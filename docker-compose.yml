@@ -1,7 +1,7 @@
 version: '3.1'
 
 services:
-  php:
+  landingpage:
     env_file: ./.env
     build: 
       context: . 
@@ -10,6 +10,8 @@ services:
       - $LANDINGPAGE_LOCAL_PORT:$LANDINGPAGE_DOCKER_PORT
     volumes:
       - ./ui-laundingpage:/var/www/html
+    networks:
+      - frontend
 
   db:
     env_file: ./.env
@@ -18,7 +20,9 @@ services:
     volumes:
         - ./database:/var/lib/mysql
     environment:
-        MYSQL_ROOT_PASSWORD: $MYSQlDB_PASSWORD
+        MYSQL_ROOT_PASSWORD: $MYSQlDB_ROOT_PASSWORD
+    networks:
+      - backend
 
   phpmyadmin:
     env_file: ./.env
@@ -28,3 +32,52 @@ services:
         - $MYSQLDB_LOCAL_PORT:$MYSQLDB_DOCKER_PORT
     environment:
         - PMA_ARBITRARY=1
+    networks:
+      - frontend
+      - backend
+
+  api:
+    depends_on:
+      - db
+    build: ./api
+    restart: unless-stopped
+    env_file: ./.env
+    ports:
+      - $API_LOCAL_PORT:$API_DOCKER_PORT
+    environment:
+      - DB_HOST=db
+      - DB_USER=$MYSQLDB_USER
+      - DB_PASSWORD=$MYSQLDB_ROOT_PASSWORD
+      - DB_NAME=$MYSQLDB_DATABASE
+      - DB_PORT=$MYSQLDB_DOCKER_PORT
+    networks:
+      - backend
+      - frontend
+  
+  ui-webapp:
+    depends_on:
+      - api
+    build:
+      context: ./ui-webapp
+      args:
+        - WA_APP_API_BASE_URL=$CLIENT_API_BASE_URL
+    ports:
+      - $WA_LOCAL_PORT:$REACT_DOCKER_PORT
+    networks:
+      - frontend
+
+  ui-backoffice:
+    depends_on:
+      - api
+    build:
+      context: ./ui-backoffice
+      args:
+        - BO_APP_API_BASE_URL=$CLIENT_API_BASE_URL
+    ports:
+      - $BACKOFFICE_LOCAL_PORT:$BACKOFFICE_DOCKER_PORT
+    networks:
+      - frontend
+
+networks:
+  backend:
+  frontend:
