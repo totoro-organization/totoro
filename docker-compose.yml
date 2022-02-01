@@ -1,0 +1,30 @@
+version: '3.1'
+
+services:
+  php:
+    env_file: ./.env
+    build: 
+      context: . 
+      dockerfile: Dockerfile
+    ports:
+      - $LANDINGPAGE_LOCAL_PORT:$LANDINGPAGE_DOCKER_PORT
+    volumes:
+      - ./ui-laundingpage:/var/www/html
+
+  db:
+    env_file: ./.env
+    image: mariadb
+    restart: always
+    volumes:
+        - ./database:/var/lib/mysql
+    environment:
+        MYSQL_ROOT_PASSWORD: $MYSQlDB_PASSWORD
+
+  phpmyadmin:
+    env_file: ./.env
+    image: phpmyadmin
+    restart: always
+    ports:
+        - $MYSQLDB_LOCAL_PORT:$MYSQLDB_DOCKER_PORT
+    environment:
+        - PMA_ARBITRARY=1
