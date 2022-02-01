@@ -20,5 +20,5 @@ COPY --from=build-stage /ui-backoffice/build /usr/share/nginx/html
 
 EXPOSE $BACKOFFICE_DOCKER_PORT
 
-CMD nginx -g "demon off;"
+CMD nginx -g "daemon off;"
 
