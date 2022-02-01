@@ -9,7 +9,7 @@ services:
     ports:
       - $LANDINGPAGE_LOCAL_PORT:$LANDINGPAGE_DOCKER_PORT
     volumes:
-      - ./ui-laundingpage:/var/www/html
+      - ./ui-landingpage:/var/www/html
     networks:
       - frontend
 
@@ -25,11 +25,10 @@ services:
       - backend
 
   phpmyadmin:
-    env_file: ./.env
     image: phpmyadmin
     restart: always
     ports:
-        - $MYSQLDB_LOCAL_PORT:$MYSQLDB_DOCKER_PORT
+        - 8888:80
     environment:
         - PMA_ARBITRARY=1
     networks:
@@ -62,7 +61,7 @@ services:
       args:
         - WA_APP_API_BASE_URL=$CLIENT_API_BASE_URL
     ports:
-      - $WA_LOCAL_PORT:$REACT_DOCKER_PORT
+      - $REACTUI_LOCAL_PORT:$REACTUI_DOCKER_PORT
     networks:
       - frontend
 
