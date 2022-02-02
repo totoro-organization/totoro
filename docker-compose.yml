@@ -77,6 +77,22 @@ services:
     networks:
       - frontend
 
+  ui-mobileapp:
+    depends_on:
+      - api
+    build:
+      context: ./ui-mobileapp
+      args:
+        - APPM_APP_API_BASE_URL=$CLIENT_API_BASE_URL
+    ports:
+      - $REACTNATIVE_LOCAL_PORT:$REACTNATIVE_DOCKER_PORT
+      - $REACTNATIVE_LOCAL_PORT2:$REACTNATIVE_DOCKER_PORT2
+      - $REACTNATIVE_LOCAL_PORT3:$REACTNATIVE_DOCKER_PORT3
+    environment:
+      - EXPO_DEVTOOLS_LISTEN_ADDRESS=$REACT_NATIVE_PUBLIC_IP
+    networks:
+      - frontend
+
 networks:
   backend:
   frontend:
