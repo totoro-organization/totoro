@@ -21,6 +21,9 @@ services:
         - ./database:/var/lib/mysql
     environment:
         MYSQL_ROOT_PASSWORD: $MYSQlDB_ROOT_PASSWORD
+        MYSQL_DATABASE: database_development
+        MYSQL_USER: $MYSQlDB_USER
+        MYSQL_PASSWORD: $MYSQlDB_ROOT_PASSWORD
     networks:
       - backend
 
