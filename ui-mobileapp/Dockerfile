@@ -1,8 +1,10 @@
 FROM node:14
 
-COPY . /home/
+RUN mkdir -p /usr/src/app_mobile
 
-WORKDIR /home
+WORKDIR /usr/src/app_mobile
+
+COPY . /usr/src/app_mobile/
 
 RUN npm install && npm install -g expo-cli
 

@@ -56,6 +56,7 @@ services:
   ui-webapp:
     depends_on:
       - api
+    env_file: ./.env
     build:
       context: ./ui-webapp
       args:
@@ -68,6 +69,7 @@ services:
   ui-backoffice:
     depends_on:
       - api
+    env_file: ./.env
     build:
       context: ./ui-backoffice
       args:
@@ -80,6 +82,7 @@ services:
   ui-mobileapp:
     depends_on:
       - api
+    env_file: ./.env
     build:
       context: ./ui-mobileapp
       args:
@@ -88,8 +91,12 @@ services:
       - $REACTNATIVE_LOCAL_PORT:$REACTNATIVE_DOCKER_PORT
       - $REACTNATIVE_LOCAL_PORT2:$REACTNATIVE_DOCKER_PORT2
       - $REACTNATIVE_LOCAL_PORT3:$REACTNATIVE_DOCKER_PORT3
+    volumes: 
+      - ./ui-mobileapp:/usr/src/app_mobile
+      - /usr/src/app_mobile/node_modules
     environment:
       - EXPO_DEVTOOLS_LISTEN_ADDRESS=$REACT_NATIVE_PUBLIC_IP
+      - REACT_NATIVE_PACKAGER_HOSTNAME=127.0.0.1
     networks:
       - frontend
 
