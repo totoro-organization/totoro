@@ -2,12 +2,11 @@
 
 # Installation
 
-create a .env file and copy the config
+`create a .env file and copy the config`
 
-docker-compose up --build
+`docker-compose up --build`
 
-docker-compose exec api sequelize db:create
-docker-compose exec api sequelize db:migrate
+`docker-compose exec api sequelize db:migrate`
 
 # ip infra
 
