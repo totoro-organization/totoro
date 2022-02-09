@@ -1,11 +1,11 @@
 FROM node:14
 
-WORKDIR /api
+RUN mkdir -p /usr/src/api
 
-COPY package.json .
+WORKDIR /usr/src/api
 
-RUN npm install
+COPY . /usr/src/api/
 
-COPY . .
+RUN npm install && npm install -g nodemon && npm install -g sequelize-cli
 
-CMD npm run start:nodemon
+CMD ["npm", "start"]
