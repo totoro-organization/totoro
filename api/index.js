@@ -15,7 +15,7 @@ const commons = require("./services/Commons").router;
 // const messagings = require("./services/Messagings").router;
 // const parameters = require("./services/Parameters").router;
 // const transactions = require("./services/Transactions").router;
-// const subscribements = require("./services/Subscribements").router;
+// const subscribtions = require("./services/Subscribtions").router;
 // const terminals = require("./services/Terminals").router;
 // const localisations = require("./services/Localisations").router;
 
@@ -42,7 +42,7 @@ server.use('/api/admins', admins);
 // server.use('/api/transactions', transactions);
 // server.use('/api/parameters', parameters);
 // server.use('/api/litigations', litigations);
-// server.use('/api/subscribements', subscribements);
+// server.use('/api/subscribtions', subscribements);
 // server.use('/api/localisations', localisations);
 server.use('/api/commons', commons);
 
