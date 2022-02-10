@@ -16,7 +16,6 @@ const commons = require("./services/Commons").router;
 // const parameters = require("./services/Parameters").router;
 // const transactions = require("./services/Transactions").router;
 // const subscriptions = require("./services/Subscriptions").router;
-// const terminals = require("./services/Terminals").router;
 // const localisations = require("./services/Localisations").router;
 
 server.use(cors({ origin: '*' }));
@@ -37,7 +36,6 @@ server.get('/', function(req, res) {
 // server.use('/api/users', users);
 server.use('/api/admins', admins);
 // server.use('/api/ads', ads);
-// server.use('/api/terminals', terminals);
 // server.use('/api/messagings', messagings);
 // server.use('/api/transactions', transactions);
 // server.use('/api/parameters', parameters);
