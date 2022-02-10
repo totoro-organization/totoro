@@ -4,6 +4,16 @@ const controller = require("./controller");
 exports.router = (function() {
     const localisationsRouter = express.Router();
 
+     // Localisation
+     localisationsRouter.post("/", async function(req, res) {
+        controller.getLocalisation(res);
+    })
+
+    localisationsRouter.put("/", async function(req, res) {
+        const data = req.body;
+        controller.sendWarning(res, data);
+    })
+
     // Terminals
     localisationsRouter.get("/terminals", async function(req, res) {
         controller.getTerminals(res);
@@ -28,16 +38,6 @@ exports.router = (function() {
     localisationsRouter.delete("/terminals/:id", async function(req, res) {
         const id = req.params.id;
         controller.deleteTerminal(res, id);
-    })
-
-    // Localisation
-    localisationsRouter.post("/", async function(req, res) {
-        controller.getLocalisation(res);
-    })
-
-    localisationsRouter.put("/", async function(req, res) {
-        const data = req.body;
-        controller.sendWarning(res, data);
     })
 
     return localisationsRouter;
