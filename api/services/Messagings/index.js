@@ -4,7 +4,6 @@ const controller = require("./controller");
 exports.router = (function() {
     const MessagingsRouter = express.Router();
 
-     // Localisation
      MessagingsRouter.post("/", async function(req, res) {
          const data = req.body;
         controller.createMessage(res, data);
@@ -15,7 +14,6 @@ exports.router = (function() {
         controller.getUserChats(res, id);
     })
 
-    // Terminals
     MessagingsRouter.get("/ads/:id", async function(req, res) {
         const id = req.params.id;
         controller.getAdsChats(res, id);
