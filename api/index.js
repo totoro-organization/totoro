@@ -9,7 +9,7 @@ const server = express();
 // const users = require("./services/Users").router;
 const admins = require("./services/Admins").router;
 // const ads = require("./services/Ads").router;
-// const authentifications = require("./services/Authentifications").router;
+// const authentications = require("./services/Authentications").router;
 const commons = require("./services/Commons").router;
 // const litigations = require("./services/Litigations").router;
 // const messagings = require("./services/Messagings").router;
@@ -33,7 +33,7 @@ server.get('/', function(req, res) {
     .send(html.home());
 });
 
-// server.use('/api', authentifications);
+// server.use('/api', authentications);
 // server.use('/api/users', users);
 server.use('/api/admins', admins);
 // server.use('/api/ads', ads);
