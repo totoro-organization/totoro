@@ -29,7 +29,7 @@ exports.router = (function() {
         controller.deleteLitigation(res, id);
     })
 
-    litigationsRouter.post("/:id", async function(req, res) {
+    litigationsRouter.post("/:id/warning", async function(req, res) {
         const id = req.params.id;
         const data = req.body;
         controller.sendWarning(res, id, data);
