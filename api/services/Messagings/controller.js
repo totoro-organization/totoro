@@ -4,7 +4,6 @@ const { Op } = require('sequelize');
 
 
 module.exports = {
-    // Terminals
     getUserChats: function(res, id){},
     getAdsChats: function(res, id){},
     getChat: function(res, id){},
