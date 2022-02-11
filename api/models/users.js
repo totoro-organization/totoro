@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       models.Users.hasMany(models.Ads, { foreignKey: 'user_id' });
       models.Users.hasMany(models.Favorites, { foreignKey: 'user_id' });
       models.Users.hasMany(models.Transactions, { foreignKey: 'user_id' });
-      models.Users.hasMany(models.Subscribements, { foreignKey: 'user_id' });
+      models.Users.hasMany(models.Subscriptions, { foreignKey: 'user_id' });
       models.Users.hasMany(models.Chats, { foreignKey: 'user_id' });
       models.Users.belongsTo(models.Terminals, { foreignKey: 'terminal_id' });
       models.Users.belongsTo(models.Status, { foreignKey: 'status_id' });
@@ -39,5 +39,8 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'Users',
   });
+  Users.addHook("beforeSave", async (element) => {
+    return element.id = uuidv4();
+  } )
   return Users;
 };

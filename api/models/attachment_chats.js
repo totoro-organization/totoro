@@ -21,5 +21,8 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'Attachment_chats',
   });
+  Attachment_chats.addHook("beforeSave", async (element) => {
+    return element.id = uuidv4();
+  } )
   return Attachment_chats;
 };

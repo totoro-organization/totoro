@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      models.Pricings.hasMany(models.Subscribements, { foreignKey: 'pricing_id' });
+      models.Pricings.hasMany(models.Subscriptions, { foreignKey: 'pricing_id' });
     }
   }
   Pricings.init({
@@ -22,5 +22,8 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'Pricings',
   });
+  Pricings.addHook("beforeSave", async (element) => {
+    return element.id = uuidv4();
+  } )
   return Pricings;
 };

@@ -9,9 +9,9 @@ exports.router = (function() {
         controller.login(res, data);
     })
 
-    authRouter.post("/register", async function(req, res) {
+    authRouter.post("/signup", async function(req, res) {
         const data = req.body;
-        controller.register(res, data);
+        controller.signup(res, data);
     })
 
     authRouter.post("/forgot", async function(req, res) {
