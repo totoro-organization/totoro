@@ -1,23 +1,41 @@
 const models = require('../../models');
 const asyncLib = require('async');
 const { Op } = require('sequelize');
-
+const { responseAll, responseOne, deleteOne, getField, createField } = require('../../utils/Commons/thenCatch');
 
 module.exports = {
     // Roles
     getRoles: function(res) {
-        models.Roles.findAll({
+        responseAll(models.Roles.findAll({
             order: [['label', 'asc']]
-        })
-        .then(function(results) {
-            res.status(200)
-            .json({total_rows: results.length, data: results});
-        })
+        }), res, "Unable to retrieve roles")
     },
-    getRole: function(res, id){},
-    createRole: function(res, data){},
+    getRole: function(res, id){
+        responseOne(models.Roles.findOne({
+            where: { id }
+        }), res, "Unable to retrieve role");
+    },
+    createRole: function(res, data){
+        asyncLib.waterfall([
+            function(done){
+                getField(res, models.Roles, { label: data.label }, done);
+            },
+            function(result, done){
+                if(result) res.status(409).json({response: "Value already exist"});
+                else {
+                    createField(res, models.Roles, data, done);
+                }
+            }
+        ], function(newField){
+            if(newField) res.status(201).json({response: "Role create successfull"})
+        });
+    },
     updateRole: function(res, id, data){},
-    deleteRole: function(res, id){},
+    deleteRole: function(res, id){
+       deleteOne(models.Roles.destroy({
+        where: { id }
+    }), res)
+    },
     // Pricings
     getPricings: function(res){},
     getPricing: function(res, id){},

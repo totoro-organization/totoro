@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       models.Status.hasMany(models.Admins, { foreignKey: 'status_id' });
       models.Status.hasMany(models.Ads, { foreignKey: 'status_id' });
-      models.Status.hasMany(models.Subscribements, { foreignKey: 'status_id' });
+      models.Status.hasMany(models.Subscriptions, { foreignKey: 'status_id' });
       models.Status.hasMany(models.Users, { foreignKey: 'status_id' });
       models.Status.hasMany(models.Terminals, { foreignKey: 'status_id' });
       models.Status.hasMany(models.Chats, { foreignKey: 'status_id' });
@@ -25,5 +25,8 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'Status',
   });
+  Status.addHook("beforeSave", async (element) => {
+    return element.id = uuidv4();
+  } )
   return Status;
 };
