@@ -20,5 +20,8 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'Litigation_objects',
   });
+  Litigation_objects.addHook("beforeSave", async (element) => {
+    return element.id = uuidv4();
+  } )
   return Litigation_objects;
 };
