@@ -20,5 +20,8 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'Logs',
   });
+  Logs.addHook("beforeSave", async (element) => {
+    return element.id = uuidv4();
+  } )
   return Logs;
 };
