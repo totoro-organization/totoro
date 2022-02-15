@@ -25,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
     lastname: DataTypes.STRING,
     username: DataTypes.STRING,
     email: DataTypes.STRING,
-    password: DataTypes.STRING,
+    password: DataTypes.STRING,allowNull: false,
     birthday: DataTypes.DATE,
     address: DataTypes.STRING,
     cp: DataTypes.INTEGER,
@@ -39,8 +39,17 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'Users',
   });
+  Users.prototype.validPassword = function(password) {
+    return bcrypt.compareSync(password, this.password);
+  };
+
+  Users.addHook("beforeCreate", function(user) {
+    user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(10), null);
+  });
+
   Users.addHook("beforeSave", async (element) => {
     return element.id = uuidv4();
-  } )
+  });
+
   return Users;
 };

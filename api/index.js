@@ -3,6 +3,8 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const html = require('./html');
 
+//const passport = require("./config/passport");
+
 const PORT = process.env.API_DOCKER_PORT || 8080;
 const server = express();
 
@@ -26,6 +28,15 @@ server.use(bodyParser.urlencoded({ extended: true }));
 
 server.use(bodyParser.json());
 
+//const cookieParser = require('cookie-parser')
+//const session = require('express-session')
+//server.use(cookieParser());
+//server.use(session({ secret: "keyboard cat", resave: true, saveUninitialized: true }));
+//server.use(passport.initialize());
+//server.use(passport.session());
+
+//require("./routes/api-routes.js")(server);
+
 server.get('/', function(req, res) {
     res.setHeader('Content-Type', 'text/html');
     res.status(200)
@@ -46,4 +57,4 @@ server.use('/api/commons', commons);
 
 server.listen(PORT, function() {
     console.log('server start')
-});
+})
