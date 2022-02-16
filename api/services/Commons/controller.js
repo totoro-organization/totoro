@@ -1,69 +1,60 @@
-const models = require('../../models');
 const asyncLib = require('async');
 const { Op } = require('sequelize');
-const { responseAll, responseOne, deleteOne, getField, createField } = require('../../utils/Commons/thenCatch');
+const { error, success } = require("../../utils/Commons/messages.json");
+const { responseAll, responseOne, actionDelete, getField, createField, updateField } = require('../../utils/Commons/thenCatch');
 
 module.exports = {
-    // Roles
-    getRoles: function(res) {
-        responseAll(models.Roles.findAll({
-            order: [['label', 'asc']]
-        }), res, "Unable to retrieve roles")
+
+    getAll: function(res, model) {
+        responseAll(model, res)
     },
-    getRole: function(res, id){
-        responseOne(models.Roles.findOne({
-            where: { id }
-        }), res, "Unable to retrieve role");
+    getOne: function(res, model){
+        responseOne(model, res);
     },
-    createRole: function(res, data){
+    create: function(res, model, data){
         asyncLib.waterfall([
             function(done){
-                getField(res, models.Roles, { label: data.label }, done);
+                getField(res, model, { label: data.label }, done, true);
             },
             function(result, done){
-                if(result) res.status(409).json({response: "Value already exist"});
+                if(result) res.status(error.duplicate.status).json({message: error.duplicate.message});
                 else {
-                    createField(res, models.Roles, data, done);
+                    createField(res, model, data, done);
                 }
             }
         ], function(newField){
-            if(newField) res.status(201).json({response: "Role create successfull"})
+            if(newField) res.status(success.create.status).json({message: success.create.message})
+            else res.status(error.op_failed.status).json({message: error.op_failed.message});
         });
     },
-    updateRole: function(res, id, data){},
-    deleteRole: function(res, id){
-       deleteOne(models.Roles.destroy({
-        where: { id }
-    }), res)
+    update: function(res, model, id, data){
+        asyncLib.waterfall([
+            function(done) {
+                getField(res, model, { id }, done, true);
+            },
+            function(found, done) {
+                if(!found) res.status(error.not_found.status).json({message: error.not_found.message});
+                else getField(res, model, { label: data.label, id: {[Op.ne]:id} }, done, true);
+            },
+            function(found, done) {
+                if(found) res.status(error.duplicate.status).json({message: error.duplicate.message});
+                else getField(res, model, { id }, done, true);
+            },
+            function(found, done) {
+                updateField(res, found, {label: data.label}, done);
+            }
+        ], function(updateFound) {
+            if(updateFound) res.status(success.update.status).json({message: success.update.message});
+            else res.status(error.op_failed.status).json({message: error.op_failed.message});
+        });
     },
-    // Pricings
-    getPricings: function(res){},
-    getPricing: function(res, id){},
-    createPricing: function(res, data){},
-    updatePricing: function(res, id, data){},
-    deletePricing: function(res, id){},
-    // Tags
-    getTags: function(res){},
-    getTag: function(res, id){},
-    createTag: function(res, data){},
-    updateTag: function(res, id, data){},
-    deleteTag: function(res, id){},
-    // Status
-    getStatus: function(res){},
-    getOneStatus: function(res, id){},
-    createStatus: function(res, data){},
-    updateStatus: function(res, id, data){},
-    deleteStatus: function(res, id){},
-    // Payments
-    getPayments: function(res){},
-    getPayment: function(res, id){},
-    createPayment: function(res, data){},
-    updatePayment: function(res, id, data){},
-    deletePayment: function(res, id){},
-    // Litigation_objects
-    getLitigation_objects: function(res){},
-    getLitigation_object: function(res, id){},
-    createLitigation_object: function(res, data){},
-    updateLitigation_object: function(res, id, data){},
-    deleteLitigation_object: function(res, id){},
+    delete: function(res, model, id){
+        asyncLib.waterfall([
+            function(done) {
+                getField(res, model, { id }, done, false);
+            }
+        ], function(found) {
+           actionDelete(found);
+        })
+    },
 }
