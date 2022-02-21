@@ -10,7 +10,7 @@ module.exports = {
             .json({message: error.syntax_error.message});
         })  
     },
-    responseOne: function(model, res) {
+    responseOne: function(model, res, id) {
         model.findOne({
             where: { id }
         }).then(result => {
@@ -31,12 +31,13 @@ module.exports = {
             .json({message: error.syntax_error.message});
         })  
     },
-    actionDelete: function(found) {
+    actionDelete: function(res, found) {
         if(found) {
             module.exports.deleteOne(found, res, { id: found.id }) 
         } else res.status(error.not_found.status).json({message: error.not_found.message});
     },
     getField: function(res, model, condition, done, isContinue) {
+        
         model.findOne({
             where: condition
         })

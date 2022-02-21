@@ -8,13 +8,13 @@ module.exports = {
     getAll: function(res, model) {
         responseAll(model, res)
     },
-    getOne: function(res, model){
-        responseOne(model, res);
+    getOne: function(res, model, id){
+        responseOne(model, res, id);
     },
-    create: function(res, model, data){
+    create: function(res, model, data, condition){
         asyncLib.waterfall([
             function(done){
-                getField(res, model, { label: data.label }, done, true);
+                getField(res, model, condition, done, true);
             },
             function(result, done){
                 if(result) res.status(error.duplicate.status).json({message: error.duplicate.message});
@@ -32,9 +32,9 @@ module.exports = {
             function(done) {
                 getField(res, model, { id }, done, true);
             },
-            function(found, done) {
+            function(found, done, condition) {
                 if(!found) res.status(error.not_found.status).json({message: error.not_found.message});
-                else getField(res, model, { label: data.label, id: {[Op.ne]:id} }, done, true);
+                else getField(res, model, { ...condition, id: {[Op.ne]:id} }, done, true);
             },
             function(found, done) {
                 if(found) res.status(error.duplicate.status).json({message: error.duplicate.message});
@@ -54,7 +54,7 @@ module.exports = {
                 getField(res, model, { id }, done, false);
             }
         ], function(found) {
-           actionDelete(found);
+           actionDelete(res, found);
         })
     },
 }
