@@ -1,9 +1,0 @@
-POST http://localhost:6868/api/commons/roles 
-Content-Type: application/json
-
-{"label": "JARCE"}
-
-###
-
-GET http://localhost:6868/api/commons/roles 
-Content-Type: application/json
