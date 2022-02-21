@@ -1,6 +1,6 @@
 const express = require('express');
 const controller = require("./controller");
-const { Roles, Pricings, Tags, Status, Payments, Litigation_objects }= require('../../models');
+const { Roles, Pricings, Tags, Status, Payments, Litigation_objects } = require('../../models');
 
 exports.router = (function() {
     const commonsRouter = express.Router();
@@ -17,13 +17,15 @@ exports.router = (function() {
 
     commonsRouter.post("/roles", async function(req, res) {
         const data = req.body;
-        controller.create(res, Roles, data);
+        const condition = { label: data.label };
+        controller.create(res, Roles, data, condition);
     })
 
     commonsRouter.put("/roles/:id", async function(req, res) {
         const id = req.params.id;
         const data = req.body;
-        controller.update(res, Roles, id, data);
+        const condition = { label: data.label };
+        controller.update(res, Roles, id, data, condition);
     })  
 
     commonsRouter.delete("/roles/:id", async function(req, res) {
@@ -43,13 +45,15 @@ exports.router = (function() {
 
     commonsRouter.post("/pricings", async function(req, res) {
         const data = req.body;
-        controller.create(res, Pricings, data);
+        const condition = { label: data.label };
+        controller.create(res, Pricings, data, condition);
     })
 
     commonsRouter.put("/pricings/:id", async function(req, res) {
         const id = req.params.id;
         const data = req.body;
-        controller.update(res, Pricings, id, data);
+        const condition = { label: data.label };
+        controller.update(res, Pricings, id, data, condition);
     })  
 
     commonsRouter.delete("/pricings/:id", async function(req, res) {
@@ -59,7 +63,7 @@ exports.router = (function() {
 
     // Tags
     commonsRouter.get("/tags", async function(req, res) {
-        controller.getALl(res, Tags);
+        controller.getAll(res, Tags);
     })
 
     commonsRouter.get("/tags/:id", async function(req, res) {
@@ -69,13 +73,15 @@ exports.router = (function() {
 
     commonsRouter.post("/tags", async function(req, res) {
         const data = req.body;
-        controller.create(res, Tags, data);
+        const condition = { label: data.label };
+        controller.create(res, Tags, data, condition);
     })
 
     commonsRouter.put("/tags/:id", async function(req, res) {
         const id = req.params.id;
         const data = req.body;
-        controller.update(res, Tags, id, data);
+        const condition = { label: data.label };
+        controller.update(res, Tags, id, data, condition);
     })  
 
     commonsRouter.delete("/tags/:id", async function(req, res) {
@@ -95,13 +101,15 @@ exports.router = (function() {
 
     commonsRouter.post("/status", async function(req, res) {
         const data = req.body;
-        controller.create(res, Status, data);
+        const condition = { label: data.label };
+        controller.create(res, Status, data, condition);
     })
 
     commonsRouter.put("/status/:id", async function(req, res) {
         const id = req.params.id;
         const data = req.body;
-        controller.update(res, Status, id, data);
+        const condition = { label: data.label };
+        controller.update(res, Status, id, data, condition);
     })  
 
     commonsRouter.delete("/status/:id", async function(req, res) {
@@ -121,13 +129,15 @@ exports.router = (function() {
 
     commonsRouter.post("/payments", async function(req, res) {
         const data = req.body;
-        controller.create(res, Payments, data);
+        const condition = { label: data.label };
+        controller.create(res, Payments, data, condition);
     })
 
     commonsRouter.put("/payments/:id", async function(req, res) {
         const id = req.params.id;
         const data = req.body;
-        controller.update(res, Payments, id, data);
+        const condition = { label: data.label };
+        controller.update(res, Payments, id, data, condition);
     })  
 
     commonsRouter.delete("/payments/:id", async function(req, res) {
@@ -147,13 +157,15 @@ exports.router = (function() {
 
     commonsRouter.post("/litigation-objects", async function(req, res) {
         const data = req.body;
-        controller.create(res, Litigation_objects, data);
+        const condition = { label: data.label }
+        controller.create(res, Litigation_objects, data, condition);
     })
 
     commonsRouter.put("/litigation-objects/:id", async function(req, res) {
         const id = req.params.id;
         const data = req.body;
-        controller.update(res, Litigation_objects, id, data);
+        const condition = {label: data.label }
+        controller.update(res, Litigation_objects, id, data, condition);
     })  
 
     commonsRouter.delete("/litigation-objects/:id", async function(req, res) {

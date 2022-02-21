@@ -11,6 +11,7 @@ const admins = require("./services/Admins").router;
 // const ads = require("./services/Ads").router;
 // const authentications = require("./services/Authentications").router;
 const commons = require("./services/Commons").router;
+const applications = require('./services/Applications').router;
 // const litigations = require("./services/Litigations").router;
 // const messagings = require("./services/Messagings").router;
 // const parameters = require("./services/Parameters").router;
@@ -35,6 +36,7 @@ server.get('/', function(req, res) {
 // server.use('/api', authentications);
 // server.use('/api/users', users);
 server.use('/api/admins', admins);
+server.use('/api/applications', applications);
 // server.use('/api/ads', ads);
 // server.use('/api/messagings', messagings);
 // server.use('/api/transactions', transactions);
