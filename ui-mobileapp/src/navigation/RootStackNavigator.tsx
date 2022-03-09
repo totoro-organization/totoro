@@ -17,7 +17,7 @@ export default function RootStackNavigator() {
     >
       <RootStack.Screen name="Accueil" component={Home} />
       <RootStack.Screen name="Se connecter" component={SignIn} />
-      <RootStack.Screen name="S'inscrire'" component={SignUp} />
+      <RootStack.Screen name="S'inscrire" component={SignUp} />
 
       <RootStack.Group>
         <RootStack.Screen name="BottomTab" component={BottomTabNavigator} />
