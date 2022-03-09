@@ -2,7 +2,7 @@ import { StatusBar } from "expo-status-bar";
 import styled, { ThemeProvider } from "styled-components";
 
 import { Text, View } from "react-native";
-import theme from "./theme/theme";
+import theme from "./src/theme/theme";
 
 const Container = styled(View)`
   background-color: ${({ theme }) => theme.colors.primary[500]};
