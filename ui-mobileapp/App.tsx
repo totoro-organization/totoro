@@ -1,17 +1,22 @@
 import { StatusBar } from "expo-status-bar";
-import styled from "styled-components/native";
+import styled, { ThemeProvider } from "styled-components";
 
 import { Text, View } from "react-native";
+import theme from "./theme/theme";
 
-const Container = styled.View`
-  background-color: red;
+const Container = styled(View)`
+  background-color: ${({ theme }) => theme.colors.primary[500]};
+  height: 100%;
 `;
 
 export default function App() {
   return (
-    <Container>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </Container>
+    <ThemeProvider theme={theme}>
+      {/* TODO: add navigation here */}
+      <Container>
+        <Text>Open up App.tsx to start working on your app!</Text>
+        <StatusBar style="auto" />
+      </Container>
+    </ThemeProvider>
   );
 }
