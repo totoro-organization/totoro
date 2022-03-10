@@ -3,6 +3,9 @@ export const border = {
     none: `0px`,
 
     // TODO: add our values (check figma)
+    // sm: `4px`,
+
+    md: `6px`, // default?
 
     circle: `50%`,
     full: `9999px`, // for pill shapes

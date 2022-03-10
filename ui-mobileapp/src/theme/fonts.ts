@@ -6,4 +6,7 @@ export const fonts = {
   },
 
   //   TODO: add weights / line-height tokens / font-family (?)
+  weight: {
+    regular: 400,
+  },
 };
