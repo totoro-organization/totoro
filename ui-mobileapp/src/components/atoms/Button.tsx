@@ -32,7 +32,8 @@ export default function Button({
 }: ButtonProps) {
   return (
     <StyledButton variant={variant} color={color} {...rest}>
-      {children}
+      {/* TODO: fix text color */}
+      <Text>{children}</Text>
     </StyledButton>
   );
 }
