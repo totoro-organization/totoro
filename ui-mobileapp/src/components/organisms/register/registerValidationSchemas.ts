@@ -30,3 +30,11 @@ export const registerStepTwoSchema = Yup.object({
   // TODO: fix validation
   phoneNumber: Yup.string().required(REQUIRED_MSG),
 }).required();
+
+export type RegisterStepFinalFormValues = Yup.InferType<
+  typeof registerStepFinalSchema
+>;
+
+export const registerStepFinalSchema = Yup.object({
+  address: Yup.string().required(REQUIRED_MSG),
+}).required();
