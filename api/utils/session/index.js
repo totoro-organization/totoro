@@ -8,7 +8,7 @@ module.exports = {
 				data,
 				isAdmin,
 			},
-			JWT_SIGN_SECRET,
+			JWT_SECRET,
 			{
 				expiresIn: "168h",
 			}
@@ -22,7 +22,7 @@ module.exports = {
 		var token = module.exports.parseAuthorization(authorization);
 		if (token != null) {
 			try {
-				var jwtToken = jwt.verify(token, JWT_SIGN_SECRET);
+				var jwtToken = jwt.verify(token, JWT_SECRET);
 				if (jwtToken != null) user = jwtToken;
 			} catch (err) {}
 		}

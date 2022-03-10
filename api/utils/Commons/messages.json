@@ -30,6 +30,10 @@
 			"status": 201,
 			"message": "Ressource successfully created"
 		},
+		"user_inactive": {
+			"status": 201,
+			"message": "Inactive account. Please check your mails"
+		},
 		"update": {
 			"status": 201,
 			"message": "Ressource successfully updated"
