@@ -2,25 +2,19 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const html = require("./html");
-const axios = require("axios");
-const { error } = require("./utils/Commons/messages.json");
+const { error } = require("./utils/common/messages.json");
 const { Applications } = require("./models");
 const PORT = process.env.API_DOCKER_PORT || 8080;
 const server = express();
 
-// const users = require("./services/Users").router;
-const admins = require("./services/Admins").router;
-const terminals = require("./services/Terminals").router;
-// const ads = require("./services/Ads").router;
-const authentications = require("./services/Authentications").router;
-const commons = require("./services/Commons").router;
-const applications = require("./services/Applications").router;
-// const litigations = require("./services/Litigations").router;
-// const messagings = require("./services/Messagings").router;
-// const parameters = require("./services/Parameters").router;
-// const transactions = require("./services/Transactions").router;
-// const subscriptions = require("./services/Subscriptions").router;
-// const localisations = require("./services/Localisations").router;
+const {
+	users,
+	admins,
+	terminals,
+	authentications,
+	commons,
+	applications,
+} = require("./services");
 
 server.use(cors({ origin: "*" }));
 
@@ -64,7 +58,7 @@ server.use("/api/applications", applications);
 server.use("/api", [accessApi, authentications]);
 server.use("/api/terminals", [accessApi, terminals]);
 server.use("/api/auth/", [accessApi, authentications]);
-// server.use('/api/users', [accessApi, users]);
+server.use("/api/users", [accessApi, users]);
 server.use("/api/admins", [accessApi, admins]);
 // server.use('/api/ads', [accessApi, ads]);
 // server.use('/api/messagings', [accessApi, messagings]);
@@ -72,7 +66,6 @@ server.use("/api/admins", [accessApi, admins]);
 // server.use('/api/parameters', [accessApi, parameters]);
 // server.use('/api/litigations', [accessApi, litigations]);
 // server.use('/api/subscriptions', [accessApi, subscriptions]);
-// server.use('/api/localisations', [accessApi, localisations]);
 server.use("/api/commons", [accessApi, commons]);
 
 server.listen(PORT, function () {
