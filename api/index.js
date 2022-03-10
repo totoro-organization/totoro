@@ -2,8 +2,8 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const html = require("./html");
-const { error } = require("./utils/common/messages.json");
-const { Applications } = require("./models");
+const { error } = require("utils/common/messages.json");
+const { Applications } = require("models");
 const PORT = process.env.API_DOCKER_PORT || 8080;
 const server = express();
 
@@ -14,7 +14,7 @@ const {
 	authentications,
 	commons,
 	applications,
-} = require("./services");
+} = require("services");
 
 server.use(cors({ origin: "*" }));
 
