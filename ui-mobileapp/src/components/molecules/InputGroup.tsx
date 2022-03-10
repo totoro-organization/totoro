@@ -14,13 +14,18 @@ export default function InputGroup({
   ...nativeTextInputProps
 }: InputGroupProps) {
   return (
-    <>
+    <Container>
       <Input {...nativeTextInputProps} error={!!error} />
 
       <ErrorMessage>{error?.message}</ErrorMessage>
-    </>
+    </Container>
   );
 }
+
+const Container = styled.View`
+  display: grid;
+  grid-gap: 0.5rem;
+`;
 
 /* TODO: add error theme color */
 const ErrorMessage = styled(Text)`
