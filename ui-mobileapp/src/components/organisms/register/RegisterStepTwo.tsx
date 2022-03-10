@@ -104,7 +104,6 @@ export default function RegisterStepTwo({ nextStep }: RegisterStepTwoProps) {
                 onBlur={onBlur}
                 onChangeText={onChange}
                 value={value}
-                placeholder="Zoli"
                 error={!!error}
               />
 

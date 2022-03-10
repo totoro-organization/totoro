@@ -44,7 +44,7 @@ export default function RegisterStepFinal() {
                 onBlur={onBlur}
                 onChangeText={onChange}
                 value={value}
-                placeholder="Marie"
+                placeholder="8 rue de la résidence des ploucs"
                 error={!!error}
               />
 
