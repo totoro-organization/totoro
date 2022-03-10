@@ -1,7 +1,12 @@
 import React from "react";
 import { Text } from "react-native";
+import MainLayout from "../components/layouts/MainLayout";
 
 // NOTE: find a better naming?
 export default function Posts() {
-  return <Text>Posts</Text>;
+  return (
+    <MainLayout>
+      <Text>Posts</Text>
+    </MainLayout>
+  );
 }
