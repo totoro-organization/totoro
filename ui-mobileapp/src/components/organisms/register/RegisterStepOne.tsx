@@ -2,7 +2,8 @@ import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import styled from "styled-components/native";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Button, Text } from "react-native";
+import { Text } from "react-native";
+import Button from "../../atoms/Button";
 
 import Input from "../..//atoms/Input";
 
@@ -109,8 +110,7 @@ export default function RegisterStepOne({ nextStep }: RegisterStepOne) {
         />
       </InputWrapper>
 
-      {/* TODO: add our Button atom */}
-      <Button title="Suivant" onPress={handleSubmit(onSubmit)} />
+      <Button onPress={handleSubmit(onSubmit)}>Suivant</Button>
     </Container>
   );
 }
