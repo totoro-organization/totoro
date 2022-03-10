@@ -10,6 +10,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@hookform/resolvers": "^2.8.8",
     "@react-navigation/bottom-tabs": "6.2.0",
     "@react-navigation/native": "^6.0.8",
     "@react-navigation/stack": "^6.1.1",
@@ -21,7 +22,8 @@
     "react-native": "0.64.3",
     "react-native-gesture-handler": "2.1.0",
     "react-native-web": "0.17.1",
-    "styled-components": "5.3.3"
+    "styled-components": "5.3.3",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
