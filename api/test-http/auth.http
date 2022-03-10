@@ -1,0 +1,16 @@
+POST http://localhost:6868/api/auth/signup 
+Content-Type: application/json
+app_id: 7783d5f1-19c1-4b1d-ba0f-3e4887eefb72
+
+{
+    "firstname": "teo",
+    "lastname": "Boukoro",
+    "username": "teoleboss123",
+    "email": "teoboukoro@gmail.com",
+    "password": "root",
+    "birthday": "1991-10-08",
+    "adress": "9 rue du progrès",
+    "longitude": 48.88039283558442,
+    "latitude": 2.4123843153442976,
+    "cp": 93310
+}

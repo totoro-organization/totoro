@@ -6,10 +6,9 @@ Content-Type: application/json
 ###
 GET http://localhost:6868/api/applications 
 Content-Type: application/json
-app_id: 23045662-1de2-439a-a42b-91e95dd63934
 
 ###
-GET http://localhost:6868/api/applications/23045662-1de2-439a-a42b-91e95dd63934
+GET http://localhost:6868/api/applications/7783d5f1-19c1-4b1d-ba0f-3e4887eefb72
 Content-Type: application/json
 
 ###
