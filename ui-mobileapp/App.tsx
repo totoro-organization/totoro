@@ -1,22 +1,22 @@
-import { StatusBar } from "expo-status-bar";
-import styled, { ThemeProvider } from "styled-components";
+import { ThemeProvider } from "styled-components";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
 
-import { Text, View } from "react-native";
 import theme from "./src/theme/theme";
+import RootStackNavigator from "./src/navigation/RootStackNavigator";
 
-const Container = styled(View)`
-  background-color: ${({ theme }) => theme.colors.primary[500]};
-  height: 100%;
-`;
+// NOTE: remove me later, this is an example to use styled-components.
+// const Container = styled(View)`
+//   background-color: ${({ theme }) => theme.colors.primary[500]};
+//   height: 100%;
+// `;
 
 export default function App() {
   return (
     <ThemeProvider theme={theme}>
-      {/* TODO: add navigation here */}
-      <Container>
-        <Text>Open up App.tsx to start working on your app!</Text>
-        <StatusBar style="auto" />
-      </Container>
+      <NavigationContainer>
+        <RootStackNavigator />
+      </NavigationContainer>
     </ThemeProvider>
   );
 }
