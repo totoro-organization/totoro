@@ -4,6 +4,7 @@ import { Text } from "react-native";
 
 import MainLayout from "../components/layouts/MainLayout";
 import RegisterStepOne from "../components/organisms/register/RegisterStepOne";
+import RegisterStepTwo from "../components/organisms/register/RegisterStepTwo";
 
 // TODO: Find a better naming for these steps?
 enum RegisterSteps {
@@ -24,6 +25,14 @@ export default function Register() {
           nextStep={() => setCurrentStep(RegisterSteps.STEP_TWO)}
         />
       )}
+
+      {currentStep === RegisterSteps.STEP_TWO && (
+        <RegisterStepTwo
+          nextStep={() => setCurrentStep(RegisterSteps.STEP_FINAL)}
+        />
+      )}
+
+      {currentStep === RegisterSteps.STEP_FINAL && <>Add final form</>}
     </MainLayout>
   );
 }

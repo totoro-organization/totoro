@@ -17,3 +17,16 @@ export const registerStepOneSchema = Yup.object({
     .required(REQUIRED_MSG)
     .oneOf([Yup.ref("password")], PASSWORD_DONT_MATCH_MSG),
 }).required();
+
+export type RegisterStepTwoFormValues = Yup.InferType<
+  typeof registerStepTwoSchema
+>;
+
+export const registerStepTwoSchema = Yup.object({
+  firstName: Yup.string().required(REQUIRED_MSG),
+  lastName: Yup.string().required(REQUIRED_MSG),
+  // TODO: fix validation
+  birthDate: Yup.string().required(REQUIRED_MSG),
+  // TODO: fix validation
+  phoneNumber: Yup.string().required(REQUIRED_MSG),
+}).required();

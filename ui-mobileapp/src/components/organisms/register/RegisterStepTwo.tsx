@@ -6,37 +6,40 @@ import { Text } from "react-native";
 import Button from "../../atoms/Button";
 
 import Input from "../..//atoms/Input";
+import {
+  RegisterStepTwoFormValues,
+  registerStepTwoSchema,
+} from "./registerValidationSchemas";
 
-import { registerStepOneSchema } from "./registerValidationSchemas";
-import type { RegisterStepOneFormValues } from "./registerValidationSchemas";
-
-export type RegisterStepOneProps = {
+export type RegisterStepTwoProps = {
   nextStep: () => void;
 };
 
-export default function RegisterStepOne({ nextStep }: RegisterStepOneProps) {
-  const { control, handleSubmit } = useForm<RegisterStepOneFormValues>({
+export default function RegisterStepTwo({ nextStep }: RegisterStepTwoProps) {
+  const { control, handleSubmit } = useForm<RegisterStepTwoFormValues>({
     defaultValues: {
-      email: "",
-      password: "",
-      confirmPassword: "",
+      firstName: "",
+      lastName: "",
+      birthDate: "",
+      phoneNumber: "",
     },
     mode: "onBlur",
-    resolver: yupResolver(registerStepOneSchema),
+    resolver: yupResolver(registerStepTwoSchema),
   });
 
-  function onSubmit(data: RegisterStepOneFormValues) {
-    // TODO: Add call api to register (create user)
+  function onSubmit(data: RegisterStepTwoFormValues) {
+    // TODO: Add call api to register (update user data)
     console.log(data);
     nextStep();
   }
 
   return (
-    <Container>
+    //   TODO: add grid container
+    <>
       <InputWrapper>
-        <Text>Adresse e-mail</Text>
+        <Text>Prénom</Text>
         <Controller
-          name="email"
+          name="firstName"
           control={control}
           render={({
             field: { onChange, onBlur, value },
@@ -45,11 +48,10 @@ export default function RegisterStepOne({ nextStep }: RegisterStepOneProps) {
             <>
               {/* TODO: Maybe add InputGroup molecule? (Input + Error message) */}
               <Input
-                keyboardType="email-address"
                 onBlur={onBlur}
                 onChangeText={onChange}
                 value={value}
-                placeholder="marie-zoli@gmail.com"
+                placeholder="Marie"
                 error={!!error}
               />
 
@@ -61,24 +63,25 @@ export default function RegisterStepOne({ nextStep }: RegisterStepOneProps) {
       </InputWrapper>
 
       <InputWrapper>
-        <Text>Mot de passe</Text>
+        <Text>Nom</Text>
         <Controller
-          name="password"
+          name="lastName"
           control={control}
           render={({
             field: { onChange, onBlur, value },
             fieldState: { error },
           }) => (
             <>
+              {/* TODO: Maybe add InputGroup molecule? (Input + Error message) */}
               <Input
-                secureTextEntry
                 onBlur={onBlur}
                 onChangeText={onChange}
                 value={value}
-                placeholder="********"
+                placeholder="Zoli"
                 error={!!error}
               />
 
+              {/* TODO: add our Text atom and use color="error" */}
               <ErrorMessage>{error?.message}</ErrorMessage>
             </>
           )}
@@ -86,24 +89,50 @@ export default function RegisterStepOne({ nextStep }: RegisterStepOneProps) {
       </InputWrapper>
 
       <InputWrapper>
-        <Text>Confirmation du mot de passe</Text>
+        <Text>Date de naissance</Text>
+        {/* TODO: replace input to date picker */}
         <Controller
-          name="confirmPassword"
+          name="birthDate"
           control={control}
           render={({
             field: { onChange, onBlur, value },
             fieldState: { error },
           }) => (
             <>
+              {/* TODO: Maybe add InputGroup molecule? (Input + Error message) */}
               <Input
-                secureTextEntry
                 onBlur={onBlur}
                 onChangeText={onChange}
                 value={value}
-                placeholder="********"
+                placeholder="Zoli"
                 error={!!error}
               />
 
+              {/* TODO: add our Text atom and use color="error" */}
+              <ErrorMessage>{error?.message}</ErrorMessage>
+            </>
+          )}
+        />
+      </InputWrapper>
+      <InputWrapper>
+        <Text>Numéro de téléphone</Text>
+        <Controller
+          name="phoneNumber"
+          control={control}
+          render={({
+            field: { onChange, onBlur, value },
+            fieldState: { error },
+          }) => (
+            <>
+              {/* TODO: Maybe add InputGroup molecule? (Input + Error message) */}
+              <Input
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+                error={!!error}
+              />
+
+              {/* TODO: add our Text atom and use color="error" */}
               <ErrorMessage>{error?.message}</ErrorMessage>
             </>
           )}
@@ -111,14 +140,9 @@ export default function RegisterStepOne({ nextStep }: RegisterStepOneProps) {
       </InputWrapper>
 
       <Button onPress={handleSubmit(onSubmit)}>Suivant</Button>
-    </Container>
+    </>
   );
 }
-
-const Container = styled.View`
-  display: grid;
-  grid-gap: 1rem;
-`;
 
 const InputWrapper = styled.View`
   display: grid;
