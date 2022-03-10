@@ -3,11 +3,13 @@ import React from "react";
 import { Button, Text } from "react-native";
 import { AuthParamList } from "../navigation/StackNavigationParams";
 import { StackNavigationProp } from "@react-navigation/stack/";
+import MainLayout from "../components/layouts/MainLayout";
 
 export default function Home() {
   const navigation = useNavigation<StackNavigationProp<AuthParamList>>();
+
   return (
-    <>
+    <MainLayout>
       <Text>Home</Text>
 
       <Button
@@ -19,6 +21,6 @@ export default function Home() {
         title="Se connecter"
         onPress={() => navigation.navigate("Se connecter")}
       />
-    </>
+    </MainLayout>
   );
 }
