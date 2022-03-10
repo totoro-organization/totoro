@@ -1,6 +1,5 @@
-import { ThemeProvider } from "styled-components";
 import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
+import { ThemeProvider } from "styled-components/native";
 
 import theme from "./src/theme/theme";
 import RootStackNavigator from "./src/navigation/RootStackNavigator";
