@@ -1,9 +1,10 @@
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
-import { Button, Text } from "react-native";
+import { Button as NativeButton, Text } from "react-native";
 import { AuthParamList } from "../navigation/StackNavigationParams";
 import { StackNavigationProp } from "@react-navigation/stack/";
 import MainLayout from "../components/layouts/MainLayout";
+import Button from "../components/atoms/Button";
 
 export default function Home() {
   const navigation = useNavigation<StackNavigationProp<AuthParamList>>();
@@ -12,15 +13,14 @@ export default function Home() {
     <MainLayout>
       <Text>Home</Text>
 
-      <Button
+      <NativeButton
         title="S'inscrire"
         onPress={() => navigation.navigate("S'inscrire")}
       />
 
-      <Button
-        title="Se connecter"
-        onPress={() => navigation.navigate("Se connecter")}
-      />
+      <Button onPress={() => navigation.navigate("Se connecter")}>
+        Se connecter
+      </Button>
     </MainLayout>
   );
 }
