@@ -12,7 +12,7 @@ enum RegisterSteps {
   STEP_FINAL = "StepFinal",
 }
 
-export default function SignUp() {
+export default function Register() {
   const [currentStep, setCurrentStep] = useState(RegisterSteps.STEP_ONE);
 
   return (
