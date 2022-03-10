@@ -1,7 +1,7 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
 import Home from "../screens/Home";
-import SignIn from "../screens/SignIn";
+import Login from "../screens/Login";
 import Register from "../screens/Register";
 import BottomTabNavigator from "./BottomTabNavigator";
 
@@ -16,7 +16,7 @@ export default function RootStackNavigator() {
       initialRouteName="Accueil"
     >
       <RootStack.Screen name="Accueil" component={Home} />
-      <RootStack.Screen name="Se connecter" component={SignIn} />
+      <RootStack.Screen name="Se connecter" component={Login} />
       <RootStack.Screen name="S'inscrire" component={Register} />
 
       <RootStack.Group>
