@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Text } from "react-native";
 
 import MainLayout from "../components/layouts/MainLayout";
+import RegisterStepFinal from "../components/organisms/register/RegisterStepFinal";
 import RegisterStepOne from "../components/organisms/register/RegisterStepOne";
 import RegisterStepTwo from "../components/organisms/register/RegisterStepTwo";
 
@@ -32,7 +33,7 @@ export default function Register() {
         />
       )}
 
-      {currentStep === RegisterSteps.STEP_FINAL && <>Add final form</>}
+      {currentStep === RegisterSteps.STEP_FINAL && <RegisterStepFinal />}
     </MainLayout>
   );
 }
