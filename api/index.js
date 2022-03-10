@@ -10,8 +10,9 @@ const server = express();
 
 // const users = require("./services/Users").router;
 const admins = require("./services/Admins").router;
+const terminals = require("./services/Terminals").router;
 // const ads = require("./services/Ads").router;
-// const authentications = require("./services/Authentications").router;
+const authentications = require("./services/Authentications").router;
 const commons = require("./services/Commons").router;
 const applications = require("./services/Applications").router;
 // const litigations = require("./services/Litigations").router;
@@ -38,7 +39,7 @@ const accessApi = async (req, res, next) => {
 	try {
 		const APP_ID = req.headers["app_id"];
 		if (!APP_ID) {
-			res
+			return res
 				.status(error.access_denied.status)
 				.json({ message: error.access_denied.message });
 		}
@@ -48,7 +49,7 @@ const accessApi = async (req, res, next) => {
 			.then((data) => {
 				if (data) next();
 				else {
-					res
+					return res
 						.status(error.access_denied.status)
 						.json({ message: error.access_denied.message });
 				}
@@ -59,10 +60,12 @@ const accessApi = async (req, res, next) => {
 	}
 };
 
-// server.use('/api', [accessApi, authentications]);
+server.use("/api/applications", applications);
+server.use("/api", [accessApi, authentications]);
+server.use("/api/terminals", [accessApi, terminals]);
+server.use("/api/auth/", [accessApi, authentications]);
 // server.use('/api/users', [accessApi, users]);
 server.use("/api/admins", [accessApi, admins]);
-server.use("/api/applications", [accessApi, applications]);
 // server.use('/api/ads', [accessApi, ads]);
 // server.use('/api/messagings', [accessApi, messagings]);
 // server.use('/api/transactions', [accessApi, transactions]);

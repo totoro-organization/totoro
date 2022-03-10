@@ -12,6 +12,10 @@
 			"status": 503,
 			"message": "Access denied"
 		},
+		"access_forbidden": {
+			"status": 403,
+			"message": "Access forbidden"
+		},
 		"not_found": {
 			"status": 404,
 			"message": "Ressource not found"

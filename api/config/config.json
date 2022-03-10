@@ -1,23 +1,32 @@
 {
-  "development": {
-    "username": "root",
-    "password": "root",
-    "database": "database_development",
-    "host": "db",
-    "dialect": "mysql"
-  },
-  "test": {
-    "username": "root",
-    "password": "root",
-    "database": "database_test",
-    "host": "db",
-    "dialect": "mysql"
-  },
-  "production": {
-    "username": "root",
-    "password": "root",
-    "database": "database_production",
-    "host": "db",
-    "dialect": "mysql"
-  }
+	"development": {
+		"username": "root",
+		"password": "root",
+		"database": "database_development",
+		"host": "db",
+		"dialect": "mysql",
+		"define": {
+			"freezeTableName": true
+		}
+	},
+	"test": {
+		"username": "root",
+		"password": "root",
+		"database": "database_test",
+		"host": "db",
+		"dialect": "mysql",
+		"define": {
+			"freezeTableName": true
+		}
+	},
+	"production": {
+		"username": "root",
+		"password": "root",
+		"database": "database_production",
+		"host": "db",
+		"dialect": "mysql",
+		"define": {
+			"freezeTableName": true
+		}
+	}
 }
