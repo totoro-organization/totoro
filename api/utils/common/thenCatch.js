@@ -1,4 +1,4 @@
-const { error, success } = require("../../utils/Commons/messages.json");
+const { error, success } = require("./messages.json");
 
 module.exports = {
 	responseAll: function (model, res) {

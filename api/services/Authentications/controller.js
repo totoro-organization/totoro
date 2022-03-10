@@ -4,8 +4,8 @@ const bcrypt = require("bcryptjs");
 const { Op } = require("sequelize");
 const { generateToken } = require("../../utils/session");
 const { getNearestTerminal } = require("../../utils/localisation");
-const { getRow, getRows } = require("../../utils/Commons/thenCatch");
-const { error, success } = require("../../utils/Commons/messages.json");
+const { getRow, getRows } = require("../../utils/common/thenCatch");
+const { error, success } = require("../../utils/common/messages.json");
 const { Terminals, Status } = require("../../models");
 
 module.exports = {
