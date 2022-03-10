@@ -5,10 +5,9 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Text } from "react-native";
 import Button from "../../atoms/Button";
 
-import Input from "../..//atoms/Input";
-
 import { registerStepOneSchema } from "./registerValidationSchemas";
 import type { RegisterStepOneFormValues } from "./registerValidationSchemas";
+import InputGroup from "../../molecules/InputGroup";
 
 export type RegisterStepOneProps = {
   nextStep: () => void;
@@ -42,20 +41,14 @@ export default function RegisterStepOne({ nextStep }: RegisterStepOneProps) {
             field: { onChange, onBlur, value },
             fieldState: { error },
           }) => (
-            <>
-              {/* TODO: Maybe add InputGroup molecule? (Input + Error message) */}
-              <Input
-                keyboardType="email-address"
-                onBlur={onBlur}
-                onChangeText={onChange}
-                value={value}
-                placeholder="marie-zoli@gmail.com"
-                error={!!error}
-              />
-
-              {/* TODO: add our Text atom and use color="error" */}
-              <ErrorMessage>{error?.message}</ErrorMessage>
-            </>
+            <InputGroup
+              keyboardType="email-address"
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              placeholder="marie-zoli@gmail.com"
+              error={error}
+            />
           )}
         />
       </InputWrapper>
@@ -69,18 +62,14 @@ export default function RegisterStepOne({ nextStep }: RegisterStepOneProps) {
             field: { onChange, onBlur, value },
             fieldState: { error },
           }) => (
-            <>
-              <Input
-                secureTextEntry
-                onBlur={onBlur}
-                onChangeText={onChange}
-                value={value}
-                placeholder="********"
-                error={!!error}
-              />
-
-              <ErrorMessage>{error?.message}</ErrorMessage>
-            </>
+            <InputGroup
+              secureTextEntry
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              placeholder="********"
+              error={error}
+            />
           )}
         />
       </InputWrapper>
@@ -94,18 +83,14 @@ export default function RegisterStepOne({ nextStep }: RegisterStepOneProps) {
             field: { onChange, onBlur, value },
             fieldState: { error },
           }) => (
-            <>
-              <Input
-                secureTextEntry
-                onBlur={onBlur}
-                onChangeText={onChange}
-                value={value}
-                placeholder="********"
-                error={!!error}
-              />
-
-              <ErrorMessage>{error?.message}</ErrorMessage>
-            </>
+            <InputGroup
+              secureTextEntry
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              placeholder="********"
+              error={error}
+            />
           )}
         />
       </InputWrapper>
@@ -123,10 +108,4 @@ const Container = styled.View`
 const InputWrapper = styled.View`
   display: grid;
   grid-gap: 0.5rem;
-`;
-
-const ErrorMessage = styled.Text`
-  color: red;
-  min-height: 0.75rem;
-  font-size: 0.75rem;
 `;

@@ -8,8 +8,8 @@ import {
 
 import { Text } from "../../atoms/Text";
 import Button from "../../atoms/Button";
-import Input from "../../atoms/Input";
 import styled from "styled-components/native";
+import InputGroup from "../../molecules/InputGroup";
 
 export default function RegisterStepFinal() {
   const { control, handleSubmit } = useForm<RegisterStepFinalFormValues>({
@@ -38,19 +38,13 @@ export default function RegisterStepFinal() {
             field: { onChange, onBlur, value },
             fieldState: { error },
           }) => (
-            <>
-              {/* TODO: Maybe add InputGroup molecule? (Input + Error message) */}
-              <Input
-                onBlur={onBlur}
-                onChangeText={onChange}
-                value={value}
-                placeholder="8 rue de la résidence des ploucs"
-                error={!!error}
-              />
-
-              {/* TODO: add our Text atom and use color="error" */}
-              <ErrorMessage>{error?.message}</ErrorMessage>
-            </>
+            <InputGroup
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              placeholder="8 rue de la résidence des ploucs"
+              error={error}
+            />
           )}
         />
 
@@ -63,10 +57,4 @@ export default function RegisterStepFinal() {
 const InputWrapper = styled.View`
   display: grid;
   grid-gap: 0.5rem;
-`;
-
-const ErrorMessage = styled.Text`
-  color: red;
-  min-height: 0.75rem;
-  font-size: 0.75rem;
 `;
