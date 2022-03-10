@@ -5,6 +5,7 @@ import { AuthParamList } from "../navigation/StackNavigationParams";
 import { StackNavigationProp } from "@react-navigation/stack/";
 import MainLayout from "../components/layouts/MainLayout";
 import Button from "../components/atoms/Button";
+import { Card } from "../components/atoms/Card";
 
 export default function Home() {
   const navigation = useNavigation<StackNavigationProp<AuthParamList>>();
@@ -21,6 +22,10 @@ export default function Home() {
       <Button onPress={() => navigation.navigate("Se connecter")}>
         Se connecter
       </Button>
+
+      <Card onPress={() => navigation.navigate("Se connecter")}>
+        <Text>cc</Text>
+      </Card>
     </MainLayout>
   );
 }
