@@ -3,10 +3,10 @@ Content-Type: application/json
 app_id: 7783d5f1-19c1-4b1d-ba0f-3e4887eefb72
 
 {
-    "firstname": "teo",
-    "lastname": "Boukoro",
-    "username": "teoleboss123",
-    "email": "teoboukoro@gmail.com",
+    "firstname": "Teo",
+    "lastname": "Lugat",
+    "username": "billy",
+    "email": "teolugatt@gmail.com",
     "password": "root",
     "birthday": "1991-10-08",
     "adress": "9 rue du progrès",

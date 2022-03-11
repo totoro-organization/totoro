@@ -2,31 +2,32 @@ const express = require("express");
 const { passport } = require("utils/session");
 const commonsController = require("../Commons/controller");
 const controller = require("./controller");
-const { Users } = require("models");
+const { Users, Status, Terminals } = require("models");
 
 exports.router = (function () {
 	const UsersRouter = express.Router();
+	const includeStatusAndTerminal = [{ model: Status }, { model: Terminals }];
 
 	UsersRouter.get("/", async function (req, res) {
-		controller.getUsers(res);
+		commonsController.getAll(res, Users, null, includeStatusAndTerminal);
 	});
 
 	UsersRouter.put("/:id", async function (req, res) {
 		const id = req.params.id;
 		const data = req.body;
-		controller.updateUser(res, id, data);
+		controller.update(res, id, data);
 	});
 
 	UsersRouter.delete("/:id", async function (req, res) {
 		const id = req.params.id;
-		controller.deleteUser(res, id);
+		commonsController.delete(res, id);
 	});
 
 	UsersRouter.get("/:id", [
 		passport,
 		async function (req, res) {
 			const id = req.params.id;
-			commonsController.getOne(res, Users, id);
+			commonsController.getOne(res, Users, id, includeStatusAndTerminal);
 		},
 	]);
 
