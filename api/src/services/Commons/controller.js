@@ -11,17 +11,17 @@ const {
 } = require("utils/common/thenCatch");
 
 module.exports = {
-	getAll: function (res, model) {
-		responseAll(model, res);
+	getAll: function (res, model, condition = null, include = null) {
+		responseAll(model, res, condition, include);
 	},
-	getOne: function (res, model, id) {
-		responseOne(model, res, id);
+	getOne: function (res, model, id, include = null) {
+		responseOne(model, res, id, include);
 	},
-	create: function (res, model, data, condition) {
+	create: function (res, model, data, condition, include = null) {
 		asyncLib.waterfall(
 			[
 				function (done) {
-					getField(res, model, condition, done, true);
+					getField(res, model, condition, done, true, include);
 				},
 				function (result, done) {
 					if (result)

@@ -6,7 +6,7 @@ const { getRow } = require("utils/common/thenCatch");
 
 exports.router = (function () {
 	const terminalsRouter = express.Router();
-
+	const includeStatus = [{ model: Status }];
 	// terminalsRouter.post("/", async function (req, res) {
 	// 	commonsController.getLocalisation(res);
 	// });
@@ -17,12 +17,12 @@ exports.router = (function () {
 	// });
 
 	terminalsRouter.get("/", async function (req, res) {
-		commonsController.getAll(res, Terminals);
+		commonsController.getAll(res, Terminals, null, includeStatus);
 	});
 
 	terminalsRouter.get("/:id", async function (req, res) {
 		const id = req.params.id;
-		commonsController.getOne(res, Terminals, id);
+		commonsController.getOne(res, Terminals, id, includeStatus);
 	});
 
 	terminalsRouter.post("/", async function (req, res) {

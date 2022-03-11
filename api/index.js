@@ -1,7 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const html = require("./html");
+const { ui_api } = require("./html");
 const { error } = require("utils/common/messages.json");
 const { Applications } = require("models");
 const PORT = process.env.API_DOCKER_PORT || 8080;
@@ -26,7 +26,7 @@ server.use(bodyParser.json());
 
 server.get("/", function (req, res) {
 	res.setHeader("Content-Type", "text/html");
-	res.status(200).send(html.home());
+	res.status(200).send(ui_api.home());
 });
 
 const accessApi = async (req, res, next) => {

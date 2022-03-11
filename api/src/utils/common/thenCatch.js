@@ -1,9 +1,13 @@
 const { error, success } = require("./messages.json");
 
 module.exports = {
-	responseAll: function (model, res) {
+	responseAll: function (model, res, condition = null, include = null) {
+		const params = {
+			where: condition,
+			include,
+		};
 		model
-			.findAll()
+			.findAll(params)
 			.then(function (results) {
 				res.status(200).json({ total_rows: results.length, data: results });
 			})
@@ -13,11 +17,13 @@ module.exports = {
 					.json({ message: error.syntax_error.message });
 			});
 	},
-	responseOne: function (model, res, id) {
+	responseOne: function (model, res, id, include = null) {
+		const params = {
+			where: { id },
+			include,
+		};
 		model
-			.findOne({
-				where: { id },
-			})
+			.findOne(params)
 			.then((result) => {
 				if (result) res.status(200).json(result);
 				else
@@ -53,11 +59,13 @@ module.exports = {
 				.status(error.not_found.status)
 				.json({ message: error.not_found.message });
 	},
-	getField: function (res, model, condition, done, isContinue) {
+	getField: function (res, model, condition, done, isContinue, include = null) {
+		const params = {
+			where: condition,
+			include,
+		};
 		model
-			.findOne({
-				where: condition,
-			})
+			.findOne(params)
 			.then((result) => {
 				if (isContinue) done(null, result);
 				else done(result);
@@ -86,18 +94,25 @@ module.exports = {
 					.json({ message: error.syntax_error.message });
 			});
 	},
-	getRow: async function (model, condition) {
+	getRow: async function (model, condition = null, include = null) {
 		try {
-			const { dataValues } = await model.findOne({ where: condition });
+			const params = {
+				where: condition,
+				include,
+			};
+			const { dataValues } = await model.findOne(params);
 			return dataValues;
 		} catch (error) {
 			console.log(error);
 		}
 	},
-	getRows: async function (model, condition = null) {
+	getRows: async function (model, condition = null, include = null) {
 		try {
-			condition = condition ?? { where: condition };
-			const request = await model.findAll(condition);
+			const params = {
+				where: condition,
+				include,
+			};
+			const request = await model.findAll(params);
 			const values = [];
 			for (const row of request) {
 				values.push(row.dataValues);

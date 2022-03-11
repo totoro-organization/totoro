@@ -7,6 +7,12 @@ const { getNearestTerminal } = require("utils/localisation");
 const { getRow, getRows } = require("utils/common/thenCatch");
 const { error, success } = require("utils/common/messages.json");
 const { Terminals, Status } = require("models");
+const mailer = require("../externals/mailer");
+const { from, subject, host } = require("utils/common/mail.json");
+const {
+	mail: { signup },
+} = require("../../../html");
+const { sign } = require("jsonwebtoken");
 
 module.exports = {
 	login: function (res, model, data) {
@@ -60,15 +66,22 @@ module.exports = {
 				},
 			],
 			function (user) {
-				if (user.Status.label === "inactive")
+				const token = generateToken(user);
+				if (user.Status.label === "inactive") {
+					mailer.sendMail(
+						host.gmail,
+						from.email,
+						from.password,
+						user.email,
+						subject.signup,
+						signup(user, token)
+					);
 					res
 						.status(success.user_inactive.status)
 						.json({ message: success.user_inactive.message });
-				else {
+				} else {
 					delete user.dataValues.password;
-					res
-						.status(success.create.status)
-						.json({ token: generateToken(user) });
+					res.status(success.create.status).json({ token });
 				}
 			}
 		);
@@ -94,29 +107,3 @@ module.exports = {
 	forgot: function (res, data) {},
 	resetPassword: function (res, data) {},
 };
-
-/* 
-    - id
-    - firstname
-    - lastname
-    - username
-    - email
-    - password
-    - birthday
-    - address
-    - cp
-
-    - longitude
-    - latitude
-
-
-    - avatar
-    - terminal_id
-    - status_id
-
-    
-    - bio
-    - rating
-    - phone
-
-*/
