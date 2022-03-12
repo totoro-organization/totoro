@@ -3,9 +3,9 @@ import React, { useState } from "react";
 import { Text } from "react-native";
 
 import MainLayout from "../components/layouts/MainLayout";
-import RegisterStepFinal from "../components/organisms/register/RegisterStepFinal";
-import RegisterStepOne from "../components/organisms/register/RegisterStepOne";
-import RegisterStepTwo from "../components/organisms/register/RegisterStepTwo";
+import RegisterStepFinal from "../components/organisms/RegisterSteps/RegisterStepFinal";
+import RegisterStepOne from "../components/organisms/RegisterSteps/RegisterStepOne";
+import RegisterStepTwo from "../components/organisms/RegisterSteps/RegisterStepTwo";
 
 // TODO: Find a better naming for these steps?
 enum RegisterSteps {
