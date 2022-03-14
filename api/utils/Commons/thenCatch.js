@@ -1,47 +1,69 @@
+const { error, success } = require("../../utils/Commons/messages.json");
+
 module.exports = {
-    responseAll: function(req, res, errorMessage) {
-        req.then(function(results) {
+    responseAll: function(model, res) {
+        model.findAll().then(function(results) {
             res.status(200)
             .json({total_rows: results.length, data: results});
-        }).catch(error => {
-            res.status(500)
-            .json({response: errorMessage});
+        }).catch(err => {
+            res.status(error.syntax_error.status)
+            .json({message: error.syntax_error.message});
         })  
     },
-    responseOne: function(req, res, errorMessage) {
-        req.then(result => {
-            res.status(200)
-            .json(result);
-        }).catch(error => {
-            res.status(500)
-            .json({response: errorMessage});
+    responseOne: function(model, res, id) {
+        model.findOne({
+            where: { id }
+        }).then(result => {
+            if(result) res.status(200).json(result);
+            else res.status(error.not_found.status).json({message: error.not_found.message});
+        }).catch(err => {
+            res.status(error.syntax_error.status)
+            .json({message: error.syntax_error.message});
         })  
     },
-    deleteOne: function(req, res) {
-        req.then(result => {
-            res.status(200)
-            .json({response: "Field delete successfull"});
-        }).catch(error => {
-            res.status(500)
-            .json({response: "Operation failed"});
+    deleteOne: function(model, res, data) {
+        model.destroy({where: data})
+        .then(result => {
+            res.status(success.delete.status)
+            .json({message: success.delete.message});
+        }).catch(err => {
+            res.status(error.syntax_error.status)
+            .json({message: error.syntax_error.message});
         })  
     },
-    getField: function(res, model, condition, done) {
+    actionDelete: function(res, found) {
+        if(found) {
+            module.exports.deleteOne(found, res, { id: found.id }) 
+        } else res.status(error.not_found.status).json({message: error.not_found.message});
+    },
+    getField: function(res, model, condition, done, isContinue) {
+        
         model.findOne({
             where: condition
         })
-        .then(result => done(null, result))
-        .catch(error => {
-            res.status(500)
-            .json({response: "Operation failed"});
+        .then(result => {
+            if(isContinue) done(null, result);
+            else done(result);
+        })
+        .catch(err => {
+            res.status(error.syntax_error.status)
+            .json({message: error.syntax_error.message});
         })  
     },
     createField: function(res, model, data, done) {
         model.create(data)
         .then(newField => done(newField))
-        .catch(error => {
-            res.status(500)
-            .json({response: error + ""});
+        .catch(err => {
+            res.status(error.syntax_error.status)
+            .json({message: error.syntax_error.message});
         });  
+    },
+    updateField: function(res, model, data, done) {
+        model.update(data)
+        .then(() => done(model))
+        .catch(err => {
+            res.status(error.syntax_error.status)
+            .json({message: error.syntax_error.message});
+        });
     }
 }
