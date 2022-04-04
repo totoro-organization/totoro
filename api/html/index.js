@@ -1,7 +1,7 @@
+const mail = require("./mail");
+const ui_api = require("./ui-api");
+
 module.exports = {
-    home: function() {
-        return ` 
-            <h1>Bienvenue sur notre API</h1>
-        `
-    }
-}
+	mail,
+	ui_api,
+};

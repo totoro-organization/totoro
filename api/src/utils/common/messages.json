@@ -1,0 +1,46 @@
+{
+	"error": {
+		"op_failed": {
+			"status": 500,
+			"message": "Operation failed"
+		},
+		"syntax_error": {
+			"status": 500,
+			"message": "Syntax error"
+		},
+		"access_denied": {
+			"status": 503,
+			"message": "Access denied"
+		},
+		"access_forbidden": {
+			"status": 403,
+			"message": "Access forbidden"
+		},
+		"not_found": {
+			"status": 404,
+			"message": "Ressource not found"
+		},
+		"duplicate": {
+			"status": 409,
+			"message": "Value already exist"
+		}
+	},
+	"success": {
+		"create": {
+			"status": 201,
+			"message": "Ressource successfully created"
+		},
+		"user_inactive": {
+			"status": 201,
+			"message": "Inactive account. Please check your mails"
+		},
+		"update": {
+			"status": 201,
+			"message": "Ressource successfully updated"
+		},
+		"delete": {
+			"status": 201,
+			"message": "Ressource successfully deleted"
+		}
+	}
+}
