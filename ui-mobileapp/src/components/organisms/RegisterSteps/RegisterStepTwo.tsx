@@ -113,7 +113,7 @@ export default function RegisterStepTwo({ nextStep }: RegisterStepTwoProps) {
         />
       </InputWrapper>
 
-      <Button onPress={handleSubmit(onSubmit)}>Suivant</Button>
+      <Button handlePress={handleSubmit(onSubmit)}>Suivant</Button>
     </>
   );
 }

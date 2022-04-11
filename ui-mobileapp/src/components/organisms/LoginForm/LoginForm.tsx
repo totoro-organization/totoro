@@ -19,8 +19,9 @@ export default function LoginForm() {
     resolver: yupResolver(loginFormSchema),
   });
 
-  function onSubmit(data: LoginFormValues) {
+  async function onSubmit(data: LoginFormValues) {
     // TODO: Add call api to login
+
     console.log(data);
   }
 
@@ -67,7 +68,7 @@ export default function LoginForm() {
         />
       </InputWrapper>
 
-      <Button onPress={handleSubmit(onSubmit)}>Se connecter</Button>
+      <Button handlePress={handleSubmit(onSubmit)}>Se connecter</Button>
     </>
   );
 }

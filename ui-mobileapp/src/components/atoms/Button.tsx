@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from "react";
+import React, { PropsWithChildren, useState } from "react";
 import styled, { css } from "styled-components/native";
 
 import { PressableProps } from "react-native";
@@ -20,6 +20,7 @@ export type ButtonProps = PropsWithChildren<
   {
     variant?: ButtonVariant;
     color?: ButtonColor;
+    handlePress?: () => void | Promise<void> | unknown;
   } & PressableProps
 >;
 
@@ -28,12 +29,39 @@ export default function Button({
   variant,
   color,
   children,
+  handlePress,
   ...rest
 }: ButtonProps) {
+  const [isInternalLoading, setIsInternalLoading] = useState(false);
+
+  async function onButtonPress() {
+    setIsInternalLoading(true);
+
+    try {
+      if (handlePress) return await handlePress();
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsInternalLoading(false);
+    }
+  }
+
   return (
-    <StyledButton variant={variant} color={color} {...rest}>
-      {/* TODO: fix text color */}
-      <Text>{children}</Text>
+    <StyledButton
+      variant={variant}
+      color={color}
+      onPress={handlePress && onButtonPress}
+      {...rest}
+    >
+      {isInternalLoading && <span>...</span>}
+
+      {React.Children.map(children, (child) => {
+        if (typeof child === "string") {
+          /* FIXME: fix text color */
+          return <StyledText $isHidden={isInternalLoading}>{child}</StyledText>;
+        }
+        return <Element $isHidden={isInternalLoading}>{child}</Element>;
+      })}
     </StyledButton>
   );
 }
@@ -72,13 +100,13 @@ const styleVariant: { [key in ButtonVariant]: FlattenSimpleInterpolation } = {
     border-color: var(--border-color);
     /* TODO: replace transparent to --light-background-color css var */
     background-color: transparent;
-    color: var(--background-color);
+    color: var(--text-color);
   `,
 
   ghost: css`
     border: 1px solid transparent;
     background: transparent;
-    color: var(--background-color);
+    color: var(--text-color);
     /* NOTE: maybe remove the padding for this variant */
   `,
 };
@@ -99,4 +127,18 @@ const StyledButton = styled.Pressable<StyledButtonProps>`
 
   ${({ color }) => (color ? styleColor[color] : styleColor.primary)};
   ${({ variant }) => (variant ? styleVariant[variant] : styleVariant.default)};
+`;
+
+const buttonContentStyle = css<{ $isHidden: boolean }>`
+  opacity: ${({ $isHidden }) => ($isHidden ? "0" : "1")};
+`;
+
+const StyledText = styled(Text)<{ $isHidden: boolean }>`
+  ${buttonContentStyle};
+`;
+
+const Element = styled.View<{ $isHidden: boolean }>`
+  display: grid;
+  place-items: center;
+  ${buttonContentStyle};
 `;
