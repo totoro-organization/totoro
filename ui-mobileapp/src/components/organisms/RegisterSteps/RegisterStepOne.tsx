@@ -24,9 +24,9 @@ export default function RegisterStepOne({ nextStep }: RegisterStepOneProps) {
     resolver: yupResolver(registerStepOneSchema),
   });
 
-  function onSubmit(data: RegisterStepOneFormValues) {
+  async function onSubmit(data: RegisterStepOneFormValues) {
     // TODO: Add call api to register (create user)
-    console.log(data);
+    await console.log(data);
     nextStep();
   }
 
