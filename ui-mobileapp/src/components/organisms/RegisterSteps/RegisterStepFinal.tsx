@@ -48,7 +48,7 @@ export default function RegisterStepFinal() {
           )}
         />
 
-        <Button onPress={handleSubmit(onSubmit)}>Je m'inscris !</Button>
+        <Button handlePress={handleSubmit(onSubmit)}>Je m'inscris !</Button>
       </InputWrapper>
     </>
   );
