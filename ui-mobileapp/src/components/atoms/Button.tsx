@@ -62,7 +62,6 @@ export default function Button({
 
       {React.Children.map(children, (child) => {
         if (typeof child === "string") {
-          /* FIXME: fix text color */
           return <StyledText $isHidden={isInternalLoading}>{child}</StyledText>;
         }
         return <Element $isHidden={isInternalLoading}>{child}</Element>;
@@ -105,7 +104,7 @@ const styleVariant: { [key in ButtonVariant]: FlattenSimpleInterpolation } = {
     border-color: var(--border-color);
     /* TODO: replace transparent to --light-background-color css var */
     background-color: transparent;
-    color: var(--text-color);
+    color: var(--border-color);
   `,
 
   ghost: css`
@@ -129,9 +128,8 @@ const StyledButton = styled.Pressable<StyledButtonProps>`
   border-radius: ${({ theme }) => theme.border.radius.md};
   padding: 1.5rem 2.25rem;
   font-family: inherit;
-
-  ${({ color }) => (color ? styleColor[color] : styleColor.primary)};
   ${({ variant }) => (variant ? styleVariant[variant] : styleVariant.default)};
+  ${({ color }) => (color ? styleColor[color] : styleColor.primary)};
 `;
 
 const LoadingWrapper = styled.View`

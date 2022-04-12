@@ -68,7 +68,13 @@ export default function LoginForm() {
         />
       </InputWrapper>
 
-      <Button handlePress={handleSubmit(onSubmit)}>Se connecter</Button>
+      <Button
+        handlePress={handleSubmit(onSubmit)}
+        color="neutral"
+        variant="ghost"
+      >
+        Se connecter
+      </Button>
     </>
   );
 }
