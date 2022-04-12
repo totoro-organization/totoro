@@ -12,9 +12,9 @@ export type TextProps = {
   size?: Sizes;
 };
 
+// TODO: add color
 export const Text = styled.Text<TextProps>`
-  color: ${({ theme, color }) =>
-    color === "primary" ? theme.colors.primary[500] : theme.colors.black[500]};
+  color: inherit;
   font-weight: ${({ theme, weight }) =>
     weight ? theme.fonts.weight[weight] : theme.fonts.weight.regular};
 `;
