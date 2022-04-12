@@ -4,7 +4,7 @@ WORKDIR /ui-backoffice
 
 COPY package.json .
 
-RUN npm install
+RUN npm install --legacy-peer-deps
 
 COPY . .
 
@@ -21,4 +21,3 @@ COPY --from=build-stage /ui-backoffice/build /usr/share/nginx/html
 EXPOSE $BACKOFFICE_DOCKER_PORT
 
 CMD nginx -g "daemon off;"
-
