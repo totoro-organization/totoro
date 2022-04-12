@@ -5,6 +5,7 @@ import { PressableProps } from "react-native";
 import { FlattenSimpleInterpolation } from "styled-components";
 import { Text } from "./Text";
 import theme from "../../theme/theme";
+import Spinner from "./Spinner";
 
 export type ButtonColor = "neutral" | "primary";
 export type ButtonVariant = "default" | "outline" | "ghost";
@@ -53,7 +54,11 @@ export default function Button({
       onPress={handlePress && onButtonPress}
       {...rest}
     >
-      {isInternalLoading && <span>...</span>}
+      {isInternalLoading && (
+        <LoadingWrapper>
+          <Spinner size={2} />
+        </LoadingWrapper>
+      )}
 
       {React.Children.map(children, (child) => {
         if (typeof child === "string") {
@@ -127,6 +132,16 @@ const StyledButton = styled.Pressable<StyledButtonProps>`
 
   ${({ color }) => (color ? styleColor[color] : styleColor.primary)};
   ${({ variant }) => (variant ? styleVariant[variant] : styleVariant.default)};
+`;
+
+const LoadingWrapper = styled.View`
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
 `;
 
 const buttonContentStyle = css<{ $isHidden: boolean }>`
