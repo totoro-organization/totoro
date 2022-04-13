@@ -18,6 +18,8 @@ FROM nginx:1.17.0-alpine
 
 COPY --from=build-stage /ui-backoffice/build /usr/share/nginx/html
 
+COPY nginx.conf /etc/nginx/nginx.conf
+
 EXPOSE $BACKOFFICE_DOCKER_PORT
 
 CMD nginx -g "daemon off;"
