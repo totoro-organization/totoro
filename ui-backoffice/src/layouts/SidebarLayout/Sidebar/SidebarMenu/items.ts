@@ -80,56 +80,56 @@ const menuItems: MenuItems[] = [
       }
     ]
   },
-  {
-    heading: 'Components',
-    items: [
-      {
-        name: 'Buttons',
-        icon: BallotTwoToneIcon,
-        link: '/components/buttons'
-      },
-      {
-        name: 'Modals',
-        icon: BeachAccessTwoToneIcon,
-        link: '/components/modals'
-      },
-      {
-        name: 'Accordions',
-        icon: EmojiEventsTwoToneIcon,
-        link: '/components/accordions'
-      },
-      {
-        name: 'Tabs',
-        icon: FilterVintageTwoToneIcon,
-        link: '/components/tabs'
-      },
-      {
-        name: 'Badges',
-        icon: HowToVoteTwoToneIcon,
-        link: '/components/badges'
-      },
-      {
-        name: 'Tooltips',
-        icon: LocalPharmacyTwoToneIcon,
-        link: '/components/tooltips'
-      },
-      {
-        name: 'Avatars',
-        icon: RedeemTwoToneIcon,
-        link: '/components/avatars'
-      },
-      {
-        name: 'Cards',
-        icon: SettingsTwoToneIcon,
-        link: '/components/cards'
-      },
-      {
-        name: 'Forms',
-        icon: TrafficTwoToneIcon,
-        link: '/components/forms'
-      },
-    ]
-  },
+  // {
+  //   heading: 'Components',
+  //   items: [
+  //     {
+  //       name: 'Buttons',
+  //       icon: BallotTwoToneIcon,
+  //       link: '/components/buttons'
+  //     },
+  //     {
+  //       name: 'Modals',
+  //       icon: BeachAccessTwoToneIcon,
+  //       link: '/components/modals'
+  //     },
+  //     {
+  //       name: 'Accordions',
+  //       icon: EmojiEventsTwoToneIcon,
+  //       link: '/components/accordions'
+  //     },
+  //     {
+  //       name: 'Tabs',
+  //       icon: FilterVintageTwoToneIcon,
+  //       link: '/components/tabs'
+  //     },
+  //     {
+  //       name: 'Badges',
+  //       icon: HowToVoteTwoToneIcon,
+  //       link: '/components/badges'
+  //     },
+  //     {
+  //       name: 'Tooltips',
+  //       icon: LocalPharmacyTwoToneIcon,
+  //       link: '/components/tooltips'
+  //     },
+  //     {
+  //       name: 'Avatars',
+  //       icon: RedeemTwoToneIcon,
+  //       link: '/components/avatars'
+  //     },
+  //     {
+  //       name: 'Cards',
+  //       icon: SettingsTwoToneIcon,
+  //       link: '/components/cards'
+  //     },
+  //     {
+  //       name: 'Forms',
+  //       icon: TrafficTwoToneIcon,
+  //       link: '/components/forms'
+  //     },
+  //   ]
+  // },
   {
     heading: 'Extra Pages',
     items: [
