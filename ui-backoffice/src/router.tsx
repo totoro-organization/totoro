@@ -170,59 +170,59 @@ const routes: PartialRouteObject[] = [
       }
     ]
   },
-  {
-    path: 'components',
-    element: (
-      <SidebarLayout />
-    ),
-    children: [
-      {
-        path: '/',
-        element: (
-          <Navigate
-            to="/components/buttons"
-            replace
-          />
-        )
-      },
-      {
-        path: 'buttons',
-        element: <Buttons />
-      },
-      {
-        path: 'modals',
-        element: <Modals />
-      },
-      {
-        path: 'accordions',
-        element: <Accordions />
-      },
-      {
-        path: 'tabs',
-        element: <Tabs />
-      },
-      {
-        path: 'badges',
-        element: <Badges />
-      },
-      {
-        path: 'tooltips',
-        element: <Tooltips />
-      },
-      {
-        path: 'avatars',
-        element: <Avatars />
-      },
-      {
-        path: 'cards',
-        element: <Cards />
-      },
-      {
-        path: 'forms',
-        element: <Forms />
-      },
-    ]
-  }
+  // {
+  //   path: 'components',
+  //   element: (
+  //     <SidebarLayout />
+  //   ),
+  //   children: [
+  //     {
+  //       path: '/',
+  //       element: (
+  //         <Navigate
+  //           to="/components/buttons"
+  //           replace
+  //         />
+  //       )
+  //     },
+  //     {
+  //       path: 'buttons',
+  //       element: <Buttons />
+  //     },
+  //     {
+  //       path: 'modals',
+  //       element: <Modals />
+  //     },
+  //     {
+  //       path: 'accordions',
+  //       element: <Accordions />
+  //     },
+  //     {
+  //       path: 'tabs',
+  //       element: <Tabs />
+  //     },
+  //     {
+  //       path: 'badges',
+  //       element: <Badges />
+  //     },
+  //     {
+  //       path: 'tooltips',
+  //       element: <Tooltips />
+  //     },
+  //     {
+  //       path: 'avatars',
+  //       element: <Avatars />
+  //     },
+  //     {
+  //       path: 'cards',
+  //       element: <Cards />
+  //     },
+  //     {
+  //       path: 'forms',
+  //       element: <Forms />
+  //     },
+  //   ]
+  // }
 ];
 
 export default routes;
