@@ -30,134 +30,94 @@ export interface MenuItems {
 }
 
 const menuItems: MenuItems[] = [
-  {
-    heading: '',
-    items: [
-      {
-        name: 'Overview',
-        link: '/overview',
-        icon: DesignServicesTwoToneIcon
-      }
-    ]
-  },
+  
   {
     heading: 'Dashboards',
     items: [
       {
-        name: 'Crypto',
-        link: '/dashboards/crypto',
+        name: 'Statistiques',
+        link: '/dashboards/stats',
         icon: BrightnessLowTwoToneIcon
       },
-      {
-        name: 'Messenger',
-        icon: MmsTwoToneIcon,
-        link: '/dashboards/messenger'
-      },
-    ]
-  },
-  {
-    heading: 'Management',
-    items: [
-      {
-        name: 'Transactions',
-        icon: TableChartTwoToneIcon,
-        link: '/management/transactions'
-      },
-      {
-        name: 'User Profile',
-        icon: AccountCircleTwoToneIcon,
-        link: '/management/profile',
-        items: [
-          {
-            name: 'Profile Details',
-            link: '/management/profile/details'
-          },
-          {
-            name: 'User Settings',
-            link: '/management/profile/settings'
-          }
-        ]
-      }
+      // {
+      //   name: 'Messenger',
+      //   icon: MmsTwoToneIcon,
+      //   link: '/dashboards/messenger'
+      // },
     ]
   },
   // {
-  //   heading: 'Components',
+  //   heading: 'Management',
   //   items: [
   //     {
-  //       name: 'Buttons',
-  //       icon: BallotTwoToneIcon,
-  //       link: '/components/buttons'
+  //       name: 'Transactions',
+  //       icon: TableChartTwoToneIcon,
+  //       link: '/management/transactions'
   //     },
   //     {
-  //       name: 'Modals',
-  //       icon: BeachAccessTwoToneIcon,
-  //       link: '/components/modals'
-  //     },
-  //     {
-  //       name: 'Accordions',
-  //       icon: EmojiEventsTwoToneIcon,
-  //       link: '/components/accordions'
-  //     },
-  //     {
-  //       name: 'Tabs',
-  //       icon: FilterVintageTwoToneIcon,
-  //       link: '/components/tabs'
-  //     },
-  //     {
-  //       name: 'Badges',
-  //       icon: HowToVoteTwoToneIcon,
-  //       link: '/components/badges'
-  //     },
-  //     {
-  //       name: 'Tooltips',
-  //       icon: LocalPharmacyTwoToneIcon,
-  //       link: '/components/tooltips'
-  //     },
-  //     {
-  //       name: 'Avatars',
-  //       icon: RedeemTwoToneIcon,
-  //       link: '/components/avatars'
-  //     },
-  //     {
-  //       name: 'Cards',
-  //       icon: SettingsTwoToneIcon,
-  //       link: '/components/cards'
-  //     },
-  //     {
-  //       name: 'Forms',
-  //       icon: TrafficTwoToneIcon,
-  //       link: '/components/forms'
-  //     },
+  //       name: 'User Profile',
+  //       icon: AccountCircleTwoToneIcon,
+  //       link: '/management/profile',
+  //       items: [
+  //         {
+  //           name: 'Profile Details',
+  //           link: '/management/profile/details'
+  //         },
+  //         {
+  //           name: 'User Settings',
+  //           link: '/management/profile/settings'
+  //         }
+  //       ]
+  //     }
   //   ]
   // },
   {
-    heading: 'Extra Pages',
+    heading: 'Gestion',
     items: [
       {
-        name: 'Status',
-        icon: VerifiedUserTwoToneIcon,
-        link: '/status',
-        items: [
-          {
-            name: 'Error 404',
-            link: '/status/404'
-          },
-          {
-            name: 'Error 500',
-            link: '/status/500'
-          },
-          {
-            name: 'Maintenance',
-            link: '/status/maintenance'
-          },
-          {
-            name: 'Coming Soon',
-            link: '/status/coming-soon'
-          }
-        ]
-      }
+        name: 'Terminaux',
+        icon: BallotTwoToneIcon,
+        link: '/gestion/terminals'
+      },
+      {
+        name: 'Litiges',
+        icon: BeachAccessTwoToneIcon,
+        link: '/gestion/litigations'
+      },
+      {
+        name: 'Partenaires',
+        icon: EmojiEventsTwoToneIcon,
+        link: '/gestion/partners'
+      },
+      {
+        name: 'Missions',
+        icon: FilterVintageTwoToneIcon,
+        link: '/gestion/jobs'
+      },
+      {
+        name: 'Utilisateurs',
+        icon: HowToVoteTwoToneIcon,
+        link: '/gestion/users',
+        // 
+        
+      },
     ]
-  }
+  },
+  {
+    heading: 'Réglages des applications',
+    items: [
+      {
+        name: 'Apparence',
+        icon: BallotTwoToneIcon,
+        link: '/app-settings/appearance'
+      },
+      {
+        name: 'Objets de litiges',
+        icon: BallotTwoToneIcon,
+        link: '/app-settings/litigation-objects'
+      },
+    ]
+  },
 ];
 
 export default menuItems;

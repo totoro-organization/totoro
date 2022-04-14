@@ -16,9 +16,12 @@ RUN npm run build
 
 FROM nginx:1.17.0-alpine
 
+RUN rm -rf /etc/nginx/conf.d
+COPY conf /etc/nginx
+
 COPY --from=build-stage /ui-backoffice/build /usr/share/nginx/html
 
-COPY nginx.conf /etc/nginx/nginx.conf
+# COPY nginx/nginx.conf /etc/nginx/nginx.conf
 
 EXPOSE $BACKOFFICE_DOCKER_PORT
 
