@@ -1,20 +1,12 @@
 import { ReactNode } from 'react';
 
-import DesignServicesTwoToneIcon from '@mui/icons-material/DesignServicesTwoTone';
-import BrightnessLowTwoToneIcon from '@mui/icons-material/BrightnessLowTwoTone';
-import MmsTwoToneIcon from '@mui/icons-material/MmsTwoTone';
-import TableChartTwoToneIcon from '@mui/icons-material/TableChartTwoTone';
-import AccountCircleTwoToneIcon from '@mui/icons-material/AccountCircleTwoTone';
-import BallotTwoToneIcon from '@mui/icons-material/BallotTwoTone';
-import BeachAccessTwoToneIcon from '@mui/icons-material/BeachAccessTwoTone';
-import EmojiEventsTwoToneIcon from '@mui/icons-material/EmojiEventsTwoTone';
-import FilterVintageTwoToneIcon from '@mui/icons-material/FilterVintageTwoTone';
-import HowToVoteTwoToneIcon from '@mui/icons-material/HowToVoteTwoTone';
-import LocalPharmacyTwoToneIcon from '@mui/icons-material/LocalPharmacyTwoTone';
-import RedeemTwoToneIcon from '@mui/icons-material/RedeemTwoTone';
-import SettingsTwoToneIcon from '@mui/icons-material/SettingsTwoTone';
-import TrafficTwoToneIcon from '@mui/icons-material/TrafficTwoTone';
-import VerifiedUserTwoToneIcon from '@mui/icons-material/VerifiedUserTwoTone';
+import TvIcon from '@mui/icons-material/Tv';
+import ReportProblemIcon from '@mui/icons-material/ReportProblem';
+import QueryStatsIcon from '@mui/icons-material/QueryStats';
+import GroupWorkIcon from '@mui/icons-material/GroupWork';
+import AssignmentIcon from '@mui/icons-material/Assignment';
+import PeopleIcon from '@mui/icons-material/People';
+import PaletteIcon from '@mui/icons-material/Palette';
 
 export interface MenuItem {
   link?: string;
@@ -37,7 +29,7 @@ const menuItems: MenuItems[] = [
       {
         name: 'Statistiques',
         link: '/dashboards/stats',
-        icon: BrightnessLowTwoToneIcon
+        icon: QueryStatsIcon
       },
       // {
       //   name: 'Messenger',
@@ -76,27 +68,27 @@ const menuItems: MenuItems[] = [
     items: [
       {
         name: 'Terminaux',
-        icon: BallotTwoToneIcon,
+        icon: TvIcon,
         link: '/gestion/terminals'
       },
       {
         name: 'Litiges',
-        icon: BeachAccessTwoToneIcon,
+        icon: ReportProblemIcon,
         link: '/gestion/litigations'
       },
       {
         name: 'Partenaires',
-        icon: EmojiEventsTwoToneIcon,
+        icon: GroupWorkIcon,
         link: '/gestion/partners'
       },
       {
         name: 'Missions',
-        icon: FilterVintageTwoToneIcon,
+        icon: AssignmentIcon,
         link: '/gestion/jobs'
       },
       {
         name: 'Utilisateurs',
-        icon: HowToVoteTwoToneIcon,
+        icon: PeopleIcon,
         link: '/gestion/users',
         // 
         
@@ -108,12 +100,12 @@ const menuItems: MenuItems[] = [
     items: [
       {
         name: 'Apparence',
-        icon: BallotTwoToneIcon,
+        icon: PaletteIcon,
         link: '/app-settings/appearance'
       },
       {
         name: 'Objets de litiges',
-        icon: BallotTwoToneIcon,
+        icon: ReportProblemIcon,
         link: '/app-settings/litigation-objects'
       },
     ]
