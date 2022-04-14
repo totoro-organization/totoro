@@ -73,7 +73,7 @@ const LogoSignInner = styled(Box)(
 function Logo() {
 
   return (
-    <Tooltip title="Tokyo Free White React Admin Dashboard" arrow>
+    <Tooltip title="Totoro Admin Dashboard" arrow>
       <LogoWrapper to="/dashboards/stats">
         <LogoSignWrapper>
           <LogoSign>
