@@ -18,6 +18,7 @@ const Loader = (Component) => (props) => (
 const SignIn = Loader(lazy(() => import('src/content/pages/Signin')));
 const Jobs = Loader(lazy(() => import('src/content/pages/Management/Jobs')));
 const Users = Loader(lazy(() => import('src/content/pages/Management/Users')));
+const Organizations = Loader(lazy(() => import('src/content/pages/Management/Organizations')));
 
 // Dashboards
 
@@ -140,6 +141,10 @@ const routes: PartialRouteObject[] = [
       {
         path: 'utilisateurs',
         element: <Users />
+      },
+      {
+        path: 'associations',
+        element: <Organizations />
       },
     ]
   },
