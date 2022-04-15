@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-import TvIcon from '@mui/icons-material/Tv';
+import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
 import ReportProblemIcon from '@mui/icons-material/ReportProblem';
 import QueryStatsIcon from '@mui/icons-material/QueryStats';
 import GroupWorkIcon from '@mui/icons-material/GroupWork';
@@ -39,9 +39,9 @@ const menuItems: MenuItems[] = [
     heading: 'Gestion',
     items: [
       {
-        name: 'Terminaux',
-        icon: TvIcon,
-        link: '/gestion/terminaux'
+        name: 'Associations',
+        icon: VolunteerActivismIcon,
+        link: '/gestion/associations'
       },
       {
         name: 'Litiges',
