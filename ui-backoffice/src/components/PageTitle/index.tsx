@@ -6,13 +6,13 @@ import { Typography, Button, Grid } from '@mui/material';
 interface PageTitleProps {
     heading?: string;
     subHeading?: string;
-    docs?: string;
+    link?: string;
 }
 
 const PageTitle: FC<PageTitleProps> = ({
     heading = '',
     subHeading = '',
-    docs = '',
+    link = '',
     ...rest
 }) => {
     return (
@@ -25,9 +25,9 @@ const PageTitle: FC<PageTitleProps> = ({
                     {subHeading}
                 </Typography>
             </Grid>
-            <Grid item>
+            { link && <Grid item>
                 <Button
-                    href={docs}
+                    href={link}
                     target="_blank"
                     rel="noopener noreferrer"
                     sx={{ mt: { xs: 2, md: 0 } }}
@@ -36,7 +36,7 @@ const PageTitle: FC<PageTitleProps> = ({
                 >
                     {heading} Documentation
                 </Button>
-            </Grid>
+            </Grid>}
         </Grid>
     );
 };
@@ -44,7 +44,7 @@ const PageTitle: FC<PageTitleProps> = ({
 PageTitle.propTypes = {
     heading: PropTypes.string,
     subHeading: PropTypes.string,
-    docs: PropTypes.string,
+    link: PropTypes.string,
 };
 
 export default PageTitle;
