@@ -15,11 +15,6 @@ export const colors = {
     600: "#FBFCFD",
   },
 
-  // TODO: Remove me and use grey900 instead
-  black: {
-    500: "#151515",
-  },
-
   grey: {
     50: "#F9FAFB",
     100: "#F3F4F6",
