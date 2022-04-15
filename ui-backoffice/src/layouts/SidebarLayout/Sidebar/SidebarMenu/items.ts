@@ -7,6 +7,8 @@ import GroupWorkIcon from '@mui/icons-material/GroupWork';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import PeopleIcon from '@mui/icons-material/People';
 import PaletteIcon from '@mui/icons-material/Palette';
+import GroupAddIcon from '@mui/icons-material/GroupAdd';
+import GroupsIcon from '@mui/icons-material/Groups';
 
 export interface MenuItem {
   link?: string;
@@ -28,70 +30,50 @@ const menuItems: MenuItems[] = [
     items: [
       {
         name: 'Statistiques',
-        link: '/dashboards/stats',
+        link: '/dashboards/statistiques',
         icon: QueryStatsIcon
       },
-      // {
-      //   name: 'Messenger',
-      //   icon: MmsTwoToneIcon,
-      //   link: '/dashboards/messenger'
-      // },
     ]
   },
-  // {
-  //   heading: 'Management',
-  //   items: [
-  //     {
-  //       name: 'Transactions',
-  //       icon: TableChartTwoToneIcon,
-  //       link: '/management/transactions'
-  //     },
-  //     {
-  //       name: 'User Profile',
-  //       icon: AccountCircleTwoToneIcon,
-  //       link: '/management/profile',
-  //       items: [
-  //         {
-  //           name: 'Profile Details',
-  //           link: '/management/profile/details'
-  //         },
-  //         {
-  //           name: 'User Settings',
-  //           link: '/management/profile/settings'
-  //         }
-  //       ]
-  //     }
-  //   ]
-  // },
   {
     heading: 'Gestion',
     items: [
       {
         name: 'Terminaux',
         icon: TvIcon,
-        link: '/gestion/terminals'
+        link: '/gestion/terminaux'
       },
       {
         name: 'Litiges',
         icon: ReportProblemIcon,
-        link: '/gestion/litigations'
+        link: '/gestion/litiges'
       },
       {
         name: 'Partenaires',
         icon: GroupWorkIcon,
-        link: '/gestion/partners'
+        link: '/gestion/partenaires',
+        items: [
+          {
+            name: 'Demandes d\'adhésion',
+            icon: GroupAddIcon,
+            link: '/gestion/partenaires/adhesion',
+          },
+          {
+            name: 'Membres',
+            icon: GroupsIcon,
+            link: '/gestion/partenaires/membres'
+          }
+        ]
       },
       {
         name: 'Missions',
         icon: AssignmentIcon,
-        link: '/gestion/jobs'
+        link: '/gestion/missions',
       },
       {
         name: 'Utilisateurs',
         icon: PeopleIcon,
-        link: '/gestion/users',
-        // 
-        
+        link: '/gestion/utilisateurs',        
       },
     ]
   },
@@ -101,12 +83,12 @@ const menuItems: MenuItems[] = [
       {
         name: 'Apparence',
         icon: PaletteIcon,
-        link: '/app-settings/appearance'
+        link: '/app-reglages/apparence'
       },
       {
         name: 'Objets de litiges',
         icon: ReportProblemIcon,
-        link: '/app-settings/litigation-objects'
+        link: '/app-reglages/objets-litiges'
       },
     ]
   },

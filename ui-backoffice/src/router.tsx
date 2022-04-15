@@ -16,6 +16,7 @@ const Loader = (Component) => (props) => (
 // Pages
 
 const SignIn = Loader(lazy(() => import('src/content/pages/Signin')));
+const Jobs = Loader(lazy(() => import('src/content/pages/Management/Jobs')));
 
 // Dashboards
 
@@ -101,13 +102,13 @@ const routes: PartialRouteObject[] = [
         path: '/',
         element: (
           <Navigate
-            to="/dashboards/stats"
+            to="/dashboards/statistiques"
             replace
           />
         )
       },
       {
-        path: 'stats',
+        path: 'statistiques',
         element: <Crypto />
       },
       {
@@ -117,7 +118,7 @@ const routes: PartialRouteObject[] = [
     ]
   },
   {
-    path: 'management',
+    path: 'gestion',
     element: (
       <SidebarLayout />
     ),
@@ -126,41 +127,19 @@ const routes: PartialRouteObject[] = [
         path: '/',
         element: (
           <Navigate
-            to="/management/transactions"
+            to="/gestion/missions"
             replace
           />
         )
       },
       {
-        path: 'transactions',
-        element: <Transactions />
+        path: 'missions',
+        element: <Jobs />
       },
-      {
-        path: 'profile',
-        children: [
-          {
-            path: '/',
-            element: (
-              <Navigate
-                to="details"
-                replace
-              />
-            )
-          },
-          {
-            path: 'details',
-            element: <UserProfile />
-          },
-          {
-            path: 'settings',
-            element: <UserSettings />
-          },
-        ]
-      }
     ]
   },
   // {
-  //   path: 'components',
+  //   path: 'management',
   //   element: (
   //     <SidebarLayout />
   //   ),
@@ -169,49 +148,39 @@ const routes: PartialRouteObject[] = [
   //       path: '/',
   //       element: (
   //         <Navigate
-  //           to="/components/buttons"
+  //           to="/management/transactions"
   //           replace
   //         />
   //       )
   //     },
   //     {
-  //       path: 'buttons',
-  //       element: <Buttons />
+  //       path: 'transactions',
+  //       element: <Transactions />
   //     },
   //     {
-  //       path: 'modals',
-  //       element: <Modals />
-  //     },
-  //     {
-  //       path: 'accordions',
-  //       element: <Accordions />
-  //     },
-  //     {
-  //       path: 'tabs',
-  //       element: <Tabs />
-  //     },
-  //     {
-  //       path: 'badges',
-  //       element: <Badges />
-  //     },
-  //     {
-  //       path: 'tooltips',
-  //       element: <Tooltips />
-  //     },
-  //     {
-  //       path: 'avatars',
-  //       element: <Avatars />
-  //     },
-  //     {
-  //       path: 'cards',
-  //       element: <Cards />
-  //     },
-  //     {
-  //       path: 'forms',
-  //       element: <Forms />
-  //     },
+  //       path: 'profile',
+  //       children: [
+  //         {
+  //           path: '/',
+  //           element: (
+  //             <Navigate
+  //               to="details"
+  //               replace
+  //             />
+  //           )
+  //         },
+  //         {
+  //           path: 'details',
+  //           element: <UserProfile />
+  //         },
+  //         {
+  //           path: 'settings',
+  //           element: <UserSettings />
+  //         },
+  //       ]
+  //     }
   //   ]
-  // }
+  // },
 ];
 
 export default routes;

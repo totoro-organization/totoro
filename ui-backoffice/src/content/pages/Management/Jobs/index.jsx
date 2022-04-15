@@ -2,7 +2,14 @@ import { Helmet } from 'react-helmet-async';
 
 import PageTitle from 'src/components/PageTitle';
 import PageTitleWrapper from 'src/components/PageTitleWrapper';
-import { Container, Grid, Card, CardHeader, CardContent, Divider } from '@mui/material';
+import {
+  Container,
+  Grid,
+  Card,
+  CardHeader,
+  CardContent,
+  Divider
+} from '@mui/material';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
@@ -10,18 +17,18 @@ import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Footer from 'src/components/Footer';
 
-function Accordions() {
-
+function Jobs() {
   return (
     <>
       <Helmet>
-        <title>Accordions - Components</title>
+        <title>Gestion des Missions</title>
       </Helmet>
       <PageTitleWrapper>
         <PageTitle
-          heading="Accordions"
-          subHeading="Accordions contain creation flows and allow lightweight editing of an element."
-          docs="https://material-ui.com/components/accordion/" />
+          heading="Missions"
+          subHeading="Liste des missions passées, en cours ou à venir."
+          docs="https://material-ui.com/components/accordion/"
+        />
       </PageTitleWrapper>
       <Container maxWidth="lg">
         <Grid
@@ -46,8 +53,9 @@ function Accordions() {
                   </AccordionSummary>
                   <AccordionDetails>
                     <Typography>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                      malesuada lacus ex, sit amet blandit leo lobortis eget.
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                      Suspendisse malesuada lacus ex, sit amet blandit leo
+                      lobortis eget.
                     </Typography>
                   </AccordionDetails>
                 </Accordion>
@@ -61,8 +69,9 @@ function Accordions() {
                   </AccordionSummary>
                   <AccordionDetails>
                     <Typography>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                      malesuada lacus ex, sit amet blandit leo lobortis eget.
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                      Suspendisse malesuada lacus ex, sit amet blandit leo
+                      lobortis eget.
                     </Typography>
                   </AccordionDetails>
                 </Accordion>
@@ -85,4 +94,4 @@ function Accordions() {
   );
 }
 
-export default Accordions;
+export default Jobs;
