@@ -80,9 +80,9 @@ export const getColors = (variables: ColorVariables) => css`
 
 const styleColor: { [key in ButtonColor]: FlattenSimpleInterpolation } = {
   neutral: getColors({
-    background: theme.colors.black[500],
+    background: theme.colors.grey[900],
     text: theme.colors.white[500],
-    border: theme.colors.black[500],
+    border: theme.colors.grey[900],
   }),
 
   primary: getColors({
