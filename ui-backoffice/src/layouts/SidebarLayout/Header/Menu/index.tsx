@@ -122,7 +122,7 @@ function HeaderMenu() {
         </List>
       </ListWrapper>
       <Menu anchorEl={ref.current} onClose={handleClose} open={isOpen}>
-        <MenuItem sx={{ px: 3 }} component={NavLink} to="/dashboards/stats">
+        <MenuItem sx={{ px: 3 }} component={NavLink} to="/dashboards/statistiques">
           Accueil
         </MenuItem>
         <MenuItem sx={{ px: 3 }} component={NavLink} to="/components/tabs">
