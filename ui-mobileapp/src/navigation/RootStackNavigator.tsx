@@ -8,6 +8,9 @@ import BottomTabNavigator from "./BottomTabNavigator";
 const RootStack = createStackNavigator();
 
 export default function RootStackNavigator() {
+  // NOTE: Add isLogged with AuthProvider? AuthContext? etc.
+  const isLogged = true;
+
   return (
     <RootStack.Navigator
       screenOptions={{
@@ -15,13 +18,19 @@ export default function RootStackNavigator() {
       }}
       initialRouteName="Accueil"
     >
-      <RootStack.Screen name="Accueil" component={Home} />
-      <RootStack.Screen name="Se connecter" component={Login} />
-      <RootStack.Screen name="S'inscrire" component={Register} />
+      {!isLogged && (
+        <>
+          <RootStack.Screen name="Accueil" component={Home} />
+          <RootStack.Screen name="Se connecter" component={Login} />
+          <RootStack.Screen name="S'inscrire" component={Register} />
+        </>
+      )}
 
-      <RootStack.Group>
-        <RootStack.Screen name="BottomTab" component={BottomTabNavigator} />
-      </RootStack.Group>
+      {isLogged && (
+        <RootStack.Group>
+          <RootStack.Screen name="BottomTab" component={BottomTabNavigator} />
+        </RootStack.Group>
+      )}
     </RootStack.Navigator>
   );
 }
