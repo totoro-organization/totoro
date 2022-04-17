@@ -3,7 +3,7 @@ export const colors = {
   // use like theme.primary[500] / ${({ theme }) => theme.primary[500]}
 
   primary: {
-    500: "#E96A54",
+    500: "#FF5B5A",
   },
 
   secondary: {
