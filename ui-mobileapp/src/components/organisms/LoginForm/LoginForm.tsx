@@ -8,8 +8,13 @@ import Button from "../../atoms/Button";
 import InputGroup from "../../molecules/InputGroup";
 import { loginFormSchema } from "./loginValidationSchema";
 import type { LoginFormValues } from "./loginValidationSchema";
+import { useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { BottomTabParamList } from "../../../navigation/StackNavigationParams";
 
 export default function LoginForm() {
+  const navigation = useNavigation<StackNavigationProp<BottomTabParamList>>();
+
   const { control, handleSubmit } = useForm<LoginFormValues>({
     defaultValues: {
       email: "",
@@ -23,6 +28,8 @@ export default function LoginForm() {
     // TODO: Add call api to login
 
     console.log(data);
+
+    navigation.navigate("BottomTab");
   }
 
   return (
