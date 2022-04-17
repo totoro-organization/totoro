@@ -3,10 +3,10 @@ import { Text } from "react-native";
 import MainLayout from "../components/layouts/MainLayout";
 
 // NOTE: find a better naming?
-export default function Posts() {
+export default function Missions() {
   return (
     <MainLayout>
-      <Text>Posts</Text>
+      <Text>Missions</Text>
     </MainLayout>
   );
 }
