@@ -6,7 +6,7 @@ import Shop from "../../assets/icons/Shop";
 import Message from "../../assets/icons/Message";
 import User from "../../assets/icons/User";
 
-enum IconName {
+export enum IconName {
   missions = "missions",
   shop = "shop",
   message = "message",
