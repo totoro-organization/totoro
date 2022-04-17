@@ -1,15 +1,22 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React from "react";
+import Icon, { IconName } from "../components/atoms/Icon";
 import Chat from "../screens/Chat";
 import Missions from "../screens/Missions";
 import Profile from "../screens/Profile";
 import Shop from "../screens/Shop";
 
-const NAVIGATION_PAGES = [
+export type NavigationPagesProps = {
+  title: string;
+  component: () => JSX.Element;
+  icon: keyof typeof IconName;
+};
+
+const NAVIGATION_PAGES: NavigationPagesProps[] = [
   {
     title: "Missions",
     component: Missions,
-    icon: "post",
+    icon: "missions",
   },
   {
     title: "Boutique",
@@ -19,7 +26,7 @@ const NAVIGATION_PAGES = [
   {
     title: "Messagerie",
     component: Chat,
-    icon: "chat",
+    icon: "message",
   },
   {
     title: "Profil",
@@ -38,13 +45,16 @@ export default function BottomTabNavigator() {
         headerShown: false,
       }}
     >
-      {NAVIGATION_PAGES.map(({ title, component }) => (
+      {NAVIGATION_PAGES.map(({ title, component, icon }) => (
         <Tab.Screen
           key={title}
           name={title}
           component={component}
-          // TODO: create Icon component and add tab icon
-          // options={{ tabBarIcon: <Icon name={icon} />}}
+          options={{
+            tabBarIcon: ({ focused }) => (
+              <Icon name={icon} color={focused ? "black" : "grey"} />
+            ),
+          }}
         />
       ))}
     </Tab.Navigator>

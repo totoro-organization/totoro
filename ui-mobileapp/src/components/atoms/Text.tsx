@@ -1,8 +1,8 @@
 import styled from "styled-components/native";
 import { fonts } from "../../theme/fonts";
-import theme from "../../theme/theme";
 
-export type Colors = "black" | "primary" | "secondary";
+import { Colors, getColors } from "../../theme/utils";
+
 // TODO: add all font weigth
 export type Weights = "regular";
 export type Sizes = keyof typeof fonts.sizes;
