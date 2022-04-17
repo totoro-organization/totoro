@@ -50,7 +50,11 @@ export default function BottomTabNavigator() {
           key={title}
           name={title}
           component={component}
-          options={{ tabBarIcon: () => <Icon name={icon} /> }}
+          options={{
+            tabBarIcon: ({ focused }) => (
+              <Icon name={icon} color={focused ? "black" : "grey"} />
+            ),
+          }}
         />
       ))}
     </Tab.Navigator>
