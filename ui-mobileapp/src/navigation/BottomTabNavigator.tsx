@@ -1,14 +1,14 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React from "react";
 import Chat from "../screens/Chat";
-import Posts from "../screens/Posts";
+import Missions from "../screens/Missions";
 import Profile from "../screens/Profile";
 import Publish from "../screens/Publish";
 
 const NAVIGATION_PAGES = [
   {
-    title: "Annonces",
-    component: Posts,
+    title: "Missions",
+    component: Missions,
     icon: "post",
   },
   {

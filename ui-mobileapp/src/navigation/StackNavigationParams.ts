@@ -10,7 +10,7 @@ export type AuthParamList = {
 };
 
 export type BottomTabParamList = {
-  Annonces: undefined;
+  Missions: undefined;
   Publier: undefined;
   Messagerie: undefined;
   Profil: undefined;
