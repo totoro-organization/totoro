@@ -2,13 +2,22 @@ import React from "react";
 import Missions from "../../assets/icons/Missions";
 import styled from "styled-components/native";
 import { ThemeColors } from "../../theme/utils";
+import Shop from "../../assets/icons/Shop";
+import Message from "../../assets/icons/Message";
+import User from "../../assets/icons/User";
 
 enum IconName {
   missions = "missions",
+  shop = "shop",
+  message = "message",
+  user = "user",
 }
 
 const ICONS: Record<IconName, JSX.Element> = {
   missions: <Missions />,
+  shop: <Shop />,
+  message: <Message />,
+  user: <User />,
 } as const;
 
 export type IconProps = {
