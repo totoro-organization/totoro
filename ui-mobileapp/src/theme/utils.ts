@@ -1,6 +1,8 @@
 import theme from "./theme";
 
-export type Colors = "black" | "primary" | "secondary";
+export type ThemeColors = "primary" | "secondary" | "grey";
+
+export type Colors = "black" | "primary" | "secondary" | "grey";
 
 export function getColors(color: Colors) {
   switch (color) {
