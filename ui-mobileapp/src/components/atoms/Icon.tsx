@@ -1,7 +1,7 @@
 import React from "react";
 import Missions from "../../assets/icons/Missions";
 import styled from "styled-components/native";
-import { ThemeColors } from "../../theme/utils";
+import { Colors, getColors } from "../../theme/utils";
 import Shop from "../../assets/icons/Shop";
 import Message from "../../assets/icons/Message";
 import User from "../../assets/icons/User";
@@ -22,7 +22,7 @@ const ICONS: Record<IconName, JSX.Element> = {
 
 export type IconProps = {
   name: keyof typeof IconName;
-  color?: ThemeColors;
+  color?: Colors;
   size?: number;
   // NOTE: To be overload with styled-components.
   className?: string;
@@ -40,5 +40,6 @@ const Wrapper = styled.View<Pick<IconProps, "color" | "size">>`
   // NOTE: The size of our icons are based on the font-size.
   font-size: ${({ size }) => (size && `${size}em`) || "1.5em"};
   width: fit-content;
-  color: ${({ theme, color }) => theme.colors[color || "grey"][500]};
+  color: ${({ color, theme }) =>
+    (color && getColors(color)) || theme.colors.grey[400]};
 `;
