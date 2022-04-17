@@ -15,11 +15,13 @@ export type IconProps = {
   name: keyof typeof IconName;
   color?: ThemeColors;
   size?: number;
+  // NOTE: To be overload with styled-components.
+  className?: string;
 };
 
-export default function Icon({ name, color, size }: IconProps) {
+export default function Icon({ name, color, size, ...rest }: IconProps) {
   return (
-    <Wrapper color={color} size={size}>
+    <Wrapper {...rest} color={color} size={size}>
       {ICONS[name]}
     </Wrapper>
   );
