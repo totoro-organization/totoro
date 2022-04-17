@@ -3,7 +3,7 @@ import React from "react";
 import Chat from "../screens/Chat";
 import Missions from "../screens/Missions";
 import Profile from "../screens/Profile";
-import Publish from "../screens/Publish";
+import Shop from "../screens/Shop";
 
 const NAVIGATION_PAGES = [
   {
@@ -12,9 +12,9 @@ const NAVIGATION_PAGES = [
     icon: "post",
   },
   {
-    title: "Publier",
-    component: Publish,
-    icon: "publish",
+    title: "Boutique",
+    component: Shop,
+    icon: "shop",
   },
   {
     title: "Messagerie",
