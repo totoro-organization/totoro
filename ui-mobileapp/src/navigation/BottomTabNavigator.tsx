@@ -6,6 +6,7 @@ import Chat from "../screens/Chat";
 import Missions from "../screens/Missions";
 import Profile from "../screens/Profile";
 import Shop from "../screens/Shop";
+import theme from "../theme/theme";
 
 export type NavigationPagesProps = {
   title: string;
@@ -39,13 +40,17 @@ const NAVIGATION_PAGES: NavigationPagesProps[] = [
 const Tab = createBottomTabNavigator();
 
 export default function BottomTabNavigator() {
-  const activeColor = (focused: boolean) => (focused ? "black" : "grey");
-
   return (
     <Tab.Navigator
       initialRouteName={NAVIGATION_PAGES[0].title}
       screenOptions={{
         headerShown: false,
+        tabBarStyle: {
+          paddingBottom: 8,
+          paddingTop: 2,
+          backgroundColor: theme.colors.white[600],
+          height: 60,
+        },
       }}
     >
       {NAVIGATION_PAGES.map(({ title, component, icon }) => (
@@ -55,12 +60,12 @@ export default function BottomTabNavigator() {
           component={component}
           options={{
             tabBarLabel: ({ focused }) => (
-              <Text size="sm" color={activeColor(focused)}>
+              <Text size="sm" color={focused ? "black" : "grey"}>
                 {title}
               </Text>
             ),
             tabBarIcon: ({ focused }) => (
-              <Icon name={icon} color={activeColor(focused)} />
+              <Icon name={icon} color={focused ? "black" : undefined} />
             ),
           }}
         />
