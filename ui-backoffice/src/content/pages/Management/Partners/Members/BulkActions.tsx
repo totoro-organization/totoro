@@ -30,7 +30,7 @@ function BulkActions() {
   const [onMenuOpen, menuOpen] = useState<boolean>(false);
   const moreRef = useRef<HTMLButtonElement | null>(null);
 
-  const openMenu = (): void => {
+  const handleOpenMenu = (): void => {
     menuOpen(true);
   };
 
