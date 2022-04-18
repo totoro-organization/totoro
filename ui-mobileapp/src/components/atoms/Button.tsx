@@ -7,7 +7,7 @@ import { Text } from "./Text";
 import theme from "../../theme/theme";
 import Spinner from "./Spinner";
 
-export type ButtonColor = "neutral" | "primary";
+export type ButtonColor = "neutral" | "primary" | "disable";
 export type ButtonVariant = "default" | "outline" | "ghost";
 
 export type ColorVariables = {
@@ -90,6 +90,12 @@ const styleColor: { [key in ButtonColor]: FlattenSimpleInterpolation } = {
     background: theme.colors.primary[500],
     text: theme.colors.white[500],
     border: theme.colors.primary[500],
+  }),
+
+  disable: getColors({
+    background: theme.colors.grey[200],
+    text: theme.colors.grey[500],
+    border: theme.colors.grey[500],
   }),
 };
 
