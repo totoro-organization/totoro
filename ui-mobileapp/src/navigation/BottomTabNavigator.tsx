@@ -60,7 +60,7 @@ export default function BottomTabNavigator() {
           component={component}
           options={{
             tabBarLabel: ({ focused }) => (
-              <Text size="sm" color={focused ? "black" : "grey"}>
+              <Text size="xs" color={focused ? "black" : "grey"}>
                 {title}
               </Text>
             ),
