@@ -1,9 +1,12 @@
 import React from "react";
-import { View } from "react-native";
+import { ImageBackground, View } from "react-native";
 import styled from "styled-components/native";
 import Box from "../atoms/Box";
 import Button from "../atoms/Button";
 import { Text } from "../atoms/Text";
+
+const PLACEHOLDER_IMAGE =
+  "https://images.unsplash.com/photo-1528698827591-e19ccd7bc23d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2952&q=80";
 
 // TODO: Add real types (see with the backend).
 type Discount = {
@@ -23,16 +26,16 @@ export default function ShopCard({ discount }: ShopCardProps) {
     <Container>
       <InfoWrapper>
         {/* TODO: Add discount banner */}
-        <ImagePlaceholder />
-
-        <Box display="flex" flexDirection="column" padding={0.875} gap={0.5}>
-          <Text size="lg" color="white">
-            {discount.shopName}
-          </Text>
-          <Text size="sm" color="white">
-            {discount.description}
-          </Text>
-        </Box>
+        <StyledImage source={PLACEHOLDER_IMAGE as any} resizeMode="cover">
+          <Box display="flex" flexDirection="column" padding={0.875} gap={0.5}>
+            <Text size="lg" color="white">
+              {discount.shopName}
+            </Text>
+            <Text size="sm" color="white">
+              {discount.description}
+            </Text>
+          </Box>
+        </StyledImage>
       </InfoWrapper>
 
       <StyledButton
@@ -51,7 +54,6 @@ export default function ShopCard({ discount }: ShopCardProps) {
 
 const Container = styled.View`
   width: 100%;
-  /* height: 10rem; */
   border-radius: ${({ theme }) => theme.border.radius.lg};
 `;
 
@@ -61,21 +63,16 @@ const StyledButton = styled(Button)`
 `;
 
 const InfoWrapper = styled.View`
-  display: flex;
-  justify-content: flex-end;
-  position: relative;
   width: 100%;
   height: 10rem;
   border-top-left-radius: ${({ theme }) => theme.border.radius.lg};
   border-top-right-radius: ${({ theme }) => theme.border.radius.lg};
 `;
 
-const ImagePlaceholder = styled.View`
-  position: absolute;
+const StyledImage = styled(ImageBackground)`
   width: 100%;
   height: 100%;
-  background-color: grey;
-  object-fit: cover;
+  display: flex;
+  justify-content: flex-end;
   border-radius: inherit;
-  z-index: -1;
 `;
