@@ -1,6 +1,8 @@
 export const colors = {
-  // TODO: add all shades here.
-  // use like theme.primary[500] / ${({ theme }) => theme.primary[500]}
+  white: {
+    500: "#FFFF",
+    600: "#FCFCFC",
+  },
 
   primary: {
     50: "#FFF7F7",
@@ -15,25 +17,29 @@ export const colors = {
     900: "#7D2D2C",
   },
 
-  secondary: {
-    500: "#FED391",
-  },
-
-  white: {
-    500: "#ffff",
-    600: "#FBFCFD",
-  },
-
   grey: {
     50: "#F9FAFB",
     100: "#F3F4F6",
     200: "#E5E7EB",
     300: "#D2D5DA",
     400: "#9DA3AE",
-    500: "#6C737F", // default
+    500: "#6C737F",
     600: "#4D5662",
     700: "#394250",
     800: "#212936",
     900: "#121826",
+  },
+
+  info: {
+    50: "#F0F6FE",
+    100: "#DEEAFC",
+    200: "#C4DBFB",
+    300: "#9CC6F8",
+    400: "#6EA5F3",
+    500: "#4B84EE",
+    600: "#3167E3",
+    700: "#2553D0",
+    800: "#2344A9",
+    900: "#233C85",
   },
 };
