@@ -27,7 +27,7 @@ const ButtonError = styled(Button)(
 );
 
 function BulkActions() {
-  const [onMenuOpen, menuOpen] = useState<boolean>(false);
+const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const moreRef = useRef<HTMLButtonElement | null>(null);
 
   const handleOpenMenu = (): void => {
