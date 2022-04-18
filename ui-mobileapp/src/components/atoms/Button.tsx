@@ -22,6 +22,7 @@ export type ButtonProps = PropsWithChildren<
     variant?: ButtonVariant;
     color?: ButtonColor;
     handlePress?: () => void | Promise<void> | unknown;
+    className?: string;
   } & PressableProps
 >;
 
