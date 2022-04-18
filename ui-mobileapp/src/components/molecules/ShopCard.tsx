@@ -26,7 +26,10 @@ export default function ShopCard({ discount }: ShopCardProps) {
     <Container>
       <InfoWrapper>
         {/* TODO: Add discount banner */}
+
         <StyledImage source={PLACEHOLDER_IMAGE as any} resizeMode="cover">
+          <Overlay />
+
           <Box display="flex" flexDirection="column" padding={0.875} gap={0.5}>
             <Text size="lg" color="white">
               {discount.shopName}
@@ -63,10 +66,20 @@ const StyledButton = styled(Button)`
 `;
 
 const InfoWrapper = styled.View`
+  position: relative;
   width: 100%;
   height: 10rem;
+  // FIXME
   border-top-left-radius: ${({ theme }) => theme.border.radius.lg};
   border-top-right-radius: ${({ theme }) => theme.border.radius.lg};
+`;
+
+const Overlay = styled.View`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: ${({ theme }) => theme.colors.grey[900]};
+  opacity: 0.3;
 `;
 
 const StyledImage = styled(ImageBackground)`
