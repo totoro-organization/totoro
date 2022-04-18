@@ -12,12 +12,9 @@ export function useCachedResources(): boolean {
         await SplashScreen.preventAutoHideAsync();
 
         // Load fonts
-        // await Font.loadAsync({
-        //   "inter-display-regular": require("../assets/fonts/InterDisplay-Regular.ttf"),
-        //   "inter-display-medium": require("../assets/fonts/InterDisplay-Medium.ttf"),
-        //   "inter-display-semibold": require("../assets/fonts/InterDisplay-SemiBold.ttf"),
-        //   "inter-display-bold": require("../assets/fonts/InterDisplay-Bold.ttf"),
-        // });
+        await Font.loadAsync({
+          Outfit: require("../../assets/fonts/Outfit-VariableFont_wght.ttf"),
+        });
       } catch (loadCachedResourcesError) {
         console.error(loadCachedResourcesError);
       } finally {
