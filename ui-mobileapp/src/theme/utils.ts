@@ -12,5 +12,7 @@ export function getColors(color: Colors) {
       return theme.colors.primary[500];
     case "secondary":
       return theme.colors.secondary[500];
+    case "grey":
+      return theme.colors.grey[500];
   }
 }

@@ -17,4 +17,6 @@ export const Text = styled.Text<TextProps>`
   color: ${({ color }) => (color && getColors(color)) || "inherit"};
   font-weight: ${({ theme, weight }) =>
     weight ? theme.fonts.weight[weight] : theme.fonts.weight.regular};
+  font-size: ${({ theme, size }) =>
+    size ? theme.fonts.sizes[size] : theme.fonts.sizes.md};
 `;
