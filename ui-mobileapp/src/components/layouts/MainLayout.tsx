@@ -9,4 +9,6 @@ export default function MainLayout({ children }: MainLayoutProps) {
 
 const Container = styled.View`
   padding: 1.5rem;
+  background-color: #fcfcfc;
+  min-height: 100%;
 `;
