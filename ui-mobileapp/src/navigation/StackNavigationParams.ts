@@ -6,6 +6,7 @@ export type StackParamList = {
 
 export type HomeParamList = {
   Accueil: undefined;
+  Explications: undefined;
 };
 
 export type AuthParamList = {

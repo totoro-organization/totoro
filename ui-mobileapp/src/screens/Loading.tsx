@@ -1,7 +1,6 @@
 import React from "react";
-import { View } from "react-native";
+import { View, Text } from "react-native";
 import Spinner from "../components/atoms/Spinner";
-import { Text } from "../components/atoms/Text";
 
 export default function Loading() {
   return (

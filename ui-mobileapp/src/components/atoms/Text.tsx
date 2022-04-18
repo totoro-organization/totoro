@@ -4,7 +4,7 @@ import { fonts } from "../../theme/fonts";
 import { Colors, getColors } from "../../theme/utils";
 
 // TODO: add all font weigth
-export type Weights = "regular";
+export type Weights = keyof typeof fonts.weight;
 export type Sizes = keyof typeof fonts.sizes;
 
 export type TextProps = {
