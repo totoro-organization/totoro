@@ -1,6 +1,7 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React from "react";
 import Icon, { IconName } from "../components/atoms/Icon";
+import { Text } from "../components/atoms/Text";
 import Chat from "../screens/Chat";
 import Missions from "../screens/Missions";
 import Profile from "../screens/Profile";
@@ -38,6 +39,8 @@ const NAVIGATION_PAGES: NavigationPagesProps[] = [
 const Tab = createBottomTabNavigator();
 
 export default function BottomTabNavigator() {
+  const activeColor = (focused: boolean) => (focused ? "black" : "grey");
+
   return (
     <Tab.Navigator
       initialRouteName={NAVIGATION_PAGES[0].title}
@@ -51,8 +54,13 @@ export default function BottomTabNavigator() {
           name={title}
           component={component}
           options={{
+            tabBarLabel: ({ focused }) => (
+              <Text size="sm" color={activeColor(focused)}>
+                {title}
+              </Text>
+            ),
             tabBarIcon: ({ focused }) => (
-              <Icon name={icon} color={focused ? "black" : "grey"} />
+              <Icon name={icon} color={activeColor(focused)} />
             ),
           }}
         />
