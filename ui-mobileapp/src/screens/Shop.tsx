@@ -25,8 +25,8 @@ export default function Shop() {
       <Text>Shop</Text>
 
       <ShopCardsWrapper>
-        {FAKE_DISCOUNTS.map((discount) => {
-          return <ShopCard discount={discount} />;
+        {FAKE_DISCOUNTS.map((discount, index) => {
+          return <ShopCard key={index} discount={discount} />;
         })}
       </ShopCardsWrapper>
     </MainLayout>
