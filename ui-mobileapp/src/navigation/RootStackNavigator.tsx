@@ -3,6 +3,7 @@ import React from "react";
 import Home from "../screens/Home";
 import Login from "../screens/Login";
 import Register from "../screens/Register";
+import Mission from "../screens/uniques/Mission";
 import BottomTabNavigator from "./BottomTabNavigator";
 
 const RootStack = createStackNavigator();
@@ -27,9 +28,13 @@ export default function RootStackNavigator() {
       )}
 
       {isLogged && (
-        <RootStack.Group>
-          <RootStack.Screen name="BottomTab" component={BottomTabNavigator} />
-        </RootStack.Group>
+        <>
+          <RootStack.Group>
+            <RootStack.Screen name="BottomTab" component={BottomTabNavigator} />
+          </RootStack.Group>
+
+          <RootStack.Screen name="Mission" component={Mission} />
+        </>
       )}
     </RootStack.Navigator>
   );
