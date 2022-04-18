@@ -1,7 +1,6 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
 import Explanation from "../screens/Explanation";
-import Home from "../screens/Home";
 import Login from "../screens/Login";
 import Register from "../screens/Register";
 import Mission from "../screens/uniques/Mission";
@@ -11,7 +10,7 @@ const RootStack = createStackNavigator();
 
 export default function RootStackNavigator() {
   // NOTE: Add isLogged with AuthProvider? AuthContext? etc.
-  const isLogged = false;
+  const isLogged = true;
 
   return (
     <RootStack.Navigator
