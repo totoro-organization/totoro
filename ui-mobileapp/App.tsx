@@ -11,8 +11,6 @@ export default function App() {
       <NavigationContainer>
         <RootStackNavigator />
       </NavigationContainer>
-
-      <View>mmm</View>
     </ThemeProvider>
   );
 }
