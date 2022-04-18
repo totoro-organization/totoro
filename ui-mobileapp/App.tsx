@@ -3,9 +3,16 @@ import { ThemeProvider } from "styled-components/native";
 
 import theme from "./src/theme/theme";
 import RootStackNavigator from "./src/navigation/RootStackNavigator";
-import { View } from "react-native";
+import { useCachedResources } from "./src/common/hooks/useCachedResources";
+import Loading from "./src/screens/Loading";
 
 export default function App() {
+  const isLoadingComplete = useCachedResources();
+
+  if (!isLoadingComplete) {
+    return <Loading />;
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <NavigationContainer>
