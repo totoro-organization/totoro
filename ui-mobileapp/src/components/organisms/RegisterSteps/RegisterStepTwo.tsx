@@ -2,7 +2,7 @@ import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import styled from "styled-components/native";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Text } from "react-native";
+import { Text } from "../../atoms/Text";
 import Button from "../../atoms/Button";
 
 import {

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { Text } from "react-native";
+import { Text } from "../components/atoms/Text";
 
 import MainLayout from "../components/layouts/MainLayout";
 import RegisterStepFinal from "../components/organisms/RegisterSteps/RegisterStepFinal";
