@@ -26,12 +26,19 @@ const Partners = Loader(lazy(() => import('src/content/pages/Management/Partners
 
 const Crypto = Loader(lazy(() => import('src/content/dashboards/Crypto')));
 
+// Apps Configuration
+
+const Tags = Loader(lazy(() => import('src/content/pages/AppsConfiguration/Settings/Tags')));
+const Status = Loader(lazy(() => import('src/content/pages/AppsConfiguration/Settings/Status')));
+const LitigationObjects = Loader(lazy(() => import('src/content/pages/AppsConfiguration/Settings/LitigationObjects')));
+const Themes = Loader(lazy(() => import('src/content/pages/AppsConfiguration/Appearance/Themes')));
+
 // Applications
 
 const Messenger = Loader(lazy(() => import('src/content/applications/Messenger')));
-const Transactions = Loader(lazy(() => import('src/content/applications/Transactions')));
-const UserProfile = Loader(lazy(() => import('src/content/applications/Users/profile')));
-const UserSettings = Loader(lazy(() => import('src/content/applications/Users/settings')));
+// const Transactions = Loader(lazy(() => import('src/content/applications/Transactions')));
+// const UserProfile = Loader(lazy(() => import('src/content/applications/Users/profile')));
+// const UserSettings = Loader(lazy(() => import('src/content/applications/Users/settings')));
 
 
 // Status
@@ -155,6 +162,39 @@ const routes: PartialRouteObject[] = [
       {
         path: 'partenaires/membres',
         element: <Partners />
+      },
+    ]
+  },
+  {
+    path: 'app-reglages',
+    element: (
+      <SidebarLayout />
+    ),
+    children: [
+      // {
+      //   path: '/',
+      //   element: (
+      //     <Navigate
+      //       to="/app-reglages/missions"
+      //       replace
+      //     />
+      //   )
+      // },
+      {
+        path: 'parametrage/tags',
+        element: <Tags />
+      },
+      {
+        path: 'parametrage/status',
+        element: <Status />
+      },
+      {
+        path: 'parametrage/objets-litiges',
+        element: <LitigationObjects />
+      },
+      {
+        path: 'apparence/themes',
+        element: <Themes />
       },
     ]
   },
