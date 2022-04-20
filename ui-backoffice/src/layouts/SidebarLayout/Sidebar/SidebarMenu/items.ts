@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 
+import DashboardIcon from '@mui/icons-material/Dashboard';
 import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
 import ReportProblemIcon from '@mui/icons-material/ReportProblem';
 import QueryStatsIcon from '@mui/icons-material/QueryStats';
@@ -35,7 +36,7 @@ const menuItems: MenuItems[] = [
       {
         name: 'Statistiques',
         link: '/dashboards/statistiques',
-        icon: QueryStatsIcon
+        icon: DashboardIcon
       },
     ]
   },
@@ -87,7 +88,7 @@ const menuItems: MenuItems[] = [
       {
         name: 'Statistiques',
         icon: QueryStatsIcon,
-        link: '/comptabilite/stats'
+        link: '/comptabilite/statistiques'
       },
     ]
   },
