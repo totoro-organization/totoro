@@ -14,6 +14,7 @@ import StyleIcon from '@mui/icons-material/Style';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import InvertColorsIcon from '@mui/icons-material/InvertColors';
 import SettingsIcon from '@mui/icons-material/Settings';
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 
 export interface MenuItem {
   link?: string;
@@ -79,6 +80,11 @@ const menuItems: MenuItems[] = [
         name: 'Utilisateurs',
         icon: PeopleIcon,
         link: '/gestion/utilisateurs',        
+      },
+      {
+        name: 'Administrateurs',
+        icon: AdminPanelSettingsIcon,
+        link: '/gestion/administrateurs',        
       },
     ]
   },

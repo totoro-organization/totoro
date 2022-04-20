@@ -1,6 +1,6 @@
 import { Status } from "./status";
 
-export type UserStatus = 'completed' | 'pending' | 'coming';
+export type UserStatus = Status<'completed' | 'pending' | 'coming'>;
 
 export interface User {
     id: string,
@@ -12,5 +12,5 @@ export interface User {
     birthday?: Date,
     avatar?: string,
     phone?: number,
-    status: Status<UserStatus>
+    status: UserStatus
 }

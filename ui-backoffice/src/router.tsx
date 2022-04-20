@@ -21,6 +21,7 @@ const Users = Loader(lazy(() => import('src/content/pages/Management/Users')));
 const Organizations = Loader(lazy(() => import('src/content/pages/Management/Organizations')));
 const Litigations = Loader(lazy(() => import('src/content/pages/Management/Litigations')));
 const Partners = Loader(lazy(() => import('src/content/pages/Management/Partners/Members')));
+const Admins = Loader(lazy(() => import('src/content/pages/Management/Admins')));
 
 // Accounting
 
@@ -39,8 +40,8 @@ const Themes = Loader(lazy(() => import('src/content/pages/AppsConfiguration/App
 
 // Applications
 
-const UserProfile = Loader(lazy(() => import('src/content/pages/Users/profile')));
-const UserSettings = Loader(lazy(() => import('src/content/pages/Users/settings')));
+const UserProfile = Loader(lazy(() => import('src/content/pages/User/profile')));
+const UserSettings = Loader(lazy(() => import('src/content/pages/User/settings')));
 
 
 // Status
@@ -160,6 +161,10 @@ const routes: PartialRouteObject[] = [
       {
         path: 'partenaires/membres',
         element: <Partners />
+      },
+      {
+        path: 'administrateurs',
+        element: <Admins />
       },
     ]
   },
