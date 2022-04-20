@@ -22,6 +22,10 @@ const Organizations = Loader(lazy(() => import('src/content/pages/Management/Org
 const Litigations = Loader(lazy(() => import('src/content/pages/Management/Litigations')));
 const Partners = Loader(lazy(() => import('src/content/pages/Management/Partners/Members')));
 
+// Accounting
+
+const Accounting = Loader(lazy(() => import('src/content/pages/Accounting')));
+
 // Dashboards
 
 const Crypto = Loader(lazy(() => import('src/content/dashboards/Crypto')));
@@ -163,6 +167,25 @@ const routes: PartialRouteObject[] = [
         path: 'partenaires/membres',
         element: <Partners />
       },
+    ]
+  },
+  {
+    path: 'comptabilite',
+    element: <SidebarLayout />,
+    children: [
+      {
+        path: '/',
+        element: (
+          <Navigate
+            to="statistiques"
+            replace
+          />
+        )
+      },
+      {
+        path: 'statistiques',
+        element: <Accounting/>
+      }
     ]
   },
   {
