@@ -36,10 +36,10 @@ interface LitigationsTableProps {
 }
 
 interface Filters {
-  status?: LitigationStatus;
+  status?: LitigationStatus["label"];
 }
 
-const getStatusLabel = (litigationStatus: LitigationStatus): JSX.Element => {
+const getStatusLabel = (litigationStatus: LitigationStatus["label"]): JSX.Element => {
   const map = {
     coming: {
       text: 'A venir',

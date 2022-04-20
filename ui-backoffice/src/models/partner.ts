@@ -1,6 +1,6 @@
 import { Status } from "./status";
 
-export type PartnerStatus = 'completed' | 'pending' | 'coming';
+export type PartnerStatus = Status<'completed' | 'pending' | 'coming'>;
 
 export interface Partner {
     id: string,
@@ -9,7 +9,7 @@ export interface Partner {
     participants: number,
     address: string,
     capacity: number,
-    status: Status<PartnerStatus>,
+    status: PartnerStatus,
     tokens: number,
     desc?: string,
     date: number,
