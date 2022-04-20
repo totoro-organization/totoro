@@ -1,17 +1,16 @@
+import { Status } from "./status";
+
 export type UserStatus = 'completed' | 'pending' | 'coming';
 
 export interface User {
     id: string,
-    title: string,
-    organization: string,
-    participants: number,
-    address: string,
-    capacity: number,
-    status:UserStatus,
+    firstname: string,
+    lastname: string,
+    username: string,
+    email: string,
     tokens: number,
-    desc?: string,
-    date: number,
-    tags?: string[],
-    banner?: string,
-    logo?: string,
+    birthday?: Date,
+    avatar?: string,
+    phone?: number,
+    status: Status<UserStatus>
 }
