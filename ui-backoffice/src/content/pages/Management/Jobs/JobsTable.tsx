@@ -28,7 +28,7 @@ import Label from 'src/components/Label';
 import { Job, JobStatus } from 'src/models/job';
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
-import BulkActions from './BulkActions';
+import BulkActions from 'src/components/ManagementTable/BulkActions';
 
 interface JobsTableProps {
   className?: string;
