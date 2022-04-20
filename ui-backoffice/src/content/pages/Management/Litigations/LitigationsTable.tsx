@@ -28,7 +28,7 @@ import Label from 'src/components/Label';
 import { Litigation, LitigationStatus } from 'src/models/litigation';
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
-import BulkActions from './BulkActions';
+import BulkActions from 'src/components/ManagementTable/BulkActions';
 
 interface LitigationsTableProps {
   className?: string;

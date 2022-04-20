@@ -28,7 +28,7 @@ import Label from 'src/components/Label';
 import { Organization, OrganizationStatus } from 'src/models/organization';
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
-import BulkActions from './BulkActions';
+import BulkActions from 'src/components/ManagementTable/BulkActions';
 
 interface OrganizationsTableProps {
   className?: string;

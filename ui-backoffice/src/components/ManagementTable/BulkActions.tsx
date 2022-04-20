@@ -27,15 +27,15 @@ const ButtonError = styled(Button)(
 );
 
 function BulkActions() {
-  const [onMenuOpen, menuOpen] = useState<boolean>(false);
+  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const moreRef = useRef<HTMLButtonElement | null>(null);
 
-  const openMenu = (): void => {
-    menuOpen(true);
+  const handleOpenMenu = (): void => {
+    setIsMenuOpen(true);
   };
 
-  const closeMenu = (): void => {
-    menuOpen(false);
+  const handleCloseMenu = (): void => {
+    setIsMenuOpen(false);
   };
 
   return (
@@ -55,7 +55,7 @@ function BulkActions() {
         </Box>
         <IconButton
           color="primary"
-          onClick={openMenu}
+          onClick={handleOpenMenu}
           ref={moreRef}
           sx={{ ml: 2, p: 1 }}
         >
@@ -66,8 +66,8 @@ function BulkActions() {
       <Menu
         keepMounted
         anchorEl={moreRef.current}
-        open={onMenuOpen}
-        onClose={closeMenu}
+        open={isMenuOpen}
+        onClose={handleCloseMenu}
         anchorOrigin={{
           vertical: 'center',
           horizontal: 'center'

@@ -28,7 +28,7 @@ import Label from 'src/components/Label';
 import { Partner, PartnerStatus } from 'src/models/partner';
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
-import BulkActions from 'src/components/ManagementTable/BulkActions';
+import BulkActions from './BulkActions';
 
 interface PartnersTableProps {
   className?: string;
