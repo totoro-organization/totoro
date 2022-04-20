@@ -9,6 +9,10 @@ import PeopleIcon from '@mui/icons-material/People';
 import PaletteIcon from '@mui/icons-material/Palette';
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
 import GroupsIcon from '@mui/icons-material/Groups';
+import StyleIcon from '@mui/icons-material/Style';
+import TrendingUpIcon from '@mui/icons-material/TrendingUp';
+import InvertColorsIcon from '@mui/icons-material/InvertColors';
+import SettingsIcon from '@mui/icons-material/Settings';
 
 export interface MenuItem {
   link?: string;
@@ -78,17 +82,51 @@ const menuItems: MenuItems[] = [
     ]
   },
   {
+    heading: 'Comptabilité',
+    items: [
+      {
+        name: 'Statistiques',
+        icon: QueryStatsIcon,
+        link: '/comptabilite/stats'
+      },
+    ]
+  },
+  {
     heading: 'Réglages des applications',
     items: [
       {
         name: 'Apparence',
-        icon: PaletteIcon,
-        link: '/app-reglages/apparence'
+        icon: InvertColorsIcon,
+        link: '/app-reglages/apparence',
+        items: [
+          {
+            name: 'Thèmes',
+            icon: PaletteIcon,
+            link: '/app-reglages/apparence/themes'
+          }
+        ]
       },
       {
-        name: 'Objets de litiges',
-        icon: ReportProblemIcon,
-        link: '/app-reglages/objets-litiges'
+        name: 'Paramétrage',
+        icon: SettingsIcon,
+        link: '/app-reglages/parametrage',
+        items: [
+          {
+            name: 'Tags',
+            icon: StyleIcon,
+            link: '/app-reglages/parametrage/tags'
+          },
+          {
+            name: 'Statuts',
+            icon: TrendingUpIcon,
+            link: '/app-reglages/parametrage/status'
+          },
+          {
+            name: 'Objets de litiges',
+            icon: ReportProblemIcon,
+            link: '/app-reglages/parametrage/objets-litiges'
+          },
+        ]
       },
     ]
   },
