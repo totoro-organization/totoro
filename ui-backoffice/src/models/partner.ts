@@ -1,3 +1,5 @@
+import { Status } from "./status";
+
 export type PartnerStatus = 'completed' | 'pending' | 'coming';
 
 export interface Partner {
@@ -7,7 +9,7 @@ export interface Partner {
     participants: number,
     address: string,
     capacity: number,
-    status: PartnerStatus,
+    status: Status<PartnerStatus>,
     tokens: number,
     desc?: string,
     date: number,

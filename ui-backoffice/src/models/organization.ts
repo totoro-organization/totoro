@@ -1,3 +1,5 @@
+import { Status } from "./status";
+
 export type OrganizationStatus = 'completed' | 'pending' | 'coming';
 
 export interface Organization {
@@ -7,7 +9,7 @@ export interface Organization {
     participants: number,
     address: string,
     capacity: number,
-    status:OrganizationStatus,
+    status: Status<OrganizationStatus>,
     tokens: number,
     desc?: string,
     date: number,
