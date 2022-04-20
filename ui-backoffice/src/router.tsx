@@ -39,10 +39,8 @@ const Themes = Loader(lazy(() => import('src/content/pages/AppsConfiguration/App
 
 // Applications
 
-const Messenger = Loader(lazy(() => import('src/content/applications/Messenger')));
-// const Transactions = Loader(lazy(() => import('src/content/applications/Transactions')));
-// const UserProfile = Loader(lazy(() => import('src/content/applications/Users/profile')));
-// const UserSettings = Loader(lazy(() => import('src/content/applications/Users/settings')));
+const UserProfile = Loader(lazy(() => import('src/content/pages/Users/profile')));
+const UserSettings = Loader(lazy(() => import('src/content/pages/Users/settings')));
 
 
 // Status
@@ -126,10 +124,6 @@ const routes: PartialRouteObject[] = [
         path: 'statistiques',
         element: <Crypto />
       },
-      {
-        path: 'messenger',
-        element: <Messenger />
-      }
     ]
   },
   {
@@ -221,49 +215,31 @@ const routes: PartialRouteObject[] = [
       },
     ]
   },
-  // {
-  //   path: 'management',
-  //   element: (
-  //     <SidebarLayout />
-  //   ),
-  //   children: [
-  //     {
-  //       path: '/',
-  //       element: (
-  //         <Navigate
-  //           to="/management/transactions"
-  //           replace
-  //         />
-  //       )
-  //     },
-  //     {
-  //       path: 'transactions',
-  //       element: <Transactions />
-  //     },
-  //     {
-  //       path: 'profile',
-  //       children: [
-  //         {
-  //           path: '/',
-  //           element: (
-  //             <Navigate
-  //               to="details"
-  //               replace
-  //             />
-  //           )
-  //         },
-  //         {
-  //           path: 'details',
-  //           element: <UserProfile />
-  //         },
-  //         {
-  //           path: 'settings',
-  //           element: <UserSettings />
-  //         },
-  //       ]
-  //     }
-  //   ]
-  // },
+  {
+    path: 'profile',
+    element: (
+      <SidebarLayout />
+    ),
+    children: [
+      {
+        path: '/',
+        element: (
+          <Navigate
+            to="details"
+            replace
+          />
+        )
+      },
+      {
+        path: 'details',
+        element: <UserProfile />
+      },
+      {
+        path: 'settings',
+        element: <UserSettings />
+      },
+    ]
+  },
 ];
 
 export default routes;
