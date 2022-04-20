@@ -21,13 +21,13 @@ import { User } from "./user";
 //     logo?: string,
 // }
 
-export type LitigationStatus = 'completed' | 'pending' | 'coming';
+export type LitigationStatus = Status<'completed' | 'pending' | 'coming'>;
 
 export interface Litigation {
     id: string,
     litigation_object: LitigationObject,
     job: Job,
     user: User,
-    status: Status<LitigationStatus>
+    status: LitigationStatus
 }
 
