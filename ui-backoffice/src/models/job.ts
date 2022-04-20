@@ -1,3 +1,6 @@
+import { Status } from "./status";
+import { Tag } from "./tag";
+
 export type JobStatus = 'completed' | 'pending' | 'coming';
 
 export interface Job {
@@ -7,11 +10,11 @@ export interface Job {
     participants: number,
     address: string,
     capacity: number,
-    status:JobStatus,
+    status:Status<JobStatus>,
     tokens: number,
     desc?: string,
     date: number,
-    tags?: string[],
+    tags?: Tag[],
     banner?: string,
     logo?: string,
 }
