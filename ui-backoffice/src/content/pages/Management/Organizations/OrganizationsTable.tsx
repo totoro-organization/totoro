@@ -39,7 +39,7 @@ interface Filters {
   status?: OrganizationStatus;
 }
 
-const getStatusLabel = (organizationStatus: OrganizationStatus): JSX.Element => {
+const getStatusLabel = (organizationStatus: OrganizationStatus["label"]): JSX.Element => {
   const map = {
     coming: {
       text: 'A venir',
@@ -176,7 +176,7 @@ const OrganizationsTable: FC<OrganizationsTableProps> = ({ organizations }) => {
 
   return (
     <Card>
-      {selectedBulkActions && (
+      {/* {selectedBulkActions && (
         <Box flex={1} p={2}>
           <BulkActions />
         </Box>
@@ -341,7 +341,7 @@ const OrganizationsTable: FC<OrganizationsTableProps> = ({ organizations }) => {
           rowsPerPage={limit}
           rowsPerPageOptions={[5, 10, 25, 30]}
         />
-      </Box>
+      </Box> */}
     </Card>
   );
 };

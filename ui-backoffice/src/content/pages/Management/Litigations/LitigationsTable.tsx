@@ -36,7 +36,7 @@ interface LitigationsTableProps {
 }
 
 interface Filters {
-  status?: LitigationStatus["label"];
+  status?: LitigationStatus;
 }
 
 const getStatusLabel = (litigationStatus: LitigationStatus["label"]): JSX.Element => {
@@ -176,7 +176,7 @@ const LitigationsTable: FC<LitigationsTableProps> = ({ litigations }) => {
 
   return (
     <Card>
-      {selectedBulkActions && (
+      {/* {selectedBulkActions && (
         <Box flex={1} p={2}>
           <BulkActions />
         </Box>
@@ -341,7 +341,7 @@ const LitigationsTable: FC<LitigationsTableProps> = ({ litigations }) => {
           rowsPerPage={limit}
           rowsPerPageOptions={[5, 10, 25, 30]}
         />
-      </Box>
+      </Box> */}
     </Card>
   );
 };
