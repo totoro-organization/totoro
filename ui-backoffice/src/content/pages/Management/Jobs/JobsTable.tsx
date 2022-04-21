@@ -39,7 +39,7 @@ interface Filters {
   status?: JobStatus;
 }
 
-const getStatusLabel = (jobStatus: JobStatus): JSX.Element => {
+const getStatusLabel = (jobStatus: JobStatus["label"]): JSX.Element => {
   const map = {
     coming: {
       text: 'A venir',
@@ -295,7 +295,7 @@ const JobsTable: FC<JobsTableProps> = ({ jobs }) => {
                     </Typography>
                   </TableCell>
                   <TableCell align="right">
-                    {getStatusLabel(job.status)}
+                    {getStatusLabel(job.status.label)}
                   </TableCell>
                   <TableCell align="right">
                     <Tooltip title="Editer la mission" arrow>
