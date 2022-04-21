@@ -39,7 +39,7 @@ interface Filters {
   status?: PartnerStatus;
 }
 
-const getStatusLabel = (partnerStatus: PartnerStatus): JSX.Element => {
+const getStatusLabel = (partnerStatus: PartnerStatus["label"]): JSX.Element => {
   const map = {
     coming: {
       text: 'A venir',
@@ -176,7 +176,7 @@ const PartnersTable: FC<PartnersTableProps> = ({ partners }) => {
 
   return (
     <Card>
-      {selectedBulkActions && (
+      {/* {selectedBulkActions && (
         <Box flex={1} p={2}>
           <BulkActions />
         </Box>
@@ -341,7 +341,7 @@ const PartnersTable: FC<PartnersTableProps> = ({ partners }) => {
           rowsPerPage={limit}
           rowsPerPageOptions={[5, 10, 25, 30]}
         />
-      </Box>
+      </Box> */}
     </Card>
   );
 };
