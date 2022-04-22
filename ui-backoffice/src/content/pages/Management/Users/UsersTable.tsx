@@ -36,22 +36,26 @@ interface UsersTableProps {
 }
 
 interface Filters {
-  status?: UserStatus;
+  status?: UserStatus["label"];
 }
 
 const getStatusLabel = (userStatus: UserStatus["label"]): JSX.Element => {
   const map = {
-    coming: {
-      text: 'A venir',
-      color: 'error'
-    },
-    completed: {
-      text: 'Terminée',
+    active: {
+      text: 'Actif',
       color: 'success'
     },
-    pending: {
-      text: 'En cours',
+    inactive: {
+      text: 'Inactif',
       color: 'warning'
+    },
+    outlawed: {
+      text: 'Banni',
+      color: 'error'
+    },
+    freezed: {
+      text: 'Gelé',
+      color: 'info'
     }
   };
 
@@ -67,7 +71,7 @@ const applyFilters = (
   return users.filter((user) => {
     let matches = true;
 
-    if (filters.status && user.status !== filters.status) {
+    if (filters.status && user.status.label !== filters.status) {
       matches = false;
     }
 
@@ -101,16 +105,20 @@ const UsersTable: FC<UsersTableProps> = ({ users }) => {
       name: 'Toutes'
     },
     {
-      id: 'completed',
-      name: 'Terminée'
+      id: 'active',
+      name: 'Actif'
     },
     {
-      id: 'pending',
-      name: 'En cours'
+      id: 'inactive',
+      name: 'Inactif'
     },
     {
-      id: 'coming',
-      name: 'A venir'
+      id: 'outlawed',
+      name: 'Banni'
+    },
+    {
+      id: 'freezed',
+      name: 'Gelé'
     }
   ];
 
@@ -176,7 +184,7 @@ const UsersTable: FC<UsersTableProps> = ({ users }) => {
 
   return (
     <Card>
-      {/* {selectedBulkActions && (
+      {selectedBulkActions && (
         <Box flex={1} p={2}>
           <BulkActions />
         </Box>
@@ -219,8 +227,7 @@ const UsersTable: FC<UsersTableProps> = ({ users }) => {
                 />
               </TableCell>
               <TableCell>Details</TableCell>
-              <TableCell>Date</TableCell>
-              <TableCell>Participants</TableCell>
+              <TableCell align="left">Missions</TableCell>
               <TableCell align="right">Tokens</TableCell>
               <TableCell align="right">Statut</TableCell>
               <TableCell align="right">Actions</TableCell>
@@ -255,10 +262,10 @@ const UsersTable: FC<UsersTableProps> = ({ users }) => {
                       gutterBottom
                       noWrap
                     >
-                      {user.title}
+                      {`${user.firstname} ${user.lastname} (${user.username})` }
                     </Typography>
                     <Typography variant="body2" color="text.secondary" noWrap>
-                      {user.organization}
+                      {user.email}
                     </Typography>
                   </TableCell>
                   <TableCell>
@@ -269,18 +276,7 @@ const UsersTable: FC<UsersTableProps> = ({ users }) => {
                       gutterBottom
                       noWrap
                     >
-                      {format(user.date, 'dd MMMM  yyyy')}
-                    </Typography>
-                  </TableCell>
-                  <TableCell>
-                    <Typography
-                      variant="body1"
-                      fontWeight="bold"
-                      color="text.primary"
-                      gutterBottom
-                      noWrap
-                    >
-                      {user.participants} / {user.capacity}
+                      {user.jobs.length}
                     </Typography>
                   </TableCell>
                   <TableCell align="right">
@@ -295,7 +291,7 @@ const UsersTable: FC<UsersTableProps> = ({ users }) => {
                     </Typography>
                   </TableCell>
                   <TableCell align="right">
-                    {getStatusLabel(user.status)}
+                    {getStatusLabel(user.status.label)}
                   </TableCell>
                   <TableCell align="right">
                     <Tooltip title="Editer la mission" arrow>
@@ -341,7 +337,7 @@ const UsersTable: FC<UsersTableProps> = ({ users }) => {
           rowsPerPage={limit}
           rowsPerPageOptions={[5, 10, 25, 30]}
         />
-      </Box> */}
+      </Box>
     </Card>
   );
 };

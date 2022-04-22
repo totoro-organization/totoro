@@ -1,6 +1,7 @@
+import { Job } from "./admin";
 import { Status } from "./status";
 
-export type UserStatus = Status<'completed' | 'pending' | 'coming'>;
+export type UserStatus = Status<'outlawed' | 'freezed' | 'active' | 'inactive'>;
 
 export interface User {
     id: string,
@@ -8,6 +9,7 @@ export interface User {
     lastname: string,
     username: string,
     email: string,
+    jobs: Job[],
     tokens: number,
     birthday?: Date,
     avatar?: string,
