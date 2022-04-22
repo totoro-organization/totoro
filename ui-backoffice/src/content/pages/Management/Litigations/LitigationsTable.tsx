@@ -36,23 +36,19 @@ interface LitigationsTableProps {
 }
 
 interface Filters {
-  status?: LitigationStatus;
+  status?: LitigationStatus["label"];
 }
 
 const getStatusLabel = (litigationStatus: LitigationStatus["label"]): JSX.Element => {
   const map = {
-    coming: {
-      text: 'A venir',
-      color: 'error'
-    },
-    completed: {
-      text: 'Terminée',
+    open: {
+      text: 'Ouvert',
       color: 'success'
     },
-    pending: {
-      text: 'En cours',
-      color: 'warning'
-    }
+    close: {
+      text: 'Résolu',
+      color: 'error'
+    },
   };
 
   const { text, color }: any = map[litigationStatus];
@@ -67,7 +63,7 @@ const applyFilters = (
   return litigations.filter((litigation) => {
     let matches = true;
 
-    if (filters.status && litigation.status !== filters.status) {
+    if (filters.status && litigation.status.label !== filters.status) {
       matches = false;
     }
 
@@ -101,17 +97,13 @@ const LitigationsTable: FC<LitigationsTableProps> = ({ litigations }) => {
       name: 'Toutes'
     },
     {
-      id: 'completed',
-      name: 'Terminée'
+      id: 'open',
+      name: 'Ouvert'
     },
     {
-      id: 'pending',
-      name: 'En cours'
+      id: 'close',
+      name: 'Résolu'
     },
-    {
-      id: 'coming',
-      name: 'A venir'
-    }
   ];
 
   const handleStatusChange = (e: ChangeEvent<HTMLInputElement>): void => {
@@ -176,7 +168,7 @@ const LitigationsTable: FC<LitigationsTableProps> = ({ litigations }) => {
 
   return (
     <Card>
-      {/* {selectedBulkActions && (
+      {selectedBulkActions && (
         <Box flex={1} p={2}>
           <BulkActions />
         </Box>
@@ -220,8 +212,9 @@ const LitigationsTable: FC<LitigationsTableProps> = ({ litigations }) => {
               </TableCell>
               <TableCell>Details</TableCell>
               <TableCell>Date</TableCell>
-              <TableCell>Participants</TableCell>
-              <TableCell align="right">Tokens</TableCell>
+              <TableCell align="left">Mission</TableCell>
+              <TableCell align="left">Auteur</TableCell>
+              <TableCell align="left">Cible</TableCell>
               <TableCell align="right">Statut</TableCell>
               <TableCell align="right">Actions</TableCell>
             </TableRow>
@@ -255,10 +248,7 @@ const LitigationsTable: FC<LitigationsTableProps> = ({ litigations }) => {
                       gutterBottom
                       noWrap
                     >
-                      {litigation.title}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary" noWrap>
-                      {litigation.organization}
+                      {litigation.litigation_object.label}
                     </Typography>
                   </TableCell>
                   <TableCell>
@@ -280,10 +270,10 @@ const LitigationsTable: FC<LitigationsTableProps> = ({ litigations }) => {
                       gutterBottom
                       noWrap
                     >
-                      {litigation.participants} / {litigation.capacity}
+                      {litigation.job.title}
                     </Typography>
                   </TableCell>
-                  <TableCell align="right">
+                  <TableCell align="left">
                     <Typography
                       variant="body1"
                       fontWeight="bold"
@@ -291,14 +281,25 @@ const LitigationsTable: FC<LitigationsTableProps> = ({ litigations }) => {
                       gutterBottom
                       noWrap
                     >
-                      {litigation.tokens}
+                      {litigation.author.username}
+                    </Typography>
+                  </TableCell>
+                  <TableCell align="left">
+                    <Typography
+                      variant="body1"
+                      fontWeight="bold"
+                      color="text.primary"
+                      gutterBottom
+                      noWrap
+                    >
+                      {litigation.target.username}
                     </Typography>
                   </TableCell>
                   <TableCell align="right">
-                    {getStatusLabel(litigation.status)}
+                    {getStatusLabel(litigation.status.label)}
                   </TableCell>
                   <TableCell align="right">
-                    <Tooltip title="Editer la mission" arrow>
+                    <Tooltip title="Editer le litige" arrow>
                       <IconButton
                         sx={{
                           '&:hover': {
@@ -312,7 +313,7 @@ const LitigationsTable: FC<LitigationsTableProps> = ({ litigations }) => {
                         <EditTwoToneIcon fontSize="small" />
                       </IconButton>
                     </Tooltip>
-                    <Tooltip title="Supprimer la mission" arrow>
+                    <Tooltip title="Supprimer le litige" arrow>
                       <IconButton
                         sx={{
                           '&:hover': { background: theme.colors.error.lighter },
@@ -341,7 +342,7 @@ const LitigationsTable: FC<LitigationsTableProps> = ({ litigations }) => {
           rowsPerPage={limit}
           rowsPerPageOptions={[5, 10, 25, 30]}
         />
-      </Box> */}
+      </Box>
     </Card>
   );
 };
