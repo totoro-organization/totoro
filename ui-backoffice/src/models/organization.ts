@@ -1,19 +1,14 @@
+import { Job } from "./job";
 import { Status } from "./status";
 
-export type OrganizationStatus = Status<'completed' | 'pending' | 'coming'>;
+export type OrganizationStatus = Status<'active' | 'inactive' | 'freezed' | 'outlawed'>;
 
 export interface Organization {
     id: string,
-    title: string,
-    organization: string,
-    participants: number,
+    name: string,
+    email: string,
     address: string,
-    capacity: number,
-    status: OrganizationStatus,
-    tokens: number,
-    desc?: string,
-    date: number,
-    tags?: string[],
-    banner?: string,
-    logo?: string,
+    jobs: Job[],
+    phone: string,
+    status: OrganizationStatus
 }
