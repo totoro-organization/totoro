@@ -36,22 +36,26 @@ interface PartnersTableProps {
 }
 
 interface Filters {
-  status?: PartnerStatus;
+  status?: PartnerStatus["label"];
 }
 
 const getStatusLabel = (partnerStatus: PartnerStatus["label"]): JSX.Element => {
   const map = {
-    coming: {
-      text: 'A venir',
-      color: 'error'
-    },
-    completed: {
-      text: 'Terminée',
+    active: {
+      text: 'Actif',
       color: 'success'
     },
-    pending: {
-      text: 'En cours',
+    inactive: {
+      text: 'Inactif',
       color: 'warning'
+    },
+    outlawed: {
+      text: 'Banni',
+      color: 'error'
+    },
+    freezed: {
+      text: 'Gelé',
+      color: 'info'
     }
   };
 
@@ -67,7 +71,7 @@ const applyFilters = (
   return partners.filter((partner) => {
     let matches = true;
 
-    if (filters.status && partner.status !== filters.status) {
+    if (filters.status && partner.status.label !== filters.status) {
       matches = false;
     }
 
@@ -101,16 +105,20 @@ const PartnersTable: FC<PartnersTableProps> = ({ partners }) => {
       name: 'Toutes'
     },
     {
-      id: 'completed',
-      name: 'Terminée'
+      id: 'active',
+      name: 'Actif'
     },
     {
-      id: 'pending',
-      name: 'En cours'
+      id: 'inactive',
+      name: 'Inactif'
     },
     {
-      id: 'coming',
-      name: 'A venir'
+      id: 'outlawed',
+      name: 'Banni'
+    },
+    {
+      id: 'freezed',
+      name: 'Gelé'
     }
   ];
 
@@ -176,7 +184,7 @@ const PartnersTable: FC<PartnersTableProps> = ({ partners }) => {
 
   return (
     <Card>
-      {/* {selectedBulkActions && (
+      {selectedBulkActions && (
         <Box flex={1} p={2}>
           <BulkActions />
         </Box>
@@ -219,9 +227,7 @@ const PartnersTable: FC<PartnersTableProps> = ({ partners }) => {
                 />
               </TableCell>
               <TableCell>Details</TableCell>
-              <TableCell>Date</TableCell>
-              <TableCell>Participants</TableCell>
-              <TableCell align="right">Tokens</TableCell>
+              <TableCell>Réductions</TableCell>
               <TableCell align="right">Statut</TableCell>
               <TableCell align="right">Actions</TableCell>
             </TableRow>
@@ -255,10 +261,10 @@ const PartnersTable: FC<PartnersTableProps> = ({ partners }) => {
                       gutterBottom
                       noWrap
                     >
-                      {partner.title}
+                      {partner.name}
                     </Typography>
                     <Typography variant="body2" color="text.secondary" noWrap>
-                      {partner.organization}
+                      {partner.email}
                     </Typography>
                   </TableCell>
                   <TableCell>
@@ -269,33 +275,11 @@ const PartnersTable: FC<PartnersTableProps> = ({ partners }) => {
                       gutterBottom
                       noWrap
                     >
-                      {format(partner.date, 'dd MMMM  yyyy')}
-                    </Typography>
-                  </TableCell>
-                  <TableCell>
-                    <Typography
-                      variant="body1"
-                      fontWeight="bold"
-                      color="text.primary"
-                      gutterBottom
-                      noWrap
-                    >
-                      {partner.participants} / {partner.capacity}
+                      {partner.discount.length}
                     </Typography>
                   </TableCell>
                   <TableCell align="right">
-                    <Typography
-                      variant="body1"
-                      fontWeight="bold"
-                      color="text.primary"
-                      gutterBottom
-                      noWrap
-                    >
-                      {partner.tokens}
-                    </Typography>
-                  </TableCell>
-                  <TableCell align="right">
-                    {getStatusLabel(partner.status)}
+                    {getStatusLabel(partner.status.label)}
                   </TableCell>
                   <TableCell align="right">
                     <Tooltip title="Editer la mission" arrow>
@@ -341,7 +325,7 @@ const PartnersTable: FC<PartnersTableProps> = ({ partners }) => {
           rowsPerPage={limit}
           rowsPerPageOptions={[5, 10, 25, 30]}
         />
-      </Box> */}
+      </Box>
     </Card>
   );
 };

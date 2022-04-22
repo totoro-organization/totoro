@@ -1,19 +1,14 @@
+import { Discount } from "./discount";
 import { Status } from "./status";
 
-export type PartnerStatus = Status<'completed' | 'pending' | 'coming'>;
+export type PartnerStatus = Status<'active' | 'inactive' | 'freezed' | 'outlawed'>;
 
 export interface Partner {
     id: string,
-    title: string,
-    organization: string,
-    participants: number,
+    name: string,
+    email: string,
+    phone: string,
     address: string,
-    capacity: number,
-    status: PartnerStatus,
-    tokens: number,
-    desc?: string,
-    date: number,
-    tags?: string[],
-    banner?: string,
-    logo?: string,
+    discount: Discount[],
+    status: PartnerStatus
 }
