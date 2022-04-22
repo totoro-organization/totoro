@@ -29,6 +29,8 @@ import { Organization, OrganizationStatus } from 'src/models/organization';
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 import BulkActions from 'src/components/ManagementTable/BulkActions';
+import { Job } from 'src/models/admin';
+import { JobStatus } from 'src/models/job';
 
 interface OrganizationsTableProps {
   className?: string;
@@ -39,7 +41,7 @@ interface Filters {
   status?: OrganizationStatus["label"];
 }
 
-const filterJobs = (jobs, status) => jobs.filter(job => job.status.label === status);
+const filterJobsByStatus = (jobs: Job[], status: JobStatus["label"]) => jobs.filter(job => job.status.label === status);
 
 const getStatusLabel = (organizationStatus: OrganizationStatus["label"]): JSX.Element => {
   const map = {
@@ -290,7 +292,7 @@ const OrganizationsTable: FC<OrganizationsTableProps> = ({ organizations }) => {
                       gutterBottom
                       noWrap
                     >
-                      {filterJobs(organization.jobs, "pending").length}
+                      {filterJobsByStatus(organization.jobs, "pending").length}
                     </Typography>
                   </TableCell>
                   <TableCell>
@@ -301,7 +303,7 @@ const OrganizationsTable: FC<OrganizationsTableProps> = ({ organizations }) => {
                       gutterBottom
                       noWrap
                     >
-                      {filterJobs(organization.jobs, "coming").length}
+                      {filterJobsByStatus(organization.jobs, "coming").length}
                     </Typography>
                   </TableCell>
                   <TableCell align="right">
