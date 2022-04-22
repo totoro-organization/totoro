@@ -32,7 +32,7 @@ function ManagementOrganizations() {
           spacing={3}
         >
           <Grid item xs={12}>
-            {/* <Organizations/> */}
+            <Organizations/>
           </Grid>
         </Grid>
       </Container>

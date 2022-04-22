@@ -36,22 +36,28 @@ interface OrganizationsTableProps {
 }
 
 interface Filters {
-  status?: OrganizationStatus;
+  status?: OrganizationStatus["label"];
 }
+
+const filterJobs = (jobs, status) => jobs.filter(job => job.status.label === status);
 
 const getStatusLabel = (organizationStatus: OrganizationStatus["label"]): JSX.Element => {
   const map = {
-    coming: {
-      text: 'A venir',
-      color: 'error'
-    },
-    completed: {
-      text: 'Terminée',
+    active: {
+      text: 'Actif',
       color: 'success'
     },
-    pending: {
-      text: 'En cours',
+    inactive: {
+      text: 'Inactif',
       color: 'warning'
+    },
+    outlawed: {
+      text: 'Banni',
+      color: 'error'
+    },
+    freezed: {
+      text: 'Gelé',
+      color: 'info'
     }
   };
 
@@ -67,7 +73,7 @@ const applyFilters = (
   return organizations.filter((organization) => {
     let matches = true;
 
-    if (filters.status && organization.status !== filters.status) {
+    if (filters.status && organization.status.label !== filters.status) {
       matches = false;
     }
 
@@ -101,16 +107,20 @@ const OrganizationsTable: FC<OrganizationsTableProps> = ({ organizations }) => {
       name: 'Toutes'
     },
     {
-      id: 'completed',
-      name: 'Terminée'
+      id: 'active',
+      name: 'Actif'
     },
     {
-      id: 'pending',
-      name: 'En cours'
+      id: 'inactive',
+      name: 'Inactif'
     },
     {
-      id: 'coming',
-      name: 'A venir'
+      id: 'outlawed',
+      name: 'Banni'
+    },
+    {
+      id: 'freezed',
+      name: 'Gelé'
     }
   ];
 
@@ -176,7 +186,7 @@ const OrganizationsTable: FC<OrganizationsTableProps> = ({ organizations }) => {
 
   return (
     <Card>
-      {/* {selectedBulkActions && (
+      {selectedBulkActions && (
         <Box flex={1} p={2}>
           <BulkActions />
         </Box>
@@ -219,9 +229,9 @@ const OrganizationsTable: FC<OrganizationsTableProps> = ({ organizations }) => {
                 />
               </TableCell>
               <TableCell>Details</TableCell>
-              <TableCell>Date</TableCell>
-              <TableCell>Participants</TableCell>
-              <TableCell align="right">Tokens</TableCell>
+              <TableCell>Missions</TableCell>
+              <TableCell>Missions actives</TableCell>
+              <TableCell>Missions à venir</TableCell>
               <TableCell align="right">Statut</TableCell>
               <TableCell align="right">Actions</TableCell>
             </TableRow>
@@ -255,10 +265,10 @@ const OrganizationsTable: FC<OrganizationsTableProps> = ({ organizations }) => {
                       gutterBottom
                       noWrap
                     >
-                      {organization.title}
+                      {organization.name}
                     </Typography>
                     <Typography variant="body2" color="text.secondary" noWrap>
-                      {organization.organization}
+                      {organization.email}
                     </Typography>
                   </TableCell>
                   <TableCell>
@@ -269,7 +279,7 @@ const OrganizationsTable: FC<OrganizationsTableProps> = ({ organizations }) => {
                       gutterBottom
                       noWrap
                     >
-                      {format(organization.date, 'dd MMMM  yyyy')}
+                      {organization.jobs.length}
                     </Typography>
                   </TableCell>
                   <TableCell>
@@ -280,10 +290,10 @@ const OrganizationsTable: FC<OrganizationsTableProps> = ({ organizations }) => {
                       gutterBottom
                       noWrap
                     >
-                      {organization.participants} / {organization.capacity}
+                      {filterJobs(organization.jobs, "pending").length}
                     </Typography>
                   </TableCell>
-                  <TableCell align="right">
+                  <TableCell>
                     <Typography
                       variant="body1"
                       fontWeight="bold"
@@ -291,11 +301,11 @@ const OrganizationsTable: FC<OrganizationsTableProps> = ({ organizations }) => {
                       gutterBottom
                       noWrap
                     >
-                      {organization.tokens}
+                      {filterJobs(organization.jobs, "coming").length}
                     </Typography>
                   </TableCell>
                   <TableCell align="right">
-                    {getStatusLabel(organization.status)}
+                    {getStatusLabel(organization.status.label)}
                   </TableCell>
                   <TableCell align="right">
                     <Tooltip title="Editer la mission" arrow>
@@ -341,7 +351,7 @@ const OrganizationsTable: FC<OrganizationsTableProps> = ({ organizations }) => {
           rowsPerPage={limit}
           rowsPerPageOptions={[5, 10, 25, 30]}
         />
-      </Box> */}
+      </Box>
     </Card>
   );
 };

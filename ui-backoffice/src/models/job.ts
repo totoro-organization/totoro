@@ -1,3 +1,4 @@
+import { Organization } from "./organization";
 import { Status } from "./status";
 import { Tag } from "./tag";
 

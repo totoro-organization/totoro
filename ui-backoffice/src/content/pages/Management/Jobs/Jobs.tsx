@@ -9,8 +9,8 @@ function Jobs() {
     {
       id: '1',
       title: 'Ma super mission',
-      organization: 'Mon association',
-      status: {id: '1', label: 'completed'},
+      organization: "Une association",
+      status: {id: '1', label: 'pending'},
       participants: 15,
       address: '3 rue de la paix',
       capacity: 20,
