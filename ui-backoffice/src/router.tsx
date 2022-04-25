@@ -24,6 +24,7 @@ const Organizations = Loader(lazy(() => import('src/content/pages/Management/Org
 const Litigations = Loader(lazy(() => import('src/content/pages/Management/Litigations')));
 const Partners = Loader(lazy(() => import('src/content/pages/Management/Partners/Members')));
 const Admins = Loader(lazy(() => import('src/content/pages/Management/Admins')));
+const MembershipRequests = Loader(lazy(() => import('src/content/pages/Management/Partners/MembershipRequests')));
 
 // single pages
 
@@ -183,6 +184,10 @@ const routes: PartialRouteObject[] = [
       {
         path: 'litiges/:id',
         element: <Litigation/>
+      },
+      {
+        path: 'partenaires/demandes',
+        element: <MembershipRequests />
       },
       {
         path: 'partenaires/membres',
