@@ -31,6 +31,7 @@ import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 import BulkActions from 'src/components/ManagementTable/BulkActions';
 import { Job } from 'src/models/job';
 import { JobStatus } from 'src/models/job';
+import { Link } from 'react-router-dom';
 
 interface OrganizationsTableProps {
   className?: string;
@@ -267,7 +268,7 @@ const OrganizationsTable: FC<OrganizationsTableProps> = ({ organizations }) => {
                       gutterBottom
                       noWrap
                     >
-                      {organization.name}
+                    <Link to={`/gestion/associations/${organization.id}`}>{organization.name}</Link>
                     </Typography>
                     <Typography variant="body2" color="text.secondary" noWrap>
                       {organization.email}
