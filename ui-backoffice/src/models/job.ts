@@ -13,7 +13,7 @@ export interface Job {
     capacity: number,
     status:JobStatus,
     tokens: number,
-    desc?: string,
+    description?: string,
     date: number,
     tags?: Tag[],
     banner?: string,
