@@ -29,6 +29,7 @@ import { Partner, PartnerStatus } from 'src/models/partner';
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 import BulkActions from 'src/components/ManagementTable/BulkActions';
+import { Link } from 'react-router-dom';
 
 interface PartnersTableProps {
   className?: string;
@@ -36,10 +37,10 @@ interface PartnersTableProps {
 }
 
 interface Filters {
-  status?: PartnerStatus["label"];
+  status?: PartnerStatus['label'];
 }
 
-const getStatusLabel = (partnerStatus: PartnerStatus["label"]): JSX.Element => {
+const getStatusLabel = (partnerStatus: PartnerStatus['label']): JSX.Element => {
   const map = {
     active: {
       text: 'Actif',
@@ -64,10 +65,7 @@ const getStatusLabel = (partnerStatus: PartnerStatus["label"]): JSX.Element => {
   return <Label color={color}>{text}</Label>;
 };
 
-const applyFilters = (
-  partners: Partner[],
-  filters: Filters
-): Partner[] => {
+const applyFilters = (partners: Partner[], filters: Filters): Partner[] => {
   return partners.filter((partner) => {
     let matches = true;
 
@@ -88,10 +86,7 @@ const applyPagination = (
 };
 
 const PartnersTable: FC<PartnersTableProps> = ({ partners }) => {
-
-  const [selectedPartners, setSelectedPartners] = useState<string[]>(
-    []
-  );
+  const [selectedPartners, setSelectedPartners] = useState<string[]>([]);
   const selectedBulkActions = selectedPartners.length > 0;
   const [page, setPage] = useState<number>(0);
   const [limit, setLimit] = useState<number>(5);
@@ -139,9 +134,7 @@ const PartnersTable: FC<PartnersTableProps> = ({ partners }) => {
     event: ChangeEvent<HTMLInputElement>
   ): void => {
     setSelectedPartners(
-      event.target.checked
-        ? partners.map((partner) => partner.id)
-        : []
+      event.target.checked ? partners.map((partner) => partner.id) : []
     );
   };
 
@@ -150,10 +143,7 @@ const PartnersTable: FC<PartnersTableProps> = ({ partners }) => {
     partnerId: string
   ): void => {
     if (!selectedPartners.includes(partnerId)) {
-      setSelectedPartners((prevSelected) => [
-        ...prevSelected,
-        partnerId
-      ]);
+      setSelectedPartners((prevSelected) => [...prevSelected, partnerId]);
     } else {
       setSelectedPartners((prevSelected) =>
         prevSelected.filter((id) => id !== partnerId)
@@ -170,16 +160,10 @@ const PartnersTable: FC<PartnersTableProps> = ({ partners }) => {
   };
 
   const filteredPartners = applyFilters(partners, filters);
-  const paginatedPartners = applyPagination(
-    filteredPartners,
-    page,
-    limit
-  );
+  const paginatedPartners = applyPagination(filteredPartners, page, limit);
   const selectedSomePartners =
-    selectedPartners.length > 0 &&
-    selectedPartners.length < partners.length;
-  const selectedAllPartners =
-    selectedPartners.length === partners.length;
+    selectedPartners.length > 0 && selectedPartners.length < partners.length;
+  const selectedAllPartners = selectedPartners.length === partners.length;
   const theme = useTheme();
 
   return (
@@ -234,15 +218,9 @@ const PartnersTable: FC<PartnersTableProps> = ({ partners }) => {
           </TableHead>
           <TableBody>
             {paginatedPartners.map((partner) => {
-              const isPartnerSelected = selectedPartners.includes(
-                partner.id
-              );
+              const isPartnerSelected = selectedPartners.includes(partner.id);
               return (
-                <TableRow
-                  hover
-                  key={partner.id}
-                  selected={isPartnerSelected}
-                >
+                <TableRow hover key={partner.id} selected={isPartnerSelected}>
                   <TableCell padding="checkbox">
                     <Checkbox
                       color="primary"
@@ -261,7 +239,9 @@ const PartnersTable: FC<PartnersTableProps> = ({ partners }) => {
                       gutterBottom
                       noWrap
                     >
-                      {partner.name}
+                      <Link to={`/gestion/partenaires/membres/${partner.id}`}>
+                        {partner.name}
+                      </Link>
                     </Typography>
                     <Typography variant="body2" color="text.secondary" noWrap>
                       {partner.email}

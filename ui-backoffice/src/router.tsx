@@ -31,6 +31,7 @@ const Litigation = Loader(lazy(() => import('src/content/pages/Management/Litiga
 const Job = Loader(lazy(() => import('src/content/pages/Management/Jobs/Job')));
 const Organization = Loader(lazy(() => import('src/content/pages/Management/Organizations/Organization')));
 const User = Loader(lazy(() => import('src/content/pages/Management/Users/User')));
+const Partner = Loader(lazy(() => import('src/content/pages/Management/Partners/Members/Partner')));
 
 // Accounting
 
@@ -186,6 +187,10 @@ const routes: PartialRouteObject[] = [
       {
         path: 'partenaires/membres',
         element: <Partners />
+      },
+      {
+        path: 'partenaires/membres/:id',
+        element: <Partner />
       },
       {
         path: 'administrateurs',
