@@ -23,6 +23,10 @@ const Litigations = Loader(lazy(() => import('src/content/pages/Management/Litig
 const Partners = Loader(lazy(() => import('src/content/pages/Management/Partners/Members')));
 const Admins = Loader(lazy(() => import('src/content/pages/Management/Admins')));
 
+// single pages
+
+const Litigation = Loader(lazy(() => import('src/content/pages/Management/Litigations/Litigation')));
+
 // Accounting
 
 const Accounting = Loader(lazy(() => import('src/content/pages/Accounting')));
@@ -157,6 +161,10 @@ const routes: PartialRouteObject[] = [
       {
         path: 'litiges',
         element: <Litigations />
+      },
+      {
+        path: 'litiges/:id',
+        element: <Litigation/>
       },
       {
         path: 'partenaires/membres',
