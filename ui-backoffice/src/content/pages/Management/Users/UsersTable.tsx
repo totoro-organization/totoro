@@ -29,6 +29,7 @@ import { User, UserStatus } from 'src/models/user';
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 import BulkActions from 'src/components/ManagementTable/BulkActions';
+import { Link } from 'react-router-dom';
 
 interface UsersTableProps {
   className?: string;
@@ -36,10 +37,10 @@ interface UsersTableProps {
 }
 
 interface Filters {
-  status?: UserStatus["label"];
+  status?: UserStatus['label'];
 }
 
-const getStatusLabel = (userStatus: UserStatus["label"]): JSX.Element => {
+const getStatusLabel = (userStatus: UserStatus['label']): JSX.Element => {
   const map = {
     active: {
       text: 'Actif',
@@ -64,10 +65,7 @@ const getStatusLabel = (userStatus: UserStatus["label"]): JSX.Element => {
   return <Label color={color}>{text}</Label>;
 };
 
-const applyFilters = (
-  users: User[],
-  filters: Filters
-): User[] => {
+const applyFilters = (users: User[], filters: Filters): User[] => {
   return users.filter((user) => {
     let matches = true;
 
@@ -88,10 +86,7 @@ const applyPagination = (
 };
 
 const UsersTable: FC<UsersTableProps> = ({ users }) => {
-
-  const [selectedUsers, setSelectedUsers] = useState<string[]>(
-    []
-  );
+  const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
   const selectedBulkActions = selectedUsers.length > 0;
   const [page, setPage] = useState<number>(0);
   const [limit, setLimit] = useState<number>(5);
@@ -135,14 +130,8 @@ const UsersTable: FC<UsersTableProps> = ({ users }) => {
     }));
   };
 
-  const handleSelectAllUsers = (
-    event: ChangeEvent<HTMLInputElement>
-  ): void => {
-    setSelectedUsers(
-      event.target.checked
-        ? users.map((user) => user.id)
-        : []
-    );
+  const handleSelectAllUsers = (event: ChangeEvent<HTMLInputElement>): void => {
+    setSelectedUsers(event.target.checked ? users.map((user) => user.id) : []);
   };
 
   const handleSelectOneUser = (
@@ -150,10 +139,7 @@ const UsersTable: FC<UsersTableProps> = ({ users }) => {
     userId: string
   ): void => {
     if (!selectedUsers.includes(userId)) {
-      setSelectedUsers((prevSelected) => [
-        ...prevSelected,
-        userId
-      ]);
+      setSelectedUsers((prevSelected) => [...prevSelected, userId]);
     } else {
       setSelectedUsers((prevSelected) =>
         prevSelected.filter((id) => id !== userId)
@@ -170,16 +156,10 @@ const UsersTable: FC<UsersTableProps> = ({ users }) => {
   };
 
   const filteredUsers = applyFilters(users, filters);
-  const paginatedUsers = applyPagination(
-    filteredUsers,
-    page,
-    limit
-  );
+  const paginatedUsers = applyPagination(filteredUsers, page, limit);
   const selectedSomeUsers =
-    selectedUsers.length > 0 &&
-    selectedUsers.length < users.length;
-  const selectedAllUsers =
-    selectedUsers.length === users.length;
+    selectedUsers.length > 0 && selectedUsers.length < users.length;
+  const selectedAllUsers = selectedUsers.length === users.length;
   const theme = useTheme();
 
   return (
@@ -235,15 +215,9 @@ const UsersTable: FC<UsersTableProps> = ({ users }) => {
           </TableHead>
           <TableBody>
             {paginatedUsers.map((user) => {
-              const isUserSelected = selectedUsers.includes(
-                user.id
-              );
+              const isUserSelected = selectedUsers.includes(user.id);
               return (
-                <TableRow
-                  hover
-                  key={user.id}
-                  selected={isUserSelected}
-                >
+                <TableRow hover key={user.id} selected={isUserSelected}>
                   <TableCell padding="checkbox">
                     <Checkbox
                       color="primary"
@@ -262,7 +236,9 @@ const UsersTable: FC<UsersTableProps> = ({ users }) => {
                       gutterBottom
                       noWrap
                     >
-                      {`${user.firstname} ${user.lastname} (${user.username})` }
+                      <Link
+                        to={`/gestion/utilisateurs/${user.id}`}
+                      >{`${user.firstname} ${user.lastname} (${user.username})`}</Link>
                     </Typography>
                     <Typography variant="body2" color="text.secondary" noWrap>
                       {user.email}
