@@ -1,4 +1,4 @@
-import { Job } from "./admin";
+import { Job } from "./job";
 import { Status } from "./status";
 
 export type UserStatus = Status<'outlawed' | 'freezed' | 'active' | 'inactive'>;
