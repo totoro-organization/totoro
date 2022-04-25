@@ -15,6 +15,8 @@ const Loader = (Component) => (props) => (
 
 // Pages
 
+// tables
+
 const SignIn = Loader(lazy(() => import('src/content/pages/Signin')));
 const Jobs = Loader(lazy(() => import('src/content/pages/Management/Jobs')));
 const Users = Loader(lazy(() => import('src/content/pages/Management/Users')));
@@ -26,6 +28,7 @@ const Admins = Loader(lazy(() => import('src/content/pages/Management/Admins')))
 // single pages
 
 const Litigation = Loader(lazy(() => import('src/content/pages/Management/Litigations/Litigation')));
+const Job = Loader(lazy(() => import('src/content/pages/Management/Jobs/Job')));
 
 // Accounting
 
@@ -148,7 +151,11 @@ const routes: PartialRouteObject[] = [
       },
       {
         path: 'missions',
-        element: <Jobs />
+        element: <Jobs />,
+      },
+      {
+        path: 'missions/:id',
+        element: <Job/>
       },
       {
         path: 'utilisateurs',

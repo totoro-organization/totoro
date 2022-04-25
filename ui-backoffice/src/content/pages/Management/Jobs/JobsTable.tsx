@@ -1,4 +1,5 @@
 import { FC, ChangeEvent, useState } from 'react';
+import { Link } from "react-router-dom";
 import { format } from 'date-fns';
 import PropTypes from 'prop-types';
 import {
@@ -254,8 +255,7 @@ const JobsTable: FC<JobsTableProps> = ({ jobs }) => {
                       color="text.primary"
                       gutterBottom
                       noWrap
-                    >
-                      {job.title}
+                    ><Link to={`/gestion/missions/${job.id}`}>{job.title}</Link>
                     </Typography>
                     <Typography variant="body2" color="text.secondary" noWrap>
                       {job.organization}

@@ -29,7 +29,7 @@ import { Organization, OrganizationStatus } from 'src/models/organization';
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 import BulkActions from 'src/components/ManagementTable/BulkActions';
-import { Job } from 'src/models/admin';
+import { Job } from 'src/models/job';
 import { JobStatus } from 'src/models/job';
 
 interface OrganizationsTableProps {
