@@ -1,4 +1,5 @@
 import { FC, ChangeEvent, useState } from 'react';
+import { Link } from "react-router-dom";
 import { format } from 'date-fns';
 import PropTypes from 'prop-types';
 import {
@@ -248,7 +249,7 @@ const LitigationsTable: FC<LitigationsTableProps> = ({ litigations }) => {
                       gutterBottom
                       noWrap
                     >
-                      {litigation.litigation_object.label}
+                      <Link to={`/gestion/litiges/${litigation.id}`}>{litigation.litigation_object.label}</Link>
                     </Typography>
                   </TableCell>
                   <TableCell>
