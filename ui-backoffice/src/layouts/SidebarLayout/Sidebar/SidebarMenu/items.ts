@@ -60,9 +60,9 @@ const menuItems: MenuItems[] = [
         link: '/gestion/partenaires',
         items: [
           {
-            name: 'Demandes d\'adhésion',
+            name: 'Demandes',
             icon: GroupAddIcon,
-            link: '/gestion/partenaires/adhesion',
+            link: '/gestion/partenaires/demandes',
           },
           {
             name: 'Membres',
