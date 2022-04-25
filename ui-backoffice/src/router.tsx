@@ -27,6 +27,7 @@ const Admins = Loader(lazy(() => import('src/content/pages/Management/Admins')))
 
 // single pages
 
+const Litigation = Loader(lazy(() => import('src/content/pages/Management/Litigations/Litigation')));
 const Job = Loader(lazy(() => import('src/content/pages/Management/Jobs/Job')));
 
 // Accounting
@@ -167,6 +168,10 @@ const routes: PartialRouteObject[] = [
       {
         path: 'litiges',
         element: <Litigations />
+      },
+      {
+        path: 'litiges/:id',
+        element: <Litigation/>
       },
       {
         path: 'partenaires/membres',

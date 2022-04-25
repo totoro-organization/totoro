@@ -14,6 +14,7 @@ export interface Litigation {
     author: User,
     target: User,
     date: number,
+    message: string,
     status: LitigationStatus
 }
 
