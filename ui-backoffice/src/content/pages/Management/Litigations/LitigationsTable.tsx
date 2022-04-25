@@ -249,7 +249,7 @@ const LitigationsTable: FC<LitigationsTableProps> = ({ litigations }) => {
                       gutterBottom
                       noWrap
                     >
-                      <Link to={`/gestion/missions/${litigation.id}`}>{litigation.litigation_object.label}</Link>
+                      <Link to={`/gestion/litiges/${litigation.id}`}>{litigation.litigation_object.label}</Link>
                     </Typography>
                   </TableCell>
                   <TableCell>

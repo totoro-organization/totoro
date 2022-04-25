@@ -67,7 +67,8 @@ function Litigations() {
         status: {id: '1', label: 'active'}
       },
       date: subDays(new Date(), 1).getTime(),
-      status: {id: '2', label: 'open'}
+      status: {id: '2', label: 'open'},
+      message: "Mon message"
   }
   ]
 
