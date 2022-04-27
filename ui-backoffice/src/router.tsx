@@ -45,10 +45,11 @@ const Crypto = Loader(lazy(() => import('src/content/dashboards/Crypto')));
 
 // Apps Configuration
 
-const Tags = Loader(lazy(() => import('src/content/pages/AppsConfiguration/Settings/Tags')));
-const Status = Loader(lazy(() => import('src/content/pages/AppsConfiguration/Settings/Status')));
-const LitigationObjects = Loader(lazy(() => import('src/content/pages/AppsConfiguration/Settings/LitigationObjects')));
-const Themes = Loader(lazy(() => import('src/content/pages/AppsConfiguration/Appearance/Themes')));
+const TagSettings = Loader(lazy(() => import('src/content/pages/AppsConfiguration/Settings/Tags')));
+const SubscriptionSettings = Loader(lazy(() => import('src/content/pages/AppsConfiguration/Settings/Subscriptions')));
+const StatusSettings = Loader(lazy(() => import('src/content/pages/AppsConfiguration/Settings/Status')));
+const LitigationObjectSettings = Loader(lazy(() => import('src/content/pages/AppsConfiguration/Settings/LitigationObjects')));
+const ThemeSettings = Loader(lazy(() => import('src/content/pages/AppsConfiguration/Appearance/Themes')));
 
 // Applications
 
@@ -244,19 +245,23 @@ const routes: PartialRouteObject[] = [
       // },
       {
         path: 'parametrage/tags',
-        element: <Tags />
+        element: <TagSettings />
+      },
+      {
+        path: 'parametrage/abonnements',
+        element: <SubscriptionSettings />
       },
       {
         path: 'parametrage/status',
-        element: <Status />
+        element: <StatusSettings />
       },
       {
         path: 'parametrage/objets-litiges',
-        element: <LitigationObjects />
+        element: <LitigationObjectSettings />
       },
       {
         path: 'apparence/themes',
-        element: <Themes />
+        element: <ThemeSettings />
       },
     ]
   },
