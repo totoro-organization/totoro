@@ -39,9 +39,7 @@ function ExpiredSubscriptionTab() {
   ];
 
   return (
-    <Card>
       <ExpiredSubscriptionTable subscriptions={subscriptions} />
-    </Card>
   );
 }
 

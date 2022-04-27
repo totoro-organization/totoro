@@ -39,9 +39,7 @@ function FreeSubscriptionTab() {
   ];
 
   return (
-    <Card>
       <FreeSubscriptionTable subscriptions={subscriptions} />
-    </Card>
   );
 }
 

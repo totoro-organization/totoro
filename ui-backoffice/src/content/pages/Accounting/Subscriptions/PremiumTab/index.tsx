@@ -39,9 +39,7 @@ function PremiumSubscriptionTab() {
   ];
 
   return (
-    <Card>
       <PremiumSubscriptionTable subscriptions={subscriptions} />
-    </Card>
   );
 }
 
