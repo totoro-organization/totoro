@@ -3,7 +3,7 @@ import { ReactNode } from 'react';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
 import ReportProblemIcon from '@mui/icons-material/ReportProblem';
-import QueryStatsIcon from '@mui/icons-material/QueryStats';
+import CardMembershipIcon from '@mui/icons-material/CardMembership';
 import GroupWorkIcon from '@mui/icons-material/GroupWork';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import PeopleIcon from '@mui/icons-material/People';
@@ -92,8 +92,8 @@ const menuItems: MenuItems[] = [
     heading: 'Comptabilité',
     items: [
       {
-        name: 'Statistiques',
-        icon: QueryStatsIcon,
+        name: 'Abonnements',
+        icon: CardMembershipIcon,
         link: '/comptabilite/statistiques'
       },
     ]
