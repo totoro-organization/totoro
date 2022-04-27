@@ -1,4 +1,3 @@
-import { Card } from '@mui/material';
 import { subDays } from 'date-fns';
 import { Subscription } from 'src/models/subscription';
 import FreeSubscriptionTable from './FreeSubscriptionsTable';
