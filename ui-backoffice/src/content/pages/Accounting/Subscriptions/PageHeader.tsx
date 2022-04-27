@@ -10,11 +10,11 @@ function PageHeader() {
   return (
     <>
       <Typography variant="h3" component="h3" gutterBottom>
-        User Settings
+        Abonnements des utilisateurs
       </Typography>
       <Typography variant="subtitle2">
-        {user.name},{' '}
-        this could be your user settings panel.
+        {0} {' '}
+        abonnements au total.
       </Typography>
     </>
   );
