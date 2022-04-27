@@ -39,9 +39,7 @@ function CanceledSubscriptionTab() {
   ];
 
   return (
-    <Card>
       <CanceledSubscriptionTable subscriptions={subscriptions} />
-    </Card>
   );
 }
 
