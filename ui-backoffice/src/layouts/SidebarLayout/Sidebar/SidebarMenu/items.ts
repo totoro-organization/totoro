@@ -94,7 +94,7 @@ const menuItems: MenuItems[] = [
       {
         name: 'Abonnements',
         icon: CardMembershipIcon,
-        link: '/comptabilite/statistiques'
+        link: '/comptabilite/abonnements'
       },
     ]
   },
