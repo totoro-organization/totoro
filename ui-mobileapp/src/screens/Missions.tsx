@@ -33,7 +33,7 @@ export default function Missions() {
       {FAKE_MISSIONS.map(({ id, organization, title }) => {
         return (
           <Card
-            style={{ marginTop: "1rem" }}
+            style={{ marginTop: "16px" }}
             onPress={() => navigation.navigate("Mission", { id: id })}
             key={id}
           >
