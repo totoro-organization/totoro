@@ -1,5 +1,6 @@
 import styled from "styled-components/native";
 import { fonts } from "../../theme/fonts";
+import theme from "../../theme/theme";
 
 import { Colors, getColors } from "../../theme/utils";
 
@@ -14,7 +15,8 @@ export type TextProps = {
 };
 
 export const Text = styled.Text<TextProps>`
-  color: ${({ color }) => (color && getColors(color)) || "inherit"};
+  color: ${({ color }) =>
+    (color && getColors(color)) || theme.colors.grey[900]};
   font-weight: ${({ theme, weight }) =>
     weight ? theme.fonts.weight[weight] : theme.fonts.weight.regular};
   font-size: ${({ theme, size }) =>
