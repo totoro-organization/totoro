@@ -24,12 +24,12 @@ export default function InputGroup({
 
 const Container = styled.View`
   display: grid;
-  grid-gap: 0.5rem;
+  grid-gap: 8px;
 `;
 
 /* TODO: add error theme color */
 const ErrorMessage = styled(Text)`
   color: red;
-  min-height: 1rem;
-  font-size: 0.75rem;
+  min-height: 16px;
+  font-size: 12px;
 `;

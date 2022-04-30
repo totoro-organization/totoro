@@ -102,10 +102,10 @@ export default function RegisterStepOne({ nextStep }: RegisterStepOneProps) {
 
 const Container = styled.View`
   display: grid;
-  grid-gap: 1rem;
+  grid-gap: 16px;
 `;
 
 const InputWrapper = styled.View`
   display: grid;
-  grid-gap: 0.5rem;
+  grid-gap: 8px;
 `;

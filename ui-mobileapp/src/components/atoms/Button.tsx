@@ -134,7 +134,7 @@ const StyledButton = styled.Pressable<StyledButtonProps>`
   align-items: center;
   border-radius: ${({ theme }) => theme.border.radius.md};
   padding: ${({ theme }) => theme.spacing[5]} ${({ theme }) => theme.spacing[9]};
-  font-family: inherit;
+  font-family: 16px;
   ${({ variant }) => (variant ? styleVariant[variant] : styleVariant.default)};
   ${({ color }) => (color ? styleColor[color] : styleColor.primary)};
 `;
