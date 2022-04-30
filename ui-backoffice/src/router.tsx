@@ -17,52 +17,52 @@ const Loader = (Component) => (props) => (
 
 // tables
 
-const SignIn = Loader(lazy(() => import('src/content/pages/Signin')));
-const Jobs = Loader(lazy(() => import('src/content/pages/Management/Jobs')));
-const Users = Loader(lazy(() => import('src/content/pages/Management/Users')));
-const Organizations = Loader(lazy(() => import('src/content/pages/Management/Organizations')));
-const Litigations = Loader(lazy(() => import('src/content/pages/Management/Litigations')));
-const Partners = Loader(lazy(() => import('src/content/pages/Management/Partners/Members')));
-const Admins = Loader(lazy(() => import('src/content/pages/Management/Admins')));
-const MembershipRequests = Loader(lazy(() => import('src/content/pages/Management/Partners/MembershipRequests')));
+const SignIn = Loader(lazy(() => import('src/pages/Signin')));
+const Jobs = Loader(lazy(() => import('src/pages/Management/Jobs')));
+const Users = Loader(lazy(() => import('src/pages/Management/Users')));
+const Organizations = Loader(lazy(() => import('src/pages/Management/Organizations')));
+const Litigations = Loader(lazy(() => import('src/pages/Management/Litigations')));
+const Partners = Loader(lazy(() => import('src/pages/Management/Partners/Members')));
+const Admins = Loader(lazy(() => import('src/pages/Management/Admins')));
+const MembershipRequests = Loader(lazy(() => import('src/pages/Management/Partners/MembershipRequests')));
 
 // single pages
 
-const Litigation = Loader(lazy(() => import('src/content/pages/Management/Litigations/Litigation')));
-const Job = Loader(lazy(() => import('src/content/pages/Management/Jobs/Job')));
-const Organization = Loader(lazy(() => import('src/content/pages/Management/Organizations/Organization')));
-const User = Loader(lazy(() => import('src/content/pages/Management/Users/User')));
-const Partner = Loader(lazy(() => import('src/content/pages/Management/Partners/Members/Partner')));
-const MembershipRequest = Loader(lazy(() => import('src/content/pages/Management/Partners/MembershipRequests/Request')));
+const Litigation = Loader(lazy(() => import('src/pages/Management/Litigations/Litigation')));
+const Job = Loader(lazy(() => import('src/pages/Management/Jobs/Job')));
+const Organization = Loader(lazy(() => import('src/pages/Management/Organizations/Organization')));
+const User = Loader(lazy(() => import('src/pages/Management/Users/User')));
+const Partner = Loader(lazy(() => import('src/pages/Management/Partners/Members/Partner')));
+const MembershipRequest = Loader(lazy(() => import('src/pages/Management/Partners/MembershipRequests/Request')));
 
 // Accounting
 
-const Subscriptions = Loader(lazy(() => import('src/content/pages/Accounting/Subscriptions')));
+const Subscriptions = Loader(lazy(() => import('src/pages/Accounting/Subscriptions')));
 
 // Dashboards
 
-const Crypto = Loader(lazy(() => import('src/content/dashboards/Crypto')));
+const Crypto = Loader(lazy(() => import('src/pages/Dashboards/Crypto')));
 
 // Apps Configuration
 
-const TagSettings = Loader(lazy(() => import('src/content/pages/AppsConfiguration/Settings/Tags')));
-const SubscriptionSettings = Loader(lazy(() => import('src/content/pages/AppsConfiguration/Settings/Subscriptions')));
-const StatusSettings = Loader(lazy(() => import('src/content/pages/AppsConfiguration/Settings/Status')));
-const LitigationObjectSettings = Loader(lazy(() => import('src/content/pages/AppsConfiguration/Settings/LitigationObjects')));
-const ThemeSettings = Loader(lazy(() => import('src/content/pages/AppsConfiguration/Appearance/Themes')));
+const TagSettings = Loader(lazy(() => import('src/pages/AppsConfiguration/Settings/Tags')));
+const SubscriptionSettings = Loader(lazy(() => import('src/pages/AppsConfiguration/Settings/Subscriptions')));
+const StatusSettings = Loader(lazy(() => import('src/pages/AppsConfiguration/Settings/Status')));
+const LitigationObjectSettings = Loader(lazy(() => import('src/pages/AppsConfiguration/Settings/LitigationObjects')));
+const ThemeSettings = Loader(lazy(() => import('src/pages/AppsConfiguration/Appearance/Themes')));
 
 // Applications
 
-const UserProfile = Loader(lazy(() => import('src/content/pages/User/profile')));
-const UserSettings = Loader(lazy(() => import('src/content/pages/User/settings')));
+const UserProfile = Loader(lazy(() => import('src/pages/User/profile')));
+const UserSettings = Loader(lazy(() => import('src/pages/User/settings')));
 
 
 // Status
 
-const Status404 = Loader(lazy(() => import('src/content/pages/Status/Status404')));
-const Status500 = Loader(lazy(() => import('src/content/pages/Status/Status500')));
-const StatusComingSoon = Loader(lazy(() => import('src/content/pages/Status/ComingSoon')));
-const StatusMaintenance = Loader(lazy(() => import('src/content/pages/Status/Maintenance')));
+const Status404 = Loader(lazy(() => import('src/pages/Status/Status404')));
+const Status500 = Loader(lazy(() => import('src/pages/Status/Status500')));
+const StatusComingSoon = Loader(lazy(() => import('src/pages/Status/ComingSoon')));
+const StatusMaintenance = Loader(lazy(() => import('src/pages/Status/Maintenance')));
 
 
 const routes: PartialRouteObject[] = [
