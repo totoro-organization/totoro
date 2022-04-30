@@ -37,7 +37,6 @@ export default function Icon({ name, color, size, ...rest }: IconProps) {
 }
 
 const Wrapper = styled.View<Pick<IconProps, "color" | "size">>`
-  // NOTE: The size of our icons are based on the font-size.
   font-size: ${({ size }) => (size && `${size}em`) || "24px"};
   width: fit-content;
   color: ${({ color, theme }) =>

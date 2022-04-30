@@ -69,7 +69,6 @@ const InfoWrapper = styled.View`
   position: relative;
   width: 100%;
   height: 160px;
-  // FIXME
   border-top-left-radius: ${({ theme }) => theme.border.radius.lg};
   border-top-right-radius: ${({ theme }) => theme.border.radius.lg};
 `;
