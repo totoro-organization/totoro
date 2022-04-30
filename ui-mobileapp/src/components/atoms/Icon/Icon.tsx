@@ -1,10 +1,10 @@
 import React from "react";
-import Missions from "../../assets/icons/Missions";
+import Missions from "../../../assets/icons/Missions";
 import styled from "styled-components/native";
-import { Colors, getColors } from "../../theme/utils";
-import Shop from "../../assets/icons/Shop";
-import Message from "../../assets/icons/Message";
-import User from "../../assets/icons/User";
+import { Colors, getColors } from "../../../theme/utils";
+import Shop from "../../../assets/icons/Shop";
+import Message from "../../../assets/icons/Message";
+import User from "../../../assets/icons/User";
 
 export enum IconName {
   missions = "missions",
@@ -38,7 +38,7 @@ export default function Icon({ name, color, size, ...rest }: IconProps) {
 
 const Wrapper = styled.View<Pick<IconProps, "color" | "size">>`
   // NOTE: The size of our icons are based on the font-size.
-  font-size: ${({ size }) => (size && `${size}em`) || "1.5em"};
+  font-size: ${({ size }) => (size && `${size}em`) || "24px"};
   width: fit-content;
   color: ${({ color, theme }) =>
     (color && getColors(color)) || theme.colors.grey[400]};

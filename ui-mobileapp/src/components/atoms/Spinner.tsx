@@ -31,21 +31,21 @@ export default function Spinner({ thickness = 3, size = 2 }: SpinnerProps) {
   return (
     <Wrapper $size={size}>
       <Animated.View style={{ transform: [{ rotate: spin }] }}>
-        <SpinnerIcon $thickness={thickness} $size={size} />
+        <SpinnerIcon $thickness={thickness} $size={size * 16} />
       </Animated.View>
     </Wrapper>
   );
 }
 
 const Wrapper = styled.View<{ $size?: number }>`
-  width: ${({ $size }) => $size && `${$size}em`};
-  height: ${({ $size }) => $size && `${$size}em`};
+  width: ${({ $size }) => $size && `${$size}px`};
+  height: ${({ $size }) => $size && `${$size}px`};
 `;
 
 const SpinnerIcon = styled.View<{ $thickness?: number; $size: number }>`
   border: ${({ $thickness }) => $thickness && `${$thickness}px`} solid #ffffff50;
   border-radius: 50;
   border-top-color: #ffff;
-  width: ${({ $size }) => $size && `${$size}em`};
-  height: ${({ $size }) => $size && `${$size}em`};
+  width: ${({ $size }) => $size && `${$size}px`};
+  height: ${({ $size }) => $size && `${$size}px`};
 `;
