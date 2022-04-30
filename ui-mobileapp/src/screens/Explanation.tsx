@@ -30,8 +30,8 @@ const Container = styled.View`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1em;
-  gap: 1rem;
+  padding: 16px;
+  gap: 16px;
   width: 100%;
   height: 100%;
   background-color: ${({ theme }) => theme.colors.grey[900]};
