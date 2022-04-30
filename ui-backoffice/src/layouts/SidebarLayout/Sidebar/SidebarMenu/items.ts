@@ -93,9 +93,9 @@ const menuItems: MenuItems[] = [
     heading: 'Comptabilité',
     items: [
       {
-        name: 'Statistiques',
-        icon: QueryStatsIcon,
-        link: '/comptabilite/statistiques'
+        name: 'Abonnements',
+        icon: CardMembershipIcon,
+        link: '/comptabilite/abonnements'
       },
     ]
   },

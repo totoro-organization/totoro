@@ -37,7 +37,7 @@ const MembershipRequest = Loader(lazy(() => import('src/content/pages/Management
 
 // Accounting
 
-const Accounting = Loader(lazy(() => import('src/content/pages/Accounting')));
+const Subscriptions = Loader(lazy(() => import('src/content/pages/Accounting/Subscriptions')));
 
 // Dashboards
 
@@ -217,14 +217,14 @@ const routes: PartialRouteObject[] = [
         path: '/',
         element: (
           <Navigate
-            to="statistiques"
+            to="abonnements"
             replace
           />
         )
       },
       {
-        path: 'statistiques',
-        element: <Accounting/>
+        path: 'abonnements',
+        element: <Subscriptions/>
       }
     ]
   },
