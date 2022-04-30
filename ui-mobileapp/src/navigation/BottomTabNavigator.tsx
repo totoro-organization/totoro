@@ -1,6 +1,6 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React from "react";
-import Icon, { IconName } from "../components/atoms/Icon";
+import Icon, { IconName } from "../components/atoms/Icon/Icon";
 import { Text } from "../components/atoms/Text";
 import Chat from "../screens/Chat";
 import Missions from "../screens/Missions";

@@ -56,5 +56,5 @@ export default function RegisterStepFinal() {
 
 const InputWrapper = styled.View`
   display: grid;
-  grid-gap: 0.5rem;
+  grid-gap: 8px;
 `;
