@@ -11,7 +11,7 @@ export default function Input({
 }
 
 const StyledInput = styled.TextInput<{ $error: boolean }>`
-  padding: 0.875rem;
+  padding: 14px;
   border: ${({ theme }) => theme.border.width[1]} solid
     ${({ theme, $error }) => ($error ? "red" : theme.colors.grey[200])};
   border-radius: ${({ theme }) => theme.border.radius.md};
