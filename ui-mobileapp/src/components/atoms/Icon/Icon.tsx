@@ -6,6 +6,7 @@ import Shop from "../../../assets/icons/Shop";
 import Message from "../../../assets/icons/Message";
 import User from "../../../assets/icons/User";
 import Info from "../../../assets/icons/Info";
+import Arrow from "../../../assets/icons/Arrow";
 
 export enum IconName {
   missions = "missions",
@@ -13,6 +14,7 @@ export enum IconName {
   message = "message",
   user = "user",
   info = "info",
+  arrow = "arrow",
 }
 
 const ICONS: Record<IconName, JSX.Element> = {
@@ -21,6 +23,7 @@ const ICONS: Record<IconName, JSX.Element> = {
   message: <Message />,
   user: <User />,
   info: <Info />,
+  arrow: <Arrow />,
 } as const;
 
 export type IconProps = {
