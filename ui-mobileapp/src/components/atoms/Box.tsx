@@ -19,13 +19,10 @@ type BoxProps = {
   alignItems?: Position;
   alignContent?: Position;
   justifyContent?: JustifySpace;
-  justifyItems?: Position;
-  placeItems?: PlaceItems;
   height?: string;
   width?: string;
   padding?: number;
   margin?: number;
-  gap?: number;
   color?: Colors;
   className?: string;
 };
