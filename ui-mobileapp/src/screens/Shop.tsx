@@ -42,5 +42,4 @@ export default function Shop() {
 
 const ShopCardsWrapper = styled.View`
   display: flex;
-  /* gap: 8px; */
 `;
