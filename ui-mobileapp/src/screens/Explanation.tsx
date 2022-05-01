@@ -5,15 +5,16 @@ import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { AuthParamList } from "../navigation/StackNavigationParams";
 import Button from "../components/atoms/Button";
+import { Text as NativeText } from "react-native";
 
 export default function Explanation() {
   const navigation = useNavigation<StackNavigationProp<AuthParamList>>();
 
   return (
     <Container>
-      <Text>Participes à des missions</Text>
-      <Text>Sois récompensé-e avec notre système de tokens</Text>
-      <Text>Viens convertir tes tokens en bons de réduction</Text>
+      <WhiteText>Participes à des missions</WhiteText>
+      <WhiteText>Sois récompensé-e avec notre système de tokens</WhiteText>
+      <WhiteText>Viens convertir tes tokens en bons de réduction</WhiteText>
 
       <Button onPress={() => navigation.navigate("Se connecter")}>
         Se connecter
@@ -31,9 +32,12 @@ const Container = styled.View`
   align-items: center;
   justify-content: center;
   padding: 16px;
-  gap: 16px;
   width: 100%;
   height: 100%;
   background-color: ${({ theme }) => theme.colors.grey[900]};
+`;
+
+const WhiteText = styled(Text)`
+  margin-top: 16px;
   color: ${({ theme }) => theme.colors.white[600]};
 `;
