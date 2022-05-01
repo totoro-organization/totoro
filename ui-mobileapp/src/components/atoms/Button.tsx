@@ -8,7 +8,7 @@ import theme from "../../theme/theme";
 import Spinner from "./Spinner";
 import { Colors, getColors } from "../../theme/utils";
 
-export type ButtonColor = "black" | "primary";
+export type ButtonColor = "black" | "primary" | "grey";
 export type ButtonVariant = "default" | "outline" | "ghost";
 
 export type ButtonProps = PropsWithChildren<
@@ -103,6 +103,11 @@ const styleColor: { [key in ButtonColor]: FlattenSimpleInterpolation } = {
   primary: getButtonVariables({
     background: theme.colors.primary[500],
     border: theme.colors.primary[500],
+  }),
+
+  grey: getButtonVariables({
+    background: theme.colors.grey[300],
+    border: theme.colors.grey[300],
   }),
 };
 
