@@ -56,5 +56,5 @@ export default function RegisterStepFinal() {
 
 const InputWrapper = styled.View`
   display: flex;
-  gap: 8px;
+  justify-content: space-between;
 `;

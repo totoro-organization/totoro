@@ -102,10 +102,10 @@ export default function RegisterStepOne({ nextStep }: RegisterStepOneProps) {
 
 const Container = styled.View`
   display: flex;
-  gap: 8px;
+  justify-content: space-between;
 `;
 
 const InputWrapper = styled.View`
   display: flex;
-  gap: 8px;
+  justify-content: space-between;
 `;

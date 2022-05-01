@@ -120,5 +120,5 @@ export default function RegisterStepTwo({ nextStep }: RegisterStepTwoProps) {
 
 const InputWrapper = styled.View`
   display: flex;
-  gap: 8px;
+  /* gap: 8px; */
 `;
