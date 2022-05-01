@@ -141,7 +141,6 @@ const StyledButton = styled.Pressable<StyledButtonProps>`
   align-items: center;
   border-radius: ${({ theme }) => theme.border.radius.md};
   padding: ${({ theme }) => theme.spacing[5]} ${({ theme }) => theme.spacing[9]};
-  font-size: 16px;
 
   ${({ variant, color }) =>
     variant && color && getButtonStyles(variant, color)};
@@ -163,6 +162,9 @@ type ButtonContentProps = {
 } & Pick<ButtonProps, "variant" | "color">;
 
 const buttonContentStyle = css<ButtonContentProps>`
+  font-size: ${({ theme }) => theme.fonts.sizes.md};
+  font-weight: ${({ theme }) => theme.fonts.weight.semiBold};
+
   opacity: ${({ $isHidden }) => ($isHidden ? "0" : "1")};
   color: ${({ variant, color, theme }) =>
     variant === "default"
