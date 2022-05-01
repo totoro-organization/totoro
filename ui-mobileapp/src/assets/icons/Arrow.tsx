@@ -1,24 +1,25 @@
 import React from "react";
-import Svg, { Path, Circle } from "react-native-svg";
+import Svg, { Path } from "react-native-svg";
 
-export default function Info() {
+export default function Arrow() {
   return (
     <Svg width="16px" height="16px" viewBox="0 0 24 24" fill="none">
       <Path
-        d="M12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22Z"
+        d="M9.57 5.93005L3.5 12.0001L9.57 18.0701"
         stroke="currentColor"
         stroke-width="1.5"
+        stroke-miterlimit="10"
         stroke-linecap="round"
         stroke-linejoin="round"
       />
       <Path
-        d="M12 8V13"
+        d="M20.4999 12H3.66992"
         stroke="currentColor"
         stroke-width="1.5"
+        stroke-miterlimit="10"
         stroke-linecap="round"
         stroke-linejoin="round"
       />
-      <Circle cx="12" cy="16" r="1" fill="currentColor" />
     </Svg>
   );
 }
