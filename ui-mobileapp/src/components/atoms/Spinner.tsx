@@ -44,7 +44,7 @@ const Wrapper = styled.View<{ $size?: number }>`
 
 const SpinnerIcon = styled.View<{ $thickness?: number; $size: number }>`
   border: ${({ $thickness }) => $thickness && `${$thickness}px`} solid #ffffff50;
-  border-radius: 50;
+  border-radius: 50%;
   border-top-color: #ffff;
   width: ${({ $size }) => $size && `${$size}px`};
   height: ${({ $size }) => $size && `${$size}px`};
