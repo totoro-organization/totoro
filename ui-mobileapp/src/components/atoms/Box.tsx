@@ -50,9 +50,8 @@ const StyledBox = styled.View<BoxProps>`
   place-items: ${({ placeItems }) => placeItems || null};
   height: ${({ height }) => `${height}` || null};
   width: ${({ width }) => `${width}` || null};
-  padding: ${({ padding }) => (padding ? `${padding}rem` : "0")};
-  margin: ${({ margin }) => (margin ? `${margin}rem` : "0")};
-  gap: ${({ gap }) => `${gap}rem` || null};
+  padding: ${({ padding }) => (padding ? `${padding * 16}px` : "0")};
+  margin: ${({ margin }) => (margin ? `${margin * 16}px` : "0")};
   grid-auto-flow: ${({ gridAutoFlow }) => `${gridAutoFlow}` || null};
   color: ${({ theme, color }) =>
     (color && getColors(color)) || theme.colors.grey[900]};
