@@ -8,6 +8,7 @@ import Button from "../../atoms/Button";
 import { registerStepOneSchema } from "./registerValidationSchemas";
 import type { RegisterStepOneFormValues } from "./registerValidationSchemas";
 import InputGroup from "../../molecules/InputGroup";
+import Spacer from "../../atoms/Spacer";
 
 export type RegisterStepOneProps = {
   nextStep: () => void;
@@ -31,9 +32,12 @@ export default function RegisterStepOne({ nextStep }: RegisterStepOneProps) {
   }
 
   return (
-    <Container>
+    <>
       <InputWrapper>
         <Text>Adresse e-mail</Text>
+
+        <Spacer axis="vertical" size={0.5} />
+
         <Controller
           name="email"
           control={control}
@@ -55,6 +59,9 @@ export default function RegisterStepOne({ nextStep }: RegisterStepOneProps) {
 
       <InputWrapper>
         <Text>Mot de passe</Text>
+
+        <Spacer axis="vertical" size={0.5} />
+
         <Controller
           name="password"
           control={control}
@@ -76,6 +83,9 @@ export default function RegisterStepOne({ nextStep }: RegisterStepOneProps) {
 
       <InputWrapper>
         <Text>Confirmation du mot de passe</Text>
+
+        <Spacer axis="vertical" size={0.5} />
+
         <Controller
           name="confirmPassword"
           control={control}
@@ -96,16 +106,11 @@ export default function RegisterStepOne({ nextStep }: RegisterStepOneProps) {
       </InputWrapper>
 
       <Button onPress={handleSubmit(onSubmit)}>Suivant</Button>
-    </Container>
+    </>
   );
 }
 
-const Container = styled.View`
-  display: flex;
-  justify-content: space-between;
-`;
-
 const InputWrapper = styled.View`
   display: flex;
-  justify-content: space-between;
+  margin-bottom: ${({ theme }) => theme.spacing[4]};
 `;
