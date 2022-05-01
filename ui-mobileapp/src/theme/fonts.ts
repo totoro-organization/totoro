@@ -7,10 +7,9 @@ export const fonts = {
     xl: "24px",
   },
 
-  //   TODO: add weights / line-height tokens / font-family (?)
   weight: {
-    regular: 400,
-    medium: 500,
-    semiBold: 600,
+    regular: "Outfit-Regular",
+    medium: "Outfit-Medium",
+    semiBold: "Outfit-SemiBold",
   },
 };

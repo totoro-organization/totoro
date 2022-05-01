@@ -4,7 +4,6 @@ import theme from "../../theme/theme";
 
 import { Colors, getColors } from "../../theme/utils";
 
-// TODO: add all font weigth
 export type Weights = keyof typeof fonts.weight;
 export type Sizes = keyof typeof fonts.sizes;
 
@@ -19,11 +18,11 @@ export type TextProps = {
 export const Text = styled.Text<TextProps>`
   color: ${({ color }) =>
     (color && getColors(color)) || theme.colors.grey[900]};
-  font-weight: ${({ theme, weight }) =>
-    weight ? theme.fonts.weight[weight] : theme.fonts.weight.regular};
+
   font-size: ${({ theme, size }) =>
     size ? theme.fonts.sizes[size] : theme.fonts.sizes.md};
-  font-family: "Outfit";
+  font-family: ${({ theme, weight }) =>
+    weight ? theme.fonts.weight[weight] : theme.fonts.weight.regular};
 `;
 
 // HEADING (H1/H2... STYLES)
@@ -46,6 +45,8 @@ export type HeadingProps = TextProps & { variant: keyof typeof Variant };
 export const Heading = styled.Text<HeadingProps>`
   color: ${({ color }) =>
     (color && getColors(color)) || theme.colors.grey[900]};
+  font-family: ${({ theme, weight }) =>
+    weight ? theme.fonts.weight[weight] : theme.fonts.weight.semiBold};
 
   ${({ variant }) => variantsStyles[variant]};
 `;
