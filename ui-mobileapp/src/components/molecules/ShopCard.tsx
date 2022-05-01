@@ -86,5 +86,6 @@ const StyledImage = styled(ImageBackground)`
   height: 100%;
   display: flex;
   justify-content: flex-end;
-  border-radius: inherit;
+  border-top-left-radius: ${({ theme }) => theme.border.radius.lg};
+  border-top-right-radius: ${({ theme }) => theme.border.radius.lg};
 `;
