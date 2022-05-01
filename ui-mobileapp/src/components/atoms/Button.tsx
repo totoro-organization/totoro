@@ -143,8 +143,9 @@ const LoadingWrapper = styled.View`
   position: absolute;
   top: 0;
   left: 0;
-  display: grid;
-  place-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
   height: 100%;
 `;
@@ -158,7 +159,7 @@ const StyledText = styled(Text)<{ $isHidden: boolean }>`
 `;
 
 const Element = styled.View<{ $isHidden: boolean }>`
-  display: grid;
-  place-items: center;
+  display: flex;
+  align-items: center;
   ${buttonContentStyle};
 `;

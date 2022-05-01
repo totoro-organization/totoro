@@ -23,8 +23,8 @@ export default function InputGroup({
 }
 
 const Container = styled.View`
-  display: grid;
-  grid-gap: 8px;
+  display: flex;
+  gap: 8px;
 `;
 
 /* TODO: add error theme color */

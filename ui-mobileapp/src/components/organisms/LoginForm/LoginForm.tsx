@@ -81,6 +81,6 @@ export default function LoginForm() {
 }
 
 const InputWrapper = styled.View`
-  display: grid;
-  grid-gap: 8px;
+  display: flex;
+  gap: 8px;
 `;
