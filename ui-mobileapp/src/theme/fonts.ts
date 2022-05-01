@@ -1,10 +1,10 @@
 export const fonts = {
   sizes: {
-    //  TODO: add all text sizes
     xs: "10px", //
     sm: "12px",
     md: "14px", // default size (refer to figma)
-    lg: "16",
+    lg: "16px",
+    xl: "24px",
   },
 
   //   TODO: add weights / line-height tokens / font-family (?)
