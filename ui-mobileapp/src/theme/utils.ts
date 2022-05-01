@@ -2,7 +2,7 @@ import theme from "./theme";
 
 export type ThemeColors = "primary" | "secondary" | "grey";
 
-export type Colors = "black" | "primary" | "white" | "grey";
+export type Colors = "black" | "primary" | "white" | "grey" | "info";
 
 export function getColors(color: Colors) {
   switch (color) {
@@ -14,5 +14,7 @@ export function getColors(color: Colors) {
       return theme.colors.white[600];
     case "grey":
       return theme.colors.grey[500];
+    case "info":
+      return theme.colors.info[500];
   }
 }
