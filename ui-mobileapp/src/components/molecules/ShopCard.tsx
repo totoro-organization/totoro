@@ -30,7 +30,7 @@ export default function ShopCard({ discount }: ShopCardProps) {
         <StyledImage source={PLACEHOLDER_IMAGE as any} resizeMode="cover">
           <Overlay />
 
-          <Box display="flex" flexDirection="column" padding={0.875} gap={0.5}>
+          <Box display="flex" flexDirection="column" padding={0.875}>
             <Text size="lg" color="white">
               {discount.shopName}
             </Text>
@@ -48,7 +48,7 @@ export default function ShopCard({ discount }: ShopCardProps) {
         handlePress={() => console.log("acheté !")}
       >
         {discount.isObtained
-          ? "Obtenu"
+          ? "Déjà obtenu"
           : `Obtenir pour ${discount.tokens} tokens`}
       </StyledButton>
     </Container>

@@ -3,6 +3,7 @@ import { Text } from "../components/atoms/Text";
 import MainLayout from "../components/layouts/MainLayout";
 import ShopCard from "../components/molecules/ShopCard";
 import styled from "styled-components/native";
+import Spacer from "../components/atoms/Spacer";
 
 const FAKE_DISCOUNTS = [
   {
@@ -26,7 +27,13 @@ export default function Shop() {
 
       <ShopCardsWrapper>
         {FAKE_DISCOUNTS.map((discount, index) => {
-          return <ShopCard key={index} discount={discount} />;
+          return (
+            <>
+              <ShopCard key={index} discount={discount} />
+
+              <Spacer axis="vertical" size={1} />
+            </>
+          );
         })}
       </ShopCardsWrapper>
     </MainLayout>
