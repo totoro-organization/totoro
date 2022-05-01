@@ -31,7 +31,7 @@ export default function ShopCard({ discount }: ShopCardProps) {
           <Overlay />
 
           <Box display="flex" flexDirection="column" padding={0.875}>
-            <Text size="lg" color="white">
+            <Text size="lg" color="white" weight="semiBold">
               {discount.shopName}
             </Text>
             <Text size="sm" color="white">
