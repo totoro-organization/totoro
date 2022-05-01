@@ -32,4 +32,5 @@ const ErrorMessage = styled(Text)`
   color: red;
   min-height: 16px;
   font-size: 12px;
+  margin-top: ${({ theme }) => theme.spacing[1]};
 `;

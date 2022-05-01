@@ -10,6 +10,7 @@ import { Text } from "../../atoms/Text";
 import Button from "../../atoms/Button";
 import styled from "styled-components/native";
 import InputGroup from "../../molecules/InputGroup";
+import Spacer from "../../atoms/Spacer";
 
 export default function RegisterStepFinal() {
   const { control, handleSubmit } = useForm<RegisterStepFinalFormValues>({
@@ -29,6 +30,9 @@ export default function RegisterStepFinal() {
     <>
       <InputWrapper>
         <Text>Adresse de résidence</Text>
+
+        <Spacer axis="vertical" size={0.5} />
+
         {/* TODO: replace Input atom to autocomplete input address */}
         {/* NOTE: check this article: https://medium.com/debugger-off/how-to-use-google-autocomplete-api-s-and-react-native-maps-in-react-native-to-fetch-user-location-20d3f65af48b */}
         <Controller
@@ -56,5 +60,5 @@ export default function RegisterStepFinal() {
 
 const InputWrapper = styled.View`
   display: flex;
-  justify-content: space-between;
+  margin-bottom: ${({ theme }) => theme.spacing[4]};
 `;
