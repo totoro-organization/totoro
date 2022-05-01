@@ -13,7 +13,9 @@ export function useCachedResources(): boolean {
 
         // Load fonts
         await Font.loadAsync({
-          Outfit: require("../../assets/fonts/Outfit-VariableFont_wght.ttf"),
+          "Outfit-Regular": require("../../assets/fonts/Outfit-Regular.ttf"),
+          "Outfit-Medium": require("../../assets/fonts/Outfit-Medium.ttf"),
+          "Outfit-SemiBold": require("../../assets/fonts/Outfit-SemiBold.ttf"),
         });
       } catch (loadCachedResourcesError) {
         console.error(loadCachedResourcesError);

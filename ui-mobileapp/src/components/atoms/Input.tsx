@@ -34,5 +34,5 @@ const StyledInput = styled.TextInput<{ $error: boolean; $active: boolean }>`
   background-color: ${({ theme, $error }) =>
     $error ? theme.colors.primary[50] : theme.colors.grey[50]};
   color: ${({ theme }) => theme.colors.grey[900]};
-  font-family: "Outfit";
+  font-family: ${({ theme }) => theme.fonts.weight.medium};
 `;
