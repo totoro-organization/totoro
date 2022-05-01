@@ -11,6 +11,10 @@ import Button from "../../atoms/Button";
 import styled from "styled-components/native";
 import InputGroup from "../../molecules/InputGroup";
 import Spacer from "../../atoms/Spacer";
+import Alert from "../../atoms/Alert";
+
+const ALERT_CONTENT_ADDRESS =
+  "Totoro est une application de proximité, votre adresse de résidence nous permet de séléctionner les meilleurs missions près de chez vous.";
 
 export default function RegisterStepFinal() {
   const { control, handleSubmit } = useForm<RegisterStepFinalFormValues>({
@@ -28,6 +32,10 @@ export default function RegisterStepFinal() {
 
   return (
     <>
+      <Alert type="info">{ALERT_CONTENT_ADDRESS}</Alert>
+
+      <Spacer axis="vertical" size={3} />
+
       <InputWrapper>
         <Text>Adresse de résidence</Text>
 
