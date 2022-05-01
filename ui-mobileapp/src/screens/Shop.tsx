@@ -34,6 +34,6 @@ export default function Shop() {
 }
 
 const ShopCardsWrapper = styled.View`
-  display: grid;
-  grid-gap: 1rem;
+  display: flex;
+  gap: 8px;
 `;

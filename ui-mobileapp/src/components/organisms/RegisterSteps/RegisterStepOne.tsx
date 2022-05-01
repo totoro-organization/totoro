@@ -101,11 +101,11 @@ export default function RegisterStepOne({ nextStep }: RegisterStepOneProps) {
 }
 
 const Container = styled.View`
-  display: grid;
-  grid-gap: 16px;
+  display: flex;
+  gap: 8px;
 `;
 
 const InputWrapper = styled.View`
-  display: grid;
-  grid-gap: 8px;
+  display: flex;
+  gap: 8px;
 `;
