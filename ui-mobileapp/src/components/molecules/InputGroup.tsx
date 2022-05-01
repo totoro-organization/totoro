@@ -24,7 +24,7 @@ export default function InputGroup({
 
 const Container = styled.View`
   display: flex;
-  gap: 8px;
+  justify-content: space-between;
 `;
 
 /* TODO: add error theme color */
