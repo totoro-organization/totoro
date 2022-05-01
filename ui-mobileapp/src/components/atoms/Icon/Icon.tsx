@@ -5,12 +5,14 @@ import { Colors, getColors } from "../../../theme/utils";
 import Shop from "../../../assets/icons/Shop";
 import Message from "../../../assets/icons/Message";
 import User from "../../../assets/icons/User";
+import Info from "../../../assets/icons/Info";
 
 export enum IconName {
   missions = "missions",
   shop = "shop",
   message = "message",
   user = "user",
+  info = "info",
 }
 
 const ICONS: Record<IconName, JSX.Element> = {
@@ -18,6 +20,7 @@ const ICONS: Record<IconName, JSX.Element> = {
   shop: <Shop />,
   message: <Message />,
   user: <User />,
+  info: <Info />,
 } as const;
 
 export type IconProps = {
