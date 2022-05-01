@@ -2,7 +2,7 @@ import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import styled from "styled-components/native";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Text } from "react-native";
+import { Text } from "../../atoms/Text";
 import Button from "../../atoms/Button";
 
 import {
@@ -10,6 +10,7 @@ import {
   registerStepTwoSchema,
 } from "./registerValidationSchemas";
 import InputGroup from "../../molecules/InputGroup";
+import Spacer from "../../atoms/Spacer";
 
 export type RegisterStepTwoProps = {
   nextStep: () => void;
@@ -34,10 +35,12 @@ export default function RegisterStepTwo({ nextStep }: RegisterStepTwoProps) {
   }
 
   return (
-    //   TODO: add grid container
     <>
       <InputWrapper>
         <Text>Prénom</Text>
+
+        <Spacer axis="vertical" size={0.5} />
+
         <Controller
           name="firstName"
           control={control}
@@ -58,6 +61,9 @@ export default function RegisterStepTwo({ nextStep }: RegisterStepTwoProps) {
 
       <InputWrapper>
         <Text>Nom</Text>
+
+        <Spacer axis="vertical" size={0.5} />
+
         <Controller
           name="lastName"
           control={control}
@@ -78,6 +84,9 @@ export default function RegisterStepTwo({ nextStep }: RegisterStepTwoProps) {
 
       <InputWrapper>
         <Text>Date de naissance</Text>
+
+        <Spacer axis="vertical" size={0.5} />
+
         <Controller
           name="birthDate"
           control={control}
@@ -94,8 +103,12 @@ export default function RegisterStepTwo({ nextStep }: RegisterStepTwoProps) {
           )}
         />
       </InputWrapper>
+
       <InputWrapper>
         <Text>Numéro de téléphone</Text>
+
+        <Spacer axis="vertical" size={0.5} />
+
         <Controller
           name="phoneNumber"
           control={control}
@@ -119,6 +132,6 @@ export default function RegisterStepTwo({ nextStep }: RegisterStepTwoProps) {
 }
 
 const InputWrapper = styled.View`
-  display: grid;
-  grid-gap: 0.5rem;
+  display: flex;
+  margin-bottom: ${({ theme }) => theme.spacing[4]};
 `;
