@@ -163,7 +163,6 @@ type ButtonContentProps = {
 
 const buttonContentStyle = css<ButtonContentProps>`
   font-size: ${({ theme }) => theme.fonts.sizes.md};
-  font-weight: ${({ theme }) => theme.fonts.weight.semiBold};
 
   opacity: ${({ $isHidden }) => ($isHidden ? "0" : "1")};
   color: ${({ variant, color, theme }) =>
