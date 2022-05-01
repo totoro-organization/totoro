@@ -1,9 +1,9 @@
 import React from "react";
-import { Svg, Path } from "react-native-svg";
+import Svg, { Path } from "react-native-svg";
 
 export default function Shop() {
   return (
-    <Svg width="1em" height="1em" viewBox="0 0 24 24" fill="none">
+    <Svg width="16px" height="16px" viewBox="0 0 24 24" fill="none">
       <Path
         d="M3.00977 11.22V15.71C3.00977 20.2 4.80977 22 9.29977 22H14.6898C19.1798 22 20.9798 20.2 20.9798 15.71V11.22"
         stroke="currentColor"

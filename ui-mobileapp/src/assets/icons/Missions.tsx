@@ -1,9 +1,9 @@
 import React from "react";
-import { Svg, Path } from "react-native-svg";
+import Svg, { Path } from "react-native-svg";
 
 export default function Missions() {
   return (
-    <Svg width="1em" height="1em" viewBox="0 0 24 24" fill="none">
+    <Svg width="16px" height="16px" viewBox="0 0 24 24" fill="none">
       <Path
         d="M19 10.75H17C14.58 10.75 13.25 9.42 13.25 7V5C13.25 2.58 14.58 1.25 17 1.25H19C21.42 1.25 22.75 2.58 22.75 5V7C22.75 9.42 21.42 10.75 19 10.75ZM17 2.75C15.42 2.75 14.75 3.42 14.75 5V7C14.75 8.58 15.42 9.25 17 9.25H19C20.58 9.25 21.25 8.58 21.25 7V5C21.25 3.42 20.58 2.75 19 2.75H17Z"
         fill="currentColor"

@@ -1,9 +1,9 @@
 import React from "react";
-import { Svg, Path } from "react-native-svg";
+import Svg, { Path } from "react-native-svg";
 
 export default function User() {
   return (
-    <Svg width="1em" height="1em" viewBox="0 0 24 24" fill="none">
+    <Svg width="16px" height="16px" viewBox="0 0 24 24" fill="none">
       <Path
         d="M15.0006 22.75H9.00063C7.68063 22.75 6.58063 22.62 5.65063 22.34C5.31063 22.24 5.09063 21.91 5.11063 21.56C5.36063 18.57 8.39063 16.22 12.0006 16.22C15.6106 16.22 18.6306 18.56 18.8906 21.56C18.9206 21.92 18.7006 22.24 18.3506 22.34C17.4206 22.62 16.3206 22.75 15.0006 22.75ZM6.72063 21.06C7.38063 21.19 8.13063 21.25 9.00063 21.25H15.0006C15.8706 21.25 16.6206 21.19 17.2806 21.06C16.7506 19.14 14.5606 17.72 12.0006 17.72C9.44063 17.72 7.25063 19.14 6.72063 21.06Z"
         fill="currentColor"
