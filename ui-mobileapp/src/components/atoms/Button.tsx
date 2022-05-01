@@ -6,16 +6,10 @@ import { FlattenSimpleInterpolation } from "styled-components";
 import { Text } from "./Text";
 import theme from "../../theme/theme";
 import Spinner from "./Spinner";
+import { Colors, getColors } from "../../theme/utils";
 
-export type ButtonColor = "neutral" | "primary" | "disable";
+export type ButtonColor = "black" | "primary";
 export type ButtonVariant = "default" | "outline" | "ghost";
-
-export type ColorVariables = {
-  background: string;
-  text: string;
-  //   disabled?: string;
-  border: string;
-};
 
 export type ButtonProps = PropsWithChildren<
   {
@@ -28,8 +22,8 @@ export type ButtonProps = PropsWithChildren<
 
 // TODO: add isLoading and disabled states?
 export default function Button({
-  variant,
-  color,
+  variant = "default",
+  color = "primary",
   children,
   handlePress,
   ...rest
@@ -63,64 +57,78 @@ export default function Button({
 
       {React.Children.map(children, (child) => {
         if (typeof child === "string") {
-          return <StyledText $isHidden={isInternalLoading}>{child}</StyledText>;
+          return (
+            <StyledText
+              $isHidden={isInternalLoading}
+              variant={variant}
+              color={color}
+            >
+              {child}
+            </StyledText>
+          );
         }
-        return <Element $isHidden={isInternalLoading}>{child}</Element>;
+        return (
+          <Element
+            $isHidden={isInternalLoading}
+            variant={variant}
+            color={color}
+          >
+            {child}
+          </Element>
+        );
       })}
     </StyledButton>
   );
 }
 
-export const getColors = (variables: ColorVariables) => css`
-  --background-color: ${variables.background};
-  /* TODO: add light background when we have all the shades of our colors */
-  /* --light-background-color: */
-  --text-color: ${variables.text};
-  --border-color: ${variables.border};
-`;
+export type ColorVariables = {
+  background: string;
+  //   disabled?: string;
+  border: string;
+};
+
+function getButtonVariables(variables: ColorVariables) {
+  const backgroundColor = variables.background;
+  const borderColor = variables.border;
+
+  return [backgroundColor, borderColor];
+}
 
 const styleColor: { [key in ButtonColor]: FlattenSimpleInterpolation } = {
-  neutral: getColors({
+  black: getButtonVariables({
     background: theme.colors.grey[900],
-    text: theme.colors.white[500],
     border: theme.colors.grey[900],
   }),
 
-  primary: getColors({
+  primary: getButtonVariables({
     background: theme.colors.primary[500],
-    text: theme.colors.white[500],
     border: theme.colors.primary[500],
   }),
-
-  disable: getColors({
-    background: theme.colors.grey[200],
-    text: theme.colors.grey[500],
-    border: theme.colors.grey[500],
-  }),
 };
 
-const styleVariant: { [key in ButtonVariant]: FlattenSimpleInterpolation } = {
-  default: css`
-    border: 1px solid transparent;
-    background-color: var(--background-color);
-    color: var(--text-color);
-  `,
+function getButtonStyles(variant: ButtonVariant, color: ButtonColor) {
+  if (variant === "default") {
+    return css`
+      border: 1px solid transparent;
+      background-color: ${styleColor[color][0]};
+    `;
+  }
 
-  outline: css`
-    border: 1px solid;
-    border-color: var(--border-color);
-    /* TODO: replace transparent to --light-background-color css var */
-    background-color: transparent;
-    color: var(--border-color);
-  `,
+  if (variant === "outline") {
+    return css`
+      border: 1px solid;
+      border-color: ${styleColor[color][1]};
+      background-color: transparent;
+    `;
+  }
 
-  ghost: css`
-    border: 1px solid transparent;
-    background: transparent;
-    color: var(--text-color);
-    /* NOTE: maybe remove the padding for this variant */
-  `,
-};
+  if (variant === "ghost") {
+    return css`
+      border: 1px solid transparent;
+      background: transparent;
+    `;
+  }
+}
 
 type StyledButtonProps = Pick<ButtonProps, "variant" | "color">;
 
@@ -128,15 +136,15 @@ type StyledButtonProps = Pick<ButtonProps, "variant" | "color">;
 //       so we use Pressable tag.
 const StyledButton = styled.Pressable<StyledButtonProps>`
   width: 100%;
-  height: fit-content;
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: ${({ theme }) => theme.border.radius.md};
   padding: ${({ theme }) => theme.spacing[5]} ${({ theme }) => theme.spacing[9]};
-  font-family: 16px;
-  ${({ variant }) => (variant ? styleVariant[variant] : styleVariant.default)};
-  ${({ color }) => (color ? styleColor[color] : styleColor.primary)};
+  font-size: 16px;
+
+  ${({ variant, color }) =>
+    variant && color && getButtonStyles(variant, color)};
 `;
 
 const LoadingWrapper = styled.View`
@@ -150,15 +158,23 @@ const LoadingWrapper = styled.View`
   height: 100%;
 `;
 
-const buttonContentStyle = css<{ $isHidden: boolean }>`
+type ButtonContentProps = {
+  $isHidden: boolean;
+} & Pick<ButtonProps, "variant" | "color">;
+
+const buttonContentStyle = css<ButtonContentProps>`
   opacity: ${({ $isHidden }) => ($isHidden ? "0" : "1")};
+  color: ${({ variant, color, theme }) =>
+    variant === "default"
+      ? theme.colors.white[600]
+      : getColors(color as Colors)};
 `;
 
-const StyledText = styled(Text)<{ $isHidden: boolean }>`
+const StyledText = styled(Text)<ButtonContentProps>`
   ${buttonContentStyle};
 `;
 
-const Element = styled.View<{ $isHidden: boolean }>`
+const Element = styled.View<ButtonContentProps>`
   display: flex;
   align-items: center;
   ${buttonContentStyle};
