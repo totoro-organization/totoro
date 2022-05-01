@@ -1,5 +1,3 @@
-// NOTE: Spacer component inspired by Josh Comeau's snippet (https://www.joshwcomeau.com/snippets/react-components/spacer/)
-
 import styled from "styled-components/native";
 
 type Props = {
