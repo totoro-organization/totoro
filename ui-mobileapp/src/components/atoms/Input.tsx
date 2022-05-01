@@ -1,12 +1,6 @@
+import { useState } from "react";
 import { TextInputProps } from "react-native";
 import styled from "styled-components/native";
-
-// TODO: Add real style (check figma)
-// TODO: add style for focus state
-const StyledInput = styled.TextInput<{ $error: boolean }>`
-  padding: 0.5rem;
-  border: 1px solid ${({ $error }) => ($error ? "red" : "grey")};
-`;
 
 export type InputProps = { error?: boolean } & TextInputProps;
 
@@ -14,5 +8,31 @@ export default function Input({
   error = false,
   ...nativeTextInputProps
 }: InputProps) {
-  return <StyledInput $error={error} {...nativeTextInputProps} />;
+  const [isActive, setIsActive] = useState<boolean>(false);
+
+  return (
+    <StyledInput
+      $error={error}
+      $active={isActive}
+      {...nativeTextInputProps}
+      onFocus={() => setIsActive(true)}
+      onBlur={() => setIsActive(false)}
+    />
+  );
 }
+
+const StyledInput = styled.TextInput<{ $error: boolean; $active: boolean }>`
+  padding: ${({ theme }) => theme.spacing[3.5]};
+  border: ${({ theme }) => theme.border.width[1]} solid
+    ${({ theme, $error, $active }) =>
+      $error
+        ? "red"
+        : $active
+        ? theme.colors.grey[900]
+        : theme.colors.grey[200]};
+  border-radius: ${({ theme }) => theme.border.radius.md};
+  background-color: ${({ theme, $error }) =>
+    $error ? theme.colors.primary[50] : theme.colors.grey[50]};
+  color: ${({ theme }) => theme.colors.grey[900]};
+  font-family: ${({ theme }) => theme.fonts.weight.medium};
+`;
