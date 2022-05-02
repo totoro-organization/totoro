@@ -1,8 +1,7 @@
 import React, { ReactNode } from "react";
 import Svg from "react-native-svg";
 import styled from "styled-components/native";
-import Info from "../../assets/icons/Info";
-import Icon from "./Icon/Icon";
+import { Info } from "../../assets/icons";
 import Spacer from "./Spacer";
 import { Text } from "./Text";
 
@@ -14,9 +13,9 @@ type AlertProps = {
 };
 
 const ICONS: Record<AlertType, JSX.Element> = {
-  info: <Icon name="info" />,
-  warning: <Icon name="info" />,
-  error: <Icon name="info" />,
+  info: <Info color="info" />,
+  warning: <Info color="info" />,
+  error: <Info color="info" />,
 } as const;
 
 export default function Alert({ type, children }: AlertProps) {
