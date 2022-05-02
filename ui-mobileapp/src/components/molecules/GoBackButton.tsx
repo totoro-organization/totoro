@@ -1,8 +1,8 @@
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import styled from "styled-components/native";
+import { Arrow } from "../../assets/icons";
 import theme from "../../theme/theme";
-import Icon from "../atoms/Icon/Icon";
 
 export default function GoBackButton() {
   const navigation = useNavigation();
@@ -13,7 +13,7 @@ export default function GoBackButton() {
 
   return (
     <Container onPress={handleGoBack} underlayColor={theme.colors.grey[300]}>
-      <Icon name="arrow" />
+      <Arrow />
     </Container>
   );
 }
