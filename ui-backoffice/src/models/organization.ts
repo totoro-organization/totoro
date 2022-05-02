@@ -1,5 +1,6 @@
 import { Job } from "./job";
 import { Status } from "./status";
+import { User } from "./user";
 
 export type OrganizationStatus = Status<'active' | 'inactive' | 'freezed' | 'outlawed'>;
 
@@ -21,6 +22,7 @@ export interface Organization {
     status: OrganizationStatus,
     creation_date?: string,
     activity?: string,
+    users: User[],
     createdAt: string,
     updatedAt: string
 }
