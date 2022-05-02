@@ -1,22 +1,20 @@
+import { Log } from "./Log";
+import { Role } from "./role";
 import { Status } from "./status";
-import { Tag } from "./tag";
 
-export type JobStatus = Status<'completed' | 'pending' | 'coming'>;
+export type AdminStatus = Status<'completed' | 'pending' | 'coming'>;
 
-export interface Job {
+export interface Admin {
     id: string,
-    title: string,
-    organization: string,
-    participants: number,
-    address: string,
-    capacity: number,
-    status:JobStatus,
-    tokens: number,
-    desc?: string,
-    date: number,
-    tags?: Tag[],
-    banner?: string,
-    logo?: string,
+    status: AdminStatus,
+    role: Role,
+    firsname: string,
+    lastname: string,
+    username: string,
+    email: string,
+    logs: Log[],
+    createdAt: string,
+    updatedAt: string
 }
 
 
