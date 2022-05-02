@@ -1,26 +1,26 @@
 'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Litigations', {
+    await queryInterface.createTable('Tokens', {
       id: {
         allowNull: false,
+        type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
         primaryKey: true,
-        type: Sequelize.UUID
       },
-      litigation_object_id: {
+      user_id: {
         allowNull: false,
         type: Sequelize.UUID,
         references: { 
-          model: 'Litigation_objects',
+          model: 'Users',
           key: 'id'
         }
       },
-      group_id: {
+      discount_id: {
         allowNull: false,
         type: Sequelize.UUID,
         references: { 
-          model: 'Groups',
+          model: 'Discounts',
           key: 'id'
         }
       },
@@ -32,13 +32,17 @@ module.exports = {
           key: 'id'
         }
       },
-      type: {
+      qrcode: {
         allowNull: false,
-        type: Sequelize.BOOLEAN
+        type: Sequelize.INTEGER
       },
-      message: {
-        allowNull: true,
-        type: Sequelize.TEXT
+      nb_token: {
+        allowNull: false,
+        type: Sequelize.INTEGER
+      },
+      end_date: {
+        allowNull: false,
+        type: Sequelize.DATE
       },
       createdAt: {
         allowNull: false,
@@ -51,6 +55,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Litigations');
+    await queryInterface.dropTable('Tokens');
   }
 };

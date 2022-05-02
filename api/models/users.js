@@ -11,11 +11,12 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      models.Users.hasMany(models.Ads, { foreignKey: 'user_id' });
       models.Users.hasMany(models.Favorites, { foreignKey: 'user_id' });
-      models.Users.hasMany(models.Transactions, { foreignKey: 'user_id' });
-      models.Users.hasMany(models.Subscriptions, { foreignKey: 'user_id' });
-      models.Users.hasMany(models.Chats, { foreignKey: 'user_id' });
+      models.Users.hasMany(models.Chats, {as: 'UserRecipient', foreignKey: 'recipient' });
+      models.Users.hasMany(models.Chats, {as: 'UserSender', foreignKey: 'sender' });
+      models.Users.hasMany(models.Groups, { foreignKey: 'user_id' });
+      models.Users.hasMany(models.Tokens, { foreignKey: 'user_id' });
+      models.Users.hasMany(models.Associations_users, { foreignKey: 'user_id' });
       models.Users.belongsTo(models.Terminals, { foreignKey: 'terminal_id' });
       models.Users.belongsTo(models.Status, { foreignKey: 'status_id' });
     
@@ -28,14 +29,12 @@ module.exports = (sequelize, DataTypes) => {
     email: DataTypes.STRING,
     password: DataTypes.STRING,
     birthday: DataTypes.DATE,
-    address: DataTypes.STRING,
-    cp: DataTypes.INTEGER,
     longitude: DataTypes.FLOAT,
     latitude: DataTypes.FLOAT,
     avatar: DataTypes.STRING,
     bio: DataTypes.TEXT,
-    rating: DataTypes.FLOAT,
-    phone: DataTypes.STRING
+    phone: DataTypes.STRING,
+    total_token: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Users',

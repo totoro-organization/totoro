@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       models.Subscriptions.belongsTo(models.Pricings, { foreignKey: 'pricing_id' });
       models.Subscriptions.belongsTo(models.Status, { foreignKey: 'status_id' });
-      models.Subscriptions.belongsTo(models.Users, { foreignKey: 'user_id' });
+      models.Subscriptions.belongsTo(models.Associations, { foreignKey: 'assos_id' });
     }
   }
   Subscriptions.init({

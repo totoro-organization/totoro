@@ -1,20 +1,12 @@
 const express = require("express");
 const { passport } = require("utils/session");
-const commonsController = require("../Commons/controller");
-const { Terminals, Status } = require("models");
+const commonsController = require("services/Commons/controller");
+const { Terminals, Status } = require("./../../../models");
 const { getRow } = require("utils/common/thenCatch");
 
 exports.router = (function () {
 	const terminalsRouter = express.Router();
 	const includeStatus = [{ model: Status }];
-	// terminalsRouter.post("/", async function (req, res) {
-	// 	commonsController.getLocalisation(res);
-	// });
-
-	// terminalsRouter.put("/", async function (req, res) {
-	// 	const data = req.body;
-	// 	commonsController.sendWarning(res, data);
-	// });
 
 	terminalsRouter.get("/", async function (req, res) {
 		commonsController.getAll(res, Terminals, null, includeStatus);

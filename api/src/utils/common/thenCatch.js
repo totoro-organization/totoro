@@ -9,10 +9,10 @@ module.exports = {
 		model
 			.findAll(params)
 			.then(function (results) {
-				res.status(200).json({ total_rows: results.length, data: results });
+				return res.status(200).json({ total_rows: results.length, data: results });
 			})
 			.catch((err) => {
-				res
+				return res
 					.status(error.syntax_error.status)
 					.json({ message: error.syntax_error.message });
 			});
@@ -25,14 +25,14 @@ module.exports = {
 		model
 			.findOne(params)
 			.then((result) => {
-				if (result) res.status(200).json(result);
+				if (result) return res.status(200).json(result);
 				else
-					res
+					return res
 						.status(error.not_found.status)
 						.json({ message: error.not_found.message });
 			})
 			.catch((err) => {
-				res
+				return res
 					.status(error.syntax_error.status)
 					.json({ message: error.syntax_error.message });
 			});
@@ -41,12 +41,12 @@ module.exports = {
 		model
 			.destroy({ where: data })
 			.then((result) => {
-				res
+				return res
 					.status(success.delete.status)
 					.json({ message: success.delete.message });
 			})
 			.catch((err) => {
-				res
+				return res
 					.status(error.syntax_error.status)
 					.json({ message: error.syntax_error.message });
 			});
@@ -55,7 +55,7 @@ module.exports = {
 		if (found) {
 			module.exports.deleteOne(found, res, { id: found.id });
 		} else
-			res
+			return res
 				.status(error.not_found.status)
 				.json({ message: error.not_found.message });
 	},
@@ -71,7 +71,7 @@ module.exports = {
 				else done(result);
 			})
 			.catch((err) => {
-				res.status(error.syntax_error.status).json({ message: err + "" });
+				return res.status(error.syntax_error.status).json({ message: err + "" });
 			});
 	},
 	createField: function (res, model, data, done) {
@@ -79,7 +79,7 @@ module.exports = {
 			.create(data)
 			.then((newField) => done(newField))
 			.catch((err) => {
-				res
+				return res
 					.status(error.syntax_error.status)
 					.json({ message: error.syntax_error.message });
 			});
@@ -89,7 +89,7 @@ module.exports = {
 			.update(data)
 			.then(() => done(model))
 			.catch((err) => {
-				res
+				return res
 					.status(error.syntax_error.status)
 					.json({ message: error.syntax_error.message });
 			});

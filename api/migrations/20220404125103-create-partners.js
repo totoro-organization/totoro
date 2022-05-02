@@ -1,20 +1,12 @@
 'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Users', {
+    await queryInterface.createTable('Partners', {
       id: {
         allowNull: false,
+        type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
         primaryKey: true,
-        type: Sequelize.UUID
-      },
-      terminal_id: {
-        allowNull: true,
-        type: Sequelize.UUID,
-        references: { 
-          model: 'Terminals',
-          key: 'id'
-        }
       },
       status_id: {
         allowNull: false,
@@ -24,15 +16,19 @@ module.exports = {
           key: 'id'
         }
       },
-      firstname: {
+      name: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
+      logo: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
+      description: {
         allowNull: true,
         type: Sequelize.STRING
       },
-      lastname: {
-        allowNull: true,
-        type: Sequelize.STRING
-      },
-      username: {
+      phone: {
         allowNull: false,
         type: Sequelize.STRING
       },
@@ -40,37 +36,17 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
-      password: {
-        allowNull: false,
-        type: Sequelize.STRING
-      },
-      birthday: {
-        allowNull: true,
-        type: Sequelize.DATE
-      },
-      longitude: {
-        allowNull: false,
-        type: Sequelize.FLOAT
-      },
-      latitude: {
-        allowNull: false,
-        type: Sequelize.FLOAT
-      },
-      avatar: {
-        allowNull: false,
-        type: Sequelize.STRING
-      },
-      bio: {
-        allowNull: true,
-        type: Sequelize.TEXT
-      },
-      phone: {
+      link: {
         allowNull: true,
         type: Sequelize.STRING
       },
-      total_token: {
+      in_internet: {
         allowNull: false,
-        type: Sequelize.INTEGER
+        type: Sequelize.BOOLEAN
+      },
+      in_store: {
+        allowNull: false,
+        type: Sequelize.BOOLEAN
       },
       createdAt: {
         allowNull: false,
@@ -83,6 +59,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Users');
+    await queryInterface.dropTable('Partners');
   }
 };
