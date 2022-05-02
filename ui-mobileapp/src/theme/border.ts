@@ -6,8 +6,9 @@ export const border = {
     // sm: `4px`,
 
     md: `6px`, // default?
+    lg: `8px`,
 
-    circle: `50%`,
+    circle: `50px`,
     full: `9999px`, // for pill shapes
   },
 

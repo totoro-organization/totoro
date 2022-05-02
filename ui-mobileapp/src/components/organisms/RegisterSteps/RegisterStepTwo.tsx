@@ -2,7 +2,7 @@ import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import styled from "styled-components/native";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Text } from "react-native";
+import { Text } from "../../atoms/Text";
 import Button from "../../atoms/Button";
 
 import {
@@ -10,6 +10,11 @@ import {
   registerStepTwoSchema,
 } from "./registerValidationSchemas";
 import InputGroup from "../../molecules/InputGroup";
+import Spacer from "../../atoms/Spacer";
+import Alert from "../../atoms/Alert";
+
+const ALERT_CONTENT_LASTNAME =
+  "Votre nom de famille nous permet de récupérer seulement votre initial. Cette information ne sera pas accessible par l’ensemble des utilisateurs.";
 
 export type RegisterStepTwoProps = {
   nextStep: () => void;
@@ -34,10 +39,16 @@ export default function RegisterStepTwo({ nextStep }: RegisterStepTwoProps) {
   }
 
   return (
-    //   TODO: add grid container
     <>
+      <Alert type="info">{ALERT_CONTENT_LASTNAME}</Alert>
+
+      <Spacer axis="vertical" size={3} />
+
       <InputWrapper>
         <Text>Prénom</Text>
+
+        <Spacer axis="vertical" size={0.5} />
+
         <Controller
           name="firstName"
           control={control}
@@ -58,6 +69,9 @@ export default function RegisterStepTwo({ nextStep }: RegisterStepTwoProps) {
 
       <InputWrapper>
         <Text>Nom</Text>
+
+        <Spacer axis="vertical" size={0.5} />
+
         <Controller
           name="lastName"
           control={control}
@@ -78,6 +92,9 @@ export default function RegisterStepTwo({ nextStep }: RegisterStepTwoProps) {
 
       <InputWrapper>
         <Text>Date de naissance</Text>
+
+        <Spacer axis="vertical" size={0.5} />
+
         <Controller
           name="birthDate"
           control={control}
@@ -94,8 +111,12 @@ export default function RegisterStepTwo({ nextStep }: RegisterStepTwoProps) {
           )}
         />
       </InputWrapper>
+
       <InputWrapper>
         <Text>Numéro de téléphone</Text>
+
+        <Spacer axis="vertical" size={0.5} />
+
         <Controller
           name="phoneNumber"
           control={control}
@@ -113,12 +134,12 @@ export default function RegisterStepTwo({ nextStep }: RegisterStepTwoProps) {
         />
       </InputWrapper>
 
-      <Button onPress={handleSubmit(onSubmit)}>Suivant</Button>
+      <Button handlePress={handleSubmit(onSubmit)}>Suivant</Button>
     </>
   );
 }
 
 const InputWrapper = styled.View`
-  display: grid;
-  grid-gap: 0.5rem;
+  display: flex;
+  margin-bottom: ${({ theme }) => theme.spacing[4]};
 `;
