@@ -1,4 +1,5 @@
 import { Job } from "./job";
+import { Organization } from "./organization";
 import { Status } from "./status";
 
 export type UserStatus = Status<'outlawed' | 'freezed' | 'active' | 'inactive'>;
@@ -16,7 +17,11 @@ export interface User {
     total_token: number,
     birthday?: Date,
     avatar: string,
-    status: UserStatus
+    status: UserStatus,
+    favorites: {
+        jobs: Job[],
+        organizations: Organization[]
+    },
     createdAt: string,
     updatedAt: string
 }
