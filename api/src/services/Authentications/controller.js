@@ -1,4 +1,3 @@
-const models = require("models");
 const asyncLib = require("async");
 const bcrypt = require("bcryptjs");
 const { Op } = require("sequelize");
@@ -6,12 +5,13 @@ const { generateToken } = require("utils/session");
 const { getNearestTerminal } = require("utils/localisation");
 const { getRow, getRows } = require("utils/common/thenCatch");
 const { error, success } = require("utils/common/messages.json");
-const { Terminals, Status } = require("models");
-const mailer = require("../externals/mailer");
+const { Terminals, Status } = require("../../../models");
+const mailer = require("services/externals/mailer");
 const { from, subject, host } = require("utils/common/mail.json");
+const commonsController = require("services/Commons/controller");
 const {
 	mail: { signup },
-} = require("../../../html");
+} = require("./../../../html");
 const { sign } = require("jsonwebtoken");
 
 module.exports = {
@@ -36,7 +36,7 @@ module.exports = {
 						})
 						.then((user) => done(null, user))
 						.catch((err) => {
-							res
+							return res
 								.status(error.syntax_error.status)
 								.json({ message: error.syntax_error.message });
 						});
@@ -51,7 +51,7 @@ module.exports = {
 							}
 						);
 					} else {
-						res
+						return res
 							.status(error.access_forbidden.status)
 							.json({ message: error.access_forbidden.message });
 					}
@@ -59,7 +59,7 @@ module.exports = {
 				function (user, resByCrypt, done) {
 					if (resByCrypt) done(user);
 					else {
-						res
+						return res
 							.status(error.access_forbidden.status)
 							.json({ message: error.access_forbidden.message });
 					}
@@ -76,17 +76,17 @@ module.exports = {
 						subject.signup,
 						signup(user, token)
 					);
-					res
+					return res
 						.status(success.user_inactive.status)
 						.json({ message: success.user_inactive.message });
 				} else {
 					delete user.dataValues.password;
-					res.status(success.create.status).json({ token });
+					return res.status(success.create.status).json({ token });
 				}
 			}
 		);
 	},
-	signup: async function (data) {
+	signup: async function (res, model, data) {
 		const inactiveStatus = await getRow(Status, { label: "inactive" });
 		const activeStatus = await getRow(Status, { label: "active" });
 		const terminalsRequest = await getRows(Terminals);
@@ -102,7 +102,29 @@ module.exports = {
 		data["avatar"] = "/img/avatar/avatar.svg";
 		data["terminal_id"] = nearestTerminal.id;
 
-		return data;
+		const condition = { email: data.email, username: data.username };
+
+		const create = commonsController.create(res, model, data, condition, null, true);
+
+		console.log(create);
+		if(typeof create == "string"){
+			const token = generateToken(create);
+			mailer.sendMail(
+				host.gmail,
+				from.email,
+				from.password,
+				create.email,
+				subject.signup,
+				signup(create, token)
+			);
+
+			return res
+				.status(success.create.status)
+				.json({ message: success.create.message });
+		} else {
+			return create;
+		}
+
 	},
 	forgot: function (res, data) {},
 	resetPassword: function (res, data) {},

@@ -5,7 +5,7 @@
 	"main": "index.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"start": "nodemon -L --inspect=0.0.0.0 --exec babel-node --config-file ./babel.config.json index.js "
+		"start": "sequelize db:migrate && nodemon -L --inspect=0.0.0.0 --exec babel-node --config-file ./babel.config.json index.js "
 	},
 	"author": "",
 	"license": "ISC",
@@ -31,6 +31,7 @@
 		"path": "^0.12.7",
 		"sequelize": "^6.15.1",
 		"sequelize-cli": "^6.4.1",
+		"sequelize-fixtures": "^1.2.0",
 		"uuid": "^8.3.2"
 	}
 }

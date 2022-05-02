@@ -4,27 +4,27 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Pricings extends Model {
+  class Difficulties extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      models.Pricings.hasMany(models.Subscriptions, { foreignKey: 'pricing_id' });
+      // define association here
+      models.Difficulties.hasMany(models.Ads, { foreignKey: 'difficulty_id' });
+
     }
   }
-  Pricings.init({
-    label: DataTypes.STRING,
-    description: DataTypes.TEXT,
-    price: DataTypes.FLOAT,
-    duration: DataTypes.INTEGER
+  Difficulties.init({
+    level: DataTypes.INTEGER,
+    token: DataTypes.INTEGER
   }, {
     sequelize,
-    modelName: 'Pricings',
+    modelName: 'Difficulties',
   });
-  Pricings.addHook("beforeSave", async (element) => {
+  Difficulties.addHook("beforeSave", async (element) => {
     return element.id = uuidv4();
   } )
-  return Pricings;
+  return Difficulties;
 };
