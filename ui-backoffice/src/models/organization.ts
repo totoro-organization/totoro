@@ -23,6 +23,7 @@ export interface Organization {
     creation_date?: string,
     activity?: string,
     users: User[],
+    jobs: Job[],
     createdAt: string,
     updatedAt: string
 }
