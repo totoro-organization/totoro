@@ -5,16 +5,15 @@ import { LitigationObject } from "./litigation_object";
 import { Status } from "./status";
 import { User } from "./user";
 
-export type LitigationStatus = Status<'open' | 'close'>;
+export type LitigationStatus = Status<'opened' | 'closed'>;
 
 export interface Litigation {
     id: string,
     litigation_object: LitigationObject,
-    job: Job,
-    author: User,
-    target: User,
-    date: number,
-    message: string,
+    author: User | Job,
+    target: User | Job,
+    date: string,
+    message?: string,
     status: LitigationStatus
 }
 
