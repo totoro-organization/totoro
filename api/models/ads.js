@@ -12,19 +12,24 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       models.Ads.belongsTo(models.Status, { foreignKey: 'status_id' });
-      models.Ads.belongsTo(models.Users, { foreignKey: 'user_id' });
+      models.Ads.belongsTo(models.Associations_users, { foreignKey: 'assos_user_id' });
+      models.Ads.belongsTo(models.Difficulties, { foreignKey: 'difficulty_id' });
       models.Ads.hasMany(models.Favorites, { foreignKey: 'ads_id' });
-      models.Ads.hasMany(models.Litigations, { foreignKey: 'ads_id' });
-      models.Ads.hasMany(models.Chats, { foreignKey: 'ads_id' });
       models.Ads.hasMany(models.Tag_ads, { foreignKey: 'ads_id' });
-      models.Ads.hasMany(models.Transactions, { foreignKey: 'ads_id' });
       models.Ads.hasMany(models.Attachment_ads, { foreignKey: 'ads_id' });
+      models.Ads.hasMany(models.Groups, { foreignKey: 'ads_id' });
+
     }
   }
   Ads.init({
     title: DataTypes.STRING,
     description: DataTypes.STRING,
-    price: DataTypes.FLOAT
+    participants_max: DataTypes.INTEGER,
+    address: DataTypes.STRING,
+    cp: DataTypes.INTEGER,
+    commune: DataTypes.STRING,
+    start_date: DataTypes.DATE,
+    end_date: DataTypes.DATE
   }, {
     sequelize,
     modelName: 'Ads',

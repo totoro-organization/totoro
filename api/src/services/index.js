@@ -8,8 +8,6 @@ const applications = require("./Applications").router;
 const litigations = require("./Litigations").router;
 const messagings = require("./Messagings").router;
 const parameters = require("./Parameters").router;
-const transactions = require("./Transactions").router;
-const subscriptions = require("./Subscriptions").router;
 
 module.exports = {
 	users,
@@ -22,6 +20,4 @@ module.exports = {
 	litigations,
 	messagings,
 	parameters,
-	transactions,
-	subscriptions,
 };

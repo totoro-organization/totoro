@@ -3,7 +3,7 @@ const { passport } = require("utils/session");
 const commonsController = require("../Commons/controller");
 const controller = require("./controller");
 
-const { Users } = require("models");
+const { Users } = require("../../../models");
 
 exports.router = (function () {
 	const authRouter = express.Router();
@@ -15,9 +15,7 @@ exports.router = (function () {
 
 	authRouter.post("/signup", async function (req, res) {
 		const data = req.body;
-		const newData = await controller.signup(data);
-		const condition = { email: data.email, username: data.username };
-		commonsController.create(res, Users, newData, condition);
+		controller.signup(res, Users, data);
 	});
 
 	authRouter.post("/forgot", async function (req, res) {
