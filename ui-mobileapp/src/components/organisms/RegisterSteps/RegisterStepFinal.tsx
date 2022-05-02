@@ -10,6 +10,11 @@ import { Text } from "../../atoms/Text";
 import Button from "../../atoms/Button";
 import styled from "styled-components/native";
 import InputGroup from "../../molecules/InputGroup";
+import Spacer from "../../atoms/Spacer";
+import Alert from "../../atoms/Alert";
+
+const ALERT_CONTENT_ADDRESS =
+  "Totoro est une application de proximité, votre adresse de résidence nous permet de séléctionner les meilleurs missions près de chez vous.";
 
 export default function RegisterStepFinal() {
   const { control, handleSubmit } = useForm<RegisterStepFinalFormValues>({
@@ -27,8 +32,15 @@ export default function RegisterStepFinal() {
 
   return (
     <>
+      <Alert type="info">{ALERT_CONTENT_ADDRESS}</Alert>
+
+      <Spacer axis="vertical" size={3} />
+
       <InputWrapper>
         <Text>Adresse de résidence</Text>
+
+        <Spacer axis="vertical" size={0.5} />
+
         {/* TODO: replace Input atom to autocomplete input address */}
         {/* NOTE: check this article: https://medium.com/debugger-off/how-to-use-google-autocomplete-api-s-and-react-native-maps-in-react-native-to-fetch-user-location-20d3f65af48b */}
         <Controller
@@ -48,13 +60,13 @@ export default function RegisterStepFinal() {
           )}
         />
 
-        <Button onPress={handleSubmit(onSubmit)}>Je m'inscris !</Button>
+        <Button handlePress={handleSubmit(onSubmit)}>Je m'inscris !</Button>
       </InputWrapper>
     </>
   );
 }
 
 const InputWrapper = styled.View`
-  display: grid;
-  grid-gap: 0.5rem;
+  display: flex;
+  margin-bottom: ${({ theme }) => theme.spacing[4]};
 `;

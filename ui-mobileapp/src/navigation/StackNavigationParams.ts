@@ -1,7 +1,12 @@
-export type StackParamList = HomeParamList & AuthParamList & BottomTabParamList;
+export type StackParamList = {
+  Mission: { id: number };
+} & HomeParamList &
+  AuthParamList &
+  BottomTabParamList;
 
 export type HomeParamList = {
   Accueil: undefined;
+  Explications: undefined;
 };
 
 export type AuthParamList = {
@@ -10,8 +15,5 @@ export type AuthParamList = {
 };
 
 export type BottomTabParamList = {
-  Annonces: undefined;
-  Publier: undefined;
-  Messagerie: undefined;
-  Profil: undefined;
+  BottomTab: undefined;
 };

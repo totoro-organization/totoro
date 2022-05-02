@@ -1,0 +1,14 @@
+############################################
+# Backend
+############################################
+/api/ @tlugat @ElyasC @j2frise @cristianamonteiroo
+/database/ @tlugat @ElyasC @j2frise @cristianamonteiroo
+
+
+############################################
+# Frontend
+############################################
+/ui-backoffice/ @Nstampfli @MaevaWolff @tlugat @Pierre-AlexisM @QuentinHuber @maellemoisis
+/ui-mobileapp/ @Nstampfli @MaevaWolff @tlugat @Pierre-AlexisM @QuentinHuber @maellemoisis
+/ui-landingpage/ @Nstampfli @MaevaWolff @tlugat @Pierre-AlexisM @QuentinHuber @maellemoisis
+/ui-webapp/ @Nstampfli @MaevaWolff @tlugat @Pierre-AlexisM @QuentinHuber @maellemoisis

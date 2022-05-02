@@ -1,30 +1,41 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React from "react";
-import Chat from "../screens/Chat";
-import Posts from "../screens/Posts";
-import Profile from "../screens/Profile";
-import Publish from "../screens/Publish";
 
-const NAVIGATION_PAGES = [
+import { Message, Missions, Shop, User } from "../assets/icons";
+import { Text } from "../components/atoms/Text";
+import ChatScreen from "../screens/Chat";
+import MissionsScreen from "../screens/Missions";
+import ProfileScreen from "../screens/Profile";
+import ShopScreen from "../screens/Shop";
+import theme from "../theme/theme";
+
+export type NavigationPagesProps = {
+  title: string;
+  component: () => JSX.Element;
+  // FIXME: Find a better type here.
+  Icon: (color: any) => JSX.Element;
+};
+
+const NAVIGATION_PAGES: NavigationPagesProps[] = [
   {
-    title: "Annonces",
-    component: Posts,
-    icon: "post",
+    title: "Missions",
+    component: MissionsScreen,
+    Icon: Missions,
   },
   {
-    title: "Publier",
-    component: Publish,
-    icon: "publish",
+    title: "Boutique",
+    component: ShopScreen,
+    Icon: Shop,
   },
   {
     title: "Messagerie",
-    component: Chat,
-    icon: "chat",
+    component: ChatScreen,
+    Icon: Message,
   },
   {
     title: "Profil",
-    component: Profile,
-    icon: "user",
+    component: ProfileScreen,
+    Icon: User,
   },
 ];
 
@@ -36,15 +47,29 @@ export default function BottomTabNavigator() {
       initialRouteName={NAVIGATION_PAGES[0].title}
       screenOptions={{
         headerShown: false,
+        tabBarStyle: {
+          paddingBottom: 8,
+          paddingTop: 2,
+          backgroundColor: theme.colors.white[600],
+          height: 60,
+        },
       }}
     >
-      {NAVIGATION_PAGES.map(({ title, component }) => (
+      {NAVIGATION_PAGES.map(({ title, component, Icon }) => (
         <Tab.Screen
           key={title}
           name={title}
           component={component}
-          // TODO: create Icon component and add tab icon
-          // options={{ tabBarIcon: <Icon name={icon} />}}
+          options={{
+            tabBarLabel: ({ focused }) => (
+              <Text size="xs" color={focused ? "black" : "grey"}>
+                {title}
+              </Text>
+            ),
+            tabBarIcon: ({ focused }) => (
+              <Icon color={focused ? "black" : undefined} size={20} />
+            ),
+          }}
         />
       ))}
     </Tab.Navigator>
