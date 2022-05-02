@@ -1,8 +1,5 @@
 {
   "dependencies": {
-    "styled-components": "^5.3.3"
-  },
-  "devDependencies": {
-    "@types/styled-components": "^5.1.22"
+    "react-native-svg": "^12.3.0"
   }
 }

@@ -7,6 +7,27 @@ const { Applications } = require("./models");
 const {loadFixtures} = require('./fixtures');
 const PORT = process.env.API_DOCKER_PORT || 8080;
 const server = express();
+const swaggerJsDoc = require("swagger-jsdoc");
+const swaggerUi = require("swagger-ui-express");
+
+const swaggerOptions = {
+  swaggerDefinition: {
+    info: {
+      version: "1.0.0",
+      title: "Customer API",
+      description: "Customer API Information",
+      contact: {
+        name: "Totoro"
+      },
+      servers: ["http://localhost:6868"]
+    }
+  },
+ 
+  apis: ["index.js"]
+};
+
+const swaggerDocs = swaggerJsDoc(swaggerOptions);
+server.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 const {
 	users,
@@ -27,10 +48,42 @@ server.use(bodyParser.urlencoded({ extended: true }));
 
 server.use(bodyParser.json());
 
+	//routes
+/**
+ * @swagger
+ * /get:
+ *  get:
+ *    description: Use to request all customers
+ *    responses:
+ *      '200':
+ *        description: A successful response
+ */
 server.get("/", function (req, res) {
 	res.setHeader("Content-Type", "text/html");
 	res.status(200).send(ui_api.home());
 });
+
+/**
+ * @swagger
+ * /customer:
+ *    put:
+ *      description: Use to return all customers
+ *    parameters:
+ *      - name: customer
+ *        in: query
+ *        description: Name of our customer
+ *        required: false
+ *        schema:
+ *          type: string
+ *          format: string
+ *    responses:
+ *      '201':
+ *        description: Successfully created user
+ */
+server.put("/customer", (req, res) => {
+  res.status(200).send("Successfully updated customer");
+});
+
 
 const accessApi = async (req, res, next) => {
 	try {
@@ -73,4 +126,5 @@ server.use("/api/commons", [accessApi, commons]);
 
 server.listen(PORT, function () {
 	console.log("server start");
+	console.log(PORT);
 });
