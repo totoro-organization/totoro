@@ -1,4 +1,5 @@
-import { Job } from "./admin";
+import { Job } from "./job";
+import { Organization } from "./organization";
 import { Status } from "./status";
 
 export type UserStatus = Status<'outlawed' | 'freezed' | 'active' | 'inactive'>;
@@ -9,10 +10,18 @@ export interface User {
     lastname: string,
     username: string,
     email: string,
-    jobs: Job[],
-    tokens: number,
-    birthday?: Date,
-    avatar?: string,
     phone?: number,
-    status: UserStatus
+    longitude: number,
+    latitude: number,
+    bio?: string,
+    total_token: number,
+    birthday?: Date,
+    avatar: string,
+    status: UserStatus,
+    favorites: {
+        jobs: Job[],
+        organizations: Organization[]
+    },
+    createdAt: string,
+    updatedAt: string
 }

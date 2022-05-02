@@ -15,41 +15,54 @@ const Loader = (Component) => (props) => (
 
 // Pages
 
-const SignIn = Loader(lazy(() => import('src/content/pages/Signin')));
-const Jobs = Loader(lazy(() => import('src/content/pages/Management/Jobs')));
-const Users = Loader(lazy(() => import('src/content/pages/Management/Users')));
-const Organizations = Loader(lazy(() => import('src/content/pages/Management/Organizations')));
-const Litigations = Loader(lazy(() => import('src/content/pages/Management/Litigations')));
-const Partners = Loader(lazy(() => import('src/content/pages/Management/Partners/Members')));
-const Admins = Loader(lazy(() => import('src/content/pages/Management/Admins')));
+// tables
+
+const SignIn = Loader(lazy(() => import('src/pages/Signin')));
+const Jobs = Loader(lazy(() => import('src/pages/Management/Jobs')));
+const Users = Loader(lazy(() => import('src/pages/Management/Users')));
+const Organizations = Loader(lazy(() => import('src/pages/Management/Organizations')));
+const Litigations = Loader(lazy(() => import('src/pages/Management/Litigations')));
+const Partners = Loader(lazy(() => import('src/pages/Management/Partners/Members')));
+const Admins = Loader(lazy(() => import('src/pages/Management/Admins')));
+const MembershipRequests = Loader(lazy(() => import('src/pages/Management/Partners/MembershipRequests')));
+
+// single pages
+
+const Litigation = Loader(lazy(() => import('src/pages/Management/Litigations/Litigation')));
+const Job = Loader(lazy(() => import('src/pages/Management/Jobs/Job')));
+const Organization = Loader(lazy(() => import('src/pages/Management/Organizations/Organization')));
+const User = Loader(lazy(() => import('src/pages/Management/Users/User')));
+const Partner = Loader(lazy(() => import('src/pages/Management/Partners/Members/Partner')));
+const MembershipRequest = Loader(lazy(() => import('src/pages/Management/Partners/MembershipRequests/Request')));
 
 // Accounting
 
-const Accounting = Loader(lazy(() => import('src/content/pages/Accounting')));
+const Subscriptions = Loader(lazy(() => import('src/pages/Accounting/Subscriptions')));
 
 // Dashboards
 
-const Crypto = Loader(lazy(() => import('src/content/dashboards/Crypto')));
+const Crypto = Loader(lazy(() => import('src/pages/Dashboards/Crypto')));
 
 // Apps Configuration
 
-const Tags = Loader(lazy(() => import('src/content/pages/AppsConfiguration/Settings/Tags')));
-const Status = Loader(lazy(() => import('src/content/pages/AppsConfiguration/Settings/Status')));
-const LitigationObjects = Loader(lazy(() => import('src/content/pages/AppsConfiguration/Settings/LitigationObjects')));
-const Themes = Loader(lazy(() => import('src/content/pages/AppsConfiguration/Appearance/Themes')));
+const TagSettings = Loader(lazy(() => import('src/pages/AppsConfiguration/Settings/Tags')));
+const SubscriptionSettings = Loader(lazy(() => import('src/pages/AppsConfiguration/Settings/Subscriptions')));
+const StatusSettings = Loader(lazy(() => import('src/pages/AppsConfiguration/Settings/Status')));
+const LitigationObjectSettings = Loader(lazy(() => import('src/pages/AppsConfiguration/Settings/LitigationObjects')));
+const ThemeSettings = Loader(lazy(() => import('src/pages/AppsConfiguration/Appearance/Themes')));
 
 // Applications
 
-const UserProfile = Loader(lazy(() => import('src/content/pages/User/profile')));
-const UserSettings = Loader(lazy(() => import('src/content/pages/User/settings')));
+const UserProfile = Loader(lazy(() => import('src/pages/User/profile')));
+const UserSettings = Loader(lazy(() => import('src/pages/User/settings')));
 
 
 // Status
 
-const Status404 = Loader(lazy(() => import('src/content/pages/Status/Status404')));
-const Status500 = Loader(lazy(() => import('src/content/pages/Status/Status500')));
-const StatusComingSoon = Loader(lazy(() => import('src/content/pages/Status/ComingSoon')));
-const StatusMaintenance = Loader(lazy(() => import('src/content/pages/Status/Maintenance')));
+const Status404 = Loader(lazy(() => import('src/pages/Status/Status404')));
+const Status500 = Loader(lazy(() => import('src/pages/Status/Status500')));
+const StatusComingSoon = Loader(lazy(() => import('src/pages/Status/ComingSoon')));
+const StatusMaintenance = Loader(lazy(() => import('src/pages/Status/Maintenance')));
 
 
 const routes: PartialRouteObject[] = [
@@ -144,23 +157,51 @@ const routes: PartialRouteObject[] = [
       },
       {
         path: 'missions',
-        element: <Jobs />
+        element: <Jobs />,
+      },
+      {
+        path: 'missions/:id',
+        element: <Job/>
       },
       {
         path: 'utilisateurs',
         element: <Users />
       },
       {
+        path: 'utilisateurs/:id',
+        element: <User />
+      },
+      {
         path: 'associations',
         element: <Organizations />
+      },
+      {
+        path: 'associations/:id',
+        element: <Organization />
       },
       {
         path: 'litiges',
         element: <Litigations />
       },
       {
+        path: 'litiges/:id',
+        element: <Litigation/>
+      },
+      {
+        path: 'partenaires/demandes',
+        element: <MembershipRequests />
+      },
+      {
+        path: 'partenaires/demandes/:id',
+        element: <MembershipRequest />
+      },
+      {
         path: 'partenaires/membres',
         element: <Partners />
+      },
+      {
+        path: 'partenaires/membres/:id',
+        element: <Partner />
       },
       {
         path: 'administrateurs',
@@ -176,14 +217,14 @@ const routes: PartialRouteObject[] = [
         path: '/',
         element: (
           <Navigate
-            to="statistiques"
+            to="abonnements"
             replace
           />
         )
       },
       {
-        path: 'statistiques',
-        element: <Accounting/>
+        path: 'abonnements',
+        element: <Subscriptions/>
       }
     ]
   },
@@ -204,19 +245,23 @@ const routes: PartialRouteObject[] = [
       // },
       {
         path: 'parametrage/tags',
-        element: <Tags />
+        element: <TagSettings />
+      },
+      {
+        path: 'parametrage/abonnements',
+        element: <SubscriptionSettings />
       },
       {
         path: 'parametrage/status',
-        element: <Status />
+        element: <StatusSettings />
       },
       {
         path: 'parametrage/objets-litiges',
-        element: <LitigationObjects />
+        element: <LitigationObjectSettings />
       },
       {
         path: 'apparence/themes',
-        element: <Themes />
+        element: <ThemeSettings />
       },
     ]
   },
