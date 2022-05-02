@@ -8,8 +8,13 @@ import Button from "../../atoms/Button";
 import InputGroup from "../../molecules/InputGroup";
 import { loginFormSchema } from "./loginValidationSchema";
 import type { LoginFormValues } from "./loginValidationSchema";
+import { useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { BottomTabParamList } from "../../../navigation/StackNavigationParams";
 
 export default function LoginForm() {
+  const navigation = useNavigation<StackNavigationProp<BottomTabParamList>>();
+
   const { control, handleSubmit } = useForm<LoginFormValues>({
     defaultValues: {
       email: "",
@@ -19,9 +24,12 @@ export default function LoginForm() {
     resolver: yupResolver(loginFormSchema),
   });
 
-  function onSubmit(data: LoginFormValues) {
+  async function onSubmit(data: LoginFormValues) {
     // TODO: Add call api to login
+
     console.log(data);
+
+    navigation.navigate("BottomTab");
   }
 
   return (
@@ -67,12 +75,12 @@ export default function LoginForm() {
         />
       </InputWrapper>
 
-      <Button onPress={handleSubmit(onSubmit)}>Se connecter</Button>
+      <Button handlePress={handleSubmit(onSubmit)}>Se connecter</Button>
     </>
   );
 }
 
 const InputWrapper = styled.View`
-  display: grid;
-  grid-gap: 0.5rem;
+  display: flex;
+  justify-content: space-between;
 `;

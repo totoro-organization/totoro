@@ -15,6 +15,7 @@ const Loader = (Component) => (props) => (
 
 // Pages
 
+<<<<<<< HEAD
 // tables
 
 const SignIn = Loader(lazy(() => import('src/pages/Signin')));
@@ -55,14 +56,50 @@ const ThemeSettings = Loader(lazy(() => import('src/pages/AppsConfiguration/Appe
 
 const UserProfile = Loader(lazy(() => import('src/pages/User/profile')));
 const UserSettings = Loader(lazy(() => import('src/pages/User/settings')));
+=======
+const SignIn = Loader(lazy(() => import('src/content/pages/Signin')));
+const Jobs = Loader(lazy(() => import('src/content/pages/Management/Jobs')));
+const Users = Loader(lazy(() => import('src/content/pages/Management/Users')));
+const Organizations = Loader(lazy(() => import('src/content/pages/Management/Organizations')));
+const Litigations = Loader(lazy(() => import('src/content/pages/Management/Litigations')));
+const Partners = Loader(lazy(() => import('src/content/pages/Management/Partners/Members')));
+const Admins = Loader(lazy(() => import('src/content/pages/Management/Admins')));
+
+// Accounting
+
+const Accounting = Loader(lazy(() => import('src/content/pages/Accounting')));
+
+// Dashboards
+
+const Crypto = Loader(lazy(() => import('src/content/dashboards/Crypto')));
+
+// Apps Configuration
+
+const Tags = Loader(lazy(() => import('src/content/pages/AppsConfiguration/Settings/Tags')));
+const Status = Loader(lazy(() => import('src/content/pages/AppsConfiguration/Settings/Status')));
+const LitigationObjects = Loader(lazy(() => import('src/content/pages/AppsConfiguration/Settings/LitigationObjects')));
+const Themes = Loader(lazy(() => import('src/content/pages/AppsConfiguration/Appearance/Themes')));
+
+// Applications
+
+const UserProfile = Loader(lazy(() => import('src/content/pages/User/profile')));
+const UserSettings = Loader(lazy(() => import('src/content/pages/User/settings')));
+>>>>>>> staging
 
 
 // Status
 
+<<<<<<< HEAD
 const Status404 = Loader(lazy(() => import('src/pages/Status/Status404')));
 const Status500 = Loader(lazy(() => import('src/pages/Status/Status500')));
 const StatusComingSoon = Loader(lazy(() => import('src/pages/Status/ComingSoon')));
 const StatusMaintenance = Loader(lazy(() => import('src/pages/Status/Maintenance')));
+=======
+const Status404 = Loader(lazy(() => import('src/content/pages/Status/Status404')));
+const Status500 = Loader(lazy(() => import('src/content/pages/Status/Status500')));
+const StatusComingSoon = Loader(lazy(() => import('src/content/pages/Status/ComingSoon')));
+const StatusMaintenance = Loader(lazy(() => import('src/content/pages/Status/Maintenance')));
+>>>>>>> staging
 
 
 const routes: PartialRouteObject[] = [
@@ -157,33 +194,44 @@ const routes: PartialRouteObject[] = [
       },
       {
         path: 'missions',
+<<<<<<< HEAD
         element: <Jobs />,
       },
       {
         path: 'missions/:id',
         element: <Job/>
+=======
+        element: <Jobs />
+>>>>>>> staging
       },
       {
         path: 'utilisateurs',
         element: <Users />
       },
       {
+<<<<<<< HEAD
         path: 'utilisateurs/:id',
         element: <User />
       },
       {
+=======
+>>>>>>> staging
         path: 'associations',
         element: <Organizations />
       },
       {
+<<<<<<< HEAD
         path: 'associations/:id',
         element: <Organization />
       },
       {
+=======
+>>>>>>> staging
         path: 'litiges',
         element: <Litigations />
       },
       {
+<<<<<<< HEAD
         path: 'litiges/:id',
         element: <Litigation/>
       },
@@ -196,14 +244,19 @@ const routes: PartialRouteObject[] = [
         element: <MembershipRequest />
       },
       {
+=======
+>>>>>>> staging
         path: 'partenaires/membres',
         element: <Partners />
       },
       {
+<<<<<<< HEAD
         path: 'partenaires/membres/:id',
         element: <Partner />
       },
       {
+=======
+>>>>>>> staging
         path: 'administrateurs',
         element: <Admins />
       },
@@ -217,14 +270,23 @@ const routes: PartialRouteObject[] = [
         path: '/',
         element: (
           <Navigate
+<<<<<<< HEAD
             to="abonnements"
+=======
+            to="statistiques"
+>>>>>>> staging
             replace
           />
         )
       },
       {
+<<<<<<< HEAD
         path: 'abonnements',
         element: <Subscriptions/>
+=======
+        path: 'statistiques',
+        element: <Accounting/>
+>>>>>>> staging
       }
     ]
   },
@@ -245,6 +307,7 @@ const routes: PartialRouteObject[] = [
       // },
       {
         path: 'parametrage/tags',
+<<<<<<< HEAD
         element: <TagSettings />
       },
       {
@@ -262,6 +325,21 @@ const routes: PartialRouteObject[] = [
       {
         path: 'apparence/themes',
         element: <ThemeSettings />
+=======
+        element: <Tags />
+      },
+      {
+        path: 'parametrage/status',
+        element: <Status />
+      },
+      {
+        path: 'parametrage/objets-litiges',
+        element: <LitigationObjects />
+      },
+      {
+        path: 'apparence/themes',
+        element: <Themes />
+>>>>>>> staging
       },
     ]
   },
