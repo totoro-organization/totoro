@@ -1,20 +1,12 @@
 'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Users', {
+    await queryInterface.createTable('Associations', {
       id: {
         allowNull: false,
         defaultValue: Sequelize.UUIDV4,
         primaryKey: true,
         type: Sequelize.UUID
-      },
-      terminal_id: {
-        allowNull: true,
-        type: Sequelize.UUID,
-        references: { 
-          model: 'Terminals',
-          key: 'id'
-        }
       },
       status_id: {
         allowNull: false,
@@ -24,53 +16,65 @@ module.exports = {
           key: 'id'
         }
       },
-      firstname: {
+      siren: {
         allowNull: true,
-        type: Sequelize.STRING
+        type: Sequelize.INTEGER
       },
-      lastname: {
+      siret: {
         allowNull: true,
-        type: Sequelize.STRING
+        type: Sequelize.INTEGER
       },
-      username: {
-        allowNull: false,
+      name: {
+        allowNull: true,
         type: Sequelize.STRING
       },
       email: {
-        allowNull: false,
-        type: Sequelize.STRING
-      },
-      password: {
-        allowNull: false,
-        type: Sequelize.STRING
-      },
-      birthday: {
         allowNull: true,
-        type: Sequelize.DATE
+        type: Sequelize.STRING
       },
       longitude: {
-        allowNull: false,
+        allowNull: true,
         type: Sequelize.FLOAT
       },
       latitude: {
-        allowNull: false,
+        allowNull: true,
         type: Sequelize.FLOAT
       },
-      avatar: {
-        allowNull: false,
-        type: Sequelize.STRING
+      creation_date: {
+        allowNull: true,
+        type: Sequelize.DATEONLY
       },
-      bio: {
+      activity: {
         allowNull: true,
         type: Sequelize.TEXT
+      },
+      address: {
+        allowNull: true,
+        type: Sequelize.STRING
+      },
+      cp: {
+        allowNull: true,
+        type: Sequelize.INTEGER
+      },
+      commune: {
+        allowNull: true,
+        type: Sequelize.STRING
+      },
+      logo: {
+        allowNull: true,
+        type: Sequelize.STRING
+      },
+      description: {
+        allowNull: true,
+        type: Sequelize.TEXT
+      },
+      link: {
+        allowNull: true,
+        type: Sequelize.STRING
       },
       phone: {
         allowNull: true,
         type: Sequelize.STRING
-      },
-      total_token: {
-        allowNull: false,
-        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,
@@ -83,6 +87,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Users');
+    await queryInterface.dropTable('Associations');
   }
 };

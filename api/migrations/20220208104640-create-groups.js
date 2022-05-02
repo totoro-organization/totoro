@@ -1,44 +1,28 @@
 'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Litigations', {
+    await queryInterface.createTable('Groups', {
       id: {
         allowNull: false,
+        type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
         primaryKey: true,
-        type: Sequelize.UUID
       },
-      litigation_object_id: {
+      user_id: {
         allowNull: false,
         type: Sequelize.UUID,
         references: { 
-          model: 'Litigation_objects',
+          model: 'Users',
           key: 'id'
         }
       },
-      group_id: {
+      ads_id: {
         allowNull: false,
         type: Sequelize.UUID,
         references: { 
-          model: 'Groups',
+          model: 'Ads',
           key: 'id'
         }
-      },
-      status_id: {
-        allowNull: false,
-        type: Sequelize.UUID,
-        references: { 
-          model: 'Status',
-          key: 'id'
-        }
-      },
-      type: {
-        allowNull: false,
-        type: Sequelize.BOOLEAN
-      },
-      message: {
-        allowNull: true,
-        type: Sequelize.TEXT
       },
       createdAt: {
         allowNull: false,
@@ -51,6 +35,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Litigations');
+    await queryInterface.dropTable('Groups');
   }
 };

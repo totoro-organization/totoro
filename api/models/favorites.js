@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       models.Favorites.belongsTo(models.Ads, { foreignKey: 'ads_id' });
       models.Favorites.belongsTo(models.Users, { foreignKey: 'user_id' });
+      models.Favorites.belongsTo(models.Associations, { foreignKey: 'assos_id' });
     }
   }
   Favorites.init({
@@ -23,6 +24,6 @@ module.exports = (sequelize, DataTypes) => {
   });
   Favorites.addHook("beforeSave", async (element) => {
     return element.id = uuidv4();
-  } )
+  } );
   return Favorites;
 };

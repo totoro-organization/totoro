@@ -16,8 +16,16 @@ module.exports = {
           key: 'id'
         }
       },
+      assos_id: {
+        allowNull: true,
+        type: Sequelize.UUID,
+        references: { 
+          model: 'Associations',
+          key: 'id'
+        }
+      },
       ads_id: {
-        allowNull: false,
+        allowNull: true,
         type: Sequelize.UUID,
         references: { 
           model: 'Ads',

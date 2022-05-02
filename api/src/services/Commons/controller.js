@@ -17,7 +17,7 @@ module.exports = {
 	getOne: function (res, model, id, include = null) {
 		responseOne(model, res, id, include);
 	},
-	create: function (res, model, data, condition, include = null) {
+	create: function (res, model, data, condition, include = null, response = false) {
 		asyncLib.waterfall(
 			[
 				function (done) {
@@ -35,25 +35,30 @@ module.exports = {
 			],
 			function (newField) {
 				if (newField)
-					res
+					if(response){
+						return newField;
+					} else {
+						return res
 						.status(success.create.status)
 						.json({ message: success.create.message });
+					}
+
 				else
-					res
+					return res
 						.status(error.op_failed.status)
 						.json({ message: error.op_failed.message });
 			}
 		);
 	},
-	update: function (res, model, id, data) {
+	update: function (res, model, id, data, condition) {
 		asyncLib.waterfall(
 			[
 				function (done) {
 					getField(res, model, { id }, done, true);
 				},
-				function (found, done, condition) {
+				function (found, done) {
 					if (!found)
-						res
+						return res
 							.status(error.not_found.status)
 							.json({ message: error.not_found.message });
 					else
@@ -67,7 +72,7 @@ module.exports = {
 				},
 				function (found, done) {
 					if (found)
-						res
+						return res
 							.status(error.duplicate.status)
 							.json({ message: error.duplicate.message });
 					else getField(res, model, { id }, done, true);
@@ -78,11 +83,11 @@ module.exports = {
 			],
 			function (updateFound) {
 				if (updateFound)
-					res
+					return res
 						.status(success.update.status)
 						.json({ message: success.update.message });
 				else
-					res
+					return res
 						.status(error.op_failed.status)
 						.json({ message: error.op_failed.message });
 			}

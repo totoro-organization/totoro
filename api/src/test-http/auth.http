@@ -1,6 +1,6 @@
 POST http://localhost:6868/api/auth/signup 
 Content-Type: application/json
-app_id: 7783d5f1-19c1-4b1d-ba0f-3e4887eefb72
+app_id: 0acfa118-0ec3-4a0a-8d25-f464cddbeaf8
 
 {
     "firstname": "Teo",
@@ -19,7 +19,7 @@ app_id: 7783d5f1-19c1-4b1d-ba0f-3e4887eefb72
 
 POST http://localhost:6868/api/auth/login
 Content-Type: application/json
-app_id: 7783d5f1-19c1-4b1d-ba0f-3e4887eefb72
+app_id: 0acfa118-0ec3-4a0a-8d25-f464cddbeaf8
 
 {
     "emailOrUsername": "teoleboss123",

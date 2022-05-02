@@ -1,28 +1,36 @@
 'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Pricings', {
+    await queryInterface.createTable('Associations_users', {
       id: {
         allowNull: false,
         defaultValue: Sequelize.UUIDV4,
         primaryKey: true,
         type: Sequelize.UUID
       },
-      label: {
+      assos_id: {
         allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.UUID,
+        references: { 
+          model: 'Associations',
+          key: 'id'
+        }
       },
-      description: {
+      user_id: {
         allowNull: false,
-        type: Sequelize.TEXT
+        type: Sequelize.UUID,
+        references: { 
+          model: 'Users',
+          key: 'id'
+        }
       },
-      price: {
+      role_id: {
         allowNull: false,
-        type: Sequelize.FLOAT
-      },
-      duration: {
-        allowNull: false,
-        type: Sequelize.INTEGER
+        type: Sequelize.UUID,
+        references: { 
+          model: 'Roles',
+          key: 'id'
+        }
       },
       createdAt: {
         allowNull: false,
@@ -35,6 +43,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Pricings');
+    await queryInterface.dropTable('Associations_users');
   }
 };

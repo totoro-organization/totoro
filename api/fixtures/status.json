@@ -1,0 +1,56 @@
+[
+    {
+        "model":"Status",
+        "data": {
+            "label": "active"
+        }
+    },
+    {
+        "model":"Status",
+        "data": {
+            "label": "disabled"
+        }
+    },
+    {
+        "model":"Status",
+        "data": {
+            "label": "delete"
+        }
+    },
+    {
+        "model":"Status",
+        "data": {
+            "label": "accept"
+        }
+    },
+    {
+        "model":"Status",
+        "data": {
+            "label": "denied"
+        }
+    },
+    {
+        "model":"Status",
+        "data": {
+            "label": "published"
+        }
+    },
+    {
+        "model":"Status",
+        "data": {
+            "label": "expired"
+        }
+    },
+    {
+        "model":"Status",
+        "data": {
+            "label": "open"
+        }
+    },
+    {
+        "model":"Status",
+        "data": {
+            "label": "close"
+        }
+    }
+]

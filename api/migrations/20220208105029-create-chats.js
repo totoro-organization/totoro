@@ -8,16 +8,24 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.UUID
       },
-      ads_id: {
-        allowNull: false,
+      group_id: {
+        allowNull: true,
         type: Sequelize.UUID,
         references: { 
-          model: 'Ads',
+          model: 'Groups',
           key: 'id'
         }
       },
-      user_id: {
-        allowNull: false,
+      recipient: {
+        allowNull: true,
+        type: Sequelize.UUID,
+        references: { 
+          model: 'Users',
+          key: 'id'
+        }
+      },
+      sender: {
+        allowNull: true,
         type: Sequelize.UUID,
         references: { 
           model: 'Users',
