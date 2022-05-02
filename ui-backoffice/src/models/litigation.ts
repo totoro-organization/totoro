@@ -15,5 +15,7 @@ export interface Litigation {
     date: string,
     message?: string,
     status: LitigationStatus
+    createdAt: string,
+    updatedAt: string
 }
 
