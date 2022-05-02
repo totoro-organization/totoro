@@ -67,7 +67,7 @@ export default function BottomTabNavigator() {
               </Text>
             ),
             tabBarIcon: ({ focused }) => (
-              <Icon color={focused ? "black" : undefined} />
+              <Icon color={focused ? "black" : undefined} size={20} />
             ),
           }}
         />
