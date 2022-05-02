@@ -9,10 +9,14 @@ export interface User {
     lastname: string,
     username: string,
     email: string,
-    jobs: Job[],
-    tokens: number,
-    birthday?: Date,
-    avatar?: string,
     phone?: number,
+    longitude: number,
+    latitude: number,
+    bio?: string,
+    total_token: number,
+    birthday?: Date,
+    avatar: string,
     status: UserStatus
+    createdAt: string,
+    updatedAt: string
 }
