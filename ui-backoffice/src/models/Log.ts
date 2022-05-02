@@ -1,6 +1,7 @@
-export interface Status<T> {
+export interface Log {
     id: string,
-    label: T,
+    table: string,
+    action: string,
     createdAt: string,
     updatedAt: string
 }

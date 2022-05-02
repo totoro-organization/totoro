@@ -1,6 +1,6 @@
-export interface Status<T> {
+export interface Application {
     id: string,
-    label: T,
+    name: string,
     createdAt: string,
     updatedAt: string
 }

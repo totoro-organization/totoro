@@ -1,4 +1,4 @@
-export interface Tag {
+export interface Role {
     id: string,
     label: string,
     createdAt: string,

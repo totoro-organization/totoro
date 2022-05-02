@@ -1,21 +1,28 @@
+import { AttachmentJob } from "./attachment_job";
+import { JobDifficulty } from "./job_difficulty";
 import { Organization } from "./organization";
 import { Status } from "./status";
 import { Tag } from "./tag";
+import { User } from "./user";
 
 export type JobStatus = Status<'completed' | 'pending' | 'coming'>;
 
 export interface Job {
     id: string,
     title: string,
-    organization: string,
-    participants: number,
+    organization: Organization,
+    difficulty: JobDifficulty,
+    participants: User[],
+    participants_max: number,
     address: string,
-    capacity: number,
-    status:JobStatus,
-    tokens: number,
+    cp: number,
+    commune: string,
     description?: string,
-    date: number,
-    tags?: Tag[],
-    banner?: string,
-    logo?: string,
+    start_date: string,
+    end_date: string,
+    tags: Tag[],
+    attachments?: AttachmentJob[],
+    status: JobStatus,
+    createdAt: string,
+    updatedAt: string
 }
