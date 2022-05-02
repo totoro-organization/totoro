@@ -1,4 +1,6 @@
 export interface Status<T> {
     id: string,
-    label: T
+    label: T,
+    createdAt: string,
+    updatedAt: string
 }
