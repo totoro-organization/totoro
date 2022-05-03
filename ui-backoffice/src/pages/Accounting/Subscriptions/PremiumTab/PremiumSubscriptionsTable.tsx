@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { FC, ChangeEvent, useState } from 'react';
 import { Link } from "react-router-dom";
 import { format } from 'date-fns';

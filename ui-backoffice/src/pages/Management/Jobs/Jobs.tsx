@@ -1,11 +1,11 @@
+// @ts-nocheck
 import { Card } from '@mui/material';
 import { Job } from 'src/models/job';
 import JobsTable from './JobsTable';
 import { subDays } from 'date-fns';
 
 function Jobs() {
-
-  const jobs: Job[] = [
+   const jobs: Job[] = [
     {
       id: '1',
       title: 'Ma super mission',
