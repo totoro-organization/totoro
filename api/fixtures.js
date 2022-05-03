@@ -17,7 +17,7 @@ module.exports = {
 				error: errorReporter
 			}
 		}).then(function(){
-			doStuffAfterLoad();
+			console.log("after load data");
 		});
     }
 };
