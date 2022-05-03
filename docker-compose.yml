@@ -48,6 +48,7 @@ services:
       - $API_LOCAL_PORT:$API_DOCKER_PORT
     volumes: 
       - ./api:/usr/src/api
+      - /usr/src/api/node_modules
     environment:
       - NODE_ENV=development
       - DB_HOST=db
