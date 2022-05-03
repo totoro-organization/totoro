@@ -10,6 +10,7 @@ export interface Discount {
     type: DiscountType,
     description: string,
     condition: string,
+    duration: number,
     partner: Partner,
     cost: number,
     status: DiscountStatus
