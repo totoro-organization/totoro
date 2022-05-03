@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Litigation } from 'src/models/litigation';
 import { Stack, Button } from '@mui/material';
 import { FormContainer, TextFieldElement, DatePickerElement } from 'react-hook-form-mui'
