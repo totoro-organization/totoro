@@ -4,7 +4,7 @@
 
 `create a .env file and copy the config`
 
-`sh build.sh`
+`sh build.sh` ou `.\build.sh`
 
 # ip infra
 
