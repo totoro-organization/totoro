@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { subDays } from 'date-fns';
 import { Subscription } from 'src/models/subscription';
 import PremiumSubscriptionTable from './PremiumSubscriptionsTable';

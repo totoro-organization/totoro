@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Stack, Button } from '@mui/material';
 import { FormContainer, TextFieldElement, DatePickerElement } from 'react-hook-form-mui'
 import { Organization } from 'src/models/organization';

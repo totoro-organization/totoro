@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Card } from '@mui/material';
 import { Partner } from 'src/models/partner';
 import PartnersTable from './PartnersTable';
