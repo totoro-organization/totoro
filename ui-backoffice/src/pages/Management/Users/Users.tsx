@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Card } from '@mui/material';
 import { subDays } from 'date-fns';
 import { User } from 'src/models/user';

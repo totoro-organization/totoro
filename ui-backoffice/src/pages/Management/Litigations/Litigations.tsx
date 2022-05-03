@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Card } from '@mui/material';
 import { Litigation } from 'src/models/litigation';
 import LitigationsTable from './LitigationsTable';
