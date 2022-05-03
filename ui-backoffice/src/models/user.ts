@@ -18,6 +18,7 @@ export interface User {
     birthday?: Date,
     avatar: string,
     status: UserStatus,
+    organizations: Organization[],
     favorites: {
         jobs: Job[],
         organizations: Organization[]
