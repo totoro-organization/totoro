@@ -16,7 +16,7 @@ module.exports = {
           key: 'id'
         }
       },
-      recipient: {
+      recipient_id: {
         allowNull: true,
         type: Sequelize.UUID,
         references: { 
@@ -24,7 +24,7 @@ module.exports = {
           key: 'id'
         }
       },
-      sender: {
+      sender_id: {
         allowNull: true,
         type: Sequelize.UUID,
         references: { 

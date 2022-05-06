@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      models.Logs.belongsTo(models.Admins, { foreignKey: 'admin_id' });
+      models.Logs.belongsTo(models.Admins, {as: 'admin', foreignKey: 'admin_id' });
     }
   }
   Logs.init({

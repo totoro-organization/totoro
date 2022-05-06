@@ -33,7 +33,7 @@ module.exports = {
         }
       },
       expirate: {
-        allowNull: false,
+        allowNull: true,
         type: Sequelize.DATE
       },
       createdAt: {

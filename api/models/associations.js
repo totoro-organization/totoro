@@ -12,15 +12,15 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      models.Associations.hasMany(models.Favorites, { foreignKey: 'assos_id' });
-      models.Associations.hasMany(models.Associations_users, { foreignKey: 'assos_id' });
-      models.Associations.hasMany(models.Subscriptions, { foreignKey: 'assos_id' });
-      models.Associations.belongsTo(models.Status, { foreignKey: 'status_id' });
+      models.Associations.hasMany(models.Favorites, {as: 'favorites', foreignKey: 'assos_id' });
+      models.Associations.hasMany(models.Associations_users, {as: 'users', foreignKey: 'assos_id' });
+      models.Associations.hasMany(models.Subscriptions, {as: 'subscriptions', foreignKey: 'assos_id' });
+      models.Associations.belongsTo(models.Status, {as: 'status', foreignKey: 'status_id' });
     }
   }
   Associations.init({
-    siren: DataTypes.INTEGER,
-    siret: DataTypes.INTEGER,
+    siren: DataTypes.STRING,
+    siret: DataTypes.STRING,
     name: DataTypes.STRING,
     email: DataTypes.STRING,
     longitude: DataTypes.FLOAT,

@@ -1,8 +1,8 @@
-[
+module.exports = [
     {
         "model":"Status",
         "data": {
-            "label": "active"
+            "label": "actived"
         }
     },
     {
@@ -14,13 +14,13 @@
     {
         "model":"Status",
         "data": {
-            "label": "delete"
+            "label": "deleted"
         }
     },
     {
         "model":"Status",
         "data": {
-            "label": "accept"
+            "label": "accepted"
         }
     },
     {
@@ -44,13 +44,37 @@
     {
         "model":"Status",
         "data": {
-            "label": "open"
+            "label": "opened"
         }
     },
     {
         "model":"Status",
         "data": {
-            "label": "close"
+            "label": "closed"
+        }
+    },
+    {
+        "model":"Status",
+        "data": {
+            "label": "freezed"
+        }
+    },
+    {
+        "model":"Status",
+        "data": {
+            "label": "canceled"
+        }
+    },
+    {
+        "model":"Status",
+        "data": {
+            "label": "pending"
+        }
+    },
+    {
+        "model":"Status",
+        "data": {
+            "label": "coming"
         }
     }
 ]

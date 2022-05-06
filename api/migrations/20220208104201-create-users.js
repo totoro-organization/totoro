@@ -46,7 +46,7 @@ module.exports = {
       },
       birthday: {
         allowNull: true,
-        type: Sequelize.DATE
+        type: Sequelize.DATEONLY
       },
       longitude: {
         allowNull: false,

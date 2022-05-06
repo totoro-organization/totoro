@@ -11,9 +11,9 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      models.Favorites.belongsTo(models.Ads, { foreignKey: 'ads_id' });
-      models.Favorites.belongsTo(models.Users, { foreignKey: 'user_id' });
-      models.Favorites.belongsTo(models.Associations, { foreignKey: 'assos_id' });
+      models.Favorites.belongsTo(models.Ads, {as: 'status', foreignKey: 'ads_id' });
+      models.Favorites.belongsTo(models.Users, {as: 'user', foreignKey: 'user_id' });
+      models.Favorites.belongsTo(models.Associations, {as: 'organization', foreignKey: 'assos_id' });
     }
   }
   Favorites.init({

@@ -18,11 +18,11 @@ module.exports = {
       },
       siren: {
         allowNull: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       siret: {
         allowNull: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       name: {
         allowNull: true,
