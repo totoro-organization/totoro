@@ -10,11 +10,13 @@ import { Colors, getColors } from "../../theme/utils";
 
 export type ButtonColor = "black" | "primary" | "grey";
 export type ButtonVariant = "default" | "outline" | "ghost";
+export type ButtonSize = "default" | "small";
 
 export type ButtonProps = PropsWithChildren<
   {
     variant?: ButtonVariant;
     color?: ButtonColor;
+    size?: ButtonSize;
     handlePress?: () => void | Promise<void> | unknown;
     className?: string;
   } & PressableProps
@@ -23,6 +25,7 @@ export type ButtonProps = PropsWithChildren<
 // TODO: add isLoading and disabled states?
 export default function Button({
   variant = "default",
+  size = "default",
   color = "primary",
   children,
   handlePress,
@@ -44,6 +47,7 @@ export default function Button({
 
   return (
     <StyledButton
+      size={size}
       variant={variant}
       color={color}
       onPress={handlePress && onButtonPress}
@@ -135,7 +139,24 @@ function getButtonStyles(variant: ButtonVariant, color: ButtonColor) {
   }
 }
 
-type StyledButtonProps = Pick<ButtonProps, "variant" | "color">;
+function getButtonSize(size: ButtonSize) {
+  if (size === "default") {
+    return css`
+      padding: ${({ theme }) => theme.spacing[5]}
+        ${({ theme }) => theme.spacing[9]};
+    `;
+  }
+
+  if (size === "small") {
+    return css`
+      padding: ${({ theme }) => theme.spacing[4]}
+        ${({ theme }) => theme.spacing[2]};
+      font-size: ${({ theme }) => theme.fonts.sizes.sm};
+    `;
+  }
+}
+
+type StyledButtonProps = Pick<ButtonProps, "variant" | "color" | "size">;
 
 // NOTE: React Native's <Button /> component does not accept a style prop
 //       so we use Pressable tag.
@@ -145,8 +166,8 @@ const StyledButton = styled.Pressable<StyledButtonProps>`
   justify-content: center;
   align-items: center;
   border-radius: ${({ theme }) => theme.border.radius.md};
-  padding: ${({ theme }) => theme.spacing[5]} ${({ theme }) => theme.spacing[9]};
 
+  ${({ size }) => size && getButtonSize(size)};
   ${({ variant, color }) =>
     variant && color && getButtonStyles(variant, color)};
 `;
