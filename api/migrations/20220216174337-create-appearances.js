@@ -1,12 +1,20 @@
 'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Parameters', {
+    await queryInterface.createTable('Appearances', {
       id: {
         allowNull: false,
         defaultValue: Sequelize.UUIDV4,
         primaryKey: true,
         type: Sequelize.UUID
+      },
+      app_id: {
+        allowNull: false,
+        type: Sequelize.UUID,
+        references: { 
+          model: 'Applications',
+          key: 'id'
+        }
       },
       logo: {
         allowNull: false,
@@ -39,6 +47,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Parameters');
+    await queryInterface.dropTable('Appearances');
   }
 };

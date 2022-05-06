@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      models.Tags.hasMany(models.Tag_ads, { foreignKey: 'tag_id' });
+      models.Tags.hasMany(models.Tag_ads, {as: 'tagsJob', foreignKey: 'tag_id' });
     }
   }
   Tags.init({

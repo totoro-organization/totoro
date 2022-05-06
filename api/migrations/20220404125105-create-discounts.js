@@ -8,6 +8,14 @@ module.exports = {
         defaultValue: Sequelize.UUIDV4,
         primaryKey: true,
       },
+      status_id: {
+        allowNull: false,
+        type: Sequelize.UUID,
+        references: { 
+          model: 'Status',
+          key: 'id'
+        }
+      },
       type_disc_id: {
         allowNull: false,
         type: Sequelize.UUID,
@@ -35,6 +43,14 @@ module.exports = {
       condition: {
         allowNull: true,
         type: Sequelize.TEXT
+      },
+      cost: {
+        allowNull: true,
+        type: Sequelize.INTEGER
+      },
+      duration: {
+        allowNull: true,
+        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,
