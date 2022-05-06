@@ -11,9 +11,9 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      models.Litigations.belongsTo(models.Groups, { foreignKey: 'group_id' });
-      models.Litigations.belongsTo(models.Litigation_objects, { foreignKey: 'litigation_object_id' });
-      models.Litigations.belongsTo(models.Status, { foreignKey: 'status_id' });
+      models.Litigations.belongsTo(models.Groups, {as: 'partipant', foreignKey: 'group_id' });
+      models.Litigations.belongsTo(models.Litigation_objects, {as: 'litigation_object', foreignKey: 'litigation_object_id' });
+      models.Litigations.belongsTo(models.Status, {as: 'status', foreignKey: 'status_id' });
     }
   }
   Litigations.init({

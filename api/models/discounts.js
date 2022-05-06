@@ -11,10 +11,11 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      models.Discounts.belongsTo(models.Types_discounts, { foreignKey: 'type_disc_id' });
-      models.Discounts.belongsTo(models.Partners, { foreignKey: 'partner_id' });
+      models.Discounts.belongsTo(models.Types_discounts, {as: 'type', foreignKey: 'type_disc_id' });
+      models.Discounts.belongsTo(models.Partners, {as: 'partner', foreignKey: 'partner_id' });
+      models.Discounts.belongsTo(models.Status, {as: 'status', foreignKey: 'status_id' });
 
-      models.Discounts.hasMany(models.Tokens, { foreignKey: 'discount_id' });
+      models.Discounts.hasMany(models.Tokens, {as: 'discountTransactions', foreignKey: 'discount_id' });
       
     }
   }
@@ -22,7 +23,8 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING,
     description: DataTypes.TEXT,
     condition: DataTypes.TEXT,
-    cost: DataTypes.INTEGER
+    cost: DataTypes.INTEGER,
+    duration: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Discounts',

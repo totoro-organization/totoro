@@ -1,4 +1,5 @@
 'use strict';
+const { v4: uuidv4 } = require('uuid');
 const {
   Model
 } = require('sequelize');
@@ -11,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      models.Litigation_objects.hasMany(models.Litigations, { foreignKey: 'litigation_object_id' });
+      models.Litigation_objects.hasMany(models.Litigations, {as: 'litigations', foreignKey: 'litigation_object_id' });
     }
   }
   Litigation_objects.init({

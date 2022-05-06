@@ -1,8 +1,8 @@
-[
+module.exports = [
     {
         "model":"Applications",
         "data": {
-            "name": "APP MOBILE"
+            "name": "MOBILE APP"
         }
     },
     {

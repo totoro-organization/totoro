@@ -11,13 +11,13 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      models.Ads.belongsTo(models.Status, { foreignKey: 'status_id' });
-      models.Ads.belongsTo(models.Associations_users, { foreignKey: 'assos_user_id' });
-      models.Ads.belongsTo(models.Difficulties, { foreignKey: 'difficulty_id' });
-      models.Ads.hasMany(models.Favorites, { foreignKey: 'ads_id' });
-      models.Ads.hasMany(models.Tag_ads, { foreignKey: 'ads_id' });
-      models.Ads.hasMany(models.Attachment_ads, { foreignKey: 'ads_id' });
-      models.Ads.hasMany(models.Groups, { foreignKey: 'ads_id' });
+      models.Ads.belongsTo(models.Status, {as: 'status',  foreignKey: 'status_id' });
+      models.Ads.belongsTo(models.Associations_users, {as: 'author',  foreignKey: 'assos_user_id' });
+      models.Ads.belongsTo(models.Difficulties, {as: 'difficulty',  foreignKey: 'difficulty_id' });
+      models.Ads.hasMany(models.Favorites, {as: 'favorites',  foreignKey: 'ads_id' });
+      models.Ads.hasMany(models.Tag_ads, {as: 'tags',  foreignKey: 'ads_id' });
+      models.Ads.hasMany(models.Attachment_ads, {as: 'attachments',  foreignKey: 'ads_id' });
+      models.Ads.hasMany(models.Groups, {as: 'participants',  foreignKey: 'ads_id' });
 
     }
   }
