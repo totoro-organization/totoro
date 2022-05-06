@@ -12,10 +12,10 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      models.Groups.belongsTo(models.Ads, { foreignKey: 'ads_id' });
-      models.Groups.belongsTo(models.Users, { foreignKey: 'user_id' });
-      models.Groups.hasMany(models.Litigations, { foreignKey: 'group_id' });
-      models.Groups.hasMany(models.Chats, { foreignKey: 'group_id' });
+      models.Groups.belongsTo(models.Ads, {as: 'job', foreignKey: 'ads_id' });
+      models.Groups.belongsTo(models.Users, {as: 'participant', foreignKey: 'user_id' });
+      models.Groups.hasMany(models.Litigations, {as: 'litigations', fforeignKey: 'group_id' });
+      models.Groups.hasMany(models.Chats, {as: 'chats', foreignKey: 'group_id' });
 
     }
   }

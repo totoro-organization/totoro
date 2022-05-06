@@ -11,8 +11,8 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      models.Tag_ads.belongsTo(models.Ads, { foreignKey: 'ads_id' });
-      models.Tag_ads.belongsTo(models.Tags, { foreignKey: 'tag_id' });
+      models.Tag_ads.belongsTo(models.Ads, {as: 'job', foreignKey: 'ads_id' });
+      models.Tag_ads.belongsTo(models.Tags, {as: 'tag', foreignKey: 'tag_id' });
     }
   }
   Tag_ads.init({

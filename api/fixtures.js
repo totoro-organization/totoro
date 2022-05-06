@@ -9,7 +9,7 @@ function errorReporter(message) {
 module.exports = {
     loadFixtures: () => {
         // can use glob syntax to select multiple files
-        sequelize_fixtures.loadFile('fixtures/*.json', models, {
+        sequelize_fixtures.loadFile('fixtures/*.js', models, {
 			logger: {
 				debug: console.log,
 				info: console.log,

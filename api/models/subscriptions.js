@@ -11,9 +11,9 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      models.Subscriptions.belongsTo(models.Pricings, { foreignKey: 'pricing_id' });
-      models.Subscriptions.belongsTo(models.Status, { foreignKey: 'status_id' });
-      models.Subscriptions.belongsTo(models.Associations, { foreignKey: 'assos_id' });
+      models.Subscriptions.belongsTo(models.Pricings, {as: 'pricing', foreignKey: 'pricing_id' });
+      models.Subscriptions.belongsTo(models.Status, {as: 'status', foreignKey: 'status_id' });
+      models.Subscriptions.belongsTo(models.Associations, {as: 'organization', foreignKey: 'assos_id' });
     }
   }
   Subscriptions.init({

@@ -4,7 +4,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Parameters extends Model {
+  class Appearances extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -12,9 +12,11 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      models.Appearances.belongsTo(models.Applications, {as: 'application', foreignKey: 'app_id' });
+
     }
   }
-  Parameters.init({
+  Appearances.init({
     logo: DataTypes.STRING,
     icon: DataTypes.STRING,
     primary_theme: DataTypes.STRING,
@@ -22,10 +24,10 @@ module.exports = (sequelize, DataTypes) => {
     title: DataTypes.STRING
   }, {
     sequelize,
-    modelName: 'Parameters',
+    modelName: 'Appearances',
   });
-  Parameters.addHook("beforeSave", async (element) => {
+  Appearances.addHook("beforeSave", async (element) => {
     return element.id = uuidv4();
   } )
-  return Parameters;
+  return Appearances;
 };
