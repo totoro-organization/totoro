@@ -7,6 +7,7 @@ import { Text } from "./Text";
 import theme from "../../theme/theme";
 import Spinner from "./Spinner";
 import { Colors, getColors } from "../../theme/utils";
+import Spacer from "./Spacer";
 
 export type ButtonColor = "black" | "primary" | "grey";
 export type ButtonVariant = "default" | "outline" | "ghost";
@@ -19,6 +20,7 @@ export type ButtonProps = PropsWithChildren<
     color?: ButtonColor;
     size?: ButtonSize;
     horizontalPosition?: ButtonPosition;
+    Icon?: JSX.Element;
     handlePress?: () => void | Promise<void> | unknown;
     className?: string;
   } & PressableProps
@@ -30,6 +32,7 @@ export default function Button({
   color = "primary",
   horizontalPosition = "flex-start",
   children,
+  Icon,
   handlePress,
   ...rest
 }: ButtonProps) {
@@ -62,28 +65,20 @@ export default function Button({
           </LoadingWrapper>
         )}
 
-        {React.Children.map(children, (child) => {
-          if (typeof child === "string") {
-            return (
-              <StyledText
-                $isHidden={isInternalLoading}
-                variant={variant}
-                color={color}
-              >
-                {child}
-              </StyledText>
-            );
-          }
-          return (
-            <Element
-              $isHidden={isInternalLoading}
-              variant={variant}
-              color={color}
-            >
-              {child}
-            </Element>
-          );
-        })}
+        {Icon && (
+          <>
+            {Icon}
+            <Spacer axis="horizontal" size={0.5} />
+          </>
+        )}
+
+        <StyledText
+          $isHidden={isInternalLoading}
+          variant={variant}
+          color={color}
+        >
+          {children}
+        </StyledText>
       </StyledButton>
     </OuterLayout>
   );
@@ -158,10 +153,9 @@ function getButtonSize(size: ButtonSize) {
   }
 }
 
-const OuterLayout = styled.View<{
-  size?: ButtonSize;
-  horizontalPosition: ButtonPosition;
-}>`
+type OuterLayoutProps = Pick<ButtonProps, "size" | "horizontalPosition">;
+
+const OuterLayout = styled.View<OuterLayoutProps>`
   ${({ size, horizontalPosition }) =>
     size !== "fullWidth" &&
     css`
@@ -176,6 +170,7 @@ type StyledButtonProps = Pick<ButtonProps, "variant" | "color" | "size">;
 const StyledButton = styled.Pressable<StyledButtonProps>`
   display: flex;
   justify-content: center;
+  flex-direction: row;
   align-items: center;
   border-radius: ${({ theme }) => theme.border.radius.md};
 
@@ -195,27 +190,17 @@ const LoadingWrapper = styled.View`
   height: 100%;
 `;
 
-type ButtonContentProps = {
+type ContentProps = {
   $isHidden: boolean;
 } & Pick<ButtonProps, "variant" | "color" | "size">;
 
-const buttonContentStyle = css<ButtonContentProps>`
+const StyledText = styled(Text)<ContentProps>`
   font-size: ${({ theme, size }) =>
-    size === "fullWidth" ? theme.fonts.sizes.md : theme.fonts.sizes.sm};
+    size === "sm" ? theme.fonts.sizes.sm : theme.fonts.sizes.md};
 
   opacity: ${({ $isHidden }) => ($isHidden ? "0" : "1")};
   color: ${({ variant, color, theme }) =>
     variant === "default"
       ? theme.colors.white[600]
       : getColors(color as Colors)};
-`;
-
-const StyledText = styled(Text)<ButtonContentProps>`
-  ${buttonContentStyle};
-`;
-
-const Element = styled.View<ButtonContentProps>`
-  display: flex;
-  align-items: center;
-  ${buttonContentStyle};
 `;

@@ -33,7 +33,7 @@ export default function Box(props: BoxProps) {
 }
 
 const StyledBox = styled.View<BoxProps>`
-  display: ${({ display }) => display || "block"};
+  display: ${({ display }) => display || "flex"};
   flex-direction: ${({ flexDirection }) => flexDirection || "row"};
   align-items: ${({ alignItems }) => alignItems || "flex-start"};
   align-content: ${({ alignContent }) => alignContent || "flex-start"};
