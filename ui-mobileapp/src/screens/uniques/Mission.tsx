@@ -45,7 +45,7 @@ export default function Mission({
         {mission.organization}
       </Text>
 
-      <Spacer axis="vertical" size={3} />
+      <Spacer axis="vertical" size={2} />
 
       <Box alignItems="center">
         <Button size="sm" color="black" Icon={<Heart color="white" />}>
