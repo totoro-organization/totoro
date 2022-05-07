@@ -25,9 +25,10 @@ export default function ShopCard({ discount }: ShopCardProps) {
   return (
     <Container>
       <InfoWrapper>
-        {/* TODO: Add discount banner */}
-
-        <StyledImage source={PLACEHOLDER_IMAGE as any} resizeMode="cover">
+        <StyledImage
+          source={{ uri: PLACEHOLDER_IMAGE as any }}
+          resizeMode="cover"
+        >
           <Overlay />
 
           <Box display="flex" flexDirection="column" padding={0.875}>
