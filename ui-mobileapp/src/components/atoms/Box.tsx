@@ -10,7 +10,6 @@ type JustifySpace =
   | "space-around"
   | "space-between"
   | "space-evenly";
-type PlaceItems = "start" | "center" | "end";
 
 type BoxProps = {
   children: React.ReactNode;
