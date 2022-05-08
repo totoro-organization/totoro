@@ -43,6 +43,7 @@ export default function ShopCard({ discount }: ShopCardProps) {
       </InfoWrapper>
 
       <StyledButton
+        horizontalPosition="stretch"
         color={discount.isObtained ? "grey" : "primary"}
         disabled={discount.isObtained}
         // TODO: Add handlePress function to buy discount.
