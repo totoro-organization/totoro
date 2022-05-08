@@ -20,6 +20,10 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
+      address: {
+        allowNull: true,
+        type: Sequelize.STRING
+      },
       logo: {
         allowNull: false,
         type: Sequelize.STRING
