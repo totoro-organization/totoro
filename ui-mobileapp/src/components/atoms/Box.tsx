@@ -10,7 +10,6 @@ type JustifySpace =
   | "space-around"
   | "space-between"
   | "space-evenly";
-type PlaceItems = "start" | "center" | "end";
 
 type BoxProps = {
   children: React.ReactNode;
@@ -34,7 +33,7 @@ export default function Box(props: BoxProps) {
 }
 
 const StyledBox = styled.View<BoxProps>`
-  display: ${({ display }) => display || "block"};
+  display: ${({ display }) => display || "flex"};
   flex-direction: ${({ flexDirection }) => flexDirection || "row"};
   align-items: ${({ alignItems }) => alignItems || "flex-start"};
   align-content: ${({ alignContent }) => alignContent || "flex-start"};

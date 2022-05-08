@@ -4,7 +4,7 @@ export const fonts = {
     sm: "12px",
     md: "14px", // default size (refer to figma)
     lg: "16px",
-    xl: "24px",
+    xl: "22px",
   },
 
   weight: {
