@@ -1,4 +1,5 @@
 'use strict';
+const { v4: uuidv4 } = require('uuid');
 const {
   Model
 } = require('sequelize');
@@ -29,5 +30,8 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'Discounts',
   });
+  Discounts.addHook("beforeSave", async (element) => {
+    return element.id = uuidv4();
+  } );
   return Discounts;
 };

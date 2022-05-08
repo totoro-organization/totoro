@@ -15,7 +15,7 @@ module.exports = [
 			duration: 80,
 			cost: 30,
 			status: {
-				label: "active",
+				label: "actived",
 			},
 		},
 	},

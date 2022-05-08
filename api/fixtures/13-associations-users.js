@@ -12,7 +12,7 @@ module.exports = [
 			},
 			role: {
 				label: "Administrateur",
-			},
+			}
 		},
 	},
 ];
