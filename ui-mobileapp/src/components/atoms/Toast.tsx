@@ -1,12 +1,11 @@
 import React, { ReactNode } from "react";
-import { View } from "react-native";
 import Toast from "react-native-toast-message";
 import type { ToastConfigParams } from "react-native-toast-message";
 
 import styled from "styled-components/native";
 
 import { Text } from "./Text";
-import Box from "./Box";
+
 import Success from "../../assets/icons/Success";
 import Error from "../../assets/icons/Error";
 import Spacer from "./Spacer";
@@ -51,23 +50,23 @@ const BaseToast = ({ title, text, type }: ToastProps) => {
 
       <Spacer axis="horizontal" size={0.5} />
 
-      <Box flexDirection="column">
+      <DetailsWrapper>
         {title && (
           <>
             <Text weight="semiBold">{title}</Text>
-            <Spacer axis="vertical" size={0.5} />
+            <Spacer axis="vertical" size={0.25} />
           </>
         )}
 
         {text && <Text size="sm">{text}</Text>}
-      </Box>
+      </DetailsWrapper>
     </Container>
   );
 };
 
 const Container = styled.View`
   position: relative;
-  width: 90%;
+  width: 95%;
   flex-direction: row;
   flex: 1;
   background-color: ${({ theme }) => theme.colors.white[600]};
@@ -78,6 +77,11 @@ const Container = styled.View`
   shadow-color: #000;
   shadow-opacity: 0.1;
   shadow-radius: 4px;
+`;
+
+const DetailsWrapper = styled.View`
+  flex-direction: column;
+  padding-right: ${({ theme }) => theme.spacing[4]};
 `;
 
 // FIXME !!
