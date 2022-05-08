@@ -16,19 +16,11 @@ module.exports = {
           key: 'id'
         }
       },
-      ads_id: {
+      group_id: {
         allowNull: false,
         type: Sequelize.UUID,
         references: { 
-          model: 'Ads',
-          key: 'id'
-        }
-      },
-      user_id: {
-        allowNull: false,
-        type: Sequelize.UUID,
-        references: { 
-          model: 'Users',
+          model: 'Groups',
           key: 'id'
         }
       },
@@ -39,6 +31,14 @@ module.exports = {
           model: 'Status',
           key: 'id'
         }
+      },
+      type: {
+        allowNull: false,
+        type: Sequelize.BOOLEAN
+      },
+      message: {
+        allowNull: true,
+        type: Sequelize.TEXT
       },
       createdAt: {
         allowNull: false,

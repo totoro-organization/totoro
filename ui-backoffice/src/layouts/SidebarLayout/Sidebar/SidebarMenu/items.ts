@@ -4,6 +4,7 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
 import ReportProblemIcon from '@mui/icons-material/ReportProblem';
 import QueryStatsIcon from '@mui/icons-material/QueryStats';
+import CardMembershipIcon from '@mui/icons-material/CardMembership';
 import GroupWorkIcon from '@mui/icons-material/GroupWork';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import PeopleIcon from '@mui/icons-material/People';
@@ -60,9 +61,9 @@ const menuItems: MenuItems[] = [
         link: '/gestion/partenaires',
         items: [
           {
-            name: 'Demandes d\'adhésion',
+            name: 'Demandes',
             icon: GroupAddIcon,
-            link: '/gestion/partenaires/adhesion',
+            link: '/gestion/partenaires/demandes',
           },
           {
             name: 'Membres',
@@ -92,9 +93,9 @@ const menuItems: MenuItems[] = [
     heading: 'Comptabilité',
     items: [
       {
-        name: 'Statistiques',
-        icon: QueryStatsIcon,
-        link: '/comptabilite/statistiques'
+        name: 'Abonnements',
+        icon: CardMembershipIcon,
+        link: '/comptabilite/abonnements'
       },
     ]
   },
@@ -122,6 +123,11 @@ const menuItems: MenuItems[] = [
             name: 'Tags',
             icon: StyleIcon,
             link: '/app-reglages/parametrage/tags'
+          },
+          {
+            name: 'Abonnements',
+            icon: CardMembershipIcon,
+            link: '/app-reglages/parametrage/abonnements'
           },
           {
             name: 'Statuts',

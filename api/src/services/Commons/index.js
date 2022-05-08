@@ -8,7 +8,7 @@ const {
 	Status,
 	Payments,
 	Litigation_objects,
-} = require("models");
+} = require("./../../../models");
 
 exports.router = (function () {
 	const commonsRouter = express.Router();

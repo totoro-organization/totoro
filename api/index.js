@@ -3,30 +3,13 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const { ui_api } = require("./html");
 const { error } = require("utils/common/messages.json");
-const { Applications } = require("models");
+const { Applications } = require("./models");
+const {loadFixtures} = require('./fixtures');
 const PORT = process.env.API_DOCKER_PORT || 8080;
 const server = express();
+const url = `http://localhost:${PORT}`
 const swaggerJsDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
-
-const swaggerOptions = {
-  swaggerDefinition: {
-    info: {
-      version: "1.0.0",
-      title: "Customer API",
-      description: "Customer API Information",
-      contact: {
-        name: "Totoro"
-      },
-      servers: ["http://localhost:6868"]
-    }
-  },
- 
-  apis: ["index.js"]
-};
-
-const swaggerDocs = swaggerJsDoc(swaggerOptions);
-server.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 const {
 	users,
@@ -37,6 +20,8 @@ const {
 	applications,
 } = require("services");
 
+loadFixtures(); 
+
 server.use(cors({ origin: "*" }));
 
 server.use(express.static(__dirname + "/data"));
@@ -45,12 +30,31 @@ server.use(bodyParser.urlencoded({ extended: true }));
 
 server.use(bodyParser.json());
 
-	//routes
+const swaggerOptions = {
+  swaggerDefinition: {
+    info: {
+      version: "1.0.0",
+      title: "Customer API",
+      description: "Customer API Information",
+      contact: {
+        name: "Totoro"
+      },
+      servers: [url]
+    }
+  },
+ 
+  apis: ["index.js"]
+};
+
+const swaggerDocs = swaggerJsDoc(swaggerOptions);
+server.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+
+//routes
 /**
  * @swagger
- * /get:
+ * /:
  *  get:
- *    description: Use to request all customers
+ *    description: test
  *    responses:
  *      '200':
  *        description: A successful response
@@ -123,5 +127,4 @@ server.use("/api/commons", [accessApi, commons]);
 
 server.listen(PORT, function () {
 	console.log("server start");
-	console.log(PORT);
 });

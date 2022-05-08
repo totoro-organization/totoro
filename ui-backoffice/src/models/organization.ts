@@ -1,19 +1,29 @@
+import { Job } from "./job";
 import { Status } from "./status";
+import { User } from "./user";
 
-export type OrganizationStatus = Status<'completed' | 'pending' | 'coming'>;
+export type OrganizationStatus = Status<'active' | 'inactive' | 'freezed' | 'outlawed'>;
 
 export interface Organization {
     id: string,
-    title: string,
-    organization: string,
-    participants: number,
-    address: string,
-    capacity: number,
+    name: string,
+    email?: string,
+    address?: string,
+    cp?: number,
+    commune?: string,
+    logo: string,
+    description?: string,
+    link?: string,
+    phone?: string,
+    siren: number,
+    siret: number,
+    longitude: number,
+    latitude: number,
     status: OrganizationStatus,
-    tokens: number,
-    desc?: string,
-    date: number,
-    tags?: string[],
-    banner?: string,
-    logo?: string,
+    creation_date?: string,
+    activity?: string,
+    users: User[],
+    jobs: Job[],
+    createdAt: string,
+    updatedAt: string
 }

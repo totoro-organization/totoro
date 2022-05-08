@@ -8,11 +8,19 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.UUID
       },
-      user_id: {
+      assos_user_id: {
         allowNull: false,
         type: Sequelize.UUID,
         references: { 
-          model: 'Users',
+          model: 'Associations_users',
+          key: 'id'
+        }
+      },
+      difficulty_id: {
+        allowNull: false,
+        type: Sequelize.UUID,
+        references: { 
+          model: 'Difficulties',
           key: 'id'
         }
       },
@@ -29,12 +37,32 @@ module.exports = {
         type: Sequelize.STRING
       },
       description: {
-        allowNull: true,
+        allowNull: false,
         type: Sequelize.STRING
       },
-      price: {
+      participants_max: {
+        allowNull: false,
+        type: Sequelize.INTEGER
+      },
+      start_date: {
+        allowNull: false,
+        type: Sequelize.DATE
+      },
+      end_date: {
         allowNull: true,
-        type: Sequelize.FLOAT
+        type: Sequelize.DATE
+      },
+      address: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
+      cp: {
+        allowNull: false,
+        type: Sequelize.INTEGER
+      },
+      commune: {
+        allowNull: false,
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,

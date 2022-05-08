@@ -1,0 +1,11 @@
+{
+	"active": "active",
+	"disabled": "disabled",
+	"delete": "delete",
+    "accept": "accept",
+    "denied": "denied",
+	"published": "published",
+	"expired": "expired",
+	"open": "open",
+	"close": "close"
+}

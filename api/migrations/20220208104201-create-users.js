@@ -9,7 +9,7 @@ module.exports = {
         type: Sequelize.UUID
       },
       terminal_id: {
-        allowNull: false,
+        allowNull: true,
         type: Sequelize.UUID,
         references: { 
           model: 'Terminals',
@@ -25,11 +25,11 @@ module.exports = {
         }
       },
       firstname: {
-        allowNull: false,
+        allowNull: true,
         type: Sequelize.STRING
       },
       lastname: {
-        allowNull: false,
+        allowNull: true,
         type: Sequelize.STRING
       },
       username: {
@@ -45,16 +45,8 @@ module.exports = {
         type: Sequelize.STRING
       },
       birthday: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
-      address: {
         allowNull: true,
-        type: Sequelize.STRING
-      },
-      cp: {
-        allowNull: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.DATEONLY
       },
       longitude: {
         allowNull: false,
@@ -72,13 +64,13 @@ module.exports = {
         allowNull: true,
         type: Sequelize.TEXT
       },
-      rating: {
-        allowNull: true,
-        type: Sequelize.FLOAT
-      },
       phone: {
         allowNull: true,
         type: Sequelize.STRING
+      },
+      total_token: {
+        allowNull: false,
+        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,

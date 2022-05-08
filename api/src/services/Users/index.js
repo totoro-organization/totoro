@@ -1,8 +1,8 @@
 const express = require("express");
 const { passport } = require("utils/session");
-const commonsController = require("../Commons/controller");
+const commonsController = require("services/Commons/controller");
 const controller = require("./controller");
-const { Users, Status, Terminals } = require("models");
+const { Users, Status, Terminals } = require("./../../../models");
 
 exports.router = (function () {
 	const UsersRouter = express.Router();
