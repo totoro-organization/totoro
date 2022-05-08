@@ -18,6 +18,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Partners.init({
     name: DataTypes.STRING,
+    address: DataTypes.STRING,
     logo: DataTypes.STRING,
     description: DataTypes.STRING,
     phone: DataTypes.STRING,

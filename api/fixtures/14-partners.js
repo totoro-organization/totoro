@@ -12,7 +12,7 @@ module.exports = [
 			in_internet: false,
 			in_store: true,
 			status: {
-				label: "active",
+				label: "actived",
 			},
 		},
 	},

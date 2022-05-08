@@ -50,7 +50,7 @@ module.exports = {
       },
       end_date: {
         allowNull: true,
-        type: Sequelize.FLOAT
+        type: Sequelize.DATE
       },
       address: {
         allowNull: false,
