@@ -3,6 +3,7 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import React, { useState } from "react";
 import styled from "styled-components/native";
 import Button from "../components/atoms/Button";
+import ProgressBar from "../components/atoms/ProgressBar";
 import Spacer from "../components/atoms/Spacer";
 
 import { Heading } from "../components/atoms/Text";
@@ -20,12 +21,37 @@ enum RegisterSteps {
 }
 
 export default function Register() {
-  const [currentStep, setCurrentStep] = useState(RegisterSteps.STEP_ONE);
+  const [currentStep, setCurrentStep] = useState<RegisterSteps>(
+    RegisterSteps.STEP_TWO
+  );
   const navigation = useNavigation<StackNavigationProp<AuthParamList>>();
 
+  const totalSteps = Object.values(RegisterSteps).length;
+  const currentStepNumber =
+    Object.values(RegisterSteps).indexOf(currentStep) + 1;
+
+  function getStepTitle(currentStep: RegisterSteps) {
+    switch (currentStep) {
+      case RegisterSteps.STEP_ONE:
+        return "Création du compte";
+      case RegisterSteps.STEP_TWO:
+        return "Vos informations personnelles";
+      case RegisterSteps.STEP_FINAL:
+        return "C'est bientôt fini !";
+    }
+  }
+
   return (
-    <MainLayout>
+    <MainLayout withBackButton>
       <Heading variant="h1">Inscription&nbsp;👋</Heading>
+
+      <Spacer axis="vertical" size={3} />
+
+      <ProgressBar
+        title={getStepTitle(currentStep)}
+        totalNumberOfSteps={totalSteps}
+        currentStepNumber={currentStepNumber}
+      />
 
       <StepWrapper>
         {currentStep === RegisterSteps.STEP_ONE && (

@@ -1,6 +1,6 @@
 POST http://localhost:6868/api/terminals 
 Content-Type: application/json
-app_id: 7783d5f1-19c1-4b1d-ba0f-3e4887eefb72
+app_id: 0acfa118-0ec3-4a0a-8d25-f464cddbeaf8
 
 {
     "label": "Terminal 3",
@@ -13,21 +13,21 @@ app_id: 7783d5f1-19c1-4b1d-ba0f-3e4887eefb72
 ###
 GET http://localhost:6868/api/terminals 
 Content-Type: application/json
-app_id: 7783d5f1-19c1-4b1d-ba0f-3e4887eefb72
+app_id: 0acfa118-0ec3-4a0a-8d25-f464cddbeaf8
 
 ###
 GET http://localhost:6868/api/terminals/0baccf09-ac85-49a0-a78f-6932b4abea48
 Content-Type: application/json
-app_id: 7783d5f1-19c1-4b1d-ba0f-3e4887eefb72
+app_id: 0acfa118-0ec3-4a0a-8d25-f464cddbeaf8
 
 ###
 DELETE http://localhost:6868/api/terminals/0baccf09-ac85-49a0-a78f-6932b4abea48
 Content-Type: application/json
-app_id: 7783d5f1-19c1-4b1d-ba0f-3e4887eefb72
+app_id: 0acfa118-0ec3-4a0a-8d25-f464cddbeaf8
 
 ###
 PUT http://localhost:6868/api/terminals/0baccf09-ac85-49a0-a78f-6932b4abea48
 Content-Type: application/json
-app_id: 7783d5f1-19c1-4b1d-ba0f-3e4887eefb72
+app_id: 0acfa118-0ec3-4a0a-8d25-f464cddbeaf8
 
 {"label": "TEST"}

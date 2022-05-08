@@ -27,9 +27,8 @@ const Container = styled.View`
   justify-content: space-between;
 `;
 
-/* TODO: add error theme color */
 const ErrorMessage = styled(Text)`
-  color: red;
+  color: ${({ theme }) => theme.colors.error[500]};
   min-height: 16px;
   font-size: 12px;
   margin-top: ${({ theme }) => theme.spacing[1]};

@@ -18,11 +18,11 @@ export type TextProps = {
 export const Text = styled.Text<TextProps>`
   color: ${({ color }) =>
     (color && getColors(color)) || theme.colors.grey[900]};
-
   font-size: ${({ theme, size }) =>
     size ? theme.fonts.sizes[size] : theme.fonts.sizes.md};
   font-family: ${({ theme, weight }) =>
     weight ? theme.fonts.weight[weight] : theme.fonts.weight.regular};
+  flex-shrink: 1;
 `;
 
 // HEADING (H1/H2... STYLES)
@@ -47,6 +47,7 @@ export const Heading = styled.Text<HeadingProps>`
     (color && getColors(color)) || theme.colors.grey[900]};
   font-family: ${({ theme, weight }) =>
     weight ? theme.fonts.weight[weight] : theme.fonts.weight.semiBold};
+  flex-shrink: 1;
 
   ${({ variant }) => variantsStyles[variant]};
 `;

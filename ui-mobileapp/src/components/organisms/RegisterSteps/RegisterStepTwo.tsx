@@ -11,6 +11,10 @@ import {
 } from "./registerValidationSchemas";
 import InputGroup from "../../molecules/InputGroup";
 import Spacer from "../../atoms/Spacer";
+import Alert from "../../atoms/Alert";
+
+const ALERT_CONTENT_LASTNAME =
+  "Votre nom de famille nous permet de récupérer seulement votre initial. Cette information ne sera pas accessible par l’ensemble des utilisateurs.";
 
 export type RegisterStepTwoProps = {
   nextStep: () => void;
@@ -36,6 +40,10 @@ export default function RegisterStepTwo({ nextStep }: RegisterStepTwoProps) {
 
   return (
     <>
+      <Alert type="info">{ALERT_CONTENT_LASTNAME}</Alert>
+
+      <Spacer axis="vertical" size={3} />
+
       <InputWrapper>
         <Text>Prénom</Text>
 

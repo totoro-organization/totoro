@@ -1,39 +1,41 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React from "react";
-import Icon, { IconName } from "../components/atoms/Icon/Icon";
+
+import { Message, Missions, Shop, User } from "../assets/icons";
 import { Text } from "../components/atoms/Text";
-import Chat from "../screens/Chat";
-import Missions from "../screens/Missions";
-import Profile from "../screens/Profile";
-import Shop from "../screens/Shop";
+import ChatScreen from "../screens/Chat";
+import MissionsScreen from "../screens/Missions";
+import ProfileScreen from "../screens/Profile";
+import ShopScreen from "../screens/Shop";
 import theme from "../theme/theme";
 
 export type NavigationPagesProps = {
   title: string;
   component: () => JSX.Element;
-  icon: keyof typeof IconName;
+  // FIXME: Find a better type here.
+  Icon: (color: any) => JSX.Element;
 };
 
 const NAVIGATION_PAGES: NavigationPagesProps[] = [
   {
     title: "Missions",
-    component: Missions,
-    icon: "missions",
+    component: MissionsScreen,
+    Icon: Missions,
   },
   {
     title: "Boutique",
-    component: Shop,
-    icon: "shop",
+    component: ShopScreen,
+    Icon: Shop,
   },
   {
     title: "Messagerie",
-    component: Chat,
-    icon: "message",
+    component: ChatScreen,
+    Icon: Message,
   },
   {
     title: "Profil",
-    component: Profile,
-    icon: "user",
+    component: ProfileScreen,
+    Icon: User,
   },
 ];
 
@@ -53,19 +55,19 @@ export default function BottomTabNavigator() {
         },
       }}
     >
-      {NAVIGATION_PAGES.map(({ title, component, icon }) => (
+      {NAVIGATION_PAGES.map(({ title, component, Icon }) => (
         <Tab.Screen
           key={title}
           name={title}
           component={component}
           options={{
             tabBarLabel: ({ focused }) => (
-              <Text size="xs" color={focused ? "black" : "grey"}>
+              <Text size="xs" color={focused ? "primary" : "grey"}>
                 {title}
               </Text>
             ),
             tabBarIcon: ({ focused }) => (
-              <Icon name={icon} color={focused ? "black" : undefined} />
+              <Icon color={focused ? "primary" : undefined} size={20} />
             ),
           }}
         />
