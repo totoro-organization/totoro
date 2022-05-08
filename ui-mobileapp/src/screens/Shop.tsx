@@ -29,7 +29,7 @@ export default function Shop() {
         {FAKE_DISCOUNTS.map((discount, index) => {
           return (
             <>
-              <ShopCard key={index} discount={discount} />
+              <ShopCard key={`${index}:shop`} discount={discount} />
 
               <Spacer axis="vertical" size={1} />
             </>
