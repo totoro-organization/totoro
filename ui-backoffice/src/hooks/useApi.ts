@@ -1,16 +1,13 @@
 import { useState, useEffect } from 'react';
+import { requestAxios } from 'src/services/requestApi';
 
 export type ApiResponse = {
-  status: Number;
-  statusText: String;
   data: any;
   error: any;
   loading: Boolean;
 };
 
-export const useApiGet = (url: string): ApiResponse => {
-  const [status, setStatus] = useState<Number>(0);
-  const [statusText, setStatusText] = useState<String>('');
+export const useApi = (url: string): ApiResponse => {
   const [data, setData] = useState<any>();
   const [error, setError] = useState<any>();
   const [loading, setLoading] = useState<boolean>(false);
@@ -18,11 +15,9 @@ export const useApiGet = (url: string): ApiResponse => {
   const getAPIData = async () => {
     setLoading(true);
     try {
-      const apiResponse = await fetch(url);
-      const json = await apiResponse.json();
-      setStatus(apiResponse.status);
-      setStatusText(apiResponse.statusText);
-      setData(json);
+      const apiResponse = await requestAxios('GET', url);
+      setData(apiResponse);
+      console.log(apiResponse);
     } catch (error) {
       setError(error);
     }
@@ -33,5 +28,5 @@ export const useApiGet = (url: string): ApiResponse => {
     getAPIData();
   }, []);
 
-  return { status, statusText, data, error, loading };
+  return { data, error, loading };
 };

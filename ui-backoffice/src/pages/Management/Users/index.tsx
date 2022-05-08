@@ -1,5 +1,6 @@
 import { Helmet } from 'react-helmet-async';
-
+import { useApi, ApiResponse } from '../../../hooks/useApi';
+import { getUsers} from '../../../services/users';
 import PageTitle from 'src/components/PageTitle';
 import PageTitleWrapper from 'src/components/PageTitleWrapper';
 import {
@@ -9,9 +10,13 @@ import {
 
 import Footer from 'src/components/Footer';
 import Users from './Users';
+import { useEffect } from 'react';
 
 
 function ManagementUsers() {
+
+  const { data } = useApi(getUsers());
+  
   return (
     <>
       <Helmet>
