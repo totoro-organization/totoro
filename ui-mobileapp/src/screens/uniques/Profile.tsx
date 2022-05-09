@@ -1,5 +1,6 @@
 import { StackScreenProps } from "@react-navigation/stack";
 import React from "react";
+import Avatar from "../../components/atoms/Avatar";
 import Button from "../../components/atoms/Button";
 import Spacer from "../../components/atoms/Spacer";
 import { Text } from "../../components/atoms/Text";
@@ -20,6 +21,11 @@ export default function Profile({
   return (
     <MainLayout>
       <Text>{type} profile page</Text>
+
+      <Spacer axis="vertical" size={1} />
+
+      {/* TODO: Replace this placeholder to the real picture or logo. */}
+      <Avatar src="https://images.unsplash.com/photo-1566492031773-4f4e44671857" />
 
       <Spacer axis="vertical" size={1} />
 
