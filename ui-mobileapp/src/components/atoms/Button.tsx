@@ -12,7 +12,7 @@ import Spacer from "./Spacer";
 export type ButtonColor = "black" | "primary" | "grey";
 export type ButtonVariant = "default" | "outline" | "ghost";
 export type ButtonSize = "fullWidth" | "sm";
-export type ButtonPosition = "flex-start" | "center" | "flex-end";
+export type ButtonPosition = "flex-start" | "center" | "flex-end" | "stretch";
 
 export type ButtonProps = PropsWithChildren<
   {

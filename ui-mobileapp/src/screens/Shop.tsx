@@ -26,10 +26,10 @@ export default function Shop() {
       <Text>Shop</Text>
 
       <ShopCardsWrapper>
-        {FAKE_DISCOUNTS.map((discount, index) => {
+        {FAKE_DISCOUNTS.map((discount) => {
           return (
             <>
-              <ShopCard key={index} discount={discount} />
+              <ShopCard key={discount.shopName} discount={discount} />
 
               <Spacer axis="vertical" size={1} />
             </>
