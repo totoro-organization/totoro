@@ -117,9 +117,14 @@ export default function Mission({
 
       <Spacer axis="vertical" size={4} />
 
+      {/* FIXME: Add fixed position. */}
       <FixedView>
         <Button>Je participe !</Button>
       </FixedView>
+
+      {/* NOTE: To fix space between the button and the bottom of the page. */}
+      {/* TODO: Find a better way. */}
+      <Spacer axis="vertical" size={5} />
     </MainLayout>
   );
 }
