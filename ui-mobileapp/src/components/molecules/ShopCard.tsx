@@ -1,5 +1,6 @@
 import React from "react";
-import { ImageBackground, View } from "react-native";
+import { ImageBackground } from "react-native";
+import Toast from "react-native-toast-message";
 import styled from "styled-components/native";
 import Box from "../atoms/Box";
 import Button from "../atoms/Button";
@@ -22,6 +23,17 @@ export type ShopCardProps = {
 };
 
 export default function ShopCard({ discount }: ShopCardProps) {
+  // TODO: Add api call here.
+  function handleBuyDiscount(shopName: string) {
+    Toast.show({
+      type: "success",
+      props: {
+        title: "Félicitations !",
+        text: `Le bon de réduction de chez ${shopName} a bien été acheté.`,
+      },
+    });
+  }
+
   return (
     <Container>
       <InfoWrapper>
@@ -43,10 +55,10 @@ export default function ShopCard({ discount }: ShopCardProps) {
       </InfoWrapper>
 
       <StyledButton
+        horizontalPosition="stretch"
         color={discount.isObtained ? "grey" : "primary"}
         disabled={discount.isObtained}
-        // TODO: Add handlePress function to buy discount.
-        handlePress={() => console.log("acheté !")}
+        handlePress={() => handleBuyDiscount(discount.shopName)}
       >
         {discount.isObtained
           ? "Déjà obtenu"
