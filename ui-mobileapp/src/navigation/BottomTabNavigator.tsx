@@ -5,7 +5,7 @@ import { Message, Missions, Shop, User } from "../assets/icons";
 import { Text } from "../components/atoms/Text";
 import ChatScreen from "../screens/Chat";
 import MissionsScreen from "../screens/Missions";
-import ProfileScreen from "../screens/Profile";
+import MyAccountScreen from "../screens/MyAccount";
 import ShopScreen from "../screens/Shop";
 import theme from "../theme/theme";
 
@@ -34,7 +34,7 @@ const NAVIGATION_PAGES: NavigationPagesProps[] = [
   },
   {
     title: "Profil",
-    component: ProfileScreen,
+    component: MyAccountScreen,
     Icon: User,
   },
 ];
