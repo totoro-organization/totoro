@@ -13,6 +13,7 @@ import { ImageBackground } from "react-native";
 import MissionDetail from "../../components/molecules/MissionDetail";
 import Location from "../../assets/icons/Location";
 import Calendar from "../../assets/icons/Calendar";
+import { Link } from "@react-navigation/native";
 
 export default function Mission({
   route,
@@ -42,7 +43,14 @@ export default function Mission({
 
       <Text color="grey">
         <TextLight>Organisé par</TextLight>&nbsp;
-        {mission.organization}
+        <Link
+          to={{
+            screen: "Profile",
+            params: { id: { missionId }, type: "organization" },
+          }}
+        >
+          {mission.organization}
+        </Link>
       </Text>
 
       <Spacer axis="vertical" size={2} />
@@ -80,20 +88,27 @@ export default function Mission({
 
       <HeadingSection>Organisé par</HeadingSection>
       <Box justifyContent="space-between" alignItems="center">
-        <Box alignItems="center">
-          <ImageBackground
-            source={{ uri: mission.logo }}
-            style={{ width: 80, height: 40 }}
-            resizeMode="contain"
-          />
+        <Link
+          to={{
+            screen: "Profile",
+            params: { id: { missionId }, type: "organization" },
+          }}
+        >
+          <Box alignItems="center">
+            <ImageBackground
+              source={{ uri: mission.logo }}
+              style={{ width: 80, height: 40 }}
+              resizeMode="contain"
+            />
 
-          <Spacer axis="horizontal" size={1} />
+            <Spacer axis="horizontal" size={1} />
 
-          <Box flexDirection="column">
-            <Text>{mission.organization}</Text>
-            <Text color="grey">{mission.location}</Text>
+            <Box flexDirection="column">
+              <Text>{mission.organization}</Text>
+              <Text color="grey">{mission.location}</Text>
+            </Box>
           </Box>
-        </Box>
+        </Link>
 
         <Button size="sm" color="black">
           Suivre
