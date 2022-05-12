@@ -8,7 +8,7 @@ type AvatarProps = {
 export default function Avatar({ src }: AvatarProps) {
   return (
     <Container>
-      {/* TODO: Add initial user name? */}
+      {/* TODO: Add initial usersssss name? */}
 
       {src && (
         <StyledImage
