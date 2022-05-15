@@ -43,7 +43,7 @@ const swaggerOptions = {
     }
   },
  
-  apis: ["index.js"]
+  apis: ["index.js", "./src/services/**/*.js"]
 };
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
@@ -54,37 +54,15 @@ server.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
  * @swagger
  * /:
  *  get:
- *    description: test
+ *    description: route primaire
  *    responses:
  *      '200':
- *        description: A successful response
+ *        description: return html content
  */
 server.get("/", function (req, res) {
 	res.setHeader("Content-Type", "text/html");
 	res.status(200).send(ui_api.home());
 });
-
-/**
- * @swagger
- * /customer:
- *    put:
- *      description: Use to return all customers
- *    parameters:
- *      - name: customer
- *        in: query
- *        description: Name of our customer
- *        required: false
- *        schema:
- *          type: string
- *          format: string
- *    responses:
- *      '201':
- *        description: Successfully created user
- */
-server.put("/customer", (req, res) => {
-  res.status(200).send("Successfully updated customer");
-});
-
 
 const accessApi = async (req, res, next) => {
 	try {
@@ -98,7 +76,10 @@ const accessApi = async (req, res, next) => {
 			where: { id: APP_ID },
 		})
 			.then((data) => {
-				if (data) next();
+				if (data) {
+					req.request = data;
+					next();
+				}
 				else {
 					return res
 						.status(error.access_denied.status)
@@ -111,7 +92,7 @@ const accessApi = async (req, res, next) => {
 	}
 };
 
-server.use("/api/applications", applications);
+server.use("/api/applications", [accessApi, applications]);
 server.use("/api", [accessApi, authentications]);
 server.use("/api/terminals", [accessApi, terminals]);
 server.use("/api/auth/", [accessApi, authentications]);

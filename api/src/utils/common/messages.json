@@ -20,12 +20,24 @@
 			"status": 404,
 			"message": "Ressource not found"
 		},
+		"not_exist": {
+			"status": 404,
+			"message": "value not exist"
+		},
 		"duplicate": {
 			"status": 409,
 			"message": "Value already exist"
+		},
+		"parameters": {
+			"status": 400,
+			"message": "Incorrect parameters"
 		}
 	},
 	"success": {
+		"get": {
+			"status": 200,
+			"message": "Successfull"
+		},
 		"create": {
 			"status": 201,
 			"message": "Ressource successfully created"

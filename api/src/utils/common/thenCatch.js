@@ -1,8 +1,9 @@
 const { error, success } = require("./messages.json");
 
 module.exports = {
-	responseAll: function (model, res, condition = null, include = null) {
+	responseAll: function (model, res, condition = null, exclude=null, include = null) {
 		const params = {
+			attributes: {exclude},
 			where: condition,
 			include,
 		};
@@ -17,8 +18,9 @@ module.exports = {
 					.json({ message: error.syntax_error.message });
 			});
 	},
-	responseOne: function (model, res, id, include = null) {
+	responseOne: function (model, res, id, exclude=null, include = null) {
 		const params = {
+			attributes: {exclude},
 			where: { id },
 			include,
 		};
@@ -59,8 +61,9 @@ module.exports = {
 				.status(error.not_found.status)
 				.json({ message: error.not_found.message });
 	},
-	getField: function (res, model, condition, done, isContinue, include = null) {
+	getField: function (res, model, condition, done, isContinue=false, include = null, exclude=null,) {
 		const params = {
+			attributes: {exclude},
 			where: condition,
 			include,
 		};
@@ -74,10 +77,41 @@ module.exports = {
 				return res.status(error.syntax_error.status).json({ message: err + "" });
 			});
 	},
-	createField: function (res, model, data, done) {
+	createField: function (res, model, data, done, isContinue=false) {
+		if(data.files){
+			let object = data.files;
+			for (const key in object) {
+				if (Object.hasOwnProperty.call(object, key)) {
+					const element = object[key];
+					data[key] = `${data.path}/${element[0].filename}`;
+					if(data.file_type){
+						data.original_name = element[0].originalname;
+						data.type = element[0].mimetype;
+						delete data.file_type;
+					}
+				}
+			}
+			delete data.files;
+			delete data.path;
+		}
+
+		if(data.file){
+			data[data.file.fieldname] = `${data.path}/${data.file.filename}`;
+			if(data.file_type){
+				data.original_name = data.file.originalname;
+				data.type = data.file.mimetype;
+				delete data.file_type;
+			}
+			delete data.file;
+			delete data.path;
+		}
+
 		model
 			.create(data)
-			.then((newField) => done(newField))
+			.then((newField) => {
+				if (isContinue) done(null, newField);
+				else done(newField);
+			})
 			.catch((err) => {
 				return res
 					.status(error.syntax_error.status)
@@ -85,6 +119,33 @@ module.exports = {
 			});
 	},
 	updateField: function (res, model, data, done) {
+		if(data.files){
+			let object = data.files;
+			for (const key in object) {
+				if (Object.hasOwnProperty.call(object, key)) {
+					const element = object[key];
+					data[key] = `${data.path}/${element[0].filename}`;
+					if(data.file_type){
+						data.original_name = element[0].originalname;
+						data.type = element[0].mimetype;
+						delete data.file_type;
+					}
+				}
+			}
+			delete data.files;
+			delete data.path;
+		}
+		if(data.file){
+			data[data.file.fieldname] = `${data.path}/${data.file.filename}`;
+			if(data.file_type){
+				data.original_name = data.file.originalname;
+				data.type = data.file.mimetype;
+				delete data.file_type;
+			}
+			delete data.file;
+			delete data.path;
+		}
+
 		model
 			.update(data)
 			.then(() => done(model))
@@ -94,14 +155,21 @@ module.exports = {
 					.json({ message: error.syntax_error.message });
 			});
 	},
-	getRow: async function (model, condition = null, include = null) {
+	getRow: async function (res, model, condition = null, include = null) {
 		try {
 			const params = {
 				where: condition,
 				include,
 			};
-			const { dataValues } = await model.findOne(params);
-			return dataValues;
+			const data = await model.findOne(params);
+			if(data){
+				return data.dataValues;
+			}else{
+				return res
+						.status(error.not_exist.status)
+						.json({ message: error.not_exist.message });
+			}
+			
 		} catch (error) {
 			console.log(error);
 		}
