@@ -6,14 +6,17 @@ import { requestAxios } from "./requestApi";
 export async function login(params: {
     emailOrUsername: FormDataEntryValue;
     password: FormDataEntryValue;
-  }): Promise<User> {
-    const response = await requestAxios("POST", "/auth/login/admin", params );
-  
-    return response.data.token;
-  }
+  }): Promise<any> {
+  const response = await requestAxios("POST", "/auth/login/admin", params );
+  return response;
+}
 
-  export async function logout() {
-    const response = await axios.delete("/api/admin");
-    
-    return response.data.data;
-  }
+export async function logout() {
+  const response = await axios.delete("/api/admin");
+  return response;
+}
+
+export async function getCurrentUser() {
+  const response = await requestAxios("GET", "/auth/connected");
+  return response;
+}
