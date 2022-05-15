@@ -12,7 +12,8 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { login } from 'src/services/sessions';
+import { login, getCurrentUser } from 'src/services/sessions';
+import useAuth from 'src/hooks/useAuth';
 
 function Copyright(props: any) {
   return (
@@ -30,14 +31,18 @@ function Copyright(props: any) {
 const theme = createTheme();
 
 export default function SignIn() {
+
+  const { login, loading, error } = useAuth();
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const data = {
-      emailOrUsername: event.currentTarget.emailOrUsername.value,
-      password: event.currentTarget.password.value 
-    };
+    
+    const data = new FormData(event.currentTarget);
 
-    login(data);
+    login({
+      emailOrUsername: data.get("emailOrUsername"),
+      password: data.get("password")
+    })
   };
 
   return (
@@ -84,6 +89,7 @@ export default function SignIn() {
               label="Remember me"
             />
             <Button
+              disabled={loading}
               type="submit"
               fullWidth
               variant="contained"
