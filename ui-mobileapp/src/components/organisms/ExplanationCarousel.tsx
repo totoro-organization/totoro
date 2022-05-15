@@ -44,18 +44,12 @@ export default function ExplanationCarousel() {
           <>
             <Button
               variant="outline"
-              horizontalPosition="stretch"
               onPress={() => navigation.navigate("Se connecter")}
             >
               Se connecter
             </Button>
 
-            <Spacer axis="horizontal" size={0.5} />
-
-            <Button
-              horizontalPosition="center"
-              onPress={() => navigation.navigate("S'inscrire")}
-            >
+            <Button onPress={() => navigation.navigate("S'inscrire")}>
               S'inscrire
             </Button>
           </>
@@ -68,6 +62,7 @@ export default function ExplanationCarousel() {
 const ButtonWrapper = styled.View<{ $direction: "row" | "column" }>`
   width: 100%;
   flex-direction: ${({ $direction }) => $direction};
+  justify-content: space-between;
   padding: 0 ${({ theme }) => theme.spacing[6]}
     ${({ theme }) => theme.spacing[8]} ${({ theme }) => theme.spacing[6]};
 `;
