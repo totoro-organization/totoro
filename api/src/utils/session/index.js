@@ -4,11 +4,9 @@ const { error } = require("../common/messages.json");
 
 module.exports = {
 	generateToken: function (data, isAdmin = false) {
-		const dataToken = {...data, isAdmin};
+		const dataToken = {id: data.id, isAdmin};
 		return jwt.sign(
-			{
-				dataToken
-			},
+			dataToken,
 			JWT_SECRET,
 			{
 				expiresIn: "168h",
