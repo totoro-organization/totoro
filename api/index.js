@@ -101,7 +101,6 @@ server.use("/api/admins", [accessApi, admins]);
 // server.use('/api/ads', [accessApi, ads]);
 // server.use('/api/messagings', [accessApi, messagings]);
 // server.use('/api/transactions', [accessApi, transactions]);
-// server.use('/api/parameters', [accessApi, parameters]);
 // server.use('/api/litigations', [accessApi, litigations]);
 // server.use('/api/subscriptions', [accessApi, subscriptions]);
 server.use("/api/commons", [accessApi, commons]);
