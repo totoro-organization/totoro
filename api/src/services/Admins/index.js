@@ -1,53 +1,69 @@
 const express = require("express");
-const { passport } = require("utils/session");
+const { passportAdmin } = require("utils/session");
 const controller = require("./controller");
 
 exports.router = (function () {
 	const adminRouter = express.Router();
 
-	adminRouter.get("/", async function (req, res) {
-		controller.getAdmins(res);
-	});
+	adminRouter.get("/", [passportAdmin, async function (req, res) {
+		controller.getAdmins(res, req.query);
+	}]);
 
-	adminRouter.get("/:id", async function (req, res) {
+	adminRouter.get("/:id", [passportAdmin, async function (req, res) {
 		const id = req.params.id;
 		controller.getAdmin(res, id);
-	});
+	}]);
 
-	adminRouter.post("/", async function (req, res) {
+	adminRouter.post("/", [passportAdmin, async function (req, res) {
 		const data = req.body;
 		controller.createAdmin(res, data);
-	});
+	}]);
 
-	adminRouter.put("/:id", async function (req, res) {
+	adminRouter.put("/:id", [passportAdmin, async function (req, res) {
 		const id = req.params.id;
 		const data = req.body;
 		controller.updateAdmin(res, id, data);
-	});
+	}]);
 
-	adminRouter.delete("/:id", async function (req, res) {
+	adminRouter.delete("/:id", [passportAdmin, async function (req, res) {
 		const id = req.params.id;
 		controller.deleteAdmin(res, id);
-	});
+	}]);
 
+	/*
 	adminRouter.get("/logs", async function (req, res) {
-		controller.getLogs(res);
-	});
+		controller.getLogs(res, req.query);
+	});*/
 
-	adminRouter.get("/logs/:adminId", async function (req, res) {
+	adminRouter.get("/:adminId/logs", [passportAdmin, async function (req, res) {
 		const adminId = req.params.adminId;
 		controller.getLog(res, adminId);
-	});
+	}]);
 
-	adminRouter.post("/logs", async function (req, res) {
+	adminRouter.post("/:adminId/logs", [passportAdmin, async function (req, res) {
 		const data = req.body;
 		controller.createLog(res, data);
-	});
+	}]);
 
-	adminRouter.post("/logs/truncate", async function (req, res) {
-		const period = req.body;
-		controller.getAdmins(res, period);
+	adminRouter.put("/change/password",[passportAdmin, async function (req, res) {
+		const data = req.body;
+		data.id = req.userData.id;
+		controller.resetPassword(res, data);
+	}]);
+
+	adminRouter.put("/change/role",[passportAdmin, async function (req, res) {
+		const data = req.body;
+		data.id = req.userData.id;
+		controller.changeRole(res, data);
+	}]);
+	
+
+	/*
+	adminRouter.delete("/logs/truncate", async function (req, res) {
+		const query = req.query;
+		controller.truncateLogs(res, query);
 	});
+	*/
 
 	return adminRouter;
 })();

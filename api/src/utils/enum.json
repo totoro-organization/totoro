@@ -1,0 +1,36 @@
+{
+    "status": {
+        "actived": "actived",
+        "disabled": "disabled",
+        "deleted": "deleted",
+        "accepted": "accepted",
+        "denied": "denied",
+        "published": "published",
+        "expired": "expired",
+        "opened": "opened",
+        "closed": "closed",
+        "freezed": "freezed",
+        "canceled": "canceled",
+        "pending": "pending",
+        "coming": "coming"
+    },
+    "search": {
+        "siren": "siren",
+        "siret": "siret"
+    },
+    "role": {
+        "moderateur": "Moderateur",
+        "administrateur": "Administrateur",
+        "comptables": "Comptables"
+    },
+    "pricing": {
+        "standard": "Standard"
+    },
+    "path": {
+        "avatar": "/avatar",
+        "jobs": "/jobs",
+        "logo": "/logo",
+        "partners": "/partners",
+        "site": "/site"
+    }
+}

@@ -18,7 +18,7 @@ exports.router = (function () {
 	applicationsRouter.post("/", async function (req, res) {
 		const data = req.body;
 		const condition = { name: data.name };
-		controller.create(res, Applications, data, condition);
+		controller.create(null, res, Applications, data, condition);
 	});
 
 	applicationsRouter.put("/:id", async function (req, res) {
@@ -30,7 +30,7 @@ exports.router = (function () {
 
 	applicationsRouter.delete("/:id", async function (req, res) {
 		const id = req.params.id;
-		controller.delete(res, Applications, id);
+		controller.delete(res, Applications, {id});
 	});
 
 	return applicationsRouter;
