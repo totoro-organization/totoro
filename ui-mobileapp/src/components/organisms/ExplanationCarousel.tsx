@@ -3,22 +3,35 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import React, { useState } from "react";
 import styled from "styled-components/native";
 import { AuthParamList } from "../../navigation/StackNavigationParams";
+import Box from "../atoms/Box";
 import Button from "../atoms/Button";
 import Spacer from "../atoms/Spacer";
 import Carousel from "../molecules/Carousel";
 
 export default function ExplanationCarousel() {
   const navigation = useNavigation<StackNavigationProp<AuthParamList>>();
-  const [index, setIndex] = useState<number>(0);
-  const lastStep = index === explanationSteps.length - 1;
+  const [carouselIndex, setCarouselIndex] = useState<number>(0);
+  const lastStep = carouselIndex === explanationSteps.length - 1;
 
   function handlePreviousItem() {
-    setIndex(index + 1);
+    setCarouselIndex(carouselIndex + 1);
   }
 
   return (
     <>
-      <Carousel data={explanationSteps} carouselIndex={index} />
+      <Carousel data={explanationSteps} carouselIndex={carouselIndex} />
+
+      <Box alignItems="center" justifyContent="center">
+        {explanationSteps.map((_, index) => (
+          <>
+            <Dot $active={carouselIndex === index} />
+
+            <Spacer axis="horizontal" size={0.5} />
+          </>
+        ))}
+      </Box>
+
+      <Spacer axis="vertical" size={2} />
 
       <ButtonWrapper $direction={lastStep ? "row" : "column"}>
         {!lastStep && (
@@ -57,6 +70,14 @@ const ButtonWrapper = styled.View<{ $direction: "row" | "column" }>`
   flex-direction: ${({ $direction }) => $direction};
   padding: 0 ${({ theme }) => theme.spacing[6]}
     ${({ theme }) => theme.spacing[8]} ${({ theme }) => theme.spacing[6]};
+`;
+
+const Dot = styled.View<{ $active?: boolean }>`
+  width: ${({ $active }) => ($active ? "12px" : "8px")};
+  height: ${({ $active }) => ($active ? "12px" : "8px")};
+  background: ${({ theme, $active }) =>
+    $active ? theme.colors.grey[900] : theme.colors.grey[300]};
+  border-radius: ${({ theme }) => theme.border.radius.circle};
 `;
 
 // DATA

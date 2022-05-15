@@ -1,10 +1,9 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import { Animated, Dimensions, FlatList } from "react-native";
+import React, { useCallback, useEffect, useRef } from "react";
+import { Dimensions, FlatList } from "react-native";
 import Box from "../atoms/Box";
 import { Text } from "../atoms/Text";
 import styled from "styled-components/native";
 import Spacer from "../atoms/Spacer";
-import Button from "../atoms/Button";
 
 interface CarouselData {
   order?: number;
