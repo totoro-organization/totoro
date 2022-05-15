@@ -3,8 +3,8 @@ module.exports = [
 		model: "Appearances",
 		keys: ["app_id"],
 		data: {
-			logo: "img/site/logo.svg",
-			icon: "img/site/icon.svg",
+			logo: "site/logo.svg",
+			icon: "site/icon.svg",
 			primary_theme: "red",
 			secondary_theme: "white",
 			title: "Totoro",
@@ -17,8 +17,8 @@ module.exports = [
 		model: "Appearances",
 		keys: ["app_id"],
 		data: {
-			logo: "img/site/logo.svg",
-			icon: "img/site/icon.svg",
+			logo: "site/logo.svg",
+			icon: "site/icon.svg",
 			primary_theme: "red",
 			secondary_theme: "white",
 			title: "Totoro",
@@ -31,8 +31,8 @@ module.exports = [
 		model: "Appearances",
 		keys: ["app_id"],
 		data: {
-			logo: "img/site/logo.svg",
-			icon: "img/site/icon.svg",
+			logo: "site/logo.svg",
+			icon: "site/icon.svg",
 			primary_theme: "red",
 			secondary_theme: "white",
 			title: "Totoro",
@@ -45,8 +45,8 @@ module.exports = [
 		model: "Appearances",
 		keys: ["app_id"],
 		data: {
-			logo: "img/site/logo.svg",
-			icon: "img/site/icon.svg",
+			logo: "site/logo.svg",
+			icon: "site/icon.svg",
 			primary_theme: "red",
 			secondary_theme: "white",
 			title: "Totoro",
