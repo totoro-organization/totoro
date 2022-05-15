@@ -25,7 +25,7 @@ export default function MainLayout({
   );
 }
 
-const Container = styled.View`
+const Container = styled.ScrollView`
   padding: 52px 24px 24px 24px;
   background-color: #fcfcfc;
   min-height: 100%;

@@ -7,24 +7,32 @@ import { Text } from "./Text";
 import theme from "../../theme/theme";
 import Spinner from "./Spinner";
 import { Colors, getColors } from "../../theme/utils";
+import Spacer from "./Spacer";
 
 export type ButtonColor = "black" | "primary" | "grey";
 export type ButtonVariant = "default" | "outline" | "ghost";
+export type ButtonSize = "fullWidth" | "sm";
+export type ButtonPosition = "flex-start" | "center" | "flex-end" | "stretch";
 
 export type ButtonProps = PropsWithChildren<
   {
     variant?: ButtonVariant;
     color?: ButtonColor;
+    size?: ButtonSize;
+    horizontalPosition?: ButtonPosition;
+    Icon?: JSX.Element;
     handlePress?: () => void | Promise<void> | unknown;
     className?: string;
   } & PressableProps
 >;
 
-// TODO: add isLoading and disabled states?
 export default function Button({
   variant = "default",
+  size = "fullWidth",
   color = "primary",
+  horizontalPosition = "flex-start",
   children,
+  Icon,
   handlePress,
   ...rest
 }: ButtonProps) {
@@ -43,47 +51,41 @@ export default function Button({
   }
 
   return (
-    <StyledButton
-      variant={variant}
-      color={color}
-      onPress={handlePress && onButtonPress}
-      {...rest}
-    >
-      {isInternalLoading && (
-        <LoadingWrapper>
-          <Spinner size={2} />
-        </LoadingWrapper>
-      )}
+    <OuterLayout horizontalPosition={horizontalPosition} size={size}>
+      <StyledButton
+        size={size}
+        variant={variant}
+        color={color}
+        onPress={handlePress && onButtonPress}
+        {...rest}
+      >
+        {isInternalLoading && (
+          <LoadingWrapper>
+            <Spinner size={2} />
+          </LoadingWrapper>
+        )}
 
-      {React.Children.map(children, (child) => {
-        if (typeof child === "string") {
-          return (
-            <StyledText
-              $isHidden={isInternalLoading}
-              variant={variant}
-              color={color}
-            >
-              {child}
-            </StyledText>
-          );
-        }
-        return (
-          <Element
-            $isHidden={isInternalLoading}
-            variant={variant}
-            color={color}
-          >
-            {child}
-          </Element>
-        );
-      })}
-    </StyledButton>
+        {Icon && (
+          <>
+            {Icon}
+            <Spacer axis="horizontal" size={0.5} />
+          </>
+        )}
+
+        <StyledText
+          $isHidden={isInternalLoading}
+          variant={variant}
+          color={color}
+        >
+          {children}
+        </StyledText>
+      </StyledButton>
+    </OuterLayout>
   );
 }
 
 export type ColorVariables = {
   background: string;
-  //   disabled?: string;
   border: string;
 };
 
@@ -135,18 +137,44 @@ function getButtonStyles(variant: ButtonVariant, color: ButtonColor) {
   }
 }
 
-type StyledButtonProps = Pick<ButtonProps, "variant" | "color">;
+function getButtonSize(size: ButtonSize) {
+  if (size === "fullWidth") {
+    return css`
+      padding: ${({ theme }) => theme.spacing[5]}
+        ${({ theme }) => theme.spacing[9]};
+    `;
+  }
+
+  if (size === "sm") {
+    return css`
+      padding: ${({ theme }) => theme.spacing[2]}
+        ${({ theme }) => theme.spacing[4]};
+    `;
+  }
+}
+
+type OuterLayoutProps = Pick<ButtonProps, "size" | "horizontalPosition">;
+
+const OuterLayout = styled.View<OuterLayoutProps>`
+  ${({ size, horizontalPosition }) =>
+    size !== "fullWidth" &&
+    css`
+      align-items: ${horizontalPosition};
+    `}
+`;
+
+type StyledButtonProps = Pick<ButtonProps, "variant" | "color" | "size">;
 
 // NOTE: React Native's <Button /> component does not accept a style prop
 //       so we use Pressable tag.
 const StyledButton = styled.Pressable<StyledButtonProps>`
-  width: 100%;
   display: flex;
   justify-content: center;
+  flex-direction: row;
   align-items: center;
   border-radius: ${({ theme }) => theme.border.radius.md};
-  padding: ${({ theme }) => theme.spacing[5]} ${({ theme }) => theme.spacing[9]};
 
+  ${({ size }) => size && getButtonSize(size)};
   ${({ variant, color }) =>
     variant && color && getButtonStyles(variant, color)};
 `;
@@ -162,26 +190,17 @@ const LoadingWrapper = styled.View`
   height: 100%;
 `;
 
-type ButtonContentProps = {
+type ContentProps = {
   $isHidden: boolean;
-} & Pick<ButtonProps, "variant" | "color">;
+} & Pick<ButtonProps, "variant" | "color" | "size">;
 
-const buttonContentStyle = css<ButtonContentProps>`
-  font-size: ${({ theme }) => theme.fonts.sizes.md};
+const StyledText = styled(Text)<ContentProps>`
+  font-size: ${({ theme, size }) =>
+    size === "sm" ? theme.fonts.sizes.sm : theme.fonts.sizes.md};
 
   opacity: ${({ $isHidden }) => ($isHidden ? "0" : "1")};
   color: ${({ variant, color, theme }) =>
     variant === "default"
       ? theme.colors.white[600]
       : getColors(color as Colors)};
-`;
-
-const StyledText = styled(Text)<ButtonContentProps>`
-  ${buttonContentStyle};
-`;
-
-const Element = styled.View<ButtonContentProps>`
-  display: flex;
-  align-items: center;
-  ${buttonContentStyle};
 `;

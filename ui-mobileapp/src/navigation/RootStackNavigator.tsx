@@ -4,6 +4,7 @@ import Explanation from "../screens/Explanation";
 import Login from "../screens/Login";
 import Register from "../screens/Register";
 import Mission from "../screens/uniques/Mission";
+import Profile from "../screens/uniques/Profile";
 import BottomTabNavigator from "./BottomTabNavigator";
 
 const RootStack = createStackNavigator();
@@ -34,6 +35,7 @@ export default function RootStackNavigator() {
           </RootStack.Group>
 
           <RootStack.Screen name="Mission" component={Mission} />
+          <RootStack.Screen name="Profile" component={Profile} />
         </>
       )}
     </RootStack.Navigator>
