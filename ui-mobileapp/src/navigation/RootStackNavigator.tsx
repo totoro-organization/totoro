@@ -11,7 +11,7 @@ const RootStack = createStackNavigator();
 
 export default function RootStackNavigator() {
   // NOTE: Add isLogged with AuthProvider? AuthContext? etc.
-  const isLogged = true;
+  const isLogged = false;
 
   return (
     <RootStack.Navigator
