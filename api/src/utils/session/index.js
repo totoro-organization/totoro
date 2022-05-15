@@ -3,11 +3,11 @@ const JWT_SECRET = "totoro";
 const { error } = require("../common/messages.json");
 
 module.exports = {
-	generateToken: function (data, isAdmin = null) {
+	generateToken: function (data, isAdmin = false) {
+		const dataToken = {...data, isAdmin};
 		return jwt.sign(
 			{
-				data,
-				isAdmin,
+				dataToken
 			},
 			JWT_SECRET,
 			{
@@ -32,8 +32,23 @@ module.exports = {
 	passport: function (req, res, next) {
 		const authorization = req.headers["authorization"];
 		const userData = module.exports.getUser(authorization);
-		// console.log(userData, authorization);
-		if (userData) next();
+		if (userData) {
+			req.userData = userData;
+			next();
+		}
+		else {
+			return res
+				.status(error.access_denied.status)
+				.json({ message: error.access_denied.message });
+		}
+	},
+	passportAdmin: function (req, res, next) {
+		const authorization = req.headers["authorization"];
+		const userData = module.exports.getUser(authorization);
+		if (userData && userData.isAdmin) {
+			req.userData = userData;
+			next();
+		}
 		else {
 			return res
 				.status(error.access_denied.status)
