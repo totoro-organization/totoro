@@ -56,22 +56,20 @@ export default function Carousel({
   }, [carouselIndex]);
 
   return (
-    <>
-      <FlatList
-        ref={carouselRef}
-        data={data}
-        initialScrollIndex={carouselIndex}
-        style={{ flex: 1 }}
-        pagingEnabled
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        scrollEnabled={isScrolled}
-        keyExtractor={(item) => item.key}
-        renderItem={({ item, index }) => {
-          return <CarouselItem key={index} data={item} />;
-        }}
-      />
-    </>
+    <FlatList
+      ref={carouselRef}
+      data={data}
+      initialScrollIndex={carouselIndex}
+      style={{ flex: 1 }}
+      pagingEnabled
+      horizontal
+      showsHorizontalScrollIndicator={false}
+      scrollEnabled={isScrolled}
+      keyExtractor={(item) => item.key}
+      renderItem={({ item, index }) => {
+        return <CarouselItem key={index} data={item} />;
+      }}
+    />
   );
 }
 
