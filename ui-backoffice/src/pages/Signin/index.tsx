@@ -12,6 +12,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { login } from 'src/services/sessions';
 
 function Copyright(props: any) {
   return (
@@ -31,11 +32,12 @@ const theme = createTheme();
 export default function SignIn() {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    const data = {
+      emailOrUsername: event.currentTarget.emailOrUsername.value,
+      password: event.currentTarget.password.value 
+    };
+
+    login(data);
   };
 
   return (
@@ -61,10 +63,10 @@ export default function SignIn() {
               margin="normal"
               required
               fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
+              id="emailOrUsername"
+              label="Email or Username"
+              name="emailOrUsername"
+              autoComplete="emailOrUsername"
               autoFocus
             />
             <TextField

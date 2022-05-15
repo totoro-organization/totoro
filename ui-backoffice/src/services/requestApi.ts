@@ -3,6 +3,7 @@ import { config } from './config';
 
 export async function requestAxios(method: string, uri: string, data = null) {
     const server = 'http://localhost:6868/api';
+    console.log(data);
     const token = null;
   
     try {
