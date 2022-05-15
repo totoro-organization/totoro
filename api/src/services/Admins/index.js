@@ -30,11 +30,6 @@ exports.router = (function () {
 		controller.deleteAdmin(res, id);
 	}]);
 
-	/*
-	adminRouter.get("/logs", async function (req, res) {
-		controller.getLogs(res, req.query);
-	});*/
-
 	adminRouter.get("/:adminId/logs", [passportAdmin, async function (req, res) {
 		const adminId = req.params.adminId;
 		controller.getLog(res, adminId);
@@ -57,13 +52,13 @@ exports.router = (function () {
 		controller.changeRole(res, data);
 	}]);
 	
+	adminRouter.get("/logs/getAll",[passportAdmin, async function (req, res) {
+		controller.getLogs(res, req.query);
+	}]);
 
-	/*
-	adminRouter.delete("/logs/truncate", async function (req, res) {
-		const query = req.query;
-		controller.truncateLogs(res, query);
-	});
-	*/
+	adminRouter.delete("/logs/truncate",[passportAdmin, async function (req, res) {
+		controller.truncateLogs(res, req.query);
+	}]);
 
 	return adminRouter;
 })();
