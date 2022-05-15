@@ -1,5 +1,7 @@
-import React, { useCallback, useEffect, useRef } from "react";
-import { Dimensions, FlatList } from "react-native";
+import React, { useEffect, useRef } from "react";
+import { Dimensions, FlatList, ImageBackground } from "react-native";
+import { Asset } from "expo-asset";
+
 import Box from "../atoms/Box";
 import { Text } from "../atoms/Text";
 import styled from "styled-components/native";
@@ -18,6 +20,7 @@ type CarouselItemProps = {
 
 const CarouselItem = ({ data }: CarouselItemProps) => {
   const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
+  const imageURI = Asset.fromModule(data.image).uri;
 
   return (
     <ItemContainer
@@ -25,6 +28,10 @@ const CarouselItem = ({ data }: CarouselItemProps) => {
       height={`${windowHeight}`}
       flexDirection="column"
     >
+      <Illustration source={{ uri: imageURI }} resizeMode="cover" />
+
+      <Spacer axis="vertical" size={2} />
+
       <Text size="xxl">{data.title}</Text>
 
       <Spacer axis="vertical" size={2} />
@@ -75,4 +82,9 @@ export default function Carousel({
 const ItemContainer = styled(Box)`
   margin-top: ${({ theme }) => theme.spacing[28]};
   padding: 0 ${({ theme }) => theme.spacing[6]};
+`;
+
+const Illustration = styled(ImageBackground)`
+  width: 126px;
+  height: 126px;
 `;
