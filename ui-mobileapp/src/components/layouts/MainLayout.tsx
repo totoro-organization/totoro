@@ -21,6 +21,10 @@ export default function MainLayout({
       )}
 
       {children}
+
+      {/* NOTE: To fix space between the button and the bottom of the page. */}
+      {/* TODO: Find a better way. */}
+      <Spacer axis="vertical" size={5} />
     </Container>
   );
 }
