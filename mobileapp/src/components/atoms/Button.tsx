@@ -57,6 +57,7 @@ export default function Button({
         variant={variant}
         color={color}
         onPress={handlePress && onButtonPress}
+        disabled={isInternalLoading}
         {...rest}
       >
         {isInternalLoading && (
