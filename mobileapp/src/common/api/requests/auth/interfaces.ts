@@ -2,13 +2,9 @@
 export interface User {
   firstname?: string;
   lastname?: string;
+  username?: string;
   email?: string;
-  username?: any;
   password?: string;
-  birthday?: string;
-  phoneNumber?: string;
-  adress: string;
-  longitude: number;
-  latitude: number;
-  cp: number;
+  birthday?: any;
+  phone?: string;
 }

@@ -44,10 +44,7 @@ export default function RegisterStepTwo({ nextStep }: RegisterStepTwoProps) {
         email: "morice@gmail.com",
         password: "root",
         birthday: "1991-10-08",
-        adress: "9 rue du progrès",
-        longitude: 48.88039283558442,
-        latitude: 2.4123843153442976,
-        cp: 93310,
+        phone: "ddd",
       },
     });
 
