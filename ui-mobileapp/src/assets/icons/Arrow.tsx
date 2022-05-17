@@ -14,18 +14,18 @@ export default function Arrow({ color = "grey", size = 16 }: ArrowProps) {
       <Path
         d="M9.57 5.93005L3.5 12.0001L9.57 18.0701"
         stroke={theme.colors[color][500]}
-        stroke-width="1.5"
-        stroke-miterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <Path
         d="M20.4999 12H3.66992"
         stroke={theme.colors[color][500]}
-        stroke-width="1.5"
-        stroke-miterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </Svg>
   );
