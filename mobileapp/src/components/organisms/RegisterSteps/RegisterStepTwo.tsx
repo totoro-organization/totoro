@@ -12,6 +12,7 @@ import {
 import InputGroup from "../../molecules/InputGroup";
 import Spacer from "../../atoms/Spacer";
 import Alert from "../../atoms/Alert";
+import fetchSubmitRegisterUser from "../../../common/api/requests/auth/fetchRegisterUser";
 
 const ALERT_CONTENT_LASTNAME =
   "Votre nom de famille nous permet de récupérer seulement votre initial. Cette information ne sera pas accessible par l’ensemble des utilisateurs.";
@@ -32,9 +33,24 @@ export default function RegisterStepTwo({ nextStep }: RegisterStepTwoProps) {
     resolver: yupResolver(registerStepTwoSchema),
   });
 
-  function onSubmit(data: RegisterStepTwoFormValues) {
+  async function onSubmit(data: RegisterStepTwoFormValues) {
     // TODO: Add call api to register (update user data)
     console.log(data);
+    await fetchSubmitRegisterUser({
+      user: {
+        firstname: "Mae",
+        lastname: "Test",
+        username: "morice",
+        email: "morice@gmail.com",
+        password: "root",
+        birthday: "1991-10-08",
+        adress: "9 rue du progrès",
+        longitude: 48.88039283558442,
+        latitude: 2.4123843153442976,
+        cp: 93310,
+      },
+    });
+
     nextStep();
   }
 
