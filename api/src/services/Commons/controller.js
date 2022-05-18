@@ -9,7 +9,13 @@ const {
 	getField,
 	createField,
 	updateField,
+	getRow
 } = require("utils/common/thenCatch");
+const { label_status } = require("utils/enum.json");
+
+const {
+	Status,
+} = require("./../../../models");
 
 module.exports = {
 	getAll: function (res, model, condition = null, exclude = null, include = null) {
@@ -42,7 +48,7 @@ module.exports = {
 						}
 						res
 							.status(error.duplicate.status)
-							.json({ message: error.duplicate.message });
+							.json({ entity: model.name, message: error.duplicate.message });
 					}	
 					else {
 						createField(res, model, data, done, true);
@@ -55,12 +61,12 @@ module.exports = {
 						} else {
 							return res
 							.status(success.create.status)
-							.json({ message: success.create.message });
+							.json({ entity: model.name, message: success.create.message });
 						}
 					else
 						return res
 							.status(error.op_failed.status)
-							.json({ message: error.op_failed.message });
+							.json({ entity: model.name, message: error.op_failed.message });
 				},
 			], callback);
 	},
@@ -74,7 +80,7 @@ module.exports = {
 					if (!found)
 						return res
 							.status(error.not_found.status)
-							.json({ message: error.not_found.message });
+							.json({ entity: model.name, message: error.not_found.message });
 					else
 
 						if(condition && !(Object.keys(condition).length === 0))
@@ -104,7 +110,7 @@ module.exports = {
 						}
 						return res
 							.status(error.duplicate.status)
-							.json({ message: error.duplicate.message });
+							.json({ entity: model.name, message: error.duplicate.message });
 					}
 					else getField(res, model, { id }, done, true);
 				},
@@ -116,24 +122,37 @@ module.exports = {
 				if (updateFound)
 					return res
 						.status(success.update.status)
-						.json({ message: success.update.message });
+						.json({ entity: model.name, message: success.update.message });
 				else
 					return res
 						.status(error.op_failed.status)
-						.json({ message: error.op_failed.message });
+						.json({ entity: model.name, message: error.op_failed.message });
 			}
 		);
 	},
-	delete: function (res, model, condition) {
+	delete: async function (res, model, condition) {
+		let statusData = await getRow(res, Status, { label: label_status.deleted });
+
 		asyncLib.waterfall(
 			[
 				function (done) {
-					getField(res, model, condition, done, false);
+					getField(res, model, condition, done, true);
+				},
+				function (found, done) {
+					const data = {status_id: statusData.id}
+					updateField(res, found, data, done);
 				},
 			],
-			function (found) {
-				actionDelete(res, found);
+			function (updated) {
+				if (updated)
+					return res
+						.status(success.delete.status)
+						.json({ entity: model.name, message: success.delete.message });
+				else
+					return res
+						.status(error.op_failed.status)
+						.json({ entity: model.name, message: error.op_failed.message });
 			}
 		);
-	},
+	}
 };

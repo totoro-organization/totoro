@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      models.Admins.hasMany(models.Logs, {as: 'logs', foreignKey: 'admin_id' });
+      models.Admins.hasMany(models.Logs, {as: 'logs', onDelete: 'cascade', foreignKey: 'admin_id' });
       models.Admins.belongsTo(models.Roles, {as: 'role', foreignKey: 'role_id' });
       models.Admins.belongsTo(models.Status, {as: 'status', foreignKey: 'status_id' });
     }

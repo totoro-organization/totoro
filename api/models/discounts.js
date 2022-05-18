@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
       models.Discounts.belongsTo(models.Partners, {as: 'partner', foreignKey: 'partner_id' });
       models.Discounts.belongsTo(models.Status, {as: 'status', foreignKey: 'status_id' });
 
-      models.Discounts.hasMany(models.Tokens, {as: 'discountTransactions', foreignKey: 'discount_id' });
+      models.Discounts.hasMany(models.Tokens, {as: 'discountTransactions', onDelete: 'cascade', foreignKey: 'discount_id' });
       
     }
   }

@@ -1,5 +1,5 @@
 const express = require("express");
-const { passport } = require("utils/session");
+const { passport,passportAdmin } = require("utils/session");
 const controller = require("./controller");
 
 exports.router = (function () {
@@ -15,8 +15,9 @@ exports.router = (function () {
 		controller.update(res, id, data);
 	}]);
 
-	UsersRouter.delete("/:id",[passport, async function (req, res) {
+	UsersRouter.delete("/:id",[passportAdmin, async function (req, res) {
 		const id = req.params.id;
+		controller.deleteUser(res, id);	
 	}]);
 
 	UsersRouter.get("/:id", [

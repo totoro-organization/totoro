@@ -14,10 +14,10 @@ module.exports = (sequelize, DataTypes) => {
       models.Ads.belongsTo(models.Status, {as: 'status',  foreignKey: 'status_id' });
       models.Ads.belongsTo(models.Associations_users, {as: 'author',  foreignKey: 'assos_user_id' });
       models.Ads.belongsTo(models.Difficulties, {as: 'difficulty',  foreignKey: 'difficulty_id' });
-      models.Ads.hasMany(models.Favorites, {as: 'favorites',  foreignKey: 'ads_id' });
-      models.Ads.hasMany(models.Tag_ads, {as: 'tags',  foreignKey: 'ads_id' });
-      models.Ads.hasMany(models.Attachment_ads, {as: 'attachments',  foreignKey: 'ads_id' });
-      models.Ads.hasMany(models.Groups, {as: 'participants',  foreignKey: 'ads_id' });
+      models.Ads.hasMany(models.Favorites, {as: 'favorites', onDelete: 'cascade', foreignKey: 'ads_id' });
+      models.Ads.hasMany(models.Tag_ads, {as: 'tags', onDelete: 'cascade', foreignKey: 'ads_id' });
+      models.Ads.hasMany(models.Attachment_ads, {as: 'attachments', onDelete: 'cascade', foreignKey: 'ads_id' });
+      models.Ads.hasMany(models.Groups, {as: 'participants', onDelete: 'cascade', foreignKey: 'ads_id' });
 
     }
   }

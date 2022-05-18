@@ -11,8 +11,8 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      models.Roles.hasMany(models.Admins, {as: 'admins', foreignKey: 'role_id' });
-      models.Roles.hasMany(models.Associations_users, {as: 'usersOrganizations', foreignKey: 'role_id' });
+      models.Roles.hasMany(models.Admins, {as: 'admins', onDelete: 'cascade', foreignKey: 'role_id' });
+      models.Roles.hasMany(models.Associations_users, {as: 'usersOrganizations', onDelete: 'cascade', foreignKey: 'role_id' });
     }
   }
   Roles.init({

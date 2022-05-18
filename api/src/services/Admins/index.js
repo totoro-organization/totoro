@@ -4,7 +4,7 @@ const controller = require("./controller");
 
 exports.router = (function () {
 	const adminRouter = express.Router();
-
+	
 	adminRouter.get("/", [passportAdmin, async function (req, res) {
 		controller.getAdmins(res, req.query);
 	}]);
