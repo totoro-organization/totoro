@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      models.Associations_users.hasMany(models.Ads, {as: 'jobs', foreignKey: 'assos_user_id' });
+      models.Associations_users.hasMany(models.Ads, {as: 'jobs', onDelete: 'cascade', foreignKey: 'assos_user_id' });
       models.Associations_users.belongsTo(models.Associations, {as: 'organization', foreignKey: 'assos_id' });
       models.Associations_users.belongsTo(models.Users, {as: 'user', foreignKey: 'user_id' });      
       models.Associations_users.belongsTo(models.Roles, {as: 'role', foreignKey: 'role_id' });

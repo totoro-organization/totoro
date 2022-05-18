@@ -11,6 +11,7 @@ import type { LoginFormValues } from "./loginValidationSchema";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { BottomTabParamList } from "../../../navigation/StackNavigationParams";
+import Spacer from "../../atoms/Spacer";
 
 export default function LoginForm() {
   const navigation = useNavigation<StackNavigationProp<BottomTabParamList>>();
@@ -36,6 +37,9 @@ export default function LoginForm() {
     <>
       <InputWrapper>
         <Text>Adresse de résidence</Text>
+
+        <Spacer axis="vertical" size={0.5} />
+
         <Controller
           name="email"
           control={control}
@@ -56,6 +60,9 @@ export default function LoginForm() {
 
       <InputWrapper>
         <Text>Mot de passe</Text>
+
+        <Spacer axis="vertical" size={0.5} />
+
         <Controller
           name="password"
           control={control}
@@ -83,4 +90,5 @@ export default function LoginForm() {
 const InputWrapper = styled.View`
   display: flex;
   justify-content: space-between;
+  margin-bottom: ${({ theme }) => theme.spacing[4]};
 `;

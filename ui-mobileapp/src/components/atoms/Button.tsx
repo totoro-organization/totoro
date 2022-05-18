@@ -29,7 +29,7 @@ export type ButtonProps = PropsWithChildren<
 export default function Button({
   variant = "default",
   size = "fullWidth",
-  color = "primary",
+  color = "black",
   horizontalPosition = "flex-start",
   children,
   Icon,

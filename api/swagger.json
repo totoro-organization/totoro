@@ -1,0 +1,162 @@
+{
+    "swagger":"2.0",
+    "info":{
+       "title":"API",
+       "description":"Totoro API Information",
+       "version":"1.0"
+    },
+    "securityDefinitions":{
+        "ApiKeyAuth": {
+            "type": "apiKey",
+            "in": "header",
+            "name": "app_id"
+        },
+        "bearerAuth": {
+            "name": "Authorization",
+            "in": "header",
+            "type": "apiKey",
+            "description": "JWT Authorization header"
+        }
+    },
+    "security": [ { "ApiKeyAuth": [] }, { "bearerAuth": [] } ],
+    "tags": [
+      {"name":"Admins"}
+    ],
+    "paths":{
+       "/api/admins":{
+          "get":{
+             "tags":["Admins"],
+             "x-swagger-router-controller":"admins",
+             "operationId":"getAllAdmins",
+             "parameters": [
+               {
+                  "name": "status",
+                  "in":"query",
+                  "type": "string",
+                  "required": false,
+                  "enum": ["actived", "disabled", "deleted"]
+               },
+               {
+                  "name": "role",
+                  "in":"query",
+                  "type": "string",
+                  "required": false,
+                  "enum": ["Moderateur", "Administrateur", "Comptable"]
+               }
+             ],
+             "responses":{
+                "default":{
+                   "description":"Unexpected error",
+                   "schema":{
+                      "$ref":"#/definitions/Error"
+                   }
+                },
+                "200":{
+                   "description":"Successful request.",
+                   "schema":{
+                      "$ref":"#/definitions/getAllAdmins"
+                   }
+                }
+             }
+          },
+          "post":{
+             "tags":["Admins"],
+             "x-swagger-router-controller":"admins",
+             "operationId":"postAdmin",
+             "parameters":[
+                {
+                   "name":"data",
+                   "in":"body",
+                   "description":"Create Admin",
+                   "required":true,
+                   "schema":{
+                      "$ref":"#/definitions/postAdmin"
+                   }
+                }
+             ],
+             "responses":{
+                "default":{
+                   "description":"Unexpected error",
+                   "schema":{
+                      "$ref":"#/definitions/Error"
+                   }
+                },
+                "201":{
+                   "description":"Admin Created"
+                }
+             }
+          }
+       }
+    },
+    "definitions":{
+       "Error":{
+          "required":[
+             "message"
+          ],
+          "properties":{
+             "entity": {
+               "type":"string"
+            },
+             "message":{
+                "type":"string"
+             }
+          }
+       },
+       "getAllAdmins":{
+          "properties":{
+            "total_rows": { "type":"integer"},
+             "data":{
+                "type":"array",
+                "items":{
+                   "type":"object",
+                   "properties":{
+                      "id":{ "type":"string"},
+                      "username":{"type":"string"},
+                      "firstname":{"type":"string"},
+                      "lastname":{"type":"string"},
+                      "email":{"type":"string"},
+                      "createdAt":{"type":"string"},
+                      "updatedAt":{"type":"string"},
+                      "status":{
+                          "type":"object",
+                          "properties":{
+                                "id": {"type":"string"},
+                                "label": {"type":"string"},
+                                "createdAt": {"type":"string"},
+                                "updatedAt": {"type":"string"}
+                          }
+                        },
+                        "role":{
+                            "type":"object",
+                            "properties":{
+                                "id": {"type":"string"},
+                                "label": {"type":"string"},
+                                "createdAt": {"type":"string"},
+                                "updatedAt": {"type":"string"}
+                            }
+                        }  
+                    }
+                }
+            }
+          }
+       },
+       "postAdmin":{
+          "type":"object",
+          "properties":{
+             "firstName":{"type":"string"},
+             "lastName":{"type":"string"},
+             "username":{"type":"string"},
+             "email":{"type":"string"},
+             "role_id":{"type":"string"}
+          },
+          "required":["firstName","lastName","username","email","role_id"],
+          "example":{
+            "username": "uber",
+            "firstname": "Quentin",
+            "lastname": "Huber",
+            "email": "h.quentin@totoro.fr",
+            "role_id": "1dc4364b-d3d1-4db4-a324-a1271e59dfb1"
+          }
+       }
+    }
+}
