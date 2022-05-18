@@ -1,4 +1,5 @@
 const { error, success } = require("./messages.json");
+const { status } = require("utils/enum.json");
 
 module.exports = {
 	responseAll: function (model, res, condition = null, exclude=null, include = null) {
@@ -45,7 +46,7 @@ module.exports = {
 			.then((result) => {
 				return res
 					.status(success.delete.status)
-					.json({ message: success.delete.message });
+					.json({ entity: model.name, message: success.delete.message });
 			})
 			.catch((err) => {
 				return res
@@ -53,7 +54,7 @@ module.exports = {
 					.json({ message: error.syntax_error.message });
 			});
 	},
-	actionDelete: function (res, found) {
+	actionDelete: async function (res, found) {
 		if (found) {
 			module.exports.deleteOne(found, res, { id: found.id });
 		} else
@@ -167,7 +168,7 @@ module.exports = {
 			}else{
 				return res
 						.status(error.not_exist.status)
-						.json({ message: error.not_exist.message });
+						.json({ entity: model.name, message: error.not_exist.message });
 			}
 			
 		} catch (error) {

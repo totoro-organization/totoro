@@ -12,9 +12,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      models.Associations.hasMany(models.Favorites, {as: 'favorites', foreignKey: 'assos_id' });
-      models.Associations.hasMany(models.Associations_users, {as: 'users', foreignKey: 'assos_id' });
-      models.Associations.hasMany(models.Subscriptions, {as: 'subscriptions', foreignKey: 'assos_id' });
+      models.Associations.hasMany(models.Favorites, {as: 'favorites', onDelete: 'cascade', foreignKey: 'assos_id' });
+      models.Associations.hasMany(models.Associations_users, {as: 'users', onDelete: 'cascade', foreignKey: 'assos_id' });
+      models.Associations.hasMany(models.Subscriptions, {as: 'subscriptions', onDelete: 'cascade', foreignKey: 'assos_id' });
       models.Associations.belongsTo(models.Status, {as: 'status', foreignKey: 'status_id' });
     }
   }

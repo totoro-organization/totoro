@@ -9,6 +9,7 @@
 # ip infra
 
 - api : http://localhost:6868
+- swagger : http://localhost:6868/docs
 - ui-backoffice : http://localhost:3002
 - ui-landingpage : http://localhost:5555
 - ui-mobileapp : http://127.0.0.1:19002

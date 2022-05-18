@@ -7,7 +7,18 @@ const { error, success } = require("utils/common/messages.json");
 const { status } = require("utils/enum.json");
 const { getRow, getField, updateField} = require("utils/common/thenCatch");
 
-const include = [{model: Status, as: "status"}, {model: Associations_users, as: "organizations", attributes: {exclude:['admin_id']}}];
+const include = [
+	{model: Status, as: "status"}, 
+	{
+		model: Associations_users, 
+		as: "memberships", 
+		attributes: {exclude:['id','user_id', 'assos_id', 'role_id']}, 
+		include: [
+			{model: Associations, as: "organization", attributes: {exclude:['status_id']}},
+			{model: Roles, as: "role"}
+		]
+	}
+];
 const exclude = ["terminal_id", "status_id", "password","longitude","latitude"];
 
 
@@ -23,7 +34,9 @@ module.exports = {
 		commonsController.getAll(res, Users, condition, exclude, include);
 
 	},
-	getUser: function (res, id) {},
+	getUser: function (res, id) {
+		commonsController.getOne(res, Users, id, exclude, include);
+	},
 	updateUser: function (res, data) {},
 	deleteUser: function (res, id) {},
 	getFavorites: function (res, id) {},
