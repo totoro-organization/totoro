@@ -16,7 +16,7 @@ const {
 	mail: { signup },
 } = require("./../../../html");
 const { sign } = require("jsonwebtoken");
-const { status } = require("utils/enum.json");
+const { label_status } = require("utils/enum.json");
 
 const include = [{model: Status, as: "status"}];
 const exclude = ["status_id", "terminal_id"];
@@ -62,7 +62,7 @@ module.exports = {
 				delete user.dataValues.password;
 
 				const token = generateToken(user, isAdmin);
-				if (user.status.label === status.disabled) {
+				if (user.status.label === label_status.disabled) {
 
 					if(!mailer.sendMail(
 						host.gmail,
@@ -86,9 +86,9 @@ module.exports = {
 	},
 
 	signup: async function (res, model, data) {
-		const inactiveStatus = await getRow(Status, { label: status.disabled });
+		const inactiveStatus = await getRow(res, Status, { label: label_status.disabled });
 		/*
-		const activeStatus = await getRow(Status, { label: status.actived });
+		const activeStatus = await getRow(res, Status, { label: label_status.actived });
 		const terminalsRequest = await getRows(Terminals);
 		const terminals = terminalsRequest.filter(
 			(terminal) => terminal.status_id === activeStatus.id
@@ -99,6 +99,7 @@ module.exports = {
 		});
 		*/
 		data["status_id"] = inactiveStatus.id;
+		data["total_token"] = 0;
 		data["password"] = bcrypt.hashSync(data["password"], 10);
 		data["avatar"] = "/avatar/avatar.svg";
 		//data["terminal_id"] = nearestTerminal.id;
@@ -128,7 +129,7 @@ module.exports = {
 	},
 
 	forgot: async function (res, model, data) {
-		const activeStatus = await getRow(Status, { label: status.actived });
+		const activeStatus = await getRow(Status, { label: label_status.actived });
 
 		asyncLib.waterfall([
 			function(done) {

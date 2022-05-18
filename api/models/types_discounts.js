@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      models.Types_discounts.hasMany(models.Discounts, {as: 'discounts', foreignKey: 'type_disc_id' });
+      models.Types_discounts.hasMany(models.Discounts, {as: 'discounts', onDelete: 'cascade', foreignKey: 'type_disc_id' });
     }
   }
   Types_discounts.init({

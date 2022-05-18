@@ -1,5 +1,5 @@
 {
-    "status": {
+    "label_status": {
         "actived": "actived",
         "disabled": "disabled",
         "deleted": "deleted",
@@ -19,9 +19,9 @@
         "siret": "siret"
     },
     "role": {
-        "moderateur": "Moderateur",
-        "administrateur": "Administrateur",
-        "comptables": "Comptables"
+        "moderator": "Moderateur",
+        "administrator": "Administrateur",
+        "accounting": "Comptable"
     },
     "pricing": {
         "standard": "Standard"

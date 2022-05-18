@@ -33,8 +33,7 @@
 		"sequelize": "^6.15.1",
 		"sequelize-cli": "^6.4.1",
 		"sequelize-fixtures": "^1.2.0",
-		"swagger-jsdoc": "^6.2.0",
-		"swagger-ui-express": "^4.3.0",
+		"swagger-tools": "^0.10.4",
 		"uuid": "^8.3.2"
 	}
 }

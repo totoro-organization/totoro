@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
       models.Chats.belongsTo(models.Status, {as: 'status', foreignKey: 'status_id' });
       models.Chats.belongsTo(models.Users, {as: 'recipient', foreignKey: 'recipient_id' });
       models.Chats.belongsTo(models.Users, {as: 'sender', foreignKey: 'sender_id' });
-      models.Chats.hasMany(models.Attachment_chats, {as: 'attachments', foreignKey: 'chat_id' });
+      models.Chats.hasMany(models.Attachment_chats, {as: 'attachments', onDelete: 'cascade', foreignKey: 'chat_id' });
     }
   }
   Chats.init({

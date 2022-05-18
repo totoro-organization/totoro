@@ -49,11 +49,11 @@ module.exports = {
         type: Sequelize.DATEONLY
       },
       longitude: {
-        allowNull: false,
+        allowNull: true,
         type: Sequelize.FLOAT
       },
       latitude: {
-        allowNull: false,
+        allowNull: true,
         type: Sequelize.FLOAT
       },
       avatar: {
