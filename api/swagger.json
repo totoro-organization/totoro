@@ -19,9 +19,13 @@
         }
     },
     "security": [ { "ApiKeyAuth": [] }, { "bearerAuth": [] } ],
+    "tags": [
+      {"name":"Admins"}
+    ],
     "paths":{
        "/api/admins":{
           "get":{
+             "tags":["Admins"],
              "x-swagger-router-controller":"admins",
              "operationId":"getAllAdmins",
              "parameters": [
@@ -56,6 +60,7 @@
              }
           },
           "post":{
+             "tags":["Admins"],
              "x-swagger-router-controller":"admins",
              "operationId":"postAdmin",
              "parameters":[
