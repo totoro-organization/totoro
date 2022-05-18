@@ -5,7 +5,7 @@ const { Op } = require("sequelize");
 const { generateToken } = require("utils/session");
 const commonsController = require("../Commons/controller");
 const { error, success } = require("utils/common/messages.json");
-const { status } = require("utils/enum.json");
+const { label_status } = require("utils/enum.json");
 const { getRow, getField, updateField} = require("utils/common/thenCatch");
 const mailer = require("services/externals/mailer");
 const {
@@ -14,7 +14,7 @@ const {
 const { from, subject, host } = require("utils/common/mail.json");
 const { Status, Roles, Logs, Admins } = require("../../../models");
 
-const include = [{model: Status, as: "status"}, {model: Roles, as: "role"}, {model: Logs, as: "logs", attributes: {exclude:['admin_id']}}];
+const include = [{model: Status, as: "status"}, {model: Roles, as: "role"}];
 const exclude = ["role_id", "status_id", "password"];
 
 module.exports = {
@@ -37,9 +37,11 @@ module.exports = {
 		commonsController.getOne(res, Admins, id, exclude, include);
 	},
 	createAdmin: async function (res, data) {
-		const statusData = await getRow(res, Status, { label: status.actived });
+		const statusData = await getRow(res, Status, { label: label_status.actived });
+		const roleData = await getRow(res, Roles, { id: data.role_id });
 		
 		data["status_id"] = statusData.id;
+		data["role_id"] = roleData.id;
 		data["password"] = bcrypt.hashSync("123456", 10);
 
 		const condition = { email: data.email, username: data.username };
@@ -59,7 +61,7 @@ module.exports = {
 
 				return res
 					.status(success.create.status)
-					.json({ message: success.create.message });
+					.json({ entity: Admins.name, message: success.create.message });
 		},
 		res, Admins, data, condition, null, true);
 	},
@@ -89,7 +91,7 @@ module.exports = {
 		if((end_date && start_date) && end_date < start_date)
 			return res
 					.status(error.parameters.status)
-					.json({ message: "end date must be greater than start date" });
+					.json({ entity: Logs.name,  message: "end date must be greater than start date" });
 		
 
 		if(queries && queries.status){
@@ -126,7 +128,7 @@ module.exports = {
 		if((end_date && start_date) && end_date < start_date)
 			return res
 					.status(error.parameters.status)
-					.json({ message: "end date must be greater than start date" });
+					.json({ entity: Logs.name, message: "end date must be greater than start date" });
 		
 		commonsController.delete(res, Logs, condition);
 	},
@@ -149,7 +151,7 @@ module.exports = {
 					} else {
 						return res
 							.status(error.access_forbidden.status)
-							.json({ message: error.access_forbidden.message });
+							.json({ entity: Admins.name, message: error.access_forbidden.message });
 					}
 				},
 				function (user, resByCrypt, done) {
@@ -160,7 +162,7 @@ module.exports = {
 					else {
 						return res
 							.status(error.access_forbidden.status)
-							.json({ message: error.access_forbidden.message });
+							.json({ entity: Admins.name, message: error.access_forbidden.message });
 					}
 				},
 			],
@@ -168,11 +170,11 @@ module.exports = {
 				if (updateFound)
 					return res
 						.status(success.update.status)
-						.json({ message: success.update.message });
+						.json({ entity: Admins.name, message: success.update.message });
 				else
 					return res
 						.status(error.op_failed.status)
-						.json({ message: error.op_failed.message });
+						.json({ entity: Admins.name, message: error.op_failed.message });
 			}
 		);
 	},

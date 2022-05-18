@@ -14,8 +14,8 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       models.Groups.belongsTo(models.Ads, {as: 'job', foreignKey: 'ads_id' });
       models.Groups.belongsTo(models.Users, {as: 'participant', foreignKey: 'user_id' });
-      models.Groups.hasMany(models.Litigations, {as: 'litigations', foreignKey: 'group_id' });
-      models.Groups.hasMany(models.Chats, {as: 'chats', foreignKey: 'group_id' });
+      models.Groups.hasMany(models.Litigations, {as: 'litigations', onDelete: 'cascade', foreignKey: 'group_id' });
+      models.Groups.hasMany(models.Chats, {as: 'chats', onDelete: 'cascade', foreignKey: 'group_id' });
 
     }
   }
