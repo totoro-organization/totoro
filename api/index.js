@@ -7,9 +7,10 @@ const { Applications } = require("./models");
 const {loadFixtures} = require('./fixtures');
 const PORT = process.env.API_DOCKER_PORT || 8080;
 const server = express();
-const url = `http://localhost:${PORT}`
-const swaggerJsDoc = require("swagger-jsdoc");
-const swaggerUi = require("swagger-ui-express");
+const url = `http://localhost:${PORT}`;
+const swaggerTools = require('swagger-tools');
+let swaggerDoc = require('./swagger.json');
+
 
 const {
 	users,
@@ -29,40 +30,6 @@ server.use(express.static(__dirname + "/data"));
 server.use(bodyParser.urlencoded({ extended: true }));
 
 server.use(bodyParser.json());
-
-const swaggerOptions = {
-  swaggerDefinition: {
-    info: {
-      version: "1.0.0",
-      title: "Customer API",
-      description: "Customer API Information",
-      contact: {
-        name: "Totoro"
-      },
-      servers: [url]
-    }
-  },
- 
-  apis: ["index.js", "./src/services/**/*.js"]
-};
-
-const swaggerDocs = swaggerJsDoc(swaggerOptions);
-server.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
-
-//routes
-/**
- * @swagger
- * /:
- *  get:
- *    description: route primaire
- *    responses:
- *      '200':
- *        description: return html content
- */
-server.get("/", function (req, res) {
-	res.setHeader("Content-Type", "text/html");
-	res.status(200).send(ui_api.home());
-});
 
 const accessApi = async (req, res, next) => {
 	try {
@@ -105,6 +72,15 @@ server.use("/api/admins", [accessApi, admins]);
 // server.use('/api/subscriptions', [accessApi, subscriptions]);
 server.use("/api/commons", [accessApi, commons]);
 
-server.listen(PORT, function () {
-	console.log("server start");
+const options = {
+	controllers: "./src/services"
+}
+swaggerTools.initializeMiddleware(swaggerDoc, (middleware) => {
+	server.use(middleware.swaggerMetadata())
+	server.use(middleware.swaggerValidator())
+	server.use(middleware.swaggerRouter(options))
+	server.use(middleware.swaggerUi())
+	server.listen(PORT, function () {
+		console.log("server start");
+	});
 });
