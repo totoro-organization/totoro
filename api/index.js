@@ -1,13 +1,10 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const { ui_api } = require("./html");
 const { error } = require("utils/common/messages.json");
 const { Applications } = require("./models");
 const { loadFixtures } = require("./fixtures");
-const PORT = process.env.API_DOCKER_PORT || 8080;
 const server = express();
-const url = `http://localhost:${PORT}`;
 const swaggerTools = require("swagger-tools");
 let swaggerDoc = require("./swagger.json");
 
@@ -19,6 +16,8 @@ const {
   commons,
   applications,
 } = require("services");
+
+const PORT = process.env.API_DOCKER_PORT || 8080;
 
 loadFixtures();
 
@@ -78,6 +77,7 @@ swaggerTools.initializeMiddleware(swaggerDoc, (middleware) => {
   server.use(middleware.swaggerValidator());
   server.use(middleware.swaggerRouter(options));
   server.use(middleware.swaggerUi());
+
   server.listen(PORT, function () {
     console.log("server start");
   });
