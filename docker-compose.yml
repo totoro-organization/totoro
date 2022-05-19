@@ -1,10 +1,10 @@
-version: '3.1'
+version: "3.1"
 
 services:
   landingpage:
     env_file: ./.env
-    build: 
-      context: . 
+    build:
+      context: .
       dockerfile: Dockerfile
     ports:
       - $LANDINGPAGE_LOCAL_PORT:$LANDINGPAGE_DOCKER_PORT
@@ -18,12 +18,12 @@ services:
     image: mariadb
     restart: always
     volumes:
-        - ./database:/var/lib/mysql
+      - ./database:/var/lib/mysql
     environment:
-        MYSQL_ROOT_PASSWORD: $MYSQlDB_ROOT_PASSWORD
-        MYSQL_DATABASE: database_development
-        MYSQL_USER: $MYSQlDB_USER
-        MYSQL_PASSWORD: $MYSQlDB_ROOT_PASSWORD
+      MYSQL_ROOT_PASSWORD: $MYSQlDB_ROOT_PASSWORD
+      MYSQL_DATABASE: database_development
+      MYSQL_USER: $MYSQlDB_USER
+      MYSQL_PASSWORD: $MYSQlDB_ROOT_PASSWORD
     networks:
       - backend
 
@@ -31,9 +31,9 @@ services:
     image: phpmyadmin
     restart: always
     ports:
-        - 8888:80
+      - 8888:80
     environment:
-        - PMA_ARBITRARY=1
+      - PMA_ARBITRARY=1
     networks:
       - frontend
       - backend
@@ -46,7 +46,7 @@ services:
     env_file: ./.env
     ports:
       - $API_LOCAL_PORT:$API_DOCKER_PORT
-    volumes: 
+    volumes:
       - ./api:/usr/src/api
       - /usr/src/api/node_modules
     environment:
@@ -59,7 +59,7 @@ services:
     networks:
       - backend
       - frontend
-  
+
   ui-webapp:
     depends_on:
       - api
@@ -86,20 +86,20 @@ services:
     networks:
       - frontend
 
-  ui-mobileapp:
+  mobileapp:
     depends_on:
       - api
     env_file: ./.env
     build:
-      context: ./ui-mobileapp
+      context: ./mobileapp
       args:
         - APPM_APP_API_BASE_URL=$CLIENT_API_BASE_URL
     ports:
       - $REACTNATIVE_LOCAL_PORT:$REACTNATIVE_DOCKER_PORT
       - $REACTNATIVE_LOCAL_PORT2:$REACTNATIVE_DOCKER_PORT2
       - $REACTNATIVE_LOCAL_PORT3:$REACTNATIVE_DOCKER_PORT3
-    volumes: 
-      - ./ui-mobileapp:/usr/src/app_mobile
+    volumes:
+      - ./mobileapp:/usr/src/app_mobile
       - /usr/src/app_mobile/node_modules
     environment:
       - EXPO_DEVTOOLS_LISTEN_ADDRESS=$REACT_NATIVE_PUBLIC_IP

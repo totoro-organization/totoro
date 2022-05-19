@@ -5,6 +5,6 @@ node_modules
 database
 
 ui-backoffice/node_modules
-ui-mobileapp/node_modules
+mobileapp/node_modules
 ui-landingpage/node_modules
 ui-webapp/node_modules
