@@ -15,12 +15,13 @@ export default async function fetchLoginUser({
     password,
   };
 
-  return fetch(`${API_HOST}${API_ROUTES.AUTH_REGISTER}`, {
+  return fetch(`${API_HOST}${API_ROUTES.AUTH_LOGIN}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       app_id: config.APP_ID,
     },
+    credentials: "include",
     body: JSON.stringify(body),
   });
 }

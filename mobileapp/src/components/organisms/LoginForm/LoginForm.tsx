@@ -12,6 +12,7 @@ import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { BottomTabParamList } from "../../../navigation/StackNavigationParams";
 import Spacer from "../../atoms/Spacer";
+import fetchLoginUser from "../../../common/api/requests/auth/fetchLoginUser";
 
 export default function LoginForm() {
   const navigation = useNavigation<StackNavigationProp<BottomTabParamList>>();
@@ -28,8 +29,12 @@ export default function LoginForm() {
   async function onSubmit(data: LoginFormValues) {
     // TODO: Add call api to login
 
-    console.log(data);
+    const response = await fetchLoginUser({
+      emailOrUsername: data.email,
+      password: data.password,
+    });
 
+    console.log(response);
     navigation.navigate("BottomTab");
   }
 

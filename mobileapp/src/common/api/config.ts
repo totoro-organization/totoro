@@ -1,6 +1,6 @@
 const config = {
   // TODO: Set this info to .env file.
-  APP_ID: "ebbdd474-f86e-4ad8-9764-3b056b14af86",
+  APP_ID: "30d1a01d-aa65-456d-83e0-322830031f00",
 };
 
 export default config;

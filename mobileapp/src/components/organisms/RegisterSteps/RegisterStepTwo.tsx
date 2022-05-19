@@ -36,17 +36,17 @@ export default function RegisterStepTwo({ nextStep }: RegisterStepTwoProps) {
   async function onSubmit(data: RegisterStepTwoFormValues) {
     // TODO: Add call api to register (update user data)
     console.log(data);
-    await fetchSubmitRegisterUser({
-      user: {
-        firstname: "Mae",
-        lastname: "Test",
-        username: "morice",
-        email: "morice@gmail.com",
-        password: "root",
-        birthday: "1991-10-08",
-        phone: "ddd",
-      },
-    });
+    const body = {
+      firstname: "Mae",
+      lastname: "Test",
+      username: "morice",
+      email: "moridce@gmail.com",
+      password: "root",
+      birthday: "1991-10-08",
+      phone: "ddd",
+    };
+
+    await fetchSubmitRegisterUser({ user: body });
 
     nextStep();
   }
