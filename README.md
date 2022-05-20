@@ -11,7 +11,7 @@
 - api : http://localhost:6868
 - swagger : http://localhost:6868/docs
 - ui-backoffice : http://localhost:3002
-- ui-landingpage : http://localhost:5555
+- landingpage : http://localhost:5555
 - mobileapp : http://127.0.0.1:19002
 - webapp : http://localhost:3000
 - phpmyadmin: http://localhost:8888

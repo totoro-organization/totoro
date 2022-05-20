@@ -9,7 +9,7 @@ services:
     ports:
       - $LANDINGPAGE_LOCAL_PORT:$LANDINGPAGE_DOCKER_PORT
     volumes:
-      - ./ui-landingpage:/var/www/html
+      - ./landingpage:/var/www/html
     networks:
       - frontend
 
