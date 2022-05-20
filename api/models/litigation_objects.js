@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      models.Litigation_objects.hasMany(models.Litigations, {as: 'litigations', foreignKey: 'litigation_object_id' });
+      models.Litigation_objects.hasMany(models.Litigations, {as: 'litigations', onDelete: 'cascade', foreignKey: 'litigation_object_id' });
     }
   }
   Litigation_objects.init({

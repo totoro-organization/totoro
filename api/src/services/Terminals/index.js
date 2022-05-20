@@ -22,7 +22,7 @@ exports.router = (function () {
 		const condition = { label: data.label };
 		const { id: status_id } = await getRow(Status, { label: "disabled" });
 		data["status_id"] = status_id;
-		commonsController.create(res, Terminals, data, condition);
+		commonsController.create(null, res, Terminals, data, condition);
 	});
 
 	terminalsRouter.put("/:id", async function (req, res) {
@@ -34,7 +34,7 @@ exports.router = (function () {
 
 	terminalsRouter.delete("/:id", async function (req, res) {
 		const id = req.params.id;
-		commonsController.delete(res, Terminals, id);
+		commonsController.delete(res, Terminals, {id});
 	});
 
 	return terminalsRouter;
