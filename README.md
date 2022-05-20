@@ -13,5 +13,5 @@
 - ui-backoffice : http://localhost:3002
 - ui-landingpage : http://localhost:5555
 - mobileapp : http://127.0.0.1:19002
-- ui-webapp : http://localhost:3000
+- webapp : http://localhost:3000
 - phpmyadmin: http://localhost:8888

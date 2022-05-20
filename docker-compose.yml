@@ -60,12 +60,12 @@ services:
       - backend
       - frontend
 
-  ui-webapp:
+  webapp:
     depends_on:
       - api
     env_file: ./.env
     build:
-      context: ./ui-webapp
+      context: ./webapp
       args:
         - WA_APP_API_BASE_URL=$CLIENT_API_BASE_URL
     ports:
