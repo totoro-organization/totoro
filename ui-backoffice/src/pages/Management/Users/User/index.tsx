@@ -8,7 +8,7 @@ import ArrowBackTwoToneIcon from '@mui/icons-material/ArrowBackTwoTone';
 import { Box, Container, Grid, IconButton, Tooltip } from '@mui/material';
 
 import Footer from 'src/components/Footer';
-import UserForm from './UserForm';
+import UserInfo from './UserInfo';
 import { subDays } from 'date-fns';
 import { User } from 'src/models/user';
 import { useApi } from 'src/hooks/useApi';
@@ -53,7 +53,7 @@ function UserDetails() {
           spacing={3}
         >
           <Grid item xs={12}>
-            { loading ? <SuspenseLoader/> : <UserForm user={user?.data} /> }
+            { loading ? <SuspenseLoader/> : <UserInfo user={user} /> }
           </Grid>
         </Grid>
       </Container>
