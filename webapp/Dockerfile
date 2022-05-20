@@ -1,6 +1,6 @@
 FROM node:14 as build-stage-1
 
-WORKDIR /ui-webapp
+WORKDIR /webapp
 
 COPY package.json .
 
@@ -16,7 +16,7 @@ RUN npm run build
 
 FROM nginx:1.17.0-alpine
 
-COPY --from=build-stage-1 /ui-webapp/build /usr/share/nginx/html
+COPY --from=build-stage-1 /webapp/build /usr/share/nginx/html
 
 EXPOSE $BACKOFFICE_DOCKER_PORT
 
