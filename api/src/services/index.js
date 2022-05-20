@@ -7,7 +7,6 @@ const commons = require("./Commons").router;
 const applications = require("./Applications").router;
 const litigations = require("./Litigations").router;
 const messagings = require("./Messagings").router;
-const parameters = require("./Parameters").router;
 
 module.exports = {
 	users,
@@ -18,6 +17,5 @@ module.exports = {
 	commons,
 	applications,
 	litigations,
-	messagings,
-	parameters,
+	messagings
 };

@@ -3,7 +3,10 @@ const bcrypt = require("bcryptjs");
 const { Op } = require("sequelize");
 const { generateToken } = require("utils/session");
 const { getNearestTerminal } = require("utils/localisation");
-const { getRow, getRows } = require("utils/common/thenCatch");
+const {
+	getRow, 
+	getField,
+} = require("utils/common/thenCatch");
 const { error, success } = require("utils/common/messages.json");
 const { Terminals, Status } = require("../../../models");
 const mailer = require("services/externals/mailer");
@@ -13,9 +16,13 @@ const {
 	mail: { signup },
 } = require("./../../../html");
 const { sign } = require("jsonwebtoken");
+const { label_status } = require("utils/enum.json");
+
+const include = [{model: Status, as: "status"}];
+const exclude = ["status_id", "terminal_id"];
 
 module.exports = {
-	login: function (res, model, data) {
+	login: async function (res, model, data, isAdmin) {
 		asyncLib.waterfall(
 			[
 				function (done) {
@@ -25,21 +32,7 @@ module.exports = {
 							{ username: data.emailOrUsername },
 						],
 					};
-					model
-						.findOne({
-							where: condition,
-							include: [
-								{
-									model: Status,
-								},
-							],
-						})
-						.then((user) => done(null, user))
-						.catch((err) => {
-							return res
-								.status(error.syntax_error.status)
-								.json({ message: error.syntax_error.message });
-						});
+					getField(res, model, condition, done, true, include, exclude);
 				},
 				function (user, done) {
 					if (user) {
@@ -66,29 +59,36 @@ module.exports = {
 				},
 			],
 			function (user) {
-				const token = generateToken(user);
-				if (user.Status.label === "inactive") {
-					mailer.sendMail(
+				delete user.dataValues.password;
+
+				const token = generateToken(user, isAdmin);
+				if (user.status.label === label_status.disabled) {
+
+					if(!mailer.sendMail(
 						host.gmail,
 						from.email,
 						from.password,
 						user.email,
 						subject.signup,
-						signup(user, token)
-					);
+						signup(user, token))
+					){
+						console.log("mail inexistant");
+					}
+
 					return res
 						.status(success.user_inactive.status)
 						.json({ message: success.user_inactive.message });
 				} else {
-					delete user.dataValues.password;
 					return res.status(success.create.status).json({ token });
 				}
 			}
 		);
 	},
+
 	signup: async function (res, model, data) {
-		const inactiveStatus = await getRow(Status, { label: "inactive" });
-		const activeStatus = await getRow(Status, { label: "active" });
+		const inactiveStatus = await getRow(res, Status, { label: label_status.disabled });
+		/*
+		const activeStatus = await getRow(res, Status, { label: label_status.actived });
 		const terminalsRequest = await getRows(Terminals);
 		const terminals = terminalsRequest.filter(
 			(terminal) => terminal.status_id === activeStatus.id
@@ -97,35 +97,68 @@ module.exports = {
 			longitude: data["longitude"],
 			latitude: data["latitude"],
 		});
+		*/
 		data["status_id"] = inactiveStatus.id;
+		data["total_token"] = 0;
 		data["password"] = bcrypt.hashSync(data["password"], 10);
-		data["avatar"] = "/img/avatar/avatar.svg";
-		data["terminal_id"] = nearestTerminal.id;
+		data["avatar"] = "/avatar/avatar.svg";
+		//data["terminal_id"] = nearestTerminal.id;
 
 		const condition = { email: data.email, username: data.username };
+			
+		commonsController.create(function(result){
+			delete result.dataValues.password;
 
-		const create = commonsController.create(res, model, data, condition, null, true);
-
-		console.log(create);
-		if(typeof create == "string"){
-			const token = generateToken(create);
-			mailer.sendMail(
+			const token = generateToken(result);
+			if(!mailer.sendMail(
 				host.gmail,
 				from.email,
 				from.password,
-				create.email,
+				result.email,
 				subject.signup,
-				signup(create, token)
-			);
+				signup(result, token))
+			){
+				console.log("mail inexistant");
+			}
 
 			return res
 				.status(success.create.status)
 				.json({ message: success.create.message });
-		} else {
-			return create;
-		}
-
+		},
+		res, model, data, condition, null, true);
 	},
-	forgot: function (res, data) {},
-	resetPassword: function (res, data) {},
+
+	forgot: async function (res, model, data) {
+		const activeStatus = await getRow(Status, { label: label_status.actived });
+
+		asyncLib.waterfall([
+			function(done) {
+				const condition = { email: data.email, status_id: activeStatus.id };
+				exclude.push("password");
+				getField(res, model, condition, done, false, include, exclude);			
+			}
+		], function(found) {
+			if (found) {
+				const token = generateToken(found);
+				if(!mailer.sendMail(
+					host.gmail,
+					from.email,
+					from.password,
+					found.email,
+					subject.signup,
+					signup(found, token))
+				){
+					console.log("mail inexistant");
+				}
+
+				return res
+					.status(success.get.status)
+					.json({ message: success.get.message });
+			} else {
+				return res
+						.status(error.not_found.status)
+						.json({ message: error.not_found.message });
+			}
+		});
+	}
 };
