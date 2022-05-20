@@ -48,7 +48,9 @@ export async function requestAxios(method: string, uri: string, data = null) {
             //BACK OFFLINE
             return "offline";
         } else {
-            return error.response.data.message
+            return {
+                error: error.response.data.message
+            }
         }
     }
 }

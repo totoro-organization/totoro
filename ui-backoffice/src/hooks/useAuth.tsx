@@ -55,10 +55,16 @@ export function AuthProvider({
   useEffect(() => {
     sessionsService
       .getCurrentUser()
-      .then((user) => setUser(user))
+      .then((response) => {
+        if(response.error) {
+          setError(response.error);
+          return;
+        } 
+        setUser(response);
+      })
       .catch((_error) => {})
       .finally(() => setLoadingInitial(false));
-  }, [token]);
+  }, []);
 
   // Flags the component loading state and posts the login
   // data to the server.
@@ -77,18 +83,27 @@ export function AuthProvider({
     sessionsService
       .login(params)
       .then((response) => {
-        if (response.message) {
-          setError(response.message);
+        if (response.error) {
+          setError(response.error);
           return;
         }
         localStorage.setItem('token', response.token);
-        setToken(response.token);
-        navigate('/');
+      })
+      .then(_ => {
+        sessionsService
+      .getCurrentUser()
+      .then((response) => {
+          if(response.error) {
+            setError(response.error);
+            return;
+          } 
+          setUser(response);
+          navigate('/')
+        })
       })
       .catch((error) => setError(error))
       .finally(() => setLoading(false));
   }
-
   // Call the logout endpoint and then remove the user
   // from the state.
   function logout() {
@@ -96,7 +111,6 @@ export function AuthProvider({
       setUser(undefined);
       setToken(undefined);
   }
-
   // Make the provider update only when it should.
   // We only want to force re-renders if the user,
   // loading or error states change.
