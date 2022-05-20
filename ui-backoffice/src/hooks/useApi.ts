@@ -17,7 +17,6 @@ export const useApi = (url: string): ApiResponse => {
     try {
       const apiResponse = await requestAxios('GET', url);
       setData(apiResponse);
-      console.log(apiResponse);
     } catch (error) {
       setError(error);
     }
