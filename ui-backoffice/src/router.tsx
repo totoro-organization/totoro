@@ -107,19 +107,18 @@ const StatusMaintenance = Loader(
 const routes: PartialRouteObject[] = [
   {
     path: '*',
-    element: <ProtectedRoute />,
+    element: <BaseLayout />,
     children: [
       {
-        path: '*',
-        element: <BaseLayout />,
+        path: 'login',
+        element: <SignIn />
+      },
+      {
+        element: <ProtectedRoute/>,
         children: [
           {
             path: '/',
             element: <Navigate to="/dashboards" replace />
-          },
-          {
-            path: 'login',
-            element: <SignIn/>
           },
           {
             path: 'status',
@@ -294,9 +293,10 @@ const routes: PartialRouteObject[] = [
             ]
           }
         ]
-      }
+      },
+      
     ]
-  },
+  }
 ];
 
 export default routes;

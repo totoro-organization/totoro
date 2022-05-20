@@ -32,7 +32,7 @@ const theme = createTheme();
 
 export default function SignIn() {
 
-  const { login, loading, error } = useAuth();
+  const { login, loading } = useAuth();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
