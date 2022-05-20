@@ -1,8 +1,9 @@
 import { Job } from "./job";
 import { Organization } from "./organization";
+import { Role } from "./role";
 import { Status } from "./status";
 
-export type UserStatus = Status<'outlawed' | 'freezed' | 'active' | 'inactive'>;
+export type UserStatus = Status<'actived' | 'freezed' | 'disabled'>;
 
 export interface User {
     id: string,
@@ -11,17 +12,16 @@ export interface User {
     username: string,
     email: string,
     phone?: number,
-    longitude: number,
-    latitude: number,
     bio?: string,
     total_token: number,
     birthday?: Date,
     avatar: string,
     status: UserStatus,
-    organizations: Organization[],
-    favorites: {
-        jobs: Job[],
-        organizations: Organization[]
+    memberships: {
+        organization: Organization,
+        role: Role,
+        createdAt: string,
+        updatedAt: string
     },
     createdAt: string,
     updatedAt: string
