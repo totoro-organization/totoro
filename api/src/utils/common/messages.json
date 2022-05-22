@@ -1,58 +1,58 @@
 {
-	"error": {
-		"op_failed": {
-			"status": 500,
-			"message": "Operation failed"
-		},
-		"syntax_error": {
-			"status": 500,
-			"message": "Syntax error"
-		},
-		"access_denied": {
-			"status": 503,
-			"message": "Access denied"
-		},
-		"access_forbidden": {
-			"status": 403,
-			"message": "Access forbidden"
-		},
-		"not_found": {
-			"status": 404,
-			"message": "Ressource not found"
-		},
-		"not_exist": {
-			"status": 404,
-			"message": "value not exist"
-		},
-		"duplicate": {
-			"status": 409,
-			"message": "Value already exist"
-		},
-		"parameters": {
-			"status": 400,
-			"message": "Incorrect parameters"
-		}
-	},
-	"success": {
-		"get": {
-			"status": 200,
-			"message": "Successfull"
-		},
-		"create": {
-			"status": 201,
-			"message": "Ressource successfully created"
-		},
-		"user_inactive": {
-			"status": 201,
-			"message": "Inactive account. Please check your mails"
-		},
-		"update": {
-			"status": 201,
-			"message": "Ressource successfully updated"
-		},
-		"delete": {
-			"status": 201,
-			"message": "Ressource successfully deleted"
-		}
-	}
+  "error": {
+    "op_failed": {
+      "status": 500,
+      "message": "Operation failed"
+    },
+    "syntax_error": {
+      "status": 500,
+      "message": "Syntax error"
+    },
+    "access_denied": {
+      "status": 503,
+      "message": "Access denied"
+    },
+    "access_forbidden": {
+      "status": 403,
+      "message": "Access forbidden"
+    },
+    "not_found": {
+      "status": 404,
+      "message": "Ressource not found"
+    },
+    "not_exist": {
+      "status": 404,
+      "message": "value not exist"
+    },
+    "duplicate": {
+      "status": 409,
+      "message": "Value already exist"
+    },
+    "parameters": {
+      "status": 400,
+      "message": "Incorrect parameters"
+    }
+  },
+  "success": {
+    "get": {
+      "status": 200,
+      "message": "Successfull"
+    },
+    "create": {
+      "status": 201,
+      "message": "Ressource successfully created"
+    },
+    "user_inactive": {
+      "status": 201,
+      "message": "Inactive account. Please check your mails"
+    },
+    "update": {
+      "status": 201,
+      "message": "Ressource successfully updated"
+    },
+    "delete": {
+      "status": 201,
+      "message": "Ressource successfully deleted"
+    }
+  }
 }
