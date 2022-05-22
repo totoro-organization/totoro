@@ -1,10 +1,10 @@
-FROM node:14 as build-stage-1
+FROM node:14 as build-stage
 
 WORKDIR /webapp
 
 COPY package.json .
 
-RUN npm install
+RUN npm install --legacy-peer-deps
 
 COPY . .
 
@@ -16,8 +16,13 @@ RUN npm run build
 
 FROM nginx:1.17.0-alpine
 
-COPY --from=build-stage-1 /webapp/build /usr/share/nginx/html
+RUN rm -rf /etc/nginx/conf.d
+COPY conf /etc/nginx
 
-EXPOSE $BACKOFFICE_DOCKER_PORT
+COPY --from=build-stage /webapp/build /usr/share/nginx/html
+
+# COPY nginx/nginx.conf /etc/nginx/nginx.conf
+
+EXPOSE $WEBAPP_DOCKER_PORT
 
 CMD nginx -g "daemon off;"
