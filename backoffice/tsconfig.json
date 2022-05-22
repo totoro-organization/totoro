@@ -17,7 +17,9 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "types": ["node"],
+    "typeRoots": [ "../node_modules/@types" ],
   },
   "include": ["src"]
 }
