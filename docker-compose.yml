@@ -73,12 +73,12 @@ services:
     networks:
       - frontend
 
-  ui-backoffice:
+  backoffice:
     depends_on:
       - api
     env_file: ./.env
     build:
-      context: ./ui-backoffice
+      context: ./backoffice
       args:
         - BO_APP_API_BASE_URL=$CLIENT_API_BASE_URL
     ports:

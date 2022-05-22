@@ -1,6 +1,6 @@
 FROM node:14 as build-stage
 
-WORKDIR /ui-backoffice
+WORKDIR /backoffice
 
 COPY package.json .
 
@@ -19,7 +19,7 @@ FROM nginx:1.17.0-alpine
 RUN rm -rf /etc/nginx/conf.d
 COPY conf /etc/nginx
 
-COPY --from=build-stage /ui-backoffice/build /usr/share/nginx/html
+COPY --from=build-stage /backoffice/build /usr/share/nginx/html
 
 # COPY nginx/nginx.conf /etc/nginx/nginx.conf
 

@@ -12,6 +12,8 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { login, getCurrentUser } from 'src/services/sessions';
+import useAuth from 'src/hooks/useAuth';
 
 function Copyright(props: any) {
   return (
@@ -29,13 +31,18 @@ function Copyright(props: any) {
 const theme = createTheme();
 
 export default function SignIn() {
+
+  const { login, loading } = useAuth();
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+
+    login({
+      emailOrUsername: data.get("emailOrUsername"),
+      password: data.get("password")
+    })
   };
 
   return (
@@ -61,10 +68,10 @@ export default function SignIn() {
               margin="normal"
               required
               fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
+              id="emailOrUsername"
+              label="Email or Username"
+              name="emailOrUsername"
+              autoComplete="emailOrUsername"
               autoFocus
             />
             <TextField
@@ -82,6 +89,7 @@ export default function SignIn() {
               label="Remember me"
             />
             <Button
+              disabled={loading}
               type="submit"
               fullWidth
               variant="contained"
