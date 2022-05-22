@@ -69,7 +69,7 @@ services:
       args:
         - WA_APP_API_BASE_URL=$CLIENT_API_BASE_URL
     ports:
-      - $REACTUI_LOCAL_PORT:$REACTUI_DOCKER_PORT
+      - $WEBAPP_LOCAL_PORT:$WEBAPP_DOCKER_PORT
     networks:
       - frontend
 
