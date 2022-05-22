@@ -8,44 +8,26 @@ import ArrowBackTwoToneIcon from '@mui/icons-material/ArrowBackTwoTone';
 import { Box, Container, Grid, IconButton, Tooltip } from '@mui/material';
 
 import Footer from 'src/components/Footer';
-import UserForm from './UserForm';
+import UserInfo from './UserInfo';
 import { subDays } from 'date-fns';
 import { User } from 'src/models/user';
+import { useApi } from 'src/hooks/useApi';
+import SuspenseLoader from 'src/components/SuspenseLoader';
 
 function UserDetails() {
-  // let { id } = useParams();
+
+  const { id } = useParams();
+
+  const { data: user, loading } = useApi(`/users/${id}`);
 
   const navigate = useNavigate();
 
   const handleGoBack = () => navigate('/gestion/utilisateurs');
 
-  const user: User = {
-    id: '1',
-    firstname: 'Téo',
-    lastname: 'Lugat',
-    username: 'tlugat',
-    email: 'teo.lugat@hetic.net',
-    jobs: [{
-      id: '1',
-      title: 'Ma super mission',
-      organization: 'Mon association',
-      status: {id: '1', label: 'completed'},
-      participants: 15,
-      address: '3 rue de la paix',
-      capacity: 20,
-      tokens: 150,
-      description: ' Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus efficitur accumsan suscipit. Etiam lacus elit, condimentum ut orci eu, vulputate tincidunt velit. Aenean ac suscipit quam, sit amet tempus risus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Aenean at erat magna. Nam bibendum sem sem, sit amet sagittis mi tincidunt et. Nulla at vehicula tortor. Etiam faucibus rhoncus nibh eget vulputate. Suspendisse sit amet lacus laoreet mi lacinia porttitor. Nam sapien lacus, tincidunt in odio ut, scelerisque laoreet lorem. Etiam in porta tortor. Nunc venenatis elit nec nulla egestas semper. Cras rhoncus velit id ipsum maximus, ac egestas enim vestibulum. Ut nec pharetra turpis. Morbi iaculis bibendum nisl et vulputate. ',
-      date: subDays(new Date(), 1).getTime(),
-      tags: [{id:'1', label: 'humanitaire'}]
-    }],
-    tokens: 150,
-    status: {id: '1', label: 'active'}
-  };
-
   return (
     <>
       <Helmet>
-        <title>{user.username}</title>
+        <title>{`${user?.firstname } ${user?.lastname}`}</title>
       </Helmet>
       <PageTitleWrapper>
         <Box display="flex">
@@ -59,7 +41,7 @@ function UserDetails() {
               <ArrowBackTwoToneIcon />
             </IconButton>
           </Tooltip>
-          <PageTitle heading={user.username} />
+          <PageTitle heading={`${user?.firstname } ${user?.lastname}`} subHeading={'@' + user?.username} />
         </Box>
       </PageTitleWrapper>
       <Container maxWidth="lg">
@@ -71,7 +53,7 @@ function UserDetails() {
           spacing={3}
         >
           <Grid item xs={12}>
-            <UserForm user={user} />
+            { loading ? <SuspenseLoader/> : <UserInfo user={user} /> }
           </Grid>
         </Grid>
       </Container>
