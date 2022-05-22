@@ -1,8 +1,7 @@
-'use strict';
-const { v4: uuidv4 } = require('uuid');
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { v4: uuidv4 } = require("uuid");
+const { Model } = require("sequelize");
+
 module.exports = (sequelize, DataTypes) => {
   class Difficulties extends Model {
     /**
@@ -12,19 +11,28 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      models.Difficulties.hasMany(models.Ads, {as: 'jobs', onDelete: 'cascade', foreignKey: 'difficulty_id' });
-
+      models.Difficulties.hasMany(models.Ads, {
+        as: "jobs",
+        onDelete: "cascade",
+        foreignKey: "difficulty_id",
+      });
     }
   }
-  Difficulties.init({
-    level: DataTypes.INTEGER,
-    token: DataTypes.INTEGER
-  }, {
-    sequelize,
-    modelName: 'Difficulties',
-  });
+
+  Difficulties.init(
+    {
+      level: DataTypes.INTEGER,
+      token: DataTypes.INTEGER,
+    },
+    {
+      sequelize,
+      modelName: "Difficulties",
+    }
+  );
+
   Difficulties.addHook("beforeSave", async (element) => {
-    return element.id = uuidv4();
-  } )
+    return (element.id = uuidv4());
+  });
+
   return Difficulties;
 };
