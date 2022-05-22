@@ -43,17 +43,13 @@ interface Filters {
 
 const getStatusLabel = (userStatus: UserStatus['label']): JSX.Element => {
   const map = {
-    active: {
+    actived: {
       text: 'Actif',
       color: 'success'
     },
-    inactive: {
+    disabled: {
       text: 'Inactif',
       color: 'warning'
-    },
-    outlawed: {
-      text: 'Banni',
-      color: 'error'
     },
     freezed: {
       text: 'Gelé',
@@ -101,16 +97,12 @@ const UsersTable: FC<UsersTableProps> = ({ users }) => {
       name: 'Toutes'
     },
     {
-      id: 'active',
+      id: 'actived',
       name: 'Actif'
     },
     {
-      id: 'inactive',
+      id: 'disabled',
       name: 'Inactif'
-    },
-    {
-      id: 'outlawed',
-      name: 'Banni'
     },
     {
       id: 'freezed',
@@ -253,7 +245,7 @@ const UsersTable: FC<UsersTableProps> = ({ users }) => {
                       gutterBottom
                       noWrap
                     >
-                      {user.jobs.length}
+                      {2}
                     </Typography>
                   </TableCell>
                   <TableCell align="right">
@@ -264,7 +256,7 @@ const UsersTable: FC<UsersTableProps> = ({ users }) => {
                       gutterBottom
                       noWrap
                     >
-                      {user.tokens}
+                      {user.total_token}
                     </Typography>
                   </TableCell>
                   <TableCell align="right">

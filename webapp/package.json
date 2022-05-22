@@ -1,12 +1,8 @@
 {
-  "name": "tokyo-free-white-react-admin-dashboard",
+  "name": "totoro-organization-dashboard",
   "version": "1.1.0",
-  "title": "Totoro Admin Dashboard",
+  "title": "Totoro Organization Dashboard",
   "description": "This free and open source admin dashboard template is built for React and it’s bootstrapped from Facebook’s create-react-app. All NPM dependencies are up to date and it contains multiple fully customized components based on the popular frontend components framework, Material-UI.",
-  "author": {
-    "name": "BloomUI.com",
-    "url": "https://bloomui.com"
-  },
   "private": false,
   "dependencies": {
     "@emotion/react": "11.4.1",
@@ -19,6 +15,7 @@
     "@types/react": "17.0.25",
     "@types/react-dom": "17.0.9",
     "@types/react-router-dom": "5.3.0",
+    "axios": "^0.27.2",
     "chart.js": "2.9.4",
     "clsx": "1.1.1",
     "date-fns": "2.25.0",
@@ -65,6 +62,7 @@
   },
   "devDependencies": {
     "@babel/eslint-parser": "7.15.8",
+    "@types/node": "^17.0.31",
     "@types/numeral": "2.0.2",
     "@types/react": "17.0.29",
     "@types/react-dom": "17.0.9",
