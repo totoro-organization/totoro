@@ -22,11 +22,9 @@ const ProtectedRoute = (props: RouteProps) => {
   return <Route {...props} />;
 };
 
-// Pages
+/* Pages */
 
 // tables
-
-const SignIn = Loader(lazy(() => import('src/pages/Signin')));
 const Jobs = Loader(lazy(() => import('src/pages/Management/Jobs')));
 const Users = Loader(lazy(() => import('src/pages/Management/Users')));
 const Organizations = Loader(
@@ -44,7 +42,6 @@ const MembershipRequests = Loader(
 );
 
 // single pages
-
 const Litigation = Loader(
   lazy(() => import('src/pages/Management/Litigations/Litigation'))
 );
@@ -60,17 +57,17 @@ const MembershipRequest = Loader(
   lazy(() => import('src/pages/Management/Partners/MembershipRequests/Request'))
 );
 
-// Accounting
+/* Accounting */
 
 const Subscriptions = Loader(
   lazy(() => import('src/pages/Accounting/Subscriptions'))
 );
 
-// Dashboards
+/* Dashboards */
 
 const Crypto = Loader(lazy(() => import('src/pages/Dashboards/Crypto')));
 
-// Apps Configuration
+/* Apps Configuration */
 
 const TagSettings = Loader(
   lazy(() => import('src/pages/AppsConfiguration/Settings/Tags'))
@@ -104,6 +101,11 @@ const StatusMaintenance = Loader(
   lazy(() => import('src/pages/Status/Maintenance'))
 );
 
+/* Authentication */
+
+const SignIn = Loader(lazy(() => import('src/pages/SignIn')));
+const SignUp = Loader(lazy(() => import('src/pages/SignUp')));
+
 const routes: PartialRouteObject[] = [
   {
     path: '*',
@@ -112,6 +114,10 @@ const routes: PartialRouteObject[] = [
       {
         path: 'login',
         element: <SignIn />
+      },
+      {
+        path: 'signup',
+        element: <SignUp />
       },
       {
         element: <ProtectedRoute/>,
