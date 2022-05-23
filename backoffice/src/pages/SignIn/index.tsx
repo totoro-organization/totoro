@@ -12,7 +12,6 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { login, getCurrentUser } from 'src/services/sessions';
 import useAuth from 'src/hooks/useAuth';
 
 function Copyright(props: any) {
@@ -101,11 +100,6 @@ export default function SignIn() {
               <Grid item xs>
                 <Link href="#" variant="body2">
                   Mot de passe oublié ?
-                </Link>
-              </Grid>
-              <Grid item>
-                <Link href="#" variant="body2">
-                  {"Pas encore inscrit ? Je m'inscris"}
                 </Link>
               </Grid>
             </Grid>
