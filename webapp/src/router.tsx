@@ -22,71 +22,11 @@ const ProtectedRoute = (props: RouteProps) => {
   return <Route {...props} />;
 };
 
-// Pages
+/* Pages */
 
-// tables
-
-const SignIn = Loader(lazy(() => import('src/pages/Signin')));
-const Jobs = Loader(lazy(() => import('src/pages/Management/Jobs')));
-const Users = Loader(lazy(() => import('src/pages/Management/Users')));
-const Organizations = Loader(
-  lazy(() => import('src/pages/Management/Organizations'))
-);
-const Litigations = Loader(
-  lazy(() => import('src/pages/Management/Litigations'))
-);
-const Partners = Loader(
-  lazy(() => import('src/pages/Management/Partners/Members'))
-);
-const Admins = Loader(lazy(() => import('src/pages/Management/Admins')));
-const MembershipRequests = Loader(
-  lazy(() => import('src/pages/Management/Partners/MembershipRequests'))
-);
-
-// single pages
-
-const Litigation = Loader(
-  lazy(() => import('src/pages/Management/Litigations/Litigation'))
-);
-const Job = Loader(lazy(() => import('src/pages/Management/Jobs/Job')));
-const Organization = Loader(
-  lazy(() => import('src/pages/Management/Organizations/Organization'))
-);
-const User = Loader(lazy(() => import('src/pages/Management/Users/User')));
-const Partner = Loader(
-  lazy(() => import('src/pages/Management/Partners/Members/Partner'))
-);
-const MembershipRequest = Loader(
-  lazy(() => import('src/pages/Management/Partners/MembershipRequests/Request'))
-);
-
-// Accounting
-
-const Subscriptions = Loader(
-  lazy(() => import('src/pages/Accounting/Subscriptions'))
-);
-
-// Dashboards
+// Dashboards 
 
 const Crypto = Loader(lazy(() => import('src/pages/Dashboards/Crypto')));
-
-// Apps Configuration
-
-const TagSettings = Loader(
-  lazy(() => import('src/pages/AppsConfiguration/Settings/Tags'))
-);
-const SubscriptionSettings = Loader(
-  lazy(() => import('src/pages/AppsConfiguration/Settings/Subscriptions'))
-);
-const StatusSettings = Loader(
-  lazy(() => import('src/pages/AppsConfiguration/Settings/Status'))
-);
-const LitigationObjectSettings = Loader(
-  lazy(() => import('src/pages/AppsConfiguration/Settings/LitigationObjects'))
-);
-const ThemeSettings = Loader(
-  lazy(() => import('src/pages/AppsConfiguration/Appearance/Themes'))
-);
 
 // Applications
 
@@ -104,6 +44,11 @@ const StatusMaintenance = Loader(
   lazy(() => import('src/pages/Status/Maintenance'))
 );
 
+/* Authentication */
+
+const SignIn = Loader(lazy(() => import('src/pages/SignIn')));
+const SignUp = Loader(lazy(() => import('src/pages/SignUp')));
+
 const routes: PartialRouteObject[] = [
   {
     path: '*',
@@ -112,6 +57,10 @@ const routes: PartialRouteObject[] = [
       {
         path: 'login',
         element: <SignIn />
+      },
+      {
+        path: 'signup',
+        element: <SignUp />
       },
       {
         element: <ProtectedRoute/>,
@@ -160,117 +109,6 @@ const routes: PartialRouteObject[] = [
               {
                 path: 'statistiques',
                 element: <Crypto />
-              }
-            ]
-          },
-          {
-            path: 'gestion',
-            element: <SidebarLayout />,
-            children: [
-              {
-                path: '/',
-                element: <Navigate to="/gestion/missions" replace />
-              },
-              {
-                path: 'missions',
-                element: <Jobs />
-              },
-              {
-                path: 'missions/:id',
-                element: <Job />
-              },
-              {
-                path: 'utilisateurs',
-                element: <Users />
-              },
-              {
-                path: 'utilisateurs/:id',
-                element: <User />
-              },
-              {
-                path: 'associations',
-                element: <Organizations />
-              },
-              {
-                path: 'associations/:id',
-                element: <Organization />
-              },
-              {
-                path: 'litiges',
-                element: <Litigations />
-              },
-              {
-                path: 'litiges/:id',
-                element: <Litigation />
-              },
-              {
-                path: 'partenaires/demandes',
-                element: <MembershipRequests />
-              },
-              {
-                path: 'partenaires/demandes/:id',
-                element: <MembershipRequest />
-              },
-              {
-                path: 'partenaires/membres',
-                element: <Partners />
-              },
-              {
-                path: 'partenaires/membres/:id',
-                element: <Partner />
-              },
-              {
-                path: 'administrateurs',
-                element: <Admins />
-              }
-            ]
-          },
-          {
-            path: 'comptabilite',
-            element: <SidebarLayout />,
-            children: [
-              {
-                path: '/',
-                element: <Navigate to="abonnements" replace />
-              },
-              {
-                path: 'abonnements',
-                element: <Subscriptions />
-              }
-            ]
-          },
-          {
-            path: 'app-reglages',
-            element: <SidebarLayout />,
-            children: [
-              // {
-              //   path: '/',
-              //   element: (
-              //     <Navigate
-              //       to="/app-reglages/missions"
-              //       replace
-              //     />
-              //   )
-              // },
-              {
-                path: 'parametrage/tags',
-                element: <TagSettings />
-              },
-              {
-                path: 'parametrage/abonnements',
-                element: <SubscriptionSettings />
-              },
-              {
-                path: 'parametrage/status',
-                element: <StatusSettings />
-              },
-              {
-                path: 'parametrage/objets-litiges',
-                element: <LitigationObjectSettings />
-              },
-              {
-                path: 'apparence/themes',
-                element: <ThemeSettings />
               }
             ]
           },
