@@ -7,20 +7,20 @@ import {
 } from '@mui/material';
 
 import Footer from 'src/components/Footer';
-import LitigationObjects from './LitigationObjects';
+import Statuses from './Statuses';
 
 
-function LitigationsObjectSettings() {
+function StatusesSettings() {
   
   return (
     <>
       <Helmet>
-        <title>Paramétrage des objets de litige</title>
+        <title>Paramétrage des statuts</title>
       </Helmet>
       <PageTitleWrapper>
         <PageTitle
-          heading="Objets de litige"
-          subHeading="Modifier la liste des objets de litige"
+          heading="Statuts"
+          subHeading="Modifier la liste des statuts"
         />
       </PageTitleWrapper>
       <Container maxWidth="lg">
@@ -32,7 +32,7 @@ function LitigationsObjectSettings() {
           spacing={3}
         >
           <Grid item xs={12}>
-            <LitigationObjects/>
+            <Statuses/>
           </Grid>
         </Grid>
       </Container>
@@ -41,4 +41,4 @@ function LitigationsObjectSettings() {
   );
 }
 
-export default LitigationsObjectSettings;
+export default StatusesSettings;

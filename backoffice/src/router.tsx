@@ -79,7 +79,7 @@ const SubscriptionSettings = Loader(
   lazy(() => import('src/pages/AppsConfiguration/Settings/Subscriptions'))
 );
 const StatusSettings = Loader(
-  lazy(() => import('src/pages/AppsConfiguration/Settings/Status'))
+  lazy(() => import('src/pages/AppsConfiguration/Settings/Statuses'))
 );
 const LitigationObjectSettings = Loader(
   lazy(() => import('src/pages/AppsConfiguration/Settings/LitigationObjects'))
