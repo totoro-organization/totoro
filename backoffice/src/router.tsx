@@ -22,11 +22,9 @@ const ProtectedRoute = (props: RouteProps) => {
   return <Route {...props} />;
 };
 
-// Pages
+/* Pages */
 
 // tables
-
-const SignIn = Loader(lazy(() => import('src/pages/Signin')));
 const Jobs = Loader(lazy(() => import('src/pages/Management/Jobs')));
 const Users = Loader(lazy(() => import('src/pages/Management/Users')));
 const Organizations = Loader(
@@ -44,7 +42,6 @@ const MembershipRequests = Loader(
 );
 
 // single pages
-
 const Litigation = Loader(
   lazy(() => import('src/pages/Management/Litigations/Litigation'))
 );
@@ -60,17 +57,19 @@ const MembershipRequest = Loader(
   lazy(() => import('src/pages/Management/Partners/MembershipRequests/Request'))
 );
 
-// Accounting
+const UserSettings = Loader(lazy(() => import('src/pages/User/settings')));
+
+/* Accounting */
 
 const Subscriptions = Loader(
   lazy(() => import('src/pages/Accounting/Subscriptions'))
 );
 
-// Dashboards
+/* Dashboards */
 
 const Crypto = Loader(lazy(() => import('src/pages/Dashboards/Crypto')));
 
-// Apps Configuration
+/* Apps Configuration */
 
 const TagSettings = Loader(
   lazy(() => import('src/pages/AppsConfiguration/Settings/Tags'))
@@ -79,7 +78,7 @@ const SubscriptionSettings = Loader(
   lazy(() => import('src/pages/AppsConfiguration/Settings/Subscriptions'))
 );
 const StatusSettings = Loader(
-  lazy(() => import('src/pages/AppsConfiguration/Settings/Status'))
+  lazy(() => import('src/pages/AppsConfiguration/Settings/Statuses'))
 );
 const LitigationObjectSettings = Loader(
   lazy(() => import('src/pages/AppsConfiguration/Settings/LitigationObjects'))
@@ -88,12 +87,7 @@ const ThemeSettings = Loader(
   lazy(() => import('src/pages/AppsConfiguration/Appearance/Themes'))
 );
 
-// Applications
-
-const UserProfile = Loader(lazy(() => import('src/pages/User/profile')));
-const UserSettings = Loader(lazy(() => import('src/pages/User/settings')));
-
-// Status
+/* Status */
 
 const Status404 = Loader(lazy(() => import('src/pages/Status/Status404')));
 const Status500 = Loader(lazy(() => import('src/pages/Status/Status500')));
@@ -103,6 +97,10 @@ const StatusComingSoon = Loader(
 const StatusMaintenance = Loader(
   lazy(() => import('src/pages/Status/Maintenance'))
 );
+
+/* Authentication */
+
+const SignIn = Loader(lazy(() => import('src/pages/SignIn')));
 
 const routes: PartialRouteObject[] = [
   {
@@ -280,11 +278,7 @@ const routes: PartialRouteObject[] = [
             children: [
               {
                 path: '/',
-                element: <Navigate to="details" replace />
-              },
-              {
-                path: 'details',
-                element: <UserProfile />
+                element: <Navigate to="settings" replace />
               },
               {
                 path: 'settings',
