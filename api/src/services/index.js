@@ -9,13 +9,13 @@ const litigations = require("./Litigations").router;
 const messagings = require("./Messagings").router;
 
 module.exports = {
-	users,
-	admins,
-	terminals,
-	ads,
-	authentications,
-	commons,
-	applications,
-	litigations,
-	messagings
+  users,
+  admins,
+  terminals,
+  ads,
+  authentications,
+  commons,
+  applications,
+  litigations,
+  messagings,
 };

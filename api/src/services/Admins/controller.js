@@ -6,15 +6,19 @@ const { generateToken } = require("utils/session");
 const commonsController = require("../Commons/controller");
 const { error, success } = require("utils/common/messages.json");
 const { label_status } = require("utils/enum.json");
-const { getRow, getField, updateField} = require("utils/common/thenCatch");
+const { getRow, getField, updateField } = require("utils/common/thenCatch");
 const mailer = require("services/externals/mailer");
 const {
-	mail: { signup },
+  mail: { signup },
 } = require("./../../../html");
 const { from, subject, host } = require("utils/common/mail.json");
 const { Status, Roles, Logs, Admins } = require("../../../models");
 
-const include = [{model: Status, as: "status"}, {model: Roles, as: "role"}];
+const include = [
+  { model: Status, as: "status" },
+  { model: Roles, as: "role" },
+];
+
 const exclude = ["role_id", "status_id", "password"];
 
 module.exports = {
@@ -195,5 +199,5 @@ module.exports = {
 	changeRole: async function (res, data) {
 		const roleData = await getRow(res, Roles, { id: data.role_id });
 		commonsController.update(res, Admins, data.admin_id, {role_id: roleData.id});
-	},
+	}
 };

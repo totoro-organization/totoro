@@ -3,27 +3,30 @@ const { passportAdmin } = require("utils/session");
 const controller = require("./controller");
 
 exports.router = (function () {
-	const adminRouter = express.Router();
-	
-	adminRouter.get("/", [passportAdmin, async function (req, res) {
-		controller.getAdmins(res, req.query);
-	}]);
+  const adminRouter = express.Router();
 
-	adminRouter.get("/:id", [passportAdmin, async function (req, res) {
-		const id = req.params.id;
-		controller.getAdmin(res, id);
-	}]);
+  adminRouter.get("/", [
+    passportAdmin,
+    async function (req, res) {
+      controller.getAdmins(res, req.query);
+    },
+  ]);
 
-	adminRouter.post("/", [passportAdmin, async function (req, res) {
-		const data = req.body;
-		controller.createAdmin(res, data);
-	}]);
+  adminRouter.get("/:id", [
+    passportAdmin,
+    async function (req, res) {
+      const id = req.params.id;
+      controller.getAdmin(res, id);
+    },
+  ]);
 
-	adminRouter.put("/:id", [passportAdmin, async function (req, res) {
-		const id = req.params.id;
-		const data = req.body;
-		controller.updateAdmin(res, id, data);
-	}]);
+  adminRouter.post("/", [
+    passportAdmin,
+    async function (req, res) {
+      const data = req.body;
+      controller.createAdmin(res, data);
+    },
+  ]);
 
 	adminRouter.put("/:id/role",[passportAdmin, async function (req, res) {
 		const data = req.body;
@@ -57,9 +60,28 @@ exports.router = (function () {
 		controller.getLogs(res, req.query);
 	}]);
 
-	adminRouter.delete("/logs/truncate",[passportAdmin, async function (req, res) {
-		controller.truncateLogs(res, req.query);
-	}]);
+  adminRouter.put("/change/role", [
+    passportAdmin,
+    async function (req, res) {
+      const data = req.body;
+      data.id = req.userData.id;
+      controller.changeRole(res, data);
+    },
+  ]);
 
-	return adminRouter;
+  adminRouter.get("/logs/getAll", [
+    passportAdmin,
+    async function (req, res) {
+      controller.getLogs(res, req.query);
+    },
+  ]);
+
+  adminRouter.delete("/logs/truncate", [
+    passportAdmin,
+    async function (req, res) {
+      controller.truncateLogs(res, req.query);
+    },
+  ]);
+
+  return adminRouter;
 })();
