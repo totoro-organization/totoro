@@ -1,4 +1,4 @@
 export const config = {
-    app_id: 'c1b9090e-0702-4d56-bba2-c1913efeb7f2',
+    app_id: 'a6349a91-0eee-4391-b671-a218693cf3fa',
     server: process.env['BO_APP_API_BASE_URL']
 }
