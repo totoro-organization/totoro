@@ -2,11 +2,11 @@ import axios from "axios";
 import { User } from "../models/user";
 import { ErrorResponse, requestAxios } from "./requestApi";
 
-export type Token = {
+export interface Token {
   token: string
 }
 
-export type LoginType = {
+export interface LoginType {
   emailOrUsername: FormDataEntryValue;
   password: FormDataEntryValue;
 }
