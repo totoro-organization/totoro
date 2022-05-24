@@ -21,39 +21,26 @@
   "security": [{ "ApiKeyAuth": [] }, { "bearerAuth": [] }],
   "tags": [{ "name": "Admins" }],
   "paths": {
-    "/api/admins": {
-      "get": {
-        "tags": ["Admins"],
-        "x-swagger-router-controller": "admins",
-        "operationId": "getAllAdmins",
-        "parameters": [
-          {
-            "name": "status",
-            "in": "query",
-            "type": "string",
-            "required": false,
-            "enum": ["actived", "disabled", "deleted"]
-          },
-          {
-            "name": "role",
-            "in": "query",
-            "type": "string",
-            "required": false,
-            "enum": ["Moderateur", "Administrateur", "Comptable"]
-          }
-       },
-       "/api/admins/{id}":{
-         "get":{
-            "tags":["Admins"],
-            "x-swagger-router-controller":"admins",
-            "operationId":"getAdminById",
-            "parameters": [
-              {
-                 "name": "id",
-                 "in":"path",
-                 "type": "string",
-                 "required": true
-              }
+      "/api/admins": {
+         "get": {
+         "tags": ["Admins"],
+         "x-swagger-router-controller": "admins",
+         "operationId": "getAllAdmins",
+         "parameters": [
+            {
+               "name": "status",
+               "in": "query",
+               "type": "string",
+               "required": false,
+               "enum": ["actived", "disabled", "deleted"]
+            },
+            {
+               "name": "role",
+               "in": "query",
+               "type": "string",
+               "required": false,
+               "enum": ["Moderateur", "Administrateur", "Comptable"]
+            }
             ],
             "responses":{
                "default":{
@@ -65,74 +52,130 @@
                "200":{
                   "description":"Successful request.",
                   "schema":{
-                     "$ref":"#/definitions/getAdmin"
+                     "$ref":"#/definitions/getAllAdmins"
                   }
                }
             }
          },
-         "put":{
-            "tags":["Admins"],
-            "x-swagger-router-controller":"admins",
-            "operationId":"putAdmin",
-            "parameters":[
-               {
-                  "name": "id",
-                  "in":"path",
-                  "type": "string",
-                  "required": true
-               },
-               {
-                  "name":"data",
-                  "in":"body",
-                  "description":"Update Admin",
-                  "required":true,
-                  "schema":{
-                     "$ref":"#/definitions/putAdmin"
-                  }
-               }
-            ],
-            "responses":{
-               "default":{
-                  "description":"Unexpected error",
-                  "schema":{
-                     "$ref":"#/definitions/Error"
-                  }
-               },
-               "201":{
-                  "description":"Admin Updated",
-                  "schema":{
-                     "$ref":"#/definitions/Success"
-                  }
-               }
-            }
-         },
-         "delete":{
-            "tags":["Admins"],
-            "x-swagger-router-controller":"admins",
-            "operationId":"deleteAdmin",
+         "post": {
+            "tags": ["Admins"],
+            "x-swagger-router-controller": "admins",
+            "operationId": "postAdmin",
             "parameters": [
+              {
+                "name": "data",
+                "in": "body",
+                "description": "Create Admin",
+                "required": true,
+                "schema": {
+                  "$ref": "#/definitions/postAdmin"
+                }
+              }
+            ],
+            "responses": {
+              "default": {
+                "description": "Unexpected error",
+                "schema": {
+                  "$ref": "#/definitions/Error"
+                }
+              },
+              "201": {
+                "description": "Admin Created"
+              }
+            }
+         }
+      },
+      "/api/admins/{id}":{
+        "get":{
+           "tags":["Admins"],
+           "x-swagger-router-controller":"admins",
+           "operationId":"getAdminById",
+           "parameters": [
+             {
+                "name": "id",
+                "in":"path",
+                "type": "string",
+                "required": true
+             }
+           ],
+           "responses":{
+              "default":{
+                 "description":"Unexpected error",
+                 "schema":{
+                    "$ref":"#/definitions/Error"
+                 }
+              },
+              "200":{
+                 "description":"Successful request.",
+                 "schema":{
+                    "$ref":"#/definitions/getAdmin"
+                 }
+              }
+           }
+        },
+        "put":{
+           "tags":["Admins"],
+           "x-swagger-router-controller":"admins",
+           "operationId":"putAdmin",
+           "parameters":[
               {
                  "name": "id",
                  "in":"path",
                  "type": "string",
                  "required": true
+              },
+              {
+                 "name":"data",
+                 "in":"body",
+                 "description":"Update Admin",
+                 "required":true,
+                 "schema":{
+                    "$ref":"#/definitions/putAdmin"
+                 }
               }
-            ],
-            "responses":{
-               "default":{
-                  "description":"Unexpected error",
-                  "schema":{
-                     "$ref":"#/definitions/Error"
-                  }
-               },
-               "201":{
-                  "description":"Successful request.",
-                  "schema":{
-                     "$ref":"#/definitions/Success"
-                  }
-               }
-            }
-         }
+           ],
+           "responses":{
+              "default":{
+                 "description":"Unexpected error",
+                 "schema":{
+                    "$ref":"#/definitions/Error"
+                 }
+              },
+              "201":{
+                 "description":"Admin Updated",
+                 "schema":{
+                    "$ref":"#/definitions/Success"
+                 }
+              }
+           }
+        },
+        "delete":{
+           "tags":["Admins"],
+           "x-swagger-router-controller":"admins",
+           "operationId":"deleteAdmin",
+           "parameters": [
+             {
+                "name": "id",
+                "in":"path",
+                "type": "string",
+                "required": true
+             }
+           ],
+           "responses":{
+              "default":{
+                 "description":"Unexpected error",
+                 "schema":{
+                    "$ref":"#/definitions/Error"
+                 }
+              },
+              "201":{
+                 "description":"Successful request.",
+                 "schema":{
+                    "$ref":"#/definitions/Success"
+                 }
+              }
+           }
+        }
       },
       "/api/admins/change/password":{
          "put":{
@@ -205,18 +248,18 @@
          }
       },
       "/api/admins/{id}/logs":{
-        "get":{
-           "tags":["Admins"],
-           "x-swagger-router-controller":"admins",
-           "operationId":"getLogsAdminById",
-           "parameters": [
-             {
-                "name": "id",
-                "in":"path",
-                "type": "string",
-                "required": true
-             },
-             {
+         "get":{
+            "tags":["Admins"],
+            "x-swagger-router-controller":"admins",
+            "operationId":"getLogsAdminById",
+            "parameters": [
+               {
+                  "name": "id",
+                  "in":"path",
+                  "type": "string",
+                  "required": true
+               },
+               {
                "name": "start_date",
                "in":"query",
                "type": "string",
@@ -228,58 +271,58 @@
                "type": "string",
                "required": false
             }
-           ],
-           "responses":{
-              "default":{
-                 "description":"Unexpected error",
-                 "schema":{
-                    "$ref":"#/definitions/Error"
-                 }
-              },
-              "200":{
-                 "description":"Successful request.",
-                 "schema":{
-                    "$ref":"#/definitions/getLogsAdmin"
-                 }
-              }
-           }
-        },
-        "post":{
-           "tags":["Admins"],
-           "x-swagger-router-controller":"admins",
-           "operationId":"postLogAdmin",
-           "parameters":[
-              {
-                 "name": "id",
-                 "in":"path",
-                 "type": "string",
-                 "required": true
-              },
-              {
-                 "name":"data",
-                 "in":"body",
-                 "description":"Post log Admin",
-                 "required":true,
-                 "schema":{
-                    "$ref":"#/definitions/postLogAdmin"
-                 }
-              }
-           ],
-           "responses":{
-              "default":{
-                 "description":"Unexpected error",
-                 "schema":{
-                    "$ref":"#/definitions/Error"
-                 }
-              },
-              "201":{
+            ],
+            "responses":{
+               "default":{
+                  "description":"Unexpected error",
+                  "schema":{
+                     "$ref":"#/definitions/Error"
+                  }
+               },
+               "200":{
+                  "description":"Successful request.",
+                  "schema":{
+                     "$ref":"#/definitions/getLogsAdmin"
+                  }
+               }
+            }
+         },
+         "post":{
+            "tags":["Admins"],
+            "x-swagger-router-controller":"admins",
+            "operationId":"postLogAdmin",
+            "parameters":[
+               {
+                  "name": "id",
+                  "in":"path",
+                  "type": "string",
+                  "required": true
+               },
+               {
+                  "name":"data",
+                  "in":"body",
+                  "description":"Post log Admin",
+                  "required":true,
+                  "schema":{
+                     "$ref":"#/definitions/postLogAdmin"
+                  }
+               }
+            ],
+            "responses":{
+               "default":{
+                  "description":"Unexpected error",
+                  "schema":{
+                     "$ref":"#/definitions/Error"
+                  }
+               },
+               "201":{
                   "description":"Successful request.",
                   "schema":{
                      "$ref":"#/definitions/Success"
                   }              
                }
-           }
-        }
+            }
+         }
       },
       "/api/admins/logs/getAll":{
          "get":{
@@ -287,18 +330,18 @@
             "x-swagger-router-controller":"admins",
             "operationId":"getLogsAdmins",
             "parameters": [
-              {
-                "name": "start_date",
-                "in":"query",
-                "type": "string",
-                "required": false
-             },
-             {
-                "name": "end_date",
-                "in":"query",
-                "type": "string",
-                "required": false
-             }
+               {
+                  "name": "start_date",
+                  "in":"query",
+                  "type": "string",
+                  "required": false
+               },
+               {
+                  "name": "end_date",
+                  "in":"query",
+                  "type": "string",
+                  "required": false
+               }
             ],
             "responses":{
                "default":{
@@ -322,18 +365,18 @@
             "x-swagger-router-controller":"admins",
             "operationId":"truncateLogsAdmins",
             "parameters": [
-              {
-                "name": "start_date",
-                "in":"query",
-                "type": "string",
-                "required": false
-             },
-             {
-                "name": "end_date",
-                "in":"query",
-                "type": "string",
-                "required": false
-             }
+               {
+                  "name": "start_date",
+                  "in":"query",
+                  "type": "string",
+                  "required": false
+               },
+               {
+                  "name": "end_date",
+                  "in":"query",
+                  "type": "string",
+                  "required": false
+               }
             ],
             "responses":{
                "default":{
@@ -351,169 +394,118 @@
             }
          }
       }
-     
-    },
-    "definitions":{
-       "Error":{
-          "required":[
-             "message"
-          ],
-          "properties":{
-             "entity": {
-               "type":"string"
-            },
-             "message":{
-                "type":"string"
-             }
-          }
-       },
-       "Success":{
-         "required":[
-            "message"
-         ],
-         "properties":{
-            "entity": {
-              "type":"string"
-           },
-            "message":{
-               "type":"string"
-            }
-         }
-      },
-       "getAllAdmins":{
-         "type":"object",
-          "properties":{
-            "total_rows": { "type":"integer"},
-             "data":{
-                "type":"array",
-                "items":{
-                   "type":"object",
-                   "properties":{
-                      "id":{ "type":"string"},
-                      "username":{"type":"string"},
-                      "firstname":{"type":"string"},
-                      "lastname":{"type":"string"},
-                      "email":{"type":"string"},
-                      "createdAt":{"type":"string"},
-                      "updatedAt":{"type":"string"},
-                      "status":{
-                          "type":"object",
-                          "properties":{
-                              "id": {"type":"string"},
-                              "label": {"type":"string"},
-                              "createdAt": {"type":"string"},
-                              "updatedAt": {"type":"string"}
-                          }
-                        },
-                        "role":{
-                            "type":"object",
-                            "properties":{
-                              "id": {"type":"string"},
-                              "label": {"type":"string"},
-                              "createdAt": {"type":"string"},
-                              "updatedAt": {"type":"string"}
-                            }
-                        }  
-                    }
-                }
-            }
-          }
-       },
-       "getAdmin":{
-         "type":"object",
-         "properties":{
-            "id":{ "type":"string"},
-            "username":{"type":"string"},
-            "firstname":{"type":"string"},
-            "lastname":{"type":"string"},
-            "email":{"type":"string"},
-            "createdAt":{"type":"string"},
-            "updatedAt":{"type":"string"},
-            "status":{
-                "type":"object",
-                "properties":{
-                    "id": {"type":"string"},
-                    "label": {"type":"string"},
-                    "createdAt": {"type":"string"},
-                    "updatedAt": {"type":"string"}
-                }
-              },
-              "role":{
-                  "type":"object",
-                  "properties":{
-                    "id": {"type":"string"},
-                    "label": {"type":"string"},
-                    "createdAt": {"type":"string"},
-                    "updatedAt": {"type":"string"}
-                  }
-              }  
-         }
-      },
-       "postAdmin":{
-          "type":"object",
-          "properties":{
-             "firstName":{"type":"string"},
-             "lastName":{"type":"string"},
-             "username":{"type":"string"},
-             "email":{"type":"string"},
-             "role_id":{"type":"string"}
-          },
-          "201": {
-            "description": "Admin Created"
-          }
-        }
-      }
-    }
-  },
+   },
   "definitions": {
-    "Error": {
-      "required": ["message"],
-      "properties": {
-        "entity": {
-          "type": "string"
-        },
-        "message": {
-          "type": "string"
-        }
-      }
-    },
-    "getAllAdmins": {
-      "properties": {
-        "total_rows": { "type": "integer" },
-        "data": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "id": { "type": "string" },
-              "username": { "type": "string" },
-              "firstname": { "type": "string" },
-              "lastname": { "type": "string" },
-              "email": { "type": "string" },
-              "createdAt": { "type": "string" },
-              "updatedAt": { "type": "string" },
-              "status": {
-                "type": "object",
-                "properties": {
-                  "id": { "type": "string" },
-                  "label": { "type": "string" },
-                  "createdAt": { "type": "string" },
-                  "updatedAt": { "type": "string" }
-                }
-              },
-              "role": {
-                "type": "object",
-                "properties": {
-                  "id": { "type": "string" },
-                  "label": { "type": "string" },
-                  "createdAt": { "type": "string" },
-                  "updatedAt": { "type": "string" }
-                }
-              }
+      "Error": {
+         "required": ["message"],
+         "properties": {
+            "entity": {
+               "type": "string"
+            },
+            "message": {
+               "type": "string"
             }
-          }
-       },
-       "putPasswordAdmin":{
+         }
+      },
+      "Success": {
+         "required": ["message"],
+         "properties": {
+            "entity": {
+               "type": "string"
+            },
+            "message": {
+               "type": "string"
+            }
+         }
+      },
+      "getAllAdmins": {
+         "type": "object",
+         "properties": {
+            "total_rows": { "type": "integer" },
+            "data": {
+               "type": "array",
+               "items": {
+                  "type": "object",
+                  "properties": {
+                     "id": { "type": "string" },
+                     "username": { "type": "string" },
+                     "firstname": { "type": "string" },
+                     "lastname": { "type": "string" },
+                     "email": { "type": "string" },
+                     "createdAt": { "type": "string" },
+                     "updatedAt": { "type": "string" },
+                     "status": {
+                        "type": "object",
+                        "properties": {
+                           "id": { "type": "string" },
+                           "label": { "type": "string" },
+                           "createdAt": { "type": "string" },
+                           "updatedAt": { "type": "string" }
+                        }
+                     },
+                     "role": {
+                        "type": "object",
+                        "properties": {
+                           "id": { "type": "string" },
+                           "label": { "type": "string" },
+                           "createdAt": { "type": "string" },
+                           "updatedAt": { "type": "string" }
+                        }
+                     }
+                  }
+               }
+            }
+         }
+      },
+      "getAdmin": {
+         "type": "object",
+         "properties": {
+            "id": { "type": "string" },
+            "username": { "type": "string" },
+            "firstname": { "type": "string" },
+            "lastname": { "type": "string" },
+            "email": { "type": "string" },
+            "createdAt": { "type": "string" },
+            "updatedAt": { "type": "string" },
+            "status": {
+               "type": "object",
+               "properties": {
+                  "id": { "type": "string" },
+                  "label": { "type": "string" },
+                  "createdAt": { "type": "string" },
+                  "updatedAt": { "type": "string" }
+               }
+            },
+            "role": {
+               "type": "object",
+               "properties": {
+                  "id": { "type": "string" },
+                  "label": { "type": "string" },
+                  "createdAt": { "type": "string" },
+                  "updatedAt": { "type": "string" }
+               }
+            }
+         }
+      },
+      "postAdmin": {
+         "type": "object",
+         "properties": {
+           "firstName": { "type": "string" },
+           "lastName": { "type": "string" },
+           "username": { "type": "string" },
+           "email": { "type": "string" },
+           "role_id": { "type": "string" }
+         },
+         "required": ["firstName", "lastName", "username", "email", "role_id"],
+         "example": {
+           "username": "uber",
+           "firstname": "Quentin",
+           "lastname": "Huber",
+           "email": "h.quentin@totoro.fr",
+           "role_id": "1dc4364b-d3d1-4db4-a324-a1271e59dfb1"
+         }
+      },
+      "putPasswordAdmin":{
          "type":"object",
          "properties":{
             "old_password":{"type":"string"},
@@ -521,11 +513,11 @@
          },
          "required":["old_password","password"],
          "example":{
-           "old_password": "123456",
-           "password": "111111"
+            "old_password": "123456",
+            "password": "111111"
          }
       },
-       "putAdmin":{
+      "putAdmin":{
          "type":"object",
          "properties":{
             "firstName":{"type":"string"},
@@ -534,9 +526,9 @@
          },
          "required":["firstName","lastName","email"],
          "example":{
-           "firstname": "Quentin",
-           "lastname": "Huber",
-           "email": "h.quentin@totoro.fr"
+            "firstname": "Quentin",
+            "lastname": "Huber",
+            "email": "h.quentin@totoro.fr"
          }
       },
       "getLogsAdmin":{
@@ -556,7 +548,7 @@
                      "admin_id":{"type":"string"}
                   }
                }
-           }
+            }
          }
       },
       "getLogsAdmins":{
@@ -605,7 +597,7 @@
                      }
                   }
                }
-           }
+            }
          }
       },
       "postLogAdmin":{
@@ -616,8 +608,8 @@
          },
          "required":["table","action"],
          "example":{
-           "table": "Users",
-           "action": "Deleted"
+            "table": "Users",
+            "action": "Deleted"
          }
       },
       "putRoleAdmin":{
@@ -627,9 +619,8 @@
          },
          "required":["role_id"],
          "example":{
-           "role_id": "1dc4364b-d3d1-4db4-a324-a1271e59dfb1"
+            "role_id": "1dc4364b-d3d1-4db4-a324-a1271e59dfb1"
          }
       }
-    }
-  }
+   }
 }
