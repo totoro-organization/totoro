@@ -8,16 +8,13 @@ import {
 } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { User } from 'src/models/user';
-import * as sessionsService from 'src/services/sessions';
+import * as sessionsService from 'src/services/auth.service';
 
 interface AuthContextType {
   user?: User;
   loading: boolean;
   error?: any;
-  login: (params: {
-    emailOrUsername: FormDataEntryValue,
-    password: FormDataEntryValue
-  }) => void;
+  login: (params: sessionsService.LoginType) => void;
   logout: () => void;
 }
 
@@ -30,7 +27,6 @@ export function AuthProvider({
   children: ReactNode;
 }): JSX.Element {
   const [user, setUser] = useState<User>();
-  const [token, setToken] = useState<string>();
   const [error, setError] = useState<any>();
   const [loading, setLoading] = useState<boolean>(false);
   const [loadingInitial, setLoadingInitial] = useState<boolean>(true);
@@ -56,7 +52,7 @@ export function AuthProvider({
     sessionsService
       .getCurrentUser()
       .then((response) => {
-        if(response.error) {
+        if("error" in response) {
           setError(response.error);
           return;
         } 
@@ -74,16 +70,13 @@ export function AuthProvider({
   //
   // Finally, just signal the component that loading the
   // loading state is over.
-  function login(params: {
-    emailOrUsername: FormDataEntryValue;
-    password: FormDataEntryValue;
-  }) {
+  function login(params: sessionsService.LoginType) {
     setLoading(true);
 
     sessionsService
       .login(params)
       .then((response) => {
-        if (response.error) {
+        if ('error' in response) {
           setError(response.error);
           return;
         }
@@ -93,7 +86,7 @@ export function AuthProvider({
         sessionsService
       .getCurrentUser()
       .then((response) => {
-          if(response.error) {
+          if('error' in response) {
             setError(response.error);
             return;
           } 
@@ -109,7 +102,6 @@ export function AuthProvider({
   function logout() {
       localStorage.removeItem('token');
       setUser(undefined);
-      setToken(undefined);
   }
   // Make the provider update only when it should.
   // We only want to force re-renders if the user,
