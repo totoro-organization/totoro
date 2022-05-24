@@ -57,7 +57,6 @@ const MembershipRequest = Loader(
   lazy(() => import('src/pages/Management/Partners/MembershipRequests/Request'))
 );
 
-const UserProfile = Loader(lazy(() => import('src/pages/User/profile')));
 const UserSettings = Loader(lazy(() => import('src/pages/User/settings')));
 
 /* Accounting */
@@ -279,11 +278,7 @@ const routes: PartialRouteObject[] = [
             children: [
               {
                 path: '/',
-                element: <Navigate to="details" replace />
-              },
-              {
-                path: 'details',
-                element: <UserProfile />
+                element: <Navigate to="settings" replace />
               },
               {
                 path: 'settings',
