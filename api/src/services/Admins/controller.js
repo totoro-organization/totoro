@@ -71,7 +71,6 @@ module.exports = {
 	updateAdmin: function (res, id, data) {
 		const condition = {};
 		if(data.email) condition.email = data.email;
-		if(data.username) condition.username = data.username;
 		
 		commonsController.update(res, Admins, id, data, condition);
 	},
@@ -104,10 +103,25 @@ module.exports = {
 			includeCondition.role_id=roleData.id
 		}
 		const includeAdmin = [{models: Admins, as: "admin", attributes: {exclude}, where:includeCondition, include}];
-		commonsController.getAll(res, Logs, condition, null, includeAdmin);
+		commonsController.getAll(res, Logs, condition, ["admin_id"], includeAdmin);
 	},
-	getLog: function (res, adminId) {
+	getLog: function (res, adminId, queries = null) {
 		const condition = {admin_id: adminId};
+		let start_date = null;
+		let end_date = null;
+
+		if(queries && queries.start_date){
+			condition.createdAt = { [Op.gte]: start_date }
+		}
+		if(queries && queries.end_date){
+			condition.createdAt = { [Op.lte]: end_date }
+		}
+
+		if((end_date && start_date) && end_date < start_date)
+			return res
+					.status(error.parameters.status)
+					.json({ entity: Logs.name,  message: "end date must be greater than start date" });
+		
 		commonsController.getAll(res, Logs, condition);
 	},
 	createLog: function (res, data) {
@@ -179,6 +193,7 @@ module.exports = {
 		);
 	},
 	changeRole: async function (res, data) {
-		commonsController.update(res, Admins, data.admin_id, {role_id: data.role_id});
+		const roleData = await getRow(res, Roles, { id: data.role_id });
+		commonsController.update(res, Admins, data.admin_id, {role_id: roleData.id});
 	},
 };
