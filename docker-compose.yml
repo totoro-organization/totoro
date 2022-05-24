@@ -1,29 +1,20 @@
-version: "3.1"
+version: "3.8"
 
 services:
-  landingpage:
-    env_file: ./.env
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - $LANDINGPAGE_LOCAL_PORT:$LANDINGPAGE_DOCKER_PORT
-    volumes:
-      - ./landingpage:/var/www/html
-    networks:
-      - frontend
-
   db:
     env_file: ./.env
-    image: mariadb
+    image: mysql:8
+    ports:
+      - $MYSQLDB_DOCKER_PORT:$MYSQLDB_DOCKER_PORT
     restart: always
+    command: --default-authentication-plugin=mysql_native_password
     volumes:
       - ./database:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: $MYSQlDB_ROOT_PASSWORD
-      MYSQL_DATABASE: database_development
+      MYSQL_DATABASE: $MYSQLDB_DATABASE
       MYSQL_USER: $MYSQlDB_USER
-      MYSQL_PASSWORD: $MYSQlDB_ROOT_PASSWORD
+      MYSQL_PASSWORD: $MYSQlDB_USER_PASSWORD
     networks:
       - backend
 
@@ -37,6 +28,8 @@ services:
     networks:
       - frontend
       - backend
+    depends_on:
+      - db
 
   api:
     depends_on:
@@ -58,6 +51,20 @@ services:
       - DB_PORT=$MYSQLDB_DOCKER_PORT
     networks:
       - backend
+      - frontend
+
+  landingpage:
+    depends_on:
+      - api
+    env_file: ./.env
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - $LANDINGPAGE_LOCAL_PORT:$LANDINGPAGE_DOCKER_PORT
+    volumes:
+      - ./landingpage:/var/www/html
+    networks:
       - frontend
 
   webapp:
