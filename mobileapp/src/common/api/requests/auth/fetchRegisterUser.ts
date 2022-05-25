@@ -21,6 +21,5 @@ export default async function fetchSubmitRegisterUser({
       app_id: config.APP_ID,
     },
     body: JSON.stringify(body),
-    credentials: "include",
   });
 }

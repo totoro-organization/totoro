@@ -9,7 +9,7 @@ interface LoginUser {
 export default async function fetchLoginUser({
   emailOrUsername,
   password,
-}: LoginUser) {
+}: LoginUser): Promise<any> {
   const body: LoginUser = {
     emailOrUsername,
     password,
@@ -21,7 +21,6 @@ export default async function fetchLoginUser({
       "Content-Type": "application/json",
       app_id: config.APP_ID,
     },
-    credentials: "include",
     body: JSON.stringify(body),
   });
 }
