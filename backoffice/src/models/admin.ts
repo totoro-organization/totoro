@@ -1,8 +1,7 @@
-import { Log } from "./Log";
 import { Role } from "./role";
 import { Status } from "./status";
 
-export type AdminStatus = Status<'completed' | 'pending' | 'coming'>;
+export type AdminStatus = Status<'actived' | 'disabled' | 'freezed'>;
 
 export interface Admin {
     id: string,
@@ -12,7 +11,6 @@ export interface Admin {
     lastname: string,
     username: string,
     email: string,
-    logs: Log[],
     createdAt: string,
     updatedAt: string
 }
