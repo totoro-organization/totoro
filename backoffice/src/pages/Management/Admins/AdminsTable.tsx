@@ -1,5 +1,4 @@
-// @ts-nocheck
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, FC } from 'react';
 import {
   Tooltip,
   Checkbox,
@@ -18,15 +17,25 @@ import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 import { Link } from 'react-router-dom';
 import StatusLabel from 'src/components/StatusLabel';
+import { Admin } from 'src/models/admin';
 
-export default function AdminsTable({
+interface AdminsTableProps {
+  items: Admin[], 
+  selectedItems: any,
+  handleSelectAllItems: (event: ChangeEvent<HTMLInputElement>) => void, 
+  handleSelectOneItem: (event: ChangeEvent<HTMLInputElement>, itemId: string) => void,
+  selectedSomeItems: any,
+  selectedAllItems: any
+}
+
+const AdminsTable: FC<AdminsTableProps> = ({
   items: admins, 
   selectedItems,
   handleSelectAllItems, 
   handleSelectOneItem,
   selectedSomeItems,
   selectedAllItems
-}) {
+}) => {
 
   const theme = useTheme();
 
@@ -142,3 +151,5 @@ export default function AdminsTable({
   </TableContainer>
   )
 }
+
+export default AdminsTable
