@@ -230,7 +230,7 @@ const Admins: FC<AdminsProps> = ({ admins }) => {
                       noWrap
                     >
                       <Link
-                        to={`/gestion/utilisateurs/${admin.id}`}
+                        to={`/gestion/administrateurs/${admin.id}`}
                       >{`${admin.firstname} ${admin.lastname}`}</Link>
                     </Typography>
                     <Typography variant="body2" color="text.secondary" noWrap>

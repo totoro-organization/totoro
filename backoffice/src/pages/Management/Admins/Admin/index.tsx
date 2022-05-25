@@ -10,7 +10,6 @@ import { Box, Container, Grid, IconButton, Tooltip } from '@mui/material';
 import Footer from 'src/components/Footer';
 import AdminInfo from './AdminInfo';
 import { subDays } from 'date-fns';
-import { User } from 'src/models/user';
 import { useApi } from 'src/hooks/useApi';
 import SuspenseLoader from 'src/components/SuspenseLoader';
 
@@ -18,16 +17,17 @@ function AdminDetails() {
 
   const { id } = useParams();
 
-  const { data: user, loading } = useApi(`/users/${id}`);
+  const { data: admin, loadingAdmin } = useApi(`/admins/${id}`);
+  const { data: logs, loadingLogs } = useApi(`/admins/${id}/logs`);
 
   const navigate = useNavigate();
 
-  const handleGoBack = () => navigate('/gestion/utilisateurs');
+  const handleGoBack = () => navigate('/gestion/administrateurs');
 
   return (
     <>
       <Helmet>
-        <title>{`${user?.firstname } ${user?.lastname}`}</title>
+        <title>{`${admin?.firstname } ${admin?.lastname}`}</title>
       </Helmet>
       <PageTitleWrapper>
         <Box display="flex">
@@ -41,7 +41,7 @@ function AdminDetails() {
               <ArrowBackTwoToneIcon />
             </IconButton>
           </Tooltip>
-          <PageTitle heading={`${user?.firstname } ${user?.lastname}`} subHeading={'@' + user?.username} />
+          <PageTitle heading={`${admin?.firstname } ${admin?.lastname}`} subHeading={'@' + admin?.username} />
         </Box>
       </PageTitleWrapper>
       <Container maxWidth="lg">
@@ -53,7 +53,7 @@ function AdminDetails() {
           spacing={3}
         >
           <Grid item xs={12}>
-            { loading ? <SuspenseLoader/> : <AdminInfo user={user} /> }
+            { !(loadingAdmin && loadingLogs) ? <AdminInfo admin={admin} logs={logs?.data} /> : <SuspenseLoader/> }
           </Grid>
         </Grid>
       </Container>

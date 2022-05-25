@@ -7,7 +7,7 @@ export interface Admin {
     id: string,
     status: AdminStatus,
     role: Role,
-    firsname: string,
+    firstname: string,
     lastname: string,
     username: string,
     email: string,

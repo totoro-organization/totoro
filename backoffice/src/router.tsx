@@ -50,6 +50,7 @@ const Organization = Loader(
   lazy(() => import('src/pages/Management/Organizations/Organization'))
 );
 const User = Loader(lazy(() => import('src/pages/Management/Users/User')));
+const Admin = Loader(lazy(() => import('src/pages/Management/Admins/Admin')));
 const Partner = Loader(
   lazy(() => import('src/pages/Management/Partners/Members/Partner'))
 );
@@ -220,6 +221,10 @@ const routes: PartialRouteObject[] = [
               {
                 path: 'administrateurs',
                 element: <Admins />
+              },
+              {
+                path: 'administrateurs/:id',
+                element: <Admin />
               }
             ]
           },
