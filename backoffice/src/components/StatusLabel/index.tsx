@@ -1,7 +1,7 @@
-import { Statuses } from "src/models/status";
+import { StatusEnum } from "src/models/status";
 import Label from "../Label";
 
-export const statuses = {
+const statuses = {
     coming: {
         name: 'A venir',
         color: 'info',
@@ -57,7 +57,7 @@ export const statuses = {
 }
 
 interface StatusLabelProps {
-    status: Statuses
+    status: StatusEnum
 }
 
 const StatusLabel = ({ status }: StatusLabelProps ): JSX.Element => {
