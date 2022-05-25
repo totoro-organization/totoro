@@ -31,6 +31,7 @@ import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 import BulkActions from 'src/components/ManagementTable/BulkActions';
 import { Link } from 'react-router-dom';
+import StatusLabel from 'src/components/StatusLabel';
 
 interface AdminsProps {
   className?: string;
@@ -260,7 +261,7 @@ const Admins: FC<AdminsProps> = ({ admins }) => {
                     </Typography>
                   </TableCell>
                   <TableCell align="right">
-                    {getStatusLabel(admin.status.label)}
+                    <StatusLabel status={admin.status.label} />
                   </TableCell>
                   <TableCell align="right">
                     <Tooltip title="Editer la mission" arrow>
