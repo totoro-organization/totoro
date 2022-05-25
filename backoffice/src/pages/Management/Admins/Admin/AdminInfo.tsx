@@ -1,33 +1,33 @@
 import { Stack, Button } from '@mui/material';
-import {
-  FormContainer,
-  TextFieldElement,
-  DatePickerElement
-} from 'react-hook-form-mui';
 import SuspenseLoader from 'src/components/SuspenseLoader';
-import { User } from 'src/models/user';
+import { Admin } from 'src/models/admin';
+import { Log } from 'src/models/Log';
+import AdminLogsTable from './AdminLogsTable';
 
 interface AdminInfoProps {
-  user: User;
+  admin: Admin;
+  logs: Log[];
 }
 
-const AdminInfo = ({ user }: AdminInfoProps) => {
+const AdminInfo = ({ admin, logs }: AdminInfoProps) => {
   return (
     <>
-      {user ? (
+      {admin ? (
         <>
-          <p>Nom : {user.lastname}</p>
-          <p>Prenom : {user.firstname}</p>
-          <p>Username : {user.username}</p>
-          <p>Date de naissance : {user.birthday}</p>
-          <p>Email : {user.email}</p>
-          <p>Téléphone : {user.phone}</p>
-          <p>Email : {user.email}</p>
-          <p>Créé le : {user.createdAt}</p>
-          <p>Modifié le : {user.updatedAt}</p>
-          <p>Statut : {user.status.label}</p>
-          <p>Bio : {user.bio}</p>
+          <p>Nom : {admin.lastname}</p>
+          <p>Prenom : {admin.firstname}</p>
+          <p>Username : {admin.username}</p>
+          <p>Email : {admin.email}</p>
+          <p>Email : {admin.email}</p>
+          <p>Créé le : {admin.createdAt}</p>
+          <p>Modifié le : {admin.updatedAt}</p>
+          <p>Statut : {admin.status.label}</p>
         </>
+      ) : (
+        <SuspenseLoader />
+      )}
+      {logs ? (
+        logs.length ? <AdminLogsTable logs={logs} /> : <h3>Aucun log</h3>
       ) : (
         <SuspenseLoader />
       )}
