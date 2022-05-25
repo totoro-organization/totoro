@@ -6,19 +6,19 @@ export interface Status<T> {
 }
 
 export enum StatusEnum {
-    "coming",
-    "pending",
-    "disabled",
-    "actived", 
-    "deleted",
-    "denied",
-    "accepted",
-    "published",
-    "closed",
-    "freezed",
-    "expired",
-    "opened",
-    "canceled"
+    coming = "coming",
+    pending = "pending",
+    disabled = "disabled",
+    actived = "actived", 
+    deleted = "deleted",
+    denied = "denied",
+    accepted = "accepted",
+    published = "published",
+    closed = "closed",
+    freezed = "freezed",
+    expired = "expired",
+    opened = "opened",
+    canceled = "canceled"
 }
 
 
