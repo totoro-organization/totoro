@@ -5,7 +5,7 @@ export interface Status<T> {
     updatedAt: string
 }
 
-export enum Statuses {
+export enum StatusEnum {
     "coming",
     "pending",
     "disabled",

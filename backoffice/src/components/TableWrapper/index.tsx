@@ -1,5 +1,4 @@
-// @ts-nocheck
-import { FC, ChangeEvent, useState, isValidElement, cloneElement } from 'react';
+import { FC, ChangeEvent, useState, isValidElement, cloneElement, ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import {
   Divider,
@@ -13,20 +12,27 @@ import {
   CardHeader
 } from '@mui/material';
 
-import { ItemStatus } from 'src/models/item';
-
 import BulkActions from 'src/components/ManagementTable/BulkActions';
+import { StatusEnum } from 'src/models/status';
 
 interface TableWrapperProps {
   className?: string;
   items: any;
+  title?: string,
+  statusOptions: StatusOption[],
+  children: ReactNode
 }
 
 interface Filters {
-  status?: ItemStatus['label'];
+  status?: StatusEnum | 'all';
 }
 
-const applyFilters = (items: any, filters: any): any => {
+interface StatusOption {
+  id: StatusEnum | 'all',
+  name: string
+}
+
+const applyFilters = (items: any, filters: Filters): any => {
   return items.filter((item) => {
     let matches = true;
 
@@ -46,7 +52,7 @@ const applyPagination = (
   return items.slice(page * limit, page * limit + limit);
 };
 
-const TableWrapper: FC<TableWrapperProps> = ({ items, title = '', children }) => {
+const TableWrapper: FC<TableWrapperProps> = ({ items, title = '', statusOptions = [], children }) => {
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const selectedBulkActions = selectedItems.length > 0;
   const [page, setPage] = useState<number>(0);
@@ -55,24 +61,13 @@ const TableWrapper: FC<TableWrapperProps> = ({ items, title = '', children }) =>
     status: null
   });
 
-  const statusOptions = [
+  statusOptions = [
     {
       id: 'all',
       name: 'Toutes'
     },
-    {
-      id: 'actived',
-      name: 'Actif'
-    },
-    {
-      id: 'disabled',
-      name: 'Inactif'
-    },
-    {
-      id: 'freezed',
-      name: 'Gelé'
-    }
-  ];
+    ...statusOptions
+  ]
 
   const handleStatusChange = (e: ChangeEvent<HTMLInputElement>): void => {
     let value = null;
