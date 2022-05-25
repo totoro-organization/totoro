@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components/native";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Controller, useForm } from "react-hook-form";
@@ -13,9 +13,15 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { BottomTabParamList } from "../../../navigation/StackNavigationParams";
 import Spacer from "../../atoms/Spacer";
 import fetchLoginUser from "../../../common/api/requests/auth/fetchLoginUser";
+import Alert from "../../atoms/Alert";
 
 export default function LoginForm() {
   const navigation = useNavigation<StackNavigationProp<BottomTabParamList>>();
+
+  const [isEmailNotAvailable, setIsEmailNotAvailable] = useState({
+    status: false,
+    email: "",
+  });
 
   const { control, handleSubmit } = useForm<LoginFormValues>({
     defaultValues: {
@@ -27,21 +33,38 @@ export default function LoginForm() {
   });
 
   async function onSubmit(data: LoginFormValues) {
-    // TODO: Add call api to login
+    try {
+      const response = await fetchLoginUser({
+        emailOrUsername: data.email,
+        password: data.password,
+      });
 
-    const response = await fetchLoginUser({
-      emailOrUsername: data.email,
-      password: data.password,
-    });
-
-    console.log(response);
-    navigation.navigate("BottomTab");
+      if (response.status === 403) {
+        setIsEmailNotAvailable({ status: true, email: data.email });
+      } else {
+        setIsEmailNotAvailable({ status: false, email: "" });
+        // TODO: Fix me
+        return navigation.navigate("BottomTab");
+      }
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   return (
     <>
+      {isEmailNotAvailable.status && (
+        <Alert type="error">
+          Il semblerait que l'email suivante&nbsp;:{" "}
+          <Text weight="medium">{isEmailNotAvailable.email}</Text> soit
+          inexistante.
+        </Alert>
+      )}
+
+      <Spacer axis="vertical" size={2} />
+
       <InputWrapper>
-        <Text>Adresse de résidence</Text>
+        <Text>Adresse email</Text>
 
         <Spacer axis="vertical" size={0.5} />
 
