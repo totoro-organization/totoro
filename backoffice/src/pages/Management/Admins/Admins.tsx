@@ -1,10 +1,9 @@
 // @ts-nocheck
 import { Card } from '@mui/material';
-import { subDays } from 'date-fns';
-import { User } from 'src/models/user';
 import AdminsTable from './AdminsTable';
 import { useApi } from 'src/hooks/useApi';
 import SuspenseLoader from 'src/components/SuspenseLoader';
+import TableWrapper from 'src/components/TableWrapper';
 
 function Admins() {
 
@@ -14,7 +13,9 @@ function Admins() {
     <Card>
       {
         loading ? <SuspenseLoader/> :
-        <AdminsTable admins={admins?.data} />
+        <TableWrapper items={admins?.data} title="Administrateurs">
+          <AdminsTable/>
+        </TableWrapper>
       }
     </Card>
   );
