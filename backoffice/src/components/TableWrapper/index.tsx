@@ -19,7 +19,7 @@ interface TableWrapperProps {
   className?: string;
   items: any;
   title?: string,
-  statusOptions: StatusOption[],
+  statusOptions?: StatusOption[],
   children: ReactNode
 }
 
@@ -52,7 +52,7 @@ const applyPagination = (
   return items.slice(page * limit, page * limit + limit);
 };
 
-const TableWrapper: FC<TableWrapperProps> = ({ items, title = '', statusOptions = [], children }) => {
+const TableWrapper: FC<TableWrapperProps> = ({ items, title = '', statusOptions, children }) => {
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const selectedBulkActions = selectedItems.length > 0;
   const [page, setPage] = useState<number>(0);
@@ -61,13 +61,16 @@ const TableWrapper: FC<TableWrapperProps> = ({ items, title = '', statusOptions 
     status: null
   });
 
-  statusOptions = [
-    {
-      id: 'all',
-      name: 'Toutes'
-    },
-    ...statusOptions
-  ]
+  if(statusOptions) {
+      statusOptions = [
+      {
+        id: 'all',
+        name: 'Toutes'
+      },
+      ...statusOptions
+    ]
+  }
+
 
   const handleStatusChange = (e: ChangeEvent<HTMLInputElement>): void => {
     let value = null;
@@ -121,7 +124,7 @@ const TableWrapper: FC<TableWrapperProps> = ({ items, title = '', statusOptions 
           <BulkActions />
         </Box>
       )}
-      {!selectedBulkActions && (
+      {(!selectedBulkActions && statusOptions) &&  (
         <CardHeader
           action={
             <Box width={150}>
