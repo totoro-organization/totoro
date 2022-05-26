@@ -9,16 +9,11 @@ import Button from "../../atoms/Button";
 import InputGroup from "../../molecules/InputGroup";
 import { loginFormSchema } from "./loginValidationSchema";
 import type { LoginFormValues } from "./loginValidationSchema";
-import { useNavigation } from "@react-navigation/native";
-import { StackNavigationProp } from "@react-navigation/stack";
-import { BottomTabParamList } from "../../../navigation/StackNavigationParams";
 import Spacer from "../../atoms/Spacer";
 import fetchLoginUser from "../../../common/api/requests/auth/fetchLoginUser";
 import Alert from "../../atoms/Alert";
 
 export default function LoginForm() {
-  const navigation = useNavigation<StackNavigationProp<BottomTabParamList>>();
-
   const [isEmailNotAvailable, setIsEmailNotAvailable] = useState({
     status: false,
     email: "",
@@ -46,11 +41,8 @@ export default function LoginForm() {
 
       const userToken = await response.json();
 
-      await AsyncStorage.setItem("userToken", JSON.stringify(userToken));
+      await AsyncStorage.setItem("userToken", userToken.token);
       setIsEmailNotAvailable({ status: false, email: "" });
-
-      // TODO: Fix me
-      // return navigation.navigate("BottomTab");
     } catch (err) {
       console.error(err);
     }
