@@ -1,4 +1,8 @@
-// TODO: Improve me => see with the backend guys
+export interface LoginUser {
+  emailOrUsername: string;
+  password: string;
+}
+
 export interface User {
   firstname?: string;
   lastname?: string;
