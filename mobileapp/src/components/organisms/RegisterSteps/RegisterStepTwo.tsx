@@ -12,7 +12,8 @@ import {
 import InputGroup from "../../molecules/InputGroup";
 import Spacer from "../../atoms/Spacer";
 import Alert from "../../atoms/Alert";
-import fetchSubmitRegisterUser from "../../../common/api/requests/auth/fetchRegisterUser";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import createUsername from "../../../common/utils/createUsername";
 
 const ALERT_CONTENT_LASTNAME =
   "Votre nom de famille nous permet de récupérer seulement votre initial. Cette information ne sera pas accessible par l’ensemble des utilisateurs.";
@@ -24,29 +25,25 @@ export type RegisterStepTwoProps = {
 export default function RegisterStepTwo({ nextStep }: RegisterStepTwoProps) {
   const { control, handleSubmit } = useForm<RegisterStepTwoFormValues>({
     defaultValues: {
-      firstName: "",
-      lastName: "",
-      birthDate: "",
-      phoneNumber: "",
+      firstname: "",
+      lastname: "",
+      birthday: "",
+      phone: "",
     },
     mode: "onBlur",
     resolver: yupResolver(registerStepTwoSchema),
   });
 
   async function onSubmit(data: RegisterStepTwoFormValues) {
-    // TODO: Add call api to register (update user data)
-    console.log(data);
     const body = {
-      firstname: "Mae",
-      lastname: "Test",
-      username: "morice",
-      email: "moridce@gmail.com",
-      password: "root",
-      birthday: "1991-10-08",
-      phone: "ddd",
+      firstname: data.firstname,
+      lastname: data.lastname,
+      birthday: data.birthday,
+      phone: data.phone,
+      username: createUsername(data.firstname, data.lastname),
     };
 
-    await fetchSubmitRegisterUser({ user: body });
+    await AsyncStorage.mergeItem?.("userFormData", JSON.stringify(body));
 
     nextStep();
   }
@@ -63,7 +60,7 @@ export default function RegisterStepTwo({ nextStep }: RegisterStepTwoProps) {
         <Spacer axis="vertical" size={0.5} />
 
         <Controller
-          name="firstName"
+          name="firstname"
           control={control}
           render={({
             field: { onChange, onBlur, value },
@@ -86,7 +83,7 @@ export default function RegisterStepTwo({ nextStep }: RegisterStepTwoProps) {
         <Spacer axis="vertical" size={0.5} />
 
         <Controller
-          name="lastName"
+          name="lastname"
           control={control}
           render={({
             field: { onChange, onBlur, value },
@@ -109,7 +106,7 @@ export default function RegisterStepTwo({ nextStep }: RegisterStepTwoProps) {
         <Spacer axis="vertical" size={0.5} />
 
         <Controller
-          name="birthDate"
+          name="birthday"
           control={control}
           render={({
             field: { onChange, onBlur, value },
@@ -131,7 +128,7 @@ export default function RegisterStepTwo({ nextStep }: RegisterStepTwoProps) {
         <Spacer axis="vertical" size={0.5} />
 
         <Controller
-          name="phoneNumber"
+          name="phone"
           control={control}
           render={({
             field: { onChange, onBlur, value },
