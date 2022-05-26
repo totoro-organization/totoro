@@ -114,7 +114,7 @@ const UsersTable: FC<UsersTableProps> = ({
                     </Typography>
                   </TableCell>
                   <TableCell align="right">
-                  <StatusLabel status={user.status.label} />
+                    <StatusLabel status={user.status.label} />
                   </TableCell>
                   <TableCell align="right">
                     <Tooltip title="Editer la mission" arrow>
