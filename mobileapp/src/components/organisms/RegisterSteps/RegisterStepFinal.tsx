@@ -12,6 +12,8 @@ import styled from "styled-components/native";
 import InputGroup from "../../molecules/InputGroup";
 import Spacer from "../../atoms/Spacer";
 import Alert from "../../atoms/Alert";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import fetchSubmitRegisterUser from "../../../common/api/requests/auth/fetchRegisterUser";
 
 const ALERT_CONTENT_ADDRESS =
   "Totoro est une application de proximité, votre adresse de résidence nous permet de séléctionner les meilleurs missions près de chez vous.";
@@ -25,9 +27,17 @@ export default function RegisterStepFinal() {
     resolver: yupResolver(registerStepFinalSchema),
   });
 
-  function onSubmit(data: RegisterStepFinalFormValues) {
-    // TODO: Add call api to register (update user data) and redirect to posts page
-    console.log(data);
+  async function onSubmit(data: RegisterStepFinalFormValues) {
+    const body = {
+      address: data.address,
+    };
+
+    await AsyncStorage.mergeItem?.("userFormData", JSON.stringify(body));
+    const user: any = await AsyncStorage.getItem("userFormData");
+
+    await fetchSubmitRegisterUser({ user: JSON.parse(user) })
+      .then((resp) => console.log(resp))
+      .catch((err) => console.log(err));
   }
 
   return (
