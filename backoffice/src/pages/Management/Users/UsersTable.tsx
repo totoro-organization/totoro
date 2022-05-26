@@ -70,7 +70,7 @@ const UsersTable: FC<UsersTableProps> = ({
                       color="primary"
                       checked={isUserSelected}
                       onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                        handleSelectOneUser(event, user.id)
+                        handleSelectOneItem(event, user.id)
                       }
                       value={isUserSelected}
                     />
