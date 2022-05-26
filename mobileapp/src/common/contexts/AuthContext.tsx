@@ -24,10 +24,14 @@ export function AuthProvider({
   const [user, setUser] = useState();
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
+  const userToken = async () => await AsyncStorage.getItem("userToken");
+
   async function getUserConnected() {
     try {
-      const connectedUser = await fetchConnectedUser();
-      setUser(await connectedUser.json());
+      if (await userToken()) {
+        const connectedUser = await fetchConnectedUser();
+        setUser(await connectedUser.json());
+      }
     } catch (err) {
       console.error(err);
     } finally {
