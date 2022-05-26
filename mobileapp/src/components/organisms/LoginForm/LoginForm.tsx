@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import styled from "styled-components/native";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Controller, useForm } from "react-hook-form";
@@ -41,11 +42,15 @@ export default function LoginForm() {
 
       if (response.status === 403) {
         setIsEmailNotAvailable({ status: true, email: data.email });
-      } else {
-        setIsEmailNotAvailable({ status: false, email: "" });
-        // TODO: Fix me
-        return navigation.navigate("BottomTab");
       }
+
+      const userToken = await response.json();
+
+      await AsyncStorage.setItem("userToken", JSON.stringify(userToken));
+      setIsEmailNotAvailable({ status: false, email: "" });
+
+      // TODO: Fix me
+      // return navigation.navigate("BottomTab");
     } catch (err) {
       console.error(err);
     }

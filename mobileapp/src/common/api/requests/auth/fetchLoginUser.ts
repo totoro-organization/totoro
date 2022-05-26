@@ -1,15 +1,15 @@
 import config from "../../config";
 import { API_HOST, API_ROUTES } from "../../routes";
+import { LoginUser } from "./interfaces";
 
-interface LoginUser {
-  emailOrUsername: string;
-  password: string;
+interface Token {
+  token: string;
 }
 
 export default async function fetchLoginUser({
   emailOrUsername,
   password,
-}: LoginUser): Promise<any> {
+}: LoginUser): Promise<Token | any> {
   const body: LoginUser = {
     emailOrUsername,
     password,
