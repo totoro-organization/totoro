@@ -1,6 +1,6 @@
 import { API_HOST, API_ROUTES } from "../../routes";
-import { User } from "./interfaces";
 import config from "../../config";
+import { User } from "../../../../models/user";
 
 type FetchSumbitRegisterUser = {
   user: User;
