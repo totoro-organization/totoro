@@ -1,6 +1,10 @@
 import config from "../../config";
 import { API_HOST, API_ROUTES } from "../../routes";
-import { LoginUser } from "./interfaces";
+
+interface LoginUser {
+  emailOrUsername: string;
+  password: string;
+}
 
 interface Token {
   token: string;
