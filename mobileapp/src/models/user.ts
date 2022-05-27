@@ -13,7 +13,7 @@ export interface User {
   phone?: number;
   bio?: string;
   total_token?: number;
-  birthday?: Date;
+  birthday?: Date | string;
   avatar?: string;
   status?: UserStatus;
   memberships?: {

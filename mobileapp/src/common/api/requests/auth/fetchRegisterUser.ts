@@ -6,14 +6,14 @@ type FetchSumbitRegisterUser = {
   user: User;
 };
 
-export default async function fetchSubmitRegisterUser({
+export default async function fetchRegisterUser({
   user,
 }: FetchSumbitRegisterUser): Promise<any> {
   const body: FetchSumbitRegisterUser = {
     user,
   };
 
-  return await fetch(`${API_HOST}${API_ROUTES.AUTH_REGISTER}`, {
+  return fetch(`${API_HOST}${API_ROUTES.AUTH_REGISTER}`, {
     method: "POST",
     headers: {
       Accept: "application/json",

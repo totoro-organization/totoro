@@ -13,7 +13,7 @@ import InputGroup from "../../molecules/InputGroup";
 import Spacer from "../../atoms/Spacer";
 import Alert from "../../atoms/Alert";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import fetchSubmitRegisterUser from "../../../common/api/requests/auth/fetchRegisterUser";
+import fetchRegisterUser from "../../../common/api/requests/auth/fetchRegisterUser";
 
 const ALERT_CONTENT_ADDRESS =
   "Totoro est une application de proximité, votre adresse de résidence nous permet de séléctionner les meilleurs missions près de chez vous.";
@@ -29,15 +29,30 @@ export default function RegisterStepFinal() {
 
   async function onSubmit(data: RegisterStepFinalFormValues) {
     const body = {
-      address: data.address,
+      // TODO: FIX TYPO!!!!!!!
+      adress: data.address,
+      longitude: 48.88039283558442,
+      latitude: 2.4123843153442976,
+      cp: 93310,
     };
 
     await AsyncStorage.mergeItem?.("userFormData", JSON.stringify(body));
     const user: any = await AsyncStorage.getItem("userFormData");
 
-    await fetchSubmitRegisterUser({ user: JSON.parse(user) })
-      .then((resp) => console.log(resp))
-      .catch((err) => console.log(err));
+    const mocked_data = {
+      firstname: "mae",
+      lastname: "Lugat",
+      username: "billy",
+      email: "maet@gmail.com",
+      password: "root",
+      birthday: "1991-10-08",
+      adress: "9 rue du progrès",
+      longitude: 48.88039283558442,
+      latitude: 2.4123843153442976,
+      cp: 93310,
+    };
+
+    await fetchRegisterUser({ user: mocked_data });
   }
 
   return (
