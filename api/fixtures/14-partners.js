@@ -14,6 +14,9 @@ module.exports = [
       status: {
         label: "actived",
       },
+      user: {
+        username: "j2frise"
+      },
     },
   },
 ];
