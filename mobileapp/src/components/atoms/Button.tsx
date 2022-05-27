@@ -1,7 +1,7 @@
 import React, { PropsWithChildren, useState } from "react";
 import styled, { css } from "styled-components/native";
 
-import { PressableProps } from "react-native";
+import { ActivityIndicator, PressableProps } from "react-native";
 import { FlattenSimpleInterpolation } from "styled-components";
 import { Text } from "./Text";
 import theme from "../../theme/theme";
@@ -57,11 +57,12 @@ export default function Button({
         variant={variant}
         color={color}
         onPress={handlePress && onButtonPress}
+        disabled={isInternalLoading}
         {...rest}
       >
         {isInternalLoading && (
           <LoadingWrapper>
-            <Spinner size={2} />
+            <ActivityIndicator />
           </LoadingWrapper>
         )}
 
@@ -181,13 +182,6 @@ const StyledButton = styled.Pressable<StyledButtonProps>`
 
 const LoadingWrapper = styled.View`
   position: absolute;
-  top: 0;
-  left: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
 `;
 
 type ContentProps = {
