@@ -4,10 +4,7 @@ services:
   db:
     env_file: ./.env
     image: mysql:8
-    ports:
-      - $MYSQLDB_DOCKER_PORT:$MYSQLDB_DOCKER_PORT
     restart: always
-    command: --default-authentication-plugin=mysql_native_password
     volumes:
       - ./database:/var/lib/mysql
     environment:
