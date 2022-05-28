@@ -19,24 +19,16 @@ export default function RootStackNavigator() {
       screenOptions={{
         headerShown: false,
       }}
-      initialRouteName="Explications"
+      initialRouteName={user ? "BottomTab" : "Explications"}
     >
-      {!user && (
-        <>
-          <RootStack.Screen name="Explications" component={Explanation} />
-          <RootStack.Screen name="Se connecter" component={Login} />
-          <RootStack.Screen name="S'inscrire" component={Register} />
-        </>
-      )}
+      <RootStack.Screen name="Explications" component={Explanation} />
+      <RootStack.Screen name="Se connecter" component={Login} />
+      <RootStack.Screen name="S'inscrire" component={Register} />
 
-      {user && (
-        <>
-          <RootStack.Screen name="BottomTab" component={BottomTabNavigator} />
+      <RootStack.Screen name="BottomTab" component={BottomTabNavigator} />
 
-          <RootStack.Screen name="Mission" component={Mission} />
-          <RootStack.Screen name="Profile" component={Profile} />
-        </>
-      )}
+      <RootStack.Screen name="Mission" component={Mission} />
+      <RootStack.Screen name="Profile" component={Profile} />
     </RootStack.Navigator>
   );
 }

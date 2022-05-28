@@ -12,8 +12,13 @@ import type { LoginFormValues } from "./loginValidationSchema";
 import Spacer from "../../atoms/Spacer";
 import fetchLoginUser from "../../../common/api/requests/auth/fetchLoginUser";
 import Alert from "../../atoms/Alert";
+import { useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { StackParamList } from "../../../navigation/StackNavigationParams";
 
 export default function LoginForm() {
+  const navigation = useNavigation<StackNavigationProp<StackParamList>>();
+
   const [isEmailNotAvailable, setIsEmailNotAvailable] = useState({
     status: false,
     email: "",
@@ -43,6 +48,8 @@ export default function LoginForm() {
 
       await AsyncStorage.setItem("userToken", userToken.token);
       setIsEmailNotAvailable({ status: false, email: "" });
+
+      navigation.navigate("BottomTab", { screen: "Missions" });
     } catch (err) {
       console.error(err);
     }
