@@ -58,6 +58,8 @@ services:
     env_file: ./.env
     build:
       context: ./landingpage
+      args:
+        - LANDING_PAGE_BASE_URL=$CLIENT_API_BASE_URL
     ports:
       - $LANDINGPAGE_LOCAL_PORT:$LANDINGPAGE_DOCKER_PORT
     networks:
