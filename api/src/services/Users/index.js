@@ -12,12 +12,20 @@ exports.router = (function () {
 		},
 	]);
 
+	UsersRouter.get("/:id", [
+		passport,
+		async function (req, res) {
+			const id = req.params.id;
+			controller.getUser(res, id);
+		},
+	]);
+
 	UsersRouter.put("/:id", [
 		passport,
 		async function (req, res) {
 			const id = req.params.id;
 			const data = req.body;
-			controller.update(res, id, data);
+			controller.updateUser(res, id, data);
 		},
 	]);
 
@@ -29,82 +37,52 @@ exports.router = (function () {
 		},
 	]);
 
-	UsersRouter.get("/:id", [
+	UsersRouter.put("/change/password",[passport, async function (req, res) {
+		const data = req.body;
+		data.id = req.userData.id;
+		controller.resetPassword(res, data);
+	}]);
+
+	UsersRouter.get("/:id/favorites", [
 		passport,
 		async function (req, res) {
 			const id = req.params.id;
+			controller.getFavorites(res, id);
 		},
 	]);
 
-	// Favorites
-
-	UsersRouter.get("/favorites", [
-		passport,
-		async function (req, res) {
-			controller.getFavorites(res);
-		},
-	]);
-
-	UsersRouter.delete("/favorites/:id", [
-		passport,
-		async function (req, res) {
-			const id = req.params.id;
-			controller.deleteFavorite(res, id);
-		},
-	]);
-
-	UsersRouter.post("/favorites", [
+	UsersRouter.post("/:id/favorites", [
 		passport,
 		async function (req, res) {
 			const data = req.body;
+			data.user_id = req.params.id;
 			controller.createFavorite(res, data);
 		},
 	]);
 
-	// Litigations
-
-	UsersRouter.get("/litigations", [
+	UsersRouter.delete("/favorites/:favotiteId", [
 		passport,
 		async function (req, res) {
-			controller.getUserLitigations(res);
+			const id = req.params.favotiteId;
+			controller.deleteFavorite(res, id);
 		},
 	]);
 
 	// Ads
-
-	UsersRouter.get("/ads", [
-		passport,
-		async function (req, res) {
-			controller.getUserAds(res);
-		},
-	]);
-
-	// Rating
-
-	UsersRouter.get("/rating", [
-		passport,
-		async function (req, res) {
-			controller.getUserRatings(res);
-		},
-	]);
-
-	UsersRouter.post("/rating", [
+	UsersRouter.get("/:id/jobs", [
 		passport,
 		async function (req, res) {
 			const id = req.params.id;
-			const data = req.body;
-			controller.rate(res, id, data);
+			controller.getUserAds(res, id, req.query);
 		},
 	]);
 
-	// Actions
-
-	UsersRouter.put("/favorites", [
+	// Litigations
+	UsersRouter.get("/:id/litigations", [
 		passport,
 		async function (req, res) {
 			const id = req.params.id;
-			const data = req.body;
-			controller.getFavorites(res, id, data);
+			controller.getUserLitigations(res, id, req.query);
 		},
 	]);
 

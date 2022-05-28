@@ -8,6 +8,14 @@ module.exports = {
         defaultValue: Sequelize.UUIDV4,
         primaryKey: true,
       },
+      status_id: {
+        allowNull: false,
+        type: Sequelize.UUID,
+        references: { 
+          model: 'Status',
+          key: 'id'
+        }
+      },
       user_id: {
         allowNull: false,
         type: Sequelize.UUID,

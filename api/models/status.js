@@ -81,6 +81,18 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: "cascade",
         foreignKey: "status_id",
       });
+
+      models.Status.hasMany(models.Groups, {
+        as: "missions",
+        onDelete: "cascade",
+        foreignKey: "status_id",
+      });
+
+      models.Status.hasMany(models.Associations_users, {
+        as: "memberships",
+        onDelete: "cascade",
+        foreignKey: "status_id",
+      });
     }
   }
 

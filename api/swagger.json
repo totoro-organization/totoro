@@ -19,8 +19,314 @@
     }
   },
   "security": [{ "ApiKeyAuth": [] }, { "bearerAuth": [] }],
-  "tags": [{"name":"Authentification"}, {"name":"Admins"}, {"name":"Commons"}, {"name":"Applications"}],
+  "tags": [{"name":"Authentification"}, {"name":"Users"}, {"name":"Admins"}, {"name":"Commons"}, {"name":"Applications"}],
   "paths": {
+     "/api/users": {
+         "get": {
+         "tags": ["Users"],
+         "x-swagger-router-controller": "users",
+         "operationId": "getAllUsers",
+         "parameters": [
+            {
+               "name": "status",
+               "in": "query",
+               "type": "string",
+               "required": false,
+               "enum": ["actived", "disabled", "deleted"]
+            }
+            ],
+            "responses":{
+               "default":{
+                  "description":"Unexpected error",
+                  "schema":{
+                     "$ref":"#/definitions/Error"
+                  }
+               },
+               "200":{
+                  "description":"Successful request.",
+                  "schema":{
+                     "$ref":"#/definitions/getAllUsers"
+                  }
+               }
+            }
+         }
+      },
+      "/api/users/{id}":{
+         "get":{
+            "tags":["Users"],
+            "x-swagger-router-controller":"users",
+            "operationId":"getUserById",
+            "parameters": [
+              {
+                 "name": "id",
+                 "in":"path",
+                 "type": "string",
+                 "required": true
+              }
+            ],
+            "responses":{
+               "default":{
+                  "description":"Unexpected error",
+                  "schema":{
+                     "$ref":"#/definitions/Error"
+                  }
+               },
+               "200":{
+                  "description":"Successful request.",
+                  "schema":{
+                     "$ref":"#/definitions/getUser"
+                  }
+               }
+            }
+         },
+        "put":{
+           "tags":["Users"],
+           "x-swagger-router-controller":"users",
+           "operationId":"putUser",
+           "parameters":[
+              {
+                 "name": "id",
+                 "in":"path",
+                 "type": "string",
+                 "required": true
+              },
+              {
+                 "name":"data",
+                 "in":"body",
+                 "description":"Update User",
+                 "required":true,
+                 "schema":{
+                    "$ref":"#/definitions/putUser"
+                 }
+              }
+           ],
+           "responses":{
+              "default":{
+                 "description":"Unexpected error",
+                 "schema":{
+                    "$ref":"#/definitions/Error"
+                 }
+              },
+              "201":{
+                 "description":"User Updated",
+                 "schema":{
+                    "$ref":"#/definitions/Success"
+                 }
+              }
+           }
+        },
+         "delete":{
+            "tags":["Users"],
+            "x-swagger-router-controller":"users",
+            "operationId":"deleteUser",
+            "parameters": [
+              {
+                 "name": "id",
+                 "in":"path",
+                 "type": "string",
+                 "required": true
+              }
+            ],
+            "responses":{
+               "default":{
+                  "description":"Unexpected error",
+                  "schema":{
+                     "$ref":"#/definitions/Error"
+                  }
+               },
+               "201":{
+                  "description":"Successful request.",
+                  "schema":{
+                     "$ref":"#/definitions/Success"
+                  }
+               }
+            }
+         }
+      },
+      "/api/users/change/password":{
+         "put":{
+            "tags":["Users"],
+            "x-swagger-router-controller":"users",
+            "operationId":"changePasswordUser",
+            "parameters":[
+               {
+                  "name":"data",
+                  "in":"body",
+                  "description":"Change password User",
+                  "required":true,
+                  "schema":{
+                     "$ref":"#/definitions/putPasswordAdmin"
+                  }
+               }
+            ],
+            "responses":{
+               "default":{
+                  "description":"Unexpected error",
+                  "schema":{
+                     "$ref":"#/definitions/Error"
+                  }
+               },
+               "201":{
+                  "description":"Password Updated",
+                  "schema":{
+                     "$ref":"#/definitions/Success"
+                  }
+               }
+            }
+         }
+      },
+      "/api/users/{id}/favorites":{
+         "get":{
+            "tags":["Users"],
+            "x-swagger-router-controller":"users",
+            "operationId":"getFavotitesUser",
+            "parameters": [
+              {
+                 "name": "id",
+                 "in":"path",
+                 "type": "string",
+                 "required": true
+              }
+            ],
+            "responses":{
+               "default":{
+                  "description":"Unexpected error",
+                  "schema":{
+                     "$ref":"#/definitions/Error"
+                  }
+               },
+               "200":{
+                  "description":"Successful request.",
+                  "schema":{
+                     "$ref":"#/definitions/getFavoritesUser"
+                  }
+               }
+            }
+         },
+        "post":{
+           "tags":["Users"],
+           "x-swagger-router-controller":"users",
+           "operationId":"postFavotitesUser",
+           "parameters":[
+              {
+                 "name": "id",
+                 "in":"path",
+                 "type": "string",
+                 "required": true
+              },
+              {
+                 "name":"data",
+                 "in":"body",
+                 "description":"Add Favorite for User",
+                 "required":true,
+                 "schema":{
+                    "$ref":"#/definitions/postFavotitesUser"
+                 }
+              }
+           ],
+           "responses":{
+              "default":{
+                 "description":"Unexpected error",
+                 "schema":{
+                    "$ref":"#/definitions/Error"
+                 }
+              },
+              "201":{
+                 "description":"Favorite added",
+                 "schema":{
+                    "$ref":"#/definitions/Success"
+                 }
+              }
+           }
+        }
+      },
+      "/api/users/favorites/{favotiteId}":{
+         "delete":{
+            "tags":["Users"],
+            "x-swagger-router-controller":"users",
+            "operationId":"deleteFavoriteUser",
+            "parameters": [
+              {
+                 "name": "favotiteId",
+                 "in":"path",
+                 "type": "string",
+                 "required": true
+              }
+            ],
+            "responses":{
+               "default":{
+                  "description":"Unexpected error",
+                  "schema":{
+                     "$ref":"#/definitions/Error"
+                  }
+               },
+               "201":{
+                  "description":"Successful request.",
+                  "schema":{
+                     "$ref":"#/definitions/Success"
+                  }
+               }
+            }
+         }
+      },
+      "/api/users/{id}/jobs":{
+         "get":{
+            "tags":["Users"],
+            "x-swagger-router-controller":"users",
+            "operationId":"getJobsUser",
+            "parameters": [
+              {
+                 "name": "id",
+                 "in":"path",
+                 "type": "string",
+                 "required": true
+              }
+            ],
+            "responses":{
+               "default":{
+                  "description":"Unexpected error",
+                  "schema":{
+                     "$ref":"#/definitions/Error"
+                  }
+               },
+               "200":{
+                  "description":"Successful request.",
+                  "schema":{
+                     "$ref":"#/definitions/getJobsUser"
+                  }
+               }
+            }
+         }
+      },
+      "/api/users/{id}/litigations":{
+         "get":{
+            "tags":["Users"],
+            "x-swagger-router-controller":"users",
+            "operationId":"getLitigationsUser",
+            "parameters": [
+              {
+                 "name": "id",
+                 "in":"path",
+                 "type": "string",
+                 "required": true
+              }
+            ],
+            "responses":{
+               "default":{
+                  "description":"Unexpected error",
+                  "schema":{
+                     "$ref":"#/definitions/Error"
+                  }
+               },
+               "200":{
+                  "description":"Successful request.",
+                  "schema":{
+                     "$ref":"#/definitions/getLitigationsUser"
+                  }
+               }
+            }
+         }
+      },
       "/api/admins": {
          "get": {
          "tags": ["Admins"],
@@ -1717,6 +2023,581 @@
             }
          }
       },
+      "getAllUsers": {
+         "type": "object",
+         "properties": {
+            "total_rows": { "type": "integer" },
+            "data": {
+               "type": "array",
+               "items": {
+                  "type": "object",
+                  "properties": {
+                     "id": { "type": "string" },
+                     "username": { "type": "string" },
+                     "firstname": { "type": "string" },
+                     "lastname": { "type": "string" },
+                     "email": { "type": "string" },
+                     "birthday": { "type": "string" },
+                     "longitude": { "type": "integer" },
+                     "latitude": { "type": "integer" },
+                     "avatar": { "type": "string" },
+                     "bio": { "type": "string" },
+                     "phone": { "type": "string" },
+                     "total_token": { "type": "integer" },
+                     "createdAt": { "type": "string" },
+                     "updatedAt": { "type": "string" },
+                     "status": {
+                        "type": "object",
+                        "properties": {
+                           "label": { "type": "string" }
+                        }
+                     },
+                     "memberships": {
+                        "type": "array",
+                        "items": {
+                           "type": "object",
+                           "properties": {
+                              "createdAt": { "type": "string" },
+                              "updatedAt": { "type": "string" },
+                              "organization": {
+                                 "type": "object",
+                                 "properties": {
+                                    "id": { "type": "string" },
+                                    "siren": { "type": "string" },
+                                    "siret": { "type": "string" },
+                                    "name": { "type": "string" },
+                                    "email": { "type": "string" },
+                                    "longitude": { "type": "integer" },
+                                    "latitude": { "type": "integer" },
+                                    "creation_date": { "type": "string" },
+                                    "activity": { "type": "string" },
+                                    "address": { "type": "string" },
+                                    "cp": { "type": "integer" },
+                                    "commune": { "type": "string" },
+                                    "logo": { "type": "string" },
+                                    "description": { "type": "string" },
+                                    "link": { "type": "string" },
+                                    "phone": { "type": "string" },
+                                    "createdAt": { "type": "string" },
+                                    "updatedAt": { "type": "string" },
+                                    "status": {
+                                       "type": "object",
+                                       "properties": {
+                                          "label": { "type": "string" }
+                                       }
+                                    }
+                                 }
+                              },
+                              "role": {
+                                 "type": "object",
+                                 "properties": {
+                                    "label": { "type": "string" }
+                                 }
+                              },
+                              "status": {
+                                 "type": "object",
+                                 "properties": {
+                                    "label": { "type": "string" }
+                                 }
+                              }
+                           }
+                        }
+                     }
+                  }
+               }
+            }
+         }
+      },
+      "getUser": {
+         "type": "object",
+         "properties": {
+            "id": { "type": "string" },
+            "username": { "type": "string" },
+            "firstname": { "type": "string" },
+            "lastname": { "type": "string" },
+            "email": { "type": "string" },
+            "birthday": { "type": "string" },
+            "longitude": { "type": "integer" },
+            "latitude": { "type": "integer" },
+            "avatar": { "type": "string" },
+            "bio": { "type": "string" },
+            "phone": { "type": "string" },
+            "total_token": { "type": "integer" },
+            "createdAt": { "type": "string" },
+            "updatedAt": { "type": "string" },
+            "status": {
+               "type": "object",
+               "properties": {
+                  "label": { "type": "string" }
+               }
+            },
+            "memberships": {
+               "type": "array",
+               "items": {
+                  "type": "object",
+                  "properties": {
+                     "createdAt": { "type": "string" },
+                     "updatedAt": { "type": "string" },
+                     "organization": {
+                        "type": "object",
+                        "properties": {
+                           "id": { "type": "string" },
+                           "siren": { "type": "string" },
+                           "siret": { "type": "string" },
+                           "name": { "type": "string" },
+                           "email": { "type": "string" },
+                           "longitude": { "type": "integer" },
+                           "latitude": { "type": "integer" },
+                           "creation_date": { "type": "string" },
+                           "activity": { "type": "string" },
+                           "address": { "type": "string" },
+                           "cp": { "type": "integer" },
+                           "commune": { "type": "string" },
+                           "logo": { "type": "string" },
+                           "description": { "type": "string" },
+                           "link": { "type": "string" },
+                           "phone": { "type": "string" },
+                           "createdAt": { "type": "string" },
+                           "updatedAt": { "type": "string" },
+                           "status": {
+                              "type": "object",
+                              "properties": {
+                                 "label": { "type": "string" }
+                              }
+                           }
+                        }
+                     },
+                     "role": {
+                        "type": "object",
+                        "properties": {
+                           "label": { "type": "string" }
+                        }
+                     },
+                     "status": {
+                        "type": "object",
+                        "properties": {
+                           "label": { "type": "string" }
+                        }
+                     }
+                  }
+               }
+            }
+         }
+      },
+      "putUser":{
+         "type":"object",
+         "properties":{
+            "firstName":{"type":"string"},
+            "lastName":{"type":"string"},
+            "email":{"type":"string"},
+            "bio":{"type":"string"},
+            "phone":{"type":"string"},
+            "longitude":{"type":"integer"},
+            "latitude":{"type":"integer"}
+         },
+         "example":{
+            "firstname": "Quentin",
+            "lastname": "Huber",
+            "email": "h.quentin@totoro.fr",
+            "bio": "Je suis très sympa",
+            "phone": "0751932695",
+            "longitude": 2.43796,
+            "latitude": 48.8268
+         }
+      },
+      "getFavoritesUser": {
+         "type": "object",
+         "properties": {
+            "total_rows": { "type": "integer" },
+            "data": {
+               "type": "array",
+               "items": {
+                  "type": "object",
+                  "properties": {
+                     "id": { "type": "string" },
+                     "user_id": { "type": "string" },
+                     "createdAt": { "type": "string" },
+                     "updatedAt": { "type": "string" },
+                     "organization": {
+                        "type": "object",
+                        "properties": {
+                           "id": { "type": "string" },
+                           "siren": { "type": "string" },
+                           "siret": { "type": "string" },
+                           "name": { "type": "string" },
+                           "email": { "type": "string" },
+                           "longitude": { "type": "integer" },
+                           "latitude": { "type": "integer" },
+                           "creation_date": { "type": "string" },
+                           "activity": { "type": "string" },
+                           "address": { "type": "string" },
+                           "cp": { "type": "integer" },
+                           "commune": { "type": "string" },
+                           "logo": { "type": "string" },
+                           "description": { "type": "string" },
+                           "link": { "type": "string" },
+                           "phone": { "type": "string" },
+                           "createdAt": { "type": "string" },
+                           "updatedAt": { "type": "string" },
+                           "status": {
+                              "type": "object",
+                              "properties": {
+                                 "label": { "type": "string" }
+                              }
+                           }
+                        }
+                     },
+                     "job": {
+                        "type": "object",
+                        "properties": {
+                           "id": { "type": "string" },
+                           "title": { "type": "string" },
+                           "description": { "type": "string" },
+                           "participants_max": { "type": "integer" },
+                           "address": { "type": "string" },
+                           "cp": { "type": "integer" },
+                           "commune": { "type": "string" },
+                           "start_date": { "type": "string" },
+                           "end_date": { "type": "string" },
+                           "createdAt": { "type": "string" },
+                           "updatedAt": { "type": "string" },
+                           "author":{
+                              "type": "object",
+                              "properties": {
+                                 "createdAt": { "type": "string" },
+                                 "updatedAt": { "type": "string" },
+                                 "organization": {
+                                    "type": "object",
+                                    "properties": {
+                                       "id": { "type": "string" },
+                                       "siren": { "type": "string" },
+                                       "siret": { "type": "string" },
+                                       "name": { "type": "string" },
+                                       "email": { "type": "string" },
+                                       "longitude": { "type": "integer" },
+                                       "latitude": { "type": "integer" },
+                                       "creation_date": { "type": "string" },
+                                       "activity": { "type": "string" },
+                                       "address": { "type": "string" },
+                                       "cp": { "type": "integer" },
+                                       "commune": { "type": "string" },
+                                       "logo": { "type": "string" },
+                                       "description": { "type": "string" },
+                                       "link": { "type": "string" },
+                                       "phone": { "type": "string" },
+                                       "createdAt": { "type": "string" },
+                                       "updatedAt": { "type": "string" },
+                                       "status": {
+                                          "type": "object",
+                                          "properties": {
+                                             "label": { "type": "string" }
+                                          }
+                                       }
+                                    }
+                                 },
+                                 "user":{
+                                    "type": "object",
+                                    "properties": {
+                                       "id": { "type": "string" },
+                                       "username": { "type": "string" },
+                                       "firstname": { "type": "string" },
+                                       "lastname": { "type": "string" },
+                                       "email": { "type": "string" },
+                                       "birthday": { "type": "string" },
+                                       "longitude": { "type": "integer" },
+                                       "latitude": { "type": "integer" },
+                                       "avatar": { "type": "string" },
+                                       "bio": { "type": "string" },
+                                       "phone": { "type": "string" },
+                                       "total_token": { "type": "integer" },
+                                       "createdAt": { "type": "string" },
+                                       "updatedAt": { "type": "string" },
+                                       "status": {
+                                          "type": "object",
+                                          "properties": {
+                                             "label": { "type": "string" }
+                                          }
+                                       }
+                                    } 
+                                 },
+                                 "status": {
+                                    "type": "object",
+                                    "properties": {
+                                       "label": { "type": "string" }
+                                    }
+                                 }
+                              }
+                           },
+                           "difficulty": {
+                              "type": "object",
+                              "properties": {
+                                 "level": { "type": "integer" },
+                                 "token": { "type": "integer" }
+                              }
+                           },
+                           "status": {
+                              "type": "object",
+                              "properties": {
+                                 "label": { "type": "string" }
+                              }
+                           }
+                        }
+                     }
+                  }
+               }
+            }
+         }
+      },
+      "postFavotitesUser":{
+         "type":"object",
+         "properties":{
+            "assos_id":{"type":"integer"},
+            "ads_id":{"type":"integer"}
+         },
+         "example":{
+            "assos_id": "561a448e-5ad9-4dd5-8b08-7cc0419824d1"
+         }
+      },
+      "getJobsUser":{
+         "type": "object",
+         "properties": {
+            "id": { "type": "string" },
+            "user_id": { "type": "string" },
+            "createdAt": { "type": "string" },
+            "updatedAt": { "type": "string" },
+            "job": {
+               "type": "object",
+               "properties": {
+                  "id": { "type": "string" },
+                  "title": { "type": "string" },
+                  "description": { "type": "string" },
+                  "participants_max": { "type": "integer" },
+                  "address": { "type": "string" },
+                  "cp": { "type": "integer" },
+                  "commune": { "type": "string" },
+                  "start_date": { "type": "string" },
+                  "end_date": { "type": "string" },
+                  "createdAt": { "type": "string" },
+                  "updatedAt": { "type": "string" },
+                  "author":{
+                     "type": "object",
+                     "properties": {
+                        "createdAt": { "type": "string" },
+                        "updatedAt": { "type": "string" },
+                        "organization": {
+                           "type": "object",
+                           "properties": {
+                              "id": { "type": "string" },
+                              "siren": { "type": "string" },
+                              "siret": { "type": "string" },
+                              "name": { "type": "string" },
+                              "email": { "type": "string" },
+                              "longitude": { "type": "integer" },
+                              "latitude": { "type": "integer" },
+                              "creation_date": { "type": "string" },
+                              "activity": { "type": "string" },
+                              "address": { "type": "string" },
+                              "cp": { "type": "integer" },
+                              "commune": { "type": "string" },
+                              "logo": { "type": "string" },
+                              "description": { "type": "string" },
+                              "link": { "type": "string" },
+                              "phone": { "type": "string" },
+                              "createdAt": { "type": "string" },
+                              "updatedAt": { "type": "string" },
+                              "status": {
+                                 "type": "object",
+                                 "properties": {
+                                    "label": { "type": "string" }
+                                 }
+                              }
+                           }
+                        },
+                        "user":{
+                           "type": "object",
+                           "properties": {
+                              "id": { "type": "string" },
+                              "username": { "type": "string" },
+                              "firstname": { "type": "string" },
+                              "lastname": { "type": "string" },
+                              "email": { "type": "string" },
+                              "birthday": { "type": "string" },
+                              "longitude": { "type": "integer" },
+                              "latitude": { "type": "integer" },
+                              "avatar": { "type": "string" },
+                              "bio": { "type": "string" },
+                              "phone": { "type": "string" },
+                              "total_token": { "type": "integer" },
+                              "createdAt": { "type": "string" },
+                              "updatedAt": { "type": "string" },
+                              "status": {
+                                 "type": "object",
+                                 "properties": {
+                                    "label": { "type": "string" }
+                                 }
+                              }
+                           } 
+                        },
+                        "status": {
+                           "type": "object",
+                           "properties": {
+                              "label": { "type": "string" }
+                           }
+                        }
+                     }
+                  },
+                  "difficulty": {
+                     "type": "object",
+                     "properties": {
+                        "level": { "type": "integer" },
+                        "token": { "type": "integer" }
+                     }
+                  },
+                  "status": {
+                     "type": "object",
+                     "properties": {
+                        "label": { "type": "string" }
+                     }
+                  }
+               }
+            },
+            "status": {
+               "type": "object",
+               "properties": {
+                  "label": { "type": "string" }
+               }
+            }
+         }
+      },
+      "getLitigationsUser":{
+         "type": "object",
+         "properties": {
+            "id": { "type": "string" },
+            "type": { "type": "boolean" },
+            "message": { "type": "string" },
+            "createdAt": { "type": "string" },
+            "updatedAt": { "type": "string" },
+            "status": {
+               "type": "object",
+               "properties": {
+                  "label": { "type": "string" }
+               }
+            },
+            "litigation_object":{
+               "type": "object",
+               "properties": {
+                  "id": { "type": "string" },
+                  "label": { "type": "string" },
+                  "description": { "type": "string" },
+                  "createdAt": { "type": "string" },
+                  "updatedAt": { "type": "string" }
+               }
+            },
+            "mission":{
+               "type": "object",
+               "properties": {
+                  "createdAt": { "type": "string" },
+                  "updatedAt": { "type": "string" },
+                  "job": {
+                     "type": "object",
+                     "properties": {
+                        "id": { "type": "string" },
+                        "title": { "type": "string" },
+                        "description": { "type": "string" },
+                        "participants_max": { "type": "integer" },
+                        "address": { "type": "string" },
+                        "cp": { "type": "integer" },
+                        "commune": { "type": "string" },
+                        "start_date": { "type": "string" },
+                        "end_date": { "type": "string" },
+                        "createdAt": { "type": "string" },
+                        "updatedAt": { "type": "string" },
+                        "author":{
+                           "type": "object",
+                           "properties": {
+                              "createdAt": { "type": "string" },
+                              "updatedAt": { "type": "string" },
+                              "organization": {
+                                 "type": "object",
+                                 "properties": {
+                                    "id": { "type": "string" },
+                                    "siren": { "type": "string" },
+                                    "siret": { "type": "string" },
+                                    "name": { "type": "string" },
+                                    "email": { "type": "string" },
+                                    "longitude": { "type": "integer" },
+                                    "latitude": { "type": "integer" },
+                                    "creation_date": { "type": "string" },
+                                    "activity": { "type": "string" },
+                                    "address": { "type": "string" },
+                                    "cp": { "type": "integer" },
+                                    "commune": { "type": "string" },
+                                    "logo": { "type": "string" },
+                                    "description": { "type": "string" },
+                                    "link": { "type": "string" },
+                                    "phone": { "type": "string" },
+                                    "createdAt": { "type": "string" },
+                                    "updatedAt": { "type": "string" },
+                                    "status": {
+                                       "type": "object",
+                                       "properties": {
+                                          "label": { "type": "string" }
+                                       }
+                                    }
+                                 }
+                              },
+                              "user":{
+                                 "type": "object",
+                                 "properties": {
+                                    "id": { "type": "string" },
+                                    "username": { "type": "string" },
+                                    "firstname": { "type": "string" },
+                                    "lastname": { "type": "string" },
+                                    "email": { "type": "string" },
+                                    "birthday": { "type": "string" },
+                                    "longitude": { "type": "integer" },
+                                    "latitude": { "type": "integer" },
+                                    "avatar": { "type": "string" },
+                                    "bio": { "type": "string" },
+                                    "phone": { "type": "string" },
+                                    "total_token": { "type": "integer" },
+                                    "createdAt": { "type": "string" },
+                                    "updatedAt": { "type": "string" },
+                                    "status": {
+                                       "type": "object",
+                                       "properties": {
+                                          "label": { "type": "string" }
+                                       }
+                                    }
+                                 } 
+                              },
+                              "status": {
+                                 "type": "object",
+                                 "properties": {
+                                    "label": { "type": "string" }
+                                 }
+                              }
+                           }
+                        },
+                        "difficulty": {
+                           "type": "object",
+                           "properties": {
+                              "level": { "type": "integer" },
+                              "token": { "type": "integer" }
+                           }
+                        },
+                        "status": {
+                           "type": "object",
+                           "properties": {
+                              "label": { "type": "string" }
+                           }
+                        }
+                     }
+                  }
+               }
+            }
+         }
+      },
       "getAllAdmins": {
          "type": "object",
          "properties": {
@@ -1736,19 +2617,13 @@
                      "status": {
                         "type": "object",
                         "properties": {
-                           "id": { "type": "string" },
-                           "label": { "type": "string" },
-                           "createdAt": { "type": "string" },
-                           "updatedAt": { "type": "string" }
+                           "label": { "type": "string" }
                         }
                      },
                      "role": {
                         "type": "object",
                         "properties": {
-                           "id": { "type": "string" },
-                           "label": { "type": "string" },
-                           "createdAt": { "type": "string" },
-                           "updatedAt": { "type": "string" }
+                           "label": { "type": "string" }
                         }
                      }
                   }
@@ -1769,19 +2644,13 @@
             "status": {
                "type": "object",
                "properties": {
-                  "id": { "type": "string" },
-                  "label": { "type": "string" },
-                  "createdAt": { "type": "string" },
-                  "updatedAt": { "type": "string" }
+                  "label": { "type": "string" }
                }
             },
             "role": {
                "type": "object",
                "properties": {
-                  "id": { "type": "string" },
-                  "label": { "type": "string" },
-                  "createdAt": { "type": "string" },
-                  "updatedAt": { "type": "string" }
+                  "label": { "type": "string" }
                }
             }
          }
@@ -1823,7 +2692,6 @@
             "lastName":{"type":"string"},
             "email":{"type":"string"}
          },
-         "required":["firstName","lastName","email"],
          "example":{
             "firstname": "Quentin",
             "lastname": "Huber",
@@ -1959,7 +2827,7 @@
             "birthday":{"type":"string"},
             "password":{"type":"string"}
          },
-         "required":["username","firstname","lastname","email","password"],
+         "required":["username","firstname","lastname","email","password","birthday"],
          "example":{
             "username": "uber",
             "firstname": "Quentin",
