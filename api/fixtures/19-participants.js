@@ -10,6 +10,9 @@ module.exports = [
       participant: {
         username: "percam",
       },
+      status: {
+        label: "actived",
+      }
     },
   },
 ];

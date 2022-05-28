@@ -14,9 +14,11 @@ const {
 const { from, subject, host } = require("utils/common/mail.json");
 const { Status, Roles, Logs, Admins } = require("../../../models");
 
+const excludeCommon = { exclude: ["id", "createdAt", "updatedAt"] };
+
 const include = [
-  { model: Status, as: "status" },
-  { model: Roles, as: "role" },
+  { model: Status, as: "status", attributes: excludeCommon },
+  { model: Roles, as: "role", attributes: excludeCommon },
 ];
 
 const exclude = ["role_id", "status_id", "password"];

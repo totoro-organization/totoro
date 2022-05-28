@@ -144,7 +144,7 @@ module.exports = {
     );
   },
 
-  delete: async function (res, model, condition) {
+  delete: async function (res, model, condition, deleted = false) {
     let statusData = await getRow(res, Status, { label: label_status.deleted });
 
     asyncLib.waterfall(
@@ -153,8 +153,12 @@ module.exports = {
           getField(res, model, condition, done, true);
         },
         function (found, done) {
-          const data = { status_id: statusData.id };
-          updateField(res, found, data, done);
+          if(deleted){
+            actionDelete(res, found);
+          } else {
+            const data = { status_id: statusData.id };
+            updateField(res, found, data, done);
+          }
         },
       ],
       function (updated) {
