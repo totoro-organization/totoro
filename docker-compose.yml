@@ -57,12 +57,9 @@ services:
       - api
     env_file: ./.env
     build:
-      context: .
-      dockerfile: Dockerfile
+      context: ./landingpage
     ports:
       - $LANDINGPAGE_LOCAL_PORT:$LANDINGPAGE_DOCKER_PORT
-    volumes:
-      - ./landingpage:/var/www/html
     networks:
       - frontend
 
