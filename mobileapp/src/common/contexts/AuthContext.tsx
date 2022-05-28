@@ -1,6 +1,4 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useNavigation } from "@react-navigation/native";
-import { StackNavigationProp } from "@react-navigation/stack";
 import {
   createContext,
   ReactNode,
@@ -9,11 +7,11 @@ import {
   useMemo,
   useState,
 } from "react";
-import { StackParamList } from "../../navigation/StackNavigationParams";
+import { User } from "../../models/user";
 import fetchConnectedUser from "../api/requests/auth/fetchConnectedUser";
 
 interface AuthContextType {
-  user?: any;
+  user?: User;
   logout?: () => Promise<void>;
   isLoading?: boolean;
 }
@@ -25,7 +23,7 @@ export function AuthProvider({
 }: {
   children: ReactNode;
 }): JSX.Element {
-  const [user, setUser] = useState();
+  const [user, setUser] = useState<User | undefined>(undefined);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const userToken = async () => await AsyncStorage.getItem("userToken");

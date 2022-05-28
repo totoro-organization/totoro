@@ -4,7 +4,7 @@ import { API_HOST, API_ROUTES } from "../../routes";
 
 export default async function fetchConnectedUser(): Promise<any> {
   const userToken = await AsyncStorage.getItem("userToken");
-  const bearer = "Bearer " + userToken;
+  const bearer = "Bearer" + " " + userToken;
 
   const myHeaders = new Headers({
     "Content-Type": "application/json",
