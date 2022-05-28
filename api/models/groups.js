@@ -12,6 +12,7 @@ module.exports = (sequelize) => {
     static associate(models) {
       // define association here
       models.Groups.belongsTo(models.Ads, { as: "job", foreignKey: "ads_id" });
+      models.Groups.belongsTo(models.Status, { as: "status", foreignKey: "status_id" });
       models.Groups.belongsTo(models.Users, {
         as: "participant",
         foreignKey: "user_id",

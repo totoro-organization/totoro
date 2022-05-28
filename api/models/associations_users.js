@@ -28,6 +28,10 @@ module.exports = (sequelize) => {
         as: "role",
         foreignKey: "role_id",
       });
+      models.Associations_users.belongsTo(models.Status, {
+        as: "status",
+        foreignKey: "status_id",
+      });
     }
   }
 
