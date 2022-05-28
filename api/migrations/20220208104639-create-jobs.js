@@ -1,12 +1,28 @@
 "use strict";
 module.exports = {
 	async up(queryInterface, Sequelize) {
-		await queryInterface.createTable("Pricings", {
+		await queryInterface.createTable("Jobs", {
 			id: {
 				allowNull: false,
 				defaultValue: Sequelize.UUIDV4,
 				primaryKey: true,
 				type: Sequelize.UUID,
+			},
+			assos_user_id: {
+				allowNull: false,
+				type: Sequelize.UUID,
+				references: {
+					model: "Associations_users",
+					key: "id",
+				},
+			},
+			difficulty_id: {
+				allowNull: false,
+				type: Sequelize.UUID,
+				references: {
+					model: "Difficulties",
+					key: "id",
+				},
 			},
 			status_id: {
 				allowNull: false,
@@ -16,29 +32,37 @@ module.exports = {
 					key: "id",
 				},
 			},
-			label: {
+			title: {
 				allowNull: false,
 				type: Sequelize.STRING,
 			},
 			description: {
 				allowNull: false,
-				type: Sequelize.TEXT,
+				type: Sequelize.STRING,
 			},
-			price: {
-				allowNull: false,
-				type: Sequelize.FLOAT,
-			},
-			duration: {
+			participants_max: {
 				allowNull: false,
 				type: Sequelize.INTEGER,
 			},
-			nb_account: {
+			start_date: {
+				allowNull: false,
+				type: Sequelize.DATE,
+			},
+			end_date: {
+				allowNull: true,
+				type: Sequelize.DATE,
+			},
+			address: {
+				allowNull: false,
+				type: Sequelize.STRING,
+			},
+			cp: {
 				allowNull: false,
 				type: Sequelize.INTEGER,
 			},
-			nb_jobs_by_month: {
+			commune: {
 				allowNull: false,
-				type: Sequelize.INTEGER,
+				type: Sequelize.STRING,
 			},
 			createdAt: {
 				allowNull: false,
@@ -51,6 +75,6 @@ module.exports = {
 		});
 	},
 	async down(queryInterface, Sequelize) {
-		await queryInterface.dropTable("Pricings");
+		await queryInterface.dropTable("Jobs");
 	},
 };

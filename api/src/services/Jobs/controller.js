@@ -3,10 +3,10 @@ const asyncLib = require("async");
 const { Op } = require("sequelize");
 const commonsController = require("services/Commons/controller");
 const { getRow } = require("~/utils/common/thenCatch");
-const { Ads, Status } = require("./../../../models");
+const { Jobs, Status } = require("./../../../models");
 
 module.exports = {
-	getAds: async function (res, queries = null) {
+	getJobs: async function (res, queries = null) {
 		let condition = {};
 		if (queries && queries.status) {
 			let statusData = await getRow(res, Status, { label: queries.status });
@@ -14,14 +14,14 @@ module.exports = {
 		}
 
 		condition = Object.keys(condition).length === 0 ? null : condition;
-		commonsController.getAll(res, Ads, condition);
+		commonsController.getAll(res, Jobs, condition);
 	},
-	getAd: function (res, id) {
-		commonsController.getOne(res, Ads, id);
+	getJob: function (res, id) {
+		commonsController.getOne(res, Jobs, id);
 	},
-	createAd: function (res, data) {},
-	updateAd: function (res, id, data) {},
-	deleteAd: function (res, id) {
-		commonsController.delete(res, Ads, { id });
+	createJob: function (res, data) {},
+	updateJob: function (res, id, data) {},
+	deleteJob: function (res, id) {
+		commonsController.delete(res, Jobs, { id });
 	},
 };

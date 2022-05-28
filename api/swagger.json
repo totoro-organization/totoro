@@ -1,3224 +1,3251 @@
 {
-  "swagger": "2.0",
-  "info": {
-    "title": "API",
-    "description": "Totoro API Information",
-    "version": "1.0"
-  },
-  "securityDefinitions": {
-    "ApiKeyAuth": {
-      "type": "apiKey",
-      "in": "header",
-      "name": "app_id"
-    },
-    "bearerAuth": {
-      "name": "Authorization",
-      "in": "header",
-      "type": "apiKey",
-      "description": "JWT Authorization header"
-    }
-  },
-  "security": [{ "ApiKeyAuth": [] }, { "bearerAuth": [] }],
-  "tags": [{"name":"Authentification"}, {"name":"Users"}, {"name":"Admins"}, {"name":"Commons"}, {"name":"Applications"}],
-  "paths": {
-     "/api/users": {
-         "get": {
-         "tags": ["Users"],
-         "x-swagger-router-controller": "users",
-         "operationId": "getAllUsers",
-         "parameters": [
-            {
-               "name": "status",
-               "in": "query",
-               "type": "string",
-               "required": false,
-               "enum": ["actived", "disabled", "deleted"]
-            }
-            ],
-            "responses":{
-               "default":{
-                  "description":"Unexpected error",
-                  "schema":{
-                     "$ref":"#/definitions/Error"
-                  }
-               },
-               "200":{
-                  "description":"Successful request.",
-                  "schema":{
-                     "$ref":"#/definitions/getAllUsers"
-                  }
-               }
-            }
-         }
-      },
-      "/api/users/{id}":{
-         "get":{
-            "tags":["Users"],
-            "x-swagger-router-controller":"users",
-            "operationId":"getUserById",
-            "parameters": [
-              {
-                 "name": "id",
-                 "in":"path",
-                 "type": "string",
-                 "required": true
-              }
-            ],
-            "responses":{
-               "default":{
-                  "description":"Unexpected error",
-                  "schema":{
-                     "$ref":"#/definitions/Error"
-                  }
-               },
-               "200":{
-                  "description":"Successful request.",
-                  "schema":{
-                     "$ref":"#/definitions/getUser"
-                  }
-               }
-            }
-         },
-        "put":{
-           "tags":["Users"],
-           "x-swagger-router-controller":"users",
-           "operationId":"putUser",
-           "parameters":[
-              {
-                 "name": "id",
-                 "in":"path",
-                 "type": "string",
-                 "required": true
-              },
-              {
-                 "name":"data",
-                 "in":"body",
-                 "description":"Update User",
-                 "required":true,
-                 "schema":{
-                    "$ref":"#/definitions/putUser"
-                 }
-              }
-           ],
-           "responses":{
-              "default":{
-                 "description":"Unexpected error",
-                 "schema":{
-                    "$ref":"#/definitions/Error"
-                 }
-              },
-              "201":{
-                 "description":"User Updated",
-                 "schema":{
-                    "$ref":"#/definitions/Success"
-                 }
-              }
-           }
-        },
-         "delete":{
-            "tags":["Users"],
-            "x-swagger-router-controller":"users",
-            "operationId":"deleteUser",
-            "parameters": [
-              {
-                 "name": "id",
-                 "in":"path",
-                 "type": "string",
-                 "required": true
-              }
-            ],
-            "responses":{
-               "default":{
-                  "description":"Unexpected error",
-                  "schema":{
-                     "$ref":"#/definitions/Error"
-                  }
-               },
-               "201":{
-                  "description":"Successful request.",
-                  "schema":{
-                     "$ref":"#/definitions/Success"
-                  }
-               }
-            }
-         }
-      },
-      "/api/users/change/password":{
-         "put":{
-            "tags":["Users"],
-            "x-swagger-router-controller":"users",
-            "operationId":"changePasswordUser",
-            "parameters":[
-               {
-                  "name":"data",
-                  "in":"body",
-                  "description":"Change password User",
-                  "required":true,
-                  "schema":{
-                     "$ref":"#/definitions/putPasswordAdmin"
-                  }
-               }
-            ],
-            "responses":{
-               "default":{
-                  "description":"Unexpected error",
-                  "schema":{
-                     "$ref":"#/definitions/Error"
-                  }
-               },
-               "201":{
-                  "description":"Password Updated",
-                  "schema":{
-                     "$ref":"#/definitions/Success"
-                  }
-               }
-            }
-         }
-      },
-      "/api/users/{id}/favorites":{
-         "get":{
-            "tags":["Users"],
-            "x-swagger-router-controller":"users",
-            "operationId":"getFavotitesUser",
-            "parameters": [
-              {
-                 "name": "id",
-                 "in":"path",
-                 "type": "string",
-                 "required": true
-              }
-            ],
-            "responses":{
-               "default":{
-                  "description":"Unexpected error",
-                  "schema":{
-                     "$ref":"#/definitions/Error"
-                  }
-               },
-               "200":{
-                  "description":"Successful request.",
-                  "schema":{
-                     "$ref":"#/definitions/getFavoritesUser"
-                  }
-               }
-            }
-         },
-        "post":{
-           "tags":["Users"],
-           "x-swagger-router-controller":"users",
-           "operationId":"postFavotitesUser",
-           "parameters":[
-              {
-                 "name": "id",
-                 "in":"path",
-                 "type": "string",
-                 "required": true
-              },
-              {
-                 "name":"data",
-                 "in":"body",
-                 "description":"Add Favorite for User",
-                 "required":true,
-                 "schema":{
-                    "$ref":"#/definitions/postFavotitesUser"
-                 }
-              }
-           ],
-           "responses":{
-              "default":{
-                 "description":"Unexpected error",
-                 "schema":{
-                    "$ref":"#/definitions/Error"
-                 }
-              },
-              "201":{
-                 "description":"Favorite added",
-                 "schema":{
-                    "$ref":"#/definitions/Success"
-                 }
-              }
-           }
-        }
-      },
-      "/api/users/favorites/{favotiteId}":{
-         "delete":{
-            "tags":["Users"],
-            "x-swagger-router-controller":"users",
-            "operationId":"deleteFavoriteUser",
-            "parameters": [
-              {
-                 "name": "favotiteId",
-                 "in":"path",
-                 "type": "string",
-                 "required": true
-              }
-            ],
-            "responses":{
-               "default":{
-                  "description":"Unexpected error",
-                  "schema":{
-                     "$ref":"#/definitions/Error"
-                  }
-               },
-               "201":{
-                  "description":"Successful request.",
-                  "schema":{
-                     "$ref":"#/definitions/Success"
-                  }
-               }
-            }
-         }
-      },
-      "/api/users/{id}/jobs":{
-         "get":{
-            "tags":["Users"],
-            "x-swagger-router-controller":"users",
-            "operationId":"getJobsUser",
-            "parameters": [
-              {
-                 "name": "id",
-                 "in":"path",
-                 "type": "string",
-                 "required": true
-              }
-            ],
-            "responses":{
-               "default":{
-                  "description":"Unexpected error",
-                  "schema":{
-                     "$ref":"#/definitions/Error"
-                  }
-               },
-               "200":{
-                  "description":"Successful request.",
-                  "schema":{
-                     "$ref":"#/definitions/getJobsUser"
-                  }
-               }
-            }
-         }
-      },
-      "/api/users/{id}/litigations":{
-         "get":{
-            "tags":["Users"],
-            "x-swagger-router-controller":"users",
-            "operationId":"getLitigationsUser",
-            "parameters": [
-              {
-                 "name": "id",
-                 "in":"path",
-                 "type": "string",
-                 "required": true
-              }
-            ],
-            "responses":{
-               "default":{
-                  "description":"Unexpected error",
-                  "schema":{
-                     "$ref":"#/definitions/Error"
-                  }
-               },
-               "200":{
-                  "description":"Successful request.",
-                  "schema":{
-                     "$ref":"#/definitions/getLitigationsUser"
-                  }
-               }
-            }
-         }
-      },
-      "/api/admins": {
-         "get": {
-         "tags": ["Admins"],
-         "x-swagger-router-controller": "admins",
-         "operationId": "getAllAdmins",
-         "parameters": [
-            {
-               "name": "status",
-               "in": "query",
-               "type": "string",
-               "required": false,
-               "enum": ["actived", "disabled", "deleted"]
-            },
-            {
-               "name": "role",
-               "in": "query",
-               "type": "string",
-               "required": false,
-               "enum": ["Moderateur", "Administrateur", "Comptable"]
-            }
-            ],
-            "responses":{
-               "default":{
-                  "description":"Unexpected error",
-                  "schema":{
-                     "$ref":"#/definitions/Error"
-                  }
-               },
-               "200":{
-                  "description":"Successful request.",
-                  "schema":{
-                     "$ref":"#/definitions/getAllAdmins"
-                  }
-               }
-            }
-         },
-         "post": {
-            "tags": ["Admins"],
-            "x-swagger-router-controller": "admins",
-            "operationId": "postAdmin",
-            "parameters": [
-              {
-                "name": "data",
-                "in": "body",
-                "description": "Create Admin",
-                "required": true,
-                "schema": {
-                  "$ref": "#/definitions/postAdmin"
-                }
-              }
-            ],
-            "responses": {
-              "default": {
-                "description": "Unexpected error",
-                "schema": {
-                  "$ref": "#/definitions/Error"
-                }
-              },
-              "201": {
-                "description": "Admin Created"
-              }
-            }
-         }
-      },
-      "/api/admins/{id}":{
-        "get":{
-           "tags":["Admins"],
-           "x-swagger-router-controller":"admins",
-           "operationId":"getAdminById",
-           "parameters": [
-             {
-                "name": "id",
-                "in":"path",
-                "type": "string",
-                "required": true
-             }
-           ],
-           "responses":{
-              "default":{
-                 "description":"Unexpected error",
-                 "schema":{
-                    "$ref":"#/definitions/Error"
-                 }
-              },
-              "200":{
-                 "description":"Successful request.",
-                 "schema":{
-                    "$ref":"#/definitions/getAdmin"
-                 }
-              }
-           }
-        },
-        "put":{
-           "tags":["Admins"],
-           "x-swagger-router-controller":"admins",
-           "operationId":"putAdmin",
-           "parameters":[
-              {
-                 "name": "id",
-                 "in":"path",
-                 "type": "string",
-                 "required": true
-              },
-              {
-                 "name":"data",
-                 "in":"body",
-                 "description":"Update Admin",
-                 "required":true,
-                 "schema":{
-                    "$ref":"#/definitions/putAdmin"
-                 }
-              }
-           ],
-           "responses":{
-              "default":{
-                 "description":"Unexpected error",
-                 "schema":{
-                    "$ref":"#/definitions/Error"
-                 }
-              },
-              "201":{
-                 "description":"Admin Updated",
-                 "schema":{
-                    "$ref":"#/definitions/Success"
-                 }
-              }
-           }
-        },
-        "delete":{
-           "tags":["Admins"],
-           "x-swagger-router-controller":"admins",
-           "operationId":"deleteAdmin",
-           "parameters": [
-             {
-                "name": "id",
-                "in":"path",
-                "type": "string",
-                "required": true
-             }
-           ],
-           "responses":{
-              "default":{
-                 "description":"Unexpected error",
-                 "schema":{
-                    "$ref":"#/definitions/Error"
-                 }
-              },
-              "201":{
-                 "description":"Successful request.",
-                 "schema":{
-                    "$ref":"#/definitions/Success"
-                 }
-              }
-           }
-        }
-      },
-      "/api/admins/change/password":{
-         "put":{
-            "tags":["Admins"],
-            "x-swagger-router-controller":"admins",
-            "operationId":"changePasswordAdmin",
-            "parameters":[
-               {
-                  "name":"data",
-                  "in":"body",
-                  "description":"Change password Admin",
-                  "required":true,
-                  "schema":{
-                     "$ref":"#/definitions/putPasswordAdmin"
-                  }
-               }
-            ],
-            "responses":{
-               "default":{
-                  "description":"Unexpected error",
-                  "schema":{
-                     "$ref":"#/definitions/Error"
-                  }
-               },
-               "201":{
-                  "description":"Password Updated",
-                  "schema":{
-                     "$ref":"#/definitions/Success"
-                  }
-               }
-            }
-         }
-      },
-      "/api/admins/{id}/role":{
-         "put":{
-            "tags":["Admins"],
-            "x-swagger-router-controller":"admins",
-            "operationId":"putAdmin",
-            "parameters":[
-               {
-                  "name": "id",
-                  "in":"path",
-                  "type": "string",
-                  "required": true
-               },
-               {
-                  "name":"data",
-                  "in":"body",
-                  "description":"Update Admin role",
-                  "required":true,
-                  "schema":{
-                     "$ref":"#/definitions/putRoleAdmin"
-                  }
-               }
-            ],
-            "responses":{
-               "default":{
-                  "description":"Unexpected error",
-                  "schema":{
-                     "$ref":"#/definitions/Error"
-                  }
-               },
-               "201":{
-                  "description":"Role Updated",
-                  "schema":{
-                     "$ref":"#/definitions/Success"
-                  }
-               }
-            }
-         }
-      },
-      "/api/admins/{id}/logs":{
-         "get":{
-            "tags":["Admins"],
-            "x-swagger-router-controller":"admins",
-            "operationId":"getLogsAdminById",
-            "parameters": [
-               {
-                  "name": "id",
-                  "in":"path",
-                  "type": "string",
-                  "required": true
-               },
-               {
-               "name": "start_date",
-               "in":"query",
-               "type": "string",
-               "required": false
-            },
-            {
-               "name": "end_date",
-               "in":"query",
-               "type": "string",
-               "required": false
-            }
-            ],
-            "responses":{
-               "default":{
-                  "description":"Unexpected error",
-                  "schema":{
-                     "$ref":"#/definitions/Error"
-                  }
-               },
-               "200":{
-                  "description":"Successful request.",
-                  "schema":{
-                     "$ref":"#/definitions/getLogsAdmin"
-                  }
-               }
-            }
-         },
-         "post":{
-            "tags":["Admins"],
-            "x-swagger-router-controller":"admins",
-            "operationId":"postLogAdmin",
-            "parameters":[
-               {
-                  "name": "id",
-                  "in":"path",
-                  "type": "string",
-                  "required": true
-               },
-               {
-                  "name":"data",
-                  "in":"body",
-                  "description":"Post log Admin",
-                  "required":true,
-                  "schema":{
-                     "$ref":"#/definitions/postLogAdmin"
-                  }
-               }
-            ],
-            "responses":{
-               "default":{
-                  "description":"Unexpected error",
-                  "schema":{
-                     "$ref":"#/definitions/Error"
-                  }
-               },
-               "201":{
-                  "description":"Successful request.",
-                  "schema":{
-                     "$ref":"#/definitions/Success"
-                  }              
-               }
-            }
-         }
-      },
-      "/api/admins/logs/getAll":{
-         "get":{
-            "tags":["Admins"],
-            "x-swagger-router-controller":"admins",
-            "operationId":"getLogsAdmins",
-            "parameters": [
-               {
-                  "name": "start_date",
-                  "in":"query",
-                  "type": "string",
-                  "required": false
-               },
-               {
-                  "name": "end_date",
-                  "in":"query",
-                  "type": "string",
-                  "required": false
-               }
-            ],
-            "responses":{
-               "default":{
-                  "description":"Unexpected error",
-                  "schema":{
-                     "$ref":"#/definitions/Error"
-                  }
-               },
-               "200":{
-                  "description":"Successful request.",
-                  "schema":{
-                     "$ref":"#/definitions/getLogsAdmins"
-                  }
-               }
-            }
-         }
-      },
-      "/api/admins/logs/truncate":{
-         "delete":{
-            "tags":["Admins"],
-            "x-swagger-router-controller":"admins",
-            "operationId":"truncateLogsAdmins",
-            "parameters": [
-               {
-                  "name": "start_date",
-                  "in":"query",
-                  "type": "string",
-                  "required": false
-               },
-               {
-                  "name": "end_date",
-                  "in":"query",
-                  "type": "string",
-                  "required": false
-               }
-            ],
-            "responses":{
-               "default":{
-                  "description":"Unexpected error",
-                  "schema":{
-                     "$ref":"#/definitions/Error"
-                  }
-               },
-               "201":{
-                  "description":"Successful request.",
-                  "schema":{
-                     "$ref":"#/definitions/Success"
-                  }
-               }
-            }
-         }
-      },
-      "/api/auth/login": {
-         "post": {
-            "tags": ["Authentification"],
-            "x-swagger-router-controller": "auth",
-            "operationId": "login",
-            "parameters": [
-              {
-                "name": "data",
-                "in": "body",
-                "description": "Login user",
-                "required": true,
-                "schema": {
-                  "$ref": "#/definitions/loginUser"
-                }
-              }
-            ],
-            "responses": {
-              "default": {
-                "description": "Unexpected error",
-                "schema": {
-                  "$ref": "#/definitions/Error"
-                }
-              },
-              "201": {
-                "description": "User logged",
-                "schema": {
-                  "$ref": "#/definitions/responseLogin"
-                }
-              }
-            }
-         }
-      },
-      "/api/auth/login/admin": {
-         "post": {
-            "tags": ["Authentification"],
-            "x-swagger-router-controller": "auth",
-            "operationId": "loginAmin",
-            "parameters": [
-              {
-                "name": "data",
-                "in": "body",
-                "description": "Login admin",
-                "required": true,
-                "schema": {
-                  "$ref": "#/definitions/loginUser"
-                }
-              }
-            ],
-            "responses": {
-              "default": {
-                "description": "Unexpected error",
-                "schema": {
-                  "$ref": "#/definitions/Error"
-                }
-              },
-              "201": {
-                "description": "Admin logged",
-                "schema": {
-                  "$ref": "#/definitions/responseLogin"
-                }
-              }
-            }
-         }
-      },
-      "/api/auth/signup": {
-         "post": {
-            "tags": ["Authentification"],
-            "x-swagger-router-controller": "auth",
-            "operationId": "signup",
-            "parameters": [
-              {
-                "name": "data",
-                "in": "body",
-                "description": "create an account",
-                "required": true,
-                "schema": {
-                  "$ref": "#/definitions/signup"
-                }
-              }
-            ],
-            "responses": {
-              "default": {
-                "description": "Unexpected error",
-                "schema": {
-                  "$ref": "#/definitions/Error"
-                }
-              },
-              "201": {
-                "description": "User created",
-                "schema": {
-                  "$ref": "#/definitions/Success"
-                }
-              }
-            }
-         }
-      },
-      "/api/auth/forgot": {
-         "post": {
-            "tags": ["Authentification"],
-            "x-swagger-router-controller": "auth",
-            "operationId": "forgot",
-            "parameters": [
-              {
-                "name": "data",
-                "in": "body",
-                "description": "Forgot password",
-                "required": true,
-                "schema": {
-                  "$ref": "#/definitions/forgot"
-                }
-              }
-            ],
-            "responses": {
-              "default": {
-                "description": "Unexpected error",
-                "schema": {
-                  "$ref": "#/definitions/Error"
-                }
-              },
-              "201": {
-                "description": "Forgot your password",
-                "schema": {
-                  "$ref": "#/definitions/Success"
-                }
-              }
-            }
-         }
-      },
-      "/api/auth/connected": {
-         "get": {
-            "tags": ["Authentification"],
-            "x-swagger-router-controller": "auth",
-            "operationId": "connected",
-            "parameters": [],
-            "responses": {
-              "default": {
-                "description": "Unexpected error",
-                "schema": {
-                  "$ref": "#/definitions/Error"
-                }
-              },
-              "201": {
-                "description": "get user connected (getAdmin or getUser model)"
-              }
-            }
-         }
-      },
-      "/api/applications": {
-         "get": {
-         "tags": ["Applications"],
-         "x-swagger-router-controller": "applications",
-         "operationId": "getAllApplications",
-         "parameters": [],
-            "responses":{
-               "default":{
-                  "description":"Unexpected error",
-                  "schema":{
-                     "$ref":"#/definitions/Error"
-                  }
-               },
-               "200":{
-                  "description":"Successful request.",
-                  "schema":{
-                     "$ref":"#/definitions/getAllApplications"
-                  }
-               }
-            }
-         },
-         "post": {
-            "tags": ["Applications"],
-            "x-swagger-router-controller": "applications",
-            "operationId": "postApplication",
-            "parameters": [
-              {
-                "name": "data",
-                "in": "body",
-                "description": "Create Application",
-                "required": true,
-                "schema": {
-                  "$ref": "#/definitions/postApplication"
-                }
-              }
-            ],
-            "responses": {
-              "default": {
-                "description": "Unexpected error",
-                "schema": {
-                  "$ref": "#/definitions/Error"
-                }
-              },
-              "201": {
-                "description": "Application Created",
-                "schema": {
-                  "$ref": "#/definitions/Success"
-                }
-              }
-            }
-         }
-      },
-      "/api/applications/{id}":{
-        "get":{
-           "tags":["Applications"],
-           "x-swagger-router-controller":"applications",
-           "operationId":"getApplicationById",
-           "parameters": [
-             {
-                "name": "id",
-                "in":"path",
-                "type": "string",
-                "required": true
-             }
-           ],
-           "responses":{
-              "default":{
-                 "description":"Unexpected error",
-                 "schema":{
-                    "$ref":"#/definitions/Error"
-                 }
-              },
-              "200":{
-                 "description":"Successful request.",
-                 "schema":{
-                    "$ref":"#/definitions/getApplication"
-                 }
-              }
-           }
-        },
-        "put":{
-           "tags":["Applications"],
-           "x-swagger-router-controller":"applications",
-           "operationId":"putApplication",
-           "parameters":[
-              {
-                 "name": "id",
-                 "in":"path",
-                 "type": "string",
-                 "required": true
-              },
-              {
-                 "name":"data",
-                 "in":"body",
-                 "description":"Update Application",
-                 "required":true,
-                 "schema":{
-                    "$ref":"#/definitions/putApplication"
-                 }
-              }
-           ],
-           "responses":{
-              "default":{
-                 "description":"Unexpected error",
-                 "schema":{
-                    "$ref":"#/definitions/Error"
-                 }
-              },
-              "201":{
-                 "description":"Application Updated",
-                 "schema":{
-                    "$ref":"#/definitions/Success"
-                 }
-              }
-           }
-        },
-        "delete":{
-           "tags":["Applications"],
-           "x-swagger-router-controller":"applications",
-           "operationId":"deleteApplication",
-           "parameters": [
-             {
-                "name": "id",
-                "in":"path",
-                "type": "string",
-                "required": true
-             }
-           ],
-           "responses":{
-              "default":{
-                 "description":"Unexpected error",
-                 "schema":{
-                    "$ref":"#/definitions/Error"
-                 }
-              },
-              "201":{
-                 "description":"Successful request.",
-                 "schema":{
-                    "$ref":"#/definitions/Success"
-                 }
-              }
-           }
-        }
-      },
-      "/api/commons/status": {
-         "get": {
-            "tags": ["Commons"],
-            "x-swagger-router-controller": "commons/status",
-            "operationId": "getAllStatus",
-            "parameters": [],
-            "responses":{
-               "default":{
-                  "description":"Unexpected error",
-                  "schema":{
-                     "$ref":"#/definitions/Error"
-                  }
-               },
-               "200":{
-                  "description":"Successful request.",
-                  "schema":{
-                     "$ref":"#/definitions/getAllCommons"
-                  }
-               }
-            }
-         },
-         "post": {
-            "tags": ["Commons"],
-            "x-swagger-router-controller": "commons/status",
-            "operationId": "postStatus",
-            "parameters": [
-              {
-                "name": "data",
-                "in": "body",
-                "description": "Create Status",
-                "required": true,
-                "schema": {
-                  "$ref": "#/definitions/postCommon"
-                }
-              }
-            ],
-            "responses": {
-              "default": {
-                "description": "Unexpected error",
-                "schema": {
-                  "$ref": "#/definitions/Error"
-                }
-              },
-              "201": {
-                "description": "Status Created",
-                "schema": {
-                  "$ref": "#/definitions/Success"
-                }
-              }
-            }
-         }
-      },
-      "/api/commons/status/{id}":{
-        "get":{
-           "tags":["Commons"],
-           "x-swagger-router-controller":"commons/status",
-           "operationId":"getStatusById",
-           "parameters": [
-             {
-                "name": "id",
-                "in":"path",
-                "type": "string",
-                "required": true
-             }
-           ],
-           "responses":{
-              "default":{
-                 "description":"Unexpected error",
-                 "schema":{
-                    "$ref":"#/definitions/Error"
-                 }
-              },
-              "200":{
-                 "description":"Successful request.",
-                 "schema":{
-                    "$ref":"#/definitions/getCommon"
-                 }
-              }
-           }
-        },
-        "put":{
-           "tags":["Commons"],
-           "x-swagger-router-controller":"commons/status",
-           "operationId":"putStatus",
-           "parameters":[
-              {
-                 "name": "id",
-                 "in":"path",
-                 "type": "string",
-                 "required": true
-              },
-              {
-                 "name":"data",
-                 "in":"body",
-                 "description":"Update Status",
-                 "required":true,
-                 "schema":{
-                    "$ref":"#/definitions/putCommon"
-                 }
-              }
-           ],
-           "responses":{
-              "default":{
-                 "description":"Unexpected error",
-                 "schema":{
-                    "$ref":"#/definitions/Error"
-                 }
-              },
-              "201":{
-                 "description":"Status Updated",
-                 "schema":{
-                    "$ref":"#/definitions/Success"
-                 }
-              }
-           }
-        },
-        "delete":{
-           "tags":["Commons"],
-           "x-swagger-router-controller":"commons/status",
-           "operationId":"deleteStatus",
-           "parameters": [
-             {
-                "name": "id",
-                "in":"path",
-                "type": "string",
-                "required": true
-             }
-           ],
-           "responses":{
-              "default":{
-                 "description":"Unexpected error",
-                 "schema":{
-                    "$ref":"#/definitions/Error"
-                 }
-              },
-              "201":{
-                 "description":"Successful request.",
-                 "schema":{
-                    "$ref":"#/definitions/Success"
-                 }
-              }
-           }
-        }
-      },
-      "/api/commons/roles": {
-         "get": {
-            "tags": ["Commons"],
-            "x-swagger-router-controller": "commons/roles",
-            "operationId": "getAllRoles",
-            "parameters": [],
-            "responses":{
-               "default":{
-                  "description":"Unexpected error",
-                  "schema":{
-                     "$ref":"#/definitions/Error"
-                  }
-               },
-               "200":{
-                  "description":"Successful request.",
-                  "schema":{
-                     "$ref":"#/definitions/getAllRoles"
-                  }
-               }
-            }
-         },
-         "post": {
-            "tags": ["Commons"],
-            "x-swagger-router-controller": "commons/roles",
-            "operationId": "postRole",
-            "parameters": [
-              {
-                "name": "data",
-                "in": "body",
-                "description": "Create Role",
-                "required": true,
-                "schema": {
-                  "$ref": "#/definitions/postRole"
-                }
-              }
-            ],
-            "responses": {
-              "default": {
-                "description": "Unexpected error",
-                "schema": {
-                  "$ref": "#/definitions/Error"
-                }
-              },
-              "201": {
-                "description": "Role Created",
-                "schema": {
-                  "$ref": "#/definitions/Success"
-                }
-              }
-            }
-         }
-      },
-      "/api/commons/roles/{id}":{
-        "get":{
-           "tags":["Commons"],
-           "x-swagger-router-controller":"commons/roles",
-           "operationId":"getRoleById",
-           "parameters": [
-             {
-                "name": "id",
-                "in":"path",
-                "type": "string",
-                "required": true
-             }
-           ],
-           "responses":{
-              "default":{
-                 "description":"Unexpected error",
-                 "schema":{
-                    "$ref":"#/definitions/Error"
-                 }
-              },
-              "200":{
-                 "description":"Successful request.",
-                 "schema":{
-                    "$ref":"#/definitions/getRole"
-                 }
-              }
-           }
-        },
-        "put":{
-           "tags":["Commons"],
-           "x-swagger-router-controller":"commons/roles",
-           "operationId":"putRole",
-           "parameters":[
-              {
-                 "name": "id",
-                 "in":"path",
-                 "type": "string",
-                 "required": true
-              },
-              {
-                 "name":"data",
-                 "in":"body",
-                 "description":"Update Role",
-                 "required":true,
-                 "schema":{
-                    "$ref":"#/definitions/putRole"
-                 }
-              }
-           ],
-           "responses":{
-              "default":{
-                 "description":"Unexpected error",
-                 "schema":{
-                    "$ref":"#/definitions/Error"
-                 }
-              },
-              "201":{
-                 "description":"Role Updated",
-                 "schema":{
-                    "$ref":"#/definitions/Success"
-                 }
-              }
-           }
-        },
-        "delete":{
-           "tags":["Commons"],
-           "x-swagger-router-controller":"commons/roles",
-           "operationId":"deleteRole",
-           "parameters": [
-             {
-                "name": "id",
-                "in":"path",
-                "type": "string",
-                "required": true
-             }
-           ],
-           "responses":{
-              "default":{
-                 "description":"Unexpected error",
-                 "schema":{
-                    "$ref":"#/definitions/Error"
-                 }
-              },
-              "201":{
-                 "description":"Successful request.",
-                 "schema":{
-                    "$ref":"#/definitions/Success"
-                 }
-              }
-           }
-        }
-      },
-      "/api/commons/tags": {
-         "get": {
-            "tags": ["Commons"],
-            "x-swagger-router-controller": "commons/tags",
-            "operationId": "getAllTags",
-            "parameters": [],
-            "responses":{
-               "default":{
-                  "description":"Unexpected error",
-                  "schema":{
-                     "$ref":"#/definitions/Error"
-                  }
-               },
-               "200":{
-                  "description":"Successful request.",
-                  "schema":{
-                     "$ref":"#/definitions/getAllCommons"
-                  }
-               }
-            }
-         },
-         "post": {
-            "tags": ["Commons"],
-            "x-swagger-router-controller": "commons/tags",
-            "operationId": "postTag",
-            "parameters": [
-              {
-                "name": "data",
-                "in": "body",
-                "description": "Create Tag",
-                "required": true,
-                "schema": {
-                  "$ref": "#/definitions/postCommon"
-                }
-              }
-            ],
-            "responses": {
-              "default": {
-                "description": "Unexpected error",
-                "schema": {
-                  "$ref": "#/definitions/Error"
-                }
-              },
-              "201": {
-                "description": "Tag Created",
-                "schema": {
-                  "$ref": "#/definitions/Success"
-                }
-              }
-            }
-         }
-      },
-      "/api/commons/tags/{id}":{
-        "get":{
-           "tags":["Commons"],
-           "x-swagger-router-controller":"commons/tags",
-           "operationId":"getTagById",
-           "parameters": [
-             {
-                "name": "id",
-                "in":"path",
-                "type": "string",
-                "required": true
-             }
-           ],
-           "responses":{
-              "default":{
-                 "description":"Unexpected error",
-                 "schema":{
-                    "$ref":"#/definitions/Error"
-                 }
-              },
-              "200":{
-                 "description":"Successful request.",
-                 "schema":{
-                    "$ref":"#/definitions/getCommon"
-                 }
-              }
-           }
-        },
-        "put":{
-           "tags":["Commons"],
-           "x-swagger-router-controller":"commons/tags",
-           "operationId":"putTag",
-           "parameters":[
-              {
-                 "name": "id",
-                 "in":"path",
-                 "type": "string",
-                 "required": true
-              },
-              {
-                 "name":"data",
-                 "in":"body",
-                 "description":"Update Tag",
-                 "required":true,
-                 "schema":{
-                    "$ref":"#/definitions/putCommon"
-                 }
-              }
-           ],
-           "responses":{
-              "default":{
-                 "description":"Unexpected error",
-                 "schema":{
-                    "$ref":"#/definitions/Error"
-                 }
-              },
-              "201":{
-                 "description":"Tag Updated",
-                 "schema":{
-                    "$ref":"#/definitions/Success"
-                 }
-              }
-           }
-        },
-        "delete":{
-           "tags":["Commons"],
-           "x-swagger-router-controller":"commons/tags",
-           "operationId":"deleteTag",
-           "parameters": [
-             {
-                "name": "id",
-                "in":"path",
-                "type": "string",
-                "required": true
-             }
-           ],
-           "responses":{
-              "default":{
-                 "description":"Unexpected error",
-                 "schema":{
-                    "$ref":"#/definitions/Error"
-                 }
-              },
-              "201":{
-                 "description":"Successful request.",
-                 "schema":{
-                    "$ref":"#/definitions/Success"
-                 }
-              }
-           }
-        }
-      },
-      "/api/commons/pricings": {
-         "get": {
-            "tags": ["Commons"],
-            "x-swagger-router-controller": "commons/pricings",
-            "operationId": "getAllPricings",
-            "parameters": [],
-            "responses":{
-               "default":{
-                  "description":"Unexpected error",
-                  "schema":{
-                     "$ref":"#/definitions/Error"
-                  }
-               },
-               "200":{
-                  "description":"Successful request.",
-                  "schema":{
-                     "$ref":"#/definitions/getAllPricings"
-                  }
-               }
-            }
-         },
-         "post": {
-            "tags": ["Commons"],
-            "x-swagger-router-controller": "commons/pricings",
-            "operationId": "postPricing",
-            "parameters": [
-              {
-                "name": "data",
-                "in": "body",
-                "description": "Create Pricing",
-                "required": true,
-                "schema": {
-                  "$ref": "#/definitions/postPricing"
-                }
-              }
-            ],
-            "responses": {
-              "default": {
-                "description": "Unexpected error",
-                "schema": {
-                  "$ref": "#/definitions/Error"
-                }
-              },
-              "201": {
-                "description": "Pricing Created",
-                "schema": {
-                  "$ref": "#/definitions/Success"
-                }
-              }
-            }
-         }
-      },
-      "/api/commons/pricings/{id}":{
-        "get":{
-           "tags":["Commons"],
-           "x-swagger-router-controller":"commons/pricings",
-           "operationId":"getPricingById",
-           "parameters": [
-             {
-                "name": "id",
-                "in":"path",
-                "type": "string",
-                "required": true
-             }
-           ],
-           "responses":{
-              "default":{
-                 "description":"Unexpected error",
-                 "schema":{
-                    "$ref":"#/definitions/Error"
-                 }
-              },
-              "200":{
-                 "description":"Successful request.",
-                 "schema":{
-                    "$ref":"#/definitions/getPricing"
-                 }
-              }
-           }
-        },
-        "put":{
-           "tags":["Commons"],
-           "x-swagger-router-controller":"commons/pricings",
-           "operationId":"putPricing",
-           "parameters":[
-              {
-                 "name": "id",
-                 "in":"path",
-                 "type": "string",
-                 "required": true
-              },
-              {
-                 "name":"data",
-                 "in":"body",
-                 "description":"Update Pricing",
-                 "required":true,
-                 "schema":{
-                    "$ref":"#/definitions/putPricing"
-                 }
-              }
-           ],
-           "responses":{
-              "default":{
-                 "description":"Unexpected error",
-                 "schema":{
-                    "$ref":"#/definitions/Error"
-                 }
-              },
-              "201":{
-                 "description":"Pricing Updated",
-                 "schema":{
-                    "$ref":"#/definitions/Success"
-                 }
-              }
-           }
-        },
-        "delete":{
-           "tags":["Commons"],
-           "x-swagger-router-controller":"commons/pricings",
-           "operationId":"deletePricing",
-           "parameters": [
-             {
-                "name": "id",
-                "in":"path",
-                "type": "string",
-                "required": true
-             }
-           ],
-           "responses":{
-              "default":{
-                 "description":"Unexpected error",
-                 "schema":{
-                    "$ref":"#/definitions/Error"
-                 }
-              },
-              "201":{
-                 "description":"Successful request.",
-                 "schema":{
-                    "$ref":"#/definitions/Success"
-                 }
-              }
-           }
-        }
-      },
-      "/api/commons/difficulties": {
-         "get": {
-            "tags": ["Commons"],
-            "x-swagger-router-controller": "commons/difficulties",
-            "operationId": "getAllDifficulties",
-            "parameters": [],
-            "responses":{
-               "default":{
-                  "description":"Unexpected error",
-                  "schema":{
-                     "$ref":"#/definitions/Error"
-                  }
-               },
-               "200":{
-                  "description":"Successful request.",
-                  "schema":{
-                     "$ref":"#/definitions/getAllDifficulties"
-                  }
-               }
-            }
-         },
-         "post": {
-            "tags": ["Commons"],
-            "x-swagger-router-controller": "commons/difficulties",
-            "operationId": "postDifficulty",
-            "parameters": [
-              {
-                "name": "data",
-                "in": "body",
-                "description": "Create Difficulty",
-                "required": true,
-                "schema": {
-                  "$ref": "#/definitions/postDifficulty"
-                }
-              }
-            ],
-            "responses": {
-              "default": {
-                "description": "Unexpected error",
-                "schema": {
-                  "$ref": "#/definitions/Error"
-                }
-              },
-              "201": {
-                "description": "Difficulty Created",
-                "schema": {
-                  "$ref": "#/definitions/Success"
-                }
-              }
-            }
-         }
-      },
-      "/api/commons/difficulties/{id}":{
-        "get":{
-           "tags":["Commons"],
-           "x-swagger-router-controller":"commons/difficulties",
-           "operationId":"getDifficultyById",
-           "parameters": [
-             {
-                "name": "id",
-                "in":"path",
-                "type": "string",
-                "required": true
-             }
-           ],
-           "responses":{
-              "default":{
-                 "description":"Unexpected error",
-                 "schema":{
-                    "$ref":"#/definitions/Error"
-                 }
-              },
-              "200":{
-                 "description":"Successful request.",
-                 "schema":{
-                    "$ref":"#/definitions/getDifficulty"
-                 }
-              }
-           }
-        },
-        "put":{
-           "tags":["Commons"],
-           "x-swagger-router-controller":"commons/difficulties",
-           "operationId":"putDifficulty",
-           "parameters":[
-              {
-                 "name": "id",
-                 "in":"path",
-                 "type": "string",
-                 "required": true
-              },
-              {
-                 "name":"data",
-                 "in":"body",
-                 "description":"Update Difficulty",
-                 "required":true,
-                 "schema":{
-                    "$ref":"#/definitions/putDifficulty"
-                 }
-              }
-           ],
-           "responses":{
-              "default":{
-                 "description":"Unexpected error",
-                 "schema":{
-                    "$ref":"#/definitions/Error"
-                 }
-              },
-              "201":{
-                 "description":"Difficulty Updated",
-                 "schema":{
-                    "$ref":"#/definitions/Success"
-                 }
-              }
-           }
-        },
-        "delete":{
-           "tags":["Commons"],
-           "x-swagger-router-controller":"commons/difficulties",
-           "operationId":"deleteDifficulty",
-           "parameters": [
-             {
-                "name": "id",
-                "in":"path",
-                "type": "string",
-                "required": true
-             }
-           ],
-           "responses":{
-              "default":{
-                 "description":"Unexpected error",
-                 "schema":{
-                    "$ref":"#/definitions/Error"
-                 }
-              },
-              "201":{
-                 "description":"Successful request.",
-                 "schema":{
-                    "$ref":"#/definitions/Success"
-                 }
-              }
-           }
-        }
-      },
-      "/api/commons/litigation-objects": {
-         "get": {
-            "tags": ["Commons"],
-            "x-swagger-router-controller": "commons/litigation-objects",
-            "operationId": "getAllLitigationObjects",
-            "parameters": [],
-            "responses":{
-               "default":{
-                  "description":"Unexpected error",
-                  "schema":{
-                     "$ref":"#/definitions/Error"
-                  }
-               },
-               "200":{
-                  "description":"Successful request.",
-                  "schema":{
-                     "$ref":"#/definitions/getAllLitigationObjects"
-                  }
-               }
-            }
-         },
-         "post": {
-            "tags": ["Commons"],
-            "x-swagger-router-controller": "commons/litigation-objects",
-            "operationId": "postLitigationObject",
-            "parameters": [
-              {
-                "name": "data",
-                "in": "body",
-                "description": "Create Litigation Object",
-                "required": true,
-                "schema": {
-                  "$ref": "#/definitions/postLitigationObject"
-                }
-              }
-            ],
-            "responses": {
-              "default": {
-                "description": "Unexpected error",
-                "schema": {
-                  "$ref": "#/definitions/Error"
-                }
-              },
-              "201": {
-                "description": "Litigation Object Created",
-                "schema": {
-                  "$ref": "#/definitions/Success"
-                }
-              }
-            }
-         }
-      },
-      "/api/commons/litigation-objects/{id}":{
-        "get":{
-           "tags":["Commons"],
-           "x-swagger-router-controller":"commons/litigation-objects",
-           "operationId":"getLitigationObjectById",
-           "parameters": [
-             {
-                "name": "id",
-                "in":"path",
-                "type": "string",
-                "required": true
-             }
-           ],
-           "responses":{
-              "default":{
-                 "description":"Unexpected error",
-                 "schema":{
-                    "$ref":"#/definitions/Error"
-                 }
-              },
-              "200":{
-                 "description":"Successful request.",
-                 "schema":{
-                    "$ref":"#/definitions/getLitigationObject"
-                 }
-              }
-           }
-        },
-        "put":{
-           "tags":["Commons"],
-           "x-swagger-router-controller":"commons/litigation-objects",
-           "operationId":"putLitigationObject",
-           "parameters":[
-              {
-                 "name": "id",
-                 "in":"path",
-                 "type": "string",
-                 "required": true
-              },
-              {
-                 "name":"data",
-                 "in":"body",
-                 "description":"Update Litigation Object",
-                 "required":true,
-                 "schema":{
-                    "$ref":"#/definitions/putLitigationObject"
-                 }
-              }
-           ],
-           "responses":{
-              "default":{
-                 "description":"Unexpected error",
-                 "schema":{
-                    "$ref":"#/definitions/Error"
-                 }
-              },
-              "201":{
-                 "description":"Litigation Object Updated",
-                 "schema":{
-                    "$ref":"#/definitions/Success"
-                 }
-              }
-           }
-        },
-        "delete":{
-           "tags":["Commons"],
-           "x-swagger-router-controller":"commons/litigation-objects",
-           "operationId":"deleteLitigationObject",
-           "parameters": [
-             {
-                "name": "id",
-                "in":"path",
-                "type": "string",
-                "required": true
-             }
-           ],
-           "responses":{
-              "default":{
-                 "description":"Unexpected error",
-                 "schema":{
-                    "$ref":"#/definitions/Error"
-                 }
-              },
-              "201":{
-                 "description":"Successful request.",
-                 "schema":{
-                    "$ref":"#/definitions/Success"
-                 }
-              }
-           }
-        }
-      },
-      "/api/commons/types-discounts": {
-         "get": {
-            "tags": ["Commons"],
-            "x-swagger-router-controller": "commons/types-discounts",
-            "operationId": "getAllTypeDiscounts",
-            "parameters": [],
-            "responses":{
-               "default":{
-                  "description":"Unexpected error",
-                  "schema":{
-                     "$ref":"#/definitions/Error"
-                  }
-               },
-               "200":{
-                  "description":"Successful request.",
-                  "schema":{
-                     "$ref":"#/definitions/getAllTypeDiscounts"
-                  }
-               }
-            }
-         },
-         "post": {
-            "tags": ["Commons"],
-            "x-swagger-router-controller": "commons/types-discounts",
-            "operationId": "postTypeDiscount",
-            "parameters": [
-              {
-                "name": "data",
-                "in": "body",
-                "description": "Create Type Discount",
-                "required": true,
-                "schema": {
-                  "$ref": "#/definitions/postTypeDiscount"
-                }
-              }
-            ],
-            "responses": {
-              "default": {
-                "description": "Unexpected error",
-                "schema": {
-                  "$ref": "#/definitions/Error"
-                }
-              },
-              "201": {
-                "description": "Litigation Type Discount",
-                "schema": {
-                  "$ref": "#/definitions/Success"
-                }
-              }
-            }
-         }
-      },
-      "/api/commons/types-discounts/{id}":{
-        "get":{
-           "tags":["Commons"],
-           "x-swagger-router-controller":"commons/types-discounts",
-           "operationId":"getTypeDiscountById",
-           "parameters": [
-             {
-                "name": "id",
-                "in":"path",
-                "type": "string",
-                "required": true
-             }
-           ],
-           "responses":{
-              "default":{
-                 "description":"Unexpected error",
-                 "schema":{
-                    "$ref":"#/definitions/Error"
-                 }
-              },
-              "200":{
-                 "description":"Successful request.",
-                 "schema":{
-                    "$ref":"#/definitions/getTypeDiscount"
-                 }
-              }
-           }
-        },
-        "put":{
-           "tags":["Commons"],
-           "x-swagger-router-controller":"commons/types-discounts",
-           "operationId":"putTypeDiscount",
-           "parameters":[
-              {
-                 "name": "id",
-                 "in":"path",
-                 "type": "string",
-                 "required": true
-              },
-              {
-                 "name":"data",
-                 "in":"body",
-                 "description":"Update Type Discount",
-                 "required":true,
-                 "schema":{
-                    "$ref":"#/definitions/putTypeDiscount"
-                 }
-              }
-           ],
-           "responses":{
-              "default":{
-                 "description":"Unexpected error",
-                 "schema":{
-                    "$ref":"#/definitions/Error"
-                 }
-              },
-              "201":{
-                 "description":"Litigation Type Discount",
-                 "schema":{
-                    "$ref":"#/definitions/Success"
-                 }
-              }
-           }
-        },
-        "delete":{
-           "tags":["Commons"],
-           "x-swagger-router-controller":"commons/types-discounts",
-           "operationId":"deleteTypeDiscount",
-           "parameters": [
-             {
-                "name": "id",
-                "in":"path",
-                "type": "string",
-                "required": true
-             }
-           ],
-           "responses":{
-              "default":{
-                 "description":"Unexpected error",
-                 "schema":{
-                    "$ref":"#/definitions/Error"
-                 }
-              },
-              "201":{
-                 "description":"Successful request.",
-                 "schema":{
-                    "$ref":"#/definitions/Success"
-                 }
-              }
-           }
-        }
-      }
-   },
-  "definitions": {
-      "Error": {
-         "required": ["message"],
-         "properties": {
-            "entity": {
-               "type": "string"
-            },
-            "message": {
-               "type": "string"
-            }
-         }
-      },
-      "Success": {
-         "required": ["message"],
-         "properties": {
-            "entity": {
-               "type": "string"
-            },
-            "message": {
-               "type": "string"
-            }
-         }
-      },
-      "getAllUsers": {
-         "type": "object",
-         "properties": {
-            "total_rows": { "type": "integer" },
-            "data": {
-               "type": "array",
-               "items": {
-                  "type": "object",
-                  "properties": {
-                     "id": { "type": "string" },
-                     "username": { "type": "string" },
-                     "firstname": { "type": "string" },
-                     "lastname": { "type": "string" },
-                     "email": { "type": "string" },
-                     "birthday": { "type": "string" },
-                     "longitude": { "type": "integer" },
-                     "latitude": { "type": "integer" },
-                     "avatar": { "type": "string" },
-                     "bio": { "type": "string" },
-                     "phone": { "type": "string" },
-                     "total_token": { "type": "integer" },
-                     "createdAt": { "type": "string" },
-                     "updatedAt": { "type": "string" },
-                     "status": {
-                        "type": "object",
-                        "properties": {
-                           "label": { "type": "string" }
-                        }
-                     },
-                     "memberships": {
-                        "type": "array",
-                        "items": {
-                           "type": "object",
-                           "properties": {
-                              "createdAt": { "type": "string" },
-                              "updatedAt": { "type": "string" },
-                              "organization": {
-                                 "type": "object",
-                                 "properties": {
-                                    "id": { "type": "string" },
-                                    "siren": { "type": "string" },
-                                    "siret": { "type": "string" },
-                                    "name": { "type": "string" },
-                                    "email": { "type": "string" },
-                                    "longitude": { "type": "integer" },
-                                    "latitude": { "type": "integer" },
-                                    "creation_date": { "type": "string" },
-                                    "activity": { "type": "string" },
-                                    "address": { "type": "string" },
-                                    "cp": { "type": "integer" },
-                                    "commune": { "type": "string" },
-                                    "logo": { "type": "string" },
-                                    "description": { "type": "string" },
-                                    "link": { "type": "string" },
-                                    "phone": { "type": "string" },
-                                    "createdAt": { "type": "string" },
-                                    "updatedAt": { "type": "string" },
-                                    "status": {
-                                       "type": "object",
-                                       "properties": {
-                                          "label": { "type": "string" }
-                                       }
-                                    }
-                                 }
-                              },
-                              "role": {
-                                 "type": "object",
-                                 "properties": {
-                                    "label": { "type": "string" }
-                                 }
-                              },
-                              "status": {
-                                 "type": "object",
-                                 "properties": {
-                                    "label": { "type": "string" }
-                                 }
-                              }
-                           }
-                        }
-                     }
-                  }
-               }
-            }
-         }
-      },
-      "getUser": {
-         "type": "object",
-         "properties": {
-            "id": { "type": "string" },
-            "username": { "type": "string" },
-            "firstname": { "type": "string" },
-            "lastname": { "type": "string" },
-            "email": { "type": "string" },
-            "birthday": { "type": "string" },
-            "longitude": { "type": "integer" },
-            "latitude": { "type": "integer" },
-            "avatar": { "type": "string" },
-            "bio": { "type": "string" },
-            "phone": { "type": "string" },
-            "total_token": { "type": "integer" },
-            "createdAt": { "type": "string" },
-            "updatedAt": { "type": "string" },
-            "status": {
-               "type": "object",
-               "properties": {
-                  "label": { "type": "string" }
-               }
-            },
-            "memberships": {
-               "type": "array",
-               "items": {
-                  "type": "object",
-                  "properties": {
-                     "createdAt": { "type": "string" },
-                     "updatedAt": { "type": "string" },
-                     "organization": {
-                        "type": "object",
-                        "properties": {
-                           "id": { "type": "string" },
-                           "siren": { "type": "string" },
-                           "siret": { "type": "string" },
-                           "name": { "type": "string" },
-                           "email": { "type": "string" },
-                           "longitude": { "type": "integer" },
-                           "latitude": { "type": "integer" },
-                           "creation_date": { "type": "string" },
-                           "activity": { "type": "string" },
-                           "address": { "type": "string" },
-                           "cp": { "type": "integer" },
-                           "commune": { "type": "string" },
-                           "logo": { "type": "string" },
-                           "description": { "type": "string" },
-                           "link": { "type": "string" },
-                           "phone": { "type": "string" },
-                           "createdAt": { "type": "string" },
-                           "updatedAt": { "type": "string" },
-                           "status": {
-                              "type": "object",
-                              "properties": {
-                                 "label": { "type": "string" }
-                              }
-                           }
-                        }
-                     },
-                     "role": {
-                        "type": "object",
-                        "properties": {
-                           "label": { "type": "string" }
-                        }
-                     },
-                     "status": {
-                        "type": "object",
-                        "properties": {
-                           "label": { "type": "string" }
-                        }
-                     }
-                  }
-               }
-            }
-         }
-      },
-      "putUser":{
-         "type":"object",
-         "properties":{
-            "firstName":{"type":"string"},
-            "lastName":{"type":"string"},
-            "email":{"type":"string"},
-            "bio":{"type":"string"},
-            "phone":{"type":"string"},
-            "longitude":{"type":"integer"},
-            "latitude":{"type":"integer"}
-         },
-         "example":{
-            "firstname": "Quentin",
-            "lastname": "Huber",
-            "email": "h.quentin@totoro.fr",
-            "bio": "Je suis très sympa",
-            "phone": "0751932695",
-            "longitude": 2.43796,
-            "latitude": 48.8268
-         }
-      },
-      "getFavoritesUser": {
-         "type": "object",
-         "properties": {
-            "total_rows": { "type": "integer" },
-            "data": {
-               "type": "array",
-               "items": {
-                  "type": "object",
-                  "properties": {
-                     "id": { "type": "string" },
-                     "user_id": { "type": "string" },
-                     "createdAt": { "type": "string" },
-                     "updatedAt": { "type": "string" },
-                     "organization": {
-                        "type": "object",
-                        "properties": {
-                           "id": { "type": "string" },
-                           "siren": { "type": "string" },
-                           "siret": { "type": "string" },
-                           "name": { "type": "string" },
-                           "email": { "type": "string" },
-                           "longitude": { "type": "integer" },
-                           "latitude": { "type": "integer" },
-                           "creation_date": { "type": "string" },
-                           "activity": { "type": "string" },
-                           "address": { "type": "string" },
-                           "cp": { "type": "integer" },
-                           "commune": { "type": "string" },
-                           "logo": { "type": "string" },
-                           "description": { "type": "string" },
-                           "link": { "type": "string" },
-                           "phone": { "type": "string" },
-                           "createdAt": { "type": "string" },
-                           "updatedAt": { "type": "string" },
-                           "status": {
-                              "type": "object",
-                              "properties": {
-                                 "label": { "type": "string" }
-                              }
-                           }
-                        }
-                     },
-                     "job": {
-                        "type": "object",
-                        "properties": {
-                           "id": { "type": "string" },
-                           "title": { "type": "string" },
-                           "description": { "type": "string" },
-                           "participants_max": { "type": "integer" },
-                           "address": { "type": "string" },
-                           "cp": { "type": "integer" },
-                           "commune": { "type": "string" },
-                           "start_date": { "type": "string" },
-                           "end_date": { "type": "string" },
-                           "createdAt": { "type": "string" },
-                           "updatedAt": { "type": "string" },
-                           "author":{
-                              "type": "object",
-                              "properties": {
-                                 "createdAt": { "type": "string" },
-                                 "updatedAt": { "type": "string" },
-                                 "organization": {
-                                    "type": "object",
-                                    "properties": {
-                                       "id": { "type": "string" },
-                                       "siren": { "type": "string" },
-                                       "siret": { "type": "string" },
-                                       "name": { "type": "string" },
-                                       "email": { "type": "string" },
-                                       "longitude": { "type": "integer" },
-                                       "latitude": { "type": "integer" },
-                                       "creation_date": { "type": "string" },
-                                       "activity": { "type": "string" },
-                                       "address": { "type": "string" },
-                                       "cp": { "type": "integer" },
-                                       "commune": { "type": "string" },
-                                       "logo": { "type": "string" },
-                                       "description": { "type": "string" },
-                                       "link": { "type": "string" },
-                                       "phone": { "type": "string" },
-                                       "createdAt": { "type": "string" },
-                                       "updatedAt": { "type": "string" },
-                                       "status": {
-                                          "type": "object",
-                                          "properties": {
-                                             "label": { "type": "string" }
-                                          }
-                                       }
-                                    }
-                                 },
-                                 "user":{
-                                    "type": "object",
-                                    "properties": {
-                                       "id": { "type": "string" },
-                                       "username": { "type": "string" },
-                                       "firstname": { "type": "string" },
-                                       "lastname": { "type": "string" },
-                                       "email": { "type": "string" },
-                                       "birthday": { "type": "string" },
-                                       "longitude": { "type": "integer" },
-                                       "latitude": { "type": "integer" },
-                                       "avatar": { "type": "string" },
-                                       "bio": { "type": "string" },
-                                       "phone": { "type": "string" },
-                                       "total_token": { "type": "integer" },
-                                       "createdAt": { "type": "string" },
-                                       "updatedAt": { "type": "string" },
-                                       "status": {
-                                          "type": "object",
-                                          "properties": {
-                                             "label": { "type": "string" }
-                                          }
-                                       }
-                                    } 
-                                 },
-                                 "status": {
-                                    "type": "object",
-                                    "properties": {
-                                       "label": { "type": "string" }
-                                    }
-                                 }
-                              }
-                           },
-                           "difficulty": {
-                              "type": "object",
-                              "properties": {
-                                 "level": { "type": "integer" },
-                                 "token": { "type": "integer" }
-                              }
-                           },
-                           "status": {
-                              "type": "object",
-                              "properties": {
-                                 "label": { "type": "string" }
-                              }
-                           }
-                        }
-                     }
-                  }
-               }
-            }
-         }
-      },
-      "postFavotitesUser":{
-         "type":"object",
-         "properties":{
-            "assos_id":{"type":"integer"},
-            "ads_id":{"type":"integer"}
-         },
-         "example":{
-            "assos_id": "561a448e-5ad9-4dd5-8b08-7cc0419824d1"
-         }
-      },
-      "getJobsUser":{
-         "type": "object",
-         "properties": {
-            "id": { "type": "string" },
-            "user_id": { "type": "string" },
-            "createdAt": { "type": "string" },
-            "updatedAt": { "type": "string" },
-            "job": {
-               "type": "object",
-               "properties": {
-                  "id": { "type": "string" },
-                  "title": { "type": "string" },
-                  "description": { "type": "string" },
-                  "participants_max": { "type": "integer" },
-                  "address": { "type": "string" },
-                  "cp": { "type": "integer" },
-                  "commune": { "type": "string" },
-                  "start_date": { "type": "string" },
-                  "end_date": { "type": "string" },
-                  "createdAt": { "type": "string" },
-                  "updatedAt": { "type": "string" },
-                  "author":{
-                     "type": "object",
-                     "properties": {
-                        "createdAt": { "type": "string" },
-                        "updatedAt": { "type": "string" },
-                        "organization": {
-                           "type": "object",
-                           "properties": {
-                              "id": { "type": "string" },
-                              "siren": { "type": "string" },
-                              "siret": { "type": "string" },
-                              "name": { "type": "string" },
-                              "email": { "type": "string" },
-                              "longitude": { "type": "integer" },
-                              "latitude": { "type": "integer" },
-                              "creation_date": { "type": "string" },
-                              "activity": { "type": "string" },
-                              "address": { "type": "string" },
-                              "cp": { "type": "integer" },
-                              "commune": { "type": "string" },
-                              "logo": { "type": "string" },
-                              "description": { "type": "string" },
-                              "link": { "type": "string" },
-                              "phone": { "type": "string" },
-                              "createdAt": { "type": "string" },
-                              "updatedAt": { "type": "string" },
-                              "status": {
-                                 "type": "object",
-                                 "properties": {
-                                    "label": { "type": "string" }
-                                 }
-                              }
-                           }
-                        },
-                        "user":{
-                           "type": "object",
-                           "properties": {
-                              "id": { "type": "string" },
-                              "username": { "type": "string" },
-                              "firstname": { "type": "string" },
-                              "lastname": { "type": "string" },
-                              "email": { "type": "string" },
-                              "birthday": { "type": "string" },
-                              "longitude": { "type": "integer" },
-                              "latitude": { "type": "integer" },
-                              "avatar": { "type": "string" },
-                              "bio": { "type": "string" },
-                              "phone": { "type": "string" },
-                              "total_token": { "type": "integer" },
-                              "createdAt": { "type": "string" },
-                              "updatedAt": { "type": "string" },
-                              "status": {
-                                 "type": "object",
-                                 "properties": {
-                                    "label": { "type": "string" }
-                                 }
-                              }
-                           } 
-                        },
-                        "status": {
-                           "type": "object",
-                           "properties": {
-                              "label": { "type": "string" }
-                           }
-                        }
-                     }
-                  },
-                  "difficulty": {
-                     "type": "object",
-                     "properties": {
-                        "level": { "type": "integer" },
-                        "token": { "type": "integer" }
-                     }
-                  },
-                  "status": {
-                     "type": "object",
-                     "properties": {
-                        "label": { "type": "string" }
-                     }
-                  }
-               }
-            },
-            "status": {
-               "type": "object",
-               "properties": {
-                  "label": { "type": "string" }
-               }
-            }
-         }
-      },
-      "getLitigationsUser":{
-         "type": "object",
-         "properties": {
-            "id": { "type": "string" },
-            "type": { "type": "boolean" },
-            "message": { "type": "string" },
-            "createdAt": { "type": "string" },
-            "updatedAt": { "type": "string" },
-            "status": {
-               "type": "object",
-               "properties": {
-                  "label": { "type": "string" }
-               }
-            },
-            "litigation_object":{
-               "type": "object",
-               "properties": {
-                  "id": { "type": "string" },
-                  "label": { "type": "string" },
-                  "description": { "type": "string" },
-                  "createdAt": { "type": "string" },
-                  "updatedAt": { "type": "string" }
-               }
-            },
-            "mission":{
-               "type": "object",
-               "properties": {
-                  "createdAt": { "type": "string" },
-                  "updatedAt": { "type": "string" },
-                  "job": {
-                     "type": "object",
-                     "properties": {
-                        "id": { "type": "string" },
-                        "title": { "type": "string" },
-                        "description": { "type": "string" },
-                        "participants_max": { "type": "integer" },
-                        "address": { "type": "string" },
-                        "cp": { "type": "integer" },
-                        "commune": { "type": "string" },
-                        "start_date": { "type": "string" },
-                        "end_date": { "type": "string" },
-                        "createdAt": { "type": "string" },
-                        "updatedAt": { "type": "string" },
-                        "author":{
-                           "type": "object",
-                           "properties": {
-                              "createdAt": { "type": "string" },
-                              "updatedAt": { "type": "string" },
-                              "organization": {
-                                 "type": "object",
-                                 "properties": {
-                                    "id": { "type": "string" },
-                                    "siren": { "type": "string" },
-                                    "siret": { "type": "string" },
-                                    "name": { "type": "string" },
-                                    "email": { "type": "string" },
-                                    "longitude": { "type": "integer" },
-                                    "latitude": { "type": "integer" },
-                                    "creation_date": { "type": "string" },
-                                    "activity": { "type": "string" },
-                                    "address": { "type": "string" },
-                                    "cp": { "type": "integer" },
-                                    "commune": { "type": "string" },
-                                    "logo": { "type": "string" },
-                                    "description": { "type": "string" },
-                                    "link": { "type": "string" },
-                                    "phone": { "type": "string" },
-                                    "createdAt": { "type": "string" },
-                                    "updatedAt": { "type": "string" },
-                                    "status": {
-                                       "type": "object",
-                                       "properties": {
-                                          "label": { "type": "string" }
-                                       }
-                                    }
-                                 }
-                              },
-                              "user":{
-                                 "type": "object",
-                                 "properties": {
-                                    "id": { "type": "string" },
-                                    "username": { "type": "string" },
-                                    "firstname": { "type": "string" },
-                                    "lastname": { "type": "string" },
-                                    "email": { "type": "string" },
-                                    "birthday": { "type": "string" },
-                                    "longitude": { "type": "integer" },
-                                    "latitude": { "type": "integer" },
-                                    "avatar": { "type": "string" },
-                                    "bio": { "type": "string" },
-                                    "phone": { "type": "string" },
-                                    "total_token": { "type": "integer" },
-                                    "createdAt": { "type": "string" },
-                                    "updatedAt": { "type": "string" },
-                                    "status": {
-                                       "type": "object",
-                                       "properties": {
-                                          "label": { "type": "string" }
-                                       }
-                                    }
-                                 } 
-                              },
-                              "status": {
-                                 "type": "object",
-                                 "properties": {
-                                    "label": { "type": "string" }
-                                 }
-                              }
-                           }
-                        },
-                        "difficulty": {
-                           "type": "object",
-                           "properties": {
-                              "level": { "type": "integer" },
-                              "token": { "type": "integer" }
-                           }
-                        },
-                        "status": {
-                           "type": "object",
-                           "properties": {
-                              "label": { "type": "string" }
-                           }
-                        }
-                     }
-                  }
-               }
-            }
-         }
-      },
-      "getAllAdmins": {
-         "type": "object",
-         "properties": {
-            "total_rows": { "type": "integer" },
-            "data": {
-               "type": "array",
-               "items": {
-                  "type": "object",
-                  "properties": {
-                     "id": { "type": "string" },
-                     "username": { "type": "string" },
-                     "firstname": { "type": "string" },
-                     "lastname": { "type": "string" },
-                     "email": { "type": "string" },
-                     "createdAt": { "type": "string" },
-                     "updatedAt": { "type": "string" },
-                     "status": {
-                        "type": "object",
-                        "properties": {
-                           "label": { "type": "string" }
-                        }
-                     },
-                     "role": {
-                        "type": "object",
-                        "properties": {
-                           "label": { "type": "string" }
-                        }
-                     }
-                  }
-               }
-            }
-         }
-      },
-      "getAdmin": {
-         "type": "object",
-         "properties": {
-            "id": { "type": "string" },
-            "username": { "type": "string" },
-            "firstname": { "type": "string" },
-            "lastname": { "type": "string" },
-            "email": { "type": "string" },
-            "createdAt": { "type": "string" },
-            "updatedAt": { "type": "string" },
-            "status": {
-               "type": "object",
-               "properties": {
-                  "label": { "type": "string" }
-               }
-            },
-            "role": {
-               "type": "object",
-               "properties": {
-                  "label": { "type": "string" }
-               }
-            }
-         }
-      },
-      "postAdmin": {
-         "type": "object",
-         "properties": {
-           "firstName": { "type": "string" },
-           "lastName": { "type": "string" },
-           "username": { "type": "string" },
-           "email": { "type": "string" },
-           "role_id": { "type": "string" }
-         },
-         "required": ["firstName", "lastName", "username", "email", "role_id"],
-         "example": {
-           "username": "uber",
-           "firstname": "Quentin",
-           "lastname": "Huber",
-           "email": "h.quentin@totoro.fr",
-           "role_id": "1dc4364b-d3d1-4db4-a324-a1271e59dfb1"
-         }
-      },
-      "putPasswordAdmin":{
-         "type":"object",
-         "properties":{
-            "old_password":{"type":"string"},
-            "password":{"type":"string"}
-         },
-         "required":["old_password","password"],
-         "example":{
-            "old_password": "123456",
-            "password": "111111"
-         }
-      },
-      "putAdmin":{
-         "type":"object",
-         "properties":{
-            "firstName":{"type":"string"},
-            "lastName":{"type":"string"},
-            "email":{"type":"string"}
-         },
-         "example":{
-            "firstname": "Quentin",
-            "lastname": "Huber",
-            "email": "h.quentin@totoro.fr"
-         }
-      },
-      "getLogsAdmin":{
-         "type":"object",
-         "properties":{
-            "total_rows": { "type":"integer"},
-            "data":{
-               "type":"array",
-               "items":{
-                  "type":"object",
-                  "properties":{
-                     "id":{ "type":"string"},
-                     "table":{"type":"string"},
-                     "action":{"type":"string"},
-                     "createdAt":{"type":"string"},
-                     "updatedAt":{"type":"string"},
-                     "admin_id":{"type":"string"}
-                  }
-               }
-            }
-         }
-      },
-      "getLogsAdmins":{
-         "type":"object",
-         "properties":{
-            "total_rows": { "type":"integer"},
-            "data":{
-               "type":"array",
-               "items":{
-                  "type":"object",
-                  "properties":{
-                     "id":{ "type":"string"},
-                     "table":{"type":"string"},
-                     "action":{"type":"string"},
-                     "createdAt":{"type":"string"},
-                     "updatedAt":{"type":"string"},
-                     "admin": {
-                        "type":"object",
-                        "properties":{
-                           "id":{ "type":"string"},
-                           "username":{"type":"string"},
-                           "firstname":{"type":"string"},
-                           "lastname":{"type":"string"},
-                           "email":{"type":"string"},
-                           "createdAt":{"type":"string"},
-                           "updatedAt":{"type":"string"},
-                           "status":{
-                              "type":"object",
-                              "properties":{
-                                 "id": {"type":"string"},
-                                 "label": {"type":"string"},
-                                 "createdAt": {"type":"string"},
-                                 "updatedAt": {"type":"string"}
-                              }
-                           },
-                           "role":{
-                                 "type":"object",
-                                 "properties":{
-                                 "id": {"type":"string"},
-                                 "label": {"type":"string"},
-                                 "createdAt": {"type":"string"},
-                                 "updatedAt": {"type":"string"}
-                                 }
-                           }  
-                        }
-                     }
-                  }
-               }
-            }
-         }
-      },
-      "postLogAdmin":{
-         "type":"object",
-         "properties":{
-            "table":{"type":"string"},
-            "action":{"type":"string"}
-         },
-         "required":["table","action"],
-         "example":{
-            "table": "Users",
-            "action": "Deleted"
-         }
-      },
-      "putRoleAdmin":{
-         "type":"object",
-         "properties":{
-            "role_id":{"type":"string"}
-         },
-         "required":["role_id"],
-         "example":{
-            "role_id": "1dc4364b-d3d1-4db4-a324-a1271e59dfb1"
-         }
-      },
-      "loginUser":{
-         "type":"object",
-         "properties":{
-            "emailOrUsername":{"type":"string"},
-            "password":{"type":"string"}
-         },
-         "required":["emailOrUsername","password"],
-         "example":{
-            "emailOrUsername": "admin@test.fr",
-            "password": "xxxxxxx"
-         }
-      },
-      "responseLogin":{
-         "type":"object",
-         "properties":{
-            "token":{"type":"string"}
-         }
-      },
-      "forgot":{
-         "type":"object",
-         "properties":{
-            "email":{"type":"string"}
-         },
-         "required":["email"],
-         "example":{
-            "email": "test@email.fr"
-         }
-      },
-      "signup":{
-         "type":"object",
-         "properties":{
-            "username":{"type":"string"},
-            "firstname":{"type":"string"},
-            "lastname":{"type":"string"},
-            "email":{"type":"string"},
-            "birthday":{"type":"string"},
-            "password":{"type":"string"}
-         },
-         "required":["username","firstname","lastname","email","password","birthday"],
-         "example":{
-            "username": "uber",
-            "firstname": "Quentin",
-            "lastname": "Huber",
-            "email": "h.quentin@totoro.fr",
-            "birthday": "2022-12-08",
-            "password": "123456"
-         }
-      },
-      "getAllApplications": {
-         "type": "object",
-         "properties": {
-            "total_rows": { "type": "integer" },
-            "data": {
-               "type": "array",
-               "items": {
-                  "type": "object",
-                  "properties": {
-                     "id": { "type": "string" },
-                     "name": { "type": "string" },
-                     "createdAt": { "type": "string" },
-                     "updatedAt": { "type": "string" }
-                  }
-               }
-            }
-         }
-      },
-      "getApplication": {
-         "type": "object",
-         "properties": {
-            "id": { "type": "string" },
-            "name": { "type": "string" },
-            "createdAt": { "type": "string" },
-            "updatedAt": { "type": "string" }
-         }
-      },
-      "postApplication": {
-         "type": "object",
-         "properties": {
-           "name": { "type": "string" }
-         },
-         "required": ["name"],
-         "example": {
-           "name": "Test"
-         }
-      },
-      "putApplication":{
-         "type":"object",
-         "properties":{
-            "name":{"type":"string"}
-         },
-         "required":["name"],
-         "example":{
-            "name": "Tests"
-         }
-      },
-      "getAllRoles": {
-         "type": "object",
-         "properties": {
-            "total_rows": { "type": "integer" },
-            "data": {
-               "type": "array",
-               "items": {
-                  "type": "object",
-                  "properties": {
-                     "id": { "type": "string" },
-                     "label": { "type": "string" },
-                     "type": { "type": "string" },
-                     "createdAt": { "type": "string" },
-                     "updatedAt": { "type": "string" }
-                  }
-               }
-            }
-         }
-      },
-      "getRole": {
-         "type": "object",
-         "properties": {
-            "id": { "type": "string" },
-            "label": { "type": "string" },
-            "type": { "type": "string" },
-            "createdAt": { "type": "string" },
-            "updatedAt": { "type": "string" }
-         }
-      },
-      "postRole": {
-         "type": "object",
-         "properties": {
-           "label": { "type": "string" },
-           "type": { "type": "string" }
-         },
-         "required": ["label", "type"],
-         "example": {
-           "label": "Test",
-           "type": "Test"
-         }
-      },
-      "putRole":{
-         "type":"object",
-         "properties":{
-            "label":{"type":"string"},
-            "type":{"type":"string"}
-         },
-         "required":["label", "type"],
-         "example":{
-            "label": "Tests",
-            "type": "Tests"
-         }
-      },
-      "getAllCommons": {
-         "type": "object",
-         "properties": {
-            "total_rows": { "type": "integer" },
-            "data": {
-               "type": "array",
-               "items": {
-                  "type": "object",
-                  "properties": {
-                     "id": { "type": "string" },
-                     "label": { "type": "string" },
-                     "createdAt": { "type": "string" },
-                     "updatedAt": { "type": "string" }
-                  }
-               }
-            }
-         }
-      },
-      "getCommon": {
-         "type": "object",
-         "properties": {
-            "id": { "type": "string" },
-            "label": { "type": "string" },
-            "createdAt": { "type": "string" },
-            "updatedAt": { "type": "string" }
-         }
-      },
-      "postCommon": {
-         "type": "object",
-         "properties": {
-           "label": { "type": "string" }
-         },
-         "required": ["label"],
-         "example": {
-           "label": "Test"
-         }
-      },
-      "putCommon":{
-         "type":"object",
-         "properties":{
-            "label":{"type":"string"}
-         },
-         "required":["label"],
-         "example":{
-            "label": "Tests"
-         }
-      },
-      "getAllLitigationObjects": {
-         "type": "object",
-         "properties": {
-            "total_rows": { "type": "integer" },
-            "data": {
-               "type": "array",
-               "items": {
-                  "type": "object",
-                  "properties": {
-                     "id": { "type": "string" },
-                     "label": { "type": "string" },
-                     "description": { "type": "string" },
-                     "createdAt": { "type": "string" },
-                     "updatedAt": { "type": "string" }
-                  }
-               }
-            }
-         }
-      },
-      "getLitigationObject": {
-         "type": "object",
-         "properties": {
-            "id": { "type": "string" },
-            "label": { "type": "string" },
-            "description": { "type": "string" },
-            "createdAt": { "type": "string" },
-            "updatedAt": { "type": "string" }
-         }
-      },
-      "postLitigationObject": {
-         "type": "object",
-         "properties": {
-           "label": { "type": "string" },
-           "description": { "type": "string" }
-         },
-         "required": ["label", "description"],
-         "example": {
-           "label": "Test",
-           "description": "Lorem ipsum, bla bla bla"
-         }
-      },
-      "putLitigationObject":{
-         "type":"object",
-         "properties":{
-            "label":{"type":"string"},
-            "description":{"type":"string"}
-         },
-         "required":["label", "description"],
-         "example":{
-            "label": "Tests",
-            "description": "Lorem ipsum, bla bla bla "
-         }
-      },
-      "getAllDifficulties": {
-         "type": "object",
-         "properties": {
-            "total_rows": { "type": "integer" },
-            "data": {
-               "type": "array",
-               "items": {
-                  "type": "object",
-                  "properties": {
-                     "id": { "type": "string" },
-                     "level": { "type": "integer" },
-                     "token": { "type": "integer" },
-                     "createdAt": { "type": "string" },
-                     "updatedAt": { "type": "string" }
-                  }
-               }
-            }
-         }
-      },
-      "getDifficulty": {
-         "type": "object",
-         "properties": {
-            "id": { "type": "string" },
-            "level": { "type": "integer" },
-            "token": { "type": "integer" },
-            "createdAt": { "type": "string" },
-            "updatedAt": { "type": "string" }
-         }
-      },
-      "postDifficulty": {
-         "type": "object",
-         "properties": {
-            "level": { "type": "integer" },
-            "token": { "type": "integer" }
-         },
-         "required": ["level", "token"],
-         "example": {
-           "level": 1,
-           "token": 12
-         }
-      },
-      "putDifficulty":{
-         "type":"object",
-         "properties":{
-            "level": { "type": "integer" },
-            "token": { "type": "integer" }
-         },
-         "required":["level", "token"],
-         "example":{
-            "level": 1,
-            "token": 5
-         }
-      },
-      "getAllTypeDiscounts": {
-         "type": "object",
-         "properties": {
-            "total_rows": { "type": "integer" },
-            "data": {
-               "type": "array",
-               "items": {
-                  "type": "object",
-                  "properties": {
-                     "id": { "type": "string" },
-                     "name": { "type": "string" },
-                     "type": { "type": "string" },
-                     "createdAt": { "type": "string" },
-                     "updatedAt": { "type": "string" }
-                  }
-               }
-            }
-         }
-      },
-      "getTypeDiscount": {
-         "type": "object",
-         "properties": {
-            "id": { "type": "string" },
-            "name": { "type": "string" },
-            "type": { "type": "string" },
-            "createdAt": { "type": "string" },
-            "updatedAt": { "type": "string" }
-         }
-      },
-      "postTypeDiscount": {
-         "type": "object",
-         "properties": {
-           "name": { "type": "string" },
-           "type": { "type": "string" }
-         },
-         "required": ["name", "type"],
-         "example": {
-           "name": "Montant",
-           "type": "Number"
-         }
-      },
-      "putTypeDiscount":{
-         "type":"object",
-         "properties":{
-            "name":{"type":"string"},
-            "type":{"type":"string"}
-         },
-         "required":["name", "type"],
-         "example":{
-            "name": "Montant",
-            "type": "Number"
-         }
-      },
-      "getAllPricings": {
-         "type": "object",
-         "properties": {
-            "total_rows": { "type": "integer" },
-            "data": {
-               "type": "array",
-               "items": {
-                  "type": "object",
-                  "properties": {
-                     "id": { "type": "string" },
-                     "label": { "type": "string" },
-                     "description": { "type": "string" },
-                     "duration": { "type": "integer" },
-                     "nb_account": { "type": "integer" },
-                     "nb_ads_by_month": { "type": "integer" },
-                     "price": { "type": "integer" },
-                     "createdAt": { "type": "string" },
-                     "updatedAt": { "type": "string" }
-                  }
-               }
-            }
-         }
-      },
-      "getPricing": {
-         "type": "object",
-         "properties": {
-            "id": { "type": "string" },
-            "label": { "type": "string" },
-            "description": { "type": "string" },
-            "duration": { "type": "integer" },
-            "nb_account": { "type": "integer" },
-            "nb_ads_by_month": { "type": "integer" },
-            "price": { "type": "integer" },
-            "createdAt": { "type": "string" },
-            "updatedAt": { "type": "string" }
-         }
-      },
-      "postPricing": {
-         "type": "object",
-         "properties": {
-           "label": { "type": "string" },
-           "description": { "type": "string" },
-           "duration": { "type": "integer" },
-           "nb_account": { "type": "integer" },
-           "nb_ads_by_month": { "type": "integer" },
-           "price": { "type": "integer" }
-         },
-         "required": ["label", "description", "duration", "nb_account", "nb_ads_by_month", "price"],
-         "example": {
-           "label": "Test",
-           "description": "Lorem ipsum, bla bla bla",
-           "duration": 1,
-           "nb_account": 5,
-           "nb_ads_by_month": 7,
-           "price": 9.99
-         }
-      },
-      "putPricing":{
-         "type":"object",
-         "properties":{
-            "label":{"type":"string"},
-            "description":{"type":"string"},
-            "duration": { "type": "integer" },
-            "nb_account": { "type": "integer" },
-            "nb_ads_by_month": { "type": "integer" },
-            "price": { "type": "integer" }
-         },
-         "required":["label", "description", "duration", "nb_account", "nb_ads_by_month", "price"],
-         "example":{
-            "label": "Tests",
-            "description": "Lorem ipsum, bla bla bla ",
-            "duration": 1,
-            "nb_account": 5,
-            "nb_ads_by_month": 7,
-            "price": 9.99
-         }
-      }
-   }
+	"swagger": "2.0",
+	"info": {
+		"title": "API",
+		"description": "Totoro API Information",
+		"version": "1.0"
+	},
+	"securityDefinitions": {
+		"ApiKeyAuth": {
+			"type": "apiKey",
+			"in": "header",
+			"name": "app_id"
+		},
+		"bearerAuth": {
+			"name": "Authorization",
+			"in": "header",
+			"type": "apiKey",
+			"description": "JWT Authorization header"
+		}
+	},
+	"security": [{ "ApiKeyAuth": [] }, { "bearerAuth": [] }],
+	"tags": [
+		{ "name": "Authentification" },
+		{ "name": "Users" },
+		{ "name": "Admins" },
+		{ "name": "Commons" },
+		{ "name": "Applications" }
+	],
+	"paths": {
+		"/api/users": {
+			"get": {
+				"tags": ["Users"],
+				"x-swagger-router-controller": "users",
+				"operationId": "getAllUsers",
+				"parameters": [
+					{
+						"name": "status",
+						"in": "query",
+						"type": "string",
+						"required": false,
+						"enum": ["actived", "disabled", "deleted"]
+					}
+				],
+				"responses": {
+					"default": {
+						"description": "Unexpected error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"200": {
+						"description": "Successful request.",
+						"schema": {
+							"$ref": "#/definitions/getAllUsers"
+						}
+					}
+				}
+			}
+		},
+		"/api/users/{id}": {
+			"get": {
+				"tags": ["Users"],
+				"x-swagger-router-controller": "users",
+				"operationId": "getUserById",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"type": "string",
+						"required": true
+					}
+				],
+				"responses": {
+					"default": {
+						"description": "Unexpected error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"200": {
+						"description": "Successful request.",
+						"schema": {
+							"$ref": "#/definitions/getUser"
+						}
+					}
+				}
+			},
+			"put": {
+				"tags": ["Users"],
+				"x-swagger-router-controller": "users",
+				"operationId": "putUser",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"type": "string",
+						"required": true
+					},
+					{
+						"name": "data",
+						"in": "body",
+						"description": "Update User",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/putUser"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"description": "Unexpected error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"201": {
+						"description": "User Updated",
+						"schema": {
+							"$ref": "#/definitions/Success"
+						}
+					}
+				}
+			},
+			"delete": {
+				"tags": ["Users"],
+				"x-swagger-router-controller": "users",
+				"operationId": "deleteUser",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"type": "string",
+						"required": true
+					}
+				],
+				"responses": {
+					"default": {
+						"description": "Unexpected error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"201": {
+						"description": "Successful request.",
+						"schema": {
+							"$ref": "#/definitions/Success"
+						}
+					}
+				}
+			}
+		},
+		"/api/users/change/password": {
+			"put": {
+				"tags": ["Users"],
+				"x-swagger-router-controller": "users",
+				"operationId": "changePasswordUser",
+				"parameters": [
+					{
+						"name": "data",
+						"in": "body",
+						"description": "Change password User",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/putPasswordAdmin"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"description": "Unexpected error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"201": {
+						"description": "Password Updated",
+						"schema": {
+							"$ref": "#/definitions/Success"
+						}
+					}
+				}
+			}
+		},
+		"/api/users/{id}/favorites": {
+			"get": {
+				"tags": ["Users"],
+				"x-swagger-router-controller": "users",
+				"operationId": "getFavotitesUser",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"type": "string",
+						"required": true
+					}
+				],
+				"responses": {
+					"default": {
+						"description": "Unexpected error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"200": {
+						"description": "Successful request.",
+						"schema": {
+							"$ref": "#/definitions/getFavoritesUser"
+						}
+					}
+				}
+			},
+			"post": {
+				"tags": ["Users"],
+				"x-swagger-router-controller": "users",
+				"operationId": "postFavotitesUser",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"type": "string",
+						"required": true
+					},
+					{
+						"name": "data",
+						"in": "body",
+						"description": "Add Favorite for User",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/postFavotitesUser"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"description": "Unexpected error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"201": {
+						"description": "Favorite added",
+						"schema": {
+							"$ref": "#/definitions/Success"
+						}
+					}
+				}
+			}
+		},
+		"/api/users/favorites/{favotiteId}": {
+			"delete": {
+				"tags": ["Users"],
+				"x-swagger-router-controller": "users",
+				"operationId": "deleteFavoriteUser",
+				"parameters": [
+					{
+						"name": "favotiteId",
+						"in": "path",
+						"type": "string",
+						"required": true
+					}
+				],
+				"responses": {
+					"default": {
+						"description": "Unexpected error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"201": {
+						"description": "Successful request.",
+						"schema": {
+							"$ref": "#/definitions/Success"
+						}
+					}
+				}
+			}
+		},
+		"/api/users/{id}/jobs": {
+			"get": {
+				"tags": ["Users"],
+				"x-swagger-router-controller": "users",
+				"operationId": "getJobsUser",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"type": "string",
+						"required": true
+					}
+				],
+				"responses": {
+					"default": {
+						"description": "Unexpected error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"200": {
+						"description": "Successful request.",
+						"schema": {
+							"$ref": "#/definitions/getJobsUser"
+						}
+					}
+				}
+			}
+		},
+		"/api/users/{id}/litigations": {
+			"get": {
+				"tags": ["Users"],
+				"x-swagger-router-controller": "users",
+				"operationId": "getLitigationsUser",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"type": "string",
+						"required": true
+					}
+				],
+				"responses": {
+					"default": {
+						"description": "Unexpected error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"200": {
+						"description": "Successful request.",
+						"schema": {
+							"$ref": "#/definitions/getLitigationsUser"
+						}
+					}
+				}
+			}
+		},
+		"/api/admins": {
+			"get": {
+				"tags": ["Admins"],
+				"x-swagger-router-controller": "admins",
+				"operationId": "getAllAdmins",
+				"parameters": [
+					{
+						"name": "status",
+						"in": "query",
+						"type": "string",
+						"required": false,
+						"enum": ["actived", "disabled", "deleted"]
+					},
+					{
+						"name": "role",
+						"in": "query",
+						"type": "string",
+						"required": false,
+						"enum": ["Moderateur", "Administrateur", "Comptable"]
+					}
+				],
+				"responses": {
+					"default": {
+						"description": "Unexpected error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"200": {
+						"description": "Successful request.",
+						"schema": {
+							"$ref": "#/definitions/getAllAdmins"
+						}
+					}
+				}
+			},
+			"post": {
+				"tags": ["Admins"],
+				"x-swagger-router-controller": "admins",
+				"operationId": "postAdmin",
+				"parameters": [
+					{
+						"name": "data",
+						"in": "body",
+						"description": "Create Admin",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/postAdmin"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"description": "Unexpected error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"201": {
+						"description": "Admin Created"
+					}
+				}
+			}
+		},
+		"/api/admins/{id}": {
+			"get": {
+				"tags": ["Admins"],
+				"x-swagger-router-controller": "admins",
+				"operationId": "getAdminById",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"type": "string",
+						"required": true
+					}
+				],
+				"responses": {
+					"default": {
+						"description": "Unexpected error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"200": {
+						"description": "Successful request.",
+						"schema": {
+							"$ref": "#/definitions/getAdmin"
+						}
+					}
+				}
+			},
+			"put": {
+				"tags": ["Admins"],
+				"x-swagger-router-controller": "admins",
+				"operationId": "putAdmin",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"type": "string",
+						"required": true
+					},
+					{
+						"name": "data",
+						"in": "body",
+						"description": "Update Admin",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/putAdmin"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"description": "Unexpected error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"201": {
+						"description": "Admin Updated",
+						"schema": {
+							"$ref": "#/definitions/Success"
+						}
+					}
+				}
+			},
+			"delete": {
+				"tags": ["Admins"],
+				"x-swagger-router-controller": "admins",
+				"operationId": "deleteAdmin",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"type": "string",
+						"required": true
+					}
+				],
+				"responses": {
+					"default": {
+						"description": "Unexpected error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"201": {
+						"description": "Successful request.",
+						"schema": {
+							"$ref": "#/definitions/Success"
+						}
+					}
+				}
+			}
+		},
+		"/api/admins/change/password": {
+			"put": {
+				"tags": ["Admins"],
+				"x-swagger-router-controller": "admins",
+				"operationId": "changePasswordAdmin",
+				"parameters": [
+					{
+						"name": "data",
+						"in": "body",
+						"description": "Change password Admin",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/putPasswordAdmin"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"description": "Unexpected error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"201": {
+						"description": "Password Updated",
+						"schema": {
+							"$ref": "#/definitions/Success"
+						}
+					}
+				}
+			}
+		},
+		"/api/admins/{id}/role": {
+			"put": {
+				"tags": ["Admins"],
+				"x-swagger-router-controller": "admins",
+				"operationId": "putAdmin",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"type": "string",
+						"required": true
+					},
+					{
+						"name": "data",
+						"in": "body",
+						"description": "Update Admin role",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/putRoleAdmin"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"description": "Unexpected error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"201": {
+						"description": "Role Updated",
+						"schema": {
+							"$ref": "#/definitions/Success"
+						}
+					}
+				}
+			}
+		},
+		"/api/admins/{id}/logs": {
+			"get": {
+				"tags": ["Admins"],
+				"x-swagger-router-controller": "admins",
+				"operationId": "getLogsAdminById",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"type": "string",
+						"required": true
+					},
+					{
+						"name": "start_date",
+						"in": "query",
+						"type": "string",
+						"required": false
+					},
+					{
+						"name": "end_date",
+						"in": "query",
+						"type": "string",
+						"required": false
+					}
+				],
+				"responses": {
+					"default": {
+						"description": "Unexpected error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"200": {
+						"description": "Successful request.",
+						"schema": {
+							"$ref": "#/definitions/getLogsAdmin"
+						}
+					}
+				}
+			},
+			"post": {
+				"tags": ["Admins"],
+				"x-swagger-router-controller": "admins",
+				"operationId": "postLogAdmin",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"type": "string",
+						"required": true
+					},
+					{
+						"name": "data",
+						"in": "body",
+						"description": "Post log Admin",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/postLogAdmin"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"description": "Unexpected error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"201": {
+						"description": "Successful request.",
+						"schema": {
+							"$ref": "#/definitions/Success"
+						}
+					}
+				}
+			}
+		},
+		"/api/admins/logs/getAll": {
+			"get": {
+				"tags": ["Admins"],
+				"x-swagger-router-controller": "admins",
+				"operationId": "getLogsAdmins",
+				"parameters": [
+					{
+						"name": "start_date",
+						"in": "query",
+						"type": "string",
+						"required": false
+					},
+					{
+						"name": "end_date",
+						"in": "query",
+						"type": "string",
+						"required": false
+					}
+				],
+				"responses": {
+					"default": {
+						"description": "Unexpected error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"200": {
+						"description": "Successful request.",
+						"schema": {
+							"$ref": "#/definitions/getLogsAdmins"
+						}
+					}
+				}
+			}
+		},
+		"/api/admins/logs/truncate": {
+			"delete": {
+				"tags": ["Admins"],
+				"x-swagger-router-controller": "admins",
+				"operationId": "truncateLogsAdmins",
+				"parameters": [
+					{
+						"name": "start_date",
+						"in": "query",
+						"type": "string",
+						"required": false
+					},
+					{
+						"name": "end_date",
+						"in": "query",
+						"type": "string",
+						"required": false
+					}
+				],
+				"responses": {
+					"default": {
+						"description": "Unexpected error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"201": {
+						"description": "Successful request.",
+						"schema": {
+							"$ref": "#/definitions/Success"
+						}
+					}
+				}
+			}
+		},
+		"/api/auth/login": {
+			"post": {
+				"tags": ["Authentification"],
+				"x-swagger-router-controller": "auth",
+				"operationId": "login",
+				"parameters": [
+					{
+						"name": "data",
+						"in": "body",
+						"description": "Login user",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/loginUser"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"description": "Unexpected error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"201": {
+						"description": "User logged",
+						"schema": {
+							"$ref": "#/definitions/responseLogin"
+						}
+					}
+				}
+			}
+		},
+		"/api/auth/login/admin": {
+			"post": {
+				"tags": ["Authentification"],
+				"x-swagger-router-controller": "auth",
+				"operationId": "loginAmin",
+				"parameters": [
+					{
+						"name": "data",
+						"in": "body",
+						"description": "Login admin",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/loginUser"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"description": "Unexpected error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"201": {
+						"description": "Admin logged",
+						"schema": {
+							"$ref": "#/definitions/responseLogin"
+						}
+					}
+				}
+			}
+		},
+		"/api/auth/signup": {
+			"post": {
+				"tags": ["Authentification"],
+				"x-swagger-router-controller": "auth",
+				"operationId": "signup",
+				"parameters": [
+					{
+						"name": "data",
+						"in": "body",
+						"description": "create an account",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/signup"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"description": "Unexpected error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"201": {
+						"description": "User created",
+						"schema": {
+							"$ref": "#/definitions/Success"
+						}
+					}
+				}
+			}
+		},
+		"/api/auth/forgot": {
+			"post": {
+				"tags": ["Authentification"],
+				"x-swagger-router-controller": "auth",
+				"operationId": "forgot",
+				"parameters": [
+					{
+						"name": "data",
+						"in": "body",
+						"description": "Forgot password",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/forgot"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"description": "Unexpected error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"201": {
+						"description": "Forgot your password",
+						"schema": {
+							"$ref": "#/definitions/Success"
+						}
+					}
+				}
+			}
+		},
+		"/api/auth/connected": {
+			"get": {
+				"tags": ["Authentification"],
+				"x-swagger-router-controller": "auth",
+				"operationId": "connected",
+				"parameters": [],
+				"responses": {
+					"default": {
+						"description": "Unexpected error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"201": {
+						"description": "get user connected (getAdmin or getUser model)"
+					}
+				}
+			}
+		},
+		"/api/applications": {
+			"get": {
+				"tags": ["Applications"],
+				"x-swagger-router-controller": "applications",
+				"operationId": "getAllApplications",
+				"parameters": [],
+				"responses": {
+					"default": {
+						"description": "Unexpected error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"200": {
+						"description": "Successful request.",
+						"schema": {
+							"$ref": "#/definitions/getAllApplications"
+						}
+					}
+				}
+			},
+			"post": {
+				"tags": ["Applications"],
+				"x-swagger-router-controller": "applications",
+				"operationId": "postApplication",
+				"parameters": [
+					{
+						"name": "data",
+						"in": "body",
+						"description": "Create Application",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/postApplication"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"description": "Unexpected error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"201": {
+						"description": "Application Created",
+						"schema": {
+							"$ref": "#/definitions/Success"
+						}
+					}
+				}
+			}
+		},
+		"/api/applications/{id}": {
+			"get": {
+				"tags": ["Applications"],
+				"x-swagger-router-controller": "applications",
+				"operationId": "getApplicationById",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"type": "string",
+						"required": true
+					}
+				],
+				"responses": {
+					"default": {
+						"description": "Unexpected error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"200": {
+						"description": "Successful request.",
+						"schema": {
+							"$ref": "#/definitions/getApplication"
+						}
+					}
+				}
+			},
+			"put": {
+				"tags": ["Applications"],
+				"x-swagger-router-controller": "applications",
+				"operationId": "putApplication",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"type": "string",
+						"required": true
+					},
+					{
+						"name": "data",
+						"in": "body",
+						"description": "Update Application",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/putApplication"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"description": "Unexpected error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"201": {
+						"description": "Application Updated",
+						"schema": {
+							"$ref": "#/definitions/Success"
+						}
+					}
+				}
+			},
+			"delete": {
+				"tags": ["Applications"],
+				"x-swagger-router-controller": "applications",
+				"operationId": "deleteApplication",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"type": "string",
+						"required": true
+					}
+				],
+				"responses": {
+					"default": {
+						"description": "Unexpected error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"201": {
+						"description": "Successful request.",
+						"schema": {
+							"$ref": "#/definitions/Success"
+						}
+					}
+				}
+			}
+		},
+		"/api/commons/status": {
+			"get": {
+				"tags": ["Commons"],
+				"x-swagger-router-controller": "commons/status",
+				"operationId": "getAllStatus",
+				"parameters": [],
+				"responses": {
+					"default": {
+						"description": "Unexpected error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"200": {
+						"description": "Successful request.",
+						"schema": {
+							"$ref": "#/definitions/getAllCommons"
+						}
+					}
+				}
+			},
+			"post": {
+				"tags": ["Commons"],
+				"x-swagger-router-controller": "commons/status",
+				"operationId": "postStatus",
+				"parameters": [
+					{
+						"name": "data",
+						"in": "body",
+						"description": "Create Status",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/postCommon"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"description": "Unexpected error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"201": {
+						"description": "Status Created",
+						"schema": {
+							"$ref": "#/definitions/Success"
+						}
+					}
+				}
+			}
+		},
+		"/api/commons/status/{id}": {
+			"get": {
+				"tags": ["Commons"],
+				"x-swagger-router-controller": "commons/status",
+				"operationId": "getStatusById",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"type": "string",
+						"required": true
+					}
+				],
+				"responses": {
+					"default": {
+						"description": "Unexpected error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"200": {
+						"description": "Successful request.",
+						"schema": {
+							"$ref": "#/definitions/getCommon"
+						}
+					}
+				}
+			},
+			"put": {
+				"tags": ["Commons"],
+				"x-swagger-router-controller": "commons/status",
+				"operationId": "putStatus",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"type": "string",
+						"required": true
+					},
+					{
+						"name": "data",
+						"in": "body",
+						"description": "Update Status",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/putCommon"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"description": "Unexpected error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"201": {
+						"description": "Status Updated",
+						"schema": {
+							"$ref": "#/definitions/Success"
+						}
+					}
+				}
+			},
+			"delete": {
+				"tags": ["Commons"],
+				"x-swagger-router-controller": "commons/status",
+				"operationId": "deleteStatus",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"type": "string",
+						"required": true
+					}
+				],
+				"responses": {
+					"default": {
+						"description": "Unexpected error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"201": {
+						"description": "Successful request.",
+						"schema": {
+							"$ref": "#/definitions/Success"
+						}
+					}
+				}
+			}
+		},
+		"/api/commons/roles": {
+			"get": {
+				"tags": ["Commons"],
+				"x-swagger-router-controller": "commons/roles",
+				"operationId": "getAllRoles",
+				"parameters": [],
+				"responses": {
+					"default": {
+						"description": "Unexpected error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"200": {
+						"description": "Successful request.",
+						"schema": {
+							"$ref": "#/definitions/getAllRoles"
+						}
+					}
+				}
+			},
+			"post": {
+				"tags": ["Commons"],
+				"x-swagger-router-controller": "commons/roles",
+				"operationId": "postRole",
+				"parameters": [
+					{
+						"name": "data",
+						"in": "body",
+						"description": "Create Role",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/postRole"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"description": "Unexpected error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"201": {
+						"description": "Role Created",
+						"schema": {
+							"$ref": "#/definitions/Success"
+						}
+					}
+				}
+			}
+		},
+		"/api/commons/roles/{id}": {
+			"get": {
+				"tags": ["Commons"],
+				"x-swagger-router-controller": "commons/roles",
+				"operationId": "getRoleById",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"type": "string",
+						"required": true
+					}
+				],
+				"responses": {
+					"default": {
+						"description": "Unexpected error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"200": {
+						"description": "Successful request.",
+						"schema": {
+							"$ref": "#/definitions/getRole"
+						}
+					}
+				}
+			},
+			"put": {
+				"tags": ["Commons"],
+				"x-swagger-router-controller": "commons/roles",
+				"operationId": "putRole",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"type": "string",
+						"required": true
+					},
+					{
+						"name": "data",
+						"in": "body",
+						"description": "Update Role",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/putRole"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"description": "Unexpected error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"201": {
+						"description": "Role Updated",
+						"schema": {
+							"$ref": "#/definitions/Success"
+						}
+					}
+				}
+			},
+			"delete": {
+				"tags": ["Commons"],
+				"x-swagger-router-controller": "commons/roles",
+				"operationId": "deleteRole",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"type": "string",
+						"required": true
+					}
+				],
+				"responses": {
+					"default": {
+						"description": "Unexpected error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"201": {
+						"description": "Successful request.",
+						"schema": {
+							"$ref": "#/definitions/Success"
+						}
+					}
+				}
+			}
+		},
+		"/api/commons/tags": {
+			"get": {
+				"tags": ["Commons"],
+				"x-swagger-router-controller": "commons/tags",
+				"operationId": "getAllTags",
+				"parameters": [],
+				"responses": {
+					"default": {
+						"description": "Unexpected error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"200": {
+						"description": "Successful request.",
+						"schema": {
+							"$ref": "#/definitions/getAllCommons"
+						}
+					}
+				}
+			},
+			"post": {
+				"tags": ["Commons"],
+				"x-swagger-router-controller": "commons/tags",
+				"operationId": "postTag",
+				"parameters": [
+					{
+						"name": "data",
+						"in": "body",
+						"description": "Create Tag",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/postCommon"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"description": "Unexpected error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"201": {
+						"description": "Tag Created",
+						"schema": {
+							"$ref": "#/definitions/Success"
+						}
+					}
+				}
+			}
+		},
+		"/api/commons/tags/{id}": {
+			"get": {
+				"tags": ["Commons"],
+				"x-swagger-router-controller": "commons/tags",
+				"operationId": "getTagById",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"type": "string",
+						"required": true
+					}
+				],
+				"responses": {
+					"default": {
+						"description": "Unexpected error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"200": {
+						"description": "Successful request.",
+						"schema": {
+							"$ref": "#/definitions/getCommon"
+						}
+					}
+				}
+			},
+			"put": {
+				"tags": ["Commons"],
+				"x-swagger-router-controller": "commons/tags",
+				"operationId": "putTag",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"type": "string",
+						"required": true
+					},
+					{
+						"name": "data",
+						"in": "body",
+						"description": "Update Tag",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/putCommon"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"description": "Unexpected error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"201": {
+						"description": "Tag Updated",
+						"schema": {
+							"$ref": "#/definitions/Success"
+						}
+					}
+				}
+			},
+			"delete": {
+				"tags": ["Commons"],
+				"x-swagger-router-controller": "commons/tags",
+				"operationId": "deleteTag",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"type": "string",
+						"required": true
+					}
+				],
+				"responses": {
+					"default": {
+						"description": "Unexpected error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"201": {
+						"description": "Successful request.",
+						"schema": {
+							"$ref": "#/definitions/Success"
+						}
+					}
+				}
+			}
+		},
+		"/api/commons/pricings": {
+			"get": {
+				"tags": ["Commons"],
+				"x-swagger-router-controller": "commons/pricings",
+				"operationId": "getAllPricings",
+				"parameters": [],
+				"responses": {
+					"default": {
+						"description": "Unexpected error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"200": {
+						"description": "Successful request.",
+						"schema": {
+							"$ref": "#/definitions/getAllPricings"
+						}
+					}
+				}
+			},
+			"post": {
+				"tags": ["Commons"],
+				"x-swagger-router-controller": "commons/pricings",
+				"operationId": "postPricing",
+				"parameters": [
+					{
+						"name": "data",
+						"in": "body",
+						"description": "Create Pricing",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/postPricing"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"description": "Unexpected error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"201": {
+						"description": "Pricing Created",
+						"schema": {
+							"$ref": "#/definitions/Success"
+						}
+					}
+				}
+			}
+		},
+		"/api/commons/pricings/{id}": {
+			"get": {
+				"tags": ["Commons"],
+				"x-swagger-router-controller": "commons/pricings",
+				"operationId": "getPricingById",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"type": "string",
+						"required": true
+					}
+				],
+				"responses": {
+					"default": {
+						"description": "Unexpected error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"200": {
+						"description": "Successful request.",
+						"schema": {
+							"$ref": "#/definitions/getPricing"
+						}
+					}
+				}
+			},
+			"put": {
+				"tags": ["Commons"],
+				"x-swagger-router-controller": "commons/pricings",
+				"operationId": "putPricing",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"type": "string",
+						"required": true
+					},
+					{
+						"name": "data",
+						"in": "body",
+						"description": "Update Pricing",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/putPricing"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"description": "Unexpected error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"201": {
+						"description": "Pricing Updated",
+						"schema": {
+							"$ref": "#/definitions/Success"
+						}
+					}
+				}
+			},
+			"delete": {
+				"tags": ["Commons"],
+				"x-swagger-router-controller": "commons/pricings",
+				"operationId": "deletePricing",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"type": "string",
+						"required": true
+					}
+				],
+				"responses": {
+					"default": {
+						"description": "Unexpected error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"201": {
+						"description": "Successful request.",
+						"schema": {
+							"$ref": "#/definitions/Success"
+						}
+					}
+				}
+			}
+		},
+		"/api/commons/difficulties": {
+			"get": {
+				"tags": ["Commons"],
+				"x-swagger-router-controller": "commons/difficulties",
+				"operationId": "getAllDifficulties",
+				"parameters": [],
+				"responses": {
+					"default": {
+						"description": "Unexpected error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"200": {
+						"description": "Successful request.",
+						"schema": {
+							"$ref": "#/definitions/getAllDifficulties"
+						}
+					}
+				}
+			},
+			"post": {
+				"tags": ["Commons"],
+				"x-swagger-router-controller": "commons/difficulties",
+				"operationId": "postDifficulty",
+				"parameters": [
+					{
+						"name": "data",
+						"in": "body",
+						"description": "Create Difficulty",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/postDifficulty"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"description": "Unexpected error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"201": {
+						"description": "Difficulty Created",
+						"schema": {
+							"$ref": "#/definitions/Success"
+						}
+					}
+				}
+			}
+		},
+		"/api/commons/difficulties/{id}": {
+			"get": {
+				"tags": ["Commons"],
+				"x-swagger-router-controller": "commons/difficulties",
+				"operationId": "getDifficultyById",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"type": "string",
+						"required": true
+					}
+				],
+				"responses": {
+					"default": {
+						"description": "Unexpected error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"200": {
+						"description": "Successful request.",
+						"schema": {
+							"$ref": "#/definitions/getDifficulty"
+						}
+					}
+				}
+			},
+			"put": {
+				"tags": ["Commons"],
+				"x-swagger-router-controller": "commons/difficulties",
+				"operationId": "putDifficulty",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"type": "string",
+						"required": true
+					},
+					{
+						"name": "data",
+						"in": "body",
+						"description": "Update Difficulty",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/putDifficulty"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"description": "Unexpected error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"201": {
+						"description": "Difficulty Updated",
+						"schema": {
+							"$ref": "#/definitions/Success"
+						}
+					}
+				}
+			},
+			"delete": {
+				"tags": ["Commons"],
+				"x-swagger-router-controller": "commons/difficulties",
+				"operationId": "deleteDifficulty",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"type": "string",
+						"required": true
+					}
+				],
+				"responses": {
+					"default": {
+						"description": "Unexpected error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"201": {
+						"description": "Successful request.",
+						"schema": {
+							"$ref": "#/definitions/Success"
+						}
+					}
+				}
+			}
+		},
+		"/api/commons/litigation-objects": {
+			"get": {
+				"tags": ["Commons"],
+				"x-swagger-router-controller": "commons/litigation-objects",
+				"operationId": "getAllLitigationObjects",
+				"parameters": [],
+				"responses": {
+					"default": {
+						"description": "Unexpected error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"200": {
+						"description": "Successful request.",
+						"schema": {
+							"$ref": "#/definitions/getAllLitigationObjects"
+						}
+					}
+				}
+			},
+			"post": {
+				"tags": ["Commons"],
+				"x-swagger-router-controller": "commons/litigation-objects",
+				"operationId": "postLitigationObject",
+				"parameters": [
+					{
+						"name": "data",
+						"in": "body",
+						"description": "Create Litigation Object",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/postLitigationObject"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"description": "Unexpected error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"201": {
+						"description": "Litigation Object Created",
+						"schema": {
+							"$ref": "#/definitions/Success"
+						}
+					}
+				}
+			}
+		},
+		"/api/commons/litigation-objects/{id}": {
+			"get": {
+				"tags": ["Commons"],
+				"x-swagger-router-controller": "commons/litigation-objects",
+				"operationId": "getLitigationObjectById",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"type": "string",
+						"required": true
+					}
+				],
+				"responses": {
+					"default": {
+						"description": "Unexpected error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"200": {
+						"description": "Successful request.",
+						"schema": {
+							"$ref": "#/definitions/getLitigationObject"
+						}
+					}
+				}
+			},
+			"put": {
+				"tags": ["Commons"],
+				"x-swagger-router-controller": "commons/litigation-objects",
+				"operationId": "putLitigationObject",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"type": "string",
+						"required": true
+					},
+					{
+						"name": "data",
+						"in": "body",
+						"description": "Update Litigation Object",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/putLitigationObject"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"description": "Unexpected error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"201": {
+						"description": "Litigation Object Updated",
+						"schema": {
+							"$ref": "#/definitions/Success"
+						}
+					}
+				}
+			},
+			"delete": {
+				"tags": ["Commons"],
+				"x-swagger-router-controller": "commons/litigation-objects",
+				"operationId": "deleteLitigationObject",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"type": "string",
+						"required": true
+					}
+				],
+				"responses": {
+					"default": {
+						"description": "Unexpected error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"201": {
+						"description": "Successful request.",
+						"schema": {
+							"$ref": "#/definitions/Success"
+						}
+					}
+				}
+			}
+		},
+		"/api/commons/types-discounts": {
+			"get": {
+				"tags": ["Commons"],
+				"x-swagger-router-controller": "commons/types-discounts",
+				"operationId": "getAllTypeDiscounts",
+				"parameters": [],
+				"responses": {
+					"default": {
+						"description": "Unexpected error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"200": {
+						"description": "Successful request.",
+						"schema": {
+							"$ref": "#/definitions/getAllTypeDiscounts"
+						}
+					}
+				}
+			},
+			"post": {
+				"tags": ["Commons"],
+				"x-swagger-router-controller": "commons/types-discounts",
+				"operationId": "postTypeDiscount",
+				"parameters": [
+					{
+						"name": "data",
+						"in": "body",
+						"description": "Create Type Discount",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/postTypeDiscount"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"description": "Unexpected error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"201": {
+						"description": "Litigation Type Discount",
+						"schema": {
+							"$ref": "#/definitions/Success"
+						}
+					}
+				}
+			}
+		},
+		"/api/commons/types-discounts/{id}": {
+			"get": {
+				"tags": ["Commons"],
+				"x-swagger-router-controller": "commons/types-discounts",
+				"operationId": "getTypeDiscountById",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"type": "string",
+						"required": true
+					}
+				],
+				"responses": {
+					"default": {
+						"description": "Unexpected error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"200": {
+						"description": "Successful request.",
+						"schema": {
+							"$ref": "#/definitions/getTypeDiscount"
+						}
+					}
+				}
+			},
+			"put": {
+				"tags": ["Commons"],
+				"x-swagger-router-controller": "commons/types-discounts",
+				"operationId": "putTypeDiscount",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"type": "string",
+						"required": true
+					},
+					{
+						"name": "data",
+						"in": "body",
+						"description": "Update Type Discount",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/putTypeDiscount"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"description": "Unexpected error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"201": {
+						"description": "Litigation Type Discount",
+						"schema": {
+							"$ref": "#/definitions/Success"
+						}
+					}
+				}
+			},
+			"delete": {
+				"tags": ["Commons"],
+				"x-swagger-router-controller": "commons/types-discounts",
+				"operationId": "deleteTypeDiscount",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"type": "string",
+						"required": true
+					}
+				],
+				"responses": {
+					"default": {
+						"description": "Unexpected error",
+						"schema": {
+							"$ref": "#/definitions/Error"
+						}
+					},
+					"201": {
+						"description": "Successful request.",
+						"schema": {
+							"$ref": "#/definitions/Success"
+						}
+					}
+				}
+			}
+		}
+	},
+	"definitions": {
+		"Error": {
+			"required": ["message"],
+			"properties": {
+				"entity": {
+					"type": "string"
+				},
+				"message": {
+					"type": "string"
+				}
+			}
+		},
+		"Success": {
+			"required": ["message"],
+			"properties": {
+				"entity": {
+					"type": "string"
+				},
+				"message": {
+					"type": "string"
+				}
+			}
+		},
+		"getAllUsers": {
+			"type": "object",
+			"properties": {
+				"total_rows": { "type": "integer" },
+				"data": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"id": { "type": "string" },
+							"username": { "type": "string" },
+							"firstname": { "type": "string" },
+							"lastname": { "type": "string" },
+							"email": { "type": "string" },
+							"birthday": { "type": "string" },
+							"longitude": { "type": "integer" },
+							"latitude": { "type": "integer" },
+							"avatar": { "type": "string" },
+							"bio": { "type": "string" },
+							"phone": { "type": "string" },
+							"total_token": { "type": "integer" },
+							"createdAt": { "type": "string" },
+							"updatedAt": { "type": "string" },
+							"status": {
+								"type": "object",
+								"properties": {
+									"label": { "type": "string" }
+								}
+							},
+							"memberships": {
+								"type": "array",
+								"items": {
+									"type": "object",
+									"properties": {
+										"createdAt": { "type": "string" },
+										"updatedAt": { "type": "string" },
+										"organization": {
+											"type": "object",
+											"properties": {
+												"id": { "type": "string" },
+												"siren": { "type": "string" },
+												"siret": { "type": "string" },
+												"name": { "type": "string" },
+												"email": { "type": "string" },
+												"longitude": { "type": "integer" },
+												"latitude": { "type": "integer" },
+												"creation_date": { "type": "string" },
+												"activity": { "type": "string" },
+												"address": { "type": "string" },
+												"cp": { "type": "integer" },
+												"commune": { "type": "string" },
+												"logo": { "type": "string" },
+												"description": { "type": "string" },
+												"link": { "type": "string" },
+												"phone": { "type": "string" },
+												"createdAt": { "type": "string" },
+												"updatedAt": { "type": "string" },
+												"status": {
+													"type": "object",
+													"properties": {
+														"label": { "type": "string" }
+													}
+												}
+											}
+										},
+										"role": {
+											"type": "object",
+											"properties": {
+												"label": { "type": "string" }
+											}
+										},
+										"status": {
+											"type": "object",
+											"properties": {
+												"label": { "type": "string" }
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"getUser": {
+			"type": "object",
+			"properties": {
+				"id": { "type": "string" },
+				"username": { "type": "string" },
+				"firstname": { "type": "string" },
+				"lastname": { "type": "string" },
+				"email": { "type": "string" },
+				"birthday": { "type": "string" },
+				"longitude": { "type": "integer" },
+				"latitude": { "type": "integer" },
+				"avatar": { "type": "string" },
+				"bio": { "type": "string" },
+				"phone": { "type": "string" },
+				"total_token": { "type": "integer" },
+				"createdAt": { "type": "string" },
+				"updatedAt": { "type": "string" },
+				"status": {
+					"type": "object",
+					"properties": {
+						"label": { "type": "string" }
+					}
+				},
+				"memberships": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"createdAt": { "type": "string" },
+							"updatedAt": { "type": "string" },
+							"organization": {
+								"type": "object",
+								"properties": {
+									"id": { "type": "string" },
+									"siren": { "type": "string" },
+									"siret": { "type": "string" },
+									"name": { "type": "string" },
+									"email": { "type": "string" },
+									"longitude": { "type": "integer" },
+									"latitude": { "type": "integer" },
+									"creation_date": { "type": "string" },
+									"activity": { "type": "string" },
+									"address": { "type": "string" },
+									"cp": { "type": "integer" },
+									"commune": { "type": "string" },
+									"logo": { "type": "string" },
+									"description": { "type": "string" },
+									"link": { "type": "string" },
+									"phone": { "type": "string" },
+									"createdAt": { "type": "string" },
+									"updatedAt": { "type": "string" },
+									"status": {
+										"type": "object",
+										"properties": {
+											"label": { "type": "string" }
+										}
+									}
+								}
+							},
+							"role": {
+								"type": "object",
+								"properties": {
+									"label": { "type": "string" }
+								}
+							},
+							"status": {
+								"type": "object",
+								"properties": {
+									"label": { "type": "string" }
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"putUser": {
+			"type": "object",
+			"properties": {
+				"firstName": { "type": "string" },
+				"lastName": { "type": "string" },
+				"email": { "type": "string" },
+				"bio": { "type": "string" },
+				"phone": { "type": "string" },
+				"longitude": { "type": "integer" },
+				"latitude": { "type": "integer" }
+			},
+			"example": {
+				"firstname": "Quentin",
+				"lastname": "Huber",
+				"email": "h.quentin@totoro.fr",
+				"bio": "Je suis très sympa",
+				"phone": "0751932695",
+				"longitude": 2.43796,
+				"latitude": 48.8268
+			}
+		},
+		"getFavoritesUser": {
+			"type": "object",
+			"properties": {
+				"total_rows": { "type": "integer" },
+				"data": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"id": { "type": "string" },
+							"user_id": { "type": "string" },
+							"createdAt": { "type": "string" },
+							"updatedAt": { "type": "string" },
+							"organization": {
+								"type": "object",
+								"properties": {
+									"id": { "type": "string" },
+									"siren": { "type": "string" },
+									"siret": { "type": "string" },
+									"name": { "type": "string" },
+									"email": { "type": "string" },
+									"longitude": { "type": "integer" },
+									"latitude": { "type": "integer" },
+									"creation_date": { "type": "string" },
+									"activity": { "type": "string" },
+									"address": { "type": "string" },
+									"cp": { "type": "integer" },
+									"commune": { "type": "string" },
+									"logo": { "type": "string" },
+									"description": { "type": "string" },
+									"link": { "type": "string" },
+									"phone": { "type": "string" },
+									"createdAt": { "type": "string" },
+									"updatedAt": { "type": "string" },
+									"status": {
+										"type": "object",
+										"properties": {
+											"label": { "type": "string" }
+										}
+									}
+								}
+							},
+							"job": {
+								"type": "object",
+								"properties": {
+									"id": { "type": "string" },
+									"title": { "type": "string" },
+									"description": { "type": "string" },
+									"participants_max": { "type": "integer" },
+									"address": { "type": "string" },
+									"cp": { "type": "integer" },
+									"commune": { "type": "string" },
+									"start_date": { "type": "string" },
+									"end_date": { "type": "string" },
+									"createdAt": { "type": "string" },
+									"updatedAt": { "type": "string" },
+									"author": {
+										"type": "object",
+										"properties": {
+											"createdAt": { "type": "string" },
+											"updatedAt": { "type": "string" },
+											"organization": {
+												"type": "object",
+												"properties": {
+													"id": { "type": "string" },
+													"siren": { "type": "string" },
+													"siret": { "type": "string" },
+													"name": { "type": "string" },
+													"email": { "type": "string" },
+													"longitude": { "type": "integer" },
+													"latitude": { "type": "integer" },
+													"creation_date": { "type": "string" },
+													"activity": { "type": "string" },
+													"address": { "type": "string" },
+													"cp": { "type": "integer" },
+													"commune": { "type": "string" },
+													"logo": { "type": "string" },
+													"description": { "type": "string" },
+													"link": { "type": "string" },
+													"phone": { "type": "string" },
+													"createdAt": { "type": "string" },
+													"updatedAt": { "type": "string" },
+													"status": {
+														"type": "object",
+														"properties": {
+															"label": { "type": "string" }
+														}
+													}
+												}
+											},
+											"user": {
+												"type": "object",
+												"properties": {
+													"id": { "type": "string" },
+													"username": { "type": "string" },
+													"firstname": { "type": "string" },
+													"lastname": { "type": "string" },
+													"email": { "type": "string" },
+													"birthday": { "type": "string" },
+													"longitude": { "type": "integer" },
+													"latitude": { "type": "integer" },
+													"avatar": { "type": "string" },
+													"bio": { "type": "string" },
+													"phone": { "type": "string" },
+													"total_token": { "type": "integer" },
+													"createdAt": { "type": "string" },
+													"updatedAt": { "type": "string" },
+													"status": {
+														"type": "object",
+														"properties": {
+															"label": { "type": "string" }
+														}
+													}
+												}
+											},
+											"status": {
+												"type": "object",
+												"properties": {
+													"label": { "type": "string" }
+												}
+											}
+										}
+									},
+									"difficulty": {
+										"type": "object",
+										"properties": {
+											"level": { "type": "integer" },
+											"token": { "type": "integer" }
+										}
+									},
+									"status": {
+										"type": "object",
+										"properties": {
+											"label": { "type": "string" }
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"postFavotitesUser": {
+			"type": "object",
+			"properties": {
+				"assos_id": { "type": "integer" },
+				"jobs_id": { "type": "integer" }
+			},
+			"example": {
+				"assos_id": "561a448e-5ad9-4dd5-8b08-7cc0419824d1"
+			}
+		},
+		"getJobsUser": {
+			"type": "object",
+			"properties": {
+				"id": { "type": "string" },
+				"user_id": { "type": "string" },
+				"createdAt": { "type": "string" },
+				"updatedAt": { "type": "string" },
+				"job": {
+					"type": "object",
+					"properties": {
+						"id": { "type": "string" },
+						"title": { "type": "string" },
+						"description": { "type": "string" },
+						"participants_max": { "type": "integer" },
+						"address": { "type": "string" },
+						"cp": { "type": "integer" },
+						"commune": { "type": "string" },
+						"start_date": { "type": "string" },
+						"end_date": { "type": "string" },
+						"createdAt": { "type": "string" },
+						"updatedAt": { "type": "string" },
+						"author": {
+							"type": "object",
+							"properties": {
+								"createdAt": { "type": "string" },
+								"updatedAt": { "type": "string" },
+								"organization": {
+									"type": "object",
+									"properties": {
+										"id": { "type": "string" },
+										"siren": { "type": "string" },
+										"siret": { "type": "string" },
+										"name": { "type": "string" },
+										"email": { "type": "string" },
+										"longitude": { "type": "integer" },
+										"latitude": { "type": "integer" },
+										"creation_date": { "type": "string" },
+										"activity": { "type": "string" },
+										"address": { "type": "string" },
+										"cp": { "type": "integer" },
+										"commune": { "type": "string" },
+										"logo": { "type": "string" },
+										"description": { "type": "string" },
+										"link": { "type": "string" },
+										"phone": { "type": "string" },
+										"createdAt": { "type": "string" },
+										"updatedAt": { "type": "string" },
+										"status": {
+											"type": "object",
+											"properties": {
+												"label": { "type": "string" }
+											}
+										}
+									}
+								},
+								"user": {
+									"type": "object",
+									"properties": {
+										"id": { "type": "string" },
+										"username": { "type": "string" },
+										"firstname": { "type": "string" },
+										"lastname": { "type": "string" },
+										"email": { "type": "string" },
+										"birthday": { "type": "string" },
+										"longitude": { "type": "integer" },
+										"latitude": { "type": "integer" },
+										"avatar": { "type": "string" },
+										"bio": { "type": "string" },
+										"phone": { "type": "string" },
+										"total_token": { "type": "integer" },
+										"createdAt": { "type": "string" },
+										"updatedAt": { "type": "string" },
+										"status": {
+											"type": "object",
+											"properties": {
+												"label": { "type": "string" }
+											}
+										}
+									}
+								},
+								"status": {
+									"type": "object",
+									"properties": {
+										"label": { "type": "string" }
+									}
+								}
+							}
+						},
+						"difficulty": {
+							"type": "object",
+							"properties": {
+								"level": { "type": "integer" },
+								"token": { "type": "integer" }
+							}
+						},
+						"status": {
+							"type": "object",
+							"properties": {
+								"label": { "type": "string" }
+							}
+						}
+					}
+				},
+				"status": {
+					"type": "object",
+					"properties": {
+						"label": { "type": "string" }
+					}
+				}
+			}
+		},
+		"getLitigationsUser": {
+			"type": "object",
+			"properties": {
+				"id": { "type": "string" },
+				"type": { "type": "boolean" },
+				"message": { "type": "string" },
+				"createdAt": { "type": "string" },
+				"updatedAt": { "type": "string" },
+				"status": {
+					"type": "object",
+					"properties": {
+						"label": { "type": "string" }
+					}
+				},
+				"litigation_object": {
+					"type": "object",
+					"properties": {
+						"id": { "type": "string" },
+						"label": { "type": "string" },
+						"description": { "type": "string" },
+						"createdAt": { "type": "string" },
+						"updatedAt": { "type": "string" }
+					}
+				},
+				"mission": {
+					"type": "object",
+					"properties": {
+						"createdAt": { "type": "string" },
+						"updatedAt": { "type": "string" },
+						"job": {
+							"type": "object",
+							"properties": {
+								"id": { "type": "string" },
+								"title": { "type": "string" },
+								"description": { "type": "string" },
+								"participants_max": { "type": "integer" },
+								"address": { "type": "string" },
+								"cp": { "type": "integer" },
+								"commune": { "type": "string" },
+								"start_date": { "type": "string" },
+								"end_date": { "type": "string" },
+								"createdAt": { "type": "string" },
+								"updatedAt": { "type": "string" },
+								"author": {
+									"type": "object",
+									"properties": {
+										"createdAt": { "type": "string" },
+										"updatedAt": { "type": "string" },
+										"organization": {
+											"type": "object",
+											"properties": {
+												"id": { "type": "string" },
+												"siren": { "type": "string" },
+												"siret": { "type": "string" },
+												"name": { "type": "string" },
+												"email": { "type": "string" },
+												"longitude": { "type": "integer" },
+												"latitude": { "type": "integer" },
+												"creation_date": { "type": "string" },
+												"activity": { "type": "string" },
+												"address": { "type": "string" },
+												"cp": { "type": "integer" },
+												"commune": { "type": "string" },
+												"logo": { "type": "string" },
+												"description": { "type": "string" },
+												"link": { "type": "string" },
+												"phone": { "type": "string" },
+												"createdAt": { "type": "string" },
+												"updatedAt": { "type": "string" },
+												"status": {
+													"type": "object",
+													"properties": {
+														"label": { "type": "string" }
+													}
+												}
+											}
+										},
+										"user": {
+											"type": "object",
+											"properties": {
+												"id": { "type": "string" },
+												"username": { "type": "string" },
+												"firstname": { "type": "string" },
+												"lastname": { "type": "string" },
+												"email": { "type": "string" },
+												"birthday": { "type": "string" },
+												"longitude": { "type": "integer" },
+												"latitude": { "type": "integer" },
+												"avatar": { "type": "string" },
+												"bio": { "type": "string" },
+												"phone": { "type": "string" },
+												"total_token": { "type": "integer" },
+												"createdAt": { "type": "string" },
+												"updatedAt": { "type": "string" },
+												"status": {
+													"type": "object",
+													"properties": {
+														"label": { "type": "string" }
+													}
+												}
+											}
+										},
+										"status": {
+											"type": "object",
+											"properties": {
+												"label": { "type": "string" }
+											}
+										}
+									}
+								},
+								"difficulty": {
+									"type": "object",
+									"properties": {
+										"level": { "type": "integer" },
+										"token": { "type": "integer" }
+									}
+								},
+								"status": {
+									"type": "object",
+									"properties": {
+										"label": { "type": "string" }
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"getAllAdmins": {
+			"type": "object",
+			"properties": {
+				"total_rows": { "type": "integer" },
+				"data": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"id": { "type": "string" },
+							"username": { "type": "string" },
+							"firstname": { "type": "string" },
+							"lastname": { "type": "string" },
+							"email": { "type": "string" },
+							"createdAt": { "type": "string" },
+							"updatedAt": { "type": "string" },
+							"status": {
+								"type": "object",
+								"properties": {
+									"label": { "type": "string" }
+								}
+							},
+							"role": {
+								"type": "object",
+								"properties": {
+									"label": { "type": "string" }
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"getAdmin": {
+			"type": "object",
+			"properties": {
+				"id": { "type": "string" },
+				"username": { "type": "string" },
+				"firstname": { "type": "string" },
+				"lastname": { "type": "string" },
+				"email": { "type": "string" },
+				"createdAt": { "type": "string" },
+				"updatedAt": { "type": "string" },
+				"status": {
+					"type": "object",
+					"properties": {
+						"label": { "type": "string" }
+					}
+				},
+				"role": {
+					"type": "object",
+					"properties": {
+						"label": { "type": "string" }
+					}
+				}
+			}
+		},
+		"postAdmin": {
+			"type": "object",
+			"properties": {
+				"firstName": { "type": "string" },
+				"lastName": { "type": "string" },
+				"username": { "type": "string" },
+				"email": { "type": "string" },
+				"role_id": { "type": "string" }
+			},
+			"required": ["firstName", "lastName", "username", "email", "role_id"],
+			"example": {
+				"username": "uber",
+				"firstname": "Quentin",
+				"lastname": "Huber",
+				"email": "h.quentin@totoro.fr",
+				"role_id": "1dc4364b-d3d1-4db4-a324-a1271e59dfb1"
+			}
+		},
+		"putPasswordAdmin": {
+			"type": "object",
+			"properties": {
+				"old_password": { "type": "string" },
+				"password": { "type": "string" }
+			},
+			"required": ["old_password", "password"],
+			"example": {
+				"old_password": "123456",
+				"password": "111111"
+			}
+		},
+		"putAdmin": {
+			"type": "object",
+			"properties": {
+				"firstName": { "type": "string" },
+				"lastName": { "type": "string" },
+				"email": { "type": "string" }
+			},
+			"example": {
+				"firstname": "Quentin",
+				"lastname": "Huber",
+				"email": "h.quentin@totoro.fr"
+			}
+		},
+		"getLogsAdmin": {
+			"type": "object",
+			"properties": {
+				"total_rows": { "type": "integer" },
+				"data": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"id": { "type": "string" },
+							"table": { "type": "string" },
+							"action": { "type": "string" },
+							"createdAt": { "type": "string" },
+							"updatedAt": { "type": "string" },
+							"admin_id": { "type": "string" }
+						}
+					}
+				}
+			}
+		},
+		"getLogsAdmins": {
+			"type": "object",
+			"properties": {
+				"total_rows": { "type": "integer" },
+				"data": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"id": { "type": "string" },
+							"table": { "type": "string" },
+							"action": { "type": "string" },
+							"createdAt": { "type": "string" },
+							"updatedAt": { "type": "string" },
+							"admin": {
+								"type": "object",
+								"properties": {
+									"id": { "type": "string" },
+									"username": { "type": "string" },
+									"firstname": { "type": "string" },
+									"lastname": { "type": "string" },
+									"email": { "type": "string" },
+									"createdAt": { "type": "string" },
+									"updatedAt": { "type": "string" },
+									"status": {
+										"type": "object",
+										"properties": {
+											"id": { "type": "string" },
+											"label": { "type": "string" },
+											"createdAt": { "type": "string" },
+											"updatedAt": { "type": "string" }
+										}
+									},
+									"role": {
+										"type": "object",
+										"properties": {
+											"id": { "type": "string" },
+											"label": { "type": "string" },
+											"createdAt": { "type": "string" },
+											"updatedAt": { "type": "string" }
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"postLogAdmin": {
+			"type": "object",
+			"properties": {
+				"table": { "type": "string" },
+				"action": { "type": "string" }
+			},
+			"required": ["table", "action"],
+			"example": {
+				"table": "Users",
+				"action": "Deleted"
+			}
+		},
+		"putRoleAdmin": {
+			"type": "object",
+			"properties": {
+				"role_id": { "type": "string" }
+			},
+			"required": ["role_id"],
+			"example": {
+				"role_id": "1dc4364b-d3d1-4db4-a324-a1271e59dfb1"
+			}
+		},
+		"loginUser": {
+			"type": "object",
+			"properties": {
+				"emailOrUsername": { "type": "string" },
+				"password": { "type": "string" }
+			},
+			"required": ["emailOrUsername", "password"],
+			"example": {
+				"emailOrUsername": "admin@test.fr",
+				"password": "xxxxxxx"
+			}
+		},
+		"responseLogin": {
+			"type": "object",
+			"properties": {
+				"token": { "type": "string" }
+			}
+		},
+		"forgot": {
+			"type": "object",
+			"properties": {
+				"email": { "type": "string" }
+			},
+			"required": ["email"],
+			"example": {
+				"email": "test@email.fr"
+			}
+		},
+		"signup": {
+			"type": "object",
+			"properties": {
+				"username": { "type": "string" },
+				"firstname": { "type": "string" },
+				"lastname": { "type": "string" },
+				"email": { "type": "string" },
+				"birthday": { "type": "string" },
+				"password": { "type": "string" }
+			},
+			"required": [
+				"username",
+				"firstname",
+				"lastname",
+				"email",
+				"password",
+				"birthday"
+			],
+			"example": {
+				"username": "uber",
+				"firstname": "Quentin",
+				"lastname": "Huber",
+				"email": "h.quentin@totoro.fr",
+				"birthday": "2022-12-08",
+				"password": "123456"
+			}
+		},
+		"getAllApplications": {
+			"type": "object",
+			"properties": {
+				"total_rows": { "type": "integer" },
+				"data": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"id": { "type": "string" },
+							"name": { "type": "string" },
+							"createdAt": { "type": "string" },
+							"updatedAt": { "type": "string" }
+						}
+					}
+				}
+			}
+		},
+		"getApplication": {
+			"type": "object",
+			"properties": {
+				"id": { "type": "string" },
+				"name": { "type": "string" },
+				"createdAt": { "type": "string" },
+				"updatedAt": { "type": "string" }
+			}
+		},
+		"postApplication": {
+			"type": "object",
+			"properties": {
+				"name": { "type": "string" }
+			},
+			"required": ["name"],
+			"example": {
+				"name": "Test"
+			}
+		},
+		"putApplication": {
+			"type": "object",
+			"properties": {
+				"name": { "type": "string" }
+			},
+			"required": ["name"],
+			"example": {
+				"name": "Tests"
+			}
+		},
+		"getAllRoles": {
+			"type": "object",
+			"properties": {
+				"total_rows": { "type": "integer" },
+				"data": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"id": { "type": "string" },
+							"label": { "type": "string" },
+							"type": { "type": "string" },
+							"createdAt": { "type": "string" },
+							"updatedAt": { "type": "string" }
+						}
+					}
+				}
+			}
+		},
+		"getRole": {
+			"type": "object",
+			"properties": {
+				"id": { "type": "string" },
+				"label": { "type": "string" },
+				"type": { "type": "string" },
+				"createdAt": { "type": "string" },
+				"updatedAt": { "type": "string" }
+			}
+		},
+		"postRole": {
+			"type": "object",
+			"properties": {
+				"label": { "type": "string" },
+				"type": { "type": "string" }
+			},
+			"required": ["label", "type"],
+			"example": {
+				"label": "Test",
+				"type": "Test"
+			}
+		},
+		"putRole": {
+			"type": "object",
+			"properties": {
+				"label": { "type": "string" },
+				"type": { "type": "string" }
+			},
+			"required": ["label", "type"],
+			"example": {
+				"label": "Tests",
+				"type": "Tests"
+			}
+		},
+		"getAllCommons": {
+			"type": "object",
+			"properties": {
+				"total_rows": { "type": "integer" },
+				"data": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"id": { "type": "string" },
+							"label": { "type": "string" },
+							"createdAt": { "type": "string" },
+							"updatedAt": { "type": "string" }
+						}
+					}
+				}
+			}
+		},
+		"getCommon": {
+			"type": "object",
+			"properties": {
+				"id": { "type": "string" },
+				"label": { "type": "string" },
+				"createdAt": { "type": "string" },
+				"updatedAt": { "type": "string" }
+			}
+		},
+		"postCommon": {
+			"type": "object",
+			"properties": {
+				"label": { "type": "string" }
+			},
+			"required": ["label"],
+			"example": {
+				"label": "Test"
+			}
+		},
+		"putCommon": {
+			"type": "object",
+			"properties": {
+				"label": { "type": "string" }
+			},
+			"required": ["label"],
+			"example": {
+				"label": "Tests"
+			}
+		},
+		"getAllLitigationObjects": {
+			"type": "object",
+			"properties": {
+				"total_rows": { "type": "integer" },
+				"data": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"id": { "type": "string" },
+							"label": { "type": "string" },
+							"description": { "type": "string" },
+							"createdAt": { "type": "string" },
+							"updatedAt": { "type": "string" }
+						}
+					}
+				}
+			}
+		},
+		"getLitigationObject": {
+			"type": "object",
+			"properties": {
+				"id": { "type": "string" },
+				"label": { "type": "string" },
+				"description": { "type": "string" },
+				"createdAt": { "type": "string" },
+				"updatedAt": { "type": "string" }
+			}
+		},
+		"postLitigationObject": {
+			"type": "object",
+			"properties": {
+				"label": { "type": "string" },
+				"description": { "type": "string" }
+			},
+			"required": ["label", "description"],
+			"example": {
+				"label": "Test",
+				"description": "Lorem ipsum, bla bla bla"
+			}
+		},
+		"putLitigationObject": {
+			"type": "object",
+			"properties": {
+				"label": { "type": "string" },
+				"description": { "type": "string" }
+			},
+			"required": ["label", "description"],
+			"example": {
+				"label": "Tests",
+				"description": "Lorem ipsum, bla bla bla "
+			}
+		},
+		"getAllDifficulties": {
+			"type": "object",
+			"properties": {
+				"total_rows": { "type": "integer" },
+				"data": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"id": { "type": "string" },
+							"level": { "type": "integer" },
+							"token": { "type": "integer" },
+							"createdAt": { "type": "string" },
+							"updatedAt": { "type": "string" }
+						}
+					}
+				}
+			}
+		},
+		"getDifficulty": {
+			"type": "object",
+			"properties": {
+				"id": { "type": "string" },
+				"level": { "type": "integer" },
+				"token": { "type": "integer" },
+				"createdAt": { "type": "string" },
+				"updatedAt": { "type": "string" }
+			}
+		},
+		"postDifficulty": {
+			"type": "object",
+			"properties": {
+				"level": { "type": "integer" },
+				"token": { "type": "integer" }
+			},
+			"required": ["level", "token"],
+			"example": {
+				"level": 1,
+				"token": 12
+			}
+		},
+		"putDifficulty": {
+			"type": "object",
+			"properties": {
+				"level": { "type": "integer" },
+				"token": { "type": "integer" }
+			},
+			"required": ["level", "token"],
+			"example": {
+				"level": 1,
+				"token": 5
+			}
+		},
+		"getAllTypeDiscounts": {
+			"type": "object",
+			"properties": {
+				"total_rows": { "type": "integer" },
+				"data": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"id": { "type": "string" },
+							"name": { "type": "string" },
+							"type": { "type": "string" },
+							"createdAt": { "type": "string" },
+							"updatedAt": { "type": "string" }
+						}
+					}
+				}
+			}
+		},
+		"getTypeDiscount": {
+			"type": "object",
+			"properties": {
+				"id": { "type": "string" },
+				"name": { "type": "string" },
+				"type": { "type": "string" },
+				"createdAt": { "type": "string" },
+				"updatedAt": { "type": "string" }
+			}
+		},
+		"postTypeDiscount": {
+			"type": "object",
+			"properties": {
+				"name": { "type": "string" },
+				"type": { "type": "string" }
+			},
+			"required": ["name", "type"],
+			"example": {
+				"name": "Montant",
+				"type": "Number"
+			}
+		},
+		"putTypeDiscount": {
+			"type": "object",
+			"properties": {
+				"name": { "type": "string" },
+				"type": { "type": "string" }
+			},
+			"required": ["name", "type"],
+			"example": {
+				"name": "Montant",
+				"type": "Number"
+			}
+		},
+		"getAllPricings": {
+			"type": "object",
+			"properties": {
+				"total_rows": { "type": "integer" },
+				"data": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"id": { "type": "string" },
+							"label": { "type": "string" },
+							"description": { "type": "string" },
+							"duration": { "type": "integer" },
+							"nb_account": { "type": "integer" },
+							"nb_jobs_by_month": { "type": "integer" },
+							"price": { "type": "integer" },
+							"createdAt": { "type": "string" },
+							"updatedAt": { "type": "string" }
+						}
+					}
+				}
+			}
+		},
+		"getPricing": {
+			"type": "object",
+			"properties": {
+				"id": { "type": "string" },
+				"label": { "type": "string" },
+				"description": { "type": "string" },
+				"duration": { "type": "integer" },
+				"nb_account": { "type": "integer" },
+				"nb_jobs_by_month": { "type": "integer" },
+				"price": { "type": "integer" },
+				"createdAt": { "type": "string" },
+				"updatedAt": { "type": "string" }
+			}
+		},
+		"postPricing": {
+			"type": "object",
+			"properties": {
+				"label": { "type": "string" },
+				"description": { "type": "string" },
+				"duration": { "type": "integer" },
+				"nb_account": { "type": "integer" },
+				"nb_jobs_by_month": { "type": "integer" },
+				"price": { "type": "integer" }
+			},
+			"required": [
+				"label",
+				"description",
+				"duration",
+				"nb_account",
+				"nb_jobs_by_month",
+				"price"
+			],
+			"example": {
+				"label": "Test",
+				"description": "Lorem ipsum, bla bla bla",
+				"duration": 1,
+				"nb_account": 5,
+				"nb_jobs_by_month": 7,
+				"price": 9.99
+			}
+		},
+		"putPricing": {
+			"type": "object",
+			"properties": {
+				"label": { "type": "string" },
+				"description": { "type": "string" },
+				"duration": { "type": "integer" },
+				"nb_account": { "type": "integer" },
+				"nb_jobs_by_month": { "type": "integer" },
+				"price": { "type": "integer" }
+			},
+			"required": [
+				"label",
+				"description",
+				"duration",
+				"nb_account",
+				"nb_jobs_by_month",
+				"price"
+			],
+			"example": {
+				"label": "Tests",
+				"description": "Lorem ipsum, bla bla bla ",
+				"duration": 1,
+				"nb_account": 5,
+				"nb_jobs_by_month": 7,
+				"price": 9.99
+			}
+		}
+	}
 }
