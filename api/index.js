@@ -15,7 +15,7 @@ const {
 	authentications,
 	commons,
 	applications,
-	ads,
+	jobs,
 } = require("services");
 
 const PORT = process.env.API_DOCKER_PORT || 8080;
@@ -62,7 +62,7 @@ server.use("/api/terminals", [accessApi, terminals]);
 server.use("/api/auth", [accessApi, authentications]);
 server.use("/api/users", [accessApi, users]);
 server.use("/api/admins", [accessApi, admins]);
-server.use("/api/ads", [accessApi, ads]);
+server.use("/api/jobs", [accessApi, jobs]);
 // server.use('/api/messagings', [accessApi, messagings]);
 // server.use('/api/transactions', [accessApi, transactions]);
 // server.use('/api/litigations', [accessApi, litigations]);

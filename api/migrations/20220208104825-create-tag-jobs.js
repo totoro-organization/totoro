@@ -1,26 +1,18 @@
 "use strict";
 module.exports = {
 	async up(queryInterface, Sequelize) {
-		await queryInterface.createTable("Groups", {
+		await queryInterface.createTable("Tag_jobs", {
 			id: {
 				allowNull: false,
-				type: Sequelize.UUID,
 				defaultValue: Sequelize.UUIDV4,
 				primaryKey: true,
+				type: Sequelize.UUID,
 			},
-			status_id: {
+			tag_id: {
 				allowNull: false,
 				type: Sequelize.UUID,
 				references: {
-					model: "Status",
-					key: "id",
-				},
-			},
-			user_id: {
-				allowNull: false,
-				type: Sequelize.UUID,
-				references: {
-					model: "Users",
+					model: "Tags",
 					key: "id",
 				},
 			},
@@ -43,6 +35,6 @@ module.exports = {
 		});
 	},
 	async down(queryInterface, Sequelize) {
-		await queryInterface.dropTable("Groups");
+		await queryInterface.dropTable("Tag_jobs");
 	},
 };

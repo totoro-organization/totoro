@@ -37,11 +37,14 @@ exports.router = (function () {
 		},
 	]);
 
-	UsersRouter.put("/change/password",[passport, async function (req, res) {
-		const data = req.body;
-		data.id = req.userData.id;
-		controller.resetPassword(res, data);
-	}]);
+	UsersRouter.put("/change/password", [
+		passport,
+		async function (req, res) {
+			const data = req.body;
+			data.id = req.userData.id;
+			controller.resetPassword(res, data);
+		},
+	]);
 
 	UsersRouter.get("/:id/favorites", [
 		passport,
@@ -68,12 +71,12 @@ exports.router = (function () {
 		},
 	]);
 
-	// Ads
+	// Jobs
 	UsersRouter.get("/:id/jobs", [
 		passport,
 		async function (req, res) {
 			const id = req.params.id;
-			controller.getUserAds(res, id, req.query);
+			controller.getUserJobs(res, id, req.query);
 		},
 	]);
 

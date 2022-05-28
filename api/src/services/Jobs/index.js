@@ -3,41 +3,41 @@ const { passport, passportAdmin } = require("utils/session");
 const controller = require("./controller");
 
 exports.router = (function () {
-	const adsRouter = express.Router();
+	const jobsRouter = express.Router();
 
-	adsRouter.get("/", [
+	jobsRouter.get("/", [
 		passport,
 		async function (req, res) {
-			controller.getAds(res, req.query);
+			controller.getJobs(res, req.query);
 		},
 	]);
 
-	adsRouter.get("/:id", [
+	jobsRouter.get("/:id", [
 		passport,
 		async function (req, res) {
 			const id = req.params.id;
-			controller.getAd(res, id);
+			controller.getJob(res, id);
 		},
 	]);
 
-	adsRouter.post("/", async function (req, res) {
+	jobsRouter.post("/", async function (req, res) {
 		const data = req.body;
-		controller.createAd(res, data);
+		controller.createJob(res, data);
 	});
 
-	adsRouter.put("/:id", async function (req, res) {
+	jobsRouter.put("/:id", async function (req, res) {
 		const id = req.params.id;
 		const data = req.body;
-		controller.updateAd(res, id, data);
+		controller.updateJob(res, id, data);
 	});
 
-	adsRouter.delete("/:id", [
+	jobsRouter.delete("/:id", [
 		passportAdmin,
 		async function (req, res) {
 			const id = req.params.id;
-			controller.deleteAd(res, id);
+			controller.deleteJob(res, id);
 		},
 	]);
 
-	return adsRouter;
+	return jobsRouter;
 })();
