@@ -1,16 +1,20 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
 import {
   createContext,
   ReactNode,
   useContext,
   useEffect,
+  useMemo,
   useState,
 } from "react";
+import { StackParamList } from "../../navigation/StackNavigationParams";
 import fetchConnectedUser from "../api/requests/auth/fetchConnectedUser";
 
 interface AuthContextType {
   user?: any;
-  logout?: () => void;
+  logout?: () => Promise<void>;
   isLoading?: boolean;
 }
 
@@ -48,10 +52,17 @@ export function AuthProvider({
     getUserConnected();
   }, []);
 
+  const memoedValue = useMemo(
+    () => ({
+      user,
+      isLoading,
+      logout,
+    }),
+    [user, isLoading]
+  );
+
   return (
-    <AuthContext.Provider value={{ user, logout, isLoading }}>
-      {children}
-    </AuthContext.Provider>
+    <AuthContext.Provider value={memoedValue}>{children}</AuthContext.Provider>
   );
 }
 
