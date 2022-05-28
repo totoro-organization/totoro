@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       models.Favorites.belongsTo(models.Ads, {
-        as: "status",
+        as: "job",
         foreignKey: "ads_id",
       });
       models.Favorites.belongsTo(models.Users, {
