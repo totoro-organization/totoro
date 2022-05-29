@@ -14,60 +14,12 @@ import {
   TableContainer,
   Typography,
   useTheme,
-  Modal,
-  Box,
-  Button,
-  TextField
 } from '@mui/material';
 
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 import { Tag } from 'src/models/tag';
-
-
-const EditTagModal = ({open, handleClose, tag, handleUpdate}) => {
-
-  const [label, setLabel] = useState(tag?.label);
-
-  const style = {
-    position: 'absolute' as 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    pt: 2,
-    px: 4,
-    pb: 3,
-  };
-
-  return (
-    <Modal
-      hideBackdrop
-      open={open}
-      onClose={handleClose}
-      aria-labelledby="child-modal-title"
-      aria-describedby="child-modal-description"
-    >
-    <Box sx={{ ...style, width: 400 }}>
-      <h2 id="child-modal-title">Editer le tag suivant : { tag?.label }</h2>
-      <TextField
-        required
-        id="tag_label"
-        label="Label"
-        defaultValue={tag?.label}
-        onChange={(e) => setLabel(e.target.value)}
-      />
-      <Button variant="outlined" onClick={handleClose}>Annuler</Button>
-      <Button variant="contained" onClick={() => handleUpdate(tag?.id, label)}>Confirmer</Button>
-    </Box>
-  </Modal>
-  )
-  
-}
-
+import Modal from 'src/components/Modal';
 
 interface TagsTableProps {
   items: Tag[], 
@@ -107,16 +59,6 @@ const TagsTable: FC<TagsTableProps> = ({
     handleUpdateTag(tagId, label);
     handleCloseModal();
   }
-
-  // const handleUpdateTag = async (tagId, label) => {
-  //   const updateResponse = await updateTag(tagId, { label });
-  //   if('error' in updateResponse) return;
-  //   handleCloseModal();
-  //   handleReload();
-  //   // const tags = await getTags();
-  //   // if('error' in updateResponse) return;
-  //   // setTags(tags);
-  // }
 
   return (
       <TableContainer>
@@ -207,7 +149,7 @@ const TagsTable: FC<TagsTableProps> = ({
             })}
           </TableBody>
         </Table>
-        <EditTagModal tag={modalInfo} handleUpdate={handleUpdate} open={openModal} handleClose={handleCloseModal}/>
+        <Modal item={modalInfo} callback={handleUpdate} open={openModal} handleClose={handleCloseModal} type="edit" title={`Editer le tag suivant : ${modalInfo?.label}`}/>
       </TableContainer>
   );
 };
