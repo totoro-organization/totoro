@@ -28,36 +28,49 @@ interface TagsTableProps {
   handleSelectOneItem: (event: ChangeEvent<HTMLInputElement>, itemId: string) => void,
   selectedSomeItems: any,
   selectedAllItems: any,
-  handleReload: () => void
+  handleDeleteTag: () => any,
+  handleUpdateTag: () => any
 }
 
 const TagsTable: FC<TagsTableProps> = ({
   items: tags, 
-  setItems: setTags,
   selectedItems,
   handleSelectAllItems, 
   handleSelectOneItem,
   selectedSomeItems,
   selectedAllItems,
-  handleUpdateTag
+  handleUpdateTag,
+  handleDeleteTag
 }) => {
 
-  const [openModal, setOpenModal] = useState(false);
-
+  const [openEditModal, setOpenEditModal] = useState(false);
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [modalInfo, setModalInfo] = useState<Tag | null>(null);
   
   const theme = useTheme();
 
-  const handleOpenModal = (tag: Tag) => {
-    setOpenModal(true);
+  const handleOpenEditModal = (tag: Tag) => {
+    setOpenEditModal(true);
     setModalInfo(tag);
   }
 
-  const handleCloseModal = () => setOpenModal(false);
+  const handleCloseEditModal = () => setOpenEditModal(false);
 
-  const handleUpdate = (tagId, label) => {
-    handleUpdateTag(tagId, label);
-    handleCloseModal();
+  const handleUpdate = ({id, label}) => {
+    handleUpdateTag({id, label});
+    handleCloseEditModal();
+  }
+
+  const handleOpenDeleteModal = (tag: Tag) => {
+    setOpenDeleteModal(true);
+    setModalInfo(tag);
+  }
+
+  const handleCloseDeleteModal = () => setOpenDeleteModal(false);
+
+  const handleDelete = ({id}) => {
+    handleDeleteTag(id);
+    handleCloseDeleteModal();
   }
 
   return (
@@ -118,7 +131,7 @@ const TagsTable: FC<TagsTableProps> = ({
                   <TableCell align="right">
                     <Tooltip title="Editer la mission" arrow>
                         <IconButton
-                          onClick={() => handleOpenModal(tag)}
+                          onClick={() => handleOpenEditModal(tag)}
                           sx={{
                             '&:hover': {
                               background: theme.colors.primary.lighter
@@ -133,6 +146,7 @@ const TagsTable: FC<TagsTableProps> = ({
                       </Tooltip>
                     <Tooltip title="Supprimer le tag" arrow>
                       <IconButton
+                      onClick={() => handleOpenDeleteModal(tag)}
                         sx={{
                           '&:hover': { background: theme.colors.error.lighter },
                           color: theme.palette.error.main
@@ -149,7 +163,8 @@ const TagsTable: FC<TagsTableProps> = ({
             })}
           </TableBody>
         </Table>
-        <Modal item={modalInfo} callback={handleUpdate} open={openModal} handleClose={handleCloseModal} type="edit" title={`Editer le tag suivant : ${modalInfo?.label}`}/>
+        <Modal item={modalInfo} callback={handleUpdate} open={openEditModal} handleClose={handleCloseEditModal} type="edit" title={`Editer le tag suivant : ${modalInfo?.label}`}/>
+        <Modal item={modalInfo} callback={handleDelete} open={openDeleteModal} handleClose={handleCloseDeleteModal} type="delete" title={`Supprimer le tag suivant : ${modalInfo?.label}`}/>
       </TableContainer>
   );
 };
