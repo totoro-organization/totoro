@@ -10,6 +10,11 @@ export async function updateTag(tagId: string, data: { label: string }) {
     return response;
 }
 
+export async function deleteTag(tagId: string) {
+    const response = await requestAxios('DELETE', `/commons/tags/${tagId}`);
+    return response;
+}
+
 export async function getTags() {
     const response = await requestAxios('GET', '/commons/tags');
     return response;
