@@ -5,7 +5,7 @@ import { useApi } from 'src/hooks/useApi';
 import SuspenseLoader from 'src/components/SuspenseLoader';
 import TableWrapper from 'src/components/TableWrapper';
 import { useEffect, useState } from 'react';
-import { updateTag, getTags, addTag } from 'src/services/tags.service';
+import { updateTag, getTags, addTag, deleteTag } from 'src/services/tags.service';
 import { Tag } from 'src/models/tag';
 import { styled } from '@mui/system';
 import Modal from "src/components/Modal";
@@ -47,6 +47,12 @@ function Tags() {
     handleGetTags();
   }
 
+  const handleDeleteTag = async (id) => {
+    const deleteResponse = await deleteTag(id);
+    if('error' in deleteResponse) return;
+    handleGetTags();
+  }
+
   const handleAddTag = async ({label}: string) => {
     const addResponse = await addTag({ label });
     if('error' in addResponse) return;
@@ -62,7 +68,7 @@ function Tags() {
       {
         loading ? <SuspenseLoader/> : 
         <TableWrapper items={tags}>
-            <TagsTable handleUpdateTag={handleUpdateTag} />
+            <TagsTable handleDeleteTag={handleDeleteTag} handleUpdateTag={handleUpdateTag} />
         </TableWrapper>
       }
       <Modal callback={handleAddTag} open={openModal} handleClose={handleCloseModal} type="add" title="Ajouter un tag"/>
