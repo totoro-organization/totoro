@@ -4,24 +4,36 @@ import TagsTable from './TagsTable';
 import { useApi } from 'src/hooks/useApi';
 import SuspenseLoader from 'src/components/SuspenseLoader';
 import TableWrapper from 'src/components/TableWrapper';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { updateTag, getTags } from 'src/services/tags.service';
+import { Tag } from 'src/models/tag';
 
 function Tags() {
 
-  const { data: tags, loading  } = useApi('/commons/tags');
+  const { data: defaultTags, loading  } = useApi('/commons/tags');
 
-  const [mustReload, setMustReload] = useState(false);
+  const [tags, setTags] = useState<Array<Tag>>(defaultTags?.data)
 
-  const handleReload = () => {
-    setMustReload(!mustReload);
+  useEffect(() => {
+    if(defaultTags?.data) {
+      setTags(defaultTags?.data);
+    }
+  }, [defaultTags])
+ 
+  const handleUpdateTag = async (tagId, label) => {
+    const updateResponse = await updateTag(tagId, { label });
+    if('error' in updateResponse) return;
+    const tagsResponse = await getTags(tagId, { label });
+    if('error' in tagsResponse) return;
+    setTags(tagsResponse?.data);
   }
 
   return (
     <Card>
       {
         loading ? <SuspenseLoader/> :
-        <TableWrapper items={tags?.data}>
-            <TagsTable handleReload={handleReload} />
+        <TableWrapper items={tags}>
+            <TagsTable handleUpdateTag={handleUpdateTag} />
         </TableWrapper>
       }
     </Card>

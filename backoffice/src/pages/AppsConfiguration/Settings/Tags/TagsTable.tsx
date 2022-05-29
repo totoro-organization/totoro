@@ -23,10 +23,9 @@ import {
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 import { Tag } from 'src/models/tag';
-import { updateTag } from 'src/services/tags.service';
 
 
-const EditTagModal = ({open, handleClose, tag, method}) => {
+const EditTagModal = ({open, handleClose, tag, handleUpdate}) => {
 
   const [label, setLabel] = useState(tag?.label);
 
@@ -52,16 +51,17 @@ const EditTagModal = ({open, handleClose, tag, method}) => {
       aria-labelledby="child-modal-title"
       aria-describedby="child-modal-description"
     >
-    <Box sx={{ ...style, width: 200 }}>
+    <Box sx={{ ...style, width: 400 }}>
       <h2 id="child-modal-title">Editer le tag suivant : { tag?.label }</h2>
       <TextField
         required
         id="tag_label"
         label="Label"
-        defaultValue={label}
+        defaultValue={tag?.label}
         onChange={(e) => setLabel(e.target.value)}
       />
-      <Button variant="contained" onClick={() => method(tag?.id, label)}>Confirmer</Button>
+      <Button variant="outlined" onClick={handleClose}>Annuler</Button>
+      <Button variant="contained" onClick={() => handleUpdate(tag?.id, label)}>Confirmer</Button>
     </Box>
   </Modal>
   )
@@ -87,30 +87,36 @@ const TagsTable: FC<TagsTableProps> = ({
   handleSelectOneItem,
   selectedSomeItems,
   selectedAllItems,
-  handleReload
+  handleUpdateTag
 }) => {
 
   const [openModal, setOpenModal] = useState(false);
 
-  const [modalInfo, setModalInfo] = useState<Tag>(tags[0]);
+  const [modalInfo, setModalInfo] = useState<Tag | null>(null);
+  
+  const theme = useTheme();
 
   const handleOpenModal = (tag: Tag) => {
     setOpenModal(true);
     setModalInfo(tag);
   }
+
   const handleCloseModal = () => setOpenModal(false);
 
-  const theme = useTheme();
-
-  const handleUpdateTag = async (tagId, label) => {
-    const updateResponse = await updateTag(tagId, { label });
-    if('error' in updateResponse) return;
+  const handleUpdate = (tagId, label) => {
+    handleUpdateTag(tagId, label);
     handleCloseModal();
-    handleReload();
-    // const tags = await getTags();
-    // if('error' in updateResponse) return;
-    // setTags(tags);
   }
+
+  // const handleUpdateTag = async (tagId, label) => {
+  //   const updateResponse = await updateTag(tagId, { label });
+  //   if('error' in updateResponse) return;
+  //   handleCloseModal();
+  //   handleReload();
+  //   // const tags = await getTags();
+  //   // if('error' in updateResponse) return;
+  //   // setTags(tags);
+  // }
 
   return (
       <TableContainer>
@@ -201,7 +207,7 @@ const TagsTable: FC<TagsTableProps> = ({
             })}
           </TableBody>
         </Table>
-        <EditTagModal tag={modalInfo} method={handleUpdateTag} open={openModal} handleClose={handleCloseModal}/>
+        <EditTagModal tag={modalInfo} handleUpdate={handleUpdate} open={openModal} handleClose={handleCloseModal}/>
       </TableContainer>
   );
 };
