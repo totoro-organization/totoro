@@ -101,6 +101,10 @@ module.exports = {
 		commonsController.update(res, Users, id, data, condition);
   },
 
+  updateAvatar: function (res, id, data) {
+		commonsController.update(res, Users, id, data);
+  },
+
   deleteUser: function (res, id) {
     commonsController.delete(res, Users, { id });
   },
@@ -217,7 +221,7 @@ module.exports = {
       {
         model: Groups,
         as: "mission",
-        attributes: { exclude: ["user_id","ads_id","id","status_id"] },
+        attributes: { exclude: ["user_id","ads_id","status_id"] },
         include: [...includeUser],
         where: {user_id: id}
       }

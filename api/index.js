@@ -11,10 +11,10 @@ let swaggerDoc = require("./swagger.json");
 const {
   users,
   admins,
-  terminals,
   authentications,
   commons,
   applications,
+  litigations
 } = require("services");
 
 const PORT = process.env.API_DOCKER_PORT || 8080;
@@ -23,8 +23,12 @@ loadFixtures();
 
 server.use(cors({ origin: "*" }));
 server.use(express.static(__dirname + "/data"));
-server.use(bodyParser.urlencoded({ extended: true }));
-server.use(bodyParser.json());
+
+//server.use(server.json({limit: '50mb'}));
+//server.use(server.urlencoded({limit: '50mb'}));
+
+server.use(bodyParser.json({limit: '50mb'}));
+server.use(bodyParser.urlencoded({limit: '50mb', extended: true, parameterLimit:50000}));
 
 const accessApi = async (req, res, next) => {
   try {
@@ -57,14 +61,14 @@ const accessApi = async (req, res, next) => {
 
 server.use("/api/applications", [accessApi, applications]);
 server.use("/api", [accessApi, authentications]);
-server.use("/api/terminals", [accessApi, terminals]);
 server.use("/api/auth", [accessApi, authentications]);
 server.use("/api/users", [accessApi, users]);
 server.use("/api/admins", [accessApi, admins]);
+server.use('/api/litigations', [accessApi, litigations]);
+//server.use("/api/terminals", [accessApi, terminals]);
 // server.use('/api/ads', [accessApi, ads]);
 // server.use('/api/messagings', [accessApi, messagings]);
 // server.use('/api/transactions', [accessApi, transactions]);
-// server.use('/api/litigations', [accessApi, litigations]);
 // server.use('/api/subscriptions', [accessApi, subscriptions]);
 server.use("/api/commons", [accessApi, commons]);
 
