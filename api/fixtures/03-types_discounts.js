@@ -5,6 +5,9 @@ module.exports = [
     data: {
       name: "Pourcentage",
       type: "number",
+      status: {
+				label: "actived",
+			},
     },
   },
   {
@@ -13,6 +16,9 @@ module.exports = [
     data: {
       name: "Montant",
       type: "number",
+      status: {
+				label: "actived",
+			},
     },
   },
   {
@@ -21,6 +27,9 @@ module.exports = [
     data: {
       name: "Autre",
       type: "text",
+      status: {
+				label: "actived",
+			},
     },
   },
 ];
