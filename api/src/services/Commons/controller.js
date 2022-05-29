@@ -12,7 +12,6 @@ const {
   getRow,
 } = require("utils/common/thenCatch");
 const { label_status } = require("utils/enum.json");
-
 const { Status } = require("./../../../models");
 
 module.exports = {

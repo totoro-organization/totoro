@@ -101,6 +101,10 @@ module.exports = {
 		commonsController.update(res, Users, id, data, condition);
   },
 
+  updateAvatar: function (res, id, data) {
+		commonsController.update(res, Users, id, data);
+  },
+
   deleteUser: function (res, id) {
     commonsController.delete(res, Users, { id });
   },
