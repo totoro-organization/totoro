@@ -1032,7 +1032,15 @@
              "tags": ["Applications"],
              "x-swagger-router-controller": "applications",
              "operationId": "getAllApplications",
-             "parameters": [],
+             "parameters": [
+               {
+                  "name": "status",
+                  "in": "query",
+                  "type": "string",
+                  "required": false,
+                  "enum": ["actived", "deleted"]
+               }
+               ],
                 "responses":{
                    "default":{
                       "description":"Unexpected error",
@@ -1286,33 +1294,6 @@
                      }
                   }
                }
-            },
-            "delete":{
-               "tags":["Commons"],
-               "x-swagger-router-controller":"commons/status",
-               "operationId":"deleteStatus",
-               "parameters": [
-                 {
-                    "name": "id",
-                    "in":"path",
-                    "type": "string",
-                    "required": true
-                 }
-               ],
-               "responses":{
-                  "default":{
-                     "description":"Unexpected error",
-                     "schema":{
-                        "$ref":"#/definitions/Error"
-                     }
-                  },
-                  "201":{
-                     "description":"Successful request.",
-                     "schema":{
-                        "$ref":"#/definitions/Success"
-                     }
-                  }
-               }
             }
           },
           "/api/commons/roles": {
@@ -1320,7 +1301,15 @@
                 "tags": ["Commons"],
                 "x-swagger-router-controller": "commons/roles",
                 "operationId": "getAllRoles",
-                "parameters": [],
+                "parameters": [
+                  {
+                     "name": "status",
+                     "in": "query",
+                     "type": "string",
+                     "required": false,
+                     "enum": ["actived", "deleted"]
+                  }
+               ],
                 "responses":{
                    "default":{
                       "description":"Unexpected error",
@@ -1464,7 +1453,15 @@
                 "tags": ["Commons"],
                 "x-swagger-router-controller": "commons/tags",
                 "operationId": "getAllTags",
-                "parameters": [],
+                "parameters": [
+                  {
+                     "name": "status",
+                     "in": "query",
+                     "type": "string",
+                     "required": false,
+                     "enum": ["actived", "deleted"]
+                  }
+               ],
                 "responses":{
                    "default":{
                       "description":"Unexpected error",
@@ -1608,7 +1605,15 @@
                 "tags": ["Commons"],
                 "x-swagger-router-controller": "commons/pricings",
                 "operationId": "getAllPricings",
-                "parameters": [],
+                "parameters": [
+                  {
+                     "name": "status",
+                     "in": "query",
+                     "type": "string",
+                     "required": false,
+                     "enum": ["actived", "deleted"]
+                  }
+               ],
                 "responses":{
                    "default":{
                       "description":"Unexpected error",
@@ -1752,7 +1757,15 @@
                 "tags": ["Commons"],
                 "x-swagger-router-controller": "commons/difficulties",
                 "operationId": "getAllDifficulties",
-                "parameters": [],
+                "parameters": [
+                  {
+                     "name": "status",
+                     "in": "query",
+                     "type": "string",
+                     "required": false,
+                     "enum": ["actived", "deleted"]
+                  }
+               ],
                 "responses":{
                    "default":{
                       "description":"Unexpected error",
@@ -1896,7 +1909,15 @@
                 "tags": ["Commons"],
                 "x-swagger-router-controller": "commons/litigation-objects",
                 "operationId": "getAllLitigationObjects",
-                "parameters": [],
+                "parameters": [
+                  {
+                     "name": "status",
+                     "in": "query",
+                     "type": "string",
+                     "required": false,
+                     "enum": ["actived", "deleted"]
+                  }
+               ],
                 "responses":{
                    "default":{
                       "description":"Unexpected error",
@@ -2040,7 +2061,15 @@
                 "tags": ["Commons"],
                 "x-swagger-router-controller": "commons/types-discounts",
                 "operationId": "getAllTypeDiscounts",
-                "parameters": [],
+                "parameters": [
+                  {
+                     "name": "status",
+                     "in": "query",
+                     "type": "string",
+                     "required": false,
+                     "enum": ["actived", "deleted"]
+                  }
+               ],
                 "responses":{
                    "default":{
                       "description":"Unexpected error",
@@ -2184,7 +2213,15 @@
                 "tags": ["Commons"],
                 "x-swagger-router-controller": "commons/appearances",
                 "operationId": "getAllAppearances",
-                "parameters": [],
+                "parameters": [
+                  {
+                     "name": "status",
+                     "in": "query",
+                     "type": "string",
+                     "required": false,
+                     "enum": ["actived", "deleted"]
+                  }
+               ],
                 "responses":{
                    "default":{
                       "description":"Unexpected error",
@@ -2644,6 +2681,8 @@
                                "commune": { "type": "string" },
                                "start_date": { "type": "string" },
                                "end_date": { "type": "string" },
+                               "longitude": { "type": "integer" },
+                               "latitude": { "type": "integer" },
                                "createdAt": { "type": "string" },
                                "updatedAt": { "type": "string" },
                                "author":{
@@ -2761,6 +2800,8 @@
                       "cp": { "type": "integer" },
                       "commune": { "type": "string" },
                       "start_date": { "type": "string" },
+                      "longitude": { "type": "integer" },
+                      "latitude": { "type": "integer" },
                       "end_date": { "type": "string" },
                       "createdAt": { "type": "string" },
                       "updatedAt": { "type": "string" },
@@ -2896,6 +2937,8 @@
                             "commune": { "type": "string" },
                             "start_date": { "type": "string" },
                             "end_date": { "type": "string" },
+                            "longitude": { "type": "integer" },
+                            "latitude": { "type": "integer" },
                             "createdAt": { "type": "string" },
                             "updatedAt": { "type": "string" },
                             "author":{
@@ -3294,6 +3337,8 @@
                                      "commune": { "type": "string" },
                                      "start_date": { "type": "string" },
                                      "end_date": { "type": "string" },
+                                     "longitude": { "type": "integer" },
+                                     "latitude": { "type": "integer" },
                                      "createdAt": { "type": "string" },
                                      "updatedAt": { "type": "string" },
                                      "author":{
@@ -3418,6 +3463,8 @@
                             "commune": { "type": "string" },
                             "start_date": { "type": "string" },
                             "end_date": { "type": "string" },
+                            "longitude": { "type": "integer" },
+                            "latitude": { "type": "integer" },
                             "createdAt": { "type": "string" },
                             "updatedAt": { "type": "string" },
                             "author":{
@@ -3512,7 +3559,13 @@
                          "id": { "type": "string" },
                          "name": { "type": "string" },
                          "createdAt": { "type": "string" },
-                         "updatedAt": { "type": "string" }
+                         "updatedAt": { "type": "string" },
+                         "status": {
+                           "type": "object",
+                           "properties": {
+                              "label": { "type": "string" }
+                           }
+                        }
                       }
                    }
                 }
@@ -3524,7 +3577,13 @@
                 "id": { "type": "string" },
                 "name": { "type": "string" },
                 "createdAt": { "type": "string" },
-                "updatedAt": { "type": "string" }
+                "updatedAt": { "type": "string" },
+                "status": {
+                  "type": "object",
+                  "properties": {
+                     "label": { "type": "string" }
+                  }
+               }
              }
           },
           "postApplication": {
@@ -3560,7 +3619,13 @@
                          "label": { "type": "string" },
                          "type": { "type": "string" },
                          "createdAt": { "type": "string" },
-                         "updatedAt": { "type": "string" }
+                         "updatedAt": { "type": "string" },
+                         "status": {
+                           "type": "object",
+                           "properties": {
+                              "label": { "type": "string" }
+                           }
+                        }
                       }
                    }
                 }
@@ -3573,7 +3638,13 @@
                 "label": { "type": "string" },
                 "type": { "type": "string" },
                 "createdAt": { "type": "string" },
-                "updatedAt": { "type": "string" }
+                "updatedAt": { "type": "string" },
+                "status": {
+                  "type": "object",
+                  "properties": {
+                     "label": { "type": "string" }
+                  }
+               }
              }
           },
           "postRole": {
@@ -3612,7 +3683,13 @@
                          "id": { "type": "string" },
                          "label": { "type": "string" },
                          "createdAt": { "type": "string" },
-                         "updatedAt": { "type": "string" }
+                         "updatedAt": { "type": "string" },
+                         "status": {
+                           "type": "object",
+                           "properties": {
+                              "label": { "type": "string" }
+                           }
+                        }
                       }
                    }
                 }
@@ -3624,7 +3701,13 @@
                 "id": { "type": "string" },
                 "label": { "type": "string" },
                 "createdAt": { "type": "string" },
-                "updatedAt": { "type": "string" }
+                "updatedAt": { "type": "string" },
+                "status": {
+                  "type": "object",
+                  "properties": {
+                     "label": { "type": "string" }
+                  }
+               }
              }
           },
           "postCommon": {
@@ -3660,7 +3743,13 @@
                          "label": { "type": "string" },
                          "description": { "type": "string" },
                          "createdAt": { "type": "string" },
-                         "updatedAt": { "type": "string" }
+                         "updatedAt": { "type": "string" },
+                         "status": {
+                           "type": "object",
+                           "properties": {
+                              "label": { "type": "string" }
+                           }
+                        }
                       }
                    }
                 }
@@ -3673,7 +3762,13 @@
                 "label": { "type": "string" },
                 "description": { "type": "string" },
                 "createdAt": { "type": "string" },
-                "updatedAt": { "type": "string" }
+                "updatedAt": { "type": "string" },
+                "status": {
+                  "type": "object",
+                  "properties": {
+                     "label": { "type": "string" }
+                  }
+               }
              }
           },
           "postLitigationObject": {
@@ -3713,7 +3808,13 @@
                          "level": { "type": "integer" },
                          "token": { "type": "integer" },
                          "createdAt": { "type": "string" },
-                         "updatedAt": { "type": "string" }
+                         "updatedAt": { "type": "string" },
+                         "status": {
+                           "type": "object",
+                           "properties": {
+                              "label": { "type": "string" }
+                           }
+                        }
                       }
                    }
                 }
@@ -3726,7 +3827,13 @@
                 "level": { "type": "integer" },
                 "token": { "type": "integer" },
                 "createdAt": { "type": "string" },
-                "updatedAt": { "type": "string" }
+                "updatedAt": { "type": "string" },
+                "status": {
+                  "type": "object",
+                  "properties": {
+                     "label": { "type": "string" }
+                  }
+               }
              }
           },
           "postDifficulty": {
@@ -3766,7 +3873,13 @@
                          "name": { "type": "string" },
                          "type": { "type": "string" },
                          "createdAt": { "type": "string" },
-                         "updatedAt": { "type": "string" }
+                         "updatedAt": { "type": "string" },
+                         "status": {
+                           "type": "object",
+                           "properties": {
+                              "label": { "type": "string" }
+                           }
+                        }
                       }
                    }
                 }
@@ -3779,7 +3892,13 @@
                 "name": { "type": "string" },
                 "type": { "type": "string" },
                 "createdAt": { "type": "string" },
-                "updatedAt": { "type": "string" }
+                "updatedAt": { "type": "string" },
+                "status": {
+                  "type": "object",
+                  "properties": {
+                     "label": { "type": "string" }
+                  }
+               }
              }
           },
           "postTypeDiscount": {
@@ -3823,7 +3942,13 @@
                          "nb_jobs_by_month": { "type": "integer" },
                          "price": { "type": "integer" },
                          "createdAt": { "type": "string" },
-                         "updatedAt": { "type": "string" }
+                         "updatedAt": { "type": "string" },
+                         "status": {
+                           "type": "object",
+                           "properties": {
+                              "label": { "type": "string" }
+                           }
+                        }
                       }
                    }
                 }
@@ -3840,7 +3965,13 @@
                 "nb_jobs_by_month": { "type": "integer" },
                 "price": { "type": "integer" },
                 "createdAt": { "type": "string" },
-                "updatedAt": { "type": "string" }
+                "updatedAt": { "type": "string" },
+                "status": {
+                  "type": "object",
+                  "properties": {
+                     "label": { "type": "string" }
+                  }
+               }
              }
           },
           "postPricing": {
@@ -3905,7 +4036,13 @@
                             "properties": {
                                "name": { "type": "string" }
                             }
-                         }
+                         },
+                         "status": {
+                           "type": "object",
+                           "properties": {
+                              "label": { "type": "string" }
+                           }
+                        }
                       }
                    }
                 }
@@ -3927,7 +4064,13 @@
                    "properties": {
                       "name": { "type": "string" }
                    }
-                }
+                },
+                "status": {
+                  "type": "object",
+                  "properties": {
+                     "label": { "type": "string" }
+                  }
+               }
              }
           }
        }

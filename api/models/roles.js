@@ -20,6 +20,10 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: "cascade",
         foreignKey: "role_id",
       });
+      models.Roles.belongsTo(models.Status, {
+				as: "status",
+				foreignKey: "status_id",
+			});
     }
   }
 
