@@ -12,7 +12,6 @@ const {
   getRow,
 } = require("utils/common/thenCatch");
 const { label_status } = require("utils/enum.json");
-
 const { Status } = require("./../../../models");
 
 module.exports = {
@@ -85,7 +84,7 @@ module.exports = {
     );
   },
 
-  update: function (res, model, id, data, condition) {
+  update: function (res, model, id, data, condition = null) {
     asyncLib.waterfall(
       [
         function (done) {

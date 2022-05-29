@@ -1,6 +1,8 @@
 const express = require("express");
 const { passport, passportAdmin } = require("utils/session");
 const controller = require("./controller");
+const { path } = require("utils/enum.json");
+const { upload } = require("utils/storage");
 
 exports.router = (function () {
 	const UsersRouter = express.Router();
@@ -45,6 +47,18 @@ exports.router = (function () {
 			controller.resetPassword(res, data);
 		},
 	]);
+
+
+	UsersRouter.put("/change/avatar", [passport, upload(path.avatar).single("avatar"), async function (req, res) {
+		const id = req.userData.id;
+		const data = {};
+		if (req.file) {
+			data.file = req.file;
+			data.path = path.avatar;
+		}
+
+		controller.updateAvatar(res, id, data);
+	}]);
 
 	UsersRouter.get("/:id/favorites", [
 		passport,

@@ -11,7 +11,7 @@ module.exports = [
         id: "f7f5bbf1-5af6-402e-a5ac-d3ec4cd6494g",
       },
       status: {
-        label: "actived",
+        label: "opened",
       },
     },
   },
