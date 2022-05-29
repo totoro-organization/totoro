@@ -16,6 +16,10 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: "cascade",
         foreignKey: "type_disc_id",
       });
+      models.Types_discounts.belongsTo(models.Status, {
+				as: "status",
+				foreignKey: "status_id",
+			});
     }
   }
 

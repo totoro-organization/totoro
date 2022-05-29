@@ -93,6 +93,48 @@ module.exports = (sequelize, DataTypes) => {
 				onDelete: "cascade",
 				foreignKey: "status_id",
 			});
+
+			models.Status.hasMany(models.Types_discounts, {
+				as: "typesDiscounts",
+				onDelete: "cascade",
+				foreignKey: "status_id",
+			});
+
+			models.Status.hasMany(models.Tags, {
+				as: "tags",
+				onDelete: "cascade",
+				foreignKey: "status_id",
+			});
+
+			models.Status.hasMany(models.Roles, {
+				as: "roles",
+				onDelete: "cascade",
+				foreignKey: "status_id",
+			});
+
+			models.Status.hasMany(models.Litigation_objects, {
+				as: "litigation_objects",
+				onDelete: "cascade",
+				foreignKey: "status_id",
+			});
+
+			models.Status.hasMany(models.Difficulties, {
+				as: "difficulties",
+				onDelete: "cascade",
+				foreignKey: "status_id",
+			});
+
+			models.Status.hasMany(models.Applications, {
+				as: "applications",
+				onDelete: "cascade",
+				foreignKey: "status_id",
+			});
+
+			models.Status.hasMany(models.Appearances, {
+				as: "appearances",
+				onDelete: "cascade",
+				foreignKey: "status_id",
+			});
 		}
 	}
 

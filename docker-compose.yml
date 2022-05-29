@@ -1,9 +1,9 @@
-version: "3.1"
+version: "3.8"
 
 services:
   db:
     env_file: ./.env
-    image: mariadb
+    image: mysql:8
     ports:
       - $MYSQLDB_DOCKER_PORT:$MYSQLDB_DOCKER_PORT
     restart: always

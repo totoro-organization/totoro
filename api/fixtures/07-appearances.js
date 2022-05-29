@@ -11,6 +11,9 @@ module.exports = [
       application: {
         name: "MOBILE APP",
       },
+      status: {
+				label: "actived",
+			},
     },
   },
   {
@@ -25,6 +28,9 @@ module.exports = [
       application: {
         name: "WEB APP",
       },
+      status: {
+				label: "actived",
+			},
     },
   },
   {
@@ -39,6 +45,9 @@ module.exports = [
       application: {
         name: "BACK OFFICE",
       },
+      status: {
+				label: "actived",
+			},
     },
   },
   {
@@ -53,6 +62,9 @@ module.exports = [
       application: {
         name: "LANDING PAGE",
       },
+      status: {
+				label: "actived",
+			},
     },
   },
 ];

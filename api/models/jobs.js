@@ -55,6 +55,8 @@ module.exports = (sequelize, DataTypes) => {
 			commune: DataTypes.STRING,
 			start_date: DataTypes.DATE,
 			end_date: DataTypes.DATE,
+			longitude: DataTypes.FLOAT,
+			latitude: DataTypes.FLOAT,
 		},
 		{
 			sequelize,
