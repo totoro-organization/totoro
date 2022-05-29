@@ -10,9 +10,14 @@ const {
   Difficulties,
   Appearances,
   Litigation_objects,
+  Applications
 } = require("./../../../models");
+const {
+  getRow
+} = require("utils/common/thenCatch");
 const { path } = require("utils/enum.json");
 const { upload } = require("utils/storage");
+const excludeCommon = { exclude: ["id", "createdAt", "updatedAt"] }
 
 exports.router = (function () {
   const commonsRouter = express.Router();
@@ -215,12 +220,14 @@ exports.router = (function () {
 
   // Appearances
   commonsRouter.get("/appearances", async function (req, res) {
-    controller.getAll(res, Appearances);
+    const include = [ { model: Applications, as: "application", attributes: excludeCommon}]
+    controller.getAll(res, Appearances, null, ['app_id'], include);
   });
 
   commonsRouter.get("/appearances/:id", async function (req, res) {
+    const include = [ { model: Applications, as: "application", attributes: excludeCommon}]
     const id = req.params.id;
-    controller.getOne(res, Appearances, id);
+    controller.getOne(res, Appearances, id, ['app_id'], include);
   });
 
   commonsRouter.post(
@@ -235,6 +242,8 @@ exports.router = (function () {
         data.files = req.files;
         data.path = path.site;
       }
+      var app = await getRow(res, Applications, { label: data.app_id })
+
       const condition = { app_id: data.app_id };
       controller.create(null, res, Appearances, data, condition);
     }
@@ -250,10 +259,12 @@ exports.router = (function () {
     async function (req, res) {
       const id = req.params.id;
       const data = req.body;
+
       if (req.files) {
         data.files = req.files;
         data.path = path.site;
       }
+      
       controller.update(res, Appearances, id, data);
     }
   );

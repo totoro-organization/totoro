@@ -104,10 +104,13 @@ module.exports = {
 		if (data.email) condition.email = data.email;
 		commonsController.update(res, Users, id, data, condition);
 	},
+  updateAvatar: function (res, id, data) {
+		commonsController.update(res, Users, id, data);
+  },
 
-	deleteUser: function (res, id) {
-		commonsController.delete(res, Users, { id });
-	},
+  deleteUser: function (res, id) {
+    commonsController.delete(res, Users, { id });
+  },
 
 	resetPassword: async function (res, data) {
 		asyncLib.waterfall(
@@ -224,29 +227,20 @@ module.exports = {
 			let statusData = await getRow(res, Status, { label: queries.status });
 			condition.status_id = statusData.id;
 		}
-		condition = Object.keys(condition).length === 0 ? null : condition;
 
-		const includeLitigation = [
-			{ model: Status, as: "status", attributes: excludeCommon },
-			{
-				model: Litigation_objects,
-				as: "litigation_object",
-				attributes: excludeCommon,
-			},
-			{
-				model: Groups,
-				as: "mission",
-				attributes: { exclude: ["user_id", "jobs_id", "id", "status_id"] },
-				include: [...includeUser],
-				where: { user_id: id },
-			},
-		];
-		commonsController.getAll(
-			res,
-			Litigations,
-			condition,
-			["litigation_object_id", "group_id", "status_id"],
-			includeLitigation
-		);
-	},
+    condition = Object.keys(condition).length === 0 ? null : condition;
+
+    const includeLitigation = [
+      {model: Status, as: "status", attributes: excludeCommon},
+      {model: Litigation_objects, as: "litigation_object", attributes: excludeCommon},
+      {
+        model: Groups,
+        as: "mission",
+        attributes: { exclude: ["user_id","ads_id","status_id"] },
+        include: [...includeUser],
+        where: {user_id: id}
+      }
+    ];
+    commonsController.getAll(res, Litigations, condition, ['litigation_object_id','group_id','status_id'], includeLitigation);
+  }
 };
