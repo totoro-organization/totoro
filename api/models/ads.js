@@ -3,68 +3,68 @@ const { v4: uuidv4 } = require("uuid");
 const { Model } = require("sequelize");
 
 module.exports = (sequelize, DataTypes) => {
-  class Ads extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
-    static associate(models) {
-      models.Ads.belongsTo(models.Status, {
-        as: "status",
-        foreignKey: "status_id",
-      });
-      models.Ads.belongsTo(models.Associations_users, {
-        as: "author",
-        foreignKey: "assos_user_id",
-      });
-      models.Ads.belongsTo(models.Difficulties, {
-        as: "difficulty",
-        foreignKey: "difficulty_id",
-      });
-      models.Ads.hasMany(models.Favorites, {
-        as: "favorites",
-        onDelete: "cascade",
-        foreignKey: "ads_id",
-      });
-      models.Ads.hasMany(models.Tag_ads, {
-        as: "tags",
-        onDelete: "cascade",
-        foreignKey: "ads_id",
-      });
-      models.Ads.hasMany(models.Attachment_ads, {
-        as: "attachments",
-        onDelete: "cascade",
-        foreignKey: "ads_id",
-      });
-      models.Ads.hasMany(models.Groups, {
-        as: "participants",
-        onDelete: "cascade",
-        foreignKey: "ads_id",
-      });
-    }
-  }
+	class Jobs extends Model {
+		/**
+		 * Helper method for defining associations.
+		 * This method is not a part of Sequelize lifecycle.
+		 * The `models/index` file will call this method automatically.
+		 */
+		static associate(models) {
+			models.Jobs.belongsTo(models.Status, {
+				as: "status",
+				foreignKey: "status_id",
+			});
+			models.Jobs.belongsTo(models.Associations_users, {
+				as: "author",
+				foreignKey: "assos_user_id",
+			});
+			models.Jobs.belongsTo(models.Difficulties, {
+				as: "difficulty",
+				foreignKey: "difficulty_id",
+			});
+			models.Jobs.hasMany(models.Favorites, {
+				as: "favorites",
+				onDelete: "cascade",
+				foreignKey: "jobs_id",
+			});
+			models.Jobs.hasMany(models.Tag_jobs, {
+				as: "tags",
+				onDelete: "cascade",
+				foreignKey: "jobs_id",
+			});
+			models.Jobs.hasMany(models.Attachment_jobs, {
+				as: "attachments",
+				onDelete: "cascade",
+				foreignKey: "jobs_id",
+			});
+			models.Jobs.hasMany(models.Groups, {
+				as: "participants",
+				onDelete: "cascade",
+				foreignKey: "jobs_id",
+			});
+		}
+	}
 
-  Ads.init(
-    {
-      title: DataTypes.STRING,
-      description: DataTypes.STRING,
-      participants_max: DataTypes.INTEGER,
-      address: DataTypes.STRING,
-      cp: DataTypes.INTEGER,
-      commune: DataTypes.STRING,
-      start_date: DataTypes.DATE,
-      end_date: DataTypes.DATE,
-    },
-    {
-      sequelize,
-      modelName: "Ads",
-    }
-  );
+	Jobs.init(
+		{
+			title: DataTypes.STRING,
+			description: DataTypes.STRING,
+			participants_max: DataTypes.INTEGER,
+			address: DataTypes.STRING,
+			cp: DataTypes.INTEGER,
+			commune: DataTypes.STRING,
+			start_date: DataTypes.DATE,
+			end_date: DataTypes.DATE,
+		},
+		{
+			sequelize,
+			modelName: "Jobs",
+		}
+	);
 
-  Ads.addHook("beforeSave", async (element) => {
-    return (element.id = uuidv4());
-  });
+	Jobs.addHook("beforeSave", async (element) => {
+		return (element.id = uuidv4());
+	});
 
-  return Ads;
+	return Jobs;
 };
