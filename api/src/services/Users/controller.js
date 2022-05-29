@@ -217,7 +217,7 @@ module.exports = {
       {
         model: Groups,
         as: "mission",
-        attributes: { exclude: ["user_id","ads_id","id","status_id"] },
+        attributes: { exclude: ["user_id","ads_id","status_id"] },
         include: [...includeUser],
         where: {user_id: id}
       }

@@ -85,7 +85,7 @@ module.exports = {
     );
   },
 
-  update: function (res, model, id, data, condition) {
+  update: function (res, model, id, data, condition = null) {
     asyncLib.waterfall(
       [
         function (done) {
