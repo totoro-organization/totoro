@@ -175,6 +175,37 @@
             }
          }
       },
+      "/api/users/change/avatar":{
+         "put":{
+            "tags":["Users"],
+            "x-swagger-router-controller":"users",
+            "operationId":"putAvatarUser",
+            "consumes": ["multipart/form-data"],
+            "parameters":[
+               {
+                  "name": "avatar",
+                  "in": "formData",
+                  "description": "avatar for user",
+                  "required": true,
+                  "type": "file"
+               }
+            ],
+            "responses":{
+               "default":{
+                  "description":"Unexpected error",
+                  "schema":{
+                     "$ref":"#/definitions/Error"
+                  }
+               },
+               "201":{
+                  "description":"Updated Avatar User",
+                  "schema":{
+                     "$ref":"#/definitions/Success"
+                  }
+               }
+            }
+         }
+      },
       "/api/users/{id}/favorites":{
          "get":{
             "tags":["Users"],
@@ -2147,6 +2178,211 @@
               }
            }
         }
+      },
+      "/api/commons/appearances": {
+         "get": {
+            "tags": ["Commons"],
+            "x-swagger-router-controller": "commons/appearances",
+            "operationId": "getAllAppearances",
+            "parameters": [],
+            "responses":{
+               "default":{
+                  "description":"Unexpected error",
+                  "schema":{
+                     "$ref":"#/definitions/Error"
+                  }
+               },
+               "200":{
+                  "description":"Successful request.",
+                  "schema":{
+                     "$ref":"#/definitions/getAllAppearances"
+                  }
+               }
+            }
+         },
+         "post": {
+            "tags": ["Commons"],
+            "x-swagger-router-controller": "commons/appearances",
+            "operationId": "postAppearance",
+            "consumes": ["multipart/form-data"],
+            "parameters": [
+              {
+                  "name": "app_id",
+                  "in": "formData",
+                  "description": "app id",
+                  "required": true,
+                  "type": "string"
+              },
+              {
+                  "name": "primary_theme",
+                  "in": "formData",
+                  "description": "color of primary theme",
+                  "required": true,
+                  "type": "string"
+               },
+               {
+                  "name": "secondary_theme",
+                  "in": "formData",
+                  "description": "color of secondary theme",
+                  "required": true,
+                  "type": "string"
+               },
+               {
+                  "name": "title",
+                  "in": "formData",
+                  "description": "principal title of appliaction",
+                  "required": true,
+                  "type": "string"
+               },
+               {
+                  "name": "logo",
+                  "in": "formData",
+                  "description": "logo of application",
+                  "required": true,
+                  "type": "file"
+               },
+               {
+                  "name": "icon",
+                  "in": "formData",
+                  "description": "icon of application",
+                  "required": true,
+                  "type": "file"
+               }
+            ],
+            "responses": {
+              "default": {
+                "description": "Unexpected error",
+                "schema": {
+                  "$ref": "#/definitions/Error"
+                }
+              },
+              "201": {
+                "description": "Created Appearances",
+                "schema": {
+                  "$ref": "#/definitions/Success"
+                }
+              }
+            }
+         }
+      },
+      "/api/commons/appearances/{id}":{
+        "get":{
+           "tags":["Commons"],
+           "x-swagger-router-controller":"commons/appearances",
+           "operationId":"getAppearanceById",
+           "parameters": [
+             {
+                "name": "id",
+                "in":"path",
+                "type": "string",
+                "required": true
+             }
+           ],
+           "responses":{
+              "default":{
+                 "description":"Unexpected error",
+                 "schema":{
+                    "$ref":"#/definitions/Error"
+                 }
+              },
+              "200":{
+                 "description":"Successful request.",
+                 "schema":{
+                    "$ref":"#/definitions/getAppearance"
+                 }
+              }
+           }
+        },
+        "put":{
+           "tags":["Commons"],
+           "x-swagger-router-controller":"commons/appearances",
+           "operationId":"putAppearances",
+           "consumes": ["multipart/form-data"],
+           "parameters":[
+              {
+                 "name": "id",
+                 "in":"path",
+                 "type": "string",
+                 "required": true
+              },
+               {
+                  "name": "primary_theme",
+                  "in": "formData",
+                  "description": "color of primary theme",
+                  "required": false,
+                  "type": "string"
+               },
+               {
+                  "name": "secondary_theme",
+                  "in": "formData",
+                  "description": "color of secondary theme",
+                  "required": false,
+                  "type": "string"
+               },
+               {
+                  "name": "title",
+                  "in": "formData",
+                  "description": "principal title of appliaction",
+                  "required": false,
+                  "type": "string"
+               },
+               {
+                  "name": "logo",
+                  "in": "formData",
+                  "description": "logo of application",
+                  "required": false,
+                  "type": "file"
+               },
+               {
+                  "name": "icon",
+                  "in": "formData",
+                  "description": "icon of application",
+                  "required": false,
+                  "type": "file"
+               }
+           ],
+           "responses":{
+              "default":{
+                 "description":"Unexpected error",
+                 "schema":{
+                    "$ref":"#/definitions/Error"
+                 }
+              },
+              "201":{
+                 "description":"Updated Appearances",
+                 "schema":{
+                    "$ref":"#/definitions/Success"
+                 }
+              }
+           }
+        },
+        "delete":{
+           "tags":["Commons"],
+           "x-swagger-router-controller":"commons/appearances",
+           "operationId":"deleteAppearance",
+           "parameters": [
+             {
+                "name": "id",
+                "in":"path",
+                "type": "string",
+                "required": true
+             }
+           ],
+           "responses":{
+              "default":{
+                 "description":"Unexpected error",
+                 "schema":{
+                    "$ref":"#/definitions/Error"
+                 }
+              },
+              "201":{
+                 "description":"Successful request.",
+                 "schema":{
+                    "$ref":"#/definitions/Success"
+                 }
+              }
+           }
+        }
       }
    },
   "definitions": {
@@ -3645,6 +3881,53 @@
             "nb_account": 5,
             "nb_ads_by_month": 7,
             "price": 9.99
+         }
+      },
+      "getAllAppearances": {
+         "type": "object",
+         "properties": {
+            "total_rows": { "type": "integer" },
+            "data": {
+               "type": "array",
+               "items": {
+                  "type": "object",
+                  "properties": {
+                     "id": { "type": "string" },
+                     "logo": { "type": "string" },
+                     "icon": { "type": "string" },
+                     "primary_theme": { "type": "string" },
+                     "secondary_theme": { "type": "string" },
+                     "title": { "type": "string" },
+                     "createdAt": { "type": "string" },
+                     "updatedAt": { "type": "string" },
+                     "application": {
+                        "type": "object",
+                        "properties": {
+                           "name": { "type": "string" }
+                        }
+                     }
+                  }
+               }
+            }
+         }
+      },
+      "getAppearance": {
+         "type": "object",
+         "properties": {
+            "id": { "type": "string" },
+            "logo": { "type": "string" },
+            "icon": { "type": "string" },
+            "primary_theme": { "type": "string" },
+            "secondary_theme": { "type": "string" },
+            "title": { "type": "string" },
+            "createdAt": { "type": "string" },
+            "updatedAt": { "type": "string" },
+            "application": {
+               "type": "object",
+               "properties": {
+                  "name": { "type": "string" }
+               }
+            }
          }
       }
    }
