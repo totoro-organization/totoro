@@ -19,7 +19,7 @@
     }
   },
   "security": [{ "ApiKeyAuth": [] }, { "bearerAuth": [] }],
-  "tags": [{"name":"Authentification"}, {"name":"Users"}, {"name":"Admins"}, {"name":"Commons"}, {"name":"Applications"}],
+  "tags": [{"name":"Authentification"}, {"name":"Users"}, {"name":"Admins"}, {"name":"Litigations"}, {"name":"Applications"}, {"name":"Commons"}],
   "paths": {
      "/api/users": {
          "get": {
@@ -844,6 +844,155 @@
               "201": {
                 "description": "get user connected (getAdmin or getUser model)"
               }
+            }
+         }
+      },
+      "/api/litigations": {
+         "get": {
+         "tags": ["Litigations"],
+         "x-swagger-router-controller": "litigations",
+         "operationId": "getAllLitigations",
+         "parameters": [
+            {
+               "name": "status",
+               "in": "query",
+               "type": "string",
+               "required": false,
+               "enum": ["closed", "deleted"]
+            }
+            ],
+            "responses":{
+               "default":{
+                  "description":"Unexpected error",
+                  "schema":{
+                     "$ref":"#/definitions/Error"
+                  }
+               },
+               "200":{
+                  "description":"Successful request.",
+                  "schema":{
+                     "$ref":"#/definitions/getAllLitigations"
+                  }
+               }
+            }
+         },
+         "post": {
+            "tags": ["Litigations"],
+            "x-swagger-router-controller": "litigations",
+            "operationId": "postLitigation",
+            "parameters": [
+              {
+                "name": "data",
+                "in": "body",
+                "description": "Create Litigation",
+                "required": true,
+                "schema": {
+                  "$ref": "#/definitions/postLitigation"
+                }
+              }
+            ],
+            "responses": {
+              "default": {
+                "description": "Unexpected error",
+                "schema": {
+                  "$ref": "#/definitions/Error"
+                }
+              },
+              "201": {
+                "description": "Litigation Created"
+              }
+            }
+         }
+      },
+      "/api/litigations/{id}":{
+         "get":{
+            "tags":["Litigations"],
+            "x-swagger-router-controller":"litigations",
+            "operationId":"getLitigationById",
+            "parameters": [
+              {
+                 "name": "id",
+                 "in":"path",
+                 "type": "string",
+                 "required": true
+              }
+            ],
+            "responses":{
+               "default":{
+                  "description":"Unexpected error",
+                  "schema":{
+                     "$ref":"#/definitions/Error"
+                  }
+               },
+               "200":{
+                  "description":"Successful request.",
+                  "schema":{
+                     "$ref":"#/definitions/getLitigation"
+                  }
+               }
+            }
+         },
+        "put":{
+           "tags":["Litigations"],
+           "x-swagger-router-controller":"litigations",
+           "operationId":"putLitigation",
+           "parameters":[
+              {
+                 "name": "id",
+                 "in":"path",
+                 "type": "string",
+                 "required": true
+              },
+              {
+                 "name":"data",
+                 "in":"body",
+                 "description":"Update Litigation",
+                 "required":true,
+                 "schema":{
+                    "$ref":"#/definitions/putLitigation"
+                 }
+              }
+           ],
+           "responses":{
+              "default":{
+                 "description":"Unexpected error",
+                 "schema":{
+                    "$ref":"#/definitions/Error"
+                 }
+              },
+              "201":{
+                 "description":"Litigation Updated",
+                 "schema":{
+                    "$ref":"#/definitions/Success"
+                 }
+              }
+           }
+        },
+         "delete":{
+            "tags":["Litigations"],
+            "x-swagger-router-controller":"litigations",
+            "operationId":"deleteLitigation",
+            "parameters": [
+              {
+                 "name": "id",
+                 "in":"path",
+                 "type": "string",
+                 "required": true
+              }
+            ],
+            "responses":{
+               "default":{
+                  "description":"Unexpected error",
+                  "schema":{
+                     "$ref":"#/definitions/Error"
+                  }
+               },
+               "201":{
+                  "description":"Successful request.",
+                  "schema":{
+                     "$ref":"#/definitions/Success"
+                  }
+               }
             }
          }
       },
@@ -2351,8 +2500,8 @@
       "postFavotitesUser":{
          "type":"object",
          "properties":{
-            "assos_id":{"type":"integer"},
-            "ads_id":{"type":"integer"}
+            "assos_id":{"type":"string"},
+            "ads_id":{"type":"string"}
          },
          "example":{
             "assos_id": "561a448e-5ad9-4dd5-8b08-7cc0419824d1"
@@ -2496,6 +2645,7 @@
             "mission":{
                "type": "object",
                "properties": {
+                  "id": { "type": "string" },
                   "createdAt": { "type": "string" },
                   "updatedAt": { "type": "string" },
                   "job": {
@@ -2835,6 +2985,281 @@
             "email": "h.quentin@totoro.fr",
             "birthday": "2022-12-08",
             "password": "123456"
+         }
+      },  
+      "postLitigation":{
+         "type":"object",
+         "properties":{
+            "litigation_object_id":{"type":"string"},
+            "group_id":{"type":"string"},
+            "type":{"type":"boolean"},
+            "message":{"type":"string"}
+         },
+         "example":{
+            "litigation_object_id": "561a448e-5ad9-4dd5-8b08-7cc0419824d1",
+            "group_id": "561a448e-5ad9-4dd5-1208-7cc0419824d5",
+            "type": 0,
+            "message": "Lorem ipsum, bla bla bla"
+         }
+      },
+      "putLitigation":{
+         "type":"object",
+         "properties":{
+            "status_id":{"type":"string"}
+         },
+         "example":{
+            "status_id": "561a448e-5ad9-4dd5-8b08-7cc0419824d1"
+         }
+      },
+      "getAllLitigations": {
+         "type": "object",
+         "properties": {
+            "total_rows": { "type": "integer" },
+            "data": {
+               "type": "array",
+               "items": {
+                  "type": "object",
+                  "properties": {
+                     "id": { "type": "string" },
+                     "type": { "type": "boolean" },
+                     "message": { "type": "string" },
+                     "createdAt": { "type": "string" },
+                     "updatedAt": { "type": "string" },
+                     "status": {
+                        "type": "object",
+                        "properties": {
+                           "label": { "type": "string" }
+                        }
+                     },
+                     "litigation_object":{
+                        "type": "object",
+                        "properties": {
+                           "label": { "type": "string" },
+                           "description": { "type": "string" }
+                        }
+                     },
+                     "mission":{
+                        "type": "object",
+                        "properties": {
+                           "id": { "type": "string" },
+                           "createdAt": { "type": "string" },
+                           "updatedAt": { "type": "string" },
+                           "job": {
+                              "type": "object",
+                              "properties": {
+                                 "id": { "type": "string" },
+                                 "title": { "type": "string" },
+                                 "description": { "type": "string" },
+                                 "participants_max": { "type": "integer" },
+                                 "address": { "type": "string" },
+                                 "cp": { "type": "integer" },
+                                 "commune": { "type": "string" },
+                                 "start_date": { "type": "string" },
+                                 "end_date": { "type": "string" },
+                                 "createdAt": { "type": "string" },
+                                 "updatedAt": { "type": "string" },
+                                 "author":{
+                                    "type": "object",
+                                    "properties": {
+                                       "createdAt": { "type": "string" },
+                                       "updatedAt": { "type": "string" },
+                                       "organization": {
+                                          "type": "object",
+                                          "properties": {
+                                             "id": { "type": "string" },
+                                             "siren": { "type": "string" },
+                                             "siret": { "type": "string" },
+                                             "name": { "type": "string" },
+                                             "email": { "type": "string" },
+                                             "longitude": { "type": "integer" },
+                                             "latitude": { "type": "integer" },
+                                             "creation_date": { "type": "string" },
+                                             "activity": { "type": "string" },
+                                             "address": { "type": "string" },
+                                             "cp": { "type": "integer" },
+                                             "commune": { "type": "string" },
+                                             "logo": { "type": "string" },
+                                             "description": { "type": "string" },
+                                             "link": { "type": "string" },
+                                             "phone": { "type": "string" },
+                                             "createdAt": { "type": "string" },
+                                             "updatedAt": { "type": "string" },
+                                             "status": {
+                                                "type": "object",
+                                                "properties": {
+                                                   "label": { "type": "string" }
+                                                }
+                                             }
+                                          }
+                                       }
+                                    }
+                                 },
+                                 "difficulty": {
+                                    "type": "object",
+                                    "properties": {
+                                       "level": { "type": "integer" },
+                                       "token": { "type": "integer" }
+                                    }
+                                 },
+                                 "participant":{
+                                    "type": "object",
+                                    "properties": {
+                                       "id": { "type": "string" },
+                                       "username": { "type": "string" },
+                                       "firstname": { "type": "string" },
+                                       "lastname": { "type": "string" },
+                                       "email": { "type": "string" },
+                                       "birthday": { "type": "string" },
+                                       "longitude": { "type": "integer" },
+                                       "latitude": { "type": "integer" },
+                                       "avatar": { "type": "string" },
+                                       "bio": { "type": "string" },
+                                       "phone": { "type": "string" },
+                                       "total_token": { "type": "integer" },
+                                       "createdAt": { "type": "string" },
+                                       "updatedAt": { "type": "string" },
+                                       "status": {
+                                          "type": "object",
+                                          "properties": {
+                                             "label": { "type": "string" }
+                                          }
+                                       }
+                                    } 
+                                 },
+                                 "status": {
+                                    "type": "object",
+                                    "properties": {
+                                       "label": { "type": "string" }
+                                    }
+                                 }
+                              }
+                           }
+                        }
+                     }
+                  }
+               }
+            }
+         }
+      },
+      "getLitigation": {
+         "type": "object",
+         "properties": {
+            "id": { "type": "string" },
+            "type": { "type": "boolean" },
+            "message": { "type": "string" },
+            "createdAt": { "type": "string" },
+            "updatedAt": { "type": "string" },
+            "status": {
+               "type": "object",
+               "properties": {
+                  "label": { "type": "string" }
+               }
+            },
+            "litigation_object":{
+               "type": "object",
+               "properties": {
+                  "label": { "type": "string" },
+                  "description": { "type": "string" }
+               }
+            },
+            "mission":{
+               "type": "object",
+               "properties": {
+                  "id": { "type": "string" },
+                  "createdAt": { "type": "string" },
+                  "updatedAt": { "type": "string" },
+                  "job": {
+                     "type": "object",
+                     "properties": {
+                        "id": { "type": "string" },
+                        "title": { "type": "string" },
+                        "description": { "type": "string" },
+                        "participants_max": { "type": "integer" },
+                        "address": { "type": "string" },
+                        "cp": { "type": "integer" },
+                        "commune": { "type": "string" },
+                        "start_date": { "type": "string" },
+                        "end_date": { "type": "string" },
+                        "createdAt": { "type": "string" },
+                        "updatedAt": { "type": "string" },
+                        "author":{
+                           "type": "object",
+                           "properties": {
+                              "createdAt": { "type": "string" },
+                              "updatedAt": { "type": "string" },
+                              "organization": {
+                                 "type": "object",
+                                 "properties": {
+                                    "id": { "type": "string" },
+                                    "siren": { "type": "string" },
+                                    "siret": { "type": "string" },
+                                    "name": { "type": "string" },
+                                    "email": { "type": "string" },
+                                    "longitude": { "type": "integer" },
+                                    "latitude": { "type": "integer" },
+                                    "creation_date": { "type": "string" },
+                                    "activity": { "type": "string" },
+                                    "address": { "type": "string" },
+                                    "cp": { "type": "integer" },
+                                    "commune": { "type": "string" },
+                                    "logo": { "type": "string" },
+                                    "description": { "type": "string" },
+                                    "link": { "type": "string" },
+                                    "phone": { "type": "string" },
+                                    "createdAt": { "type": "string" },
+                                    "updatedAt": { "type": "string" },
+                                    "status": {
+                                       "type": "object",
+                                       "properties": {
+                                          "label": { "type": "string" }
+                                       }
+                                    }
+                                 }
+                              }
+                           }
+                        },
+                        "difficulty": {
+                           "type": "object",
+                           "properties": {
+                              "level": { "type": "integer" },
+                              "token": { "type": "integer" }
+                           }
+                        },
+                        "participant":{
+                           "type": "object",
+                           "properties": {
+                              "id": { "type": "string" },
+                              "username": { "type": "string" },
+                              "firstname": { "type": "string" },
+                              "lastname": { "type": "string" },
+                              "email": { "type": "string" },
+                              "birthday": { "type": "string" },
+                              "longitude": { "type": "integer" },
+                              "latitude": { "type": "integer" },
+                              "avatar": { "type": "string" },
+                              "bio": { "type": "string" },
+                              "phone": { "type": "string" },
+                              "total_token": { "type": "integer" },
+                              "createdAt": { "type": "string" },
+                              "updatedAt": { "type": "string" },
+                              "status": {
+                                 "type": "object",
+                                 "properties": {
+                                    "label": { "type": "string" }
+                                 }
+                              }
+                           } 
+                        },
+                        "status": {
+                           "type": "object",
+                           "properties": {
+                              "label": { "type": "string" }
+                           }
+                        }
+                     }
+                  }
+               }
+            }
          }
       },
       "getAllApplications": {

@@ -1,4 +1,3 @@
-const models = require("./../../../models");
 const bcrypt = require("bcryptjs");
 const asyncLib = require("async");
 const { Op } = require("sequelize");
