@@ -20,6 +20,7 @@ import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 import { Tag } from 'src/models/tag';
 import Modal from 'src/components/Modal';
+import StatusLabel from 'src/components/StatusLabel';
 
 interface TagsTableProps {
   items: Tag[], 
@@ -88,6 +89,7 @@ const TagsTable: FC<TagsTableProps> = ({
               </TableCell>
               <TableCell>Label</TableCell>
               <TableCell>Date de création</TableCell>
+              <TableCell align="right">Statut</TableCell>
               <TableCell align="right">Actions</TableCell>
             </TableRow>
           </TableHead>
@@ -127,6 +129,9 @@ const TagsTable: FC<TagsTableProps> = ({
                     >
                       {tag.createdAt} 
                     </Typography>
+                  </TableCell>
+                  <TableCell align="right">
+                    <StatusLabel status={tag.status.label} />
                   </TableCell>
                   <TableCell align="right">
                     <Tooltip title="Editer la mission" arrow>
