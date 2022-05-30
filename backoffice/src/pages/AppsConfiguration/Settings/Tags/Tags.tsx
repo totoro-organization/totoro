@@ -4,13 +4,14 @@ import TagsTable from './TagsTable';
 import { useApi } from 'src/hooks/useApi';
 import SuspenseLoader from 'src/components/SuspenseLoader';
 import TableWrapper from 'src/components/TableWrapper';
-import { Tag } from 'src/models/tag';
+import { Tag } from 'src/models';
 import { styled } from '@mui/system';
 import Modal from "src/components/Modal";
 import { StatusEnum } from 'src/models/status';
 import { useTable } from 'src/hooks/useTable';
 import { useModal } from 'src/hooks/useModal';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import { CommonsEnum } from 'src/models/commons';
 
 const WrapperBox = styled(Box)(
   ({ theme }) => `
@@ -31,7 +32,7 @@ function Tags() {
     handleDeleteItem,
     handleUpdateItem,
     items: tags
-  } = useTable({ model: 'tags', defaultItems: defaultTags, handleCloseModal: handleCloseAddModal })
+  } = useTable({ model: CommonsEnum.tags, defaultItems: defaultTags?.data, handleCloseModal: handleCloseAddModal })
 
   const statusOptions = [
     {
@@ -39,7 +40,7 @@ function Tags() {
       name: 'Actif'
     },
     {
-      id: StatusEnum.disabled,
+      id: StatusEnum.deleted,
       name: 'Supprimé'
     },
   ];

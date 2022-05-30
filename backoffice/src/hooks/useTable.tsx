@@ -1,14 +1,49 @@
 import { useEffect, useState } from "react";
+import { Admin, CommonsEnum, Discount, DiscountTransaction, DiscountType, Job, JobDifficulty, Litigation, LitigationObject, Log, Organization, Partner, Pricing, Role, Status, Subscription, Tag, User } from "src/models";
 import { updateItem, getItems, addItem, deleteItem } from 'src/services/commons.service';
 
-export const useTable = ({ model, defaultItems, handleCloseModal }) => {
 
-    const [items, setItems] = useState<Array<any>>(defaultItems?.data);
+type TableItem =
+  Status<any>         |
+  Role                |
+  Tag                 |
+  JobDifficulty       |
+  LitigationObject    |
+  DiscountType        |
+  Pricing             |
+  Organization        |
+  Litigation          |
+  Partner             |
+  Log                 |
+  Admin               |
+  User                |
+  Discount            |
+  Job                 |
+  JobDifficulty       |
+  DiscountTransaction |
+  Subscription        
+  
 
+interface UseTableProps {
+  model: CommonsEnum,
+  defaultItems: TableItem[],
+  handleCloseModal: () => void
+}
+
+interface UseTableResponse {
+  handleAddItem: ({label}: {label: string}) => void,
+  handleDeleteItem: (id: string) => void,
+  handleUpdateItem: ({id, label}: {id: string, label: string}) => void,
+  items: TableItem[],
+}
+
+export const useTable = ({ model, defaultItems, handleCloseModal }: UseTableProps): UseTableResponse => {
+
+  const [items, setItems] = useState<Array<TableItem>>(defaultItems);
 
   useEffect(() => {
-    if(defaultItems?.data) {
-      setItems(defaultItems?.data);
+    if(defaultItems) {
+      setItems(defaultItems);
     }
   }, [defaultItems])
 

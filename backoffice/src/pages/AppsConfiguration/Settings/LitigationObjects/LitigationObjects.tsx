@@ -11,6 +11,7 @@ import { StatusEnum } from 'src/models/status';
 import { useTable } from 'src/hooks/useTable';
 import { useModal } from 'src/hooks/useModal';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import { CommonsEnum } from 'src/models/commons';
 
 const WrapperBox = styled(Box)(
   ({ theme }) => `
@@ -31,7 +32,7 @@ function LitigationObjects() {
     handleDeleteItem,
     handleUpdateItem,
     items: litigationObjects
-  } = useTable({ model: 'litigation-objects', defaultItems: defaultLitigationObjects, handleCloseModal: handleCloseAddModal })
+  } = useTable({ model: CommonsEnum.litigationObjects, defaultItems: defaultLitigationObjects?.data, handleCloseModal: handleCloseAddModal })
 
   const statusOptions = [
     {
@@ -39,7 +40,7 @@ function LitigationObjects() {
       name: 'Actif'
     },
     {
-      id: StatusEnum.disabled,
+      id: StatusEnum.deleted,
       name: 'Supprimé'
     },
   ];
