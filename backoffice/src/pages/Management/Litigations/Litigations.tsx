@@ -3,6 +3,8 @@ import { Card } from '@mui/material';
 import { Litigation } from 'src/models/litigation';
 import LitigationsTable from './LitigationsTable';
 import { subDays } from 'date-fns';
+import TableWrapper from 'src/components/TableWrapper';
+import { StatusEnum } from 'src/models/status';
 
 function Litigations() {
 
@@ -14,7 +16,7 @@ function Litigations() {
         id: '1',
         title: 'Ma super mission',
         organization: 'Mon association',
-        status: {id: '1', label: 'completed'},
+        status: {id: '1', label: 'coming'},
         participants: 15,
         address: '3 rue de la paix',
         capacity: 20,
@@ -33,7 +35,7 @@ function Litigations() {
           id: '1',
           title: 'Ma super mission',
           organization: 'Mon association',
-          status: {id: '1', label: 'completed'},
+          status: {id: '1', label: 'coming'},
           participants: 15,
           address: '3 rue de la paix',
           capacity: 20,
@@ -43,7 +45,7 @@ function Litigations() {
           tags: [{id:'1', label: 'humanitaire'}]
         }],
         tokens: 150,
-        status: {id: '1', label: 'active'}
+        status: {id: '1', label: 'actived'}
       },
       target: {
         id: '1',
@@ -65,17 +67,36 @@ function Litigations() {
           tags: [{id:'1', label: 'humanitaire'}]
         }],
         tokens: 350,
-        status: {id: '1', label: 'active'}
+        status: {id: '1', label: 'actived'}
       },
       date: subDays(new Date(), 1).getTime(),
-      status: {id: '2', label: 'open'},
+      status: {id: '2', label: 'opened'},
       message: "Mon message"
   }
   ]
 
+  const statusOptions = [
+    {
+      id: StatusEnum.opened,
+      name: 'Ouvert'
+    },
+    {
+      id: StatusEnum.closed,
+      name: 'Fermé'
+    },
+  ];
+
   return (
     <Card>
-      <LitigationsTable litigations={litigations} />
+      {/* {
+        loading ? <SuspenseLoader/> :
+        <TableWrapper statusOptions={statusOptions} items={litigations}>
+            <LitigationsTable />
+        </TableWrapper>
+      } */}
+      <TableWrapper statusOptions={statusOptions} items={litigations}>
+          <LitigationsTable />
+      </TableWrapper>
     </Card>
   );
 }
