@@ -9,6 +9,7 @@ import { updateTag, getTags, addTag, deleteTag } from 'src/services/tags.service
 import { Tag } from 'src/models/tag';
 import { styled } from '@mui/system';
 import Modal from "src/components/Modal";
+import { StatusEnum } from 'src/models/status';
 
 const WrapperBox = styled(Box)(
   ({ theme }) => `
@@ -60,6 +61,17 @@ function Tags() {
     handleGetTags();
   }
 
+  const statusOptions = [
+    {
+      id: StatusEnum.actived,
+      name: 'Actif'
+    },
+    {
+      id: StatusEnum.disabled,
+      name: 'Supprimé'
+    },
+  ];
+
   return (
     <WrapperBox>
       <Button sx={{ alignSelf: 'flex-end'}} onClick={handleOpenModal} variant="contained">
@@ -67,7 +79,7 @@ function Tags() {
       </Button>
       {
         loading ? <SuspenseLoader/> : 
-        <TableWrapper items={tags}>
+        <TableWrapper statusOptions={statusOptions} items={tags}>
             <TagsTable handleDeleteTag={handleDeleteTag} handleUpdateTag={handleUpdateTag} />
         </TableWrapper>
       }
