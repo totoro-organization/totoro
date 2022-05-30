@@ -13,8 +13,8 @@ type AlertProps = {
 
 const ICONS: Record<AlertType, JSX.Element> = {
   info: <Info color="info" size={18} />,
-  warning: <Info color="info" size={18} />,
-  error: <Info color="info" size={18} />,
+  warning: <Info color="warning" size={18} />,
+  error: <Info color="error" size={18} />,
 } as const;
 
 export default function Alert({ type, children }: AlertProps) {

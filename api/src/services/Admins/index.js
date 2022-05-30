@@ -60,15 +60,6 @@ exports.router = (function () {
 		controller.getLogs(res, req.query);
 	}]);
 
-  adminRouter.put("/change/role", [
-    passportAdmin,
-    async function (req, res) {
-      const data = req.body;
-      data.id = req.userData.id;
-      controller.changeRole(res, data);
-    },
-  ]);
-
   adminRouter.get("/logs/getAll", [
     passportAdmin,
     async function (req, res) {

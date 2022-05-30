@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       models.Litigations.belongsTo(models.Groups, {
-        as: "participant",
+        as: "mission",
         foreignKey: "group_id",
       });
       models.Litigations.belongsTo(models.Litigation_objects, {

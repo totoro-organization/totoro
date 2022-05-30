@@ -48,10 +48,10 @@ export default function BottomTabNavigator() {
       screenOptions={{
         headerShown: false,
         tabBarStyle: {
-          paddingBottom: 8,
+          paddingBottom: 24,
           paddingTop: 2,
           backgroundColor: theme.colors.white[600],
-          height: 60,
+          height: 70,
         },
       }}
     >

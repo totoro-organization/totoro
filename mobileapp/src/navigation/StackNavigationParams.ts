@@ -17,6 +17,13 @@ export type AuthParamList = {
   "S'inscrire": undefined;
 };
 
+export type AppParamList = {
+  Missions: undefined;
+  Boutique: undefined;
+  Profil: undefined;
+  Messagerie: undefined;
+};
+
 export type BottomTabParamList = {
-  BottomTab: undefined;
+  BottomTab: { screen: keyof AppParamList };
 };
