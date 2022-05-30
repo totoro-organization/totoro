@@ -4,12 +4,12 @@ import TagsTable from './TagsTable';
 import { useApi } from 'src/hooks/useApi';
 import SuspenseLoader from 'src/components/SuspenseLoader';
 import TableWrapper from 'src/components/TableWrapper';
-import { useEffect, useState } from 'react';
-import { updateTag, getTags, addTag, deleteTag } from 'src/services/tags.service';
+import { useState } from 'react';
 import { Tag } from 'src/models/tag';
 import { styled } from '@mui/system';
 import Modal from "src/components/Modal";
 import { StatusEnum } from 'src/models/status';
+import { useTable } from 'src/hooks/useTable';
 
 const WrapperBox = styled(Box)(
   ({ theme }) => `
@@ -23,43 +23,17 @@ function Tags() {
 
   const { data: defaultTags, loading  } = useApi('/commons/tags');
 
-  const [tags, setTags] = useState<Array<Tag>>(defaultTags?.data);
-
   const [openModal, setOpenModal] = useState(false);
 
-  const handleOpenModal = (tag: Tag) => setOpenModal(true);
+  const handleOpenModal = (item: any) => setOpenModal(true);
   const handleCloseModal = () => setOpenModal(false);
 
-  useEffect(() => {
-    if(defaultTags?.data) {
-      setTags(defaultTags?.data);
-    }
-  }, [defaultTags])
-
-  const handleGetTags = async () => {
-    const tagsResponse = await getTags();
-    if('error' in tagsResponse) return;
-    setTags(tagsResponse?.data);
-  }
- 
-  const handleUpdateTag = async ({id, label}: {id: string, label: string}) => {
-    const updateResponse = await updateTag(id, { label });
-    if('error' in updateResponse) return;
-    handleGetTags();
-  }
-
-  const handleDeleteTag = async (id) => {
-    const deleteResponse = await deleteTag(id);
-    if('error' in deleteResponse) return;
-    handleGetTags();
-  }
-
-  const handleAddTag = async ({label}: string) => {
-    const addResponse = await addTag({ label });
-    if('error' in addResponse) return;
-    handleCloseModal();
-    handleGetTags();
-  }
+  const {
+    handleAddItem,
+    handleDeleteItem,
+    handleUpdateItem,
+    items: tags
+  } = useTable({ model: 'tags', defaultItems: defaultTags, handleCloseModal })
 
   const statusOptions = [
     {
@@ -80,10 +54,10 @@ function Tags() {
       {
         loading ? <SuspenseLoader/> : 
         <TableWrapper statusOptions={statusOptions} items={tags}>
-            <TagsTable handleDeleteTag={handleDeleteTag} handleUpdateTag={handleUpdateTag} />
+            <TagsTable handleDeleteTag={handleDeleteItem} handleUpdateTag={handleUpdateItem} />
         </TableWrapper>
       }
-      <Modal callback={handleAddTag} open={openModal} handleClose={handleCloseModal} type="add" title="Ajouter un tag"/>
+      <Modal callback={handleAddItem} open={openModal} handleClose={handleCloseModal} type="add" title="Ajouter un tag"/>
     </WrapperBox>
   );
 }
