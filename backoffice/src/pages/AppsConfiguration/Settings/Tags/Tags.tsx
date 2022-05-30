@@ -10,6 +10,7 @@ import Modal from "src/components/Modal";
 import { StatusEnum } from 'src/models/status';
 import { useTable } from 'src/hooks/useTable';
 import { useModal } from 'src/hooks/useModal';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
 const WrapperBox = styled(Box)(
   ({ theme }) => `
@@ -45,7 +46,7 @@ function Tags() {
 
   return (
     <WrapperBox>
-      <Button sx={{ alignSelf: 'flex-end'}} onClick={handleOpenAddModal} variant="contained">
+      <Button size='large' startIcon={<AddCircleOutlineIcon/>} sx={{ alignSelf: 'flex-end'}} onClick={handleOpenAddModal} variant="contained">
         Ajouter un tag
       </Button>
       {
