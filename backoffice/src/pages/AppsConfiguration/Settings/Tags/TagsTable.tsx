@@ -1,95 +1,66 @@
 // @ts-nocheck
-import { FC, ChangeEvent, useState } from 'react';
+import { FC, ChangeEvent } from 'react';
 import { format } from 'date-fns';
-import PropTypes from 'prop-types';
+
 import {
   Tooltip,
-  Divider,
-  Box,
-  FormControl,
-  InputLabel,
-  Card,
   Checkbox,
   IconButton,
   Table,
   TableBody,
   TableCell,
   TableHead,
-  TablePagination,
   TableRow,
   TableContainer,
-  Select,
-  MenuItem,
   Typography,
   useTheme,
-  CardHeader
 } from '@mui/material';
 
-import Label from 'src/components/Label';
-import { User, UserStatus } from 'src/models/user';
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
-import BulkActions from 'src/components/ManagementTable/BulkActions';
-import { Link } from 'react-router-dom';
+import { Tag } from 'src/models/tag';
+import Modal from 'src/components/Modal';
+import StatusLabel from 'src/components/StatusLabel';
+import { useModal } from 'src/hooks/useModal';
 
 interface TagsTableProps {
-  className?: string;
-  users: User[];
+  items: Tag[], 
+  selectedItems: any,
+  handleSelectAllItems: (event: ChangeEvent<HTMLInputElement>) => void, 
+  handleSelectOneItem: (event: ChangeEvent<HTMLInputElement>, itemId: string) => void,
+  selectedSomeItems: any,
+  selectedAllItems: any,
+  handleDeleteTag: () => any,
+  handleUpdateTag: () => any
 }
 
-const applyPagination = (
-  users: User[],
-  page: number,
-  limit: number
-): User[] => {
-  return users.slice(page * limit, page * limit + limit);
-};
+const TagsTable: FC<TagsTableProps> = ({
+  items: tags, 
+  selectedItems,
+  handleSelectAllItems, 
+  handleSelectOneItem,
+  selectedSomeItems,
+  selectedAllItems,
+  handleUpdateTag,
+  handleDeleteTag
+}) => {
 
-const TagsTable: FC<TagsTableProps> = ({ users }) => {
-  const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
-  const selectedBulkActions = selectedUsers.length > 0;
-  const [page, setPage] = useState<number>(0);
-  const [limit, setLimit] = useState<number>(5);
-
-  const handleSelectAllUsers = (event: ChangeEvent<HTMLInputElement>): void => {
-    setSelectedUsers(event.target.checked ? users.map((user) => user.id) : []);
-  };
-
-  const handleSelectOneUser = (
-    event: ChangeEvent<HTMLInputElement>,
-    userId: string
-  ): void => {
-    if (!selectedUsers.includes(userId)) {
-      setSelectedUsers((prevSelected) => [...prevSelected, userId]);
-    } else {
-      setSelectedUsers((prevSelected) =>
-        prevSelected.filter((id) => id !== userId)
-      );
-    }
-  };
-
-  const handlePageChange = (event: any, newPage: number): void => {
-    setPage(newPage);
-  };
-
-  const handleLimitChange = (event: ChangeEvent<HTMLInputElement>): void => {
-    setLimit(parseInt(event.target.value));
-  };
-
-  const paginatedUsers = applyPagination(users, page, limit);
-  const selectedSomeUsers =
-    selectedUsers.length > 0 && selectedUsers.length < users.length;
-  const selectedAllUsers = selectedUsers.length === users.length;
+  const [editModalOpen, handleOpenEditModal, handleCloseEditModal, editModalItem] = useModal();
+  const [deleteModalOpen, handleOpenDeleteModal, handleCloseDeleteModal, deleteModalItem] = useModal();
+  
   const theme = useTheme();
 
+  const handleUpdate = ({id, label}) => {
+    handleUpdateTag({id, label});
+    handleCloseEditModal();
+  }
+
+  const handleDelete = ({id}) => {
+    handleDeleteTag(id);
+    handleCloseDeleteModal();
+  }
+
   return (
-    <Card>
-      {selectedBulkActions && (
-        <Box flex={1} p={2}>
-          <BulkActions />
-        </Box>
-      )}
-      <Divider />
       <TableContainer>
         <Table>
           <TableHead>
@@ -97,28 +68,28 @@ const TagsTable: FC<TagsTableProps> = ({ users }) => {
               <TableCell padding="checkbox">
                 <Checkbox
                   color="primary"
-                  checked={selectedAllUsers}
-                  indeterminate={selectedSomeUsers}
-                  onChange={handleSelectAllUsers}
+                  checked={selectedAllItems}
+                  indeterminate={selectedSomeItems}
+                  onChange={handleSelectAllItems}
                 />
               </TableCell>
-              <TableCell>Details</TableCell>
-              <TableCell align="left">Missions</TableCell>
-              <TableCell align="right">Tokens</TableCell>
+              <TableCell>Label</TableCell>
+              <TableCell>Date de création</TableCell>
+              <TableCell align="right">Statut</TableCell>
               <TableCell align="right">Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {paginatedUsers.map((user) => {
-              const isUserSelected = selectedUsers.includes(user.id);
+            { tags.map((tag) => {
+              const isUserSelected = selectedItems.includes(tag.id);
               return (
-                <TableRow hover key={user.id} selected={isUserSelected}>
+                <TableRow hover key={tag.id} selected={isUserSelected}>
                   <TableCell padding="checkbox">
                     <Checkbox
                       color="primary"
                       checked={isUserSelected}
                       onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                        handleSelectOneUser(event, user.id)
+                        handleSelectOneItem(event, tag.id)
                       }
                       value={isUserSelected}
                     />
@@ -131,12 +102,7 @@ const TagsTable: FC<TagsTableProps> = ({ users }) => {
                       gutterBottom
                       noWrap
                     >
-                      <Link
-                        to={`/gestion/utilisateurs/${user.id}`}
-                      >{`${user.firstname} ${user.lastname} (${user.username})`}</Link>
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary" noWrap>
-                      {user.email}
+                      { tag.label }
                     </Typography>
                   </TableCell>
                   <TableCell>
@@ -147,37 +113,31 @@ const TagsTable: FC<TagsTableProps> = ({ users }) => {
                       gutterBottom
                       noWrap
                     >
-                      {2}
+                      {tag.createdAt} 
                     </Typography>
                   </TableCell>
                   <TableCell align="right">
-                    <Typography
-                      variant="body1"
-                      fontWeight="bold"
-                      color="text.primary"
-                      gutterBottom
-                      noWrap
-                    >
-                      {user.total_token}
-                    </Typography>
+                    <StatusLabel status={tag.status.label} />
                   </TableCell>
                   <TableCell align="right">
                     <Tooltip title="Editer la mission" arrow>
+                        <IconButton
+                          onClick={() => handleOpenEditModal(tag)}
+                          sx={{
+                            '&:hover': {
+                              background: theme.colors.primary.lighter
+                            },
+                            color: theme.palette.primary.main
+                          }}
+                          color="inherit"
+                          size="small"
+                        >
+                          <EditTwoToneIcon fontSize="small" />
+                        </IconButton>
+                      </Tooltip>
+                    <Tooltip title="Supprimer le tag" arrow>
                       <IconButton
-                        sx={{
-                          '&:hover': {
-                            background: theme.colors.primary.lighter
-                          },
-                          color: theme.palette.primary.main
-                        }}
-                        color="inherit"
-                        size="small"
-                      >
-                        <EditTwoToneIcon fontSize="small" />
-                      </IconButton>
-                    </Tooltip>
-                    <Tooltip title="Supprimer la mission" arrow>
-                      <IconButton
+                      onClick={() => handleOpenDeleteModal(tag)}
                         sx={{
                           '&:hover': { background: theme.colors.error.lighter },
                           color: theme.palette.error.main
@@ -194,28 +154,10 @@ const TagsTable: FC<TagsTableProps> = ({ users }) => {
             })}
           </TableBody>
         </Table>
+        <Modal item={editModalItem} callback={handleUpdate} open={editModalOpen} handleClose={handleCloseEditModal} type="edit" title={`Editer le tag suivant : ${editModalItem?.label}`}/>
+        <Modal item={deleteModalItem} callback={handleDelete} open={deleteModalOpen} handleClose={handleCloseDeleteModal} type="delete" title={`Supprimer le tag suivant : ${deleteModalItem?.label}`}/>
       </TableContainer>
-      <Box p={2}>
-        <TablePagination
-          component="div"
-          count={users.length}
-          onPageChange={handlePageChange}
-          onRowsPerPageChange={handleLimitChange}
-          page={page}
-          rowsPerPage={limit}
-          rowsPerPageOptions={[5, 10, 25, 30]}
-        />
-      </Box>
-    </Card>
   );
-};
-
-TagsTable.propTypes = {
-  users: PropTypes.array.isRequired
-};
-
-TagsTable.defaultProps = {
-  users: []
 };
 
 export default TagsTable;

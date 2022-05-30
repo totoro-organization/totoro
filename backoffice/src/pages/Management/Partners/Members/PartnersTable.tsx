@@ -1,203 +1,46 @@
-import { FC, ChangeEvent, useState } from 'react';
-import { format } from 'date-fns';
-import PropTypes from 'prop-types';
+import { FC, ChangeEvent } from 'react';
 import {
   Tooltip,
-  Divider,
-  Box,
-  FormControl,
-  InputLabel,
-  Card,
   Checkbox,
   IconButton,
   Table,
   TableBody,
   TableCell,
   TableHead,
-  TablePagination,
   TableRow,
   TableContainer,
-  Select,
-  MenuItem,
   Typography,
   useTheme,
-  CardHeader
 } from '@mui/material';
 
-import Label from 'src/components/Label';
-import { Partner, PartnerStatus } from 'src/models/partner';
+import { Partner } from 'src/models/partner';
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
-import BulkActions from 'src/components/ManagementTable/BulkActions';
 import { Link } from 'react-router-dom';
+import StatusLabel from 'src/components/StatusLabel';
+
 
 interface PartnersTableProps {
-  className?: string;
-  partners: Partner[];
+  items: Partner[], 
+  selectedItems: any,
+  handleSelectAllItems: (event: ChangeEvent<HTMLInputElement>) => void, 
+  handleSelectOneItem: (event: ChangeEvent<HTMLInputElement>, itemId: string) => void,
+  selectedSomeItems: any,
+  selectedAllItems: any
 }
 
-interface Filters {
-  status?: PartnerStatus['label'];
-}
-
-const getStatusLabel = (partnerStatus: PartnerStatus['label']): JSX.Element => {
-  const map = {
-    active: {
-      text: 'Actif',
-      color: 'success'
-    },
-    inactive: {
-      text: 'Inactif',
-      color: 'warning'
-    },
-    outlawed: {
-      text: 'Banni',
-      color: 'error'
-    },
-    freezed: {
-      text: 'Gelé',
-      color: 'info'
-    }
-  };
-
-  const { text, color }: any = map[partnerStatus];
-
-  return <Label color={color}>{text}</Label>;
-};
-
-const applyFilters = (partners: Partner[], filters: Filters): Partner[] => {
-  return partners.filter((partner) => {
-    let matches = true;
-
-    if (filters.status && partner.status.label !== filters.status) {
-      matches = false;
-    }
-
-    return matches;
-  });
-};
-
-const applyPagination = (
-  partners: Partner[],
-  page: number,
-  limit: number
-): Partner[] => {
-  return partners.slice(page * limit, page * limit + limit);
-};
-
-const PartnersTable: FC<PartnersTableProps> = ({ partners }) => {
-  const [selectedPartners, setSelectedPartners] = useState<string[]>([]);
-  const selectedBulkActions = selectedPartners.length > 0;
-  const [page, setPage] = useState<number>(0);
-  const [limit, setLimit] = useState<number>(5);
-  const [filters, setFilters] = useState<Filters>({
-    status: null
-  });
-
-  const statusOptions = [
-    {
-      id: 'all',
-      name: 'Toutes'
-    },
-    {
-      id: 'active',
-      name: 'Actif'
-    },
-    {
-      id: 'inactive',
-      name: 'Inactif'
-    },
-    {
-      id: 'outlawed',
-      name: 'Banni'
-    },
-    {
-      id: 'freezed',
-      name: 'Gelé'
-    }
-  ];
-
-  const handleStatusChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    let value = null;
-
-    if (e.target.value !== 'all') {
-      value = e.target.value;
-    }
-
-    setFilters((prevFilters) => ({
-      ...prevFilters,
-      status: value
-    }));
-  };
-
-  const handleSelectAllPartners = (
-    event: ChangeEvent<HTMLInputElement>
-  ): void => {
-    setSelectedPartners(
-      event.target.checked ? partners.map((partner) => partner.id) : []
-    );
-  };
-
-  const handleSelectOnePartner = (
-    event: ChangeEvent<HTMLInputElement>,
-    partnerId: string
-  ): void => {
-    if (!selectedPartners.includes(partnerId)) {
-      setSelectedPartners((prevSelected) => [...prevSelected, partnerId]);
-    } else {
-      setSelectedPartners((prevSelected) =>
-        prevSelected.filter((id) => id !== partnerId)
-      );
-    }
-  };
-
-  const handlePageChange = (event: any, newPage: number): void => {
-    setPage(newPage);
-  };
-
-  const handleLimitChange = (event: ChangeEvent<HTMLInputElement>): void => {
-    setLimit(parseInt(event.target.value));
-  };
-
-  const filteredPartners = applyFilters(partners, filters);
-  const paginatedPartners = applyPagination(filteredPartners, page, limit);
-  const selectedSomePartners =
-    selectedPartners.length > 0 && selectedPartners.length < partners.length;
-  const selectedAllPartners = selectedPartners.length === partners.length;
+const PartnersTable: FC<PartnersTableProps> = ({
+  items: partners, 
+  selectedItems,
+  handleSelectAllItems, 
+  handleSelectOneItem,
+  selectedSomeItems,
+  selectedAllItems
+}) => {
+ 
   const theme = useTheme();
 
   return (
-    <Card>
-      {selectedBulkActions && (
-        <Box flex={1} p={2}>
-          <BulkActions />
-        </Box>
-      )}
-      {!selectedBulkActions && (
-        <CardHeader
-          action={
-            <Box width={150}>
-              <FormControl fullWidth variant="outlined">
-                <InputLabel>Statut</InputLabel>
-                <Select
-                  value={filters.status || 'all'}
-                  onChange={handleStatusChange}
-                  label="Statut"
-                  autoWidth
-                >
-                  {statusOptions.map((statusOption) => (
-                    <MenuItem key={statusOption.id} value={statusOption.id}>
-                      {statusOption.name}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Box>
-          }
-          title="Missions récentes"
-        />
-      )}
-      <Divider />
       <TableContainer>
         <Table>
           <TableHead>
@@ -205,9 +48,9 @@ const PartnersTable: FC<PartnersTableProps> = ({ partners }) => {
               <TableCell padding="checkbox">
                 <Checkbox
                   color="primary"
-                  checked={selectedAllPartners}
-                  indeterminate={selectedSomePartners}
-                  onChange={handleSelectAllPartners}
+                  checked={selectedAllItems}
+                  indeterminate={selectedSomeItems}
+                  onChange={handleSelectAllItems}
                 />
               </TableCell>
               <TableCell>Details</TableCell>
@@ -217,8 +60,8 @@ const PartnersTable: FC<PartnersTableProps> = ({ partners }) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {paginatedPartners.map((partner) => {
-              const isPartnerSelected = selectedPartners.includes(partner.id);
+            {partners.map((partner) => {
+              const isPartnerSelected = selectedItems.includes(partner.id);
               return (
                 <TableRow hover key={partner.id} selected={isPartnerSelected}>
                   <TableCell padding="checkbox">
@@ -226,7 +69,7 @@ const PartnersTable: FC<PartnersTableProps> = ({ partners }) => {
                       color="primary"
                       checked={isPartnerSelected}
                       onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                        handleSelectOnePartner(event, partner.id)
+                        handleSelectOneItem(event, partner.id)
                       }
                       value={isPartnerSelected}
                     />
@@ -259,7 +102,7 @@ const PartnersTable: FC<PartnersTableProps> = ({ partners }) => {
                     </Typography>
                   </TableCell>
                   <TableCell align="right">
-                    {getStatusLabel(partner.status.label)}
+                    <StatusLabel status={partner.status.label} />
                   </TableCell>
                   <TableCell align="right">
                     <Tooltip title="Editer la mission" arrow>
@@ -295,27 +138,7 @@ const PartnersTable: FC<PartnersTableProps> = ({ partners }) => {
           </TableBody>
         </Table>
       </TableContainer>
-      <Box p={2}>
-        <TablePagination
-          component="div"
-          count={filteredPartners.length}
-          onPageChange={handlePageChange}
-          onRowsPerPageChange={handleLimitChange}
-          page={page}
-          rowsPerPage={limit}
-          rowsPerPageOptions={[5, 10, 25, 30]}
-        />
-      </Box>
-    </Card>
   );
-};
-
-PartnersTable.propTypes = {
-  partners: PropTypes.array.isRequired
-};
-
-PartnersTable.defaultProps = {
-  partners: []
 };
 
 export default PartnersTable;

@@ -1,11 +1,11 @@
 import { AttachmentJob } from "./attachment_job";
 import { JobDifficulty } from "./job_difficulty";
 import { Organization } from "./organization";
-import { Status } from "./status";
+import { Status, StatusEnum } from "./status";
 import { Tag } from "./tag";
 import { User } from "./user";
 
-export type JobStatus = Status<'completed' | 'pending' | 'coming'>;
+export type JobStatus = Status<StatusEnum.actived | StatusEnum.disabled | StatusEnum.coming>;
 
 export interface Job {
     id: string,
