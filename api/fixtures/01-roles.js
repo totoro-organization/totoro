@@ -5,6 +5,9 @@ module.exports = [
     data: {
       label: "Moderateur",
       type: "all",
+      status: {
+				label: "actived",
+			},
     },
   },
   {
@@ -13,6 +16,9 @@ module.exports = [
     data: {
       label: "Administrateur",
       type: "all",
+      status: {
+				label: "actived",
+			},
     },
   },
   {
@@ -21,6 +27,9 @@ module.exports = [
     data: {
       label: "Comptables",
       type: "admin",
+      status: {
+				label: "actived",
+			},
     },
   },
 ];

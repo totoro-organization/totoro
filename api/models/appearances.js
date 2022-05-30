@@ -15,6 +15,10 @@ module.exports = (sequelize, DataTypes) => {
         as: "application",
         foreignKey: "app_id",
       });
+      models.Appearances.belongsTo(models.Status, {
+				as: "status",
+				foreignKey: "status_id",
+			});
     }
   }
 

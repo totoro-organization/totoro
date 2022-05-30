@@ -6,6 +6,8 @@ import RootStackNavigator from "./src/navigation/RootStackNavigator";
 import { useCachedResources } from "./src/common/hooks/useCachedResources";
 import Loading from "./src/screens/Loading";
 import { ToastAtom as Toast } from "./src/components/atoms/Toast";
+import React from "react";
+import useAuth, { AuthProvider } from "./src/common/contexts/AuthContext";
 
 export default function App() {
   const isLoadingComplete = useCachedResources();
@@ -16,11 +18,13 @@ export default function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <NavigationContainer>
-        <RootStackNavigator />
-      </NavigationContainer>
+      <AuthProvider>
+        <NavigationContainer>
+          <RootStackNavigator />
+        </NavigationContainer>
 
-      <Toast />
+        <Toast />
+      </AuthProvider>
     </ThemeProvider>
   );
 }

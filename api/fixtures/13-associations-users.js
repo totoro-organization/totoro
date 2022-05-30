@@ -13,6 +13,9 @@ module.exports = [
       role: {
         label: "Administrateur",
       },
+      status: {
+        label: "actived",
+      }
     },
   },
 ];

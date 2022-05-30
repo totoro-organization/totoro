@@ -12,7 +12,6 @@ const {
   getRow,
 } = require("utils/common/thenCatch");
 const { label_status } = require("utils/enum.json");
-
 const { Status } = require("./../../../models");
 
 module.exports = {
@@ -85,7 +84,7 @@ module.exports = {
     );
   },
 
-  update: function (res, model, id, data, condition) {
+  update: function (res, model, id, data, condition = null) {
     asyncLib.waterfall(
       [
         function (done) {
@@ -144,7 +143,7 @@ module.exports = {
     );
   },
 
-  delete: async function (res, model, condition) {
+  delete: async function (res, model, condition, deleted = false) {
     let statusData = await getRow(res, Status, { label: label_status.deleted });
 
     asyncLib.waterfall(
@@ -153,8 +152,12 @@ module.exports = {
           getField(res, model, condition, done, true);
         },
         function (found, done) {
-          const data = { status_id: statusData.id };
-          updateField(res, found, data, done);
+          if(deleted){
+            actionDelete(res, found);
+          } else {
+            const data = { status_id: statusData.id };
+            updateField(res, found, data, done);
+          }
         },
       ],
       function (updated) {

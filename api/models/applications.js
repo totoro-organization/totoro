@@ -16,6 +16,10 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: "cascade",
         foreignKey: "app_id",
       });
+      models.Applications.belongsTo(models.Status, {
+				as: "status",
+				foreignKey: "status_id",
+			});
     }
   }
 
