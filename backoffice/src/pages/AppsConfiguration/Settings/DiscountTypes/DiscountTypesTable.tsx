@@ -18,32 +18,32 @@ import {
 
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
-import { Role } from 'src/models/role';
+import { DiscountType } from 'src/models';
 import Modal from 'src/components/Modal';
 import StatusLabel from 'src/components/StatusLabel';
 import { useModal } from 'src/hooks/useModal';
-import { DeleteRoleContent, EditRoleContent } from './RoleModalContent';
+import { DeleteDiscountTypeContent, EditDiscountTypeContent } from './DiscountTypeModalContent';
 
-interface RolesTableProps {
-  items: Role[], 
+interface DiscountTypesTableProps {
+  items: DiscountType[], 
   selectedItems: any,
   handleSelectAllItems: (event: ChangeEvent<HTMLInputElement>) => void, 
   handleSelectOneItem: (event: ChangeEvent<HTMLInputElement>, itemId: string) => void,
   selectedSomeItems: any,
   selectedAllItems: any,
-  handleDeleteRole: () => any,
-  handleUpdateRole: () => any
+  handleDeleteDiscountType: () => any,
+  handleUpdateDiscountType: () => any
 }
 
-const RolesTable: FC<RolesTableProps> = ({
-  items: roles, 
+const DiscountTypesTable: FC<DiscountTypesTableProps> = ({
+  items: discountTypes, 
   selectedItems,
   handleSelectAllItems, 
   handleSelectOneItem,
   selectedSomeItems,
   selectedAllItems,
-  handleUpdateRole,
-  handleDeleteRole
+  handleUpdateDiscountType,
+  handleDeleteDiscountType
 }) => {
 
   const [editModalOpen, handleOpenEditModal, handleCloseEditModal, editModalItem] = useModal();
@@ -52,12 +52,12 @@ const RolesTable: FC<RolesTableProps> = ({
   const theme = useTheme();
 
   const handleUpdate = ({id, label}) => {
-    handleUpdateRole({id, label});
+    handleUpdateDiscountType({id, label});
     handleCloseEditModal();
   }
 
   const handleDelete = ({id}) => {
-    handleDeleteRole(id);
+    handleDeleteDiscountType(id);
     handleCloseDeleteModal();
   }
 
@@ -81,16 +81,16 @@ const RolesTable: FC<RolesTableProps> = ({
             </TableRow>
           </TableHead>
           <TableBody>
-            { roles.map((role) => {
-              const isUserSelected = selectedItems.includes(role.id);
+            { discountTypes.map((discountType) => {
+              const isUserSelected = selectedItems.includes(discountType.id);
               return (
-                <TableRow hover key={role.id} selected={isUserSelected}>
+                <TableRow hover key={discountType.id} selected={isUserSelected}>
                   <TableCell padding="checkbox">
                     <Checkbox
                       color="primary"
                       checked={isUserSelected}
                       onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                        handleSelectOneItem(event, role.id)
+                        handleSelectOneItem(event, discountType.id)
                       }
                       value={isUserSelected}
                     />
@@ -103,7 +103,7 @@ const RolesTable: FC<RolesTableProps> = ({
                       gutterBottom
                       noWrap
                     >
-                      { role.label }
+                      { discountType.label }
                     </Typography>
                   </TableCell>
                   <TableCell>
@@ -114,16 +114,16 @@ const RolesTable: FC<RolesTableProps> = ({
                       gutterBottom
                       noWrap
                     >
-                      {role.createdAt} 
+                      {discountType.createdAt} 
                     </Typography>
                   </TableCell>
                   <TableCell align="right">
-                    <StatusLabel status={role.status.label} />
+                    <StatusLabel status={discountType.status.label} />
                   </TableCell>
                   <TableCell align="right">
-                    <Tooltip title="Editer le role" arrow>
+                    <Tooltip title="Editer la promotion" arrow>
                         <IconButton
-                          onClick={() => handleOpenEditModal(role)}
+                          onClick={() => handleOpenEditModal(discountType)}
                           sx={{
                             '&:hover': {
                               background: theme.colors.primary.lighter
@@ -136,9 +136,9 @@ const RolesTable: FC<RolesTableProps> = ({
                           <EditTwoToneIcon fontSize="small" />
                         </IconButton>
                       </Tooltip>
-                    <Tooltip title="Supprimer le role" arrow>
+                    <Tooltip title="Supprimer la promotion" arrow>
                       <IconButton
-                      onClick={() => handleOpenDeleteModal(role)}
+                      onClick={() => handleOpenDeleteModal(discountType)}
                         sx={{
                           '&:hover': { background: theme.colors.error.lighter },
                           color: theme.palette.error.main
@@ -155,14 +155,14 @@ const RolesTable: FC<RolesTableProps> = ({
             })}
           </TableBody>
         </Table>
-        <Modal   open={editModalOpen} handleClose={handleCloseEditModal} title={`Editer le role suivant : ${editModalItem?.label}`}>
-            <EditRoleContent handleClose={handleCloseEditModal} handleUpdate={handleUpdate} item={editModalItem}/>
+        <Modal   open={editModalOpen} handleClose={handleCloseEditModal} title={`Editer le type suivant : ${editModalItem?.name}`}>
+            <EditDiscountTypeContent handleClose={handleCloseEditModal} handleUpdate={handleUpdate} item={editModalItem}/>
         </Modal>
-        <Modal open={deleteModalOpen} handleClose={handleCloseDeleteModal} title={`Supprimer le role suivant : ${deleteModalItem?.label}`}>
-            <DeleteRoleContent handleClose={handleCloseDeleteModal} handleDelete={handleDelete} item={deleteModalItem} />
+        <Modal open={deleteModalOpen} handleClose={handleCloseDeleteModal} title={`Supprimer le type suivant : ${deleteModalItem?.name}`}>
+            <DeleteDiscountTypeContent handleClose={handleCloseDeleteModal} handleDelete={handleDelete} item={deleteModalItem} />
         </Modal>
       </TableContainer>
   );
 };
 
-export default RolesTable;
+export default DiscountTypesTable;

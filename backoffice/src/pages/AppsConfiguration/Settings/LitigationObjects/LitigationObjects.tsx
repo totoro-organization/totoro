@@ -11,7 +11,8 @@ import { StatusEnum } from 'src/models/status';
 import { useTable } from 'src/hooks/useTable';
 import { useModal } from 'src/hooks/useModal';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import { CommonsEnum } from 'src/models/commons';
+import { CommonsUriEnum } from 'src/models/commons';
+import { AddLitigationObjectContent } from './LitigationObjectModalContent';
 
 const WrapperBox = styled(Box)(
   ({ theme }) => `
@@ -32,7 +33,7 @@ function LitigationObjects() {
     handleDeleteItem,
     handleUpdateItem,
     items: litigationObjects
-  } = useTable({ model: CommonsEnum.litigationObjects, defaultItems: defaultLitigationObjects?.data, handleCloseModal: handleCloseAddModal })
+  } = useTable({ uri: CommonsUriEnum.litigationObjects, defaultItems: defaultLitigationObjects?.data, handleCloseModal: handleCloseAddModal })
 
   const statusOptions = [
     {
@@ -56,7 +57,9 @@ function LitigationObjects() {
             <LitigationObjectsTable handleDeleteLitigationObject={handleDeleteItem} handleUpdateLitigationObject={handleUpdateItem} />
         </TableWrapper>
       }
-      <Modal callback={handleAddItem} open={addModalOpen} handleClose={handleCloseAddModal} type="add" title="Ajouter un objet de litige"/>
+      <Modal open={addModalOpen} handleClose={handleCloseAddModal} title="Ajouter un objet">
+        <AddLitigationObjectContent handleClose={handleCloseAddModal} handleAdd={handleAddItem}/>
+      </Modal>
     </WrapperBox>
   );
 }

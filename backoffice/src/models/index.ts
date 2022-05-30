@@ -11,7 +11,7 @@ export type { Status } from './status';
 export type { Discount } from './discount';
 export type { DiscountType } from './discount_type';
 export type { DiscountTransaction } from './discount_transaction';
-export type { Commons, CommonsEnum } from './commons';
+export type { Commons, CommonsUriEnum } from './commons';
 export type { Chat } from './chat';
 export type { AttachmentChat } from './attachment_chat';
 export type { AttachmentJob } from './attachment_job';

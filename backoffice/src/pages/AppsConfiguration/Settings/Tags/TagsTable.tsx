@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { FC, ChangeEvent } from 'react';
 import { format } from 'date-fns';
 
@@ -22,6 +21,7 @@ import { Tag } from 'src/models/tag';
 import Modal from 'src/components/Modal';
 import StatusLabel from 'src/components/StatusLabel';
 import { useModal } from 'src/hooks/useModal';
+import { DeleteTagContent, EditTagContent } from './TagModalContent';
 
 interface TagsTableProps {
   items: Tag[], 
@@ -30,8 +30,8 @@ interface TagsTableProps {
   handleSelectOneItem: (event: ChangeEvent<HTMLInputElement>, itemId: string) => void,
   selectedSomeItems: any,
   selectedAllItems: any,
-  handleDeleteTag: () => any,
-  handleUpdateTag: () => any
+  handleDeleteTag: (id: string) => any,
+  handleUpdateTag: (id: string, data: object) => any
 }
 
 const TagsTable: FC<TagsTableProps> = ({
@@ -50,12 +50,12 @@ const TagsTable: FC<TagsTableProps> = ({
   
   const theme = useTheme();
 
-  const handleUpdate = ({id, label}) => {
-    handleUpdateTag({id, label});
+  const handleUpdate = (id: string, data: object) => {
+    handleUpdateTag(id, data);
     handleCloseEditModal();
   }
 
-  const handleDelete = ({id}) => {
+  const handleDelete = (id: string) => {
     handleDeleteTag(id);
     handleCloseDeleteModal();
   }
@@ -154,8 +154,12 @@ const TagsTable: FC<TagsTableProps> = ({
             })}
           </TableBody>
         </Table>
-        <Modal item={editModalItem} callback={handleUpdate} open={editModalOpen} handleClose={handleCloseEditModal} type="edit" title={`Editer le tag suivant : ${editModalItem?.label}`}/>
-        <Modal item={deleteModalItem} callback={handleDelete} open={deleteModalOpen} handleClose={handleCloseDeleteModal} type="delete" title={`Supprimer le tag suivant : ${deleteModalItem?.label}`}/>
+        <Modal   open={editModalOpen} handleClose={handleCloseEditModal} title={`Editer le tag suivant : ${editModalItem?.label}`}>
+            <EditTagContent handleClose={handleCloseEditModal} handleUpdate={handleUpdate} item={editModalItem}/>
+        </Modal>
+        <Modal open={deleteModalOpen} handleClose={handleCloseDeleteModal} title={`Supprimer le tag suivant : ${deleteModalItem?.label}`}>
+            <DeleteTagContent handleClose={handleCloseDeleteModal} handleDelete={handleDelete} item={deleteModalItem} />
+        </Modal>
       </TableContainer>
   );
 };

@@ -22,6 +22,7 @@ import { LitigationObject } from 'src/models/litigation_object';
 import Modal from 'src/components/Modal';
 import StatusLabel from 'src/components/StatusLabel';
 import { useModal } from 'src/hooks/useModal';
+import { DeleteLitigationObjectContent, EditLitigationObjectContent } from './LitigationObjectModalContent';
 
 interface LitigationObjectsTableProps {
   items: LitigationObject[], 
@@ -154,8 +155,12 @@ const LitigationObjectsTable: FC<LitigationObjectsTableProps> = ({
             })}
           </TableBody>
         </Table>
-        <Modal item={editModalItem} callback={handleUpdate} open={editModalOpen} handleClose={handleCloseEditModal} type="edit" title={`Editer le litigationObject suivant : ${editModalItem?.label}`}/>
-        <Modal item={deleteModalItem} callback={handleDelete} open={deleteModalOpen} handleClose={handleCloseDeleteModal} type="delete" title={`Supprimer le litigationObject suivant : ${deleteModalItem?.label}`}/>
+        <Modal   open={editModalOpen} handleClose={handleCloseEditModal} title={`Editer l'objet suivant : ${editModalItem?.label}`}>
+            <EditLitigationObjectContent handleClose={handleCloseEditModal} handleUpdate={handleUpdate} item={editModalItem}/>
+        </Modal>
+        <Modal open={deleteModalOpen} handleClose={handleCloseDeleteModal} title={`Supprimer l'objet suivant : ${deleteModalItem?.label}`}>
+            <DeleteLitigationObjectContent handleClose={handleCloseDeleteModal} handleDelete={handleDelete} item={deleteModalItem} />
+        </Modal>
       </TableContainer>
   );
 };
