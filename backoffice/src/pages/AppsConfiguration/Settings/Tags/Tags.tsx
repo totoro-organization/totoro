@@ -4,7 +4,6 @@ import TagsTable from './TagsTable';
 import { useApi } from 'src/hooks/useApi';
 import SuspenseLoader from 'src/components/SuspenseLoader';
 import TableWrapper from 'src/components/TableWrapper';
-import { useState } from 'react';
 import { Tag } from 'src/models/tag';
 import { styled } from '@mui/system';
 import Modal from "src/components/Modal";
