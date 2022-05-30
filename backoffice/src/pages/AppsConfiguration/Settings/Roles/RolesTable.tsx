@@ -120,7 +120,7 @@ const RolesTable: FC<RolesTableProps> = ({
                     <StatusLabel status={role.status.label} />
                   </TableCell>
                   <TableCell align="right">
-                    <Tooltip title="Editer la mission" arrow>
+                    <Tooltip title="Editer le role" arrow>
                         <IconButton
                           onClick={() => handleOpenEditModal(role)}
                           sx={{

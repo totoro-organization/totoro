@@ -75,6 +75,9 @@ const Crypto = Loader(lazy(() => import('src/pages/Dashboards/Crypto')));
 const TagSettings = Loader(
   lazy(() => import('src/pages/AppsConfiguration/Settings/Tags'))
 );
+const RoleSettings = Loader(
+  lazy(() => import('src/pages/AppsConfiguration/Settings/Roles'))
+);
 const SubscriptionSettings = Loader(
   lazy(() => import('src/pages/AppsConfiguration/Settings/Subscriptions'))
 );
@@ -246,18 +249,22 @@ const routes: PartialRouteObject[] = [
             path: 'app-reglages',
             element: <SidebarLayout />,
             children: [
-              // {
-              //   path: '/',
-              //   element: (
-              //     <Navigate
-              //       to="/app-reglages/missions"
-              //       replace
-              //     />
-              //   )
-              // },
+              {
+                path: '/',
+                element: (
+                  <Navigate
+                    to="/app-reglages/parametrage/tags"
+                    replace
+                  />
+                )
+              },
               {
                 path: 'parametrage/tags',
                 element: <TagSettings />
+              },
+              {
+                path: 'parametrage/roles',
+                element: <RoleSettings />
               },
               {
                 path: 'parametrage/abonnements',
