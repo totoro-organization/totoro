@@ -21,6 +21,7 @@ import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 import { Tag } from 'src/models/tag';
 import Modal from 'src/components/Modal';
 import StatusLabel from 'src/components/StatusLabel';
+import { useModal } from 'src/hooks/useModal';
 
 interface TagsTableProps {
   items: Tag[], 
@@ -44,30 +45,15 @@ const TagsTable: FC<TagsTableProps> = ({
   handleDeleteTag
 }) => {
 
-  const [openEditModal, setOpenEditModal] = useState(false);
-  const [openDeleteModal, setOpenDeleteModal] = useState(false);
-  const [modalInfo, setModalInfo] = useState<Tag | null>(null);
+  const [editModalOpen, handleOpenEditModal, handleCloseEditModal, editModalItem] = useModal();
+  const [deleteModalOpen, handleOpenDeleteModal, handleCloseDeleteModal, deleteModalItem] = useModal();
   
   const theme = useTheme();
-
-  const handleOpenEditModal = (tag: Tag) => {
-    setOpenEditModal(true);
-    setModalInfo(tag);
-  }
-
-  const handleCloseEditModal = () => setOpenEditModal(false);
 
   const handleUpdate = ({id, label}) => {
     handleUpdateTag({id, label});
     handleCloseEditModal();
   }
-
-  const handleOpenDeleteModal = (tag: Tag) => {
-    setOpenDeleteModal(true);
-    setModalInfo(tag);
-  }
-
-  const handleCloseDeleteModal = () => setOpenDeleteModal(false);
 
   const handleDelete = ({id}) => {
     handleDeleteTag(id);
@@ -168,8 +154,8 @@ const TagsTable: FC<TagsTableProps> = ({
             })}
           </TableBody>
         </Table>
-        <Modal item={modalInfo} callback={handleUpdate} open={openEditModal} handleClose={handleCloseEditModal} type="edit" title={`Editer le tag suivant : ${modalInfo?.label}`}/>
-        <Modal item={modalInfo} callback={handleDelete} open={openDeleteModal} handleClose={handleCloseDeleteModal} type="delete" title={`Supprimer le tag suivant : ${modalInfo?.label}`}/>
+        <Modal item={editModalItem} callback={handleUpdate} open={editModalOpen} handleClose={handleCloseEditModal} type="edit" title={`Editer le tag suivant : ${editModalItem?.label}`}/>
+        <Modal item={deleteModalItem} callback={handleDelete} open={deleteModalOpen} handleClose={handleCloseDeleteModal} type="delete" title={`Supprimer le tag suivant : ${deleteModalItem?.label}`}/>
       </TableContainer>
   );
 };

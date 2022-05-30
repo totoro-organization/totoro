@@ -10,6 +10,7 @@ import { styled } from '@mui/system';
 import Modal from "src/components/Modal";
 import { StatusEnum } from 'src/models/status';
 import { useTable } from 'src/hooks/useTable';
+import { useModal } from 'src/hooks/useModal';
 
 const WrapperBox = styled(Box)(
   ({ theme }) => `
@@ -23,17 +24,14 @@ function Tags() {
 
   const { data: defaultTags, loading  } = useApi('/commons/tags');
 
-  const [openModal, setOpenModal] = useState(false);
-
-  const handleOpenModal = (item: any) => setOpenModal(true);
-  const handleCloseModal = () => setOpenModal(false);
+  const [addModalOpen, handleOpenAddModal, handleCloseAddModal] = useModal();
 
   const {
     handleAddItem,
     handleDeleteItem,
     handleUpdateItem,
     items: tags
-  } = useTable({ model: 'tags', defaultItems: defaultTags, handleCloseModal })
+  } = useTable({ model: 'tags', defaultItems: defaultTags, handleCloseModal: handleCloseAddModal })
 
   const statusOptions = [
     {
@@ -48,7 +46,7 @@ function Tags() {
 
   return (
     <WrapperBox>
-      <Button sx={{ alignSelf: 'flex-end'}} onClick={handleOpenModal} variant="contained">
+      <Button sx={{ alignSelf: 'flex-end'}} onClick={handleOpenAddModal} variant="contained">
         Ajouter un tag
       </Button>
       {
@@ -57,7 +55,7 @@ function Tags() {
             <TagsTable handleDeleteTag={handleDeleteItem} handleUpdateTag={handleUpdateItem} />
         </TableWrapper>
       }
-      <Modal callback={handleAddItem} open={openModal} handleClose={handleCloseModal} type="add" title="Ajouter un tag"/>
+      <Modal callback={handleAddItem} open={addModalOpen} handleClose={handleCloseAddModal} type="add" title="Ajouter un tag"/>
     </WrapperBox>
   );
 }
