@@ -1,7 +1,6 @@
 import { Stack, Button } from '@mui/material';
 import SuspenseLoader from 'src/components/SuspenseLoader';
-import { Admin } from 'src/models/admin';
-import { Log } from 'src/models/Log';
+import { Admin, Log } from 'src/models';
 import AdminLogsTable from './AdminLogsTable';
 
 interface AdminInfoProps {
