@@ -87,6 +87,9 @@ const StatusSettings = Loader(
 const LitigationObjectSettings = Loader(
   lazy(() => import('src/pages/AppsConfiguration/Settings/LitigationObjects'))
 );
+const DiscountTypeSettings = Loader(
+  lazy(() => import('src/pages/AppsConfiguration/Settings/DiscountTypes'))
+);
 const ThemeSettings = Loader(
   lazy(() => import('src/pages/AppsConfiguration/Appearance/Themes'))
 );
@@ -277,6 +280,10 @@ const routes: PartialRouteObject[] = [
               {
                 path: 'parametrage/objets-litiges',
                 element: <LitigationObjectSettings />
+              },
+              {
+                path: 'parametrage/types-de-promotion',
+                element: <DiscountTypeSettings />
               },
               {
                 path: 'apparence/themes',

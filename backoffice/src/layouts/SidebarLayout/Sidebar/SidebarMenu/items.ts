@@ -4,6 +4,7 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
 import ReportProblemIcon from '@mui/icons-material/ReportProblem';
 import QueryStatsIcon from '@mui/icons-material/QueryStats';
+import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 import CardMembershipIcon from '@mui/icons-material/CardMembership';
 import GroupWorkIcon from '@mui/icons-material/GroupWork';
@@ -144,6 +145,11 @@ const menuItems: MenuItems[] = [
             name: 'Objets de litiges',
             icon: ReportProblemIcon,
             link: '/app-reglages/parametrage/objets-litiges'
+          },
+          {
+            name: 'Types de promotions',
+            icon: LocalOfferIcon,
+            link: '/app-reglages/parametrage/types-de-promotion'
           },
         ]
       },

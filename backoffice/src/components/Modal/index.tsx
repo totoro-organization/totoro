@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Box, Button, Modal, TextField } from '@mui/material';
+import { ReactNode } from 'react';
+import { Box, Modal } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
 const ModalBox = styled(Box)(
@@ -20,26 +20,7 @@ const ModalBox = styled(Box)(
     `
 );
 
-interface CustomModalProps {
-  open: boolean,
-  handleClose: () => void,
-  callback: ({id, label}: {id: string, label: string}) => any,
-  item?: any,
-  title: string,
-  type?: 'edit' | 'delete' | 'add'
-}
-
-const CustomModal = ({
-  open,
-  handleClose,
-  callback,
-  item = null,
-  title,
-  type
-}: CustomModalProps) => {
-  const [label, setLabel] = useState(item?.label);
-
-  const ButtonsBox = styled(Box)(
+ export const ButtonsBox = styled(Box)(
     ({ theme }) => `
         display: flex;
         flex-direction: column;
@@ -52,6 +33,20 @@ const CustomModal = ({
         }
     `
   );
+
+interface CustomModalProps {
+  open: boolean,
+  handleClose: () => void,
+  title: string,
+  children?: ReactNode
+}
+
+const CustomModal = ({
+  open,
+  handleClose,
+  title,
+  children
+}: CustomModalProps) => {
        
   return (
     <Modal
@@ -62,61 +57,9 @@ const CustomModal = ({
     >
       <ModalBox>
         <h2 id="child-modal-title">{title}</h2>
-        {type === 'edit' ? (
-          <EditTemplate label={item?.label} setLabel={setLabel} />
-        ) : type === 'add' ? (
-          <AddTemplate setLabel={setLabel} />
-        ) : (
-          (type === 'delete' ? <DeleteTemplate item={item} /> : <DefaultTemplate />)
-        )}
-        <ButtonsBox>
-          <Button variant="outlined" onClick={handleClose}>
-            Annuler
-          </Button>
-          <Button
-            variant="contained"
-            onClick={() => callback({id: item?.id, label})}
-          >
-            { type === 'edit' ? "Editer" : type === 'delete' ? "Supprimer" : type === 'add' ? "Ajouter" : 'Confirmer'}
-          </Button>
-        </ButtonsBox>
+        { children }
       </ModalBox>
     </Modal>
-  );
-};
-
-const DefaultTemplate = () => {
-  return (
-    <p>Default</p>
-  );
-};
-
-const EditTemplate = ({label, setLabel}) => {
-  return (
-    <TextField
-      required
-      id="tag_label"
-      label="Label"
-      defaultValue={label}
-      onChange={(e) => setLabel(e.target.value)}
-    />
-  );
-};
-
-const DeleteTemplate = ({item}) => {
-  return (
-    <p>Vous allez supprimer { item?.label }</p>
-  );
-};
-
-const AddTemplate = ({setLabel}) => {
-  return (
-    <TextField
-      required
-      id="tag_label"
-      label="Label"
-      onChange={(e) => setLabel(e.target.value)}
-    />
   );
 };
 

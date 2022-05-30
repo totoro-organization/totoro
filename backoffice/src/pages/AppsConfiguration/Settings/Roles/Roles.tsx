@@ -10,7 +10,9 @@ import { StatusEnum } from 'src/models/status';
 import { useTable } from 'src/hooks/useTable';
 import { useModal } from 'src/hooks/useModal';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import { CommonsEnum } from 'src/models/commons';
+import { CommonsUriEnum } from 'src/models/commons';
+import { AddTagContent } from '../Tags/TagModalContent';
+import { AddRoleContent } from './RoleModalContent';
 
 const WrapperBox = styled(Box)(
   ({ theme }) => `
@@ -31,7 +33,7 @@ function Roles() {
     handleDeleteItem,
     handleUpdateItem,
     items: roles
-  } = useTable({ model: CommonsEnum.roles, defaultItems: defaultRoles?.data, handleCloseModal: handleCloseAddModal })
+  } = useTable({ uri: CommonsUriEnum.roles, defaultItems: defaultRoles?.data, handleCloseModal: handleCloseAddModal })
 
   const statusOptions = [
     {
@@ -55,7 +57,9 @@ function Roles() {
             <RolesTable handleDeleteRole={handleDeleteItem} handleUpdateRole={handleUpdateItem} />
         </TableWrapper>
       }
-      <Modal callback={handleAddItem} open={addModalOpen} handleClose={handleCloseAddModal} type="add" title="Ajouter un role"/>
+      <Modal open={addModalOpen} handleClose={handleCloseAddModal} title="Ajouter un role">
+        <AddRoleContent handleClose={handleCloseAddModal} handleAdd={handleAddItem}/>
+      </Modal>
     </WrapperBox>
   );
 }

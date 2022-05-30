@@ -1,5 +1,5 @@
 import { Box, Button } from '@mui/material';
-import TagsTable from './TagsTable';
+import DiscountTypesTable from './DiscountTypesTable';
 import { useApi } from 'src/hooks/useApi';
 import SuspenseLoader from 'src/components/SuspenseLoader';
 import TableWrapper from 'src/components/TableWrapper';
@@ -10,7 +10,7 @@ import { useTable } from 'src/hooks/useTable';
 import { useModal } from 'src/hooks/useModal';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { CommonsUriEnum } from 'src/models/commons';
-import { AddTagContent } from './TagModalContent';
+import { AddDiscountTypeContent } from './DiscountTypeModalContent';
 
 const WrapperBox = styled(Box)(
   ({ theme }) => `
@@ -20,9 +20,9 @@ const WrapperBox = styled(Box)(
 `
 );
 
-function Tags() {
+function DiscountTypes() {
 
-  const { data: defaultTags, loading  } = useApi('/commons/tags');
+  const { data: defaultDiscountTypes, loading  } = useApi(`/commons/${CommonsUriEnum.discountTypes}`);
 
   const [addModalOpen, handleOpenAddModal, handleCloseAddModal] = useModal();
 
@@ -30,8 +30,8 @@ function Tags() {
     handleAddItem,
     handleDeleteItem,
     handleUpdateItem,
-    items: tags
-  } = useTable({ uri: CommonsUriEnum.tags, defaultItems: defaultTags?.data, handleCloseModal: handleCloseAddModal })
+    items: discountTypes
+  } = useTable({ uri: CommonsUriEnum.discountTypes, defaultItems: defaultDiscountTypes?.data, handleCloseModal: handleCloseAddModal })
 
   const statusOptions = [
     {
@@ -46,21 +46,21 @@ function Tags() {
 
   return (
     <WrapperBox>
-      <Button onClick={handleOpenAddModal} size='large' startIcon={<AddCircleOutlineIcon/>} sx={{ alignSelf: 'flex-end'}}  variant="contained">
-        Ajouter un tag
+      <Button size='large' startIcon={<AddCircleOutlineIcon/>} sx={{ alignSelf: 'flex-end'}} onClick={handleOpenAddModal} variant="contained">
+        Ajouter un type de promotion
       </Button>
       {
         loading ? <SuspenseLoader/> : 
-        <TableWrapper statusOptions={statusOptions} items={tags}>
+        <TableWrapper statusOptions={statusOptions} items={discountTypes}>
           {/* @ts-ignore */}
-            <TagsTable handleDeleteTag={handleDeleteItem} handleUpdateTag={handleUpdateItem} />
+            <DiscountTypesTable handleDeleteDiscountType={handleDeleteItem} handleUpdateDiscountType={handleUpdateItem} />
         </TableWrapper>
       }
-      <Modal open={addModalOpen} handleClose={handleCloseAddModal} title="Ajouter un tag">
-        <AddTagContent handleClose={handleCloseAddModal} handleAdd={handleAddItem}/>
+      <Modal open={addModalOpen} handleClose={handleCloseAddModal} title="Ajouter un type">
+        <AddDiscountTypeContent handleClose={handleCloseAddModal} handleAdd={handleAddItem}/>
       </Modal>
     </WrapperBox>
   );
 }
 
-export default Tags;
+export default DiscountTypes;
