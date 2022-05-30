@@ -4,6 +4,7 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
 import ReportProblemIcon from '@mui/icons-material/ReportProblem';
 import QueryStatsIcon from '@mui/icons-material/QueryStats';
+import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 import CardMembershipIcon from '@mui/icons-material/CardMembership';
 import GroupWorkIcon from '@mui/icons-material/GroupWork';
 import AssignmentIcon from '@mui/icons-material/Assignment';
@@ -123,6 +124,11 @@ const menuItems: MenuItems[] = [
             name: 'Tags',
             icon: StyleIcon,
             link: '/app-reglages/parametrage/tags'
+          },
+          {
+            name: 'Roles',
+            icon: AssignmentIndIcon,
+            link: '/app-reglages/parametrage/roles'
           },
           {
             name: 'Abonnements',
