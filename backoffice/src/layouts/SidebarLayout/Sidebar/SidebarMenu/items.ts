@@ -3,6 +3,7 @@ import { ReactNode } from 'react';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
 import ReportProblemIcon from '@mui/icons-material/ReportProblem';
+import SpeedIcon from '@mui/icons-material/Speed';
 import QueryStatsIcon from '@mui/icons-material/QueryStats';
 import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
@@ -140,6 +141,11 @@ const menuItems: MenuItems[] = [
             name: 'Statuts',
             icon: TrendingUpIcon,
             link: '/app-reglages/parametrage/status'
+          },
+          {
+            name: 'Difficultés de mission',
+            icon: SpeedIcon,
+            link: '/app-reglages/parametrage/difficultes'
           },
           {
             name: 'Objets de litiges',

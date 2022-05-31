@@ -84,6 +84,9 @@ const PricingSettings = Loader(
 const StatusSettings = Loader(
   lazy(() => import('src/pages/AppsConfiguration/Settings/Statuses'))
 );
+const DifficultySettings = Loader(
+  lazy(() => import('src/pages/AppsConfiguration/Settings/Difficulties'))
+);
 const LitigationObjectSettings = Loader(
   lazy(() => import('src/pages/AppsConfiguration/Settings/LitigationObjects'))
 );
@@ -276,6 +279,10 @@ const routes: PartialRouteObject[] = [
               {
                 path: 'parametrage/status',
                 element: <StatusSettings />
+              },
+              {
+                path: 'parametrage/difficultes',
+                element: <DifficultySettings />
               },
               {
                 path: 'parametrage/objets-litiges',
