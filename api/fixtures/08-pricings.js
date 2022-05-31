@@ -9,7 +9,7 @@ module.exports = [
 			price: 0,
 			duration: 0,
 			nb_account: 3,
-			nb_ads_by_month: 5,
+			nb_jobs_by_month: 5,
 			status: {
 				label: "actived",
 			},
@@ -25,7 +25,7 @@ module.exports = [
 			price: 0,
 			duration: 1,
 			nb_account: 15,
-			nb_ads_by_month: 50,
+			nb_jobs_by_month: 50,
 			status: {
 				label: "actived",
 			},

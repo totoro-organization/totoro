@@ -1,185 +1,327 @@
 const express = require("express");
-const { passport } = require("utils/session");
+const { passport, passportAdmin } = require("utils/session");
 const controller = require("./controller");
 const {
-	Roles,
-	Pricings,
-	Tags,
-	Status,
-	Payments,
-	Litigation_objects,
+  Roles,
+  Pricings,
+  Tags,
+  Status,
+  Types_discounts,
+  Difficulties,
+  Appearances,
+  Litigation_objects,
+  Applications
 } = require("./../../../models");
+const {
+  getRow
+} = require("utils/common/thenCatch");
+const { path } = require("utils/enum.json");
+const { upload } = require("utils/storage");
+const { label_status } = require("utils/enum.json");
+
+const excludeCommon = { exclude: ["id", "createdAt", "updatedAt"] }
+const include = [
+  { model: Status, as: "status", attributes: excludeCommon }
+];
+const exclude = ['status_id']
 
 exports.router = (function () {
-	const commonsRouter = express.Router();
+  const commonsRouter = express.Router();
 
-	// Roles
-	commonsRouter.get("/roles", async function (req, res) {
-		controller.getAll(res, Roles);
-	});
+  // Roles
+  commonsRouter.get("/roles", async function (req, res) {
+    let condition = {};
+		if(req.query && req.query.status){
+			let statusData = await getRow(res, Status, { label: req.query.status });
+			condition.status_id=statusData.id
+		}
+    controller.getAll(res, Roles, condition, exclude, include);
+  });
 
-	commonsRouter.get("/roles/:id", async function (req, res) {
-		const id = req.params.id;
-		controller.getOne(res, Roles, id);
-	});
+  commonsRouter.get("/roles/:id", async function (req, res) {
+    const id = req.params.id;
+    controller.getOne(res, Roles, id, exclude, include);
+  });
 
-	commonsRouter.post("/roles", async function (req, res) {
-		const data = req.body;
-		const condition = { label: data.label };
-		controller.create(res, Roles, data, condition);
-	});
+  commonsRouter.post("/roles", [passportAdmin, async function (req, res) {
+    const data = req.body;
+    const statusData = await getRow(res, Status, { label: label_status.actived });
+    data.status_id = statusData.id
+    const condition = { label: data.label };
+    controller.create(null, res, Roles, data, condition);
+  }]);
 
-	commonsRouter.put("/roles/:id", async function (req, res) {
-		const id = req.params.id;
-		const data = req.body;
-		const condition = { label: data.label };
-		controller.update(res, Roles, id, data, condition);
-	});
+  commonsRouter.put("/roles/:id", [passportAdmin, async function (req, res) {
+    const id = req.params.id;
+    const data = req.body;
+    const condition = { label: data.label };
+    controller.update(res, Roles, id, data, condition);
+  }]);
 
-	commonsRouter.delete("/roles/:id", async function (req, res) {
-		const id = req.params.id;
-		controller.delete(res, Roles, id);
-	});
+  commonsRouter.delete("/roles/:id", [passportAdmin, async function (req, res) {
+    const id = req.params.id;
+    controller.delete(res, Roles, { id });
+  }]);
 
-	// Pricings
-	commonsRouter.get("/pricings", async function (req, res) {
-		controller.getAll(res, Pricings);
-	});
+  // Pricings
+  commonsRouter.get("/pricings", async function (req, res) {
+    let condition = {};
+		if(req.query && req.query.status){
+			let statusData = await getRow(res, Status, { label: req.query.status });
+			condition.status_id=statusData.id
+		}
+    controller.getAll(res, Pricings, condition, exclude, include);
+  });
 
-	commonsRouter.get("/pricings/:id", async function (req, res) {
-		const id = req.params.id;
-		controller.getOne(res, Pricings, id);
-	});
+  commonsRouter.get("/pricings/:id", async function (req, res) {
+    const id = req.params.id;
+    controller.getOne(res, Pricings, id, exclude, include);
+  });
 
-	commonsRouter.post("/pricings", async function (req, res) {
-		const data = req.body;
-		const condition = { label: data.label };
-		controller.create(res, Pricings, data, condition);
-	});
+  commonsRouter.post("/pricings", [passportAdmin, async function (req, res) {
+    const data = req.body;
+    const statusData = await getRow(res, Status, { label: label_status.actived });
+    data.status_id = statusData.id
+    const condition = { label: data.label };
+    controller.create(null, res, Pricings, data, condition);
+  }]);
 
-	commonsRouter.put("/pricings/:id", async function (req, res) {
-		const id = req.params.id;
-		const data = req.body;
-		const condition = { label: data.label };
-		controller.update(res, Pricings, id, data, condition);
-	});
+  commonsRouter.put("/pricings/:id", [passportAdmin, async function (req, res) {
+    const id = req.params.id;
+    const data = req.body;
+    const condition = { label: data.label };
+    controller.update(res, Pricings, id, data, condition);
+  }]);
 
-	commonsRouter.delete("/pricings/:id", async function (req, res) {
-		const id = req.params.id;
-		controller.delete(res, Pricings, id);
-	});
+  commonsRouter.delete("/pricings/:id", [passportAdmin, async function (req, res) {
+    const id = req.params.id;
+    controller.delete(res, Pricings, { id });
+  }]);
 
-	// Tags
-	commonsRouter.get("/tags", async function (req, res) {
-		controller.getAll(res, Tags);
-	});
+  // Tags
+  commonsRouter.get("/tags", async function (req, res) {
+    let condition = {};
+		if(req.query && req.query.status){
+			let statusData = await getRow(res, Status, { label: req.query.status });
+			condition.status_id=statusData.id
+		}
+    controller.getAll(res, Tags, condition, exclude, include);
+  });
 
-	commonsRouter.get("/tags/:id", async function (req, res) {
-		const id = req.params.id;
-		controller.getOne(res, Tags, id);
-	});
+  commonsRouter.get("/tags/:id", async function (req, res) {
+    const id = req.params.id;
+    controller.getOne(res, Tags, id, exclude, include);
+  });
 
-	commonsRouter.post("/tags", async function (req, res) {
-		const data = req.body;
-		const condition = { label: data.label };
-		controller.create(res, Tags, data, condition);
-	});
+  commonsRouter.post("/tags", [passportAdmin, async function (req, res) {
+    const data = req.body;
+    const statusData = await getRow(res, Status, { label: label_status.actived });
+    data.status_id = statusData.id
+    const condition = { label: data.label };
+    controller.create(null, res, Tags, data, condition);
+  }]);
 
-	commonsRouter.put("/tags/:id", async function (req, res) {
-		const id = req.params.id;
-		const data = req.body;
-		const condition = { label: data.label };
-		controller.update(res, Tags, id, data, condition);
-	});
+  commonsRouter.put("/tags/:id", [passportAdmin, async function (req, res) {
+    const id = req.params.id;
+    const data = req.body;
+    const condition = { label: data.label };
+    controller.update(res, Tags, id, data, condition);
+  }]);
 
-	commonsRouter.delete("/tags/:id", async function (req, res) {
-		const id = req.params.id;
-		controller.delete(res, Tags, id);
-	});
+  commonsRouter.delete("/tags/:id", [passportAdmin, async function (req, res) {
+    const id = req.params.id;
+    controller.delete(res, Tags, { id });
+  }]);
 
-	// Status
-	commonsRouter.get("/status", async function (req, res) {
-		controller.getAll(res, Status);
-	});
+  // Status
+  commonsRouter.get("/status", async function (req, res) {
+    controller.getAll(res, Status);
+  });
 
-	commonsRouter.get("/status/:id", async function (req, res) {
-		const id = req.params.id;
-		controller.getOne(res, Status, id);
-	});
+  commonsRouter.get("/status/:id", async function (req, res) {
+    const id = req.params.id;
+    controller.getOne(res, Status, id);
+  });
 
-	commonsRouter.post("/status", async function (req, res) {
-		const data = req.body;
-		const condition = { label: data.label };
-		controller.create(res, Status, data, condition);
-	});
+  commonsRouter.post("/status", [passportAdmin, async function (req, res) {
+    const data = req.body;
+    const condition = { label: data.label };
+    controller.create(null, res, Status, data, condition);
+  }]);
 
-	commonsRouter.put("/status/:id", async function (req, res) {
-		const id = req.params.id;
-		const data = req.body;
-		const condition = { label: data.label };
-		controller.update(res, Status, id, data, condition);
-	});
+  commonsRouter.put("/status/:id", [passportAdmin, async function (req, res) {
+    const id = req.params.id;
+    const data = req.body;
+    const condition = { label: data.label };
+    controller.update(res, Status, id, data, condition);
+  }]);
 
-	commonsRouter.delete("/status/:id", async function (req, res) {
-		const id = req.params.id;
-		controller.delete(res, Status, id);
-	});
+  // types-discounts
+  commonsRouter.get("/types-discounts", async function (req, res) {
+    let condition = {};
+		if(req.query && req.query.status){
+			let statusData = await getRow(res, Status, { label: req.query.status });
+			condition.status_id=statusData.id
+		}
+    controller.getAll(res, Types_discounts, condition, exclude, include);
+  });
 
-	// Payments
-	commonsRouter.get("/payments", async function (req, res) {
-		controller.getAll(res, Payments);
-	});
+  commonsRouter.get("/types-discounts/:id", async function (req, res) {
+    const id = req.params.id;
+    controller.getOne(res, Types_discounts, id, exclude, include);
+  });
 
-	commonsRouter.get("/payments/:id", async function (req, res) {
-		const id = req.params.id;
-		controller.getOne(res, Payments, id);
-	});
+  commonsRouter.post("/types-discounts", [passportAdmin, async function (req, res) {
+    const data = req.body;
+    const statusData = await getRow(res, Status, { label: label_status.actived });
+    data.status_id = statusData.id
+    const condition = { name: data.name };
+    controller.create(null, res, Types_discounts, data, condition);
+  }]);
 
-	commonsRouter.post("/payments", async function (req, res) {
-		const data = req.body;
-		const condition = { label: data.label };
-		controller.create(res, Payments, data, condition);
-	});
+  commonsRouter.put("/types-discounts/:id", [passportAdmin, async function (req, res) {
+    const id = req.params.id;
+    const data = req.body;
+    const condition = { name: data.name };
+    controller.update(res, Types_discounts, id, data, condition);
+  }]);
 
-	commonsRouter.put("/payments/:id", async function (req, res) {
-		const id = req.params.id;
-		const data = req.body;
-		const condition = { label: data.label };
-		controller.update(res, Payments, id, data, condition);
-	});
+  commonsRouter.delete("/types-discounts/:id", [passportAdmin, async function (req, res) {
+    const id = req.params.id;
+    controller.delete(res, Types_discounts, { id });
+  }]);
 
-	commonsRouter.delete("/payments/:id", async function (req, res) {
-		const id = req.params.id;
-		controller.delete(res, Payments, id);
-	});
+  // Litigation_objects
+  commonsRouter.get("/litigation-objects", async function (req, res) {
+    let condition = {};
+		if(req.query && req.query.status){
+			let statusData = await getRow(res, Status, { label: req.query.status });
+			condition.status_id=statusData.id
+		}
+    controller.getAll(res, Litigation_objects, condition, exclude, include);
+  });
 
-	// Litigation_objects
-	commonsRouter.get("/litigation-objects", async function (req, res) {
-		controller.getAll(res, Litigation_objects);
-	});
+  commonsRouter.get("/litigation-objects/:id", async function (req, res) {
+    const id = req.params.id;
+    controller.getOne(res, Litigation_objects, id, exclude, include);
+  });
 
-	commonsRouter.get("/litigation-objects/:id", async function (req, res) {
-		const id = req.params.id;
-		controller.getOne(res, Litigation_objects, id);
-	});
+  commonsRouter.post("/litigation-objects", [passportAdmin, async function (req, res) {
+    const data = req.body;
+    const statusData = await getRow(res, Status, { label: label_status.actived });
+    data.status_id = statusData.id
+    const condition = { label: data.label };
+    controller.create(null, res, Litigation_objects, data, condition);
+  }]);
 
-	commonsRouter.post("/litigation-objects", async function (req, res) {
-		const data = req.body;
-		const condition = { label: data.label };
-		controller.create(res, Litigation_objects, data, condition);
-	});
+  commonsRouter.put("/litigation-objects/:id", [passportAdmin, async function (req, res) {
+    const id = req.params.id;
+    const data = req.body;
+    const condition = { label: data.label };
+    controller.update(res, Litigation_objects, id, data, condition);
+  }]);
 
-	commonsRouter.put("/litigation-objects/:id", async function (req, res) {
-		const id = req.params.id;
-		const data = req.body;
-		const condition = { label: data.label };
-		controller.update(res, Litigation_objects, id, data, condition);
-	});
+  commonsRouter.delete("/litigation-objects/:id", [passportAdmin, async function (req, res) {
+    const id = req.params.id;
+    controller.delete(res, Litigation_objects, { id });
+  }]);
 
-	commonsRouter.delete("/litigation-objects/:id", async function (req, res) {
-		const id = req.params.id;
-		controller.delete(res, Litigation_objects, id);
-	});
+  // Difficulties
+  commonsRouter.get("/difficulties", async function (req, res) {
+    let condition = {};
+		if(req.query && req.query.status){
+			let statusData = await getRow(res, Status, { label: req.query.status });
+			condition.status_id=statusData.id
+		}
+    controller.getAll(res, Difficulties, Difficulties, exclude, include);
+  });
 
-	return commonsRouter;
+  commonsRouter.get("/difficulties/:id", async function (req, res) {
+    const id = req.params.id;
+    controller.getOne(res, Difficulties, id, exclude, include);
+  });
+
+  commonsRouter.post("/difficulties", [passportAdmin, async function (req, res) {
+    const data = req.body;
+    const statusData = await getRow(res, Status, { label: label_status.actived });
+    data.status_id = statusData.id
+    const condition = { level: data.level };
+    controller.create(null, res, Difficulties, data, condition);
+  }]);
+
+  commonsRouter.put("/difficulties/:id", [passportAdmin, async function (req, res) {
+    const id = req.params.id;
+    const data = req.body;
+    const condition = { level: data.level };
+    controller.update(res, Difficulties, id, data, condition);
+  }]);
+
+  commonsRouter.delete("/difficulties/:id", [passportAdmin, async function (req, res) {
+    const id = req.params.id;
+    controller.delete(res, Difficulties, { id });
+  }]);
+
+  // Appearances
+  commonsRouter.get("/appearances", async function (req, res) {
+    let condition = {};
+		if(req.query && req.query.status){
+			let statusData = await getRow(res, Status, { label: req.query.status });
+			condition.status_id=statusData.id
+		}
+    const includeAp = [...include, { model: Applications, as: "application", attributes: excludeCommon}]
+    controller.getAll(res, Appearances, condition, ['status_id','app_id'], includeAp);
+  });
+
+  commonsRouter.get("/appearances/:id", async function (req, res) {
+    const includeAp = [...include, { model: Applications, as: "application", attributes: excludeCommon}]
+    const id = req.params.id;
+    controller.getOne(res, Appearances, id, ['status_id','app_id'], includeAp);
+  });
+
+  commonsRouter.post(
+    "/appearances",
+    [passportAdmin, upload(path.site).fields([
+      { name: "icon", maxCount: 1 },
+      { name: "logo", maxCount: 1 },
+    ]),
+    async function (req, res) {
+      const data = req.body;
+      if (req.files) {
+        data.files = req.files;
+        data.path = path.site;
+      }
+      var app = await getRow(res, Applications, { label: data.app_id })
+      const statusData = await getRow(res, Status, { label: label_status.actived });
+      data.status_id = statusData.id
+      const condition = { app_id: data.app_id };
+      controller.create(null, res, Appearances, data, condition);
+    }]
+  );
+
+  //single('name'), array('name', count), fields([{name: String, name: Int},])
+  commonsRouter.put(
+    "/appearances/:id",
+    [passportAdmin, upload(path.site).fields([
+      { name: "icon", maxCount: 1 },
+      { name: "logo", maxCount: 1 },
+    ]),
+    async function (req, res) {
+      const id = req.params.id;
+      const data = req.body;
+
+      if (req.files) {
+        data.files = req.files;
+        data.path = path.site;
+      }
+
+      controller.update(res, Appearances, id, data);
+    }]
+  );
+
+  commonsRouter.delete("/appearances/:id", [passportAdmin, async function (req, res) {
+    const id = req.params.id;
+    controller.delete(res, Appearances, { id });
+  }]);
+
+  return commonsRouter;
 })();

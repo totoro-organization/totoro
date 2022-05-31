@@ -8,6 +8,14 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.UUID
       },
+      status_id: {
+        allowNull: false,
+        type: Sequelize.UUID,
+        references: { 
+          model: 'Status',
+          key: 'id'
+        }
+      },
       assos_id: {
         allowNull: false,
         type: Sequelize.UUID,
