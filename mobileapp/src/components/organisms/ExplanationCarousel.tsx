@@ -1,6 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import React, { useState } from "react";
+import { View } from "react-native";
 import styled from "styled-components/native";
 import { AuthParamList } from "../../navigation/StackNavigationParams";
 import Box from "../atoms/Box";
@@ -23,11 +24,11 @@ export default function ExplanationCarousel() {
 
       <Box alignItems="center" justifyContent="center">
         {explanationSteps.map((_, index) => (
-          <>
+          <View key={index}>
             <Dot $active={carouselIndex === index} />
 
             <Spacer axis="horizontal" size={0.5} />
-          </>
+          </View>
         ))}
       </Box>
 

@@ -13,12 +13,17 @@ import InputGroup from "../../molecules/InputGroup";
 import Spacer from "../../atoms/Spacer";
 import Alert from "../../atoms/Alert";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import fetchRegisterUser from "../../../common/api/requests/auth/fetchRegisterUser";
-
-const ALERT_CONTENT_ADDRESS =
-  "Totoro est une application de proximité, votre adresse de résidence nous permet de séléctionner les meilleurs missions près de chez vous.";
+import fetchRegisterUser, {
+  LoginUser,
+} from "../../../common/api/requests/auth/fetchRegisterUser";
+import { useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { StackParamList } from "../../../navigation/StackNavigationParams";
+import Toast from "react-native-toast-message";
 
 export default function RegisterStepFinal() {
+  const navigation = useNavigation<StackNavigationProp<StackParamList>>();
+
   const { control, handleSubmit } = useForm<RegisterStepFinalFormValues>({
     defaultValues: {
       address: "",
@@ -26,6 +31,15 @@ export default function RegisterStepFinal() {
     mode: "onBlur",
     resolver: yupResolver(registerStepFinalSchema),
   });
+
+  const registerErrorToast = () =>
+    Toast.show({
+      type: "error",
+      props: {
+        title: "Oups",
+        text: `Il semblerait que nous ayons rencontré un problème.`,
+      },
+    });
 
   async function onSubmit(data: RegisterStepFinalFormValues) {
     const body = {
@@ -36,28 +50,27 @@ export default function RegisterStepFinal() {
       cp: 93310,
     };
 
-    await AsyncStorage.mergeItem?.("userFormData", JSON.stringify(body));
-    const user: any = await AsyncStorage.getItem("userFormData");
+    // TODO: Add this step
+    // await AsyncStorage.mergeItem?.("userFormData", JSON.stringify(body));
+    const userData = (await AsyncStorage.getItem("userFormData")) || "";
 
-    const mocked_data = {
-      firstname: "mae",
-      lastname: "Lugat",
-      username: "billy",
-      email: "maet@gmail.com",
-      password: "root",
-      birthday: "1991-10-08",
-      adress: "9 rue du progrès",
-      longitude: 48.88039283558442,
-      latitude: 2.4123843153442976,
-      cp: 93310,
-    };
-
-    await fetchRegisterUser({ user: mocked_data });
+    await fetchRegisterUser({ user: JSON.parse(userData) })
+      .then((res) => {
+        if (res.status === 201) {
+          navigation.navigate("Se connecter");
+        } else {
+          registerErrorToast();
+        }
+      })
+      .catch((err) => console.error(err));
   }
 
   return (
     <>
-      <Alert type="info">{ALERT_CONTENT_ADDRESS}</Alert>
+      <Alert type="info">
+        Totoro est une application de proximité, votre adresse de résidence nous
+        permet de séléctionner les meilleurs missions près de chez vous.
+      </Alert>
 
       <Spacer axis="vertical" size={3} />
 
@@ -66,8 +79,6 @@ export default function RegisterStepFinal() {
 
         <Spacer axis="vertical" size={0.5} />
 
-        {/* TODO: replace Input atom to autocomplete input address */}
-        {/* NOTE: check this article: https://medium.com/debugger-off/how-to-use-google-autocomplete-api-s-and-react-native-maps-in-react-native-to-fetch-user-location-20d3f65af48b */}
         <Controller
           name="address"
           control={control}

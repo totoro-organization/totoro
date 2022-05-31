@@ -28,7 +28,6 @@ export default function RegisterStepTwo({ nextStep }: RegisterStepTwoProps) {
       firstname: "",
       lastname: "",
       birthday: "",
-      phone: "",
     },
     mode: "onBlur",
     resolver: yupResolver(registerStepTwoSchema),
@@ -39,7 +38,7 @@ export default function RegisterStepTwo({ nextStep }: RegisterStepTwoProps) {
       firstname: data.firstname,
       lastname: data.lastname,
       birthday: data.birthday,
-      phone: data.phone,
+
       username: createUsername(data.firstname, data.lastname),
     };
 
@@ -107,28 +106,6 @@ export default function RegisterStepTwo({ nextStep }: RegisterStepTwoProps) {
 
         <Controller
           name="birthday"
-          control={control}
-          render={({
-            field: { onChange, onBlur, value },
-            fieldState: { error },
-          }) => (
-            <InputGroup
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-              error={error}
-            />
-          )}
-        />
-      </InputWrapper>
-
-      <InputWrapper>
-        <Text>Numéro de téléphone</Text>
-
-        <Spacer axis="vertical" size={0.5} />
-
-        <Controller
-          name="phone"
           control={control}
           render={({
             field: { onChange, onBlur, value },

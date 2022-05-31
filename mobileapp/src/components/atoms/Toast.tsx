@@ -65,9 +65,12 @@ const BaseToast = ({ title, text, type }: ToastProps) => {
 };
 
 const Container = styled.View`
-  position: relative;
+  position: absolute;
   width: 95%;
+  z-index: 5;
+  top: 16px;
   flex-direction: row;
+  height: auto;
   flex: 1;
   background-color: ${({ theme }) => theme.colors.white[600]};
   padding: ${({ theme }) => theme.spacing[4]};
