@@ -1,5 +1,6 @@
 import { Button, TextField } from "@mui/material";
 import { FormEvent, useState } from "react";
+import { Form } from "src/components/Form";
 import { ButtonsBox } from "src/components/Modal";
 import { TableMethods } from "src/hooks/useTable";
 import { Status } from "src/models";
@@ -22,7 +23,7 @@ export const EditStatusContent = ({item, handleUpdate, handleClose}: EditStatusC
     }
   
     return (
-      <form onSubmit={(e: FormEvent) => handleSubmit(e)}>
+      <Form onSubmit={(e: FormEvent) => handleSubmit(e)}>
           <TextField
           required
           id="status_label"
@@ -41,7 +42,7 @@ export const EditStatusContent = ({item, handleUpdate, handleClose}: EditStatusC
               Editer
             </Button>
           </ButtonsBox>
-      </form>
+      </Form>
     );
   };
 
@@ -60,7 +61,7 @@ export const AddStatusContent = ({handleAdd, handleClose}: AddStatusContentProps
     }
   
     return (
-      <form onSubmit={(e: FormEvent) => handleSubmit(e)}>
+      <Form onSubmit={(e: FormEvent) => handleSubmit(e)}>
           <TextField
           required
           id="status_label"
@@ -78,7 +79,7 @@ export const AddStatusContent = ({handleAdd, handleClose}: AddStatusContentProps
               Ajouter
             </Button>
           </ButtonsBox>
-      </form>
+      </Form>
     );
   };
 
@@ -96,7 +97,7 @@ export const DeleteStatusContent = ({item, handleDelete, handleClose}: DeleteSta
     }
   
     return (
-      <form onSubmit={(e: FormEvent) => handleSubmit(e)}>
+      <Form onSubmit={(e: FormEvent) => handleSubmit(e)}>
         <p>Vous allez supprimer le status suivant : { item.label }</p>
         <ButtonsBox>
             <Button variant="outlined" onClick={handleClose}>
@@ -109,6 +110,6 @@ export const DeleteStatusContent = ({item, handleDelete, handleClose}: DeleteSta
               Supprimer
             </Button>
           </ButtonsBox>
-      </form>
+      </Form>
     );
   };

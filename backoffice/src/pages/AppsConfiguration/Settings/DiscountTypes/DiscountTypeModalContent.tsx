@@ -1,5 +1,6 @@
 import { Button, TextField } from "@mui/material";
 import { FormEvent, useState } from "react";
+import { Form } from "src/components/Form";
 import { ButtonsBox } from "src/components/Modal";
 import { TableMethods } from "src/hooks/useTable";
 import { DiscountType } from "src/models";
@@ -22,7 +23,7 @@ export const EditDiscountTypeContent = ({item, handleUpdate, handleClose}: EditD
     }
   
     return (
-      <form onSubmit={(e: FormEvent) => handleSubmit(e)}>
+      <Form onSubmit={(e: FormEvent) => handleSubmit(e)}>
           <TextField
           required
           id="discountType_name"
@@ -41,7 +42,7 @@ export const EditDiscountTypeContent = ({item, handleUpdate, handleClose}: EditD
               Editer
             </Button>
           </ButtonsBox>
-      </form>
+      </Form>
     );
   };
 
@@ -60,7 +61,7 @@ export const AddDiscountTypeContent = ({handleAdd, handleClose}: AddDiscountType
     }
   
     return (
-      <form onSubmit={(e: FormEvent) => handleSubmit(e)}>
+      <Form onSubmit={(e: FormEvent) => handleSubmit(e)}>
           <TextField
           required
           id="discountType_name"
@@ -78,7 +79,7 @@ export const AddDiscountTypeContent = ({handleAdd, handleClose}: AddDiscountType
               Ajouter
             </Button>
           </ButtonsBox>
-      </form>
+      </Form>
     );
   };
 
@@ -96,7 +97,7 @@ export const DeleteDiscountTypeContent = ({item, handleDelete, handleClose}: Del
     }
   
     return (
-      <form onSubmit={(e: FormEvent) => handleSubmit(e)}>
+      <Form onSubmit={(e: FormEvent) => handleSubmit(e)}>
         <p>Vous allez supprimer le discountType suivant : { item.name }</p>
         <ButtonsBox>
             <Button variant="outlined" onClick={handleClose}>
@@ -109,6 +110,6 @@ export const DeleteDiscountTypeContent = ({item, handleDelete, handleClose}: Del
               Supprimer
             </Button>
           </ButtonsBox>
-      </form>
+      </Form>
     );
   };
