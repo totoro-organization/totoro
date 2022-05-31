@@ -50,17 +50,10 @@ export function AuthProvider({
     getUserConnected();
   }, []);
 
-  const memoedValue = useMemo(
-    () => ({
-      user,
-      isLoading,
-      logout,
-    }),
-    [user, isLoading]
-  );
-
   return (
-    <AuthContext.Provider value={memoedValue}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ user, logout, isLoading }}>
+      {children}
+    </AuthContext.Provider>
   );
 }
 
