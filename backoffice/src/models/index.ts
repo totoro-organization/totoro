@@ -8,6 +8,7 @@ export type { Tag } from './tag';
 export type { User } from './user';
 export type { Admin } from './admin';
 export type { Status } from './status';
+export { StatusEnum } from './status';
 export type { Discount } from './discount';
 export type { DiscountType } from './discount_type';
 export type { DiscountTransaction } from './discount_transaction';
