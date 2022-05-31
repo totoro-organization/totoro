@@ -13,7 +13,7 @@ export default function Login() {
 
   return (
     <MainLayout withBackButton>
-      <Heading variant="h1">Inscription&nbsp;👋</Heading>
+      <Heading variant="h1">Connexion&nbsp;👋</Heading>
 
       <Spacer axis="vertical" size={3} />
 

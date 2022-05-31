@@ -1,8 +1,8 @@
 import { Organization } from "./organization";
 import { Pricing } from "./pricing";
-import { Status } from "./status";
+import { Status, StatusEnum } from "./status";
 
-export type SubscriptionStatus = Status<'active' | 'canceled' | 'expired'>;
+export type SubscriptionStatus = Status<StatusEnum.actived | StatusEnum.expired | StatusEnum.canceled>;
 
 export interface Subscription {
     id: string,

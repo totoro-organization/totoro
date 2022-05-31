@@ -1,9 +1,8 @@
-import { Job } from "./job";
 import { Organization } from "./organization";
 import { Role } from "./role";
-import { Status } from "./status";
+import { Status, StatusEnum } from "./status";
 
-export type UserStatus = Status<'actived' | 'freezed' | 'disabled'>;
+export type UserStatus = Status<StatusEnum.actived | StatusEnum.disabled | StatusEnum.freezed>;
 
 export interface User {
     id: string,

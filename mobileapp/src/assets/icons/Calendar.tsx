@@ -45,42 +45,42 @@ export default function Calendar({ color = "grey", size = 16 }: CalendarProps) {
       <Path
         d="M15.6957 13.7H15.7047"
         stroke={theme.colors[color][500]}
-        stroke-width="2"
+        strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
       <Path
         d="M15.6957 16.7H15.7047"
         stroke={theme.colors[color][500]}
-        stroke-width="2"
+        strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
       <Path
         d="M11.9965 13.7H12.0054"
         stroke={theme.colors[color][500]}
-        stroke-width="2"
+        strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
       <Path
         d="M11.9965 16.7H12.0054"
         stroke={theme.colors[color][500]}
-        stroke-width="2"
+        strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
       <Path
         d="M8.29529 13.7H8.30427"
         stroke={theme.colors[color][500]}
-        stroke-width="2"
+        strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
       <Path
         d="M8.29529 16.7H8.30427"
         stroke={theme.colors[color][500]}
-        stroke-width="2"
+        strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
       />

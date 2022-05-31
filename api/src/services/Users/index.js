@@ -1,6 +1,8 @@
 const express = require("express");
 const { passport, passportAdmin } = require("utils/session");
 const controller = require("./controller");
+const { path } = require("utils/enum.json");
+const { upload } = require("utils/storage");
 
 exports.router = (function () {
 	const UsersRouter = express.Router();
@@ -12,12 +14,20 @@ exports.router = (function () {
 		},
 	]);
 
+	UsersRouter.get("/:id", [
+		passport,
+		async function (req, res) {
+			const id = req.params.id;
+			controller.getUser(res, id);
+		},
+	]);
+
 	UsersRouter.put("/:id", [
 		passport,
 		async function (req, res) {
 			const id = req.params.id;
 			const data = req.body;
-			controller.update(res, id, data);
+			controller.updateUser(res, id, data);
 		},
 	]);
 
@@ -29,82 +39,67 @@ exports.router = (function () {
 		},
 	]);
 
-	UsersRouter.get("/:id", [
-		passport,
-		async function (req, res) {
-			const id = req.params.id;
-		},
-	]);
-
-	// Favorites
-
-	UsersRouter.get("/favorites", [
-		passport,
-		async function (req, res) {
-			controller.getFavorites(res);
-		},
-	]);
-
-	UsersRouter.delete("/favorites/:id", [
-		passport,
-		async function (req, res) {
-			const id = req.params.id;
-			controller.deleteFavorite(res, id);
-		},
-	]);
-
-	UsersRouter.post("/favorites", [
+	UsersRouter.put("/change/password", [
 		passport,
 		async function (req, res) {
 			const data = req.body;
+			data.id = req.userData.id;
+			controller.resetPassword(res, data);
+		},
+	]);
+
+
+	UsersRouter.put("/change/avatar", [passport, upload(path.avatar).single("avatar"), async function (req, res) {
+		const id = req.userData.id;
+		const data = {};
+		if (req.file) {
+			data.file = req.file;
+			data.path = path.avatar;
+		}
+
+		controller.updateAvatar(res, id, data);
+	}]);
+
+	UsersRouter.get("/:id/favorites", [
+		passport,
+		async function (req, res) {
+			const id = req.params.id;
+			controller.getFavorites(res, id);
+		},
+	]);
+
+	UsersRouter.post("/:id/favorites", [
+		passport,
+		async function (req, res) {
+			const data = req.body;
+			data.user_id = req.params.id;
 			controller.createFavorite(res, data);
 		},
 	]);
 
+	UsersRouter.delete("/favorites/:favotiteId", [
+		passport,
+		async function (req, res) {
+			const id = req.params.favotiteId;
+			controller.deleteFavorite(res, id);
+		},
+	]);
+
+	// Jobs
+	UsersRouter.get("/:id/jobs", [
+		passport,
+		async function (req, res) {
+			const id = req.params.id;
+			controller.getUserJobs(res, id, req.query);
+		},
+	]);
+
 	// Litigations
-
-	UsersRouter.get("/litigations", [
-		passport,
-		async function (req, res) {
-			controller.getUserLitigations(res);
-		},
-	]);
-
-	// Ads
-
-	UsersRouter.get("/ads", [
-		passport,
-		async function (req, res) {
-			controller.getUserAds(res);
-		},
-	]);
-
-	// Rating
-
-	UsersRouter.get("/rating", [
-		passport,
-		async function (req, res) {
-			controller.getUserRatings(res);
-		},
-	]);
-
-	UsersRouter.post("/rating", [
+	UsersRouter.get("/:id/litigations", [
 		passport,
 		async function (req, res) {
 			const id = req.params.id;
-			const data = req.body;
-			controller.rate(res, id, data);
-		},
-	]);
-
-	// Actions
-
-	UsersRouter.put("/favorites", [
-		passport,
-		async function (req, res) {
-			const id = req.params.id;
-			const data = req.body;
-			controller.getFavorites(res, id, data);
+			controller.getUserLitigations(res, id, req.query);
 		},
 	]);
 
