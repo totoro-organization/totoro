@@ -1,21 +1,54 @@
-// @ts-nocheck
-import { Card } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import StatusesTable from './StatusesTable';
 import { useApi } from 'src/hooks/useApi';
 import SuspenseLoader from 'src/components/SuspenseLoader';
+import TableWrapper from 'src/components/TableWrapper';
+import { styled } from '@mui/system';
+import Modal from "src/components/Modal";
+import { useTable } from 'src/hooks/useTable';
+import { useModal } from 'src/hooks/useModal';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import { CommonsUriEnum } from 'src/models/commons';
+import { AddStatusContent } from './StatusModalContent';
 
-function Users() {
+const WrapperBox = styled(Box)(
+  ({ theme }) => `
+    display: flex;
+    flex-direction: column;
+    row-gap: ${theme.spacing(2)}
+`
+);
 
-  const { data: users, loading } = useApi('/users');
+function Statuses() {
+
+  const { data: defaultStatuses, loading  } = useApi(`/commons/${CommonsUriEnum.status}`);
+
+  const [addModalOpen, handleOpenAddModal, handleCloseAddModal] = useModal();
+
+  const {
+    handleAddItem,
+    handleDeleteItem,
+    handleUpdateItem,
+    items: statuses
+  } = useTable({ uri: CommonsUriEnum.status, defaultItems: defaultStatuses?.data, handleCloseModal: handleCloseAddModal })
 
   return (
-    <Card>
+    <WrapperBox>
+      <Button onClick={handleOpenAddModal} size='large' startIcon={<AddCircleOutlineIcon/>} sx={{ alignSelf: 'flex-end'}}  variant="contained">
+        Ajouter un status
+      </Button>
       {
-        loading ? <SuspenseLoader/> :
-        <StatusesTable users={users?.data} />
+        loading ? <SuspenseLoader/> : 
+        <TableWrapper items={statuses}>
+          {/* @ts-ignore */}
+            <StatusesTable handleDeleteStatus={handleDeleteItem} handleUpdateStatus={handleUpdateItem} />
+        </TableWrapper>
       }
-    </Card>
+      <Modal open={addModalOpen} handleClose={handleCloseAddModal} title="Ajouter un statut">
+        <AddStatusContent handleClose={handleCloseAddModal} handleAdd={handleAddItem}/>
+      </Modal>
+    </WrapperBox>
   );
 }
 
-export default Users;
+export default Statuses;

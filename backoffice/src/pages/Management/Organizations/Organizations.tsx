@@ -1,7 +1,9 @@
 // @ts-nocheck
 import { Card } from '@mui/material';
 import { subDays } from 'date-fns';
+import TableWrapper from 'src/components/TableWrapper';
 import { Organization } from 'src/models/organization';
+import { StatusEnum } from 'src/models/status';
 import OrganizationsTable from '../Organizations/OrganizationsTable';
 
 function Organizations() {
@@ -26,13 +28,36 @@ function Organizations() {
         date: subDays(new Date(), 1).getTime(),
         tags: [{id:'1', label: 'humanitaire'}]
       }],
-      status: {id: '1', label: 'inactive'}
+      status: {id: '1', label: 'disabled'}
     }
   ]
 
+  const statusOptions = [
+    {
+      id: StatusEnum.actived,
+      name: 'Actif'
+    },
+    {
+      id: StatusEnum.disabled,
+      name: 'Inactif'
+    },
+    {
+      id: StatusEnum.freezed,
+      name: 'Gelé'
+    }
+  ];
+
   return (
     <Card>
-      <OrganizationsTable organizations={organizations} />
+      {/* {
+        loading ? <SuspenseLoader/> :
+        <TableWrapper statusOptions={statusOptions} items={organizations}>
+            <OrganizationsTable />
+        </TableWrapper>
+      } */}
+      <TableWrapper statusOptions={statusOptions} items={organizations}>
+            <OrganizationsTable />
+        </TableWrapper>
     </Card>
   );
 }

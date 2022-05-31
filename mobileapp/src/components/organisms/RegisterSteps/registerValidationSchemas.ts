@@ -23,12 +23,12 @@ export type RegisterStepTwoFormValues = Yup.InferType<
 >;
 
 export const registerStepTwoSchema = Yup.object({
-  firstName: Yup.string().required(REQUIRED_MSG),
-  lastName: Yup.string().required(REQUIRED_MSG),
+  firstname: Yup.string().required(REQUIRED_MSG),
+  lastname: Yup.string().required(REQUIRED_MSG),
   // TODO: fix validation
-  birthDate: Yup.string().required(REQUIRED_MSG),
+  birthday: Yup.string().required(REQUIRED_MSG),
   // TODO: fix validation
-  phoneNumber: Yup.string().required(REQUIRED_MSG),
+  phone: Yup.string().required(REQUIRED_MSG),
 }).required();
 
 export type RegisterStepFinalFormValues = Yup.InferType<

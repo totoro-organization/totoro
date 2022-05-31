@@ -50,6 +50,7 @@ const Organization = Loader(
   lazy(() => import('src/pages/Management/Organizations/Organization'))
 );
 const User = Loader(lazy(() => import('src/pages/Management/Users/User')));
+const Admin = Loader(lazy(() => import('src/pages/Management/Admins/Admin')));
 const Partner = Loader(
   lazy(() => import('src/pages/Management/Partners/Members/Partner'))
 );
@@ -74,14 +75,23 @@ const Crypto = Loader(lazy(() => import('src/pages/Dashboards/Crypto')));
 const TagSettings = Loader(
   lazy(() => import('src/pages/AppsConfiguration/Settings/Tags'))
 );
-const SubscriptionSettings = Loader(
-  lazy(() => import('src/pages/AppsConfiguration/Settings/Subscriptions'))
+const RoleSettings = Loader(
+  lazy(() => import('src/pages/AppsConfiguration/Settings/Roles'))
+);
+const PricingSettings = Loader(
+  lazy(() => import('src/pages/AppsConfiguration/Settings/Pricings'))
 );
 const StatusSettings = Loader(
   lazy(() => import('src/pages/AppsConfiguration/Settings/Statuses'))
 );
+const DifficultySettings = Loader(
+  lazy(() => import('src/pages/AppsConfiguration/Settings/Difficulties'))
+);
 const LitigationObjectSettings = Loader(
   lazy(() => import('src/pages/AppsConfiguration/Settings/LitigationObjects'))
+);
+const DiscountTypeSettings = Loader(
+  lazy(() => import('src/pages/AppsConfiguration/Settings/DiscountTypes'))
 );
 const ThemeSettings = Loader(
   lazy(() => import('src/pages/AppsConfiguration/Appearance/Themes'))
@@ -220,6 +230,10 @@ const routes: PartialRouteObject[] = [
               {
                 path: 'administrateurs',
                 element: <Admins />
+              },
+              {
+                path: 'administrateurs/:id',
+                element: <Admin />
               }
             ]
           },
@@ -241,30 +255,42 @@ const routes: PartialRouteObject[] = [
             path: 'app-reglages',
             element: <SidebarLayout />,
             children: [
-              // {
-              //   path: '/',
-              //   element: (
-              //     <Navigate
-              //       to="/app-reglages/missions"
-              //       replace
-              //     />
-              //   )
-              // },
+              {
+                path: '/',
+                element: (
+                  <Navigate
+                    to="/app-reglages/parametrage/tags"
+                    replace
+                  />
+                )
+              },
               {
                 path: 'parametrage/tags',
                 element: <TagSettings />
               },
               {
-                path: 'parametrage/abonnements',
-                element: <SubscriptionSettings />
+                path: 'parametrage/roles',
+                element: <RoleSettings />
+              },
+              {
+                path: 'parametrage/pricings',
+                element: <PricingSettings />
               },
               {
                 path: 'parametrage/status',
                 element: <StatusSettings />
               },
               {
+                path: 'parametrage/difficultes',
+                element: <DifficultySettings />
+              },
+              {
                 path: 'parametrage/objets-litiges',
                 element: <LitigationObjectSettings />
+              },
+              {
+                path: 'parametrage/types-de-promotion',
+                element: <DiscountTypeSettings />
               },
               {
                 path: 'apparence/themes',

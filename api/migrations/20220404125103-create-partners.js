@@ -16,6 +16,14 @@ module.exports = {
           key: 'id'
         }
       },
+      user_id: {
+        allowNull: false,
+        type: Sequelize.UUID,
+        references: { 
+          model: 'Users',
+          key: 'id'
+        }
+      },
       name: {
         allowNull: false,
         type: Sequelize.STRING

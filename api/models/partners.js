@@ -20,6 +20,10 @@ module.exports = (sequelize, DataTypes) => {
         as: "status",
         foreignKey: "status_id",
       });
+      models.Partners.belongsTo(models.Users, {
+        as: "user",
+        foreignKey: "user_id",
+      });
     }
   }
 

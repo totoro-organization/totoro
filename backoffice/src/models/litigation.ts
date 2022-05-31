@@ -2,10 +2,10 @@
 
 import { Job } from "./job";
 import { LitigationObject } from "./litigation_object";
-import { Status } from "./status";
+import { Status, StatusEnum } from "./status";
 import { User } from "./user";
 
-export type LitigationStatus = Status<'opened' | 'closed'>;
+export type LitigationStatus = Status<StatusEnum.opened | StatusEnum.closed>;
 
 export interface Litigation {
     id: string,

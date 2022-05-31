@@ -9,6 +9,7 @@ import { registerStepOneSchema } from "./registerValidationSchemas";
 import type { RegisterStepOneFormValues } from "./registerValidationSchemas";
 import InputGroup from "../../molecules/InputGroup";
 import Spacer from "../../atoms/Spacer";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export type RegisterStepOneProps = {
   nextStep: () => void;
@@ -26,8 +27,12 @@ export default function RegisterStepOne({ nextStep }: RegisterStepOneProps) {
   });
 
   async function onSubmit(data: RegisterStepOneFormValues) {
-    // TODO: Add call api to register (create user)
-    await console.log(data);
+    const body = {
+      email: data.email,
+      password: data.password,
+    };
+
+    await AsyncStorage.setItem("userFormData", JSON.stringify(body));
     nextStep();
   }
 

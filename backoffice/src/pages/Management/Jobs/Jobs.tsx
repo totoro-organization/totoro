@@ -3,6 +3,9 @@ import { Card } from '@mui/material';
 import { Job } from 'src/models/job';
 import JobsTable from './JobsTable';
 import { subDays } from 'date-fns';
+import TableWrapper from 'src/components/TableWrapper';
+import { StatusEnum } from 'src/models/status';
+import SuspenseLoader from 'src/components/SuspenseLoader';
 
 function Jobs() {
    const jobs: Job[] = [
@@ -10,7 +13,7 @@ function Jobs() {
       id: '1',
       title: 'Ma super mission',
       organization: "Une association",
-      status: {id: '1', label: 'pending'},
+      status: {id: '1', label: 'coming'},
       participants: 15,
       address: '3 rue de la paix',
       capacity: 20,
@@ -21,9 +24,32 @@ function Jobs() {
     }
   ]
 
+  const statusOptions = [
+    {
+      id: StatusEnum.coming,
+      name: 'A venir'
+    },
+    {
+      id: StatusEnum.actived,
+      name: 'Actif'
+    },
+    {
+      id: StatusEnum.disabled,
+      name: 'Inactif'
+    }
+  ];
+
   return (
     <Card>
-      <JobsTable jobs={jobs} />
+      {/* {
+        loading ? <SuspenseLoader/> :
+        <TableWrapper statusOptions={statusOptions} items={jobs}>
+            <JobsTable />
+        </TableWrapper>
+      } */}
+      <TableWrapper statusOptions={statusOptions} items={jobs}>
+            <JobsTable />
+        </TableWrapper>
     </Card>
   );
 }
