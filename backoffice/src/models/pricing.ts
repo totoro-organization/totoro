@@ -10,7 +10,7 @@ export interface Pricing {
     price: number,
     duration: number,
     nb_account: number,
-    nb_ads_by_month: number,
+    nb_jobs_by_month: number,
     status: PricingStatus,
     createdAt: string,
     updatedAt: string
