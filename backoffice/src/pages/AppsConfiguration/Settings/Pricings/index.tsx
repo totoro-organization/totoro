@@ -7,20 +7,20 @@ import {
 } from '@mui/material';
 
 import Footer from 'src/components/Footer';
-import Subscriptions from './Subscriptions';
+import Pricings from './Pricings';
 
 
-function SubscriptionSettings() {
+function PricingsSettings() {
   
   return (
     <>
       <Helmet>
-        <title>Paramétrage des abonnements</title>
+        <title>Paramétrage des pricings</title>
       </Helmet>
       <PageTitleWrapper>
         <PageTitle
-          heading="Abonnements"
-          subHeading="Modifier la liste des abonnements"
+          heading="Pricings"
+          subHeading="Modifier la liste des pricings"
         />
       </PageTitleWrapper>
       <Container maxWidth="lg">
@@ -32,7 +32,7 @@ function SubscriptionSettings() {
           spacing={3}
         >
           <Grid item xs={12}>
-            <Subscriptions/>
+            <Pricings/>
           </Grid>
         </Grid>
       </Container>
@@ -41,4 +41,4 @@ function SubscriptionSettings() {
   );
 }
 
-export default SubscriptionSettings;
+export default PricingsSettings;

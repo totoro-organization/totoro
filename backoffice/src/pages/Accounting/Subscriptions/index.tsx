@@ -65,10 +65,10 @@ function ManagementUserSettings() {
             </TabsWrapper>
           </Grid>
           <Grid item xs={12}>
-            {currentTab === 'free' && <FreeTab />}
+            {/* {currentTab === 'free' && <FreeTab />}
             {currentTab === 'premium' && <PremiumTab />}
             {currentTab === 'expired' && <ExpiredTab />}
-            {currentTab === 'canceled' && <CanceledTab />}
+            {currentTab === 'canceled' && <CanceledTab />} */}
           </Grid>
         </Grid>
       </Container>
