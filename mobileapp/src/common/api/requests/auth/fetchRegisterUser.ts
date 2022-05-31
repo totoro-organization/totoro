@@ -2,16 +2,23 @@ import { API_HOST, API_ROUTES } from "../../routes";
 import config from "../../config";
 import { User } from "../../../../models/user";
 
+export interface LoginUser {
+  username: string;
+  firstname: string;
+  lastname: string;
+  email: string;
+  birthday: string;
+  password: string;
+}
+
 type FetchSumbitRegisterUser = {
-  user: User;
+  user: LoginUser;
 };
 
 export default async function fetchRegisterUser({
   user,
 }: FetchSumbitRegisterUser): Promise<any> {
-  const body: FetchSumbitRegisterUser = {
-    user,
-  };
+  const body: LoginUser = user;
 
   return fetch(`${API_HOST}${API_ROUTES.AUTH_REGISTER}`, {
     method: "POST",

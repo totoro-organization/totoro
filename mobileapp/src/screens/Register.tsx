@@ -22,7 +22,7 @@ enum RegisterSteps {
 
 export default function Register() {
   const [currentStep, setCurrentStep] = useState<RegisterSteps>(
-    RegisterSteps.STEP_FINAL
+    RegisterSteps.STEP_ONE
   );
   const navigation = useNavigation<StackNavigationProp<AuthParamList>>();
 
