@@ -1,5 +1,6 @@
 import { Button, TextField } from "@mui/material";
 import { FormEvent, useState } from "react";
+import { Form } from "src/components/Form";
 import { ButtonsBox } from "src/components/Modal";
 import { TableMethods } from "src/hooks/useTable";
 import { Tag } from "src/models";
@@ -22,7 +23,7 @@ export const EditTagContent = ({item, handleUpdate, handleClose}: EditTagContent
     }
   
     return (
-      <form onSubmit={(e: FormEvent) => handleSubmit(e)}>
+      <Form onSubmit={(e: FormEvent) => handleSubmit(e)}>
           <TextField
           required
           id="tag_label"
@@ -41,7 +42,7 @@ export const EditTagContent = ({item, handleUpdate, handleClose}: EditTagContent
               Editer
             </Button>
           </ButtonsBox>
-      </form>
+      </Form>
     );
   };
 
@@ -60,7 +61,7 @@ export const AddTagContent = ({handleAdd, handleClose}: AddTagContentProps) => {
     }
   
     return (
-      <form onSubmit={(e: FormEvent) => handleSubmit(e)}>
+      <Form onSubmit={(e: FormEvent) => handleSubmit(e)}>
           <TextField
           required
           id="tag_label"
@@ -78,7 +79,7 @@ export const AddTagContent = ({handleAdd, handleClose}: AddTagContentProps) => {
               Ajouter
             </Button>
           </ButtonsBox>
-      </form>
+      </Form>
     );
   };
 
@@ -96,7 +97,7 @@ export const DeleteTagContent = ({item, handleDelete, handleClose}: DeleteTagCon
     }
   
     return (
-      <form onSubmit={(e: FormEvent) => handleSubmit(e)}>
+      <Form onSubmit={(e: FormEvent) => handleSubmit(e)}>
         <p>Vous allez supprimer le tag suivant : { item.label }</p>
         <ButtonsBox>
             <Button variant="outlined" onClick={handleClose}>
@@ -109,6 +110,6 @@ export const DeleteTagContent = ({item, handleDelete, handleClose}: DeleteTagCon
               Supprimer
             </Button>
           </ButtonsBox>
-      </form>
+      </Form>
     );
   };

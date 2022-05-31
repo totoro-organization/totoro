@@ -1,5 +1,6 @@
 import { Button, TextField } from "@mui/material";
 import { FormEvent, useState } from "react";
+import { Form } from "src/components/Form";
 import { ButtonsBox } from "src/components/Modal";
 import { TableMethods } from "src/hooks/useTable";
 import { JobDifficulty } from "src/models";
@@ -23,7 +24,7 @@ export const EditDifficultyContent = ({item, handleUpdate, handleClose}: EditDif
     }
   
     return (
-      <form onSubmit={(e: FormEvent) => handleSubmit(e)}>
+      <Form onSubmit={(e: FormEvent) => handleSubmit(e)}>
           <TextField
           required
           id="difficulty_level"
@@ -34,7 +35,7 @@ export const EditDifficultyContent = ({item, handleUpdate, handleClose}: EditDif
           />
           <TextField
           required
-          id="difficulty_label"
+          id="difficulty_token"
           label="Tokens rapportés"
           type="number"
           defaultValue={item.token}
@@ -51,7 +52,7 @@ export const EditDifficultyContent = ({item, handleUpdate, handleClose}: EditDif
               Editer
             </Button>
           </ButtonsBox>
-      </form>
+      </Form>
     );
   };
 
@@ -70,7 +71,7 @@ export const AddDifficultyContent = ({handleAdd, handleClose}: AddDifficultyCont
     }
   
     return (
-      <form onSubmit={(e: FormEvent) => handleSubmit(e)}>
+      <Form onSubmit={(e: FormEvent) => handleSubmit(e)}>
            <TextField
           required
           id="difficulty_level"
@@ -96,7 +97,7 @@ export const AddDifficultyContent = ({handleAdd, handleClose}: AddDifficultyCont
               Ajouter
             </Button>
           </ButtonsBox>
-      </form>
+      </Form>
     );
   };
 
@@ -114,7 +115,7 @@ export const DeleteDifficultyContent = ({item, handleDelete, handleClose}: Delet
     }
   
     return (
-      <form onSubmit={(e: FormEvent) => handleSubmit(e)}>
+      <Form onSubmit={(e: FormEvent) => handleSubmit(e)}>
         <p>Vous allez supprimer la difficulté suivante : { item.level }</p>
         <ButtonsBox>
             <Button variant="outlined" onClick={handleClose}>
@@ -127,6 +128,6 @@ export const DeleteDifficultyContent = ({item, handleDelete, handleClose}: Delet
               Supprimer
             </Button>
           </ButtonsBox>
-      </form>
+      </Form>
     );
   };

@@ -1,5 +1,6 @@
 import { Button, TextField } from "@mui/material";
 import { FormEvent, useState } from "react";
+import { Form } from "src/components/Form";
 import { ButtonsBox } from "src/components/Modal";
 import { TableMethods } from "src/hooks/useTable";
 import { LitigationObject } from "src/models";
@@ -22,7 +23,7 @@ export const EditLitigationObjectContent = ({item, handleUpdate, handleClose}: E
     }
   
     return (
-      <form onSubmit={(e: FormEvent) => handleSubmit(e)}>
+      <Form onSubmit={(e: FormEvent) => handleSubmit(e)}>
           <TextField
           required
           id="litigationObject_label"
@@ -41,7 +42,7 @@ export const EditLitigationObjectContent = ({item, handleUpdate, handleClose}: E
               Editer
             </Button>
           </ButtonsBox>
-      </form>
+      </Form>
     );
   };
 
@@ -60,7 +61,7 @@ export const AddLitigationObjectContent = ({handleAdd, handleClose}: AddLitigati
     }
   
     return (
-      <form onSubmit={(e: FormEvent) => handleSubmit(e)}>
+      <Form onSubmit={(e: FormEvent) => handleSubmit(e)}>
           <TextField
           required
           id="litigationObject_label"
@@ -78,7 +79,7 @@ export const AddLitigationObjectContent = ({handleAdd, handleClose}: AddLitigati
               Ajouter
             </Button>
           </ButtonsBox>
-      </form>
+      </Form>
     );
   };
 
@@ -96,7 +97,7 @@ export const DeleteLitigationObjectContent = ({item, handleDelete, handleClose}:
     }
   
     return (
-      <form onSubmit={(e: FormEvent) => handleSubmit(e)}>
+      <Form onSubmit={(e: FormEvent) => handleSubmit(e)}>
         <p>Vous allez supprimer l'objet suivant : { item.label }</p>
         <ButtonsBox>
             <Button variant="outlined" onClick={handleClose}>
@@ -109,6 +110,6 @@ export const DeleteLitigationObjectContent = ({item, handleDelete, handleClose}:
               Supprimer
             </Button>
           </ButtonsBox>
-      </form>
+      </Form>
     );
   };
