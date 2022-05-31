@@ -78,8 +78,8 @@ const TagSettings = Loader(
 const RoleSettings = Loader(
   lazy(() => import('src/pages/AppsConfiguration/Settings/Roles'))
 );
-const SubscriptionSettings = Loader(
-  lazy(() => import('src/pages/AppsConfiguration/Settings/Subscriptions'))
+const PricingSettings = Loader(
+  lazy(() => import('src/pages/AppsConfiguration/Settings/Pricings'))
 );
 const StatusSettings = Loader(
   lazy(() => import('src/pages/AppsConfiguration/Settings/Statuses'))
@@ -271,7 +271,7 @@ const routes: PartialRouteObject[] = [
               },
               {
                 path: 'parametrage/abonnements',
-                element: <SubscriptionSettings />
+                element: <PricingSettings />
               },
               {
                 path: 'parametrage/status',
