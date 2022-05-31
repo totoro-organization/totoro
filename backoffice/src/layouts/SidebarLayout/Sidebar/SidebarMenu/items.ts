@@ -132,9 +132,9 @@ const menuItems: MenuItems[] = [
             link: '/app-reglages/parametrage/roles'
           },
           {
-            name: 'Abonnements',
+            name: 'Pricings',
             icon: CardMembershipIcon,
-            link: '/app-reglages/parametrage/abonnements'
+            link: '/app-reglages/parametrage/pricings'
           },
           {
             name: 'Statuts',
