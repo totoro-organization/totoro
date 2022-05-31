@@ -22,7 +22,7 @@ const WrapperBox = styled(Box)(
 
 function Tags() {
 
-  const { data: defaultTags, loading  } = useApi('/commons/tags');
+  const { data: defaultTags, loading  } = useApi(`/commons/${CommonsUriEnum.tags}`);
 
   const [addModalOpen, handleOpenAddModal, handleCloseAddModal] = useModal();
 
