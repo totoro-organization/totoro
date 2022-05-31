@@ -74,6 +74,10 @@ const PricingsTable: FC<PricingsTableProps> = ({
                 />
               </TableCell>
               <TableCell>Label</TableCell>
+              <TableCell>Tarif (€)</TableCell>
+              <TableCell>Durée</TableCell>
+              <TableCell>Nb comptes</TableCell>
+              <TableCell>Nb missions/mois</TableCell>
               <TableCell>Date de création</TableCell>
               <TableCell align="right">Statut</TableCell>
               <TableCell align="right">Actions</TableCell>
@@ -103,6 +107,50 @@ const PricingsTable: FC<PricingsTableProps> = ({
                       noWrap
                     >
                       { pricing.label }
+                    </Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Typography
+                      variant="body1"
+                      fontWeight="bold"
+                      color="text.primary"
+                      gutterBottom
+                      noWrap
+                    >
+                      { pricing.price }
+                    </Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Typography
+                      variant="body1"
+                      fontWeight="bold"
+                      color="text.primary"
+                      gutterBottom
+                      noWrap
+                    >
+                      { pricing.duration }
+                    </Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Typography
+                      variant="body1"
+                      fontWeight="bold"
+                      color="text.primary"
+                      gutterBottom
+                      noWrap
+                    >
+                      { pricing.nb_account }
+                    </Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Typography
+                      variant="body1"
+                      fontWeight="bold"
+                      color="text.primary"
+                      gutterBottom
+                      noWrap
+                    >
+                      { pricing.nb_jobs_by_month }
                     </Typography>
                   </TableCell>
                   <TableCell>
