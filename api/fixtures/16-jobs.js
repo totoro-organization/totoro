@@ -1,6 +1,6 @@
 module.exports = [
 	{
-		model: "Ads",
+		model: "Jobs",
 		keys: ["title"],
 		data: {
 			title: "Tournoi de football 14-18 ans",
@@ -12,14 +12,14 @@ module.exports = [
 			start_date: "2022-05-06 12:10:00",
 			end_date: "2022-08-06 23:00:00",
 			difficulty: {
-				level: 1
+				level: 1,
 			},
 			status: {
-				label: "actived"
+				label: "actived",
 			},
-            author: {
-                id: "f7f5bbf1-5af6-402e-a5ac-d3ec4cd6494e"
-            }
+			author: {
+				id: "f7f5bbf1-5af6-402e-a5ac-d3ec4cd6494e",
+			},
 		},
 	},
 ];

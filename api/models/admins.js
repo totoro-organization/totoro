@@ -1,8 +1,7 @@
-'use strict';
-const { v4: uuidv4 } = require('uuid');
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { v4: uuidv4 } = require("uuid");
+const { Model } = require("sequelize");
+
 module.exports = (sequelize, DataTypes) => {
   class Admins extends Model {
     /**
@@ -11,23 +10,39 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      models.Admins.hasMany(models.Logs, {as: 'logs', foreignKey: 'admin_id' });
-      models.Admins.belongsTo(models.Roles, {as: 'role', foreignKey: 'role_id' });
-      models.Admins.belongsTo(models.Status, {as: 'status', foreignKey: 'status_id' });
+      models.Admins.hasMany(models.Logs, {
+        as: "logs",
+        onDelete: "cascade",
+        foreignKey: "admin_id",
+      });
+      models.Admins.belongsTo(models.Roles, {
+        as: "role",
+        foreignKey: "role_id",
+      });
+      models.Admins.belongsTo(models.Status, {
+        as: "status",
+        foreignKey: "status_id",
+      });
     }
   }
-  Admins.init({
-    username: DataTypes.STRING,
-    firstname: DataTypes.STRING,
-    lastname: DataTypes.STRING,
-    email: DataTypes.STRING,
-    password: DataTypes.STRING
-  }, {
-    sequelize,
-    modelName: 'Admins',
-  });
+
+  Admins.init(
+    {
+      username: DataTypes.STRING,
+      firstname: DataTypes.STRING,
+      lastname: DataTypes.STRING,
+      email: DataTypes.STRING,
+      password: DataTypes.STRING,
+    },
+    {
+      sequelize,
+      modelName: "Admins",
+    }
+  );
+
   Admins.addHook("beforeSave", async (element) => {
-    return element.id = uuidv4();
-  } )
+    return (element.id = uuidv4());
+  });
+
   return Admins;
 };
