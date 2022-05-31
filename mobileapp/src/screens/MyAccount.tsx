@@ -11,9 +11,8 @@ import MainLayout from "../components/layouts/MainLayout";
 import { StackParamList } from "../navigation/StackNavigationParams";
 
 export default function MyAccount() {
-  const { user } = useAuth();
   const navigation = useNavigation<StackNavigationProp<StackParamList>>();
-  const { logout } = useAuth();
+  const { user, logout } = useAuth();
 
   console.log(user);
 
@@ -22,6 +21,7 @@ export default function MyAccount() {
 
     navigation.navigate("Explications");
   }
+
   return (
     <MainLayout>
       <Text>My Account</Text>
