@@ -1,4 +1,4 @@
-import createUsername from "./createUsername";
+import createUsername from "../createUsername";
 
 describe(createUsername.name, () => {
   it.each([
