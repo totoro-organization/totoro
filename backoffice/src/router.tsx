@@ -270,7 +270,7 @@ const routes: PartialRouteObject[] = [
                 element: <RoleSettings />
               },
               {
-                path: 'parametrage/abonnements',
+                path: 'parametrage/pricings',
                 element: <PricingSettings />
               },
               {
