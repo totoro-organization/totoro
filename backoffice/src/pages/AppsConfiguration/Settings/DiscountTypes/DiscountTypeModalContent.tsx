@@ -27,7 +27,7 @@ export const EditDiscountTypeContent = ({item, handleUpdate, handleClose}: EditD
           <TextField
           required
           id="discountType_name"
-          name="Label"
+          label="Label"
           defaultValue={item.name}
           onChange={(e) => setData({ name: e.target.value })}
           />
@@ -65,7 +65,7 @@ export const AddDiscountTypeContent = ({handleAdd, handleClose}: AddDiscountType
           <TextField
           required
           id="discountType_name"
-          name="Label"
+          label="Label"
           onChange={(e) => setData({ name: e.target.value })}
           />
         <ButtonsBox>
