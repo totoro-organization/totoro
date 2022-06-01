@@ -17,32 +17,32 @@ import {
 
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
-import { Tag } from 'src/models/tag';
+import { JobDifficulty } from 'src/models';
 import Modal from 'src/components/Modal';
 import StatusLabel from 'src/components/StatusLabel';
 import { useModal } from 'src/hooks/useModal';
-import { DeleteTagContent, EditTagContent } from './TagModalContent';
+import { DeleteDifficultyContent, EditDifficultyContent } from './DifficultyModalContent';
 
-interface TagsTableProps {
-  items: Tag[], 
+interface DifficultiesTableProps {
+  items: JobDifficulty[], 
   selectedItems: any,
   handleSelectAllItems: (event: ChangeEvent<HTMLInputElement>) => void, 
   handleSelectOneItem: (event: ChangeEvent<HTMLInputElement>, itemId: string) => void,
   selectedSomeItems: any,
   selectedAllItems: any,
-  handleDeleteTag: (id: string) => any,
-  handleUpdateTag: (id: string, data: object) => any
+  handleDeleteDifficulty: (id: string) => any,
+  handleUpdateDifficulty: (id: string, data: object) => any
 }
 
-const TagsTable: FC<TagsTableProps> = ({
-  items: tags, 
+const DifficultiesTable: FC<DifficultiesTableProps> = ({
+  items: difficulties, 
   selectedItems,
   handleSelectAllItems, 
   handleSelectOneItem,
   selectedSomeItems,
   selectedAllItems,
-  handleUpdateTag,
-  handleDeleteTag
+  handleUpdateDifficulty,
+  handleDeleteDifficulty
 }) => {
 
   const [editModalOpen, handleOpenEditModal, handleCloseEditModal, editModalItem] = useModal();
@@ -51,12 +51,12 @@ const TagsTable: FC<TagsTableProps> = ({
   const theme = useTheme();
 
   const handleUpdate = (id: string, data: object) => {
-    handleUpdateTag(id, data);
+    handleUpdateDifficulty(id, data);
     handleCloseEditModal();
   }
 
   const handleDelete = (id: string) => {
-    handleDeleteTag(id);
+    handleDeleteDifficulty(id);
     handleCloseDeleteModal();
   }
 
@@ -73,23 +73,24 @@ const TagsTable: FC<TagsTableProps> = ({
                   onChange={handleSelectAllItems}
                 />
               </TableCell>
-              <TableCell>Label</TableCell>
+              <TableCell>Niveau</TableCell>
+              <TableCell>Nb Tokens</TableCell>
               <TableCell>Date de création</TableCell>
               <TableCell align="right">Statut</TableCell>
               <TableCell align="right">Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            { tags.map((tag) => {
-              const isUserSelected = selectedItems.includes(tag.id);
+            { difficulties.map((difficulty) => {
+              const isUserSelected = selectedItems.includes(difficulty.id);
               return (
-                <TableRow hover key={tag.id} selected={isUserSelected}>
+                <TableRow hover key={difficulty.id} selected={isUserSelected}>
                   <TableCell padding="checkbox">
                     <Checkbox
                       color="primary"
                       checked={isUserSelected}
                       onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                        handleSelectOneItem(event, tag.id)
+                        handleSelectOneItem(event, difficulty.id)
                       }
                       value={isUserSelected}
                     />
@@ -102,7 +103,7 @@ const TagsTable: FC<TagsTableProps> = ({
                       gutterBottom
                       noWrap
                     >
-                      { tag.label }
+                      { difficulty.level }
                     </Typography>
                   </TableCell>
                   <TableCell>
@@ -113,16 +114,27 @@ const TagsTable: FC<TagsTableProps> = ({
                       gutterBottom
                       noWrap
                     >
-                      {tag.createdAt} 
+                      { difficulty.token}
+                    </Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Typography
+                      variant="body1"
+                      fontWeight="bold"
+                      color="text.primary"
+                      gutterBottom
+                      noWrap
+                    >
+                      {difficulty.createdAt} 
                     </Typography>
                   </TableCell>
                   <TableCell align="right">
-                    <StatusLabel status={tag.status.label} />
+                    <StatusLabel status={difficulty.status.label} />
                   </TableCell>
                   <TableCell align="right">
-                    <Tooltip title="Editer la mission" arrow>
+                    <Tooltip title="Editer la difficulté" arrow>
                         <IconButton
-                          onClick={() => handleOpenEditModal(tag)}
+                          onClick={() => handleOpenEditModal(difficulty)}
                           sx={{
                             '&:hover': {
                               background: theme.colors.primary.lighter
@@ -135,9 +147,9 @@ const TagsTable: FC<TagsTableProps> = ({
                           <EditTwoToneIcon fontSize="small" />
                         </IconButton>
                       </Tooltip>
-                    <Tooltip title="Supprimer le tag" arrow>
+                    <Tooltip title="Supprimer la difficulté" arrow>
                       <IconButton
-                      onClick={() => handleOpenDeleteModal(tag)}
+                      onClick={() => handleOpenDeleteModal(difficulty)}
                         sx={{
                           '&:hover': { background: theme.colors.error.lighter },
                           color: theme.palette.error.main
@@ -154,14 +166,14 @@ const TagsTable: FC<TagsTableProps> = ({
             })}
           </TableBody>
         </Table>
-        <Modal   open={editModalOpen} handleClose={handleCloseEditModal} title={`Editer le tag suivant : ${editModalItem?.label}`}>
-            <EditTagContent handleClose={handleCloseEditModal} handleUpdate={handleUpdate} item={editModalItem}/>
+        <Modal   open={editModalOpen} handleClose={handleCloseEditModal} title={`Editer le difficulty suivant : ${editModalItem?.label}`}>
+            <EditDifficultyContent handleClose={handleCloseEditModal} handleUpdate={handleUpdate} item={editModalItem}/>
         </Modal>
-        <Modal open={deleteModalOpen} handleClose={handleCloseDeleteModal} title={`Supprimer le tag suivant : ${deleteModalItem?.label}`}>
-            <DeleteTagContent handleClose={handleCloseDeleteModal} handleDelete={handleDelete} item={deleteModalItem} />
+        <Modal open={deleteModalOpen} handleClose={handleCloseDeleteModal} title={`Supprimer le difficulty suivant : ${deleteModalItem?.label}`}>
+            <DeleteDifficultyContent handleClose={handleCloseDeleteModal} handleDelete={handleDelete} item={deleteModalItem} />
         </Modal>
       </TableContainer>
   );
 };
 
-export default TagsTable;
+export default DifficultiesTable;

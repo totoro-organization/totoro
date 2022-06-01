@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { FC, ChangeEvent } from 'react';
 import { format } from 'date-fns';
 
@@ -17,32 +18,32 @@ import {
 
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
-import { Tag } from 'src/models/tag';
+import { DiscountType } from 'src/models';
 import Modal from 'src/components/Modal';
 import StatusLabel from 'src/components/StatusLabel';
 import { useModal } from 'src/hooks/useModal';
-import { DeleteTagContent, EditTagContent } from './TagModalContent';
+import { DeleteDiscountTypeContent, EditDiscountTypeContent } from './DiscountTypeModalContent';
 
-interface TagsTableProps {
-  items: Tag[], 
+interface DiscountTypesTableProps {
+  items: DiscountType[], 
   selectedItems: any,
   handleSelectAllItems: (event: ChangeEvent<HTMLInputElement>) => void, 
   handleSelectOneItem: (event: ChangeEvent<HTMLInputElement>, itemId: string) => void,
   selectedSomeItems: any,
   selectedAllItems: any,
-  handleDeleteTag: (id: string) => any,
-  handleUpdateTag: (id: string, data: object) => any
+  handleDeleteDiscountType: () => any,
+  handleUpdateDiscountType: () => any
 }
 
-const TagsTable: FC<TagsTableProps> = ({
-  items: tags, 
+const DiscountTypesTable: FC<DiscountTypesTableProps> = ({
+  items: discountTypes, 
   selectedItems,
   handleSelectAllItems, 
   handleSelectOneItem,
   selectedSomeItems,
   selectedAllItems,
-  handleUpdateTag,
-  handleDeleteTag
+  handleUpdateDiscountType,
+  handleDeleteDiscountType
 }) => {
 
   const [editModalOpen, handleOpenEditModal, handleCloseEditModal, editModalItem] = useModal();
@@ -50,13 +51,13 @@ const TagsTable: FC<TagsTableProps> = ({
   
   const theme = useTheme();
 
-  const handleUpdate = (id: string, data: object) => {
-    handleUpdateTag(id, data);
+  const handleUpdate = ({id, label}) => {
+    handleUpdateDiscountType({id, label});
     handleCloseEditModal();
   }
 
-  const handleDelete = (id: string) => {
-    handleDeleteTag(id);
+  const handleDelete = ({id}) => {
+    handleDeleteDiscountType(id);
     handleCloseDeleteModal();
   }
 
@@ -80,16 +81,16 @@ const TagsTable: FC<TagsTableProps> = ({
             </TableRow>
           </TableHead>
           <TableBody>
-            { tags.map((tag) => {
-              const isUserSelected = selectedItems.includes(tag.id);
+            { discountTypes.map((discountType) => {
+              const isUserSelected = selectedItems.includes(discountType.id);
               return (
-                <TableRow hover key={tag.id} selected={isUserSelected}>
+                <TableRow hover key={discountType.id} selected={isUserSelected}>
                   <TableCell padding="checkbox">
                     <Checkbox
                       color="primary"
                       checked={isUserSelected}
                       onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                        handleSelectOneItem(event, tag.id)
+                        handleSelectOneItem(event, discountType.id)
                       }
                       value={isUserSelected}
                     />
@@ -102,7 +103,7 @@ const TagsTable: FC<TagsTableProps> = ({
                       gutterBottom
                       noWrap
                     >
-                      { tag.label }
+                      { discountType.name }
                     </Typography>
                   </TableCell>
                   <TableCell>
@@ -113,16 +114,16 @@ const TagsTable: FC<TagsTableProps> = ({
                       gutterBottom
                       noWrap
                     >
-                      {tag.createdAt} 
+                      {discountType.createdAt} 
                     </Typography>
                   </TableCell>
                   <TableCell align="right">
-                    <StatusLabel status={tag.status.label} />
+                    <StatusLabel status={discountType.status.label} />
                   </TableCell>
                   <TableCell align="right">
-                    <Tooltip title="Editer la mission" arrow>
+                    <Tooltip title="Editer la promotion" arrow>
                         <IconButton
-                          onClick={() => handleOpenEditModal(tag)}
+                          onClick={() => handleOpenEditModal(discountType)}
                           sx={{
                             '&:hover': {
                               background: theme.colors.primary.lighter
@@ -135,9 +136,9 @@ const TagsTable: FC<TagsTableProps> = ({
                           <EditTwoToneIcon fontSize="small" />
                         </IconButton>
                       </Tooltip>
-                    <Tooltip title="Supprimer le tag" arrow>
+                    <Tooltip title="Supprimer la promotion" arrow>
                       <IconButton
-                      onClick={() => handleOpenDeleteModal(tag)}
+                      onClick={() => handleOpenDeleteModal(discountType)}
                         sx={{
                           '&:hover': { background: theme.colors.error.lighter },
                           color: theme.palette.error.main
@@ -154,14 +155,14 @@ const TagsTable: FC<TagsTableProps> = ({
             })}
           </TableBody>
         </Table>
-        <Modal   open={editModalOpen} handleClose={handleCloseEditModal} title={`Editer le tag suivant : ${editModalItem?.label}`}>
-            <EditTagContent handleClose={handleCloseEditModal} handleUpdate={handleUpdate} item={editModalItem}/>
+        <Modal   open={editModalOpen} handleClose={handleCloseEditModal} title={`Editer le type suivant : ${editModalItem?.name}`}>
+            <EditDiscountTypeContent handleClose={handleCloseEditModal} handleUpdate={handleUpdate} item={editModalItem}/>
         </Modal>
-        <Modal open={deleteModalOpen} handleClose={handleCloseDeleteModal} title={`Supprimer le tag suivant : ${deleteModalItem?.label}`}>
-            <DeleteTagContent handleClose={handleCloseDeleteModal} handleDelete={handleDelete} item={deleteModalItem} />
+        <Modal open={deleteModalOpen} handleClose={handleCloseDeleteModal} title={`Supprimer le type suivant : ${deleteModalItem?.name}`}>
+            <DeleteDiscountTypeContent handleClose={handleCloseDeleteModal} handleDelete={handleDelete} item={deleteModalItem} />
         </Modal>
       </TableContainer>
   );
 };
 
-export default TagsTable;
+export default DiscountTypesTable;

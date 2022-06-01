@@ -7,20 +7,20 @@ import {
 } from '@mui/material';
 
 import Footer from 'src/components/Footer';
-import Subscriptions from './Subscriptions';
+import Roles from './Roles';
 
 
-function SubscriptionSettings() {
+function RolesSettings() {
   
   return (
     <>
       <Helmet>
-        <title>Paramétrage des abonnements</title>
+        <title>Paramétrage des tags</title>
       </Helmet>
       <PageTitleWrapper>
         <PageTitle
-          heading="Abonnements"
-          subHeading="Modifier la liste des abonnements"
+          heading="Roles"
+          subHeading="Modifier la liste des roles"
         />
       </PageTitleWrapper>
       <Container maxWidth="lg">
@@ -32,7 +32,7 @@ function SubscriptionSettings() {
           spacing={3}
         >
           <Grid item xs={12}>
-            <Subscriptions/>
+            <Roles/>
           </Grid>
         </Grid>
       </Container>
@@ -41,4 +41,4 @@ function SubscriptionSettings() {
   );
 }
 
-export default SubscriptionSettings;
+export default RolesSettings;

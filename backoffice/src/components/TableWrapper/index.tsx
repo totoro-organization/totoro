@@ -12,7 +12,7 @@ import {
   CardHeader
 } from '@mui/material';
 
-import BulkActions from 'src/components/ManagementTable/BulkActions';
+import BulkActions from './BulkActions';
 import { StatusEnum } from 'src/models/status';
 
 interface TableWrapperProps {
@@ -51,6 +51,8 @@ const applyPagination = (
 ): any => {
   return items.slice(page * limit, page * limit + limit);
 };
+
+
 
 const TableWrapper: FC<TableWrapperProps> = ({ items, title = '', statusOptions, children }) => {
   const [selectedItems, setSelectedItems] = useState<string[]>([]);

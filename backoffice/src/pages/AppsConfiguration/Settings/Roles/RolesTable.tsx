@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { FC, ChangeEvent } from 'react';
 import { format } from 'date-fns';
 
@@ -17,32 +18,32 @@ import {
 
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
-import { Tag } from 'src/models/tag';
+import { Role } from 'src/models/role';
 import Modal from 'src/components/Modal';
 import StatusLabel from 'src/components/StatusLabel';
 import { useModal } from 'src/hooks/useModal';
-import { DeleteTagContent, EditTagContent } from './TagModalContent';
+import { DeleteRoleContent, EditRoleContent } from './RoleModalContent';
 
-interface TagsTableProps {
-  items: Tag[], 
+interface RolesTableProps {
+  items: Role[], 
   selectedItems: any,
   handleSelectAllItems: (event: ChangeEvent<HTMLInputElement>) => void, 
   handleSelectOneItem: (event: ChangeEvent<HTMLInputElement>, itemId: string) => void,
   selectedSomeItems: any,
   selectedAllItems: any,
-  handleDeleteTag: (id: string) => any,
-  handleUpdateTag: (id: string, data: object) => any
+  handleDeleteRole: () => any,
+  handleUpdateRole: () => any
 }
 
-const TagsTable: FC<TagsTableProps> = ({
-  items: tags, 
+const RolesTable: FC<RolesTableProps> = ({
+  items: roles, 
   selectedItems,
   handleSelectAllItems, 
   handleSelectOneItem,
   selectedSomeItems,
   selectedAllItems,
-  handleUpdateTag,
-  handleDeleteTag
+  handleUpdateRole,
+  handleDeleteRole
 }) => {
 
   const [editModalOpen, handleOpenEditModal, handleCloseEditModal, editModalItem] = useModal();
@@ -50,13 +51,13 @@ const TagsTable: FC<TagsTableProps> = ({
   
   const theme = useTheme();
 
-  const handleUpdate = (id: string, data: object) => {
-    handleUpdateTag(id, data);
+  const handleUpdate = ({id, label}) => {
+    handleUpdateRole({id, label});
     handleCloseEditModal();
   }
 
-  const handleDelete = (id: string) => {
-    handleDeleteTag(id);
+  const handleDelete = ({id}) => {
+    handleDeleteRole(id);
     handleCloseDeleteModal();
   }
 
@@ -80,16 +81,16 @@ const TagsTable: FC<TagsTableProps> = ({
             </TableRow>
           </TableHead>
           <TableBody>
-            { tags.map((tag) => {
-              const isUserSelected = selectedItems.includes(tag.id);
+            { roles.map((role) => {
+              const isUserSelected = selectedItems.includes(role.id);
               return (
-                <TableRow hover key={tag.id} selected={isUserSelected}>
+                <TableRow hover key={role.id} selected={isUserSelected}>
                   <TableCell padding="checkbox">
                     <Checkbox
                       color="primary"
                       checked={isUserSelected}
                       onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                        handleSelectOneItem(event, tag.id)
+                        handleSelectOneItem(event, role.id)
                       }
                       value={isUserSelected}
                     />
@@ -102,7 +103,7 @@ const TagsTable: FC<TagsTableProps> = ({
                       gutterBottom
                       noWrap
                     >
-                      { tag.label }
+                      { role.label }
                     </Typography>
                   </TableCell>
                   <TableCell>
@@ -113,16 +114,16 @@ const TagsTable: FC<TagsTableProps> = ({
                       gutterBottom
                       noWrap
                     >
-                      {tag.createdAt} 
+                      {role.createdAt} 
                     </Typography>
                   </TableCell>
                   <TableCell align="right">
-                    <StatusLabel status={tag.status.label} />
+                    <StatusLabel status={role.status.label} />
                   </TableCell>
                   <TableCell align="right">
-                    <Tooltip title="Editer la mission" arrow>
+                    <Tooltip title="Editer le role" arrow>
                         <IconButton
-                          onClick={() => handleOpenEditModal(tag)}
+                          onClick={() => handleOpenEditModal(role)}
                           sx={{
                             '&:hover': {
                               background: theme.colors.primary.lighter
@@ -135,9 +136,9 @@ const TagsTable: FC<TagsTableProps> = ({
                           <EditTwoToneIcon fontSize="small" />
                         </IconButton>
                       </Tooltip>
-                    <Tooltip title="Supprimer le tag" arrow>
+                    <Tooltip title="Supprimer le role" arrow>
                       <IconButton
-                      onClick={() => handleOpenDeleteModal(tag)}
+                      onClick={() => handleOpenDeleteModal(role)}
                         sx={{
                           '&:hover': { background: theme.colors.error.lighter },
                           color: theme.palette.error.main
@@ -154,14 +155,14 @@ const TagsTable: FC<TagsTableProps> = ({
             })}
           </TableBody>
         </Table>
-        <Modal   open={editModalOpen} handleClose={handleCloseEditModal} title={`Editer le tag suivant : ${editModalItem?.label}`}>
-            <EditTagContent handleClose={handleCloseEditModal} handleUpdate={handleUpdate} item={editModalItem}/>
+        <Modal   open={editModalOpen} handleClose={handleCloseEditModal} title={`Editer le role suivant : ${editModalItem?.label}`}>
+            <EditRoleContent handleClose={handleCloseEditModal} handleUpdate={handleUpdate} item={editModalItem}/>
         </Modal>
-        <Modal open={deleteModalOpen} handleClose={handleCloseDeleteModal} title={`Supprimer le tag suivant : ${deleteModalItem?.label}`}>
-            <DeleteTagContent handleClose={handleCloseDeleteModal} handleDelete={handleDelete} item={deleteModalItem} />
+        <Modal open={deleteModalOpen} handleClose={handleCloseDeleteModal} title={`Supprimer le role suivant : ${deleteModalItem?.label}`}>
+            <DeleteRoleContent handleClose={handleCloseDeleteModal} handleDelete={handleDelete} item={deleteModalItem} />
         </Modal>
       </TableContainer>
   );
 };
 
-export default TagsTable;
+export default RolesTable;
