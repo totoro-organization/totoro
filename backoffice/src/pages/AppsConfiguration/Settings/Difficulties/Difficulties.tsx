@@ -47,7 +47,7 @@ function Difficultys() {
   return (
     <WrapperBox>
       <Button onClick={handleOpenAddModal} size='large' startIcon={<AddCircleOutlineIcon/>} sx={{ alignSelf: 'flex-end'}}  variant="contained">
-        Ajouter un difficulty
+        Ajouter une difficulté
       </Button>
       {
         loading ? <SuspenseLoader/> : 

@@ -103,7 +103,7 @@ const DiscountTypesTable: FC<DiscountTypesTableProps> = ({
                       gutterBottom
                       noWrap
                     >
-                      { discountType.label }
+                      { discountType.name }
                     </Typography>
                   </TableCell>
                   <TableCell>
