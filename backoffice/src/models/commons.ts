@@ -6,13 +6,13 @@ import { Role } from "./role";
 import { Status } from "./status";
 import { Tag } from "./tag";
 
-export enum CommonsEnum {
+export enum CommonsUriEnum {
     status = "status",
     roles = "roles",
     tags = "tags",
     difficulties = "difficulties",
     litigationObjects = "litigation-objects",
-    discountType = "types-discounts",
+    discountTypes = "types-discounts",
     appearances = "appearances",
     pricings = "pricings"
 }

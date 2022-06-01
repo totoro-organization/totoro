@@ -1,17 +1,16 @@
-// @ts-nocheck
 import { Box, Button } from '@mui/material';
 import TagsTable from './TagsTable';
 import { useApi } from 'src/hooks/useApi';
 import SuspenseLoader from 'src/components/SuspenseLoader';
 import TableWrapper from 'src/components/TableWrapper';
-import { Tag } from 'src/models';
 import { styled } from '@mui/system';
 import Modal from "src/components/Modal";
 import { StatusEnum } from 'src/models/status';
 import { useTable } from 'src/hooks/useTable';
 import { useModal } from 'src/hooks/useModal';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import { CommonsEnum } from 'src/models/commons';
+import { CommonsUriEnum } from 'src/models/commons';
+import { AddTagContent } from './TagModalContent';
 
 const WrapperBox = styled(Box)(
   ({ theme }) => `
@@ -23,7 +22,7 @@ const WrapperBox = styled(Box)(
 
 function Tags() {
 
-  const { data: defaultTags, loading  } = useApi('/commons/tags');
+  const { data: defaultTags, loading  } = useApi(`/commons/${CommonsUriEnum.tags}`);
 
   const [addModalOpen, handleOpenAddModal, handleCloseAddModal] = useModal();
 
@@ -32,7 +31,7 @@ function Tags() {
     handleDeleteItem,
     handleUpdateItem,
     items: tags
-  } = useTable({ model: CommonsEnum.tags, defaultItems: defaultTags?.data, handleCloseModal: handleCloseAddModal })
+  } = useTable({ uri: CommonsUriEnum.tags, defaultItems: defaultTags?.data, handleCloseModal: handleCloseAddModal })
 
   const statusOptions = [
     {
@@ -47,16 +46,19 @@ function Tags() {
 
   return (
     <WrapperBox>
-      <Button size='large' startIcon={<AddCircleOutlineIcon/>} sx={{ alignSelf: 'flex-end'}} onClick={handleOpenAddModal} variant="contained">
+      <Button onClick={handleOpenAddModal} size='large' startIcon={<AddCircleOutlineIcon/>} sx={{ alignSelf: 'flex-end'}}  variant="contained">
         Ajouter un tag
       </Button>
       {
         loading ? <SuspenseLoader/> : 
         <TableWrapper statusOptions={statusOptions} items={tags}>
+          {/* @ts-ignore */}
             <TagsTable handleDeleteTag={handleDeleteItem} handleUpdateTag={handleUpdateItem} />
         </TableWrapper>
       }
-      <Modal callback={handleAddItem} open={addModalOpen} handleClose={handleCloseAddModal} type="add" title="Ajouter un tag"/>
+      <Modal open={addModalOpen} handleClose={handleCloseAddModal} title="Ajouter un tag">
+        <AddTagContent handleClose={handleCloseAddModal} handleAdd={handleAddItem}/>
+      </Modal>
     </WrapperBox>
   );
 }

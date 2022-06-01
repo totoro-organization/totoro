@@ -17,32 +17,32 @@ import {
 
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
-import { Tag } from 'src/models/tag';
+import { Pricing } from 'src/models/pricing';
 import Modal from 'src/components/Modal';
 import StatusLabel from 'src/components/StatusLabel';
 import { useModal } from 'src/hooks/useModal';
-import { DeleteTagContent, EditTagContent } from './TagModalContent';
+import { DeletePricingContent, EditPricingContent } from './PricingModalContent';
 
-interface TagsTableProps {
-  items: Tag[], 
+interface PricingsTableProps {
+  items: Pricing[], 
   selectedItems: any,
   handleSelectAllItems: (event: ChangeEvent<HTMLInputElement>) => void, 
   handleSelectOneItem: (event: ChangeEvent<HTMLInputElement>, itemId: string) => void,
   selectedSomeItems: any,
   selectedAllItems: any,
-  handleDeleteTag: (id: string) => any,
-  handleUpdateTag: (id: string, data: object) => any
+  handleDeletePricing: (id: string) => any,
+  handleUpdatePricing: (id: string, data: object) => any
 }
 
-const TagsTable: FC<TagsTableProps> = ({
-  items: tags, 
+const PricingsTable: FC<PricingsTableProps> = ({
+  items: pricings, 
   selectedItems,
   handleSelectAllItems, 
   handleSelectOneItem,
   selectedSomeItems,
   selectedAllItems,
-  handleUpdateTag,
-  handleDeleteTag
+  handleUpdatePricing,
+  handleDeletePricing
 }) => {
 
   const [editModalOpen, handleOpenEditModal, handleCloseEditModal, editModalItem] = useModal();
@@ -51,12 +51,12 @@ const TagsTable: FC<TagsTableProps> = ({
   const theme = useTheme();
 
   const handleUpdate = (id: string, data: object) => {
-    handleUpdateTag(id, data);
+    handleUpdatePricing(id, data);
     handleCloseEditModal();
   }
 
   const handleDelete = (id: string) => {
-    handleDeleteTag(id);
+    handleDeletePricing(id);
     handleCloseDeleteModal();
   }
 
@@ -74,22 +74,26 @@ const TagsTable: FC<TagsTableProps> = ({
                 />
               </TableCell>
               <TableCell>Label</TableCell>
+              <TableCell>Tarif (€)</TableCell>
+              <TableCell>Durée</TableCell>
+              <TableCell>Nb comptes</TableCell>
+              <TableCell>Nb missions/mois</TableCell>
               <TableCell>Date de création</TableCell>
               <TableCell align="right">Statut</TableCell>
               <TableCell align="right">Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            { tags.map((tag) => {
-              const isUserSelected = selectedItems.includes(tag.id);
+            { pricings.map((pricing) => {
+              const isUserSelected = selectedItems.includes(pricing.id);
               return (
-                <TableRow hover key={tag.id} selected={isUserSelected}>
+                <TableRow hover key={pricing.id} selected={isUserSelected}>
                   <TableCell padding="checkbox">
                     <Checkbox
                       color="primary"
                       checked={isUserSelected}
                       onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                        handleSelectOneItem(event, tag.id)
+                        handleSelectOneItem(event, pricing.id)
                       }
                       value={isUserSelected}
                     />
@@ -102,7 +106,7 @@ const TagsTable: FC<TagsTableProps> = ({
                       gutterBottom
                       noWrap
                     >
-                      { tag.label }
+                      { pricing.label }
                     </Typography>
                   </TableCell>
                   <TableCell>
@@ -113,16 +117,60 @@ const TagsTable: FC<TagsTableProps> = ({
                       gutterBottom
                       noWrap
                     >
-                      {tag.createdAt} 
+                      { pricing.price }
+                    </Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Typography
+                      variant="body1"
+                      fontWeight="bold"
+                      color="text.primary"
+                      gutterBottom
+                      noWrap
+                    >
+                      { pricing.duration }
+                    </Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Typography
+                      variant="body1"
+                      fontWeight="bold"
+                      color="text.primary"
+                      gutterBottom
+                      noWrap
+                    >
+                      { pricing.nb_account }
+                    </Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Typography
+                      variant="body1"
+                      fontWeight="bold"
+                      color="text.primary"
+                      gutterBottom
+                      noWrap
+                    >
+                      { pricing.nb_jobs_by_month }
+                    </Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Typography
+                      variant="body1"
+                      fontWeight="bold"
+                      color="text.primary"
+                      gutterBottom
+                      noWrap
+                    >
+                      {pricing.createdAt} 
                     </Typography>
                   </TableCell>
                   <TableCell align="right">
-                    <StatusLabel status={tag.status.label} />
+                    <StatusLabel status={pricing.status.label} />
                   </TableCell>
                   <TableCell align="right">
                     <Tooltip title="Editer la mission" arrow>
                         <IconButton
-                          onClick={() => handleOpenEditModal(tag)}
+                          onClick={() => handleOpenEditModal(pricing)}
                           sx={{
                             '&:hover': {
                               background: theme.colors.primary.lighter
@@ -135,9 +183,9 @@ const TagsTable: FC<TagsTableProps> = ({
                           <EditTwoToneIcon fontSize="small" />
                         </IconButton>
                       </Tooltip>
-                    <Tooltip title="Supprimer le tag" arrow>
+                    <Tooltip title="Supprimer le pricing" arrow>
                       <IconButton
-                      onClick={() => handleOpenDeleteModal(tag)}
+                      onClick={() => handleOpenDeleteModal(pricing)}
                         sx={{
                           '&:hover': { background: theme.colors.error.lighter },
                           color: theme.palette.error.main
@@ -154,14 +202,14 @@ const TagsTable: FC<TagsTableProps> = ({
             })}
           </TableBody>
         </Table>
-        <Modal   open={editModalOpen} handleClose={handleCloseEditModal} title={`Editer le tag suivant : ${editModalItem?.label}`}>
-            <EditTagContent handleClose={handleCloseEditModal} handleUpdate={handleUpdate} item={editModalItem}/>
+        <Modal   open={editModalOpen} handleClose={handleCloseEditModal} title={`Editer le pricing suivant : ${editModalItem?.label}`}>
+            <EditPricingContent handleClose={handleCloseEditModal} handleUpdate={handleUpdate} item={editModalItem}/>
         </Modal>
-        <Modal open={deleteModalOpen} handleClose={handleCloseDeleteModal} title={`Supprimer le tag suivant : ${deleteModalItem?.label}`}>
-            <DeleteTagContent handleClose={handleCloseDeleteModal} handleDelete={handleDelete} item={deleteModalItem} />
+        <Modal open={deleteModalOpen} handleClose={handleCloseDeleteModal} title={`Supprimer le pricing suivant : ${deleteModalItem?.label}`}>
+            <DeletePricingContent handleClose={handleCloseDeleteModal} handleDelete={handleDelete} item={deleteModalItem} />
         </Modal>
       </TableContainer>
   );
 };
 
-export default TagsTable;
+export default PricingsTable;

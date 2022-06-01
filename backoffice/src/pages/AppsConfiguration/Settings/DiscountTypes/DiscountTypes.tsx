@@ -1,10 +1,8 @@
-// @ts-nocheck
 import { Box, Button } from '@mui/material';
-import LitigationObjectsTable from './LitigationObjectsTable';
+import DiscountTypesTable from './DiscountTypesTable';
 import { useApi } from 'src/hooks/useApi';
 import SuspenseLoader from 'src/components/SuspenseLoader';
 import TableWrapper from 'src/components/TableWrapper';
-import { LitigationObject } from 'src/models/litigationObject';
 import { styled } from '@mui/system';
 import Modal from "src/components/Modal";
 import { StatusEnum } from 'src/models/status';
@@ -12,7 +10,7 @@ import { useTable } from 'src/hooks/useTable';
 import { useModal } from 'src/hooks/useModal';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { CommonsUriEnum } from 'src/models/commons';
-import { AddLitigationObjectContent } from './LitigationObjectModalContent';
+import { AddDiscountTypeContent } from './DiscountTypeModalContent';
 
 const WrapperBox = styled(Box)(
   ({ theme }) => `
@@ -22,9 +20,9 @@ const WrapperBox = styled(Box)(
 `
 );
 
-function LitigationObjects() {
+function DiscountTypes() {
 
-  const { data: defaultLitigationObjects, loading  } = useApi('/commons/litigation-objects');
+  const { data: defaultDiscountTypes, loading  } = useApi(`/commons/${CommonsUriEnum.discountTypes}`);
 
   const [addModalOpen, handleOpenAddModal, handleCloseAddModal] = useModal();
 
@@ -32,8 +30,8 @@ function LitigationObjects() {
     handleAddItem,
     handleDeleteItem,
     handleUpdateItem,
-    items: litigationObjects
-  } = useTable({ uri: CommonsUriEnum.litigationObjects, defaultItems: defaultLitigationObjects?.data, handleCloseModal: handleCloseAddModal })
+    items: discountTypes
+  } = useTable({ uri: CommonsUriEnum.discountTypes, defaultItems: defaultDiscountTypes?.data, handleCloseModal: handleCloseAddModal })
 
   const statusOptions = [
     {
@@ -49,19 +47,20 @@ function LitigationObjects() {
   return (
     <WrapperBox>
       <Button size='large' startIcon={<AddCircleOutlineIcon/>} sx={{ alignSelf: 'flex-end'}} onClick={handleOpenAddModal} variant="contained">
-        Ajouter un objet de litige
+        Ajouter un type de promotion
       </Button>
       {
         loading ? <SuspenseLoader/> : 
-        <TableWrapper statusOptions={statusOptions} items={litigationObjects}>
-            <LitigationObjectsTable handleDeleteLitigationObject={handleDeleteItem} handleUpdateLitigationObject={handleUpdateItem} />
+        <TableWrapper statusOptions={statusOptions} items={discountTypes}>
+          {/* @ts-ignore */}
+            <DiscountTypesTable handleDeleteDiscountType={handleDeleteItem} handleUpdateDiscountType={handleUpdateItem} />
         </TableWrapper>
       }
-      <Modal open={addModalOpen} handleClose={handleCloseAddModal} title="Ajouter un objet">
-        <AddLitigationObjectContent handleClose={handleCloseAddModal} handleAdd={handleAddItem}/>
+      <Modal open={addModalOpen} handleClose={handleCloseAddModal} title="Ajouter un type">
+        <AddDiscountTypeContent handleClose={handleCloseAddModal} handleAdd={handleAddItem}/>
       </Modal>
     </WrapperBox>
   );
 }
 
-export default LitigationObjects;
+export default DiscountTypes;
