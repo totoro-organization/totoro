@@ -1,6 +1,8 @@
 .env.local
 .env
 docker-compose.override.yml
+docker-compose.yml
+.gitignore
 node_modules
 database
 
