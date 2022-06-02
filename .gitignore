@@ -1,6 +1,7 @@
 .env.local
 .env
 docker-compose.override.yml
+docker-compose.yml
 node_modules
 database
 ui-backoffice/node_modules
