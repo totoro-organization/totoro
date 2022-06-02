@@ -1,4 +1,3 @@
-import { Log } from "./Log";
 import { Role } from "./role";
 import { Status } from "./status";
 
@@ -12,7 +11,6 @@ export interface Admin {
     lastname: string,
     username: string,
     email: string,
-    logs: Log[],
     createdAt: string,
     updatedAt: string
 }
