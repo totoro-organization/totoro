@@ -21,6 +21,8 @@ export default function Header({ title }: HeaderProps) {
 
       {title && <Text>{title}</Text>}
 
+      {/* TODO: Add scanner button here. */}
+
       <Button size="sm" color="primary" variant="outline">
         {/* TODO: Add real data. */}
         {getLocaleCurrencyNotation(9328)}
