@@ -3,7 +3,7 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import React from "react";
 import { Card } from "../components/atoms/Card";
 import { Text } from "../components/atoms/Text";
-import GlobalLayout from "../components/layouts/SimpleLayout";
+import GlobalLayout from "../components/layouts/GlobalLayout";
 import { StackParamList } from "../navigation/StackNavigationParams";
 
 // TODO: Replace me to the real data with api.

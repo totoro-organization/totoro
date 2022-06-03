@@ -15,11 +15,9 @@ export default function GlobalLayout({
   pageTitle,
   withBackButton,
 }: GlobalLayoutProps) {
-  const { user } = useAuth();
-
   return (
     <Container>
-      <Header title={pageTitle} user={user} />
+      <Header title={pageTitle} />
 
       {withBackButton && (
         <>
