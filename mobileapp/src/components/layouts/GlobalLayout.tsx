@@ -7,6 +7,7 @@ import Header from "./subComponents/Header";
 export type GlobalLayoutProps = PropsWithChildren<{
   withBackButton?: boolean;
   withHeader?: boolean;
+  withScanner?: boolean;
   pageTitle?: string;
   fullBanner?: ReactNode;
 }>;
@@ -17,10 +18,11 @@ export default function GlobalLayout({
   fullBanner,
   withBackButton,
   withHeader = true,
+  withScanner = true,
 }: GlobalLayoutProps) {
   return (
     <Container $withHeader={withHeader}>
-      {withHeader && <Header title={pageTitle} />}
+      {withHeader && <Header title={pageTitle} withScanner={withScanner} />}
 
       {/* TODO: Add back button on Header component. */}
       {withBackButton && (
