@@ -14,10 +14,8 @@ export default function MyAccount() {
   const navigation = useNavigation<StackNavigationProp<StackParamList>>();
   const { user, logout } = useAuth();
 
-  console.log(user);
-
   async function handleLogout() {
-    await logout?.();
+    await logout();
 
     navigation.navigate("Explications");
   }

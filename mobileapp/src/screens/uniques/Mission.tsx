@@ -9,7 +9,7 @@ import { FAKE_MISSIONS } from "../Missions";
 import Spacer from "../../components/atoms/Spacer";
 import Heart from "../../assets/icons/Heart";
 import Box from "../../components/atoms/Box";
-import { ImageBackground } from "react-native";
+import { ImageBackground, ScrollView } from "react-native";
 import MissionDetail from "../../components/molecules/MissionDetail";
 import Location from "../../assets/icons/Location";
 import Calendar from "../../assets/icons/Calendar";
@@ -27,108 +27,109 @@ export default function Mission({
   //   const { mission } = useMission(missionId);
 
   return (
-    <MainLayout>
+    <ScrollView>
       <StyledImage source={{ uri: mission.banner }} resizeMode="cover" />
 
-      {/* TODO: Add Tag atom.*/}
-      <Text color="info">{mission.tags[0]}</Text>
+      <MainLayout>
+        {/* TODO: Add Tag atom.*/}
+        <Text color="info">{mission.tags[0]}</Text>
 
-      <Spacer axis="vertical" size={1} />
+        <Spacer axis="vertical" size={1} />
 
-      <Heading variant="h1" weight="regular">
-        {mission.title}
-      </Heading>
+        <Heading variant="h1" weight="regular">
+          {mission.title}
+        </Heading>
 
-      <Spacer axis="vertical" size={0.5} />
+        <Spacer axis="vertical" size={0.5} />
 
-      <Text color="grey">
-        <TextLight>Organisé par</TextLight>&nbsp;
-        <Link
-          to={{
-            screen: "Profile",
-            params: { id: { missionId }, type: "organization" },
-          }}
-        >
-          {mission.organization}
-        </Link>
-      </Text>
+        <Text color="grey">
+          <TextLight>Organisé par</TextLight>&nbsp;
+          <Link
+            to={{
+              screen: "Profile",
+              params: { id: { missionId }, type: "organization" },
+            }}
+          >
+            {mission.organization}
+          </Link>
+        </Text>
 
-      <Spacer axis="vertical" size={2} />
+        <Spacer axis="vertical" size={2} />
 
-      <Box alignItems="center">
-        <Button size="sm" color="black" Icon={<Heart color="white" />}>
-          Sauvegarder
-        </Button>
+        <Box alignItems="center">
+          <Button size="sm" color="black" Icon={<Heart color="white" />}>
+            Sauvegarder
+          </Button>
 
-        <Spacer axis="horizontal" size={0.75} />
+          <Spacer axis="horizontal" size={0.75} />
 
-        <TextLight size="sm">
-          {mission.interestedParticipants} personnes intéressé.e.s
-        </TextLight>
-      </Box>
+          <TextLight size="sm">
+            {mission.interestedParticipants} personnes intéressé.e.s
+          </TextLight>
+        </Box>
 
-      <Spacer axis="vertical" size={3} />
+        <Spacer axis="vertical" size={3} />
 
-      <MissionDetail
-        Icon={<Location size={24} />}
-        title={mission.location}
-        text="21 bis rue du Progrès"
-      />
+        <MissionDetail
+          Icon={<Location size={24} />}
+          title={mission.location}
+          text="21 bis rue du Progrès"
+        />
 
-      <Spacer axis="vertical" size={0.5} />
+        <Spacer axis="vertical" size={0.5} />
 
-      <MissionDetail
-        Icon={<Calendar size={24} />}
-        title="20 Juin 2022"
-        text="10h00 à 15h30"
-      />
+        <MissionDetail
+          Icon={<Calendar size={24} />}
+          title="20 Juin 2022"
+          text="10h00 à 15h30"
+        />
 
-      <HeadingSection>Description</HeadingSection>
-      <Text color="grey">{mission.description}</Text>
+        <HeadingSection>Description</HeadingSection>
+        <Text color="grey">{mission.description}</Text>
 
-      <HeadingSection>Organisé par</HeadingSection>
-      <Box justifyContent="space-between" alignItems="center">
-        <Link
-          to={{
-            screen: "Profile",
-            params: { id: { missionId }, type: "organization" },
-          }}
-        >
-          <Box alignItems="center">
-            <ImageBackground
-              source={{ uri: mission.logo }}
-              style={{ width: 80, height: 40 }}
-              resizeMode="contain"
-            />
+        <HeadingSection>Organisé par</HeadingSection>
+        <Box justifyContent="space-between" alignItems="center">
+          <Link
+            to={{
+              screen: "Profile",
+              params: { id: { missionId }, type: "organization" },
+            }}
+          >
+            <Box alignItems="center">
+              <ImageBackground
+                source={{ uri: mission.logo }}
+                style={{ width: 80, height: 40 }}
+                resizeMode="contain"
+              />
 
-            <Spacer axis="horizontal" size={1} />
+              <Spacer axis="horizontal" size={1} />
 
-            <Box flexDirection="column">
-              <Text>{mission.organization}</Text>
-              <Text color="grey">{mission.location}</Text>
+              <Box flexDirection="column">
+                <Text>{mission.organization}</Text>
+                <Text color="grey">{mission.location}</Text>
+              </Box>
             </Box>
-          </Box>
-        </Link>
+          </Link>
 
-        <Button size="sm" color="black">
-          Suivre
-        </Button>
-      </Box>
+          <Button size="sm" color="black">
+            Suivre
+          </Button>
+        </Box>
 
-      <Spacer axis="vertical" size={4} />
+        <Spacer axis="vertical" size={4} />
 
-      {/* FIXME: Add fixed position. */}
-      <FixedView>
-        <Button>Je participe !</Button>
-      </FixedView>
-    </MainLayout>
+        {/* FIXME: Add fixed position. */}
+        <FixedView>
+          <Button>Je participe !</Button>
+        </FixedView>
+      </MainLayout>
+    </ScrollView>
   );
 }
 
 const StyledImage = styled.ImageBackground`
   width: 100%;
-  height: 140px;
-  margin-bottom: ${({ theme }) => theme.spacing[6]};
+  height: 160px;
 `;
 
 const TextLight = styled(Text)`
