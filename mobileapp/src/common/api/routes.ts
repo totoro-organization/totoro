@@ -5,4 +5,6 @@ export const API_ROUTES = {
   AUTH_LOGIN: "/auth/login", // POST
   AUTH_REGISTER: "/auth/signup", // POST
   AUTH_USER_CONNECTED: "/auth/connected", // GET
+
+  GET_USER_FAVORITES: (userId: string) => `/users/${userId}/favorites`,
 } as const;
