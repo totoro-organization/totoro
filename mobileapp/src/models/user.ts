@@ -15,7 +15,7 @@ export interface User {
   latitude?: any; // REMOVE ME => see with backend guys
   longitude?: any; // REMOVE ME => see with backend guys
   bio?: string;
-  total_token?: number;
+  total_token: number;
   birthday?: any;
   avatar?: string;
   status?: UserStatus;

@@ -4,15 +4,16 @@ import React from "react";
 import Button from "../components/atoms/Button";
 import Spacer from "../components/atoms/Spacer";
 import { Heading } from "../components/atoms/Text";
-import MainLayout from "../components/layouts/MainLayout";
+import SimpleLayout from "../components/layouts/SimpleLayout";
 import LoginForm from "../components/organisms/LoginForm/LoginForm";
 import { AuthParamList } from "../navigation/StackNavigationParams";
 
+// TODO: Add new layout
 export default function Login() {
   const navigation = useNavigation<StackNavigationProp<AuthParamList>>();
 
   return (
-    <MainLayout withBackButton>
+    <SimpleLayout>
       <Heading variant="h1">Connexion&nbsp;👋</Heading>
 
       <Spacer axis="vertical" size={3} />
@@ -28,6 +29,6 @@ export default function Login() {
       >
         Pas de compte ? S’inscrire
       </Button>
-    </MainLayout>
+    </SimpleLayout>
   );
 }

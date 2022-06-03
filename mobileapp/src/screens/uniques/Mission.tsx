@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components/native";
 import { Heading, Text } from "../../components/atoms/Text";
-import MainLayout from "../../components/layouts/MainLayout";
+import MainLayout from "../../components/layouts/SimpleLayout";
 import { StackScreenProps } from "@react-navigation/stack";
 import { StackParamList } from "../../navigation/StackNavigationParams";
 import Button from "../../components/atoms/Button";
