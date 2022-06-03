@@ -25,7 +25,7 @@ export default function Scanner() {
   }
 
   return (
-    <GlobalLayout pageTitle="Scanner">
+    <GlobalLayout pageTitle="Scanner" withScanner={false}>
       {hasPermission === null && (
         <Text>Dans l'attente de l'autorisation de la caméra.</Text>
       )}

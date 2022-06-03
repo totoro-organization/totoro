@@ -15,9 +15,10 @@ import { AppParamList } from "../../../navigation/StackNavigationParams";
 
 type HeaderProps = {
   title?: string;
+  withScanner?: boolean;
 };
 
-export default function Header({ title }: HeaderProps) {
+export default function Header({ title, withScanner }: HeaderProps) {
   const navigation = useNavigation<StackNavigationProp<AppParamList>>();
 
   return (
@@ -31,11 +32,15 @@ export default function Header({ title }: HeaderProps) {
       {title && <Text size="xl">{title}</Text>}
 
       <Box alignItems="center">
-        <Pressable onPress={() => navigation.navigate("Scanner")}>
-          <Scanner size={28} />
-        </Pressable>
+        {withScanner && (
+          <>
+            <Pressable onPress={() => navigation.navigate("Scanner")}>
+              <Scanner size={28} />
+            </Pressable>
 
-        <Spacer axis="horizontal" size={1} />
+            <Spacer axis="horizontal" size={1} />
+          </>
+        )}
 
         <Button size="sm" color="primary" variant="outline">
           {/* TODO: Add real data. */}
