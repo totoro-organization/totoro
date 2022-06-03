@@ -17,6 +17,7 @@ export type AppParamList = {
   Boutique: undefined;
   Profil: undefined;
   Messagerie: undefined;
+  Scanner: undefined;
 };
 
 export type BottomTabParamList = {
