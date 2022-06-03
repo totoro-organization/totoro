@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components/native";
 import { Heading, Text } from "../../components/atoms/Text";
-import MainLayout from "../../components/layouts/MainLayout";
+import GlobalLayout from "../../components/layouts/GlobalLayout";
 import { StackScreenProps } from "@react-navigation/stack";
 import { StackParamList } from "../../navigation/StackNavigationParams";
 import Button from "../../components/atoms/Button";
@@ -9,7 +9,7 @@ import { FAKE_MISSIONS } from "../Missions";
 import Spacer from "../../components/atoms/Spacer";
 import Heart from "../../assets/icons/Heart";
 import Box from "../../components/atoms/Box";
-import { ImageBackground } from "react-native";
+import { ImageBackground, ScrollView } from "react-native";
 import MissionDetail from "../../components/molecules/MissionDetail";
 import Location from "../../assets/icons/Location";
 import Calendar from "../../assets/icons/Calendar";
@@ -27,9 +27,12 @@ export default function Mission({
   //   const { mission } = useMission(missionId);
 
   return (
-    <MainLayout>
-      <StyledImage source={{ uri: mission.banner }} resizeMode="cover" />
-
+    <GlobalLayout
+      withHeader={false}
+      fullBanner={
+        <StyledImage source={{ uri: mission.banner }} resizeMode="cover" />
+      }
+    >
       {/* TODO: Add Tag atom.*/}
       <Text color="info">{mission.tags[0]}</Text>
 
@@ -121,14 +124,13 @@ export default function Mission({
       <FixedView>
         <Button>Je participe !</Button>
       </FixedView>
-    </MainLayout>
+    </GlobalLayout>
   );
 }
 
 const StyledImage = styled.ImageBackground`
   width: 100%;
-  height: 140px;
-  margin-bottom: ${({ theme }) => theme.spacing[6]};
+  height: 160px;
 `;
 
 const TextLight = styled(Text)`

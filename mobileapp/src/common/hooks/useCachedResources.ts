@@ -16,6 +16,7 @@ export function useCachedResources(): boolean {
           "Outfit-Regular": require("../../assets/fonts/Outfit-Regular.ttf"),
           "Outfit-Medium": require("../../assets/fonts/Outfit-Medium.ttf"),
           "Outfit-SemiBold": require("../../assets/fonts/Outfit-SemiBold.ttf"),
+          "Outfit-ExtraBold": require("../../assets/fonts/Outfit-ExtraBold.ttf"),
         });
       } catch (loadCachedResourcesError) {
         console.error(loadCachedResourcesError);

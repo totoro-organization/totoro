@@ -11,6 +11,7 @@ import BottomTabNavigator from "./BottomTabNavigator";
 
 const RootStack = createStackNavigator();
 
+// TODO: Add Launching screen is `isLoading` on useAuth is true?
 export default function RootStackNavigator() {
   const { user } = useAuth();
 
@@ -19,16 +20,24 @@ export default function RootStackNavigator() {
       screenOptions={{
         headerShown: false,
       }}
-      initialRouteName={!user ? "BottomTab" : "Explications"}
+      initialRouteName={user ? "BottomTab" : "Explications"}
     >
-      <RootStack.Screen name="Explications" component={Explanation} />
-      <RootStack.Screen name="Se connecter" component={Login} />
-      <RootStack.Screen name="S'inscrire" component={Register} />
+      {!user && (
+        <>
+          <RootStack.Screen name="Explications" component={Explanation} />
+          <RootStack.Screen name="Se connecter" component={Login} />
+          <RootStack.Screen name="S'inscrire" component={Register} />
+        </>
+      )}
 
-      <RootStack.Screen name="BottomTab" component={BottomTabNavigator} />
+      {user && (
+        <>
+          <RootStack.Screen name="BottomTab" component={BottomTabNavigator} />
 
-      <RootStack.Screen name="Mission" component={Mission} />
-      <RootStack.Screen name="Profile" component={Profile} />
+          <RootStack.Screen name="Mission" component={Mission} />
+          <RootStack.Screen name="Profile" component={Profile} />
+        </>
+      )}
     </RootStack.Navigator>
   );
 }

@@ -1,6 +1,5 @@
 import React from "react";
-import { Text } from "../components/atoms/Text";
-import MainLayout from "../components/layouts/MainLayout";
+import GlobalLayout from "../components/layouts/GlobalLayout";
 import ShopCard from "../components/molecules/ShopCard";
 import styled from "styled-components/native";
 import Spacer from "../components/atoms/Spacer";
@@ -23,9 +22,7 @@ const FAKE_DISCOUNTS = [
 
 export default function Shop() {
   return (
-    <MainLayout>
-      <Text>Shop</Text>
-
+    <GlobalLayout pageTitle="Boutique">
       <ShopCardsWrapper>
         {FAKE_DISCOUNTS.map((discount, index) => {
           return (
@@ -37,7 +34,7 @@ export default function Shop() {
           );
         })}
       </ShopCardsWrapper>
-    </MainLayout>
+    </GlobalLayout>
   );
 }
 
