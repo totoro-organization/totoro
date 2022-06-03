@@ -47,11 +47,6 @@ export default function GlobalLayout({
   );
 }
 
-// TODO: Create a common file?
-export const layoutInnerSpaces = css`
-  margin: 0 24px 24px 24px;
-`;
-
 const Container = styled.ScrollView<{ $withHeader: boolean }>`
   padding-top: ${({ $withHeader }) => ($withHeader ? "52px" : "0")}
   min-height: 100%;
@@ -59,5 +54,5 @@ const Container = styled.ScrollView<{ $withHeader: boolean }>`
 `;
 
 const MainContainer = styled.ScrollView`
-  ${layoutInnerSpaces}
+  margin: 0 24px 24px 24px;
 `;

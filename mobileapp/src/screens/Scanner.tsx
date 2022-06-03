@@ -9,8 +9,10 @@ import {
 import Button from "../components/atoms/Button";
 import { Text } from "../components/atoms/Text";
 
+import { StyleSheet } from "react-native";
+
 export default function Scanner() {
-  const [hasPermission, setHasPermission] = useState<boolean | null>(null);
+  const [hasPermission, setHasPermission] = useState<boolean | null>(true);
   const [scanned, setScanned] = useState(false);
 
   useEffect(() => {
@@ -37,6 +39,7 @@ export default function Scanner() {
 
       <BarCodeScanner
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+        style={StyleSheet.absoluteFill}
       />
 
       {scanned && (
