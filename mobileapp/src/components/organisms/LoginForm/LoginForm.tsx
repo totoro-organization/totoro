@@ -1,28 +1,21 @@
-import React, { useState } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import React from "react";
 import styled from "styled-components/native";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Controller, useForm } from "react-hook-form";
 
-import { Text } from "../../atoms/Text";
-import Button from "../../atoms/Button";
-import InputGroup from "../../molecules/InputGroup";
 import { loginFormSchema } from "./loginValidationSchema";
 import type { LoginFormValues } from "./loginValidationSchema";
+
+import { Text } from "../../atoms/Text";
+import Button from "../../atoms/Button";
 import Spacer from "../../atoms/Spacer";
-import fetchLoginUser from "../../../common/api/requests/auth/fetchLoginUser";
 import Alert from "../../atoms/Alert";
-import { useNavigation } from "@react-navigation/native";
-import { StackNavigationProp } from "@react-navigation/stack";
-import { StackParamList } from "../../../navigation/StackNavigationParams";
+import InputGroup from "../../molecules/InputGroup";
+
+import useAuth from "../../../common/contexts/AuthContext";
 
 export default function LoginForm() {
-  const navigation = useNavigation<StackNavigationProp<StackParamList>>();
-
-  const [isEmailNotAvailable, setIsEmailNotAvailable] = useState({
-    status: false,
-    email: "",
-  });
+  const { login, error } = useAuth();
 
   const { control, handleSubmit } = useForm<LoginFormValues>({
     defaultValues: {
@@ -33,35 +26,12 @@ export default function LoginForm() {
     resolver: yupResolver(loginFormSchema),
   });
 
-  async function onSubmit(data: LoginFormValues) {
-    try {
-      const response = await fetchLoginUser({
-        emailOrUsername: data.email,
-        password: data.password,
-      });
-
-      if (response.status === 403) {
-        setIsEmailNotAvailable({ status: true, email: data.email });
-      }
-
-      const userToken = await response.json();
-
-      await AsyncStorage.setItem("userToken", userToken.token);
-      setIsEmailNotAvailable({ status: false, email: "" });
-
-      navigation.navigate("BottomTab", { screen: "Missions" });
-    } catch (err) {
-      console.error(err);
-    }
-  }
-
   return (
     <>
-      {isEmailNotAvailable.status && (
+      {error?.status && (
         <Alert type="error">
           Il semblerait que l'email suivante&nbsp;:{" "}
-          <Text weight="medium">{isEmailNotAvailable.email}</Text> soit
-          inexistante.
+          <Text weight="medium">{error?.email}</Text> soit inexistante.
         </Alert>
       )}
 
@@ -114,7 +84,7 @@ export default function LoginForm() {
         />
       </InputWrapper>
 
-      <Button handlePress={handleSubmit(onSubmit)}>Se connecter</Button>
+      <Button handlePress={handleSubmit(login)}>Se connecter</Button>
     </>
   );
 }

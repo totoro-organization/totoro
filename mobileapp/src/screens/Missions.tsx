@@ -3,7 +3,7 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import React from "react";
 import { Card } from "../components/atoms/Card";
 import { Text } from "../components/atoms/Text";
-import MainLayout from "../components/layouts/MainLayout";
+import GlobalLayout from "../components/layouts/GlobalLayout";
 import { StackParamList } from "../navigation/StackNavigationParams";
 
 // TODO: Replace me to the real data with api.
@@ -40,9 +40,7 @@ export default function Missions() {
   const navigation = useNavigation<StackNavigationProp<StackParamList>>();
 
   return (
-    <MainLayout>
-      <Text>Missions</Text>
-
+    <GlobalLayout>
       {FAKE_MISSIONS.map(({ id, organization, title }) => {
         return (
           <Card
@@ -56,6 +54,6 @@ export default function Missions() {
           </Card>
         );
       })}
-    </MainLayout>
+    </GlobalLayout>
   );
 }

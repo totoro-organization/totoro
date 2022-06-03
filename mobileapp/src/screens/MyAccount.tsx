@@ -7,17 +7,15 @@ import Avatar from "../components/atoms/Avatar";
 import Box from "../components/atoms/Box";
 import Button from "../components/atoms/Button";
 import { Text } from "../components/atoms/Text";
-import MainLayout from "../components/layouts/MainLayout";
+import MainLayout from "../components/layouts/SimpleLayout";
 import { StackParamList } from "../navigation/StackNavigationParams";
 
 export default function MyAccount() {
   const navigation = useNavigation<StackNavigationProp<StackParamList>>();
   const { user, logout } = useAuth();
 
-  console.log(user);
-
   async function handleLogout() {
-    await logout?.();
+    await logout();
 
     navigation.navigate("Explications");
   }
