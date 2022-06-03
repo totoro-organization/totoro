@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
 import GlobalLayout from "../components/layouts/GlobalLayout";
 
-import { BarCodeScanner, PermissionStatus } from "expo-barcode-scanner";
+import {
+  BarCodeScanner,
+  BarCodeScannerResult,
+  PermissionStatus,
+} from "expo-barcode-scanner";
 import Button from "../components/atoms/Button";
 import { Text } from "../components/atoms/Text";
 
@@ -19,7 +23,7 @@ export default function Scanner() {
     getScannerPermissions();
   }, []);
 
-  function handleBarCodeScanned({ type, data }: any) {
+  function handleBarCodeScanned({ type, data }: BarCodeScannerResult) {
     setScanned(true);
     alert(`Bar code with type ${type} and data ${data} has been scanned!`);
   }
