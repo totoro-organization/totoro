@@ -9,10 +9,11 @@ import {
 import Button from "../components/atoms/Button";
 import { Text } from "../components/atoms/Text";
 
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
+import styled from "styled-components/native";
 
 export default function Scanner() {
-  const [hasPermission, setHasPermission] = useState<boolean | null>(true);
+  const [hasPermission, setHasPermission] = useState<boolean | null>(false);
   const [scanned, setScanned] = useState(false);
 
   useEffect(() => {
@@ -31,22 +32,39 @@ export default function Scanner() {
   }
 
   return (
-    <GlobalLayout pageTitle="Scanner" withScanner={false}>
+    <View style={{ flex: 1 }}>
       {hasPermission === null && (
-        <Text>Dans l'attente de l'autorisation de la caméra.</Text>
+        <Text color="white">
+          Dans l'attente de l'autorisation de la caméra.
+        </Text>
       )}
-      {!hasPermission && <Text>Pas d'accès caméra.</Text>}
+
+      {!hasPermission && <Text color="white">Pas d'accès caméra.</Text>}
 
       <BarCodeScanner
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+        barCodeTypes={[BarCodeScanner.Constants.BarCodeType.qr]}
+        type="back"
         style={StyleSheet.absoluteFill}
       />
 
       {scanned && (
-        <Button handlePress={() => setScanned(false)}>
-          Scanner un autre code
-        </Button>
+        <FixedWrapper>
+          <Button
+            handlePress={() => setScanned(false)}
+            horizontalPosition="stretch"
+          >
+            Scanner une autre mission
+          </Button>
+        </FixedWrapper>
       )}
-    </GlobalLayout>
+    </View>
   );
 }
+
+const FixedWrapper = styled.View`
+  width: 100%;
+  position: absolute;
+  bottom: 24px;
+  padding: 0 24px;
+`;
