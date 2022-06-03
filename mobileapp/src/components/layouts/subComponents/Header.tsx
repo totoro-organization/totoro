@@ -3,7 +3,6 @@ import styled from "styled-components/native";
 
 import Button from "../../atoms/Button";
 import { Text } from "../../atoms/Text";
-import { layoutInnerSpaces } from "../GlobalLayout";
 import getLocaleCurrencyNotation from "../../../common/utils/getLocaleCurrencyNotation";
 import { Pressable } from "react-native";
 import Scanner from "../../../assets/icons/Scanner";
@@ -55,5 +54,5 @@ const Container = styled.View`
   justify-content: space-between;
   align-items: center;
   flex-direction: row;
-  ${layoutInnerSpaces}
+  margin: 0 24px 24px 24px;
 `;
