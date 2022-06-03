@@ -24,11 +24,13 @@ export default function ExplanationCarousel() {
 
       <Box alignItems="center" justifyContent="center">
         {explanationSteps.map((_, index) => (
-          <View key={index}>
-            <Dot $active={carouselIndex === index} />
+          <>
+            <View key={index}>
+              <Dot $active={carouselIndex === index} />
+            </View>
 
             <Spacer axis="horizontal" size={0.5} />
-          </View>
+          </>
         ))}
       </Box>
 
