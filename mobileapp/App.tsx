@@ -1,5 +1,12 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { ThemeProvider } from "styled-components/native";
+import {
+  useQuery,
+  useMutation,
+  useQueryClient,
+  QueryClient,
+  QueryClientProvider,
+} from "react-query";
 
 import theme from "./src/theme/theme";
 import RootStackNavigator from "./src/navigation/RootStackNavigator";
@@ -10,6 +17,7 @@ import React from "react";
 import useAuth, { AuthProvider } from "./src/common/contexts/AuthContext";
 
 export default function App() {
+  const queryClient = new QueryClient();
   const isLoadingComplete = useCachedResources();
 
   if (!isLoadingComplete) {
@@ -18,13 +26,15 @@ export default function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <AuthProvider>
-        <NavigationContainer>
-          <RootStackNavigator />
-        </NavigationContainer>
+      <QueryClientProvider client={queryClient}>
+        <AuthProvider>
+          <NavigationContainer>
+            <RootStackNavigator />
+          </NavigationContainer>
 
-        <Toast />
-      </AuthProvider>
+          <Toast />
+        </AuthProvider>
+      </QueryClientProvider>
     </ThemeProvider>
   );
 }
