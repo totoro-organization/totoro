@@ -7,6 +7,7 @@ import Header from "./subComponents/Header";
 export type GlobalLayoutProps = PropsWithChildren<{
   withBackButton?: boolean;
   withHeader?: boolean;
+  withScanner?: boolean;
   pageTitle?: string;
   fullBanner?: ReactNode;
 }>;
@@ -17,10 +18,11 @@ export default function GlobalLayout({
   fullBanner,
   withBackButton,
   withHeader = true,
+  withScanner = true,
 }: GlobalLayoutProps) {
   return (
     <Container $withHeader={withHeader}>
-      {withHeader && <Header title={pageTitle} />}
+      {withHeader && <Header title={pageTitle} withScanner={withScanner} />}
 
       {/* TODO: Add back button on Header component. */}
       {withBackButton && (
@@ -45,11 +47,6 @@ export default function GlobalLayout({
   );
 }
 
-// TODO: Create a common file?
-export const layoutInnerSpaces = css`
-  margin: 0 24px 24px 24px;
-`;
-
 const Container = styled.ScrollView<{ $withHeader: boolean }>`
   padding-top: ${({ $withHeader }) => ($withHeader ? "52px" : "0")}
   min-height: 100%;
@@ -57,5 +54,5 @@ const Container = styled.ScrollView<{ $withHeader: boolean }>`
 `;
 
 const MainContainer = styled.ScrollView`
-  ${layoutInnerSpaces}
+  margin: 0 24px 24px 24px;
 `;
