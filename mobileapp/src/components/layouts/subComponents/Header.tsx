@@ -8,10 +8,9 @@ import getLocaleCurrencyNotation from "../../../common/utils/getLocaleCurrencyNo
 
 type HeaderProps = {
   title?: string;
-  user: User;
 };
 
-export default function Header({ title, user }: HeaderProps) {
+export default function Header({ title }: HeaderProps) {
   return (
     <Container>
       {!title && (
@@ -23,7 +22,8 @@ export default function Header({ title, user }: HeaderProps) {
       {title && <Text>{title}</Text>}
 
       <Button size="sm" color="primary" variant="outline">
-        {getLocaleCurrencyNotation(user.total_token)}
+        {/* TODO: Add real data. */}
+        {getLocaleCurrencyNotation(9328)}
       </Button>
     </Container>
   );

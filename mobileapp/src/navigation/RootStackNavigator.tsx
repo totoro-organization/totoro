@@ -30,7 +30,7 @@ export default function RootStackNavigator() {
         </>
       )}
 
-      {!!user && (
+      {user && (
         <>
           <RootStack.Screen name="BottomTab" component={BottomTabNavigator} />
 
