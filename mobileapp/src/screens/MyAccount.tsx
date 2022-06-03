@@ -7,7 +7,7 @@ import Avatar from "../components/atoms/Avatar";
 import Box from "../components/atoms/Box";
 import Button from "../components/atoms/Button";
 import { Text } from "../components/atoms/Text";
-import MainLayout from "../components/layouts/MainLayout";
+import MainLayout from "../components/layouts/SimpleLayout";
 import { StackParamList } from "../navigation/StackNavigationParams";
 
 export default function MyAccount() {

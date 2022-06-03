@@ -4,7 +4,7 @@ import Avatar from "../../components/atoms/Avatar";
 import Button from "../../components/atoms/Button";
 import Spacer from "../../components/atoms/Spacer";
 import { Text } from "../../components/atoms/Text";
-import MainLayout from "../../components/layouts/MainLayout";
+import GlobalLayout from "../../components/layouts/GlobalLayout";
 import { StackParamList } from "../../navigation/StackNavigationParams";
 
 export type ProfileType = "user" | "organization";
@@ -15,11 +15,10 @@ export default function Profile({
   const paramId = route.params.id;
   const type = route.params.type;
 
-  const isUser = type === "user";
   const isOrganization = type === "organization";
 
   return (
-    <MainLayout>
+    <GlobalLayout pageTitle="">
       <Text>{type} profile page</Text>
 
       <Spacer axis="vertical" size={1} />
@@ -39,6 +38,6 @@ export default function Profile({
           Suivre
         </Button>
       )}
-    </MainLayout>
+    </GlobalLayout>
   );
 }

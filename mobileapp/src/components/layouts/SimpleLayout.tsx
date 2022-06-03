@@ -3,14 +3,15 @@ import styled from "styled-components/native";
 import Spacer from "../atoms/Spacer";
 import GoBackButton from "../molecules/GoBackButton";
 
-export type MainLayoutProps = PropsWithChildren<{
+export type SimpleLayoutProps = PropsWithChildren<{
   withBackButton?: boolean;
 }>;
 
-export default function MainLayout({
+// TODO: Refactor me.
+export default function SimpleLayout({
   children,
   withBackButton,
-}: MainLayoutProps) {
+}: SimpleLayoutProps) {
   return (
     <Container>
       {withBackButton && (
@@ -20,7 +21,7 @@ export default function MainLayout({
         </>
       )}
 
-      {children}
+      <MainContainer>{children}</MainContainer>
 
       {/* NOTE: To fix space between the button and the bottom of the page. */}
       {/* TODO: Find a better way. */}
@@ -30,7 +31,11 @@ export default function MainLayout({
 }
 
 const Container = styled.ScrollView`
-  padding: 52px 24px 24px 24px;
-  background-color: #fcfcfc;
+  padding-top: 52px;
   min-height: 100%;
+  background-color: #fcfcfc;
+`;
+
+const MainContainer = styled.ScrollView`
+  margin: 0 24px 24px 24px;
 `;
