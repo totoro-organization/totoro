@@ -1,16 +1,25 @@
 import React from "react";
 import styled from "styled-components/native";
-import { User } from "../../../models/user";
+
 import Button from "../../atoms/Button";
 import { Text } from "../../atoms/Text";
 import { layoutInnerSpaces } from "../GlobalLayout";
 import getLocaleCurrencyNotation from "../../../common/utils/getLocaleCurrencyNotation";
+import { Pressable } from "react-native";
+import Scanner from "../../../assets/icons/Scanner";
+import Box from "../../atoms/Box";
+import Spacer from "../../atoms/Spacer";
+import { useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { AppParamList } from "../../../navigation/StackNavigationParams";
 
 type HeaderProps = {
   title?: string;
 };
 
 export default function Header({ title }: HeaderProps) {
+  const navigation = useNavigation<StackNavigationProp<AppParamList>>();
+
   return (
     <Container>
       {!title && (
@@ -19,14 +28,20 @@ export default function Header({ title }: HeaderProps) {
         </Text>
       )}
 
-      {title && <Text>{title}</Text>}
+      {title && <Text size="xl">{title}</Text>}
 
-      {/* TODO: Add scanner button here. */}
+      <Box alignItems="center">
+        <Pressable onPress={() => navigation.navigate("Scanner")}>
+          <Scanner size={28} />
+        </Pressable>
 
-      <Button size="sm" color="primary" variant="outline">
-        {/* TODO: Add real data. */}
-        {getLocaleCurrencyNotation(9328)}
-      </Button>
+        <Spacer axis="horizontal" size={1} />
+
+        <Button size="sm" color="primary" variant="outline">
+          {/* TODO: Add real data. */}
+          {getLocaleCurrencyNotation(9328)}
+        </Button>
+      </Box>
     </Container>
   );
 }
