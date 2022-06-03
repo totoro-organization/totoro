@@ -130,7 +130,7 @@ export default function Mission({
 
 const StyledImage = styled.ImageBackground`
   width: 100%;
-  height: 160px;
+  height: 200px;
 `;
 
 const TextLight = styled(Text)`
