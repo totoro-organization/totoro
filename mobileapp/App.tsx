@@ -1,12 +1,6 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { ThemeProvider } from "styled-components/native";
-import {
-  useQuery,
-  useMutation,
-  useQueryClient,
-  QueryClient,
-  QueryClientProvider,
-} from "react-query";
+import { QueryClient, QueryClientProvider } from "react-query";
 
 import theme from "./src/theme/theme";
 import RootStackNavigator from "./src/navigation/RootStackNavigator";
