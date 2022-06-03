@@ -31,6 +31,7 @@ export default function Header({ title }: HeaderProps) {
 
 const Container = styled.View`
   justify-content: space-between;
+  align-items: center;
   flex-direction: row;
   ${layoutInnerSpaces}
 `;
