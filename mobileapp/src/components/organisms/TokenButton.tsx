@@ -5,6 +5,7 @@ import Modal from "../atoms/Modal";
 import { Text } from "../atoms/Text";
 import getLocaleCurrencyNotation from "../../common/utils/getLocaleCurrencyNotation";
 import Spacer from "../atoms/Spacer";
+import Token from "../../assets/icons/Token";
 
 /* TODO: Add real user data. */
 const FAKE_DATA_TOKEN = 9328;
@@ -20,9 +21,17 @@ export default function TokenButton() {
         handlePress={() => setModalOpen(!modalOpen)}
       >
         {getLocaleCurrencyNotation(FAKE_DATA_TOKEN)}
+
+        {/* TODO: Add icon to Button atom. */}
+        {/* <Spacer axis="horizontal" size={0.5} />
+        <Token color="primary" /> */}
       </Button>
 
       <Modal visible={modalOpen} onCloseModal={() => setModalOpen(!modalOpen)}>
+        <Token color="primary" size={48} />
+
+        <Spacer axis="vertical" size={1.5} />
+
         <Text>Tu as actuellement</Text>
         <Text size="xl" color="primary" weight="semiBold">
           {getLocaleCurrencyNotation(FAKE_DATA_TOKEN)} tokens
