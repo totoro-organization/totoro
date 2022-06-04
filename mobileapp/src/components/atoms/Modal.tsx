@@ -6,6 +6,7 @@ import {
   ModalProps as RNModalProps,
 } from "react-native";
 import styled from "styled-components/native";
+import Close from "../../assets/icons/Close";
 
 type ModalProps = PropsWithChildren<
   {
@@ -22,7 +23,13 @@ export default function Modal({ children, onCloseModal, ...rest }: ModalProps) {
       {...rest}
     >
       <Container onPress={onCloseModal}>
-        <InnerWrapper>{children}</InnerWrapper>
+        <InnerWrapper>
+          <IconWrapper onPress={onCloseModal}>
+            <Close size={24} />
+          </IconWrapper>
+
+          {children}
+        </InnerWrapper>
       </Container>
     </RNModal>
   );
@@ -39,10 +46,17 @@ const Container = styled.Pressable`
 `;
 
 const InnerWrapper = styled.View`
+  position: relative;
   width: 90%;
   align-items: center;
   justify-content: center;
   background-color: ${({ theme }) => theme.colors.white[600]};
   padding: ${({ theme }) => theme.spacing[6]};
   border-radius: ${({ theme }) => theme.border.radius.md};
+`;
+
+const IconWrapper = styled.Pressable`
+  position: absolute;
+  top: 24px;
+  right: 24px;
 `;
