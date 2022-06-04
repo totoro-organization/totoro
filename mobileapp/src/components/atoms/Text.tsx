@@ -6,11 +6,13 @@ import { Colors, getColors } from "../../theme/utils";
 
 export type Weights = keyof typeof fonts.weight;
 export type Sizes = keyof typeof fonts.sizes;
+export type TextAlign = "center" | "left" | "right" | "justify";
 
 export type TextProps = {
   color?: Colors;
   weight?: Weights;
   size?: Sizes;
+  align?: TextAlign;
 };
 
 // BASIC TEXT
@@ -23,6 +25,7 @@ export const Text = styled.Text<TextProps>`
   font-family: ${({ theme, weight }) =>
     weight ? theme.fonts.weight[weight] : theme.fonts.weight.regular};
   flex-shrink: 1;
+  text-align: ${({ align }) => (align ? align : "left")};
 `;
 
 // HEADING (H1/H2... STYLES)
