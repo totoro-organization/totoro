@@ -16,7 +16,7 @@ type ModalProps = PropsWithChildren<
 export default function Modal({ children, onCloseModal, ...rest }: ModalProps) {
   return (
     <RNModal
-      animationType="slide"
+      animationType="none"
       transparent
       style={StyleSheet.absoluteFillObject}
       {...rest}
