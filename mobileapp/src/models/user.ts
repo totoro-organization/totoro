@@ -1,5 +1,3 @@
-import { Organization } from "./organization";
-import { Role } from "./role";
 import { Status } from "./status";
 
 export type UserStatus = Status<"actived" | "freezed" | "disabled">;
