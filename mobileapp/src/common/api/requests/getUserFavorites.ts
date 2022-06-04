@@ -8,7 +8,7 @@ export default async function getUserFavorites(userId: string): Promise<any> {
   });
 
   const response = await fetch(
-    `${API_HOST}${API_ROUTES.GET_USER_FAVORITES(userId)}`,
+    `${API_HOST}${API_ROUTES.USER_FAVORITES(userId)}`,
     {
       method: "GET",
       headers: myHeaders,

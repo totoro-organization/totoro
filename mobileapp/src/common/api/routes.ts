@@ -6,5 +6,5 @@ export const API_ROUTES = {
   AUTH_REGISTER: "/auth/signup", // POST
   AUTH_USER_CONNECTED: "/auth/connected", // GET
 
-  GET_USER_FAVORITES: (userId: string) => `/users/${userId}/favorites`,
+  USER_FAVORITES: (userId: string) => `/users/${userId}/favorites`, // GET, POST
 } as const;
