@@ -5,15 +5,15 @@ import GlobalLayout from "../../components/layouts/GlobalLayout";
 import { StackScreenProps } from "@react-navigation/stack";
 import { StackParamList } from "../../navigation/StackNavigationParams";
 import Button from "../../components/atoms/Button";
-import { FAKE_MISSIONS } from "../Missions";
 import Spacer from "../../components/atoms/Spacer";
 import Heart from "../../assets/icons/Heart";
 import Box from "../../components/atoms/Box";
-import { ImageBackground, ScrollView } from "react-native";
+import { ImageBackground } from "react-native";
 import MissionDetail from "../../components/molecules/MissionDetail";
 import Location from "../../assets/icons/Location";
 import Calendar from "../../assets/icons/Calendar";
 import { Link } from "@react-navigation/native";
+import { FAKE_MISSIONS_DATA } from "../../common/mockedData";
 
 export default function Mission({
   route,
@@ -21,7 +21,7 @@ export default function Mission({
   const missionId = route.params.id;
 
   // TODO: Replace me by the real data.
-  const mission = FAKE_MISSIONS[missionId];
+  const mission = FAKE_MISSIONS_DATA[missionId];
 
   // TODO: Create hook with fetch API to get mission by id.
   //   const { mission } = useMission(missionId);
