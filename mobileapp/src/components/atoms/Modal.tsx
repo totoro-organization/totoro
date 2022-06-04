@@ -39,7 +39,7 @@ const Container = styled.Pressable`
 `;
 
 const InnerWrapper = styled.View`
-  width: 80%;
+  width: 90%;
   align-items: center;
   justify-content: center;
   background-color: ${({ theme }) => theme.colors.white[600]};
