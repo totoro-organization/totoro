@@ -1,9 +1,7 @@
 import React from "react";
 import styled from "styled-components/native";
 
-import Button from "../../atoms/Button";
 import { Text } from "../../atoms/Text";
-import getLocaleCurrencyNotation from "../../../common/utils/getLocaleCurrencyNotation";
 import { Pressable } from "react-native";
 import Scanner from "../../../assets/icons/Scanner";
 import Box from "../../atoms/Box";
@@ -11,6 +9,7 @@ import Spacer from "../../atoms/Spacer";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { AppParamList } from "../../../navigation/StackNavigationParams";
+import TokenButton from "../../organisms/TokenButton";
 
 type HeaderProps = {
   title?: string;
@@ -41,10 +40,7 @@ export default function Header({ title, withScanner }: HeaderProps) {
           </>
         )}
 
-        <Button size="sm" color="primary" variant="outline">
-          {/* TODO: Add real data. */}
-          {getLocaleCurrencyNotation(9328)}
-        </Button>
+        <TokenButton />
       </Box>
     </Container>
   );
