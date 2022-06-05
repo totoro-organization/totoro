@@ -1,5 +1,5 @@
 import React from "react";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, FormProvider, useForm } from "react-hook-form";
 import styled from "styled-components/native";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Text } from "../../atoms/Text";
@@ -15,6 +15,8 @@ import Alert from "../../atoms/Alert";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import createUsername from "../../../common/utils/createUsername";
 
+import DateTimePickerInput from "../../molecules/DateTimePickerInput";
+
 const ALERT_CONTENT_LASTNAME =
   "Votre nom de famille nous permet de récupérer seulement votre initial. Cette information ne sera pas accessible par l’ensemble des utilisateurs.";
 
@@ -27,7 +29,6 @@ export default function RegisterStepTwo({ nextStep }: RegisterStepTwoProps) {
     defaultValues: {
       firstname: "",
       lastname: "",
-      birthday: "",
     },
     mode: "onBlur",
     resolver: yupResolver(registerStepTwoSchema),
@@ -42,9 +43,11 @@ export default function RegisterStepTwo({ nextStep }: RegisterStepTwoProps) {
       username: createUsername(data.firstname, data.lastname),
     };
 
-    await AsyncStorage.mergeItem?.("userFormData", JSON.stringify(body));
+    console.log("ui");
+    console.log(data);
+    // await AsyncStorage.mergeItem?.("userFormData", JSON.stringify(body));
 
-    nextStep();
+    // nextStep();
   }
 
   return (
@@ -99,27 +102,19 @@ export default function RegisterStepTwo({ nextStep }: RegisterStepTwoProps) {
         />
       </InputWrapper>
 
-      <InputWrapper>
-        <Text>Date de naissance</Text>
+      <Controller
+        name="lastname"
+        control={control}
+        render={({ field: { onChange } }) => (
+          <DateTimePickerInput
+            label="Date de naissance"
+            onChange={(value: any) => onChange(value)}
+            name="lastname"
+          />
+        )}
+      />
 
-        <Spacer axis="vertical" size={0.5} />
-
-        <Controller
-          name="birthday"
-          control={control}
-          render={({
-            field: { onChange, onBlur, value },
-            fieldState: { error },
-          }) => (
-            <InputGroup
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-              error={error}
-            />
-          )}
-        />
-      </InputWrapper>
+      <Spacer axis="vertical" size={3} />
 
       <Button handlePress={handleSubmit(onSubmit)}>Suivant</Button>
     </>
