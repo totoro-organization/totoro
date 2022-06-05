@@ -4,7 +4,7 @@
  * @param withTime defaults to false, set to true if you need time in the output `hh:mm:ss`
  * @returns a formatted French locale date `string` `dd/mm/yyyy` and  `dd/mm/yyyy, hh:mm:ss` if `withTime` is set to true.
  */
-export default function formatDateFrenchLocale(
+export default function getFormatDateFrenchLocale(
   valueToConvert: string | Date,
   withTime = false
 ): string {
