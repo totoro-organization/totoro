@@ -11,10 +11,16 @@ import Close from "../../assets/icons/Close";
 type ModalProps = PropsWithChildren<
   {
     onCloseModal: () => void;
+    center?: boolean;
   } & RNModalProps
 >;
 
-export default function Modal({ children, onCloseModal, ...rest }: ModalProps) {
+export default function Modal({
+  children,
+  center = true,
+  onCloseModal,
+  ...rest
+}: ModalProps) {
   return (
     <RNModal
       animationType="none"
@@ -23,7 +29,7 @@ export default function Modal({ children, onCloseModal, ...rest }: ModalProps) {
       {...rest}
     >
       <Container onPress={onCloseModal}>
-        <InnerWrapper>
+        <InnerWrapper $center={center}>
           <IconWrapper onPress={onCloseModal}>
             <Close size={24} />
           </IconWrapper>
@@ -45,10 +51,10 @@ const Container = styled.Pressable`
   background-color: #05011f31;
 `;
 
-const InnerWrapper = styled.View`
+const InnerWrapper = styled.View<{ $center?: boolean }>`
   position: relative;
   width: 90%;
-  align-items: center;
+  align-items: ${({ $center }) => ($center ? "center" : "flex-start")};
   justify-content: center;
   background-color: ${({ theme }) => theme.colors.white[600]};
   padding: ${({ theme }) => theme.spacing[6]};
