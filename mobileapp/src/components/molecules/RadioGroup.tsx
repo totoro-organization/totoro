@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { View } from "react-native";
 import Radio from "../atoms/Radio";
 import Spacer from "../atoms/Spacer";
-import { Text } from "../atoms/Text";
 
 type RadioGroupProps = {
   options: string[];
