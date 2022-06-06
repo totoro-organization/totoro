@@ -6,6 +6,7 @@ import useAuth from "../common/contexts/AuthContext";
 import Explanation from "../screens/Explanation";
 import Login from "../screens/Login";
 import Register from "../screens/Register";
+import MissionsFilter from "../screens/MissionsFilter";
 import Mission from "../screens/uniques/Mission";
 import Scanner from "../screens/Scanner";
 import Profile from "../screens/uniques/Profile";
@@ -38,6 +39,7 @@ export default function RootStackNavigator() {
           <RootStack.Screen name="BottomTab" component={BottomTabNavigator} />
 
           <RootStack.Screen name="Scanner" component={Scanner} />
+          <RootStack.Screen name="MissionsFilter" component={MissionsFilter} />
           <RootStack.Screen name="Mission" component={Mission} />
           <RootStack.Screen name="Profile" component={Profile} />
         </>

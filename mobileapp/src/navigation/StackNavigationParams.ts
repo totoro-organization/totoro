@@ -13,11 +13,13 @@ export type AuthParamList = {
 };
 
 export type AppParamList = {
+  // TODO: Add filters param for Missions page.
   Missions: undefined;
   Boutique: undefined;
   Profil: undefined;
   Messagerie: undefined;
   Scanner: undefined;
+  MissionsFilter: undefined;
 };
 
 export type BottomTabParamList = {
