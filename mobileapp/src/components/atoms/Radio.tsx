@@ -6,38 +6,32 @@ import Spacer from "./Spacer";
 import { Text } from "./Text";
 
 type RadioProps = {
-  options: string[];
+  option: string;
+  checked: boolean;
   handlePress: (selectedOption: string) => void;
 };
 
-export default function Radio({ options, handlePress }: RadioProps) {
-  const [radioIndex, setRadioIndex] = useState<number | undefined>(undefined);
-
-  function getRadioIndex(index: number) {
-    setRadioIndex(index);
-  }
-
+export default function Radio({
+  option,
+  checked = false,
+  handlePress,
+}: RadioProps) {
   return (
     <View>
-      {options.map((option, index) => (
-        <TouchableOpacity
-          onPress={() => {
-            handlePress(option);
-            getRadioIndex(index);
-          }}
-          key={option}
-        >
-          <Box flexDirection="row" alignItems="center">
-            <Dot>
-              <DotActive $checked={index === radioIndex} />
-            </Dot>
-            <Spacer axis="horizontal" size={0.5} />
+      <TouchableOpacity
+        onPress={() => {
+          handlePress(option);
+        }}
+      >
+        <Box flexDirection="row" alignItems="center">
+          <Dot>
+            <DotActive $checked={checked} />
+          </Dot>
+          <Spacer axis="horizontal" size={0.5} />
 
-            <Label $checked={index === radioIndex}>{option}</Label>
-          </Box>
-          <Spacer axis="vertical" size={0.5} />
-        </TouchableOpacity>
-      ))}
+          <Label $checked={checked}>{option}</Label>
+        </Box>
+      </TouchableOpacity>
     </View>
   );
 }
