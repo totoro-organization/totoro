@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { TouchableHighlight, TouchableOpacity, View } from "react-native";
+import React from "react";
+import { TouchableOpacity, View } from "react-native";
 import styled from "styled-components/native";
 import Box from "./Box";
 import Spacer from "./Spacer";
