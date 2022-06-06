@@ -50,7 +50,7 @@ export default function Filter({ color = "grey", size = 16 }: FilterProps) {
         strokeLinecap="round"
         strokeLinejoin="round"
       />
-      <path
+      <Path
         d="M14 21C15.933 21 17.5 19.433 17.5 17.5C17.5 15.567 15.933 14 14 14C12.067 14 10.5 15.567 10.5 17.5C10.5 19.433 12.067 21 14 21Z"
         stroke={theme.colors[color][500]}
         strokeWidth="1.5"
