@@ -13,6 +13,7 @@ export type TextProps = {
   weight?: Weights;
   size?: Sizes;
   align?: TextAlign;
+  underline?: boolean;
 };
 
 // BASIC TEXT
@@ -26,6 +27,7 @@ export const Text = styled.Text<TextProps>`
     weight ? theme.fonts.weight[weight] : theme.fonts.weight.regular};
   flex-shrink: 1;
   text-align: ${({ align }) => (align ? align : "left")};
+  text-decoration: ${({ underline }) => (underline ? "underline" : "none")};
 `;
 
 // HEADING (H1/H2... STYLES)
