@@ -60,7 +60,7 @@ export function AuthProvider({
 
   useEffect(() => {
     setUser(userConnected);
-  }, [userConnected]);
+  }, []);
 
   return (
     <AuthContext.Provider value={{ user, logout, login, error, isLoading }}>
