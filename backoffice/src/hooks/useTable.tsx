@@ -23,22 +23,23 @@ export type TableItem = any
   // Subscription        
 
 interface UseTableProps {
-  uri: CommonsUriEnum,
+  url: CommonsUriEnum | string,
   defaultItems: TableItem[],
-  handleCloseModal: () => void
+  handleCloseModal?: () => void,
 }
 
 export interface TableMethods {
   handleAddItem: (data: object) => void,
   handleDeleteItem: (id: string) => void,
   handleUpdateItem: (id: string, data: object) => void,
+  handleGetItems: () => void
 }
 
 interface UseTableResponse extends TableMethods{
   items: TableItem[],
 }
 
-export const useTable = ({ uri, defaultItems, handleCloseModal }: UseTableProps): UseTableResponse => {
+export const useTable = ({ url, defaultItems, handleCloseModal }: UseTableProps): UseTableResponse => {
 
   const [items, setItems] = useState<Array<TableItem>>(defaultItems);
 
@@ -49,25 +50,25 @@ export const useTable = ({ uri, defaultItems, handleCloseModal }: UseTableProps)
   }, [defaultItems])
 
   const handleGetItems = async () => {
-    const itemsResponse = await getItems(uri);
+    const itemsResponse = await getItems(url);
     if('error' in itemsResponse) return;
     setItems(itemsResponse?.data);
   }
  
   const handleUpdateItem = async (id: string, data: object) => {
-    const updateResponse = await updateItem(uri, id, data);
+    const updateResponse = await updateItem(url, id, data);
     if('error' in updateResponse) return;
     handleGetItems();
   }
 
   const handleDeleteItem = async (id: string) => {
-    const deleteResponse = await deleteItem(uri, id);
+    const deleteResponse = await deleteItem(url, id);
     if('error' in deleteResponse) return;
     handleGetItems();
   }
 
   const handleAddItem = async (data: object) => {
-    const addResponse = await addItem(uri, data);
+    const addResponse = await addItem(url, data);
     if('error' in addResponse) return;
     handleGetItems();
     handleCloseModal();
@@ -77,6 +78,7 @@ export const useTable = ({ uri, defaultItems, handleCloseModal }: UseTableProps)
       handleAddItem,
       handleDeleteItem,
       handleUpdateItem,
+      handleGetItems,
       items,
   }
 }

@@ -34,7 +34,7 @@ function Roles() {
     handleDeleteItem,
     handleUpdateItem,
     items: roles
-  } = useTable({ uri: CommonsUriEnum.roles, defaultItems: defaultRoles?.data, handleCloseModal: handleCloseAddModal })
+  } = useTable({ url: CommonsUriEnum.roles, defaultItems: defaultRoles?.data, handleCloseModal: handleCloseAddModal })
 
   const statusOptions = [
     {

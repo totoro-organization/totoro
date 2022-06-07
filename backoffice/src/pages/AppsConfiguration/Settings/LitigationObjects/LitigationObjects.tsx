@@ -34,7 +34,7 @@ function LitigationObjects() {
     handleDeleteItem,
     handleUpdateItem,
     items: litigationObjects
-  } = useTable({ uri: CommonsUriEnum.litigationObjects, defaultItems: defaultLitigationObjects?.data, handleCloseModal: handleCloseAddModal })
+  } = useTable({ url: CommonsUriEnum.litigationObjects, defaultItems: defaultLitigationObjects?.data, handleCloseModal: handleCloseAddModal })
 
   const statusOptions = [
     {

@@ -32,7 +32,7 @@ function DiscountTypes() {
     handleDeleteItem,
     handleUpdateItem,
     items: discountTypes
-  } = useTable({ uri: CommonsUriEnum.discountTypes, defaultItems: defaultDiscountTypes?.data, handleCloseModal: handleCloseAddModal })
+  } = useTable({ url: CommonsUriEnum.discountTypes, defaultItems: defaultDiscountTypes?.data, handleCloseModal: handleCloseAddModal })
 
   const statusOptions = [
     {

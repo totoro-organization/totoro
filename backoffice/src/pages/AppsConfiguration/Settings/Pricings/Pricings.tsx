@@ -32,7 +32,7 @@ function Pricings() {
     handleDeleteItem,
     handleUpdateItem,
     items: pricings
-  } = useTable({ uri: CommonsUriEnum.pricings, defaultItems: defaultPricings?.data, handleCloseModal: handleCloseAddModal })
+  } = useTable({ url: CommonsUriEnum.pricings, defaultItems: defaultPricings?.data, handleCloseModal: handleCloseAddModal })
 
   const statusOptions = [
     {
