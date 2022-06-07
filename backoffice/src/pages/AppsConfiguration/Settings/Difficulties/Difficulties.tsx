@@ -11,6 +11,7 @@ import { useModal } from 'src/hooks/useModal';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { CommonsUriEnum } from 'src/models/commons';
 import { AddDifficultyContent } from './DifficultyModalContent';
+import { COMMONS_BASE_URL } from 'src/services/commons.service';
 
 const WrapperBox = styled(Box)(
   ({ theme }) => `
@@ -22,7 +23,7 @@ const WrapperBox = styled(Box)(
 
 function Difficultys() {
 
-  const { data: defaultDifficultys, loading  } = useApi(`/commons/${CommonsUriEnum.difficulties}`);
+  const { data: defaultDifficultys, loading  } = useApi(`${COMMONS_BASE_URL}/${CommonsUriEnum.difficulties}`);
 
   const [addModalOpen, handleOpenAddModal, handleCloseAddModal] = useModal();
 
@@ -31,7 +32,7 @@ function Difficultys() {
     handleDeleteItem,
     handleUpdateItem,
     items: difficulties
-  } = useTable({ uri: CommonsUriEnum.difficulties, defaultItems: defaultDifficultys?.data, handleCloseModal: handleCloseAddModal })
+  } = useTable({ url: CommonsUriEnum.difficulties, defaultItems: defaultDifficultys?.data, handleCloseModal: handleCloseAddModal })
 
   const statusOptions = [
     {
