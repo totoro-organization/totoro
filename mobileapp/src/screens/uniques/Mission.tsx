@@ -19,12 +19,12 @@ import addUserFavorite from "../../common/api/requests/addUserFavorite";
 import Toast from "react-native-toast-message";
 import Check from "../../assets/icons/Check";
 import useAuth from "../../common/contexts/AuthContext";
+import deleteFavorite from "../../common/api/requests/deleteFavorite";
 
 export default function Mission({
   route,
 }: StackScreenProps<StackParamList, "Mission">) {
   const missionId = route.params.id;
-
   const { user } = useAuth();
   const { userFavorites } = useUserFavorites(user?.id || "");
 
@@ -32,12 +32,11 @@ export default function Mission({
   //   const { mission } = useMission(missionId);
   const mission = FAKE_MISSIONS_DATA[missionId];
 
-  // FIXME: Fix object possibility undefined error.
+  const currentFavorite = userFavorites?.filter(
+    (fav) => fav.organization.id === mission.organization.id
+  );
   const isOrganizationFollow =
-    userFavorites !== undefined &&
-    userFavorites?.filter(
-      (fav) => fav.organization.id === mission.organization.id
-    ).length > 0;
+    currentFavorite !== undefined && currentFavorite.length > 0;
 
   async function handleFollowOrganization(assos_id: string) {
     try {
@@ -52,6 +51,14 @@ export default function Mission({
           },
         });
       }
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  async function handleUnfollowOrganization(favoriteId: string) {
+    try {
+      await deleteFavorite(favoriteId);
     } catch (err) {
       console.error(err);
     }
@@ -151,7 +158,9 @@ export default function Mission({
             color="grey"
             variant="outline"
             Icon={<Check />}
-            handlePress={() => console.log("add function to unfollow")}
+            handlePress={() =>
+              handleUnfollowOrganization(currentFavorite[0].id)
+            }
           >
             Suivi
           </Button>
