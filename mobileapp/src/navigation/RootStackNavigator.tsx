@@ -14,9 +14,11 @@ import BottomTabNavigator from "./BottomTabNavigator";
 
 const RootStack = createStackNavigator();
 
-// TODO: Add Launching screen is `isLoading` on useAuth is true?
 export default function RootStackNavigator() {
-  const { user } = useAuth();
+  const { user, isLoading } = useAuth();
+
+  // TODO: Add Launching screen is `isLoading` on useAuth is true?
+  if (isLoading) return null;
 
   return (
     <RootStack.Navigator

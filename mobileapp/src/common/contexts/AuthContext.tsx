@@ -27,11 +27,9 @@ export function AuthProvider({
 }: {
   children: ReactNode;
 }): JSX.Element {
-  const { userConnected } = useUserConnected();
-
+  const { userConnected, isLoading } = useUserConnected();
   const [user, setUser] = useState<User | undefined>(undefined);
   const [error, setError] = useState<any>();
-  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   async function login(data: LoginFormValues) {
     try {
