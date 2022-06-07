@@ -1,7 +1,14 @@
 import { Role } from "./role";
 import { Status, StatusEnum } from "./status";
 
-export type AdminStatus = Status<StatusEnum.actived | StatusEnum.disabled  | StatusEnum.freezed | StatusEnum.deleted>;
+export enum AdminStatusEnum {
+    actived = StatusEnum.actived,
+    disabled = StatusEnum.disabled,
+    deleted = StatusEnum.deleted,
+    freezed = StatusEnum.freezed,
+}
+
+export type AdminStatus = Status<AdminStatusEnum>;
 
 export interface Admin {
     id: string,
