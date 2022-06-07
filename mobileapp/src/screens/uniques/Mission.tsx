@@ -15,6 +15,8 @@ import Calendar from "../../assets/icons/Calendar";
 import { Link } from "@react-navigation/native";
 import { FAKE_MISSIONS_DATA } from "../../common/mockedData";
 import useUserFavorites from "../../common/api/hooks/useUserFavorites";
+import addUserFavorite from "../../common/api/requests/addUserFavorite";
+import Toast from "react-native-toast-message";
 
 export default function Mission({
   route,
@@ -32,11 +34,29 @@ export default function Mission({
   );
 
   // FIXME: Fix object possibility undefined error.
-  const organizationAlreadyFollow =
+  const isOrganizationFollow =
     userFavorites !== undefined &&
     userFavorites?.filter(
       (fav) => fav.organization.id === mission.organization.id
     ).length > 0;
+
+  async function handleFollowOrganization(assos_id: string) {
+    try {
+      const response = await addUserFavorite(assos_id);
+
+      if (response.status === 201) {
+        Toast.show({
+          type: "success",
+          props: {
+            title: "Tout est bon",
+            text: `Merci d'avoir follow ${mission.organization.name} !`,
+          },
+        });
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  }
 
   return (
     <GlobalLayout
@@ -128,10 +148,15 @@ export default function Mission({
 
         <Button
           size="sm"
-          color={organizationAlreadyFollow ? "grey" : "black"}
-          variant={organizationAlreadyFollow ? "outline" : "default"}
+          color={isOrganizationFollow ? "grey" : "black"}
+          variant={isOrganizationFollow ? "outline" : "default"}
+          handlePress={() =>
+            isOrganizationFollow
+              ? console.log("add function to unfollow")
+              : handleFollowOrganization(mission.organization.id)
+          }
         >
-          {organizationAlreadyFollow ? "Suivi" : "Suivre"}
+          {isOrganizationFollow ? "Suivi" : "Suivre"}
         </Button>
       </Box>
 
