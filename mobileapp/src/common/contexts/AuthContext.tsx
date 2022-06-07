@@ -10,7 +10,6 @@ import {
 import { LoginFormValues } from "../../components/organisms/LoginForm/loginValidationSchema";
 import { User } from "../../models/user";
 import useUserConnected from "../api/hooks/useUserConnected";
-import fetchConnectedUser from "../api/requests/auth/fetchConnectedUser";
 import fetchLoginUser from "../api/requests/auth/fetchLoginUser";
 
 interface AuthContextType {
