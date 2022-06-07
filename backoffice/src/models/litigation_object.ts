@@ -1,6 +1,11 @@
 import { Status, StatusEnum } from "./status";
 
-export type LitigationObjectStatus = Status<StatusEnum.actived | StatusEnum.deleted>;
+export enum LitigationObjectStatusEnum {
+    actived = StatusEnum.opened,
+    closed = StatusEnum.closed,
+}
+
+export type LitigationObjectStatus = Status<LitigationObjectStatusEnum>;
 
 export interface LitigationObject {
     id: string,

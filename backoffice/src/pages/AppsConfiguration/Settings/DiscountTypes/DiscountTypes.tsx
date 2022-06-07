@@ -11,7 +11,7 @@ import { useModal } from 'src/hooks/useModal';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { CommonsUriEnum } from 'src/models/commons';
 import { AddDiscountTypeContent } from './DiscountTypeModalContent';
-import { COMMONS_BASE_URL } from 'src/services/commons.service';
+
 
 const WrapperBox = styled(Box)(
   ({ theme }) => `
@@ -23,7 +23,7 @@ const WrapperBox = styled(Box)(
 
 function DiscountTypes() {
 
-  const { data: defaultDiscountTypes, loading  } = useApi(`${COMMONS_BASE_URL}/${CommonsUriEnum.discountTypes}`);
+  const { data: defaultDiscountTypes, loading  } = useApi(`/${CommonsUriEnum.discountTypes}`);
 
   const [addModalOpen, handleOpenAddModal, handleCloseAddModal] = useModal();
 

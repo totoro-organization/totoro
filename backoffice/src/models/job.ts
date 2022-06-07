@@ -5,7 +5,14 @@ import { Status, StatusEnum } from "./status";
 import { Tag } from "./tag";
 import { User } from "./user";
 
-export type JobStatus = Status<StatusEnum.actived | StatusEnum.disabled | StatusEnum.coming>;
+export enum JobStatusEnum {
+    actived = StatusEnum.actived,
+    disabled = StatusEnum.disabled,
+    deleted = StatusEnum.deleted,
+    coming = StatusEnum.coming,
+}
+
+export type JobStatus = Status<JobStatusEnum>;
 
 export interface Job {
     id: string,
