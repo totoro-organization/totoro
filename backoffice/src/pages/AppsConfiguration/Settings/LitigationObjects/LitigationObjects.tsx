@@ -13,6 +13,7 @@ import { useModal } from 'src/hooks/useModal';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { CommonsUriEnum } from 'src/models/commons';
 import { AddLitigationObjectContent } from './LitigationObjectModalContent';
+import { COMMONS_BASE_URL } from 'src/services/commons.service';
 
 const WrapperBox = styled(Box)(
   ({ theme }) => `
@@ -24,7 +25,7 @@ const WrapperBox = styled(Box)(
 
 function LitigationObjects() {
 
-  const { data: defaultLitigationObjects, loading  } = useApi('/commons/litigation-objects');
+  const { data: defaultLitigationObjects, loading  } = useApi(`${COMMONS_BASE_URL}/${CommonsUriEnum.litigationObjects}`);
 
   const [addModalOpen, handleOpenAddModal, handleCloseAddModal] = useModal();
 
@@ -33,7 +34,7 @@ function LitigationObjects() {
     handleDeleteItem,
     handleUpdateItem,
     items: litigationObjects
-  } = useTable({ uri: CommonsUriEnum.litigationObjects, defaultItems: defaultLitigationObjects?.data, handleCloseModal: handleCloseAddModal })
+  } = useTable({ url: CommonsUriEnum.litigationObjects, defaultItems: defaultLitigationObjects?.data, handleCloseModal: handleCloseAddModal })
 
   const statusOptions = [
     {

@@ -10,6 +10,7 @@ import { useModal } from 'src/hooks/useModal';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { CommonsUriEnum } from 'src/models/commons';
 import { AddStatusContent } from './StatusModalContent';
+import { COMMONS_BASE_URL } from 'src/services/commons.service';
 
 const WrapperBox = styled(Box)(
   ({ theme }) => `
@@ -21,7 +22,7 @@ const WrapperBox = styled(Box)(
 
 function Statuses() {
 
-  const { data: defaultStatuses, loading  } = useApi(`/commons/${CommonsUriEnum.status}`);
+  const { data: defaultStatuses, loading  } = useApi(`${COMMONS_BASE_URL}/${CommonsUriEnum.status}`);
 
   const [addModalOpen, handleOpenAddModal, handleCloseAddModal] = useModal();
 
@@ -30,7 +31,7 @@ function Statuses() {
     handleDeleteItem,
     handleUpdateItem,
     items: statuses
-  } = useTable({ uri: CommonsUriEnum.status, defaultItems: defaultStatuses?.data, handleCloseModal: handleCloseAddModal })
+  } = useTable({ url: CommonsUriEnum.status, defaultItems: defaultStatuses?.data, handleCloseModal: handleCloseAddModal })
 
   return (
     <WrapperBox>
