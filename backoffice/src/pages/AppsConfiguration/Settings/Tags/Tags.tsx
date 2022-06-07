@@ -11,6 +11,7 @@ import { useModal } from 'src/hooks/useModal';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { CommonsUriEnum } from 'src/models/commons';
 import { AddTagContent } from './TagModalContent';
+import { COMMONS_BASE_URL } from 'src/services/commons.service';
 
 const WrapperBox = styled(Box)(
   ({ theme }) => `
@@ -22,7 +23,7 @@ const WrapperBox = styled(Box)(
 
 function Tags() {
 
-  const { data: defaultTags, loading  } = useApi(`/commons/${CommonsUriEnum.tags}`);
+  const { data: defaultTags, loading  } = useApi(`${COMMONS_BASE_URL}/${CommonsUriEnum.tags}`);
 
   const [addModalOpen, handleOpenAddModal, handleCloseAddModal] = useModal();
 

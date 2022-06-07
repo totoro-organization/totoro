@@ -6,10 +6,11 @@ import SuspenseLoader from 'src/components/SuspenseLoader';
 import TableWrapper from 'src/components/TableWrapper';
 import { AdminStatus } from 'src/models/admin';
 import { StatusEnum } from 'src/models/status';
+import { ADMIN_BASE_URL } from 'src/services/admins.service';
 
 function Admins() {
 
-  const { data: admins, loading } = useApi('/admins');
+  const { data: admins, loading } = useApi(ADMIN_BASE_URL);
 
   const statusOptions = [
     {
@@ -39,3 +40,5 @@ function Admins() {
 }
 
 export default Admins;
+
+

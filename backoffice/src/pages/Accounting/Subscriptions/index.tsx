@@ -6,11 +6,6 @@ import { Container, Tabs, Tab, Grid } from '@mui/material';
 import Footer from 'src/components/Footer';
 import { styled } from '@mui/material/styles';
 
-import FreeTab from './FreeTab';
-import PremiumTab from './PremiumTab';
-import ExpiredTab from './ExpiredTab';
-import CanceledTab from './CanceledTab';
-
 const TabsWrapper = styled(Tabs)(
   () => `
     .MuiTabs-scrollableX {
