@@ -13,6 +13,7 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { CommonsUriEnum } from 'src/models/commons';
 import { AddTagContent } from '../Tags/TagModalContent';
 import { AddRoleContent } from './RoleModalContent';
+import { COMMONS_BASE_URL } from 'src/services/commons.service';
 
 const WrapperBox = styled(Box)(
   ({ theme }) => `
@@ -24,7 +25,7 @@ const WrapperBox = styled(Box)(
 
 function Roles() {
 
-  const { data: defaultRoles, loading  } = useApi('/commons/roles');
+  const { data: defaultRoles, loading  } = useApi(`${COMMONS_BASE_URL}/${CommonsUriEnum.roles}`);
 
   const [addModalOpen, handleOpenAddModal, handleCloseAddModal] = useModal();
 
