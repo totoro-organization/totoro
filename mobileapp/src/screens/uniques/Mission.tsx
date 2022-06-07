@@ -28,7 +28,7 @@ export default function Mission({
 
   return (
     <GlobalLayout
-      withHeader={false}
+      header={<></>}
       fullBanner={
         <StyledImage source={{ uri: mission.banner }} resizeMode="cover" />
       }

@@ -3,7 +3,7 @@ import React from "react";
 
 import { Message, Missions, Shop, User } from "../assets/icons";
 import { Text } from "../components/atoms/Text";
-import ChatScreen from "../screens/Chat";
+import MessagingScreen from "../screens/Messaging";
 import MissionsScreen from "../screens/Missions";
 import MyAccountScreen from "../screens/MyAccount";
 import ShopScreen from "../screens/Shop";
@@ -29,7 +29,7 @@ const NAVIGATION_PAGES: NavigationPagesProps[] = [
   },
   {
     title: "Messagerie",
-    component: ChatScreen,
+    component: MessagingScreen,
     Icon: Message,
   },
   {
