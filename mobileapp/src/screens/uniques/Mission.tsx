@@ -18,21 +18,19 @@ import useUserFavorites from "../../common/api/hooks/useUserFavorites";
 import addUserFavorite from "../../common/api/requests/addUserFavorite";
 import Toast from "react-native-toast-message";
 import Check from "../../assets/icons/Check";
+import useAuth from "../../common/contexts/AuthContext";
 
 export default function Mission({
   route,
 }: StackScreenProps<StackParamList, "Mission">) {
   const missionId = route.params.id;
 
-  // TODO: Replace me by the real data.
-  const mission = FAKE_MISSIONS_DATA[missionId];
+  const { user } = useAuth();
+  const { userFavorites } = useUserFavorites(user?.id || "");
 
   // TODO: Create hook with fetch API to get mission by id.
   //   const { mission } = useMission(missionId);
-
-  const { userFavorites } = useUserFavorites(
-    "5e3ac14e-cefa-4af4-8641-a9eb7405145c"
-  );
+  const mission = FAKE_MISSIONS_DATA[missionId];
 
   // FIXME: Fix object possibility undefined error.
   const isOrganizationFollow =
