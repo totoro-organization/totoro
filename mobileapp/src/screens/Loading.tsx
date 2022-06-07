@@ -2,11 +2,7 @@ import React from "react";
 import styled from "styled-components/native";
 
 export default function Loading() {
-  return (
-    <Container>
-      <TextStyled>totoro!</TextStyled>
-    </Container>
-  );
+  return <Container>{/* <TextStyled>totoro!</TextStyled> */}</Container>;
 }
 
 const Container = styled.View`
