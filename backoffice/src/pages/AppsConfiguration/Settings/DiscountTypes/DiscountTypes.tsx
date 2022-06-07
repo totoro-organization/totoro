@@ -23,7 +23,7 @@ const WrapperBox = styled(Box)(
 
 function DiscountTypes() {
 
-  const { data: defaultDiscountTypes, loading  } = useApi(`${COMMONS_BASE_URL}/${CommonsUriEnum.discountTypes}`);
+  const { data: defaultDiscountTypes, loading  } = useApi(`/${CommonsUriEnum.discountTypes}`);
 
   const [addModalOpen, handleOpenAddModal, handleCloseAddModal] = useModal();
 

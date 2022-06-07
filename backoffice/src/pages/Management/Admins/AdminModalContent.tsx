@@ -15,7 +15,7 @@ interface EditAdminContentProps {
 
 export const EditAdminContent = ({item, handleUpdate, handleClose}: EditAdminContentProps) => {
 
-    const { data: roles, loading  } = useApi(`${COMMONS_BASE_URL}/${CommonsUriEnum.roles}`);
+    const { data: roles, loading  } = useApi(`/${CommonsUriEnum.roles}`);
     
     const [data, setData] = useState({
         role_id: item?.role.id

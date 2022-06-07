@@ -23,7 +23,7 @@ const WrapperBox = styled(Box)(
 
 function Pricings() {
 
-  const { data: defaultPricings, loading  } = useApi(`${COMMONS_BASE_URL}/${CommonsUriEnum.pricings}`);
+  const { data: defaultPricings, loading  } = useApi(`/${CommonsUriEnum.pricings}`);
 
   const [addModalOpen, handleOpenAddModal, handleCloseAddModal] = useModal();
 

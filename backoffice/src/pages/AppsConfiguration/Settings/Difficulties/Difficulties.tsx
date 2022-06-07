@@ -23,7 +23,7 @@ const WrapperBox = styled(Box)(
 
 function Difficultys() {
 
-  const { data: defaultDifficultys, loading  } = useApi(`${COMMONS_BASE_URL}/${CommonsUriEnum.difficulties}`);
+  const { data: defaultDifficultys, loading  } = useApi(`/${CommonsUriEnum.difficulties}`);
 
   const [addModalOpen, handleOpenAddModal, handleCloseAddModal] = useModal();
 

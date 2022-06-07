@@ -25,7 +25,7 @@ const WrapperBox = styled(Box)(
 
 function Roles() {
 
-  const { data: defaultRoles, loading  } = useApi(`${COMMONS_BASE_URL}/${CommonsUriEnum.roles}`);
+  const { data: defaultRoles, loading  } = useApi(`/${CommonsUriEnum.roles}`);
 
   const [addModalOpen, handleOpenAddModal, handleCloseAddModal] = useModal();
 
