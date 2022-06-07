@@ -31,8 +31,8 @@ export default function Mission({
     "5e3ac14e-cefa-4af4-8641-a9eb7405145c"
   );
 
-  // FIXME: Fix object possibily undefined error.
-  const userAlreadyFollowOrganization =
+  // FIXME: Fix object possibility undefined error.
+  const organizationAlreadyFollow =
     userFavorites !== undefined &&
     userFavorites?.filter(
       (fav) => fav.organization.id === mission.organization.id
@@ -128,10 +128,10 @@ export default function Mission({
 
         <Button
           size="sm"
-          color={userAlreadyFollowOrganization ? "grey" : "black"}
-          variant={userAlreadyFollowOrganization ? "outline" : "default"}
+          color={organizationAlreadyFollow ? "grey" : "black"}
+          variant={organizationAlreadyFollow ? "outline" : "default"}
         >
-          {userAlreadyFollowOrganization ? "Suivi" : "Suivre"}
+          {organizationAlreadyFollow ? "Suivi" : "Suivre"}
         </Button>
       </Box>
 
