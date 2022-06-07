@@ -31,7 +31,7 @@ function Statuses() {
     handleDeleteItem,
     handleUpdateItem,
     items: statuses
-  } = useTable({ uri: CommonsUriEnum.status, defaultItems: defaultStatuses?.data, handleCloseModal: handleCloseAddModal })
+  } = useTable({ url: CommonsUriEnum.status, defaultItems: defaultStatuses?.data, handleCloseModal: handleCloseAddModal })
 
   return (
     <WrapperBox>

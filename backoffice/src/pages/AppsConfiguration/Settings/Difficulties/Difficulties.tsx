@@ -32,7 +32,7 @@ function Difficultys() {
     handleDeleteItem,
     handleUpdateItem,
     items: difficulties
-  } = useTable({ uri: CommonsUriEnum.difficulties, defaultItems: defaultDifficultys?.data, handleCloseModal: handleCloseAddModal })
+  } = useTable({ url: CommonsUriEnum.difficulties, defaultItems: defaultDifficultys?.data, handleCloseModal: handleCloseAddModal })
 
   const statusOptions = [
     {

@@ -32,7 +32,7 @@ function Tags() {
     handleDeleteItem,
     handleUpdateItem,
     items: tags
-  } = useTable({ uri: CommonsUriEnum.tags, defaultItems: defaultTags?.data, handleCloseModal: handleCloseAddModal })
+  } = useTable({ url: CommonsUriEnum.tags, defaultItems: defaultTags?.data, handleCloseModal: handleCloseAddModal })
 
   const statusOptions = [
     {
