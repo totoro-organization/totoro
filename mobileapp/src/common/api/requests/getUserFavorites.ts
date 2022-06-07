@@ -21,5 +21,5 @@ export default async function getUserFavorites(userId: string): Promise<any> {
     }
   );
 
-  return response;
+  return response.json();
 }
