@@ -77,10 +77,10 @@ exports.router = (function () {
 		},
 	]);
 
-	UsersRouter.delete("/favorites/:favotiteId", [
+	UsersRouter.delete("/favorites/:favoriteId", [
 		passport,
 		async function (req, res) {
-			const id = req.params.favotiteId;
+			const id = req.params.favoriteId;
 			controller.deleteFavorite(res, id);
 		},
 	]);
