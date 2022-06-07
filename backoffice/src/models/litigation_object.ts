@@ -5,7 +5,7 @@ export enum LitigationObjectStatusEnum {
     closed = StatusEnum.closed,
 }
 
-export type LitigationObjectStatus = Status<LitigationObjectStatusEnum>;
+export type LitigationObjectStatus = Status<keyof typeof LitigationObjectStatusEnum>;
 
 export interface LitigationObject {
     id: string,

@@ -8,7 +8,7 @@ export enum AdminStatusEnum {
     freezed = StatusEnum.freezed,
 }
 
-export type AdminStatus = Status<AdminStatusEnum>;
+export type AdminStatus = Status<keyof typeof AdminStatusEnum>;
 
 export interface Admin {
     id: string,

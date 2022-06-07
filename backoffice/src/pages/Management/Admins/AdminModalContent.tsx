@@ -5,7 +5,6 @@ import { ButtonsBox } from "src/components/Modal";
 import { useApi } from "src/hooks/useApi";
 import { TableMethods } from "src/hooks/useTable";
 import { Admin, CommonsUriEnum, Role } from "src/models";
-import { COMMONS_BASE_URL } from "src/services/commons.service";
 
 interface EditAdminContentProps {
     item: Admin,
