@@ -1296,6 +1296,38 @@
                }
             }
           },
+          "/api/change/status":{
+            "put":{
+               "tags":["Commons"],
+               "x-swagger-router-controller":"commons/change",
+               "operationId":"changeStatus",
+               "parameters":[
+                  {
+                     "name":"data",
+                     "in":"body",
+                     "description":"Change Status",
+                     "required":true,
+                     "schema":{
+                        "$ref":"#/definitions/changeStatus"
+                     }
+                  }
+               ],
+               "responses":{
+                  "default":{
+                     "description":"Unexpected error",
+                     "schema":{
+                        "$ref":"#/definitions/Error"
+                     }
+                  },
+                  "201":{
+                     "description":"Status Changed",
+                     "schema":{
+                        "$ref":"#/definitions/Success"
+                     }
+                  }
+               }
+            }
+          },
           "/api/roles": {
              "get": {
                 "tags": ["Commons"],
@@ -3730,6 +3762,20 @@
                 "label": "Tests"
              }
           },
+          "changeStatus":{
+            "type":"object",
+            "properties":{
+               "tableName":{"type":"string"},
+               "id":{"type":"string"},
+               "status_id":{"type":"string"}
+            },
+            "required":["tableName", "id", "status_id"],
+            "example":{
+               "tableName": "Users",
+               "id": "561a448e-5ad9-4dd5-1208-7cc0419824d5",
+               "status_id": "561a448e-ggd4-4dd5-1208-8aa0419824d5"
+            }
+         },
           "getAllLitigationObjects": {
              "type": "object",
              "properties": {
