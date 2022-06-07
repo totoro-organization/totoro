@@ -17,6 +17,7 @@ import { FAKE_MISSIONS_DATA } from "../../common/mockedData";
 import useUserFavorites from "../../common/api/hooks/useUserFavorites";
 import addUserFavorite from "../../common/api/requests/addUserFavorite";
 import Toast from "react-native-toast-message";
+import Check from "../../assets/icons/Check";
 
 export default function Mission({
   route,
@@ -146,18 +147,29 @@ export default function Mission({
           </Box>
         </Link>
 
-        <Button
-          size="sm"
-          color={isOrganizationFollow ? "grey" : "black"}
-          variant={isOrganizationFollow ? "outline" : "default"}
-          handlePress={() =>
-            isOrganizationFollow
-              ? console.log("add function to unfollow")
-              : handleFollowOrganization(mission.organization.id)
-          }
-        >
-          {isOrganizationFollow ? "Suivi" : "Suivre"}
-        </Button>
+        {isOrganizationFollow && (
+          <Button
+            size="sm"
+            color="grey"
+            variant="outline"
+            Icon={<Check />}
+            handlePress={() => console.log("add function to unfollow")}
+          >
+            Suivi
+          </Button>
+        )}
+
+        {!isOrganizationFollow && (
+          <Button
+            size="sm"
+            color="black"
+            handlePress={() =>
+              handleFollowOrganization(mission.organization.id)
+            }
+          >
+            Suivre
+          </Button>
+        )}
       </Box>
 
       <Spacer axis="vertical" size={4} />
