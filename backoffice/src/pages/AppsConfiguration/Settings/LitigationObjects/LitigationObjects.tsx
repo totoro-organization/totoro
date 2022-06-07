@@ -13,7 +13,7 @@ import { useModal } from 'src/hooks/useModal';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { CommonsUriEnum } from 'src/models/commons';
 import { AddLitigationObjectContent } from './LitigationObjectModalContent';
-import { COMMONS_BASE_URL } from 'src/services/commons.service';
+
 
 const WrapperBox = styled(Box)(
   ({ theme }) => `

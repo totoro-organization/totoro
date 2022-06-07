@@ -7,7 +7,7 @@ import { styled } from '@mui/system';
 import { StatusEnum } from 'src/models/status';
 import { TableMethods, useTable } from 'src/hooks/useTable';
 import { CommonsUriEnum } from 'src/models/commons';
-import { COMMONS_BASE_URL } from 'src/services/commons.service';
+
 import { ADMIN_BASE_URL, updateRoleAdmin } from 'src/services/admins.service';
 
 const WrapperBox = styled(Box)(
