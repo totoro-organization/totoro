@@ -1,8 +1,9 @@
+import config from "../config";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import config from "../../config";
-import { API_HOST, API_ROUTES } from "../../routes";
 
-export default async function fetchConnectedUser(): Promise<any> {
+import { API_HOST, API_ROUTES } from "../routes";
+
+export default async function deleteFavorite(favoriteId: string): Promise<any> {
   const userToken = await AsyncStorage.getItem("userToken");
   const bearer = "Bearer" + " " + userToken;
 
@@ -12,10 +13,11 @@ export default async function fetchConnectedUser(): Promise<any> {
     Authorization: bearer,
   });
 
-  const response = await fetch(`${API_HOST}${API_ROUTES.AUTH_USER_CONNECTED}`, {
-    method: "GET",
-    headers: myHeaders,
-  });
+  const body = { favoriteId };
 
-  return response.json();
+  return fetch(`${API_HOST}${API_ROUTES.FAVORITES(favoriteId)}`, {
+    method: "DELETE",
+    headers: myHeaders,
+    body: JSON.stringify(body),
+  });
 }

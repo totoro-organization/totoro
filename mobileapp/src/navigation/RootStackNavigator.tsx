@@ -1,8 +1,6 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
-
 import useAuth from "../common/contexts/AuthContext";
-
 import Explanation from "../screens/Explanation";
 import Login from "../screens/Login";
 import Register from "../screens/Register";
@@ -16,9 +14,11 @@ import BottomTabNavigator from "./BottomTabNavigator";
 
 const RootStack = createStackNavigator();
 
-// TODO: Add Launching screen is `isLoading` on useAuth is true?
 export default function RootStackNavigator() {
-  const { user } = useAuth();
+  const { user, isLoading } = useAuth();
+
+  // TODO: Add Launching screen is `isLoading` on useAuth is true?
+  if (isLoading) return null;
 
   return (
     <RootStack.Navigator
