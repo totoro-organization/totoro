@@ -78,3 +78,49 @@ export const FAKE_MISSIONS_DATA = [
     interestedParticipants: 43,
   },
 ];
+
+// NOTE: The data schema isn't correct.
+export const FAKE_MESSAGES_DATA = [
+  {
+    id: 0,
+    mission: FAKE_MISSIONS_DATA[0],
+    messages: [
+      {
+        user: { username: "JackD" },
+        text: "ouais je serais là",
+        createdAt: new Date(),
+      },
+      {
+        user: { username: "MarieP", isOrganizateur: true },
+        text: "pas de soucis",
+        createdAt: new Date(),
+      },
+      {
+        user: { username: "RogerL" },
+        text: "d'acc!",
+        createdAt: new Date(),
+      },
+    ],
+  },
+  {
+    id: 1,
+    mission: FAKE_MISSIONS_DATA[1],
+    messages: [
+      {
+        user: { username: "JosephW", isOrganizateur: true },
+        text: "La mission se deroulera à 14h pour ceux qui seront présents sur place.",
+        createdAt: new Date(),
+      },
+      {
+        user: { username: "PloucO" },
+        text: "djsqlkhdkqjdqslk dqjksdh k dqhjkhdjk sqh dqshkdshkjmdhqkls",
+        createdAt: new Date(),
+      },
+      {
+        user: { username: "MaeS" },
+        text: "oki",
+        createdAt: new Date(),
+      },
+    ],
+  },
+];
