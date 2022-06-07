@@ -56,7 +56,9 @@ module.exports = (sequelize, DataTypes) => {
 			start_date: DataTypes.DATE,
 			end_date: DataTypes.DATE,
 			longitude: DataTypes.FLOAT,
-			latitude: DataTypes.FLOAT,
+			latitude: DataTypes.FLOAT,      
+			qrcode: DataTypes.STRING,
+			code: DataTypes.STRING,
 		},
 		{
 			sequelize,

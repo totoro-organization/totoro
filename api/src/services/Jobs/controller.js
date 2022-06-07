@@ -3,11 +3,14 @@ const asyncLib = require("async");
 const { Op } = require("sequelize");
 const commonsController = require("services/Commons/controller");
 const { getRow } = require("~/utils/common/thenCatch");
+const { label_status } = require("utils/enum.json");
 const {
 	Users,
 	Status,
 	Difficulties,
-	Roles,
+	Tags,
+	Tag_jobs,
+	Attachment_jobs,
 	Associations,
 	Litigations,
 	Litigation_objects,
@@ -22,6 +25,7 @@ const excludeCommon = { exclude: ["id", "createdAt", "updatedAt"] };
 const include = [
 	{ model: Status, as: "status", attributes: excludeCommon },
 	{ model: Difficulties, as: "difficulty", attributes: excludeCommon },
+	{ model: Attachment_jobs, as: "attachments", attributes: excludeCommon },
 	{
 		model: Associations_users,
 		as: "author",
@@ -48,6 +52,13 @@ const include = [
 			{ model: Status, as: "status", attributes: excludeCommon }
 		],
 	},
+	{
+		model: Tag_jobs,
+		as: "tags",
+		attributes: excludeCommon,
+		include: [{ model: Tags, as: "tag", attributes: excludeCommon }]
+	}
+
 ]
 const exclude = ["assos_user_id","difficulty_id","status_id"];
 
@@ -65,7 +76,11 @@ module.exports = {
 	getJob: function (res, id) {
 		commonsController.getOne(res, Jobs, id, exclude, include);
 	},
-	createJob: function (res, data) {},
+	createJob: async function (res, data) {
+		const statusData = await getRow(res, Status, { label: label_status.disabled });
+		const difficultyData = await getRow(res, Difficulties, { id: data.difficulty_id });
+		const authorData = await getRow(res, Associations_users, { id: data.assos_user_id });
+	},
 	updateJob: async function (res, id, data) {
 		const condition = {};
 		if(data.title) condition.title = data.title;

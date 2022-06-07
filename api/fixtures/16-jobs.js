@@ -11,6 +11,12 @@ module.exports = [
 			description: "Tournoi de football 14-18 ans",
 			start_date: "2022-05-06 12:10:00",
 			end_date: "2022-08-06 23:00:00",
+			end_date: "2022-08-06 23:00:00",
+			end_date: "2022-08-06 23:00:00",
+			longitude: 2.319089,
+			latitude: 48.84661,
+			qrcode: "RN2TSG55GS",
+			code: "/qrcode-jobs/job-1.png",
 			difficulty: {
 				level: 1,
 			},
