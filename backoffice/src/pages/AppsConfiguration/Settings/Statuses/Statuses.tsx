@@ -22,7 +22,7 @@ const WrapperBox = styled(Box)(
 
 function Statuses() {
 
-  const { data: defaultStatuses, loading  } = useApi(`${COMMONS_BASE_URL}/${CommonsUriEnum.status}`);
+  const { data: defaultStatuses, loading  } = useApi(`/${CommonsUriEnum.status}`);
 
   const [addModalOpen, handleOpenAddModal, handleCloseAddModal] = useModal();
 

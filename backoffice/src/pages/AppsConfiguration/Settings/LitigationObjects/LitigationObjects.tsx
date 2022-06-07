@@ -25,7 +25,7 @@ const WrapperBox = styled(Box)(
 
 function LitigationObjects() {
 
-  const { data: defaultLitigationObjects, loading  } = useApi(`${COMMONS_BASE_URL}/${CommonsUriEnum.litigationObjects}`);
+  const { data: defaultLitigationObjects, loading  } = useApi(`/${CommonsUriEnum.litigationObjects}`);
 
   const [addModalOpen, handleOpenAddModal, handleCloseAddModal] = useModal();
 
