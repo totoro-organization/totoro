@@ -1,7 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import React, { useState } from "react";
-import styled from "styled-components/native";
 import Filter from "../assets/icons/Filter";
 import Sort from "../assets/icons/Sort";
 import Box from "../components/atoms/Box";

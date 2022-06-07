@@ -34,7 +34,9 @@
     "react-native-web": "0.17.1",
     "react-query": "^3.39.0",
     "styled-components": "5.3.3",
-    "yup": "^0.32.11"
+    "yup": "^0.32.11",
+    "webpack-dev-server": "~3.11.0",
+    "@expo/webpack-config": "~0.16.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

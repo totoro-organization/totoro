@@ -17,7 +17,7 @@ export default function MissionCard({ mission }: MissionCardProps) {
   return (
     <Card onPress={() => navigation.navigate("Mission", { id: mission.id })}>
       <Text>
-        {mission.title} - {mission.organization}
+        {mission.title} - {mission.organization.name}
       </Text>
     </Card>
   );

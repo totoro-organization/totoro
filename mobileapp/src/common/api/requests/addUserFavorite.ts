@@ -13,9 +13,11 @@ export default async function addUserFavorite(assos_id: string): Promise<any> {
     Authorization: bearer,
   });
 
-  fetch(`${API_HOST}${API_ROUTES.USER_FAVORITES(assos_id)}`, {
+  const body = { assos_id };
+
+  return fetch(`${API_HOST}${API_ROUTES.USER_FAVORITES(assos_id)}`, {
     method: "POST",
     headers: myHeaders,
-    body: JSON.stringify(assos_id),
+    body: JSON.stringify(body),
   });
 }
