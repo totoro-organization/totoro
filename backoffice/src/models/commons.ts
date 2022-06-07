@@ -3,7 +3,7 @@ import { JobDifficulty } from "./job_difficulty";
 import { LitigationObject } from "./litigation_object";
 import { Pricing } from "./pricing";
 import { Role } from "./role";
-import { Status } from "./status";
+import { Status, StatusEnum } from "./status";
 import { Tag } from "./tag";
 
 export enum CommonsUriEnum {
@@ -15,6 +15,11 @@ export enum CommonsUriEnum {
     discountTypes = "types-discounts",
     appearances = "appearances",
     pricings = "pricings"
+}
+
+export enum CommonStatusEnum {
+    actived = StatusEnum.actived,
+    deleted = StatusEnum.deleted
 }
 
 export type Commons = 

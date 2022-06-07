@@ -9,7 +9,7 @@ export enum OrganizationStatusEnum {
     freezed = StatusEnum.freezed
 }
 
-export type OrganizationStatus = Status<OrganizationStatusEnum>;
+export type OrganizationStatus = Status<keyof typeof OrganizationStatusEnum>;
 
 export interface Organization {
     id: string,
