@@ -7,8 +7,7 @@ import { Text } from "../components/atoms/Text";
 import GlobalLayout from "../components/layouts/GlobalLayout";
 import { StackParamList } from "../navigation/StackNavigationParams";
 
-// TODO: Rename me to Messagerie?
-export default function Chat() {
+export default function Messaging() {
   const navigation = useNavigation<StackNavigationProp<StackParamList>>();
 
   return (
