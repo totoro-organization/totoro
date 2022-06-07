@@ -8,6 +8,7 @@ import Login from "../screens/Login";
 import Register from "../screens/Register";
 import MissionsFilter from "../screens/MissionsFilter";
 import Mission from "../screens/uniques/Mission";
+import Conversation from "../screens/uniques/Conversation";
 import Scanner from "../screens/Scanner";
 import Profile from "../screens/uniques/Profile";
 
@@ -42,6 +43,8 @@ export default function RootStackNavigator() {
           <RootStack.Screen name="MissionsFilter" component={MissionsFilter} />
           <RootStack.Screen name="Mission" component={Mission} />
           <RootStack.Screen name="Profile" component={Profile} />
+
+          <RootStack.Screen name="Conversation" component={Conversation} />
         </>
       )}
     </RootStack.Navigator>
