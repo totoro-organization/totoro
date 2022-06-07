@@ -271,14 +271,14 @@
                }
             }
           },
-          "/api/users/favorites/{favotiteId}":{
+          "/api/users/favorites/{favoriteId}":{
              "delete":{
                 "tags":["Users"],
                 "x-swagger-router-controller":"users",
                 "operationId":"deleteFavoriteUser",
                 "parameters": [
                   {
-                     "name": "favotiteId",
+                     "name": "favoriteId",
                      "in":"path",
                      "type": "string",
                      "required": true
