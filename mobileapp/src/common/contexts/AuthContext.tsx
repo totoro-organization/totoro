@@ -9,6 +9,7 @@ import {
 } from "react";
 import { LoginFormValues } from "../../components/organisms/LoginForm/loginValidationSchema";
 import { User } from "../../models/user";
+import useUserConnected from "../api/hooks/useUserConnected";
 import fetchConnectedUser from "../api/requests/auth/fetchConnectedUser";
 import fetchLoginUser from "../api/requests/auth/fetchLoginUser";
 
@@ -27,20 +28,11 @@ export function AuthProvider({
 }: {
   children: ReactNode;
 }): JSX.Element {
+  const { userConnected } = useUserConnected();
+
   const [user, setUser] = useState<User | undefined>(undefined);
   const [error, setError] = useState<any>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
-
-  function getConnectedUser() {
-    fetchConnectedUser()
-      .then((response) => {
-        if ("error" in response) return setError(response.error);
-
-        setUser(response.json());
-      })
-      .catch((err) => console.error(err))
-      .finally(() => setIsLoading(true));
-  }
 
   async function login(data: LoginFormValues) {
     try {
@@ -58,7 +50,7 @@ export function AuthProvider({
       await AsyncStorage.setItem("userToken", userToken.token);
 
       setError({ status: false, email: "" });
-      getConnectedUser();
+      setUser(userConnected);
     } catch (err) {
       console.error(err);
     }
@@ -70,8 +62,8 @@ export function AuthProvider({
   }
 
   useEffect(() => {
-    getConnectedUser();
-  }, []);
+    setUser(userConnected);
+  }, [userConnected]);
 
   return (
     <AuthContext.Provider value={{ user, logout, login, error, isLoading }}>
