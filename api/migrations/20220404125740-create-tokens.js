@@ -34,11 +34,11 @@ module.exports = {
       },
       qrcode: {
         allowNull: false,
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
-      nb_token: {
+      code: {
         allowNull: false,
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       end_date: {
         allowNull: false,

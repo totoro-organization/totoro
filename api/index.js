@@ -9,7 +9,7 @@ const swaggerTools = require("swagger-tools");
 let swaggerDoc = require("./swagger.json");
 
 const {
-	jobs,
+  jobs,
   users,
   admins,
   authentications,
@@ -60,8 +60,8 @@ const accessApi = async (req, res, next) => {
 	}
 };
 
+server.use("/api", [accessApi, commons]);
 server.use("/api/applications", [accessApi, applications]);
-server.use("/api", [accessApi, authentications]);
 server.use("/api/auth", [accessApi, authentications]);
 server.use("/api/users", [accessApi, users]);
 server.use("/api/admins", [accessApi, admins]);
@@ -70,7 +70,6 @@ server.use('/api/litigations', [accessApi, litigations]);
 // server.use('/api/messagings', [accessApi, messagings]);
 // server.use('/api/transactions', [accessApi, transactions]);
 // server.use('/api/subscriptions', [accessApi, subscriptions]);
-server.use("/api/commons", [accessApi, commons]);
 
 const options = {
 	controllers: "./src/services",

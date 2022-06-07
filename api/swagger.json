@@ -1179,7 +1179,7 @@
                }
             }
           },
-          "/api/commons/status": {
+          "/api/status": {
              "get": {
                 "tags": ["Commons"],
                 "x-swagger-router-controller": "commons/status",
@@ -1231,7 +1231,7 @@
                 }
              }
           },
-          "/api/commons/status/{id}":{
+          "/api/status/{id}":{
             "get":{
                "tags":["Commons"],
                "x-swagger-router-controller":"commons/status",
@@ -1296,7 +1296,7 @@
                }
             }
           },
-          "/api/commons/roles": {
+          "/api/roles": {
              "get": {
                 "tags": ["Commons"],
                 "x-swagger-router-controller": "commons/roles",
@@ -1356,7 +1356,7 @@
                 }
              }
           },
-          "/api/commons/roles/{id}":{
+          "/api/roles/{id}":{
             "get":{
                "tags":["Commons"],
                "x-swagger-router-controller":"commons/roles",
@@ -1448,7 +1448,7 @@
                }
             }
           },
-          "/api/commons/tags": {
+          "/api/tags": {
              "get": {
                 "tags": ["Commons"],
                 "x-swagger-router-controller": "commons/tags",
@@ -1508,7 +1508,7 @@
                 }
              }
           },
-          "/api/commons/tags/{id}":{
+          "/api/tags/{id}":{
             "get":{
                "tags":["Commons"],
                "x-swagger-router-controller":"commons/tags",
@@ -1600,7 +1600,7 @@
                }
             }
           },
-          "/api/commons/pricings": {
+          "/api/pricings": {
              "get": {
                 "tags": ["Commons"],
                 "x-swagger-router-controller": "commons/pricings",
@@ -1660,7 +1660,7 @@
                 }
              }
           },
-          "/api/commons/pricings/{id}":{
+          "/api/pricings/{id}":{
             "get":{
                "tags":["Commons"],
                "x-swagger-router-controller":"commons/pricings",
@@ -1752,7 +1752,7 @@
                }
             }
           },
-          "/api/commons/difficulties": {
+          "/api/difficulties": {
              "get": {
                 "tags": ["Commons"],
                 "x-swagger-router-controller": "commons/difficulties",
@@ -1812,7 +1812,7 @@
                 }
              }
           },
-          "/api/commons/difficulties/{id}":{
+          "/api/difficulties/{id}":{
             "get":{
                "tags":["Commons"],
                "x-swagger-router-controller":"commons/difficulties",
@@ -1904,7 +1904,7 @@
                }
             }
           },
-          "/api/commons/litigation-objects": {
+          "/api/litigation-objects": {
              "get": {
                 "tags": ["Commons"],
                 "x-swagger-router-controller": "commons/litigation-objects",
@@ -1964,7 +1964,7 @@
                 }
              }
           },
-          "/api/commons/litigation-objects/{id}":{
+          "/api/litigation-objects/{id}":{
             "get":{
                "tags":["Commons"],
                "x-swagger-router-controller":"commons/litigation-objects",
@@ -2056,7 +2056,7 @@
                }
             }
           },
-          "/api/commons/types-discounts": {
+          "/api/types-discounts": {
              "get": {
                 "tags": ["Commons"],
                 "x-swagger-router-controller": "commons/types-discounts",
@@ -2116,7 +2116,7 @@
                 }
              }
           },
-          "/api/commons/types-discounts/{id}":{
+          "/api/types-discounts/{id}":{
             "get":{
                "tags":["Commons"],
                "x-swagger-router-controller":"commons/types-discounts",
@@ -2208,7 +2208,7 @@
                }
             }
           },
-          "/api/commons/appearances": {
+          "/api/appearances": {
              "get": {
                 "tags": ["Commons"],
                 "x-swagger-router-controller": "commons/appearances",
@@ -2302,7 +2302,7 @@
                 }
              }
           },
-          "/api/commons/appearances/{id}":{
+          "/api/appearances/{id}":{
             "get":{
                "tags":["Commons"],
                "x-swagger-router-controller":"commons/appearances",
