@@ -19,7 +19,7 @@
         }
       },
       "security": [{ "ApiKeyAuth": [] }, { "bearerAuth": [] }],
-      "tags": [{"name":"Authentification"}, {"name":"Users"}, {"name":"Admins"}, {"name":"Litigations"}, {"name":"Applications"}, {"name":"Commons"}],
+      "tags": [{"name":"Authentification"}, {"name":"Users"}, {"name":"Favorites"}, {"name":"Admins"}, {"name":"Litigations"}, {"name":"Applications"}, {"name":"Commons"}],
       "paths": {
          "/api/users": {
              "get": {
@@ -271,14 +271,14 @@
                }
             }
           },
-          "/api/users/favorites/{favoriteId}":{
+          "/api/favorites/{id}":{
              "delete":{
-                "tags":["Users"],
-                "x-swagger-router-controller":"users",
+                "tags":["Favorites"],
+                "x-swagger-router-controller":"favorites",
                 "operationId":"deleteFavoriteUser",
                 "parameters": [
                   {
-                     "name": "favoriteId",
+                     "name": "id",
                      "in":"path",
                      "type": "string",
                      "required": true
