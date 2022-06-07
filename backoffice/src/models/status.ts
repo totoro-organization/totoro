@@ -20,5 +20,3 @@ export enum StatusEnum {
     opened = "opened",
     canceled = "canceled"
 }
-
-
