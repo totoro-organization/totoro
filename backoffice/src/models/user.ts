@@ -10,7 +10,7 @@ export enum UserStatusEnum {
     freezed = StatusEnum.freezed
 }
 
-export type UserStatus = Status<UserStatusEnum>;
+export type UserStatus = Status<keyof typeof UserStatusEnum>;
 
 export interface User {
     id: string,

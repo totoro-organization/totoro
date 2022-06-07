@@ -12,7 +12,7 @@ export enum JobStatusEnum {
     coming = StatusEnum.coming,
 }
 
-export type JobStatus = Status<JobStatusEnum>;
+export type JobStatus = Status<keyof typeof JobStatusEnum>;
 
 export interface Job {
     id: string,
