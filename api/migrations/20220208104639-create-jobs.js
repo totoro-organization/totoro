@@ -72,6 +72,14 @@ module.exports = {
 				allowNull: true,
 				type: Sequelize.FLOAT
 			},
+			qrcode: {
+			  allowNull: false,
+			  type: Sequelize.STRING
+			},
+			code: {
+			  allowNull: false,
+			  type: Sequelize.STRING
+			},
 			createdAt: {
 				allowNull: false,
 				type: Sequelize.DATE,
