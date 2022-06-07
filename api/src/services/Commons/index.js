@@ -10,7 +10,8 @@ const {
   Difficulties,
   Appearances,
   Litigation_objects,
-  Applications
+  Applications,
+  Favorites
 } = require("./../../../models");
 const {
   getRow
@@ -322,6 +323,14 @@ exports.router = (function () {
     const id = req.params.id;
     controller.delete(res, Appearances, { id });
   }]);
+
+  commonsRouter.delete("/favorites/:id", [
+		passport,
+		async function (req, res) {
+			const id = req.params.id;
+			controller.delete(res, Favorites, { id });
+		},
+	]);
 
   return commonsRouter;
 })();

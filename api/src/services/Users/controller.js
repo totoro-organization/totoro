@@ -199,10 +199,6 @@ module.exports = {
 		commonsController.create(null, res, Favorites, data, condition);
 	},
 
-	deleteFavorite: function (res, id) {
-		commonsController.delete(res, Favorites, { id });
-	},
-
 	getUserJobs: async function (res, id, queries = null) {
 		let condition = {};
 		if (queries && queries.status) {
