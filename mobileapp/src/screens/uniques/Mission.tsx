@@ -14,6 +14,7 @@ import Location from "../../assets/icons/Location";
 import Calendar from "../../assets/icons/Calendar";
 import { Link } from "@react-navigation/native";
 import { FAKE_MISSIONS_DATA } from "../../common/mockedData";
+import useUserFavorites from "../../common/api/hooks/useUserFavorites";
 
 export default function Mission({
   route,
@@ -25,6 +26,17 @@ export default function Mission({
 
   // TODO: Create hook with fetch API to get mission by id.
   //   const { mission } = useMission(missionId);
+
+  const { userFavorites } = useUserFavorites(
+    "5e3ac14e-cefa-4af4-8641-a9eb7405145c"
+  );
+
+  // FIXME: Fix object possibily undefined error.
+  const userAlreadyFollowOrganization =
+    userFavorites !== undefined &&
+    userFavorites?.filter(
+      (fav) => fav.organization.id === mission.organization.id
+    ).length > 0;
 
   return (
     <GlobalLayout
@@ -52,7 +64,7 @@ export default function Mission({
             params: { id: { missionId }, type: "organization" },
           }}
         >
-          {mission.organization}
+          {mission.organization.name}
         </Link>
       </Text>
 
@@ -94,6 +106,7 @@ export default function Mission({
         <Link
           to={{
             screen: "Profile",
+            // TODO: Replace me with organization id
             params: { id: { missionId }, type: "organization" },
           }}
         >
@@ -107,14 +120,18 @@ export default function Mission({
             <Spacer axis="horizontal" size={1} />
 
             <Box flexDirection="column">
-              <Text>{mission.organization}</Text>
+              <Text>{mission.organization.name}</Text>
               <Text color="grey">{mission.location}</Text>
             </Box>
           </Box>
         </Link>
 
-        <Button size="sm" color="black">
-          Suivre
+        <Button
+          size="sm"
+          color={userAlreadyFollowOrganization ? "grey" : "black"}
+          variant={userAlreadyFollowOrganization ? "outline" : "default"}
+        >
+          {userAlreadyFollowOrganization ? "Suivi" : "Suivre"}
         </Button>
       </Box>
 
