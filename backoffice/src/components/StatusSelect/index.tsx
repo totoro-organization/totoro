@@ -2,6 +2,7 @@ import { MenuItem, Select } from "@mui/material"
 import { useContext, useEffect, useState } from "react";
 import { StatusContext } from "src/contexts/StatusContext";
 import { changeStatus } from "src/services/status.service";
+import StatusLabel from "../StatusLabel";
 
 function StatusSelect({ statusOptions, currentItem, table, handleChangeStatus }: any) {
 
@@ -37,12 +38,14 @@ function StatusSelect({ statusOptions, currentItem, table, handleChangeStatus }:
         <Select
             id="admin_role"
             value={selectedOption ?? currentItem?.status.label}
-            label="Modifier le Rôle"
             required
             onChange={(e) => handleChange(e.target.value)}
             >
                 {
-                    options.map((option, i) => <MenuItem  key={option.id} value={option.label}>{option.label}</MenuItem>)
+                    options.map((option, i) => 
+                        <MenuItem  key={option.id} value={option.label}>
+                            <StatusLabel status={option.label} />
+                        </MenuItem>)
                 }
             
             </Select>
