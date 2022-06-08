@@ -22,7 +22,7 @@ import { Role } from 'src/models/role';
 import Modal from 'src/components/Modal';
 import StatusLabel from 'src/components/StatusLabel';
 import { useModal } from 'src/hooks/useModal';
-import { DeleteRoleContent, EditRoleContent } from './RoleModalContent';
+import { AddRoleContent, DeleteRoleContent, EditRoleContent } from './RoleModalContent';
 
 interface RolesTableProps {
   items: Role[], 
@@ -31,8 +31,11 @@ interface RolesTableProps {
   handleSelectOneItem: (event: ChangeEvent<HTMLInputElement>, itemId: string) => void,
   selectedSomeItems: any,
   selectedAllItems: any,
-  handleDeleteRole: () => any,
-  handleUpdateRole: () => any
+  handleDeleteItem: (id: string) => any,
+  handleUpdateItem: (id: string, data: object) => any,
+  handleAddItem: (data: object) => any,
+  addModalOpen: boolean,
+  handleCloseAddModal: () => void
 }
 
 const RolesTable: FC<RolesTableProps> = ({
@@ -42,22 +45,25 @@ const RolesTable: FC<RolesTableProps> = ({
   handleSelectOneItem,
   selectedSomeItems,
   selectedAllItems,
-  handleUpdateRole,
-  handleDeleteRole
+  handleUpdateItem,
+  handleDeleteItem,
+  handleAddItem,
+  addModalOpen,
+  handleCloseAddModal
 }) => {
 
   const [editModalOpen, handleOpenEditModal, handleCloseEditModal, editModalItem] = useModal();
   const [deleteModalOpen, handleOpenDeleteModal, handleCloseDeleteModal, deleteModalItem] = useModal();
-  
+
   const theme = useTheme();
 
   const handleUpdate = ({id, label}) => {
-    handleUpdateRole({id, label});
+    handleUpdateItem({id, label});
     handleCloseEditModal();
   }
 
   const handleDelete = ({id}) => {
-    handleDeleteRole(id);
+    handleDeleteItem(id);
     handleCloseDeleteModal();
   }
 
@@ -160,6 +166,9 @@ const RolesTable: FC<RolesTableProps> = ({
         </Modal>
         <Modal open={deleteModalOpen} handleClose={handleCloseDeleteModal} title={`Supprimer le role suivant : ${deleteModalItem?.label}`}>
             <DeleteRoleContent handleClose={handleCloseDeleteModal} handleDelete={handleDelete} item={deleteModalItem} />
+        </Modal>
+        <Modal open={addModalOpen} handleClose={handleCloseAddModal} title="Ajouter un role">
+          <AddRoleContent handleClose={handleCloseAddModal} handleAdd={handleAddItem}/>
         </Modal>
       </TableContainer>
   );

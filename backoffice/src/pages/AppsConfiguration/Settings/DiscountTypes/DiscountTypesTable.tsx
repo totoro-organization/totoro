@@ -22,7 +22,7 @@ import { DiscountType } from 'src/models';
 import Modal from 'src/components/Modal';
 import StatusLabel from 'src/components/StatusLabel';
 import { useModal } from 'src/hooks/useModal';
-import { DeleteDiscountTypeContent, EditDiscountTypeContent } from './DiscountTypeModalContent';
+import { AddDiscountTypeContent, DeleteDiscountTypeContent, EditDiscountTypeContent } from './DiscountTypeModalContent';
 
 interface DiscountTypesTableProps {
   items: DiscountType[], 
@@ -31,8 +31,11 @@ interface DiscountTypesTableProps {
   handleSelectOneItem: (event: ChangeEvent<HTMLInputElement>, itemId: string) => void,
   selectedSomeItems: any,
   selectedAllItems: any,
-  handleDeleteDiscountType: () => any,
-  handleUpdateDiscountType: () => any
+  handleDeleteItem: (id: string) => any,
+  handleUpdateItem: (id: string, data: object) => any,
+  handleAddItem: (data: object) => any,
+  addModalOpen: boolean,
+  handleCloseAddModal: () => void
 }
 
 const DiscountTypesTable: FC<DiscountTypesTableProps> = ({
@@ -42,8 +45,12 @@ const DiscountTypesTable: FC<DiscountTypesTableProps> = ({
   handleSelectOneItem,
   selectedSomeItems,
   selectedAllItems,
-  handleUpdateDiscountType,
-  handleDeleteDiscountType
+  handleUpdateItem,
+  handleDeleteItem,
+  handleAddItem,
+  addModalOpen,
+  handleCloseAddModal
+
 }) => {
 
   const [editModalOpen, handleOpenEditModal, handleCloseEditModal, editModalItem] = useModal();
@@ -52,12 +59,12 @@ const DiscountTypesTable: FC<DiscountTypesTableProps> = ({
   const theme = useTheme();
 
   const handleUpdate = ({id, label}) => {
-    handleUpdateDiscountType({id, label});
+    handleUpdateItem({id, label});
     handleCloseEditModal();
   }
 
   const handleDelete = ({id}) => {
-    handleDeleteDiscountType(id);
+    handleDeleteItem(id);
     handleCloseDeleteModal();
   }
 
@@ -160,6 +167,9 @@ const DiscountTypesTable: FC<DiscountTypesTableProps> = ({
         </Modal>
         <Modal open={deleteModalOpen} handleClose={handleCloseDeleteModal} title={`Supprimer le type suivant : ${deleteModalItem?.name}`}>
             <DeleteDiscountTypeContent handleClose={handleCloseDeleteModal} handleDelete={handleDelete} item={deleteModalItem} />
+        </Modal>
+        <Modal open={addModalOpen} handleClose={handleCloseAddModal} title="Ajouter un type">
+          <AddDiscountTypeContent handleClose={handleCloseAddModal} handleAdd={handleAddItem}/>
         </Modal>
       </TableContainer>
   );
