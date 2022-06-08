@@ -1,15 +1,12 @@
 import { MenuItem, Select } from "@mui/material"
 import { useContext, useEffect, useState } from "react";
 import { StatusContext } from "src/contexts/StatusContext";
-import { Status, StatusEnum } from "src/models";
+import { Status, StatusEnum, StatusOptions } from "src/models";
 import { changeStatus } from "src/services/status.service";
 import StatusLabel from "../StatusLabel";
 
 interface StatusSelectProps {
-    statusOptions: {
-        id: keyof typeof StatusEnum,
-        name: string
-    }[],
+    statusOptions: StatusOptions,
     currentItem: {
         id: string,
         status: {

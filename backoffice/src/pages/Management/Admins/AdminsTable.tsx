@@ -19,12 +19,11 @@ import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 import { Admin } from 'src/models/admin';
 import Modal from 'src/components/Modal';
-import StatusLabel from 'src/components/StatusLabel';
 import { useModal } from 'src/hooks/useModal';
 import { DeleteAdminContent, EditAdminContent } from './AdminModalContent';
 import { Link } from 'react-router-dom';
 import StatusSelect from 'src/components/StatusSelect';
-import { TableEnum } from 'src/models';
+import { StatusOptions, TableEnum } from 'src/models';
 
 interface AdminsTableProps {
   items: Admin[], 
@@ -35,7 +34,7 @@ interface AdminsTableProps {
   selectedAllItems: any,
   handleDeleteAdmin: (id: string) => any,
   handleUpdateAdmin: (id: string, data: object) => any,
-  statusOptions: any
+  statusOptions: StatusOptions
 }
 
 const AdminsTable: FC<AdminsTableProps> = ({

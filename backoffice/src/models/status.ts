@@ -20,3 +20,8 @@ export enum StatusEnum {
     opened = "opened",
     canceled = "canceled"
 }
+
+export type StatusOptions = {
+    id: keyof typeof StatusEnum,
+    name: string
+}[]
