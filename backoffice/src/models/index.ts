@@ -24,3 +24,4 @@ export type { Log } from './log';
 export { CommonsUriEnum } from './commons';
 export { StatusEnum } from './status';
 export { LangEnum } from './lang';
+export { TableEnum } from './table';
