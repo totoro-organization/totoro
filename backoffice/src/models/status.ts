@@ -22,6 +22,6 @@ export enum StatusEnum {
 }
 
 export type StatusOptions = {
-    id: keyof typeof StatusEnum,
+    id: keyof typeof StatusEnum | 'all',
     name: string
 }[]

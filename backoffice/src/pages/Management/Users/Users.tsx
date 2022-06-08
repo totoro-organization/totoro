@@ -5,10 +5,16 @@ import { useApi } from 'src/hooks/useApi';
 import SuspenseLoader from 'src/components/SuspenseLoader';
 import TableWrapper from 'src/components/TableWrapper';
 import { StatusEnum } from 'src/models/status';
+import { useTable } from 'src/hooks/useTable';
 
 function Users() {
 
-  const { data: users, loading } = useApi('/users');
+  const { data: defaultUsers, loading } = useApi('/users');
+
+  const {
+    handleDeleteItem,
+    items: users
+  } = useTable({ url: '/users', defaultItems: defaultUsers?.data })
 
   const statusOptions = [
     {
@@ -33,8 +39,8 @@ function Users() {
     <Card>
       {
         loading ? <SuspenseLoader/> :
-        <TableWrapper statusOptions={statusOptions} items={users?.data}>
-          <UsersTable statusOptions={statusOptions}/>
+        <TableWrapper statusOptions={statusOptions} items={users}>
+          <UsersTable/>
         </TableWrapper>
       }
     </Card>

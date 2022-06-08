@@ -1,16 +1,11 @@
-import { Box, Button } from '@mui/material';
+import { Box } from '@mui/material';
 import DiscountTypesTable from './DiscountTypesTable';
 import { useApi } from 'src/hooks/useApi';
 import SuspenseLoader from 'src/components/SuspenseLoader';
 import TableWrapper from 'src/components/TableWrapper';
 import { styled } from '@mui/system';
-import Modal from "src/components/Modal";
 import { StatusEnum } from 'src/models/status';
-import { useTable } from 'src/hooks/useTable';
-import { useModal } from 'src/hooks/useModal';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { CommonsUriEnum } from 'src/models/commons';
-import { AddDiscountTypeContent } from './DiscountTypeModalContent';
 
 
 const WrapperBox = styled(Box)(
@@ -23,16 +18,7 @@ const WrapperBox = styled(Box)(
 
 function DiscountTypes() {
 
-  const { data: defaultDiscountTypes, loading  } = useApi(`/${CommonsUriEnum.discountTypes}`);
-
-  const [addModalOpen, handleOpenAddModal, handleCloseAddModal] = useModal();
-
-  const {
-    handleAddItem,
-    handleDeleteItem,
-    handleUpdateItem,
-    items: discountTypes
-  } = useTable({ url: CommonsUriEnum.discountTypes, defaultItems: defaultDiscountTypes?.data, handleCloseModal: handleCloseAddModal })
+  const { data: discountTypes, loading  } = useApi(CommonsUriEnum.discountTypes);
 
   const statusOptions = [
     {
@@ -47,19 +33,13 @@ function DiscountTypes() {
 
   return (
     <WrapperBox>
-      <Button size='large' startIcon={<AddCircleOutlineIcon/>} sx={{ alignSelf: 'flex-end'}} onClick={handleOpenAddModal} variant="contained">
-        Ajouter un type de promotion
-      </Button>
       {
-        loading ? <SuspenseLoader/> : 
-        <TableWrapper statusOptions={statusOptions} items={discountTypes}>
+        loading || !discountTypes ? <SuspenseLoader/> : 
+        <TableWrapper url={CommonsUriEnum.discountTypes} statusOptions={statusOptions} defaultItems={discountTypes?.data}>
           {/* @ts-ignore */}
-            <DiscountTypesTable handleDeleteDiscountType={handleDeleteItem} handleUpdateDiscountType={handleUpdateItem} />
+            <DiscountTypesTable />
         </TableWrapper>
       }
-      <Modal open={addModalOpen} handleClose={handleCloseAddModal} title="Ajouter un type">
-        <AddDiscountTypeContent handleClose={handleCloseAddModal} handleAdd={handleAddItem}/>
-      </Modal>
     </WrapperBox>
   );
 }

@@ -1,16 +1,11 @@
-import { Box, Button } from '@mui/material';
+import { Box } from '@mui/material';
 import PricingsTable from './PricingsTable';
 import { useApi } from 'src/hooks/useApi';
 import SuspenseLoader from 'src/components/SuspenseLoader';
 import TableWrapper from 'src/components/TableWrapper';
 import { styled } from '@mui/system';
-import Modal from "src/components/Modal";
 import { StatusEnum } from 'src/models/status';
-import { useTable } from 'src/hooks/useTable';
-import { useModal } from 'src/hooks/useModal';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { CommonsUriEnum } from 'src/models/commons';
-import { AddPricingContent } from './PricingModalContent';
 
 
 const WrapperBox = styled(Box)(
@@ -23,16 +18,7 @@ const WrapperBox = styled(Box)(
 
 function Pricings() {
 
-  const { data: defaultPricings, loading  } = useApi(`/${CommonsUriEnum.pricings}`);
-
-  const [addModalOpen, handleOpenAddModal, handleCloseAddModal] = useModal();
-
-  const {
-    handleAddItem,
-    handleDeleteItem,
-    handleUpdateItem,
-    items: pricings
-  } = useTable({ url: CommonsUriEnum.pricings, defaultItems: defaultPricings?.data, handleCloseModal: handleCloseAddModal })
+  const { data: pricings, loading  } = useApi(CommonsUriEnum.pricings);
 
   const statusOptions = [
     {
@@ -47,19 +33,13 @@ function Pricings() {
 
   return (
     <WrapperBox>
-      <Button onClick={handleOpenAddModal} size='large' startIcon={<AddCircleOutlineIcon/>} sx={{ alignSelf: 'flex-end'}}  variant="contained">
-        Ajouter un pricing
-      </Button>
       {
-        loading ? <SuspenseLoader/> : 
-        <TableWrapper statusOptions={statusOptions} items={pricings}>
+        loading || !pricings ? <SuspenseLoader/> : 
+        <TableWrapper url={CommonsUriEnum.pricings} statusOptions={statusOptions} defaultItems={pricings?.data}>
           {/* @ts-ignore */}
-            <PricingsTable handleDeletePricing={handleDeleteItem} handleUpdatePricing={handleUpdateItem} />
+            <PricingsTable />
         </TableWrapper>
       }
-      <Modal open={addModalOpen} handleClose={handleCloseAddModal} title="Ajouter un pricing">
-        <AddPricingContent handleClose={handleCloseAddModal} handleAdd={handleAddItem}/>
-      </Modal>
     </WrapperBox>
   );
 }

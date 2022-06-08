@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { Box } from '@mui/material';
 import AdminsTable from './AdminsTable';
 import { useApi } from 'src/hooks/useApi';
@@ -52,7 +54,7 @@ function Admins() {
         loading ? <SuspenseLoader/> : 
         <TableWrapper statusOptions={statusOptions} items={admins}>
           {/* @ts-ignore */}
-            <AdminsTable statusOptions={statusOptions} handleDeleteAdmin={handleDeleteItem} handleUpdateAdmin={handleUpdateItem} />
+            <AdminsTable handleDeleteAdmin={handleDeleteItem} handleUpdateAdmin={handleUpdateItem} />
         </TableWrapper>
       }
     </WrapperBox>
