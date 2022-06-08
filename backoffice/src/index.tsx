@@ -9,13 +9,12 @@ import { BrowserRouter } from 'react-router-dom';
 import 'nprogress/nprogress.css';
 import { SidebarProvider } from './contexts/SidebarContext';
 
+
 ReactDOM.render(
   <HelmetProvider>
-    <SidebarProvider>
       <BrowserRouter>
         <App />
       </BrowserRouter>
-    </SidebarProvider>
   </HelmetProvider>,
   document.getElementById('root')
 );

@@ -10,6 +10,9 @@ import HeaderButtons from './Buttons';
 import HeaderUserbox from './Userbox';
 import Logo from 'src/components/Logo';
 
+import {useTranslation} from "react-i18next";
+import useAuth from 'src/hooks/useAuth';
+
 const HeaderWrapper = styled(Box)(
   ({ theme }) => `
         height: ${theme.header.height};
@@ -30,7 +33,12 @@ const HeaderWrapper = styled(Box)(
 );
 
 function Header() {
+
+  const { user } = useAuth();
+
   const { sidebarToggle, toggleSidebar } = useContext(SidebarContext);
+
+  const {t, i18n} = useTranslation('common');
 
   return (
     <HeaderWrapper display="flex" alignItems="center">
@@ -39,6 +47,7 @@ function Header() {
           <Logo />
         </Hidden>
       </Box>
+      <h2>{ t('welcome.title', {name: user.firstname + ' ' + user.lastname}) }</h2>
       <Box display="flex" alignItems="center">
         <HeaderButtons />
         <HeaderUserbox />

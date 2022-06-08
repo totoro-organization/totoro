@@ -138,9 +138,7 @@ const AdminsTable: FC<AdminsTableProps> = ({
                 </Typography>
               </TableCell>
               <TableCell align="right">
-                
                 <StatusSelect table="Admins" currentItem={{ id: admin.id, status: admin.status}} statusOptions={statusOptions} />
-                {/* <StatusLabel status={admin.status.label} /> */}
               </TableCell>
                   <TableCell align="right">
                     <Tooltip title="Editer" arrow>

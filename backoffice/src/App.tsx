@@ -7,22 +7,46 @@ import ThemeProvider from './theme/ThemeProvider';
 import { CssBaseline } from '@mui/material';
 import { AuthProvider } from './hooks/useAuth';
 import { StatusProvider } from './contexts/StatusContext';
+import useAuth from './hooks/useAuth';
+import { I18nextProvider } from 'react-i18next';
+import i18next from 'i18next';
+
+import { common_en, common_fr } from 'src/translate';
+import { LangEnum } from './models';
+import { SidebarProvider } from './contexts/SidebarContext';
 
 const App = () => {
+  const { lang } = useAuth();
+
+  i18next.init({
+    interpolation: { escapeValue: false }, // React already does escaping
+    lng: LangEnum.fr, // language to use
+    resources: {
+      en: {
+        common: common_en // 'common' is our custom namespace
+      },
+      fr: {
+        common: common_fr
+      }
+    }
+  });
+  console.log(i18next.t('common.welcome.title'));
 
   const content = useRoutes(routes);
 
   return (
-    <ThemeProvider>
-      <LocalizationProvider dateAdapter={AdapterDateFns}>
-        <CssBaseline />
-        <AuthProvider>
-          <StatusProvider>
-            {content}
-          </StatusProvider>
-        </AuthProvider>
-      </LocalizationProvider>
-    </ThemeProvider>
+    <I18nextProvider i18n={i18next}>
+      <SidebarProvider>
+        <ThemeProvider>
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <CssBaseline />
+            <AuthProvider>
+              <StatusProvider>{content}</StatusProvider>
+            </AuthProvider>
+          </LocalizationProvider>
+        </ThemeProvider>
+      </SidebarProvider>
+    </I18nextProvider>
   );
-}
+};
 export default App;
