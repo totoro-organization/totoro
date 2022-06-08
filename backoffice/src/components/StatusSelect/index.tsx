@@ -1,30 +1,42 @@
 import { MenuItem, Select } from "@mui/material"
 import { useContext, useEffect, useState } from "react";
 import { StatusContext } from "src/contexts/StatusContext";
+import { Status, StatusEnum } from "src/models";
 import { changeStatus } from "src/services/status.service";
 import StatusLabel from "../StatusLabel";
 
-function StatusSelect({ statusOptions, currentItem, table, handleChangeStatus }: any) {
+interface StatusSelectProps {
+    statusOptions: {
+        id: keyof typeof StatusEnum,
+        name: string
+    }[],
+    currentItem: {
+        id: string,
+        status: {
+            label: keyof typeof StatusEnum
+        }
+    },
+    table: string
+}
 
-    const statusAll = useContext(StatusContext);
+function StatusSelect({ statusOptions, currentItem, table }: StatusSelectProps) {
+
+    const allStatuses = useContext(StatusContext);
     const [options, setOptions] = useState<any>([]);
     const [selectedOption, setSelectedOption] = useState<any>(null);
 
     useEffect(() => {
-        if(statusAll.length) {
-            const filteredOptions = statusAll.filter((status) => {
-                if(statusOptions.find(option => option.id === status.label)) return status;
-            })
+        if(allStatuses.length) {
+            const filteredOptions = allStatuses.filter((status: Status<any>) => statusOptions.find(option => option.id === status.label));
             setOptions(filteredOptions);
         }
         
-    }, [statusAll]);
+    }, [allStatuses]);
 
 
-    const handleChange = async (value) => {
+    const handleChange = async (value: string) => {
         setSelectedOption(value);
-        const status = statusAll.find(status => status.label === value);
-        console.log(status);
+        const status = allStatuses.find((status: Status<any>) => status.label === value);
         const response = await changeStatus({
             tableName: table,
             id: currentItem.id,
@@ -42,7 +54,7 @@ function StatusSelect({ statusOptions, currentItem, table, handleChangeStatus }:
             onChange={(e) => handleChange(e.target.value)}
             >
                 {
-                    options.map((option, i) => 
+                    options.map((option: Status<any>) => 
                         <MenuItem  key={option.id} value={option.label}>
                             <StatusLabel status={option.label} />
                         </MenuItem>)

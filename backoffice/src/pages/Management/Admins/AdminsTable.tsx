@@ -24,6 +24,7 @@ import { useModal } from 'src/hooks/useModal';
 import { DeleteAdminContent, EditAdminContent } from './AdminModalContent';
 import { Link } from 'react-router-dom';
 import StatusSelect from 'src/components/StatusSelect';
+import { TableEnum } from 'src/models';
 
 interface AdminsTableProps {
   items: Admin[], 
@@ -138,7 +139,7 @@ const AdminsTable: FC<AdminsTableProps> = ({
                 </Typography>
               </TableCell>
               <TableCell align="right">
-                <StatusSelect table="Admins" currentItem={{ id: admin.id, status: admin.status}} statusOptions={statusOptions} />
+                <StatusSelect table={TableEnum.admins} currentItem={{ id: admin.id, status: admin.status}} statusOptions={statusOptions} />
               </TableCell>
                   <TableCell align="right">
                     <Tooltip title="Editer" arrow>
