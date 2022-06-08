@@ -139,7 +139,7 @@ const AdminsTable: FC<AdminsTableProps> = ({
               </TableCell>
               <TableCell align="right">
                 
-                <StatusSelect currentStatus={admin.status} statusOptions={statusOptions} />
+                <StatusSelect table="Admins" currentItem={{ id: admin.id, status: admin.status}} statusOptions={statusOptions} />
                 {/* <StatusLabel status={admin.status.label} /> */}
               </TableCell>
                   <TableCell align="right">

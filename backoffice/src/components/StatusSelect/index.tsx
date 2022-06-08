@@ -1,16 +1,13 @@
 import { MenuItem, Select } from "@mui/material"
 import { useContext, useEffect, useState } from "react";
 import { StatusContext } from "src/contexts/StatusContext";
+import { changeStatus } from "src/services/status.service";
 
-function StatusSelect({ statusOptions, currentStatus }) {
+function StatusSelect({ statusOptions, currentItem, table, handleChangeStatus }: any) {
 
     const statusAll = useContext(StatusContext);
     const [options, setOptions] = useState<any>([]);
-    const [selectedOption, setSelectedOption] = useState<any>(currentStatus?.label);
-
-    // useEffect(() => {
-    //     if(currentStatus) setSelectedOption(currentStatus)
-    // }, [currentStatus]);
+    const [selectedOption, setSelectedOption] = useState<any>(null);
 
     useEffect(() => {
         if(statusAll.length) {
@@ -23,14 +20,26 @@ function StatusSelect({ statusOptions, currentStatus }) {
     }, [statusAll]);
 
 
+    const handleChange = async (value) => {
+        setSelectedOption(value);
+        const status = statusAll.find(status => status.label === value);
+        console.log(status);
+        const response = await changeStatus({
+            tableName: table,
+            id: currentItem.id,
+            status_id: status.id
+        });
+        if('error' in response) return;
+    }
+
+
     return (
         <Select
             id="admin_role"
-            defaultValue={selectedOption}
-            displayEmpty
+            value={selectedOption ?? currentItem?.status.label}
             label="Modifier le Rôle"
             required
-            onChange={(e) => console.log(e.target.value)}
+            onChange={(e) => handleChange(e.target.value)}
             >
                 {
                     options.map((option, i) => <MenuItem  key={option.id} value={option.label}>{option.label}</MenuItem>)
