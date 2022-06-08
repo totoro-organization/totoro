@@ -2,6 +2,7 @@ import type { ProfileType } from "../screens/uniques/Profile";
 
 export type StackParamList = {
   Mission: { id: number };
+  Conversation: { id: number };
   Profile: { id: number; type: ProfileType };
 } & AuthParamList &
   BottomTabParamList;

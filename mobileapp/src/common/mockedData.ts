@@ -54,7 +54,10 @@ export const FAKE_ASSOCIATIONS_DATA: Association[] = [
 export const FAKE_MISSIONS_DATA = [
   {
     id: 0,
-    organization: "Les restau du coeur",
+    organization: {
+      name: "Les restau du coeur",
+      id: "00d2cc55-1395-428f-9a8f-0225278b76a7",
+    },
     logo: "https://ongconseil.com/php/wp-content/uploads/2015/12/LogoRestos.jpg",
     title: "Collecte alimentaire",
     location: "Montreuil",
@@ -67,7 +70,7 @@ export const FAKE_MISSIONS_DATA = [
   },
   {
     id: 1,
-    organization: "Solid’elles",
+    organization: { name: "Solid’elles", id: "342" },
     logo: "https://solidelles.com/wp-content/uploads/2021/10/logovf-02.png",
     title: "Collecte de dons pour des femmes en situation de précarité",
     location: "Paris 12",
@@ -76,5 +79,51 @@ export const FAKE_MISSIONS_DATA = [
     banner: "https://images.unsplash.com/photo-1541802645635-11f2286a7482",
     tags: ["Solidarité et santé"],
     interestedParticipants: 43,
+  },
+];
+
+// NOTE: The data schema isn't correct.
+export const FAKE_MESSAGES_DATA = [
+  {
+    id: 0,
+    mission: FAKE_MISSIONS_DATA[0],
+    messages: [
+      {
+        user: { username: "JackD" },
+        text: "ouais je serais là",
+        createdAt: new Date(),
+      },
+      {
+        user: { username: "MarieP", isOrganizateur: true },
+        text: "pas de soucis",
+        createdAt: new Date(),
+      },
+      {
+        user: { username: "RogerL" },
+        text: "d'acc!",
+        createdAt: new Date(),
+      },
+    ],
+  },
+  {
+    id: 1,
+    mission: FAKE_MISSIONS_DATA[1],
+    messages: [
+      {
+        user: { username: "JosephW", isOrganizateur: true },
+        text: "La mission se deroulera à 14h pour ceux qui seront présents sur place.",
+        createdAt: new Date(),
+      },
+      {
+        user: { username: "PloucO" },
+        text: "djsqlkhdkqjdqslk dqjksdh k dqhjkhdjk sqh dqshkdshkjmdhqkls",
+        createdAt: new Date(),
+      },
+      {
+        user: { username: "MaeS" },
+        text: "oki",
+        createdAt: new Date(),
+      },
+    ],
   },
 ];
