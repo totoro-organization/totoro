@@ -23,6 +23,7 @@ import StatusLabel from 'src/components/StatusLabel';
 import { useModal } from 'src/hooks/useModal';
 import { DeleteAdminContent, EditAdminContent } from './AdminModalContent';
 import { Link } from 'react-router-dom';
+import StatusSelect from 'src/components/StatusSelect';
 
 interface AdminsTableProps {
   items: Admin[], 
@@ -32,7 +33,8 @@ interface AdminsTableProps {
   selectedSomeItems: any,
   selectedAllItems: any,
   handleDeleteAdmin: (id: string) => any,
-  handleUpdateAdmin: (id: string, data: object) => any
+  handleUpdateAdmin: (id: string, data: object) => any,
+  statusOptions: any
 }
 
 const AdminsTable: FC<AdminsTableProps> = ({
@@ -43,7 +45,8 @@ const AdminsTable: FC<AdminsTableProps> = ({
   selectedSomeItems,
   selectedAllItems,
   handleUpdateAdmin,
-  handleDeleteAdmin
+  handleDeleteAdmin,
+  statusOptions
 }) => {
 
   const [editModalOpen, handleOpenEditModal, handleCloseEditModal, editModalItem] = useModal();
@@ -135,7 +138,9 @@ const AdminsTable: FC<AdminsTableProps> = ({
                 </Typography>
               </TableCell>
               <TableCell align="right">
-                <StatusLabel status={admin.status.label} />
+                
+                <StatusSelect currentStatus={admin.status} statusOptions={statusOptions} />
+                {/* <StatusLabel status={admin.status.label} /> */}
               </TableCell>
                   <TableCell align="right">
                     <Tooltip title="Editer" arrow>

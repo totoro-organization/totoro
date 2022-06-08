@@ -53,7 +53,7 @@ function Admins() {
         loading ? <SuspenseLoader/> : 
         <TableWrapper statusOptions={statusOptions} items={admins}>
           {/* @ts-ignore */}
-            <AdminsTable handleDeleteAdmin={handleDeleteItem} handleUpdateAdmin={handleUpdateItem} />
+            <AdminsTable statusOptions={statusOptions} handleDeleteAdmin={handleDeleteItem} handleUpdateAdmin={handleUpdateItem} />
         </TableWrapper>
       }
     </WrapperBox>
