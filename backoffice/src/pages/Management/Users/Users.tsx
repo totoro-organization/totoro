@@ -16,13 +16,17 @@ function Users() {
       name: 'Actif'
     },
     {
-      id: StatusEnum.disabled,
-      name: 'Inactif'
+      id: StatusEnum.deleted,
+      name: 'Supprimé'
     },
     {
       id: StatusEnum.freezed,
       name: 'Gelé'
-    }
+    },
+    {
+      id: StatusEnum.disabled,
+      name: 'Désactivé'
+    },
   ];
 
   return (
@@ -30,7 +34,7 @@ function Users() {
       {
         loading ? <SuspenseLoader/> :
         <TableWrapper statusOptions={statusOptions} items={users?.data}>
-          <UsersTable />
+          <UsersTable statusOptions={statusOptions}/>
         </TableWrapper>
       }
     </Card>

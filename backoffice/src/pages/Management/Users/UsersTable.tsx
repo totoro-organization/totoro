@@ -18,7 +18,8 @@ import { User } from 'src/models/user';
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 import { Link } from 'react-router-dom';
-import StatusLabel from 'src/components/StatusLabel';
+import { StatusOptions, TableEnum } from 'src/models';
+import StatusSelect from 'src/components/StatusSelect';
 
 interface UsersTableProps {
   items: User[], 
@@ -26,7 +27,8 @@ interface UsersTableProps {
   handleSelectAllItems: (event: ChangeEvent<HTMLInputElement>) => void, 
   handleSelectOneItem: (event: ChangeEvent<HTMLInputElement>, itemId: string) => void,
   selectedSomeItems: any,
-  selectedAllItems: any
+  selectedAllItems: any,
+  statusOptions: StatusOptions
 }
 
 const UsersTable: FC<UsersTableProps> = ({
@@ -35,7 +37,8 @@ const UsersTable: FC<UsersTableProps> = ({
   handleSelectAllItems, 
   handleSelectOneItem,
   selectedSomeItems,
-  selectedAllItems
+  selectedAllItems,
+  statusOptions
 }) => {
 
   const theme = useTheme();
@@ -114,7 +117,7 @@ const UsersTable: FC<UsersTableProps> = ({
                     </Typography>
                   </TableCell>
                   <TableCell align="right">
-                    <StatusLabel status={user.status.label} />
+                    <StatusSelect table={TableEnum.users} currentItem={{ id: user.id, status: user.status}} statusOptions={statusOptions} />
                   </TableCell>
                   <TableCell align="right">
                     <Tooltip title="Editer la mission" arrow>
