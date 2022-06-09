@@ -31,11 +31,11 @@ function Admins() {
     },
     {
       id: StatusEnum.freezed,
-      name: 'Supprimé'
+      name: 'Gelé'
     },
     {
       id: StatusEnum.disabled,
-      name: 'Supprimé'
+      name: 'Désactivé'
     },
   ];
 

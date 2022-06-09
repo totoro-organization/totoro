@@ -25,6 +25,7 @@ import { Link } from 'react-router-dom';
 import StatusSelect from 'src/components/StatusSelect';
 import { TableEnum } from 'src/models';
 import { TableProps } from 'src/components/TableWrapper';
+import { updateRoleAdmin } from 'src/services/admins.service';
 
 
 const AdminsTable: FC<TableProps<Admin>> = ({
@@ -34,8 +35,8 @@ const AdminsTable: FC<TableProps<Admin>> = ({
   handleSelectOneItem,
   selectedSomeItems,
   selectedAllItems,
-  handleUpdateItem,
   handleDeleteItem,
+  handleGetItems,
   statusOptions
 }) => {
 
@@ -44,9 +45,11 @@ const AdminsTable: FC<TableProps<Admin>> = ({
   
   const theme = useTheme();
 
-  const handleUpdate = (id: string, data: object) => {
-    handleUpdateItem(id, data);
+  const handleUpdate = async (id: string, data: object) => {
+    const response = await updateRoleAdmin(id, data);
     handleCloseEditModal();
+    if('error' in response) return;
+    handleGetItems();
   }
 
   const handleDelete = (id: string) => {
