@@ -40,6 +40,7 @@ export interface TableProps<T> {
   handleAddItem: (data: object) => any,
   addModalOpen: boolean,
   handleCloseAddModal: () => void,
+  handleGetItems: () => void,
   statusOptions: StatusOptions
 }
 
@@ -222,6 +223,7 @@ const TableWrapper: FC<TableWrapperProps> = ({
             handleUpdateItem,
             handleDeleteItem,
             handleAddItem,
+            handleGetItems,
             addModalOpen,
             handleCloseAddModal
             }) 
