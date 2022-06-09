@@ -35,7 +35,7 @@ function LitigationObjects() {
     <WrapperBox>
       {
         loading || !litigationObjects ? <SuspenseLoader/> : 
-        <TableWrapper url={CommonsUriEnum.litigationObjects} statusOptions={statusOptions} defaultItems={litigationObjects?.data}>
+        <TableWrapper addButton url={CommonsUriEnum.litigationObjects} statusOptions={statusOptions} defaultItems={litigationObjects?.data}>
             {/* @ts-ignore */}
             <LitigationObjectsTable />
         </TableWrapper>

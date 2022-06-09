@@ -22,22 +22,9 @@ import Modal from 'src/components/Modal';
 import StatusLabel from 'src/components/StatusLabel';
 import { useModal } from 'src/hooks/useModal';
 import { AddTagContent, DeleteTagContent, EditTagContent } from './TagModalContent';
+import { TableProps } from 'src/components/TableWrapper';
 
-interface TagsTableProps {
-  items: Tag[], 
-  selectedItems: any,
-  handleSelectAllItems: (event: ChangeEvent<HTMLInputElement>) => void, 
-  handleSelectOneItem: (event: ChangeEvent<HTMLInputElement>, itemId: string) => void,
-  selectedSomeItems: any,
-  selectedAllItems: any,
-  handleDeleteItem: (id: string) => any,
-  handleUpdateItem: (id: string, data: object) => any,
-  handleAddItem: (data: object) => any,
-  addModalOpen: boolean,
-  handleCloseAddModal: () => void
-}
-
-const TagsTable: FC<TagsTableProps> = ({
+const TagsTable: FC<TableProps<Tag>> = ({
   items: tags, 
   selectedItems,
   handleSelectAllItems, 

@@ -23,22 +23,10 @@ import Modal from 'src/components/Modal';
 import StatusLabel from 'src/components/StatusLabel';
 import { useModal } from 'src/hooks/useModal';
 import { AddDiscountTypeContent, DeleteDiscountTypeContent, EditDiscountTypeContent } from './DiscountTypeModalContent';
+import { TableProps } from 'src/components/TableWrapper';
 
-interface DiscountTypesTableProps {
-  items: DiscountType[], 
-  selectedItems: any,
-  handleSelectAllItems: (event: ChangeEvent<HTMLInputElement>) => void, 
-  handleSelectOneItem: (event: ChangeEvent<HTMLInputElement>, itemId: string) => void,
-  selectedSomeItems: any,
-  selectedAllItems: any,
-  handleDeleteItem: (id: string) => any,
-  handleUpdateItem: (id: string, data: object) => any,
-  handleAddItem: (data: object) => any,
-  addModalOpen: boolean,
-  handleCloseAddModal: () => void
-}
 
-const DiscountTypesTable: FC<DiscountTypesTableProps> = ({
+const DiscountTypesTable: FC<TableProps<DiscountType>> = ({
   items: discountTypes, 
   selectedItems,
   handleSelectAllItems, 

@@ -20,22 +20,10 @@ import { Status } from 'src/models';
 import Modal from 'src/components/Modal';
 import { useModal } from 'src/hooks/useModal';
 import { AddStatusContent, EditStatusContent } from './StatusModalContent';
+import { TableProps } from 'src/components/TableWrapper';
 
-interface StatusesTableProps {
-  items: Status<any>[], 
-  selectedItems: any,
-  handleSelectAllItems: (event: ChangeEvent<HTMLInputElement>) => void, 
-  handleSelectOneItem: (event: ChangeEvent<HTMLInputElement>, itemId: string) => void,
-  selectedSomeItems: any,
-  selectedAllItems: any,
-  handleDeleteItem: (id: string) => any,
-  handleUpdateItem: (id: string, data: object) => any,
-  handleAddItem: (data: object) => any,
-  addModalOpen: boolean,
-  handleCloseAddModal: () => void
-}
 
-const StatusesTable: FC<StatusesTableProps> = ({
+const StatusesTable: FC<TableProps<Status<any>>> = ({
   items: statuses, 
   selectedItems,
   handleSelectAllItems, 

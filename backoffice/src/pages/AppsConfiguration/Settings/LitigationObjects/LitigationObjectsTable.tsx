@@ -22,22 +22,10 @@ import Modal from 'src/components/Modal';
 import StatusLabel from 'src/components/StatusLabel';
 import { useModal } from 'src/hooks/useModal';
 import { AddLitigationObjectContent, DeleteLitigationObjectContent, EditLitigationObjectContent } from './LitigationObjectModalContent';
+import { TableProps } from 'src/components/TableWrapper';
 
-interface LitigationObjectsTableProps {
-  items: LitigationObject[], 
-  selectedItems: any,
-  handleSelectAllItems: (event: ChangeEvent<HTMLInputElement>) => void, 
-  handleSelectOneItem: (event: ChangeEvent<HTMLInputElement>, itemId: string) => void,
-  selectedSomeItems: any,
-  selectedAllItems: any,
-  handleDeleteItem: (id: string) => any,
-  handleUpdateItem: (id: string, data: object) => any,
-  handleAddItem: (data: object) => any,
-  addModalOpen: boolean,
-  handleCloseAddModal: () => void
-}
 
-const LitigationObjectsTable: FC<LitigationObjectsTableProps> = ({
+const LitigationObjectsTable: FC<TableProps<LitigationObject>> = ({
   items: litigationObjects, 
   selectedItems,
   handleSelectAllItems, 

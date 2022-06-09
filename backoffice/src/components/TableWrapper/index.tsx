@@ -1,5 +1,5 @@
 import { FC, ChangeEvent, useState, isValidElement, cloneElement, ReactNode, useEffect } from 'react';
-import PropTypes from 'prop-types';
+
 import {
   Divider,
   Box,
@@ -24,7 +24,23 @@ interface TableWrapperProps {
   url: string,
   title?: string,
   statusOptions?: StatusOptions,
-  children: ReactNode
+  children: ReactNode,
+  addButton?: boolean
+}
+
+export interface TableProps<T> {
+  items: T[], 
+  selectedItems: any,
+  handleSelectAllItems: (event: ChangeEvent<HTMLInputElement>) => void, 
+  handleSelectOneItem: (event: ChangeEvent<HTMLInputElement>, itemId: string) => void,
+  selectedSomeItems: any,
+  selectedAllItems: any,
+  handleDeleteItem: (id: string) => any,
+  handleUpdateItem: (id: string, data: object) => any,
+  handleAddItem: (data: object) => any,
+  addModalOpen: boolean,
+  handleCloseAddModal: () => void,
+  statusOptions: StatusOptions
 }
 
 interface Filters {
@@ -53,7 +69,14 @@ const applyPagination = (
 
 
 
-const TableWrapper: FC<TableWrapperProps> = ({ defaultItems, url, title = '', statusOptions, children }) => {
+const TableWrapper: FC<TableWrapperProps> = ({ 
+  defaultItems, 
+  url, 
+  title = '', 
+  statusOptions, 
+  children,
+  addButton = false 
+}) => {
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const selectedBulkActions = selectedItems.length > 0;
   const [page, setPage] = useState<number>(0);
@@ -181,9 +204,10 @@ const TableWrapper: FC<TableWrapperProps> = ({ defaultItems, url, title = '', st
             </Box>
           }
           title={title}
-          subheader={<Button onClick={handleOpenAddModal} size='large' startIcon={<AddCircleOutlineIcon/>} variant="contained">
+          subheader={ addButton &&
+          <Button onClick={handleOpenAddModal} size='large' startIcon={<AddCircleOutlineIcon/>} variant="contained">
           Ajouter
-        </Button>}
+          </Button>}
         />
       )}
       <Divider />

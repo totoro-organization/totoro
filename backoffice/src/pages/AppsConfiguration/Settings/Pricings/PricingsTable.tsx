@@ -22,22 +22,10 @@ import Modal from 'src/components/Modal';
 import StatusLabel from 'src/components/StatusLabel';
 import { useModal } from 'src/hooks/useModal';
 import { AddPricingContent, DeletePricingContent, EditPricingContent } from './PricingModalContent';
+import { TableProps } from 'src/components/TableWrapper';
 
-interface PricingsTableProps {
-  items: Pricing[], 
-  selectedItems: any,
-  handleSelectAllItems: (event: ChangeEvent<HTMLInputElement>) => void, 
-  handleSelectOneItem: (event: ChangeEvent<HTMLInputElement>, itemId: string) => void,
-  selectedSomeItems: any,
-  selectedAllItems: any,
-  handleDeleteItem: (id: string) => any,
-  handleUpdateItem: (id: string, data: object) => any,
-  handleAddItem: (data: object) => any,
-  addModalOpen: boolean,
-  handleCloseAddModal: () => void
-}
 
-const PricingsTable: FC<PricingsTableProps> = ({
+const PricingsTable: FC<TableProps<Pricing>> = ({
   items: pricings, 
   selectedItems,
   handleSelectAllItems, 

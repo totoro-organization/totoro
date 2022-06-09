@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { FC, ChangeEvent } from 'react';
 import {
   Tooltip,
@@ -12,36 +11,36 @@ import {
   TableContainer,
   Typography,
   useTheme,
+  TableProps,
 } from '@mui/material';
 
-import { User } from 'src/models/user';
-import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
+import Modal from 'src/components/Modal';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 import { Link } from 'react-router-dom';
-import { StatusOptions, TableEnum } from 'src/models';
+import { TableEnum, User } from 'src/models';
 import StatusSelect from 'src/components/StatusSelect';
+import { DeleteUserContent } from './UserModalContent';
+import { useModal } from 'src/hooks/useModal';
 
-interface UsersTableProps {
-  items: User[], 
-  selectedItems: any,
-  handleSelectAllItems: (event: ChangeEvent<HTMLInputElement>) => void, 
-  handleSelectOneItem: (event: ChangeEvent<HTMLInputElement>, itemId: string) => void,
-  selectedSomeItems: any,
-  selectedAllItems: any,
-  statusOptions: StatusOptions
-}
-
-const UsersTable: FC<UsersTableProps> = ({
+const UsersTable: FC<TableProps<any>> = ({
   items: users, 
   selectedItems,
   handleSelectAllItems, 
   handleSelectOneItem,
   selectedSomeItems,
   selectedAllItems,
-  statusOptions
+  statusOptions,
+  handleDeleteItem
 }) => {
 
   const theme = useTheme();
+
+  const [deleteModalOpen, handleOpenDeleteModal, handleCloseDeleteModal, deleteModalItem] = useModal();
+
+  const handleDelete = (id: string) => {
+    handleDeleteItem(id);
+    handleCloseDeleteModal();
+  }
 
   return (
       <TableContainer>
@@ -120,22 +119,9 @@ const UsersTable: FC<UsersTableProps> = ({
                     <StatusSelect table={TableEnum.users} currentItem={{ id: user.id, status: user.status}} statusOptions={statusOptions} />
                   </TableCell>
                   <TableCell align="right">
-                    <Tooltip title="Editer la mission" arrow>
-                      <IconButton
-                        sx={{
-                          '&:hover': {
-                            background: theme.colors.primary.lighter
-                          },
-                          color: theme.palette.primary.main
-                        }}
-                        color="inherit"
-                        size="small"
-                      >
-                        <EditTwoToneIcon fontSize="small" />
-                      </IconButton>
-                    </Tooltip>
                     <Tooltip title="Supprimer la mission" arrow>
                       <IconButton
+                        onClick={() => handleOpenDeleteModal(user)}
                         sx={{
                           '&:hover': { background: theme.colors.error.lighter },
                           color: theme.palette.error.main
@@ -152,6 +138,9 @@ const UsersTable: FC<UsersTableProps> = ({
             })}
           </TableBody>
         </Table>
+        <Modal open={deleteModalOpen} handleClose={handleCloseDeleteModal} title={`Supprimer l'utilisateur suivant : ${deleteModalItem?.firstname} ${deleteModalItem?.lastname}`}>
+            <DeleteUserContent handleClose={handleCloseDeleteModal} handleDelete={handleDelete} item={deleteModalItem} />
+        </Modal>
       </TableContainer>
   );
 };
