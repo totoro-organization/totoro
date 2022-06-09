@@ -35,7 +35,7 @@ function DiscountTypes() {
     <WrapperBox>
       {
         loading || !discountTypes ? <SuspenseLoader/> : 
-        <TableWrapper url={CommonsUriEnum.discountTypes} statusOptions={statusOptions} defaultItems={discountTypes?.data}>
+        <TableWrapper addButton url={CommonsUriEnum.discountTypes} statusOptions={statusOptions} defaultItems={discountTypes?.data}>
           {/* @ts-ignore */}
             <DiscountTypesTable />
         </TableWrapper>

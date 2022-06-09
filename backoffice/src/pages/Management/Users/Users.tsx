@@ -1,20 +1,13 @@
-// @ts-nocheck
 import { Card } from '@mui/material';
 import UsersTable from './UsersTable';
 import { useApi } from 'src/hooks/useApi';
 import SuspenseLoader from 'src/components/SuspenseLoader';
 import TableWrapper from 'src/components/TableWrapper';
 import { StatusEnum } from 'src/models/status';
-import { useTable } from 'src/hooks/useTable';
 
 function Users() {
 
-  const { data: defaultUsers, loading } = useApi('/users');
-
-  const {
-    handleDeleteItem,
-    items: users
-  } = useTable({ url: '/users', defaultItems: defaultUsers?.data })
+  const { data: users, loading } = useApi('/users');
 
   const statusOptions = [
     {
@@ -36,14 +29,11 @@ function Users() {
   ];
 
   return (
-    <Card>
-      {
-        loading ? <SuspenseLoader/> :
-        <TableWrapper statusOptions={statusOptions} items={users}>
-          <UsersTable/>
-        </TableWrapper>
-      }
-    </Card>
+      loading || !users ? <SuspenseLoader/> :
+      <TableWrapper url="/users" statusOptions={statusOptions} defaultItems={users?.data}>
+        {/* @ts-ignore */}
+        <UsersTable />
+      </TableWrapper>
   );
 }
 

@@ -4,5 +4,15 @@ export enum TableEnum {
     organizations = "Organizations",
     litigationObjects = "LitigationObjects",
     partners = "Partners",
-    jobs = "Jobs"
+    jobs = "Jobs",
+    tags = "Tags",
+    pricings = "Pricings",
+    subscriptions = "Subscriptions",
+    litigations = "Litigations",
+    logs = "Logs",
+    discounts = "Discounts",
+    discountTypes = "DiscountTypes",
+    roles = "Roles",
+    status = "Status"
 }
+

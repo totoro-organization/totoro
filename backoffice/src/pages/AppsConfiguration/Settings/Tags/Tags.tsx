@@ -31,12 +31,12 @@ function Tags() {
       name: 'Supprimé'
     },
   ];
-console.log(tags)
+
   return (
     <WrapperBox>
       {
         loading || !tags ? <SuspenseLoader/> : 
-        <TableWrapper url={CommonsUriEnum.tags} statusOptions={statusOptions} defaultItems={tags?.data}>
+        <TableWrapper addButton url={CommonsUriEnum.tags} statusOptions={statusOptions} defaultItems={tags?.data}>
           {/* @ts-ignore */}
             <TagsTable  />
         </TableWrapper>

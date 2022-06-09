@@ -25,7 +25,7 @@ function Statuses() {
     <WrapperBox>
       {
         loading || !statuses ? <SuspenseLoader/> : 
-        <TableWrapper url={CommonsUriEnum.status} defaultItems={statuses?.data}>
+        <TableWrapper addButton url={CommonsUriEnum.status} defaultItems={statuses?.data}>
           {/* @ts-ignore */}
             <StatusesTable />
         </TableWrapper>

@@ -35,7 +35,7 @@ function Difficultys() {
     <WrapperBox>
       {
         loading || !difficulties ? <SuspenseLoader/> : 
-        <TableWrapper url={CommonsUriEnum.difficulties} statusOptions={statusOptions} defaultItems={difficulties?.data}>
+        <TableWrapper addButton url={CommonsUriEnum.difficulties} statusOptions={statusOptions} defaultItems={difficulties?.data}>
           {/* @ts-ignore */}
             <DifficultiesTable />
         </TableWrapper>

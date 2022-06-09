@@ -35,7 +35,7 @@ function Pricings() {
     <WrapperBox>
       {
         loading || !pricings ? <SuspenseLoader/> : 
-        <TableWrapper url={CommonsUriEnum.pricings} statusOptions={statusOptions} defaultItems={pricings?.data}>
+        <TableWrapper addButton url={CommonsUriEnum.pricings} statusOptions={statusOptions} defaultItems={pricings?.data}>
           {/* @ts-ignore */}
             <PricingsTable />
         </TableWrapper>

@@ -30,7 +30,6 @@ const App = () => {
       }
     }
   });
-  console.log(i18next.t('common.welcome.title'));
 
   const content = useRoutes(routes);
 

@@ -35,7 +35,7 @@ function Roles() {
     <WrapperBox>
       {
         loading || !roles ? <SuspenseLoader/> : 
-        <TableWrapper url={CommonsUriEnum.roles} statusOptions={statusOptions} defaultItems={roles?.data}>
+        <TableWrapper addButton url={CommonsUriEnum.roles} statusOptions={statusOptions} defaultItems={roles?.data}>
             {/* @ts-ignore */} 
             <RolesTable />
         </TableWrapper>
