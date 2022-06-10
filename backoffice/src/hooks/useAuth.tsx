@@ -7,11 +7,11 @@ import {
   useState
 } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { User } from 'src/models/user';
+import { Admin } from 'src/models';
 import * as sessionsService from 'src/services/auth.service';
 
 interface AuthContextType {
-  user?: User;
+  user?: Admin;
   loading: boolean;
   error?: any;
   login: (params: sessionsService.LoginType) => void;
@@ -26,7 +26,7 @@ export function AuthProvider({
 }: {
   children: ReactNode;
 }): JSX.Element {
-  const [user, setUser] = useState<User>();
+  const [user, setUser] = useState<Admin>();
   const [error, setError] = useState<any>();
   const [loading, setLoading] = useState<boolean>(false);
   const [loadingInitial, setLoadingInitial] = useState<boolean>(true);
