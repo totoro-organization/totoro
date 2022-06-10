@@ -1,15 +1,12 @@
-import { Box, Button } from '@mui/material';
+
+
+import { Box } from '@mui/material';
 import StatusesTable from './StatusesTable';
 import { useApi } from 'src/hooks/useApi';
 import SuspenseLoader from 'src/components/SuspenseLoader';
 import TableWrapper from 'src/components/TableWrapper';
 import { styled } from '@mui/system';
-import Modal from "src/components/Modal";
-import { useTable } from 'src/hooks/useTable';
-import { useModal } from 'src/hooks/useModal';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { CommonsUriEnum } from 'src/models/commons';
-import { AddStatusContent } from './StatusModalContent';
 
 
 const WrapperBox = styled(Box)(
@@ -22,32 +19,17 @@ const WrapperBox = styled(Box)(
 
 function Statuses() {
 
-  const { data: defaultStatuses, loading  } = useApi(`/${CommonsUriEnum.status}`);
-
-  const [addModalOpen, handleOpenAddModal, handleCloseAddModal] = useModal();
-
-  const {
-    handleAddItem,
-    handleDeleteItem,
-    handleUpdateItem,
-    items: statuses
-  } = useTable({ url: CommonsUriEnum.status, defaultItems: defaultStatuses?.data, handleCloseModal: handleCloseAddModal })
+  const { data: statuses, loading  } = useApi(CommonsUriEnum.status);
 
   return (
     <WrapperBox>
-      <Button onClick={handleOpenAddModal} size='large' startIcon={<AddCircleOutlineIcon/>} sx={{ alignSelf: 'flex-end'}}  variant="contained">
-        Ajouter un status
-      </Button>
       {
-        loading ? <SuspenseLoader/> : 
-        <TableWrapper items={statuses}>
+        loading || !statuses ? <SuspenseLoader/> : 
+        <TableWrapper addButton url={CommonsUriEnum.status} defaultItems={statuses?.data}>
           {/* @ts-ignore */}
-            <StatusesTable handleDeleteStatus={handleDeleteItem} handleUpdateStatus={handleUpdateItem} />
+            <StatusesTable />
         </TableWrapper>
       }
-      <Modal open={addModalOpen} handleClose={handleCloseAddModal} title="Ajouter un statut">
-        <AddStatusContent handleClose={handleCloseAddModal} handleAdd={handleAddItem}/>
-      </Modal>
     </WrapperBox>
   );
 }
