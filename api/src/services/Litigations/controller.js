@@ -26,8 +26,8 @@ const exclude = [
 ];
 
 const include = [
-  { model: Status, as: "status", attributes: excludeCommon},
-  { model: Litigation_objects, as: "litigation_object", attributes: excludeCommon},
+  { model: Status, as: "status", attributes: excludeCommon.exclude.push("type")},
+  { model: Litigation_objects, as: "litigation_object", attributes: excludeCommon.exclude.push("status_id")},
   {
     model: Groups,
     as: "mission",
@@ -38,8 +38,8 @@ const include = [
         as: "job", 
         attributes: {exclude:['assos_user_id', 'status_id', 'difficulty_id']}, 
         include:[
-          {model: Status, as: "status", attributes: excludeCommon},
-          {model: Difficulties, as: "difficulty", attributes: excludeCommon},
+          {model: Status, as: "status", attributes: excludeCommon.exclude.push("type")},
+          {model: Difficulties, as: "difficulty", attributes: excludeCommon.exclude.push("status_id")},
           {
             model: Associations_users,
             as: "author",
@@ -49,7 +49,7 @@ const include = [
                 model: Associations,
                 as: "organization",
                 attributes: { exclude: ["status_id"] },
-                include:[{model: Status, as: "status", attributes: excludeCommon}]
+                include:[{model: Status, as: "status", attributes: excludeCommon.exclude.push("type")}]
               }
             ]
           }
@@ -59,9 +59,9 @@ const include = [
         model: Users,
         as: "participant",
         attributes: { exclude:["terminal_id","status_id","password"] },
-        include: [{ model: Status, as: "status", attributes: excludeCommon }],
+        include: [{ model: Status, as: "status", attributes: excludeCommon.exclude.push("type") }],
       },
-      {model: Status, as: "status", attributes: excludeCommon}
+      {model: Status, as: "status", attributes: excludeCommon.exclude.push("type")}
     ]
   }
 ];

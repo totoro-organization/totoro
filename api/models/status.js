@@ -141,6 +141,7 @@ module.exports = (sequelize, DataTypes) => {
 	Status.init(
 		{
 			label: DataTypes.STRING,
+			type: DataTypes.STRING
 		},
 		{
 			sequelize,
