@@ -21,28 +21,22 @@ import { JobDifficulty } from 'src/models';
 import Modal from 'src/components/Modal';
 import StatusLabel from 'src/components/StatusLabel';
 import { useModal } from 'src/hooks/useModal';
-import { DeleteDifficultyContent, EditDifficultyContent } from './DifficultyModalContent';
+import { AddDifficultyContent, DeleteDifficultyContent, EditDifficultyContent } from './DifficultyModalContent';
+import { TableProps } from 'src/components/TableWrapper';
 
-interface DifficultiesTableProps {
-  items: JobDifficulty[], 
-  selectedItems: any,
-  handleSelectAllItems: (event: ChangeEvent<HTMLInputElement>) => void, 
-  handleSelectOneItem: (event: ChangeEvent<HTMLInputElement>, itemId: string) => void,
-  selectedSomeItems: any,
-  selectedAllItems: any,
-  handleDeleteDifficulty: (id: string) => any,
-  handleUpdateDifficulty: (id: string, data: object) => any
-}
 
-const DifficultiesTable: FC<DifficultiesTableProps> = ({
+const DifficultiesTable: FC<TableProps<JobDifficulty>> = ({
   items: difficulties, 
   selectedItems,
   handleSelectAllItems, 
   handleSelectOneItem,
   selectedSomeItems,
   selectedAllItems,
-  handleUpdateDifficulty,
-  handleDeleteDifficulty
+  handleUpdateItem,
+  handleDeleteItem,
+  handleAddItem,
+  addModalOpen,
+  handleCloseAddModal
 }) => {
 
   const [editModalOpen, handleOpenEditModal, handleCloseEditModal, editModalItem] = useModal();
@@ -51,12 +45,12 @@ const DifficultiesTable: FC<DifficultiesTableProps> = ({
   const theme = useTheme();
 
   const handleUpdate = (id: string, data: object) => {
-    handleUpdateDifficulty(id, data);
+    handleUpdateItem(id, data);
     handleCloseEditModal();
   }
 
   const handleDelete = (id: string) => {
-    handleDeleteDifficulty(id);
+    handleDeleteItem(id);
     handleCloseDeleteModal();
   }
 
@@ -171,6 +165,9 @@ const DifficultiesTable: FC<DifficultiesTableProps> = ({
         </Modal>
         <Modal open={deleteModalOpen} handleClose={handleCloseDeleteModal} title={`Supprimer le difficulty suivant : ${deleteModalItem?.label}`}>
             <DeleteDifficultyContent handleClose={handleCloseDeleteModal} handleDelete={handleDelete} item={deleteModalItem} />
+        </Modal>
+        <Modal open={addModalOpen} handleClose={handleCloseAddModal} title="Ajouter un difficulty">
+          <AddDifficultyContent handleClose={handleCloseAddModal} handleAdd={handleAddItem}/>
         </Modal>
       </TableContainer>
   );

@@ -27,7 +27,7 @@ function AdminDetails() {
   return (
     <>
       <Helmet>
-        <title>{`${admin?.firstname } ${admin?.lastname}`}</title>
+        <title>Administrateur {`${admin?.firstname } ${admin?.lastname}`}</title>
       </Helmet>
       <PageTitleWrapper>
         <Box display="flex">
@@ -35,13 +35,13 @@ function AdminDetails() {
             onClick={handleGoBack}
             arrow
             placement="top"
-            title="Retourner aux missions"
+            title="Retourner à la page administrateur"
           >
             <IconButton color="primary" sx={{ p: 2, mr: 2 }}>
               <ArrowBackTwoToneIcon />
             </IconButton>
           </Tooltip>
-          <PageTitle heading={`${admin?.firstname } ${admin?.lastname}`} subHeading={'@' + admin?.username} />
+          {/* <PageTitle heading={`${admin?.firstname } ${admin?.lastname} (@${admin?.username})`}/> */}
         </Box>
       </PageTitleWrapper>
       <Container maxWidth="lg">
@@ -53,7 +53,7 @@ function AdminDetails() {
           spacing={3}
         >
           <Grid item xs={12}>
-            { !(loadingAdmin && loadingLogs) ? <AdminInfo admin={admin} logs={logs?.data} /> : <SuspenseLoader/> }
+            <AdminInfo admin={admin} logs={logs?.data} /> 
           </Grid>
         </Grid>
       </Container>

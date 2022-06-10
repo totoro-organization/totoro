@@ -1,7 +1,5 @@
-// @ts-nocheck
 import { FC, ChangeEvent } from 'react';
 import { Link } from "react-router-dom";
-import { format } from 'date-fns';
 
 import {
   Tooltip,
@@ -18,30 +16,33 @@ import {
 } from '@mui/material';
 
 import { Litigation } from 'src/models/litigation';
-import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
-import StatusLabel from 'src/components/StatusLabel';
+import { TableProps } from 'src/components/TableWrapper';
+import { DeleteLitigationContent } from './LitigationModalContent';
+import Modal from 'src/components/Modal';
+import { useModal } from 'src/hooks/useModal';
+import { TableEnum } from 'src/models';
+import StatusSelect from 'src/components/StatusSelect';
 
 
-interface LitigationsTableProps {
-  items: Litigation[], 
-  selectedItems: any,
-  handleSelectAllItems: (event: ChangeEvent<HTMLInputElement>) => void, 
-  handleSelectOneItem: (event: ChangeEvent<HTMLInputElement>, itemId: string) => void,
-  selectedSomeItems: any,
-  selectedAllItems: any
-}
-
-const LitigationsTable: FC<LitigationsTableProps> = ({
+const LitigationsTable: FC<TableProps<Litigation>> = ({
   items: litigations, 
   selectedItems,
   handleSelectAllItems, 
   handleSelectOneItem,
   selectedSomeItems,
-  selectedAllItems
+  selectedAllItems,
+  handleDeleteItem,
+  statusOptions
 }) => {
 
   const theme = useTheme();
+  const [deleteModalOpen, handleOpenDeleteModal, handleCloseDeleteModal, deleteModalItem] = useModal();
+
+  const handleDelete = (id: string) => {
+    handleDeleteItem(id);
+    handleCloseDeleteModal();
+  }
 
   return (
       <TableContainer>
@@ -105,7 +106,7 @@ const LitigationsTable: FC<LitigationsTableProps> = ({
                       gutterBottom
                       noWrap
                     >
-                      {format(litigation.date, 'dd MMMM  yyyy')}
+                      {litigation.createdAt}
                     </Typography>
                   </TableCell>
                   <TableCell>
@@ -116,7 +117,7 @@ const LitigationsTable: FC<LitigationsTableProps> = ({
                       gutterBottom
                       noWrap
                     >
-                      {litigation.job.title}
+                      titre de la mission
                     </Typography>
                   </TableCell>
                   <TableCell align="left">
@@ -127,7 +128,10 @@ const LitigationsTable: FC<LitigationsTableProps> = ({
                       gutterBottom
                       noWrap
                     >
-                      {litigation.author.username}
+                      {
+                        'firstname' in litigation.author ? `${litigation.author.firstname} ${litigation.author.lastname}` 
+                        : litigation.author.title
+                      }
                     </Typography>
                   </TableCell>
                   <TableCell align="left">
@@ -138,29 +142,19 @@ const LitigationsTable: FC<LitigationsTableProps> = ({
                       gutterBottom
                       noWrap
                     >
-                      {litigation.target.username}
+                      {
+                        'firstname' in litigation.author ? `${litigation.author.firstname} ${litigation.author.lastname}` 
+                        : litigation.author.title
+                      }
                     </Typography>
                   </TableCell>
                   <TableCell align="right">
-                    <StatusLabel status={litigation.status.label} />
+                    <StatusSelect table={TableEnum.litigations} currentItem={{ id: litigation.id, status: litigation.status}} statusOptions={statusOptions} />
                   </TableCell>
                   <TableCell align="right">
-                    <Tooltip title="Editer le litige" arrow>
-                      <IconButton
-                        sx={{
-                          '&:hover': {
-                            background: theme.colors.primary.lighter
-                          },
-                          color: theme.palette.primary.main
-                        }}
-                        color="inherit"
-                        size="small"
-                      >
-                        <EditTwoToneIcon fontSize="small" />
-                      </IconButton>
-                    </Tooltip>
                     <Tooltip title="Supprimer le litige" arrow>
                       <IconButton
+                        onClick={() => handleOpenDeleteModal(litigation)}
                         sx={{
                           '&:hover': { background: theme.colors.error.lighter },
                           color: theme.palette.error.main
@@ -177,6 +171,9 @@ const LitigationsTable: FC<LitigationsTableProps> = ({
             })}
           </TableBody>
         </Table>
+        <Modal open={deleteModalOpen} handleClose={handleCloseDeleteModal} title={`Supprimer l'administrateur suivant : ${deleteModalItem?.firstname} ${deleteModalItem?.lastname}`}>
+            <DeleteLitigationContent handleClose={handleCloseDeleteModal} handleDelete={handleDelete} item={deleteModalItem} />
+        </Modal>
       </TableContainer>
   );
 };

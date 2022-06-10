@@ -1,6 +1,7 @@
-import { Status, StatusEnum } from "./status";
+import { CommonStatusEnum } from "./commons";
+import { Status } from "./status";
 
-export type JobDifficultyStatus = Status<StatusEnum.actived | StatusEnum.deleted>;
+export type JobDifficultyStatus = Status<keyof typeof CommonStatusEnum>;
 
 export interface JobDifficulty {
     id: string,

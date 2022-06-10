@@ -14,7 +14,7 @@ interface EditAdminContentProps {
 
 export const EditAdminContent = ({item, handleUpdate, handleClose}: EditAdminContentProps) => {
 
-    const { data: roles, loading  } = useApi(`/${CommonsUriEnum.roles}`);
+    const { data: roles, loading  } = useApi(CommonsUriEnum.roles);
     
     const [data, setData] = useState({
         role_id: item?.role.id
@@ -24,18 +24,24 @@ export const EditAdminContent = ({item, handleUpdate, handleClose}: EditAdminCon
         e.preventDefault();
         handleUpdate(item.id, data);
     }
+
+    const handleChange = (value) => {
+      const role = roles?.data.find(role => role.label === value);
+      setData({ role_id: role.id });
+    }
     
     return (
       <Form onSubmit={(e: FormEvent) => handleSubmit(e)}>
           <Select
-          id="admin_role"
-          value=""
           label="Modifier le Rôle"
+          id="admin_role"
+          defaultValue={item?.role.label}
+          
           required
-          onChange={(e) => setData({ role_id: e.target.value })}
+          onChange={(e) => handleChange(e.target.value)}
         >
             {
-                roles?.data.map((role: Role) => <MenuItem key={role.id} value={role.id}>{role.label}</MenuItem>)
+                roles?.data.map((role: Role) => <MenuItem key={role.id} value={role.label}>{role.label}</MenuItem>)
             }
           
         </Select>

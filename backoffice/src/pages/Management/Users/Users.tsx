@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { Card } from '@mui/material';
 import UsersTable from './UsersTable';
 import { useApi } from 'src/hooks/useApi';
@@ -16,24 +15,25 @@ function Users() {
       name: 'Actif'
     },
     {
-      id: StatusEnum.disabled,
-      name: 'Inactif'
+      id: StatusEnum.deleted,
+      name: 'Supprimé'
     },
     {
       id: StatusEnum.freezed,
       name: 'Gelé'
-    }
+    },
+    {
+      id: StatusEnum.disabled,
+      name: 'Désactivé'
+    },
   ];
 
   return (
-    <Card>
-      {
-        loading ? <SuspenseLoader/> :
-        <TableWrapper statusOptions={statusOptions} items={users?.data}>
-          <UsersTable />
-        </TableWrapper>
-      }
-    </Card>
+      loading || !users ? <SuspenseLoader/> :
+      <TableWrapper url="/users" statusOptions={statusOptions} defaultItems={users?.data}>
+        {/* @ts-ignore */}
+        <UsersTable />
+      </TableWrapper>
   );
 }
 
