@@ -8,10 +8,11 @@ import ArrowBackTwoToneIcon from '@mui/icons-material/ArrowBackTwoTone';
 import { Box, Container, Grid, IconButton, Tooltip } from '@mui/material';
 
 import Footer from 'src/components/Footer';
-import AdminInfo from './AdminInfo';
+import AdminCard from './AdminCard';
 import { subDays } from 'date-fns';
 import { useApi } from 'src/hooks/useApi';
 import SuspenseLoader from 'src/components/SuspenseLoader';
+import AdminLogsTable from './AdminLogsTable';
 
 function AdminDetails() {
 
@@ -53,7 +54,10 @@ function AdminDetails() {
           spacing={3}
         >
           <Grid item xs={12}>
-            <AdminInfo admin={admin} logs={logs?.data} /> 
+            <AdminCard admin={admin} /> 
+          </Grid>
+          <Grid item xs={12}>
+            {logs ? <AdminLogsTable logs={logs?.data} /> : <SuspenseLoader />}
           </Grid>
         </Grid>
       </Container>

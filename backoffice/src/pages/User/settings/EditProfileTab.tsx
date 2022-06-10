@@ -12,7 +12,7 @@ import {
   ListItemText
 } from '@mui/material';
 
-import useAuth from "../../../hooks/useAuth";
+import useAuth from '../../../hooks/useAuth';
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import DoneTwoToneIcon from '@mui/icons-material/DoneTwoTone';
 import Text from 'src/components/Text';
@@ -26,41 +26,38 @@ import { Admin } from 'src/models';
 import { getCurrentUser } from 'src/services/auth.service';
 
 function EditProfileTab() {
-  
   const [EditUser, setEditUser] = useState(false);
   const [valueEdit, setValueEdit] = useState({});
-  const { user: currentUser } = useAuth()
-  const [editPassword, setEditPassword] = useState(false)
+  const { user: currentUser } = useAuth();
+  const [editPassword, setEditPassword] = useState(false);
   const [user, setUser] = useState<Admin>(currentUser);
 
-  const handleChangeEdit = (event: React.FormEvent<HTMLFormElement>) => {  
+  const handleChangeEdit = (event: React.FormEvent<HTMLFormElement>) => {
     const value = event.currentTarget.value;
     const name = event.currentTarget.name;
-    setValueEdit(
-      {
-        ...valueEdit,
-        [name]: value
-      }
-    )
+    setValueEdit({
+      ...valueEdit,
+      [name]: value
+    });
   };
 
   const handleEditUser = async () => {
     const updateResponse = await updateAdmin(user.id, valueEdit);
-    if('error' in updateResponse) return;
+    if ('error' in updateResponse) return;
     setEditUser(false);
     const userResponse = await getCurrentUser();
-    if('error' in userResponse) return;
+    if ('error' in userResponse) return;
     setUser(userResponse);
   };
 
   const handleEditUserPassword = async () => {
     const updateResponse = await updatePasswordAdmin(valueEdit);
-    if('error' in updateResponse) return;
+    if ('error' in updateResponse) return;
     setEditPassword(false);
     const userResponse = await getCurrentUser();
-    if('error' in userResponse) return;
+    if ('error' in userResponse) return;
     setUser(userResponse);
-  }
+  };
 
   return (
     <Grid container spacing={3}>
@@ -81,29 +78,44 @@ function EditProfileTab() {
               </Typography>
             </Box>
             <>
-              {
-                !EditUser ?
-                  <Button variant="text" startIcon={<EditTwoToneIcon />} onClick={() => { setEditUser(true) }}>
-                    Edit
-                  </Button> :
-                  <div>
-                    <Button variant="text" color="success" startIcon={<CheckIcon />} onClick={handleEditUser}>
-                      validé 
-                    </Button>
-             
-                    <Button variant="text" startIcon={<CancelIcon />} onClick={() => { setEditUser(false) }}>
-                      annuler
-         
-                    </Button>
-                  </div>
-              }
+              {!EditUser ? (
+                <Button
+                  variant="text"
+                  startIcon={<EditTwoToneIcon />}
+                  onClick={() => {
+                    setEditUser(true);
+                  }}
+                >
+                  Edit
+                </Button>
+              ) : (
+                <div>
+                  <Button
+                    variant="text"
+                    color="success"
+                    startIcon={<CheckIcon />}
+                    onClick={handleEditUser}
+                  >
+                    validé
+                  </Button>
+
+                  <Button
+                    variant="text"
+                    startIcon={<CancelIcon />}
+                    onClick={() => {
+                      setEditUser(false);
+                    }}
+                  >
+                    annuler
+                  </Button>
+                </div>
+              )}
             </>
           </Box>
-
           <Divider />
           <CardContent sx={{ p: 4 }}>
             <Typography variant="subtitle2">
-              <Grid justifyItems={"center"} container spacing={0}>
+              <Grid justifyItems={'center'} container spacing={0}>
                 <Grid item xs={12} sm={4} md={3} textAlign={{ sm: 'right' }}>
                   <Box pr={3} pb={2}>
                     Firstname:
@@ -111,9 +123,20 @@ function EditProfileTab() {
                 </Grid>
                 <Grid item xs={12} sm={8} md={9}>
                   <Text color="black">
-                    {
-                      !EditUser ? <b>{user.firstname}</b> : <TextField id="user-firstname" label="Firstname" name="firstname" onChange={(e: any) => { handleChangeEdit(e) }} variant="standard" size="small" />
-                    }
+                    {!EditUser ? (
+                      <b>{user.firstname}</b>
+                    ) : (
+                      <TextField
+                        id="user-firstname"
+                        label="Firstname"
+                        name="firstname"
+                        onChange={(e: any) => {
+                          handleChangeEdit(e);
+                        }}
+                        variant="standard"
+                        size="small"
+                      />
+                    )}
                   </Text>
                 </Grid>
                 <Grid item xs={12} sm={4} md={3} textAlign={{ sm: 'right' }}>
@@ -123,9 +146,20 @@ function EditProfileTab() {
                 </Grid>
                 <Grid item xs={12} sm={8} md={9}>
                   <Text color="black">
-                    {
-                      !EditUser ? <b>{user.lastname}</b> : <TextField id="user-lastname" label="Lastname" name="lastname" onChange={(e: any) => { handleChangeEdit(e) }} variant="standard" size="small" />
-                    }    
+                    {!EditUser ? (
+                      <b>{user.lastname}</b>
+                    ) : (
+                      <TextField
+                        id="user-lastname"
+                        label="Lastname"
+                        name="lastname"
+                        onChange={(e: any) => {
+                          handleChangeEdit(e);
+                        }}
+                        variant="standard"
+                        size="small"
+                      />
+                    )}
                   </Text>
                 </Grid>
                 <Grid item xs={12} sm={4} md={3} textAlign={{ sm: 'right' }}>
@@ -135,9 +169,21 @@ function EditProfileTab() {
                 </Grid>
                 <Grid item xs={12} sm={8} md={9}>
                   <Text color="black">
-                    {
-                      !EditUser ? <b>{user.email}</b> : <TextField type="email" id="user-email" label="Email" name="email" onChange={(e: any) => { handleChangeEdit(e) }} variant="standard" size="small" />
-                    }    
+                    {!EditUser ? (
+                      <b>{user.email}</b>
+                    ) : (
+                      <TextField
+                        type="email"
+                        id="user-email"
+                        label="Email"
+                        name="email"
+                        onChange={(e: any) => {
+                          handleChangeEdit(e);
+                        }}
+                        variant="standard"
+                        size="small"
+                      />
+                    )}
                   </Text>
                 </Grid>
                 <Grid item xs={12} sm={4} md={3} textAlign={{ sm: 'right' }}>
@@ -146,9 +192,7 @@ function EditProfileTab() {
                   </Box>
                 </Grid>
                 <Grid item xs={12} sm={8} md={9}>
-                  <Text color="black">
-                    {user.createdAt}
-                  </Text>
+                  <Text color="black">{user.createdAt}</Text>
                 </Grid>
                 <Grid item xs={12} sm={4} md={3} textAlign={{ sm: 'right' }}>
                   <Box pr={3} pb={2}>
@@ -157,9 +201,7 @@ function EditProfileTab() {
                 </Grid>
                 <Grid item xs={12} sm={8} md={9}>
                   <Box sx={{ maxWidth: { xs: 'auto', sm: 300 } }}>
-                    <Text color="black">
-                      { user.username }
-                    </Text>
+                    <Text color="black">{user.username}</Text>
                   </Box>
                 </Grid>
                 <Grid item xs={12} sm={4} md={3} textAlign={{ sm: 'right' }}>
@@ -169,9 +211,7 @@ function EditProfileTab() {
                 </Grid>
                 <Grid item xs={12} sm={8} md={9}>
                   <Box sx={{ maxWidth: { xs: 'auto', sm: 300 } }}>
-                    <Text color="black">
-                      { user.role.label }
-                    </Text>
+                    <Text color="black">{user.role.label}</Text>
                   </Box>
                 </Grid>
               </Grid>
@@ -190,30 +230,69 @@ function EditProfileTab() {
                   lineHeight: 1
                 }}
                 primary="Change Password"
-                secondary="You can change your password here"/>
-                {
-                  !editPassword ? <Button onClick={() => setEditPassword(true)} size="large" variant="outlined">Change password</Button> : (
-                    <div>
-                    <Button variant="text" color="success" startIcon={<CheckIcon />} onClick={handleEditUserPassword}>validé </Button>
-                    <Button variant="text" startIcon={<CancelIcon />} onClick={() => { setEditPassword(false) }}>annuler</Button>
-                    </div>
-                  )
-                }
-              
+                secondary="You can change your password here"
+              />
+              {!editPassword ? (
+                <Button
+                  onClick={() => setEditPassword(true)}
+                  size="large"
+                  variant="outlined"
+                >
+                  Change password
+                </Button>
+              ) : (
+                <div>
+                  <Button
+                    variant="text"
+                    color="success"
+                    startIcon={<CheckIcon />}
+                    onClick={handleEditUserPassword}
+                  >
+                    validé{' '}
+                  </Button>
+                  <Button
+                    variant="text"
+                    startIcon={<CancelIcon />}
+                    onClick={() => {
+                      setEditPassword(false);
+                    }}
+                  >
+                    annuler
+                  </Button>
+                </div>
+              )}
             </ListItem>
-            {
-              editPassword && (
-                <>
-                <Divider/>
+            {editPassword && (
+              <>
+                <Divider />
                 <ListItem sx={{ p: 3 }}>
-                  <TextField label="Old password" type="password" id="user-old-password" name="old_password" onChange={(e: any) => { handleChangeEdit(e) }} variant="standard" size="small" />
+                  <TextField
+                    label="Old password"
+                    type="password"
+                    id="user-old-password"
+                    name="old_password"
+                    onChange={(e: any) => {
+                      handleChangeEdit(e);
+                    }}
+                    variant="standard"
+                    size="small"
+                  />
                 </ListItem>
                 <ListItem sx={{ p: 3 }}>
-                <TextField label="New password" type="password" id="user-password" name="password" onChange={(e: any) => { handleChangeEdit(e) }} variant="standard" size="small" />
+                  <TextField
+                    label="New password"
+                    type="password"
+                    id="user-password"
+                    name="password"
+                    onChange={(e: any) => {
+                      handleChangeEdit(e);
+                    }}
+                    variant="standard"
+                    size="small"
+                  />
                 </ListItem>
-                </>
-              )
-            }
+              </>
+            )}
           </List>
         </Card>
       </Grid>
