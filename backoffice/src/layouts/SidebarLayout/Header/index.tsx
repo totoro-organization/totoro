@@ -34,11 +34,7 @@ const HeaderWrapper = styled(Box)(
 
 function Header() {
 
-  const { user } = useAuth();
-
   const { sidebarToggle, toggleSidebar } = useContext(SidebarContext);
-
-  const {t, i18n} = useTranslation('common');
 
   return (
     <HeaderWrapper display="flex" alignItems="center">
@@ -47,7 +43,6 @@ function Header() {
           <Logo />
         </Hidden>
       </Box>
-      <h2>{ t('welcome.title', {name: user.firstname + ' ' + user.lastname}) }</h2>
       <Box display="flex" alignItems="center">
         <HeaderButtons />
         <HeaderUserbox />
