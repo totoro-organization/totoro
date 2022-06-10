@@ -112,7 +112,7 @@ function EditProfileTab() {
                 <Grid item xs={12} sm={8} md={9}>
                   <Text color="black">
                     {
-                      !EditUser ? <b>{user.firstname}</b> : <TextField id="user-firstname" label="Firstname" name="firstname" onChange={(e: any) => { handleChangeEdit(e) }} variant="standard" size="small" />
+                      !EditUser ? <b>{user.firstname}</b> : <TextField id="user-firstname" placeholder={user.firstname} name="firstname" onChange={(e: any) => { handleChangeEdit(e) }} variant="standard" size="small" />
                     }
                   </Text>
                 </Grid>
@@ -124,7 +124,7 @@ function EditProfileTab() {
                 <Grid item xs={12} sm={8} md={9}>
                   <Text color="black">
                     {
-                      !EditUser ? <b>{user.lastname}</b> : <TextField id="user-lastname" label="Lastname" name="lastname" onChange={(e: any) => { handleChangeEdit(e) }} variant="standard" size="small" />
+                      !EditUser ? <b>{user.lastname}</b> : <TextField id="user-lastname" placeholder={user.lastname} name="lastname" onChange={(e: any) => { handleChangeEdit(e) }} variant="standard" size="small" />
                     }    
                   </Text>
                 </Grid>
@@ -136,7 +136,7 @@ function EditProfileTab() {
                 <Grid item xs={12} sm={8} md={9}>
                   <Text color="black">
                     {
-                      !EditUser ? <b>{user.email}</b> : <TextField type="email" id="user-email" label="Email" name="email" onChange={(e: any) => { handleChangeEdit(e) }} variant="standard" size="small" />
+                      !EditUser ? <b>{user.email}</b> : <TextField type="email" id="user-email" placeholder={user.email} name="email" onChange={(e: any) => { handleChangeEdit(e) }} variant="standard" size="small" />
                     }    
                   </Text>
                 </Grid>
