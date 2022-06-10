@@ -16,7 +16,7 @@ const { sign } = require("jsonwebtoken");
 const { label_status } = require("utils/enum.json");
 const excludeCommon = { exclude: ["id", "createdAt", "updatedAt"] };
 
-const include = [{ model: Status, as: "status", attributes: excludeCommon.exclude.push("type") }];
+const include = [{ model: Status, as: "status", attributes: excludeCommon }];
 const exclude = ["status_id", "terminal_id"];
 
 module.exports = {

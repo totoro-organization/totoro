@@ -22,7 +22,7 @@ const { getRow, getField, updateField } = require("utils/common/thenCatch");
 const excludeCommon = { exclude: ["id", "createdAt", "updatedAt"] };
 
 const include = [
-	{ model: Status, as: "status", attributes: excludeCommon.exclude.push("type") },
+	{ model: Status, as: "status", attributes: excludeCommon },
 	{
 		model: Associations_users,
 		as: "memberships",
@@ -34,10 +34,10 @@ const include = [
 				model: Associations,
 				as: "organization",
 				attributes: { exclude: ["status_id"] },
-				include: [{ model: Status, as: "status", attributes: excludeCommon.exclude.push("type") }],
+				include: [{ model: Status, as: "status", attributes: excludeCommon }],
 			},
-			{ model: Roles, as: "role", attributes: excludeCommon.exclude.push("status_id") },
-			{ model: Status, as: "status", attributes: excludeCommon.exclude.push("type") },
+			{ model: Roles, as: "role", attributes: excludeCommon },
+			{ model: Status, as: "status", attributes: excludeCommon },
 		],
 	},
 ];
@@ -50,8 +50,8 @@ const includeUser = [
 		as: "job",
 		attributes: { exclude: ["assos_user_id", "status_id", "difficulty_id"] },
 		include: [
-			{ model: Status, as: "status", attributes: excludeCommon.exclude.push("type") },
-			{ model: Difficulties, as: "difficulty", attributes: excludeCommon.exclude.push("status_id") },
+			{ model: Status, as: "status", attributes: excludeCommon },
+			{ model: Difficulties, as: "difficulty", attributes: excludeCommon },
 			{
 				model: Associations_users,
 				as: "author",
@@ -64,7 +64,7 @@ const includeUser = [
 						as: "organization",
 						attributes: { exclude: ["status_id"] },
 						include: [
-							{ model: Status, as: "status", attributes: excludeCommon.exclude.push("type") },
+							{ model: Status, as: "status", attributes: excludeCommon },
 						],
 					},
 					{
@@ -72,15 +72,15 @@ const includeUser = [
 						as: "user",
 						attributes: { exclude },
 						include: [
-							{ model: Status, as: "status", attributes: excludeCommon.exclude.push("type") },
+							{ model: Status, as: "status", attributes: excludeCommon },
 						],
 					},
-					{ model: Status, as: "status", attributes: excludeCommon.exclude.push("type") },
+					{ model: Status, as: "status", attributes: excludeCommon },
 				],
 			},
 		],
 	},
-	{ model: Status, as: "status", attributes: excludeCommon.exclude.push("type") },
+	{ model: Status, as: "status", attributes: excludeCommon },
 ];
 
 module.exports = {
@@ -168,7 +168,7 @@ module.exports = {
 			model: Associations,
 			as: "organization",
 			attributes: { exclude: ["status_id"] },
-			include: [{ model: Status, as: "status", attributes: excludeCommon.exclude.push("type") }],
+			include: [{ model: Status, as: "status", attributes: excludeCommon }],
 		});
 		const condition = { user_id: id };
 		commonsController.getAll(
@@ -228,8 +228,8 @@ module.exports = {
     condition = Object.keys(condition).length === 0 ? null : condition;
 
     const includeLitigation = [
-      {model: Status, as: "status", attributes: excludeCommon.exclude.push("type")},
-      {model: Litigation_objects, as: "litigation_object", attributes: excludeCommon.exclude.push("status_id")},
+      {model: Status, as: "status", attributes: excludeCommon},
+      {model: Litigation_objects, as: "litigation_object", attributes: excludeCommon},
       {
         model: Groups,
         as: "mission",
