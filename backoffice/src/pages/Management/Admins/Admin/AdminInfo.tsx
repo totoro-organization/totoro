@@ -1,4 +1,4 @@
-import { Stack, Button } from '@mui/material';
+import { Stack, Button, Card } from '@mui/material';
 import SuspenseLoader from 'src/components/SuspenseLoader';
 import { Admin, Log } from 'src/models';
 import AdminLogsTable from './AdminLogsTable';
@@ -10,7 +10,7 @@ interface AdminInfoProps {
 
 const AdminInfo = ({ admin, logs }: AdminInfoProps) => {
   return (
-    <>
+    <Card>
       {admin ? (
         <>
           <p>Nom : {admin.lastname}</p>
@@ -30,7 +30,7 @@ const AdminInfo = ({ admin, logs }: AdminInfoProps) => {
       ) : (
         <SuspenseLoader />
       )}
-    </>
+    </Card>
   );
 };
 
