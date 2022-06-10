@@ -30,9 +30,9 @@ const { label_status } = require("utils/enum.json");
 const excludeCommon = { exclude: ["id", "createdAt", "updatedAt"] };
 
 const include = [
-	{ model: Status, as: "status", attributes: excludeCommon.exclude.push("type") },
+	{ model: Status, as: "status", attributes: excludeCommon },
 	{ model: Difficulties, as: "difficulty", attributes: excludeCommon },
-	{ model: Attachment_jobs, as: "attachments", attributes: excludeCommon.exclude.push("jobs_id") },
+	{ model: Attachment_jobs, as: "attachments", attributes: excludeCommon },
 	{
 		model: Associations_users,
 		as: "author",
@@ -64,7 +64,7 @@ const include = [
 		as: "tags",
 		required: true,
 		attributes: {exclude: ["jobs_id","tag_id","createdAt", "updatedAt"]},
-		include: [{ model: Tags,     required: true, as: "tag", attributes: excludeCommon.exclude.push("status_id") }]
+		include: [{ model: Tags,     required: true, as: "tag", attributes: excludeCommon }]
 	}
 ]
 const exclude = ["assos_user_id","difficulty_id","status_id"];
