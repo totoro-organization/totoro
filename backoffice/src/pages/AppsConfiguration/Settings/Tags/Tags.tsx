@@ -1,16 +1,12 @@
-import { Box, Button } from '@mui/material';
+import { Box } from '@mui/material';
 import TagsTable from './TagsTable';
 import { useApi } from 'src/hooks/useApi';
 import SuspenseLoader from 'src/components/SuspenseLoader';
 import TableWrapper from 'src/components/TableWrapper';
 import { styled } from '@mui/system';
-import Modal from "src/components/Modal";
 import { StatusEnum } from 'src/models/status';
-import { useTable } from 'src/hooks/useTable';
-import { useModal } from 'src/hooks/useModal';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+
 import { CommonsUriEnum } from 'src/models/commons';
-import { AddTagContent } from './TagModalContent';
 
 
 const WrapperBox = styled(Box)(
@@ -23,16 +19,7 @@ const WrapperBox = styled(Box)(
 
 function Tags() {
 
-  const { data: defaultTags, loading  } = useApi(`/${CommonsUriEnum.tags}`);
-
-  const [addModalOpen, handleOpenAddModal, handleCloseAddModal] = useModal();
-
-  const {
-    handleAddItem,
-    handleDeleteItem,
-    handleUpdateItem,
-    items: tags
-  } = useTable({ url: CommonsUriEnum.tags, defaultItems: defaultTags?.data, handleCloseModal: handleCloseAddModal })
+  const { data: tags, loading  } = useApi(CommonsUriEnum.tags);
 
   const statusOptions = [
     {
@@ -47,19 +34,13 @@ function Tags() {
 
   return (
     <WrapperBox>
-      <Button onClick={handleOpenAddModal} size='large' startIcon={<AddCircleOutlineIcon/>} sx={{ alignSelf: 'flex-end'}}  variant="contained">
-        Ajouter un tag
-      </Button>
       {
-        loading ? <SuspenseLoader/> : 
-        <TableWrapper statusOptions={statusOptions} items={tags}>
+        loading || !tags ? <SuspenseLoader/> : 
+        <TableWrapper addButton url={CommonsUriEnum.tags} statusOptions={statusOptions} defaultItems={tags?.data}>
           {/* @ts-ignore */}
-            <TagsTable handleDeleteTag={handleDeleteItem} handleUpdateTag={handleUpdateItem} />
+            <TagsTable  />
         </TableWrapper>
       }
-      <Modal open={addModalOpen} handleClose={handleCloseAddModal} title="Ajouter un tag">
-        <AddTagContent handleClose={handleCloseAddModal} handleAdd={handleAddItem}/>
-      </Modal>
     </WrapperBox>
   );
 }

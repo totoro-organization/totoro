@@ -9,9 +9,12 @@ import {
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Admin } from 'src/models';
 import * as sessionsService from 'src/services/auth.service';
+import { LangEnum } from 'src/models';
+import * as sessionsService from 'src/services/auth.service';
 
 interface AuthContextType {
   user?: Admin;
+  lang: keyof typeof LangEnum;
   loading: boolean;
   error?: any;
   login: (params: sessionsService.LoginType) => void;
@@ -27,6 +30,7 @@ export function AuthProvider({
   children: ReactNode;
 }): JSX.Element {
   const [user, setUser] = useState<Admin>();
+  const [lang, setLang] = useState<keyof typeof LangEnum>(LangEnum.fr || localStorage.getItem('lang') as keyof typeof LangEnum);
   const [error, setError] = useState<any>();
   const [loading, setLoading] = useState<boolean>(false);
   const [loadingInitial, setLoadingInitial] = useState<boolean>(true);
@@ -81,6 +85,7 @@ export function AuthProvider({
           return;
         }
         localStorage.setItem('token', response.token);
+        localStorage.setItem('lang', LangEnum.fr);
       })
       .then(_ => {
         sessionsService
@@ -118,7 +123,8 @@ export function AuthProvider({
       loading,
       error,
       login,
-      logout
+      logout,
+      lang
     }),
     [user, loading, error]
   );

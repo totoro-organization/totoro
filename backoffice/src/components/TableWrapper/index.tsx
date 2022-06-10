@@ -1,5 +1,5 @@
-import { FC, ChangeEvent, useState, isValidElement, cloneElement, ReactNode } from 'react';
-import PropTypes from 'prop-types';
+import { FC, ChangeEvent, useState, isValidElement, cloneElement, ReactNode, useEffect } from 'react';
+
 import {
   Divider,
   Box,
@@ -9,27 +9,43 @@ import {
   TablePagination,
   Select,
   MenuItem,
-  CardHeader
+  CardHeader,
+  Button
 } from '@mui/material';
-
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import BulkActions from './BulkActions';
-import { StatusEnum } from 'src/models/status';
+import { StatusEnum, StatusOptions } from 'src/models/status';
+import { addItem, deleteItem, getItems, updateItem } from 'src/services/commons.service';
+import { useModal } from 'src/hooks/useModal';
 
 interface TableWrapperProps {
   className?: string;
-  items: any;
+  defaultItems: any;
+  url: string,
   title?: string,
-  statusOptions?: StatusOption[],
-  children: ReactNode
+  statusOptions?: StatusOptions,
+  children: ReactNode,
+  addButton?: boolean
+}
+
+export interface TableProps<T> {
+  items: T[], 
+  selectedItems: any,
+  handleSelectAllItems: (event: ChangeEvent<HTMLInputElement>) => void, 
+  handleSelectOneItem: (event: ChangeEvent<HTMLInputElement>, itemId: string) => void,
+  selectedSomeItems: any,
+  selectedAllItems: any,
+  handleDeleteItem: (id: string) => any,
+  handleUpdateItem: (id: string, data: object) => any,
+  handleAddItem: (data: object) => any,
+  addModalOpen: boolean,
+  handleCloseAddModal: () => void,
+  handleGetItems: () => void,
+  statusOptions: StatusOptions
 }
 
 interface Filters {
-  status?: StatusEnum | 'all';
-}
-
-interface StatusOption {
-  id: StatusEnum | 'all',
-  name: string
+  status?: keyof typeof StatusEnum | 'all';
 }
 
 const applyFilters = (items: any, filters: Filters): any => {
@@ -54,7 +70,14 @@ const applyPagination = (
 
 
 
-const TableWrapper: FC<TableWrapperProps> = ({ items, title = '', statusOptions, children }) => {
+const TableWrapper: FC<TableWrapperProps> = ({ 
+  defaultItems, 
+  url, 
+  title = '', 
+  statusOptions, 
+  children,
+  addButton = false 
+}) => {
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const selectedBulkActions = selectedItems.length > 0;
   const [page, setPage] = useState<number>(0);
@@ -62,15 +85,49 @@ const TableWrapper: FC<TableWrapperProps> = ({ items, title = '', statusOptions,
   const [filters, setFilters] = useState<Filters>({
     status: null
   });
+  const [items, setItems] = useState<Array<any>>(defaultItems);
+
+  const [addModalOpen, handleOpenAddModal, handleCloseAddModal] = useModal();
+
+  useEffect(() => {
+    if(defaultItems) {
+      setItems(defaultItems);
+    }
+  }, [defaultItems])
 
   if(statusOptions) {
       statusOptions = [
       {
         id: 'all',
-        name: 'Toutes'
+        name: 'Tous'
       },
       ...statusOptions
     ]
+  }
+
+  const handleGetItems = async () => {
+    const itemsResponse = await getItems(url);
+    if('error' in itemsResponse) return;
+    setItems(itemsResponse?.data);
+  }
+ 
+  const handleUpdateItem = async (id: string, data: object) => {
+    const updateResponse = await updateItem(url, id, data);
+    if('error' in updateResponse) return;
+    handleGetItems();
+  }
+
+  const handleDeleteItem = async (id: string) => {
+    const deleteResponse = await deleteItem(url, id);
+    if('error' in deleteResponse) return;
+    handleGetItems();
+  }
+
+  const handleAddItem = async (data: object) => {
+    const addResponse = await addItem(url, data);
+    if('error' in addResponse) return;
+    handleGetItems();
+    handleCloseAddModal();
   }
 
 
@@ -148,6 +205,10 @@ const TableWrapper: FC<TableWrapperProps> = ({ items, title = '', statusOptions,
             </Box>
           }
           title={title}
+          subheader={ addButton &&
+          <Button onClick={handleOpenAddModal} size='large' startIcon={<AddCircleOutlineIcon/>} variant="contained">
+          Ajouter
+          </Button>}
         />
       )}
       <Divider />
@@ -157,7 +218,14 @@ const TableWrapper: FC<TableWrapperProps> = ({ items, title = '', statusOptions,
             handleSelectAllItems, 
             handleSelectOneItem,
             selectedSomeItems,
-            selectedAllItems
+            selectedAllItems,
+            statusOptions,
+            handleUpdateItem,
+            handleDeleteItem,
+            handleAddItem,
+            handleGetItems,
+            addModalOpen,
+            handleCloseAddModal
             }) 
         } 
       <Box p={2}>
@@ -173,14 +241,6 @@ const TableWrapper: FC<TableWrapperProps> = ({ items, title = '', statusOptions,
       </Box>
     </Card>
   );
-};
-
-TableWrapper.propTypes = {
-  items: PropTypes.array.isRequired
-};
-
-TableWrapper.defaultProps = {
-  items: []
 };
 
 export default TableWrapper;

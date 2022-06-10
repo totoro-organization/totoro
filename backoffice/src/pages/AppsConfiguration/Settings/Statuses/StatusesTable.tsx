@@ -19,27 +19,22 @@ import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import { Status } from 'src/models';
 import Modal from 'src/components/Modal';
 import { useModal } from 'src/hooks/useModal';
-import { EditStatusContent } from './StatusModalContent';
+import { AddStatusContent, EditStatusContent } from './StatusModalContent';
+import { TableProps } from 'src/components/TableWrapper';
 
-interface StatusesTableProps {
-  items: Status<any>[], 
-  selectedItems: any,
-  handleSelectAllItems: (event: ChangeEvent<HTMLInputElement>) => void, 
-  handleSelectOneItem: (event: ChangeEvent<HTMLInputElement>, itemId: string) => void,
-  selectedSomeItems: any,
-  selectedAllItems: any,
-  handleDeleteStatus: (id: string) => any,
-  handleUpdateStatus: (id: string, data: object) => any
-}
 
-const StatusesTable: FC<StatusesTableProps> = ({
+const StatusesTable: FC<TableProps<Status<any>>> = ({
   items: statuses, 
   selectedItems,
   handleSelectAllItems, 
   handleSelectOneItem,
   selectedSomeItems,
   selectedAllItems,
-  handleUpdateStatus,
+  handleUpdateItem,
+  handleDeleteItem,
+  handleAddItem,
+  addModalOpen,
+  handleCloseAddModal
 }) => {
 
   const [editModalOpen, handleOpenEditModal, handleCloseEditModal, editModalItem] = useModal();
@@ -47,7 +42,7 @@ const StatusesTable: FC<StatusesTableProps> = ({
   const theme = useTheme();
 
   const handleUpdate = (id: string, data: object) => {
-    handleUpdateStatus(id, data);
+    handleUpdateItem(id, data);
     handleCloseEditModal();
   }
 
@@ -130,6 +125,9 @@ const StatusesTable: FC<StatusesTableProps> = ({
         </Table>
         <Modal   open={editModalOpen} handleClose={handleCloseEditModal} title={`Editer le status suivant : ${editModalItem?.label}`}>
             <EditStatusContent handleClose={handleCloseEditModal} handleUpdate={handleUpdate} item={editModalItem}/>
+        </Modal>
+        <Modal open={addModalOpen} handleClose={handleCloseAddModal} title="Ajouter un statut">
+          <AddStatusContent handleClose={handleCloseAddModal} handleAdd={handleAddItem}/>
         </Modal>
       </TableContainer>
   );

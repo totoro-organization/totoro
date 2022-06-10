@@ -24,8 +24,8 @@ const CarouselItem = ({ data }: CarouselItemProps) => {
 
   return (
     <ItemContainer
-      width={`${windowWidth}`}
-      height={`${windowHeight}`}
+      width={`${windowWidth}px`}
+      height={`${windowHeight}px`}
       flexDirection="column"
     >
       <Illustration source={{ uri: imageURI }} resizeMode="cover" />

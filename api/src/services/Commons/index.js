@@ -10,8 +10,11 @@ const {
   Difficulties,
   Appearances,
   Litigation_objects,
-  Applications
+  Applications,
+  Favorites
 } = require("./../../../models");
+
+const models = require("./../../../models");
 const {
   getRow
 } = require("utils/common/thenCatch");
@@ -154,6 +157,15 @@ exports.router = (function () {
     const data = req.body;
     const condition = { label: data.label };
     controller.update(res, Status, id, data, condition);
+  }]);
+
+  commonsRouter.put("/change/status", [passportAdmin, async function (req, res) {
+    const id = req.body.id;
+    const status_id = req.body.status_id
+    const tableName = req.body.tableName;
+    const statusData = await getRow(res, Status, { id: status_id });
+
+    controller.update(res, models[tableName], id, { status_id });
   }]);
 
   // types-discounts
@@ -322,6 +334,14 @@ exports.router = (function () {
     const id = req.params.id;
     controller.delete(res, Appearances, { id });
   }]);
+
+  commonsRouter.delete("/favorites/:id", [
+		passport,
+		async function (req, res) {
+			const id = req.params.id;
+			controller.delete(res, Favorites, { id });
+		},
+	]);
 
   return commonsRouter;
 })();

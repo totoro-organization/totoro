@@ -21,28 +21,22 @@ import { Pricing } from 'src/models/pricing';
 import Modal from 'src/components/Modal';
 import StatusLabel from 'src/components/StatusLabel';
 import { useModal } from 'src/hooks/useModal';
-import { DeletePricingContent, EditPricingContent } from './PricingModalContent';
+import { AddPricingContent, DeletePricingContent, EditPricingContent } from './PricingModalContent';
+import { TableProps } from 'src/components/TableWrapper';
 
-interface PricingsTableProps {
-  items: Pricing[], 
-  selectedItems: any,
-  handleSelectAllItems: (event: ChangeEvent<HTMLInputElement>) => void, 
-  handleSelectOneItem: (event: ChangeEvent<HTMLInputElement>, itemId: string) => void,
-  selectedSomeItems: any,
-  selectedAllItems: any,
-  handleDeletePricing: (id: string) => any,
-  handleUpdatePricing: (id: string, data: object) => any
-}
 
-const PricingsTable: FC<PricingsTableProps> = ({
+const PricingsTable: FC<TableProps<Pricing>> = ({
   items: pricings, 
   selectedItems,
   handleSelectAllItems, 
   handleSelectOneItem,
   selectedSomeItems,
   selectedAllItems,
-  handleUpdatePricing,
-  handleDeletePricing
+  handleUpdateItem,
+  handleDeleteItem,
+  handleAddItem,
+  addModalOpen,
+  handleCloseAddModal
 }) => {
 
   const [editModalOpen, handleOpenEditModal, handleCloseEditModal, editModalItem] = useModal();
@@ -51,12 +45,12 @@ const PricingsTable: FC<PricingsTableProps> = ({
   const theme = useTheme();
 
   const handleUpdate = (id: string, data: object) => {
-    handleUpdatePricing(id, data);
+    handleUpdateItem(id, data);
     handleCloseEditModal();
   }
 
   const handleDelete = (id: string) => {
-    handleDeletePricing(id);
+    handleDeleteItem(id);
     handleCloseDeleteModal();
   }
 
@@ -207,6 +201,9 @@ const PricingsTable: FC<PricingsTableProps> = ({
         </Modal>
         <Modal open={deleteModalOpen} handleClose={handleCloseDeleteModal} title={`Supprimer le pricing suivant : ${deleteModalItem?.label}`}>
             <DeletePricingContent handleClose={handleCloseDeleteModal} handleDelete={handleDelete} item={deleteModalItem} />
+        </Modal>
+        <Modal open={addModalOpen} handleClose={handleCloseAddModal} title="Ajouter un pricing">
+          <AddPricingContent handleClose={handleCloseAddModal} handleAdd={handleAddItem}/>
         </Modal>
       </TableContainer>
   );

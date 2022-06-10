@@ -19,31 +19,25 @@ import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 import { Admin } from 'src/models/admin';
 import Modal from 'src/components/Modal';
-import StatusLabel from 'src/components/StatusLabel';
 import { useModal } from 'src/hooks/useModal';
 import { DeleteAdminContent, EditAdminContent } from './AdminModalContent';
 import { Link } from 'react-router-dom';
+import StatusSelect from 'src/components/StatusSelect';
+import { TableEnum } from 'src/models';
+import { TableProps } from 'src/components/TableWrapper';
+import { updateRoleAdmin } from 'src/services/admins.service';
 
-interface AdminsTableProps {
-  items: Admin[], 
-  selectedItems: any,
-  handleSelectAllItems: (event: ChangeEvent<HTMLInputElement>) => void, 
-  handleSelectOneItem: (event: ChangeEvent<HTMLInputElement>, itemId: string) => void,
-  selectedSomeItems: any,
-  selectedAllItems: any,
-  handleDeleteAdmin: (id: string) => any,
-  handleUpdateAdmin: (id: string, data: object) => any
-}
 
-const AdminsTable: FC<AdminsTableProps> = ({
+const AdminsTable: FC<TableProps<Admin>> = ({
   items: admins, 
   selectedItems,
   handleSelectAllItems, 
   handleSelectOneItem,
   selectedSomeItems,
   selectedAllItems,
-  handleUpdateAdmin,
-  handleDeleteAdmin
+  handleDeleteItem,
+  handleGetItems,
+  statusOptions
 }) => {
 
   const [editModalOpen, handleOpenEditModal, handleCloseEditModal, editModalItem] = useModal();
@@ -51,13 +45,15 @@ const AdminsTable: FC<AdminsTableProps> = ({
   
   const theme = useTheme();
 
-  const handleUpdate = (id: string, data: object) => {
-    handleUpdateAdmin(id, data);
+  const handleUpdate = async (id: string, data: object) => {
+    const response = await updateRoleAdmin(id, data);
     handleCloseEditModal();
+    if('error' in response) return;
+    handleGetItems();
   }
 
   const handleDelete = (id: string) => {
-    handleDeleteAdmin(id);
+    handleDeleteItem(id);
     handleCloseDeleteModal();
   }
 
@@ -135,7 +131,7 @@ const AdminsTable: FC<AdminsTableProps> = ({
                 </Typography>
               </TableCell>
               <TableCell align="right">
-                <StatusLabel status={admin.status.label} />
+                <StatusSelect table={TableEnum.admins} currentItem={{ id: admin.id, status: admin.status}} statusOptions={statusOptions} />
               </TableCell>
                   <TableCell align="right">
                     <Tooltip title="Editer" arrow>
@@ -175,7 +171,7 @@ const AdminsTable: FC<AdminsTableProps> = ({
         <Modal   open={editModalOpen} handleClose={handleCloseEditModal} title={`Editer l'administrateur suivant : ${editModalItem?.firstname} ${editModalItem?.lastname}`}>
             <EditAdminContent handleClose={handleCloseEditModal} handleUpdate={handleUpdate} item={editModalItem}/>
         </Modal>
-        <Modal open={deleteModalOpen} handleClose={handleCloseDeleteModal} title={`Supprimer l'administrateur suivant : ${editModalItem?.firstname} ${editModalItem?.lastname}`}>
+        <Modal open={deleteModalOpen} handleClose={handleCloseDeleteModal} title={`Supprimer l'administrateur suivant : ${deleteModalItem?.firstname} ${deleteModalItem?.lastname}`}>
             <DeleteAdminContent handleClose={handleCloseDeleteModal} handleDelete={handleDelete} item={deleteModalItem} />
         </Modal>
       </TableContainer>
