@@ -16,8 +16,8 @@ const { Status, Roles, Logs, Admins } = require("../../../models");
 const excludeCommon = { exclude: ["id", "createdAt", "updatedAt"] };
 
 const include = [
-  { model: Status, as: "status", attributes: excludeCommon.exclude.push("type") },
-  { model: Roles, as: "role", attributes: excludeCommon.exclude.push("status_id") },
+  { model: Status, as: "status", attributes: excludeCommon },
+  { model: Roles, as: "role", attributes: excludeCommon },
 ];
 
 const exclude = ["role_id", "status_id", "password"];
