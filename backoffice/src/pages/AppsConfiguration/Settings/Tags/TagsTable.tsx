@@ -21,42 +21,35 @@ import { Tag } from 'src/models/tag';
 import Modal from 'src/components/Modal';
 import StatusLabel from 'src/components/StatusLabel';
 import { useModal } from 'src/hooks/useModal';
-import { DeleteTagContent, EditTagContent } from './TagModalContent';
+import { AddTagContent, DeleteTagContent, EditTagContent } from './TagModalContent';
+import { TableProps } from 'src/components/TableWrapper';
 
-interface TagsTableProps {
-  items: Tag[], 
-  selectedItems: any,
-  handleSelectAllItems: (event: ChangeEvent<HTMLInputElement>) => void, 
-  handleSelectOneItem: (event: ChangeEvent<HTMLInputElement>, itemId: string) => void,
-  selectedSomeItems: any,
-  selectedAllItems: any,
-  handleDeleteTag: (id: string) => any,
-  handleUpdateTag: (id: string, data: object) => any
-}
-
-const TagsTable: FC<TagsTableProps> = ({
+const TagsTable: FC<TableProps<Tag>> = ({
   items: tags, 
   selectedItems,
   handleSelectAllItems, 
   handleSelectOneItem,
   selectedSomeItems,
   selectedAllItems,
-  handleUpdateTag,
-  handleDeleteTag
+  handleUpdateItem,
+  handleDeleteItem,
+  handleAddItem,
+  addModalOpen,
+  handleCloseAddModal
 }) => {
 
   const [editModalOpen, handleOpenEditModal, handleCloseEditModal, editModalItem] = useModal();
   const [deleteModalOpen, handleOpenDeleteModal, handleCloseDeleteModal, deleteModalItem] = useModal();
-  
+
   const theme = useTheme();
 
   const handleUpdate = (id: string, data: object) => {
-    handleUpdateTag(id, data);
+    handleUpdateItem(id, data);
     handleCloseEditModal();
   }
 
   const handleDelete = (id: string) => {
-    handleDeleteTag(id);
+    handleDeleteItem(id);
     handleCloseDeleteModal();
   }
 
@@ -160,6 +153,9 @@ const TagsTable: FC<TagsTableProps> = ({
         <Modal open={deleteModalOpen} handleClose={handleCloseDeleteModal} title={`Supprimer le tag suivant : ${deleteModalItem?.label}`}>
             <DeleteTagContent handleClose={handleCloseDeleteModal} handleDelete={handleDelete} item={deleteModalItem} />
         </Modal>
+        <Modal open={addModalOpen} handleClose={handleCloseAddModal} title="Ajouter un tag">
+        <AddTagContent handleClose={handleCloseAddModal} handleAdd={handleAddItem}/>
+      </Modal>
       </TableContainer>
   );
 };

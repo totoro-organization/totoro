@@ -32,7 +32,7 @@ function ManagementUserSettings() {
   return (
     <>
       <Helmet>
-        <title>User Settings - Applications</title>
+        <title>Comptabilité - Abonnements</title>
       </Helmet>
       <PageTitleWrapper>
         <PageHeader />

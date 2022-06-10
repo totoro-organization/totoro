@@ -12,8 +12,10 @@ export default async function fetchConnectedUser(): Promise<any> {
     Authorization: bearer,
   });
 
-  return await fetch(`${API_HOST}${API_ROUTES.AUTH_USER_CONNECTED}`, {
+  const response = await fetch(`${API_HOST}${API_ROUTES.AUTH_USER_CONNECTED}`, {
     method: "GET",
     headers: myHeaders,
   });
+
+  return response.json();
 }

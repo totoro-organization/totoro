@@ -77,14 +77,6 @@ exports.router = (function () {
 		},
 	]);
 
-	UsersRouter.delete("/favorites/:favotiteId", [
-		passport,
-		async function (req, res) {
-			const id = req.params.favotiteId;
-			controller.deleteFavorite(res, id);
-		},
-	]);
-
 	// Jobs
 	UsersRouter.get("/:id/jobs", [
 		passport,

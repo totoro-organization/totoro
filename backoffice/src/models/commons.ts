@@ -7,14 +7,14 @@ import { Status, StatusEnum } from "./status";
 import { Tag } from "./tag";
 
 export enum CommonsUriEnum {
-    status = "status",
-    roles = "roles",
-    tags = "tags",
-    difficulties = "difficulties",
-    litigationObjects = "litigation-objects",
-    discountTypes = "types-discounts",
-    appearances = "appearances",
-    pricings = "pricings"
+    status = "/status",
+    roles = "/roles",
+    tags = "/tags",
+    difficulties = "/difficulties",
+    litigationObjects = "/litigation-objects",
+    discountTypes = "/types-discounts",
+    appearances = "/appearances",
+    pricings = "/pricings"
 }
 
 export enum CommonStatusEnum {
