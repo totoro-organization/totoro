@@ -22,7 +22,7 @@ const { getRow, getField, updateField } = require("utils/common/thenCatch");
 const excludeCommon = { exclude: ["id", "createdAt", "updatedAt"] };
 
 const include = [
-	{ model: Status, as: "status", attributes: excludeCommon },
+	{ model: Status, as: "status", attributes: excludeCommon.exclude.push("type") },
 	{
 		model: Associations_users,
 		as: "memberships",
@@ -34,10 +34,10 @@ const include = [
 				model: Associations,
 				as: "organization",
 				attributes: { exclude: ["status_id"] },
-				include: [{ model: Status, as: "status", attributes: excludeCommon }],
+				include: [{ model: Status, as: "status", attributes: excludeCommon.exclude.push("type") }],
 			},
-			{ model: Roles, as: "role", attributes: excludeCommon },
-			{ model: Status, as: "status", attributes: excludeCommon },
+			{ model: Roles, as: "role", attributes: excludeCommon.exclude.push("status_id") },
+			{ model: Status, as: "status", attributes: excludeCommon.exclude.push("type") },
 		],
 	},
 ];
@@ -50,8 +50,8 @@ const includeUser = [
 		as: "job",
 		attributes: { exclude: ["assos_user_id", "status_id", "difficulty_id"] },
 		include: [
-			{ model: Status, as: "status", attributes: excludeCommon },
-			{ model: Difficulties, as: "difficulty", attributes: excludeCommon },
+			{ model: Status, as: "status", attributes: excludeCommon.exclude.push("type") },
+			{ model: Difficulties, as: "difficulty", attributes: excludeCommon.exclude.push("status_id") },
 			{
 				model: Associations_users,
 				as: "author",
@@ -64,7 +64,7 @@ const includeUser = [
 						as: "organization",
 						attributes: { exclude: ["status_id"] },
 						include: [
-							{ model: Status, as: "status", attributes: excludeCommon },
+							{ model: Status, as: "status", attributes: excludeCommon.exclude.push("type") },
 						],
 					},
 					{
@@ -72,15 +72,15 @@ const includeUser = [
 						as: "user",
 						attributes: { exclude },
 						include: [
-							{ model: Status, as: "status", attributes: excludeCommon },
+							{ model: Status, as: "status", attributes: excludeCommon.exclude.push("type") },
 						],
 					},
-					{ model: Status, as: "status", attributes: excludeCommon },
+					{ model: Status, as: "status", attributes: excludeCommon.exclude.push("type") },
 				],
 			},
 		],
 	},
-	{ model: Status, as: "status", attributes: excludeCommon },
+	{ model: Status, as: "status", attributes: excludeCommon.exclude.push("type") },
 ];
 
 module.exports = {
@@ -104,13 +104,14 @@ module.exports = {
 		if (data.email) condition.email = data.email;
 		commonsController.update(res, Users, id, data, condition);
 	},
-  updateAvatar: function (res, id, data) {
-		commonsController.update(res, Users, id, data);
-  },
 
-  deleteUser: function (res, id) {
-    commonsController.delete(res, Users, { id });
-  },
+	updateAvatar: function (res, id, data) {
+		commonsController.update(res, Users, id, data);
+	},
+
+	deleteUser: function (res, id) {
+		commonsController.delete(res, Users, { id });
+	},
 
 	resetPassword: async function (res, data) {
 		asyncLib.waterfall(
@@ -137,7 +138,7 @@ module.exports = {
 				},
 				function (user, resByCrypt, done) {
 					if (resByCrypt) {
-						const updateData = { password: data.password };
+						const updateData = {password: bcrypt.hashSync(data.password, 10)};
 						updateField(res, user, updateData, done);
 					} else {
 						return res.status(error.access_forbidden.status).json({
@@ -167,7 +168,7 @@ module.exports = {
 			model: Associations,
 			as: "organization",
 			attributes: { exclude: ["status_id"] },
-			include: [{ model: Status, as: "status", attributes: excludeCommon }],
+			include: [{ model: Status, as: "status", attributes: excludeCommon.exclude.push("type") }],
 		});
 		const condition = { user_id: id };
 		commonsController.getAll(
@@ -227,8 +228,8 @@ module.exports = {
     condition = Object.keys(condition).length === 0 ? null : condition;
 
     const includeLitigation = [
-      {model: Status, as: "status", attributes: excludeCommon},
-      {model: Litigation_objects, as: "litigation_object", attributes: excludeCommon},
+      {model: Status, as: "status", attributes: excludeCommon.exclude.push("type")},
+      {model: Litigation_objects, as: "litigation_object", attributes: excludeCommon.exclude.push("status_id")},
       {
         model: Groups,
         as: "mission",
@@ -238,5 +239,5 @@ module.exports = {
       }
     ];
     commonsController.getAll(res, Litigations, condition, ['litigation_object_id','group_id','status_id'], includeLitigation);
-  }
+  	}
 };
