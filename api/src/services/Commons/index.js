@@ -1,4 +1,5 @@
 const express = require("express");
+const { Op } = require("sequelize");
 const { passport, passportAdmin } = require("utils/session");
 const controller = require("./controller");
 const {
@@ -37,6 +38,9 @@ exports.router = (function () {
 		if(req.query && req.query.status){
 			let statusData = await getRow(res, Status, { label: req.query.status });
 			condition.status_id=statusData.id
+		}
+    if(req.query && req.query.type){
+			condition.type= {[Op.like]: '%'+req.query.type+'%'}
 		}
     controller.getAll(res, Roles, condition, exclude, include);
   });
@@ -107,6 +111,9 @@ exports.router = (function () {
 		if(req.query && req.query.status){
 			let statusData = await getRow(res, Status, { label: req.query.status });
 			condition.status_id=statusData.id
+		}
+    if(req.query && req.query.type){
+			condition.type= {[Op.like]: '%'+req.query.type+'%'}
 		}
     controller.getAll(res, Tags, condition, exclude, include);
   });

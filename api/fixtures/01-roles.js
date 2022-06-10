@@ -4,7 +4,7 @@ module.exports = [
     keys: ["label"],
     data: {
       label: "Moderateur",
-      type: "all",
+      type: "['user','admin']",
       status: {
 				label: "actived",
 			},
@@ -15,7 +15,7 @@ module.exports = [
     keys: ["label"],
     data: {
       label: "Administrateur",
-      type: "all",
+      type: "['user','admin']",
       status: {
 				label: "actived",
 			},
@@ -26,7 +26,7 @@ module.exports = [
     keys: ["label"],
     data: {
       label: "Comptables",
-      type: "admin",
+      type: "['admin']",
       status: {
 				label: "actived",
 			},

@@ -31,6 +31,10 @@
     "parameters": {
       "status": 400,
       "message": "Incorrect parameters"
+    },
+    "during_creation": {
+      "status": 400,
+      "message": "error during creation, one of the id does not exist"
     }
   },
   "success": {

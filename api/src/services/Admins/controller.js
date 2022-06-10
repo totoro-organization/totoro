@@ -16,8 +16,8 @@ const { Status, Roles, Logs, Admins } = require("../../../models");
 const excludeCommon = { exclude: ["id", "createdAt", "updatedAt"] };
 
 const include = [
-  { model: Status, as: "status", attributes: excludeCommon },
-  { model: Roles, as: "role", attributes: excludeCommon },
+  { model: Status, as: "status", attributes: excludeCommon.exclude.push("type") },
+  { model: Roles, as: "role", attributes: excludeCommon.exclude.push("status_id") },
 ];
 
 const exclude = ["role_id", "status_id", "password"];
@@ -175,7 +175,7 @@ module.exports = {
 				},
 				function (user, resByCrypt, done) {
 					if (resByCrypt) {
-						const updateData = {password: data.password};
+						const updateData = {password: bcrypt.hashSync(data.password, 10)};
 						updateField(res, user, updateData, done);
 					}
 					else {
