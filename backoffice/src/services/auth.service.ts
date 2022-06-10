@@ -1,5 +1,5 @@
 import axios from "axios";
-import { User } from "../models/user";
+import { User, Admin } from "../models";
 import { ErrorResponse, requestAxios } from "./requestApi";
 
 export const AUTH_BASE_URL = "/auth";
@@ -18,7 +18,7 @@ export async function login(params: LoginType): Promise<Token | ErrorResponse> {
   return response;
 }
 
-export async function getCurrentUser(): Promise<User | ErrorResponse> {
-  const response: User | ErrorResponse = await requestAxios("GET", `${AUTH_BASE_URL}/connected`);
+export async function getCurrentUser(): Promise<Admin | ErrorResponse> {
+  const response: Admin | ErrorResponse = await requestAxios("GET", `${AUTH_BASE_URL}/connected`);
   return response;
 }
