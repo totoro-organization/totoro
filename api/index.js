@@ -24,10 +24,6 @@ loadFixtures();
 
 server.use(cors({ origin: "*" }));
 server.use(express.static(__dirname + "/data"));
-
-//server.use(server.json({limit: '50mb'}));
-//server.use(server.urlencoded({limit: '50mb'}));
-
 server.use(bodyParser.json({limit: '50mb'}));
 server.use(bodyParser.urlencoded({limit: '50mb', extended: true, parameterLimit:50000}));
 
@@ -59,6 +55,13 @@ const accessApi = async (req, res, next) => {
 		console.log("jarce");
 	}
 };
+
+/*
+server.get("/",async function(req,res){
+	const link = await qrcode("/qrcode-jobs", "je suis jarce le boss");
+    res.setHeader("Content-Type","text/html")
+    res.status(200).send(`<h1>qrcode link ${link}</h1>`)
+})*/
 
 server.use("/api", [accessApi, commons]);
 server.use("/api/applications", [accessApi, applications]);
