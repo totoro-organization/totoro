@@ -73,11 +73,7 @@ module.exports = {
 				type: Sequelize.FLOAT
 			},
 			qrcode: {
-			  allowNull: false,
-			  type: Sequelize.STRING
-			},
-			code: {
-			  allowNull: false,
+			  allowNull: true,
 			  type: Sequelize.STRING
 			},
 			createdAt: {
