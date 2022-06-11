@@ -104,13 +104,14 @@ module.exports = {
 		if (data.email) condition.email = data.email;
 		commonsController.update(res, Users, id, data, condition);
 	},
-  updateAvatar: function (res, id, data) {
-		commonsController.update(res, Users, id, data);
-  },
 
-  deleteUser: function (res, id) {
-    commonsController.delete(res, Users, { id });
-  },
+	updateAvatar: function (res, id, data) {
+		commonsController.update(res, Users, id, data);
+	},
+
+	deleteUser: function (res, id) {
+		commonsController.delete(res, Users, { id });
+	},
 
 	resetPassword: async function (res, data) {
 		asyncLib.waterfall(
@@ -137,7 +138,7 @@ module.exports = {
 				},
 				function (user, resByCrypt, done) {
 					if (resByCrypt) {
-						const updateData = { password: data.password };
+						const updateData = {password: bcrypt.hashSync(data.password, 10)};
 						updateField(res, user, updateData, done);
 					} else {
 						return res.status(error.access_forbidden.status).json({
@@ -238,5 +239,5 @@ module.exports = {
       }
     ];
     commonsController.getAll(res, Litigations, condition, ['litigation_object_id','group_id','status_id'], includeLitigation);
-  }
+  	}
 };

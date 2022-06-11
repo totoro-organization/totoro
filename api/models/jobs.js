@@ -58,7 +58,6 @@ module.exports = (sequelize, DataTypes) => {
 			longitude: DataTypes.FLOAT,
 			latitude: DataTypes.FLOAT,      
 			qrcode: DataTypes.STRING,
-			code: DataTypes.STRING,
 		},
 		{
 			sequelize,
