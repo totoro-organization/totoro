@@ -10,7 +10,6 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { Admin } from 'src/models';
 import * as sessionsService from 'src/services/auth.service';
 import { LangEnum } from 'src/models';
-import * as sessionsService from 'src/services/auth.service';
 
 interface AuthContextType {
   user?: Admin;
