@@ -19,10 +19,13 @@ const ProtectedRoute = (props: RouteProps) => {
   const { user } = useAuth();
 
   if (!user) return <Navigate to="/login" />;
+   
   return <Route {...props} />;
 };
 
 /* Pages */
+
+const FirstLogin = Loader(lazy(() => import('src/pages/SignIn/FirstLogin')));
 
 // Dashboards 
 
@@ -32,6 +35,10 @@ const Crypto = Loader(lazy(() => import('src/pages/Dashboards/Crypto')));
 
 const UserProfile = Loader(lazy(() => import('src/pages/User/profile')));
 const UserSettings = Loader(lazy(() => import('src/pages/User/settings')));
+
+//Gestion
+
+const Missions = Loader(lazy(() => import('src/pages/Gestion/missions/indexedDB')));
 
 // Status
 
@@ -63,11 +70,15 @@ const routes: PartialRouteObject[] = [
         element: <SignUp />
       },
       {
-        element: <ProtectedRoute/>,
+        element: <ProtectedRoute/>, 
         children: [
           {
             path: '/',
             element: <Navigate to="/dashboards" replace />
+          },
+          {
+            path: '/first-login',
+            element: <FirstLogin />
           },
           {
             path: 'status',
@@ -127,6 +138,20 @@ const routes: PartialRouteObject[] = [
               {
                 path: 'settings',
                 element: <UserSettings />
+              }
+            ]
+          },
+          {
+            path: 'gestion',
+            element: <SidebarLayout />,
+            children: [
+              {
+                path: '/',
+                element: <Navigate to="missions" replace />
+              },
+              {
+                path: 'missions',
+                element: <Missions />
               }
             ]
           }
