@@ -8,7 +8,7 @@ import ArrowBackTwoToneIcon from '@mui/icons-material/ArrowBackTwoTone';
 import { Box, Container, Grid, IconButton, Tooltip } from '@mui/material';
 
 import Footer from 'src/components/Footer';
-import UserInfo from './UserInfo';
+import UserCard from './UserCard';
 import { subDays } from 'date-fns';
 import { User } from 'src/models/user';
 import { useApi } from 'src/hooks/useApi';
@@ -27,7 +27,7 @@ function UserDetails() {
   return (
     <>
       <Helmet>
-        <title>{`${user?.firstname } ${user?.lastname}`}</title>
+        <title>Utilisateur {`${user?.firstname } ${user?.lastname}`}</title>
       </Helmet>
       <PageTitleWrapper>
         <Box display="flex">
@@ -35,7 +35,7 @@ function UserDetails() {
             onClick={handleGoBack}
             arrow
             placement="top"
-            title="Retourner aux missions"
+            title="Retourner à la page utilisateurs"
           >
             <IconButton color="primary" sx={{ p: 2, mr: 2 }}>
               <ArrowBackTwoToneIcon />
@@ -53,7 +53,7 @@ function UserDetails() {
           spacing={3}
         >
           <Grid item xs={12}>
-            { loading ? <SuspenseLoader/> : <UserInfo user={user} /> }
+            { loading ? <SuspenseLoader/> : <UserCard user={user} /> }
           </Grid>
         </Grid>
       </Container>
