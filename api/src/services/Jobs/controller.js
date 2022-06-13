@@ -1,10 +1,15 @@
 const models = require("./../../../models");
 const asyncLib = require("async");
 const { Op } = require("sequelize");
+var moment = require('moment');
 const commonsController = require("services/Commons/controller");
 const {qrcode} = require("~/utils/generate");
 const { 
 	getRow,
+	getPagingData,
+	getPagination,
+	getPaginationQueries,
+	responseOne
  } = require("~/utils/common/thenCatch");
 const {
 	Users,
@@ -37,7 +42,7 @@ const include = [
 		model: Associations_users,
 		as: "author",
 		attributes: {
-			exclude: ["id", "user_id", "assos_id", "role_id", "status_id","createdAt","updatedAt"],
+			exclude: ["user_id", "assos_id", "role_id", "status_id","createdAt","updatedAt"],
 		},
 		include: [
 			{
@@ -62,7 +67,6 @@ const include = [
 	{
 		model: Tag_jobs,
 		as: "tags",
-		required: true,
 		attributes: {exclude: ["jobs_id","tag_id","createdAt", "updatedAt"]},
 		include: [{ model: Tags,     required: true, as: "tag", attributes: excludeCommon }]
 	}
@@ -70,28 +74,42 @@ const include = [
 const exclude = ["assos_user_id","difficulty_id","status_id"];
 
 module.exports = {
-	getJobs: async function (res, queries = null) {
-		let condition = {};
-		var listTags = [];
+	getJobs: async function (res, queries) {
+		const {status, size, page, title, min, max, isExpired, start_date, end_date, cp, commune, type, category, latitude, longitude, distance} = queries
 
-		if (queries && queries.status) {
-			let statusData = await getRow(res, Status, { label: queries.status });
+		let condition = {};
+		let listTags = [];
+
+		if (status) {
+			let statusData = await getRow(res, Status, { label: status });
 			condition.status_id = statusData.id;
 		}
-		if (queries && queries.title) condition.title = {[Op.like]: '%'+queries.title+'%'};
-		if (queries && queries.min) condition.participants_max = { [Op.gte]: parseInt(queries.min) };
-		if (queries && queries.max) condition.participants_max = { [Op.lte]: parseInt(queries.max) };
-		if (queries && queries.min && queries.max) condition.participants_max = { [Op.and]: [{[Op.gte]: parseInt(queries.min), [Op.lte]: parseInt(queries.max)}] };
-		if (queries && queries.start_date) condition.start_date = { [Op.gte]: queries.start_date }
-		if (queries && queries.end_date) condition.end_date = { [Op.lte]: queries.end_date }
-		if (queries && queries.cp) condition.cp = parseInt(queries.cp)
-		if (queries && queries.commune) condition.commune = {[Op.like]: '%'+queries.commune+'%'}
-		if (queries && queries.type) {
-			var tabType = queries.type.split(';');
+		if (title) condition.title = {[Op.like]: '%'+title+'%'};
+		if (min) condition.participants_max = { [Op.gte]: parseInt(min) };
+		if (max) condition.participants_max = { [Op.lte]: parseInt(max) };
+		if (min && max) condition.participants_max = { [Op.and]: [{[Op.gte]: parseInt(min), [Op.lte]: parseInt(max)}] };
+
+		if (isExpired){
+			condition.start_date = JSON.parse(isExpired) ?
+				Jobs.sequelize.literal(`DATE_FORMAT(CURRENT_TIMESTAMP, "%Y-%m-%d") > DATE_FORMAT(Jobs.start_date, "%Y-%m-%d")`) : 
+				Jobs.sequelize.literal(`DATE_FORMAT(CURRENT_TIMESTAMP, "%Y-%m-%d") <= DATE_FORMAT(Jobs.start_date, "%Y-%m-%d")`)
+		}
+
+		if (start_date) condition.start_date = { [Op.gte]: start_date }
+		if (end_date) condition.end_date = { [Op.lte]: end_date }
+		if ((end_date && start_date) && end_date < start_date)
+			return res
+					.status(error.parameters.status)
+					.json({ entity: Jobs.name,  message: "end date must be greater than start date" });
+
+		if (cp) condition.cp = parseInt(cp)
+		if (commune) condition.commune = {[Op.like]: '%'+commune+'%'}
+		if (type) {
+			var tabType = type.split(';');
 			for (var i=0; i < tabType.length; i++) listTags.push({label: tabType[i]});
 		}
-		if (queries && queries.category) {
-			var tabCategory = queries.category.split(';');
+		if (category) {
+			var tabCategory = category.split(';');
 			for (var i=0; i < tabCategory.length; i++) listTags.push({label: tabCategory[i]});
 		}
 
@@ -101,13 +119,9 @@ module.exports = {
 				if(item.as == "tags"){
 					for (let j = 0; j < item.include.length; j++) {
 						const element = item.include[j];
-						if(element.as == "tag") element.where = {[Op.or]: listTags}
-					}
-
-					for (const key in item) {
-						if (Object.hasOwnProperty.call(item, key)) {
-							const element = item[key];
-							if(element.as == "tag") element.where = {[Op.or]: listTags}
+						if(element.as == "tag") {
+							element.required = true
+							element.where = {[Op.or]: listTags}
 						}
 					}
 				}
@@ -117,14 +131,25 @@ module.exports = {
 		condition = Object.keys(condition).length === 0 ? null : condition;
 
 		const params = {
+			include,
 			attributes: { exclude },
 			where: condition,
-			include,
 		};
 
-		if (queries && queries.latitude && queries.longitude) {
-			var lat = parseFloat(queries.latitude);
-			var lng = parseFloat(queries.longitude);
+		let getPaginationTab = {}
+		let pagination = {}
+		if(size){
+			pagination.size = size < 1 ? 1 : parseInt(size) || 1
+			pagination.page = !page || page < 1 ? 0 : parseInt(page)-1 || 0
+			getPaginationTab = getPagination(pagination.page, pagination.size);
+			params.limit = getPaginationTab.limit;
+			params.offset = getPaginationTab.offset;
+
+		}
+
+		if (latitude && longitude) {
+			var lat = parseFloat(latitude);
+			var lng = parseFloat(longitude);
 			
 			const haversine = `(
 				6371 * acos(
@@ -136,31 +161,74 @@ module.exports = {
 			)`;
 			params.attributes['include'] = [[Jobs.sequelize.literal(haversine), 'distance']]
 			params.order = Jobs.sequelize.col('distance')
-			if(queries.distance) params.having = Jobs.sequelize.literal(`distance <= ${queries.distance}`)
+			if(distance) params.having = Jobs.sequelize.literal(`distance <= ${distance}`)
 		} 
 
-		Jobs.findAll(params)
+		Jobs[size ? "findAndCountAll" : "findAll"](params)
 		.then(function (results) {
+			let response = size ? 
+				getPagingData(results, pagination.page, getPaginationTab.limit) : 
+				{ totalRows: results.length, data: results }
+
 			return res
-			.status(200)
-			.json({ total_rows: results.length, data: results });
+				.status(200)
+				.json(response);
 		})
 		.catch((err) => {
 			return res
 			.status(error.syntax_error.status)
-			.json({ message: error.syntax_error.message });
+			.json({ message: err+ " => "+ error.syntax_error.message });
 		});
 
 	},
-	getJob: function (res, id) {
-		commonsController.getOne(res, Jobs, id, exclude, include);
-	},
-	getParticipants: async function (res, id, queries = null) {
-		let condition = {};
-		const excludeGroup = { exclude: ["user_id"] };
+	getJob: function (res, id, queries) {
+		const {latitude, longitude} = queries
+		
+		const params = {
+			include,
+			attributes: { exclude },
+			where: { id },
+		};
 
-		if (queries && queries.status) {
-			let statusData = await getRow(res, Status, { label: queries.status });
+		if (latitude && longitude) {
+			var lat = parseFloat(latitude);
+			var lng = parseFloat(longitude);
+			
+			const haversine = `(
+				6371 * acos(
+					cos(radians(${lat}))
+					* cos(radians(Jobs.latitude))
+					* cos(radians(Jobs.longitude) - radians(${lng}))
+					+ sin(radians(${lat})) * sin(radians(Jobs.latitude))
+				)
+			)`;
+			params.attributes['include'] = [[Jobs.sequelize.literal(haversine), 'distance']]
+		} 
+
+
+		Jobs
+			.findOne(params)
+			.then((result) => {
+			if (result) return res.status(200).json(result);
+			else
+				return res
+				.status(error.not_found.status)
+				.json({ message: error.not_found.message });
+			})
+			.catch((err) => {
+			return res
+				.status(error.syntax_error.status)
+				.json({ message: error.syntax_error.message });
+			});
+	},
+	getParticipants: async function (res, id, queries) {
+		const {status, size, page} = queries
+
+		let condition = {};
+		const excludeGroup = ["user_id"];
+
+		if (status) {
+			let statusData = await getRow(res, Status, { label: status });
 			condition.status_id = statusData.id;
 		}
 		condition = Object.keys(condition).length === 0 ? null : condition;
@@ -174,15 +242,16 @@ module.exports = {
 					{ model: Status, as: "status", attributes: excludeCommon },
 				],
 			},
-			{ model: Status, as: "status", attributes: excludeCommon, where: {condition}},
-		]
+			{ model: Status, as: "status", attributes: excludeCommon, where: condition},
+		];
+		let pagination = getPaginationQueries(size,page)
 
-		commonsController.getAll(res, Groups, {jobs_id: id}, excludeGroup, includeGroup);
+		commonsController.getAll(res, Groups, {jobs_id: id}, excludeGroup, includeGroup, pagination);
 	},
-	getFavorites: async function (res, id) {
-		let condition = {};
-		const excludeFavorites = { exclude: ["user_id"] };
+	getFavorites: async function (res, id, queries) {
+		const {size, page} = queries
 
+		const excludeFavorites = ["user_id"];
 		const includeFavorites = [
 			{
 				model: Users,
@@ -191,23 +260,24 @@ module.exports = {
 				include: [
 					{ model: Status, as: "status", attributes: excludeCommon },
 				],
-			},
-			{ model: Status, as: "status", attributes: excludeCommon, where: {condition}},
+			}
 		]
+		let pagination = getPaginationQueries(size,page)
 
-		commonsController.getAll(res, Favorites, {jobs_id: id}, excludeFavorites, includeFavorites);
+		commonsController.getAll(res, Favorites, {jobs_id: id}, excludeFavorites, includeFavorites, pagination);
 	},
 	createJob: async function (res, req) {
-		const data = req.body;
+		const {body : data, files} = req
+		const {tags,difficulty_id,assos_user_id,title} = data
 
 		const statusData = await getRow(res, Status, { label: label_status.disabled });
-		const difficultyData = await getRow(res, Difficulties, { id: data.difficulty_id });
-		const authorData = await getRow(res, Associations_users, { id: data.assos_user_id });
+		const difficultyData = await getRow(res, Difficulties, { id: difficulty_id });
+		const authorData = await getRow(res, Associations_users, { id: assos_user_id });
 		data.status_id = statusData.id;
 
-		const tagsJob = data.tags;
+		const tagsJob = tags;
 		delete data.tags;
-		const condition = {title: data.title};
+		const condition = {title};
 		
 		commonsController.create(
 			async function (result) {
@@ -234,7 +304,6 @@ module.exports = {
 										.json({ message:"error uploading file" });
 								}
 						
-								const files = req.files;
 								let index, len;
 								const tabFiles = []
 						
@@ -287,18 +356,19 @@ module.exports = {
 
 	},
 	updateJob: async function (res, id, data) {
+		const {status_id, title, difficulty_id, tags} = data
 		const condition = {};
-		if(data.title) condition.title = data.title;
+		if(title) condition.title = title;
 
-		if (data.status_id) {
-			const assos = await getRow(res, Status, { id: data.status_id });
+		if (status_id) {
+			const stat = await getRow(res, Status, { id: status_id });
 		}
 
-		if (data.difficulty_id) {
-			const assos = await getRow(res, Difficulties, { id: data.difficulty_id });
+		if (difficulty_id) {
+			const diff = await getRow(res, Difficulties, { id: difficulty_id });
 		}
 
-		const tagsJob = data.tags ? data.tags : null;
+		const tagsJob = tags;
 		delete data.tags; 
 
 		if(tagsJob){
@@ -343,5 +413,38 @@ module.exports = {
 	updateImage: function (res, id, data) {
 		commonsController.update(res, Attachment_jobs, id, data);
   	},
+	getJobLitigations: async function (res, id, queries) {
+		const {status, size, page} = queries
+
+		let condition = {type: 0};
+		if (status) {
+			let statusData = await getRow(res, Status, { label: status });
+			condition.status_id = statusData.id;
+		}
+
+		const includeLitigation = [
+			{model: Status, as: "status", attributes: excludeCommon},
+			{model: Litigation_objects, as: "litigation_object", attributes: excludeCommon},
+			{
+				model: Groups,
+				as: "mission",
+				attributes: { exclude: ["user_id","jobs_id","status_id"] },
+				include: [
+					{
+						model: Users,
+						as: "participant",
+						attributes: { exclude: ["terminal_id", "status_id", "password"] },
+						include: [
+							{ model: Status, as: "status", attributes: excludeCommon },
+						],
+					}
+				],
+				where: {jobs_id: id}
+			}
+		];
+		let pagination = getPaginationQueries(size,page)
+
+    	commonsController.getAll(res, Litigations, condition, ['litigation_object_id','group_id','status_id'], includeLitigation, pagination);
+  	}
 };
 

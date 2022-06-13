@@ -7,7 +7,7 @@ module.exports = [
 				title: "Tournoi de football 14-18 ans",
 			},
 			type: "img/png",
-			image: "img/jobs/sport-association-event-venue-hero.png",
+			image: "/jobs/sport-association-event-venue-hero.png",
 		},
 	},
 ];

@@ -44,6 +44,10 @@ module.exports = {
 				allowNull: false,
 				type: Sequelize.INTEGER,
 			},
+			remaining_place: {
+				allowNull: false,
+				type: Sequelize.INTEGER,
+			},
 			start_date: {
 				allowNull: false,
 				type: Sequelize.DATE,
