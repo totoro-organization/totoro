@@ -20,9 +20,10 @@ module.exports = {
     model,
     condition = null,
     exclude = null,
-    include = null
+    include = null,
+    pagination = null
   ) {
-    responseAll(model, res, condition, exclude, include);
+    responseAll(model, res, condition, exclude, include, pagination);
   },
 
   getOne: function (res, model, id, exclude = null, include = null) {

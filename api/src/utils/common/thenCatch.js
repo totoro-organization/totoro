@@ -6,32 +6,44 @@ module.exports = {
     res,
     condition = null,
     exclude = null,
-    include = null
+    include = null,
+    pagination = null
   ) {
+
     const params = {
+      include,
       attributes: { exclude },
       where: condition,
-      include,
     };
-    model
-      .findAll(params)
-      .then(function (results) {
+
+    let getPagination = {}
+    var page = 0;
+    if(pagination){
+      page = pagination.page || 0
+      getPagination = module.exports.getPagination(page,  parseInt(pagination.size) || 0);
+      params.limit = getPagination.limit;
+      params.offset = getPagination.offset;
+    }
+
+    model[pagination ? "findAndCountAll" : "findAll"](params)
+    .then(function (results) {
+        let response = pagination ? module.exports.getPagingData(results, page, getPagination.limit):{ totalRows: results.length, data: results };
         return res
           .status(200)
-          .json({ total_rows: results.length, data: results });
-      })
-      .catch((err) => {
-        return res
-          .status(error.syntax_error.status)
-          .json({ message: error.syntax_error.message });
-      });
+          .json(response);
+    })
+    .catch((err) => {
+      return res
+        .status(error.syntax_error.status)
+        .json({ message: err+" => "+error.syntax_error.message });
+    });
   },
 
   responseOne: function (model, res, id, exclude = null, include = null) {
     const params = {
+      include,
       attributes: { exclude },
       where: { id },
-      include,
     };
     model
       .findOne(params)
@@ -80,9 +92,9 @@ module.exports = {
     exclude = null
   ) {
     const params = {
+      include,
       attributes: { exclude },
       where: condition,
-      include,
     };
     model
       .findOne(params)
@@ -210,9 +222,9 @@ module.exports = {
   getRows: async function (model, condition = null, include = null, exclude = null) {
     try {
       const params = {
+        include,
         attributes: { exclude },
         where: condition,
-        include,
       };
       const request = await model.findAll(params);
       const values = [];
@@ -223,5 +235,24 @@ module.exports = {
     } catch (error) {
       console.log(error);
     }
+  },
+  getPagingData: function (results, page, limit) {
+    const { count: totalRows, rows: data } = results;
+    const currentPage = page ? +page : 0;
+    const totalPages = Math.ceil(totalRows / limit);
+    return { totalRows, data, totalPages, currentPage: totalPages == 0 ? 0 : currentPage + 1 };
+  },
+  getPagination : function (page, size) {
+    const limit = size ? +size : 10;
+    const offset = page ? page * limit : 0;
+    return { limit, offset };
+  },
+  getPaginationQueries : function (size, page) {
+    let pagination = {}
+
+    if(size) pagination.size = parseInt(size) < 1 ? 1 : parseInt(size) || 1
+    if(page) pagination.page = parseInt(page) < 1 ? 0 : parseInt(page)-1 || 0
+
+    return Object.keys(pagination).length === 0 ? null : pagination;
   },
 };
