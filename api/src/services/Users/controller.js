@@ -41,6 +41,12 @@ const include = [
 			{ model: Status, as: "status", attributes: excludeCommon },
 		],
 	},
+	{
+		model: Partners,
+		as: "partners",
+		attributes: {exclude: ["status_id"]},
+		include: [{ model: Status, as: "status", attributes: excludeCommon }],
+	}
 ];
 
 const exclude = ["terminal_id", "status_id", "password"];
@@ -78,12 +84,6 @@ const includeUser = [
 					},
 					{ model: Status, as: "status", attributes: excludeCommon },
 				],
-			},
-			{
-				model: Partners,
-				as: "partners",
-				attributes: {exclude: ["status_id"]},
-				include: [{ model: Status, as: "status", attributes: excludeCommon }],
 			}
 		],
 	},
