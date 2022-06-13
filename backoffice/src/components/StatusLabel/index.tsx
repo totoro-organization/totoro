@@ -57,7 +57,7 @@ const statuses = {
 }
 
 interface StatusLabelProps {
-    status: StatusEnum
+    status: keyof typeof StatusEnum
 }
 
 const StatusLabel = ({ status }: StatusLabelProps ): JSX.Element => {

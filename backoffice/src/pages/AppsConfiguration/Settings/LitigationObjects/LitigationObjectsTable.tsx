@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { FC, ChangeEvent } from 'react';
 import { format } from 'date-fns';
 
@@ -22,27 +21,22 @@ import { LitigationObject } from 'src/models/litigation_object';
 import Modal from 'src/components/Modal';
 import StatusLabel from 'src/components/StatusLabel';
 import { useModal } from 'src/hooks/useModal';
+import { AddLitigationObjectContent, DeleteLitigationObjectContent, EditLitigationObjectContent } from './LitigationObjectModalContent';
+import { TableProps } from 'src/components/TableWrapper';
 
-interface LitigationObjectsTableProps {
-  items: LitigationObject[], 
-  selectedItems: any,
-  handleSelectAllItems: (event: ChangeEvent<HTMLInputElement>) => void, 
-  handleSelectOneItem: (event: ChangeEvent<HTMLInputElement>, itemId: string) => void,
-  selectedSomeItems: any,
-  selectedAllItems: any,
-  handleDeleteLitigationObject: () => any,
-  handleUpdateLitigationObject: () => any
-}
 
-const LitigationObjectsTable: FC<LitigationObjectsTableProps> = ({
+const LitigationObjectsTable: FC<TableProps<LitigationObject>> = ({
   items: litigationObjects, 
   selectedItems,
   handleSelectAllItems, 
   handleSelectOneItem,
   selectedSomeItems,
   selectedAllItems,
-  handleUpdateLitigationObject,
-  handleDeleteLitigationObject
+  handleUpdateItem,
+  handleDeleteItem,
+  handleAddItem,
+  addModalOpen,
+  handleCloseAddModal
 }) => {
 
   const [editModalOpen, handleOpenEditModal, handleCloseEditModal, editModalItem] = useModal();
@@ -50,13 +44,13 @@ const LitigationObjectsTable: FC<LitigationObjectsTableProps> = ({
   
   const theme = useTheme();
 
-  const handleUpdate = ({id, label}) => {
-    handleUpdateLitigationObject({id, label});
+  const handleUpdate = (id: string, data: object) => {
+    handleUpdateItem(id, data);
     handleCloseEditModal();
   }
 
-  const handleDelete = ({id}) => {
-    handleDeleteLitigationObject(id);
+  const handleDelete = (id: string) => {
+    handleDeleteItem(id);
     handleCloseDeleteModal();
   }
 
@@ -154,8 +148,15 @@ const LitigationObjectsTable: FC<LitigationObjectsTableProps> = ({
             })}
           </TableBody>
         </Table>
-        <Modal item={editModalItem} callback={handleUpdate} open={editModalOpen} handleClose={handleCloseEditModal} type="edit" title={`Editer le litigationObject suivant : ${editModalItem?.label}`}/>
-        <Modal item={deleteModalItem} callback={handleDelete} open={deleteModalOpen} handleClose={handleCloseDeleteModal} type="delete" title={`Supprimer le litigationObject suivant : ${deleteModalItem?.label}`}/>
+        <Modal   open={editModalOpen} handleClose={handleCloseEditModal} title={`Editer l'objet suivant : ${editModalItem?.label}`}>
+            <EditLitigationObjectContent handleClose={handleCloseEditModal} handleUpdate={handleUpdate} item={editModalItem}/>
+        </Modal>
+        <Modal open={deleteModalOpen} handleClose={handleCloseDeleteModal} title={`Supprimer l'objet suivant : ${deleteModalItem?.label}`}>
+            <DeleteLitigationObjectContent handleClose={handleCloseDeleteModal} handleDelete={handleDelete} item={deleteModalItem} />
+        </Modal>
+        <Modal open={addModalOpen} handleClose={handleCloseAddModal} title="Ajouter un objet">
+          <AddLitigationObjectContent handleClose={handleCloseAddModal} handleAdd={handleAddItem}/>
+        </Modal>
       </TableContainer>
   );
 };

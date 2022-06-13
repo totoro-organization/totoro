@@ -1,9 +1,9 @@
 import React from "react";
-import { Text } from "../components/atoms/Text";
-import MainLayout from "../components/layouts/MainLayout";
+import GlobalLayout from "../components/layouts/GlobalLayout";
 import ShopCard from "../components/molecules/ShopCard";
 import styled from "styled-components/native";
 import Spacer from "../components/atoms/Spacer";
+import { View } from "react-native";
 
 const FAKE_DISCOUNTS = [
   {
@@ -22,21 +22,19 @@ const FAKE_DISCOUNTS = [
 
 export default function Shop() {
   return (
-    <MainLayout>
-      <Text>Shop</Text>
-
+    <GlobalLayout pageTitle="Boutique">
       <ShopCardsWrapper>
-        {FAKE_DISCOUNTS.map((discount) => {
+        {FAKE_DISCOUNTS.map((discount, index) => {
           return (
-            <>
-              <ShopCard key={discount.shopName} discount={discount} />
+            <View key={`${discount.shopName}+${index}`}>
+              <ShopCard discount={discount} />
 
               <Spacer axis="vertical" size={1} />
-            </>
+            </View>
           );
         })}
       </ShopCardsWrapper>
-    </MainLayout>
+    </GlobalLayout>
   );
 }
 

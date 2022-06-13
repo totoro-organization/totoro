@@ -5,7 +5,6 @@ import { ActivityIndicator, PressableProps } from "react-native";
 import { FlattenSimpleInterpolation } from "styled-components";
 import { Text } from "./Text";
 import theme from "../../theme/theme";
-import Spinner from "./Spinner";
 import { Colors, getColors } from "../../theme/utils";
 import Spacer from "./Spacer";
 

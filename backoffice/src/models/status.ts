@@ -21,4 +21,7 @@ export enum StatusEnum {
     canceled = "canceled"
 }
 
-
+export type StatusOptions = {
+    id: keyof typeof StatusEnum | 'all',
+    name: string
+}[]

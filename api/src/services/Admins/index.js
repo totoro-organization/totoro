@@ -28,6 +28,12 @@ exports.router = (function () {
     },
   ]);
 
+  adminRouter.put("/:id",[passportAdmin, async function (req, res) {
+		const id = req.params.id;
+    const data = req.body;
+		controller.updateAdmin(res, id, data);
+	}]);
+
 	adminRouter.put("/:id/role",[passportAdmin, async function (req, res) {
 		const data = req.body;
 		data.admin_id = req.params.id;

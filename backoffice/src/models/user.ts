@@ -2,7 +2,15 @@ import { Organization } from "./organization";
 import { Role } from "./role";
 import { Status, StatusEnum } from "./status";
 
-export type UserStatus = Status<StatusEnum.actived | StatusEnum.disabled | StatusEnum.freezed>;
+
+export enum UserStatusEnum {
+    actived = StatusEnum.actived,
+    disabled = StatusEnum.disabled,
+    deleted = StatusEnum.deleted,
+    freezed = StatusEnum.freezed
+}
+
+export type UserStatus = Status<keyof typeof UserStatusEnum>;
 
 export interface User {
     id: string,

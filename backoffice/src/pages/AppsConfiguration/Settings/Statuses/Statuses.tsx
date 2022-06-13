@@ -1,21 +1,37 @@
-// @ts-nocheck
-import { Card } from '@mui/material';
+
+
+import { Box } from '@mui/material';
 import StatusesTable from './StatusesTable';
 import { useApi } from 'src/hooks/useApi';
 import SuspenseLoader from 'src/components/SuspenseLoader';
+import TableWrapper from 'src/components/TableWrapper';
+import { styled } from '@mui/system';
+import { CommonsUriEnum } from 'src/models/commons';
 
-function Users() {
 
-  const { data: users, loading } = useApi('/users');
+const WrapperBox = styled(Box)(
+  ({ theme }) => `
+    display: flex;
+    flex-direction: column;
+    row-gap: ${theme.spacing(2)}
+`
+);
+
+function Statuses() {
+
+  const { data: statuses, loading  } = useApi(CommonsUriEnum.status);
 
   return (
-    <Card>
+    <WrapperBox>
       {
-        loading ? <SuspenseLoader/> :
-        <StatusesTable users={users?.data} />
+        loading || !statuses ? <SuspenseLoader/> : 
+        <TableWrapper addButton url={CommonsUriEnum.status} defaultItems={statuses?.data}>
+          {/* @ts-ignore */}
+            <StatusesTable />
+        </TableWrapper>
       }
-    </Card>
+    </WrapperBox>
   );
 }
 
-export default Users;
+export default Statuses;

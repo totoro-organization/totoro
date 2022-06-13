@@ -1,9 +1,16 @@
-import { Job } from "./job";
 import { Organization } from "./organization";
 import { Role } from "./role";
-import { Status } from "./status";
+import { Status, StatusEnum } from "./status";
 
-export type UserStatus = Status<'actived' | 'freezed' | 'disabled'>;
+
+export enum UserStatusEnum {
+    actived = StatusEnum.actived,
+    disabled = StatusEnum.disabled,
+    deleted = StatusEnum.deleted,
+    freezed = StatusEnum.freezed
+}
+
+export type UserStatus = Status<keyof typeof UserStatusEnum>;
 
 export interface User {
     id: string,
@@ -12,9 +19,6 @@ export interface User {
     username: string,
     email: string,
     phone?: number,
-    adress?: any,  // FIXME
-    latitude: any, // REMOVE ME => see with backend guys
-    longitude: any, // REMOVE ME => see with backend guys
     bio?: string,
     total_token: number,
     birthday?: Date,

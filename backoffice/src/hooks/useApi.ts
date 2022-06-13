@@ -4,7 +4,7 @@ import { requestAxios } from 'src/services/requestApi';
 export type ApiResponse = {
   data: any;
   error: any;
-  loading: Boolean;
+  loading: boolean;
 };
 
 export const useApi = (url: string): ApiResponse => {

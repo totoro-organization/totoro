@@ -1,6 +1,4 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useNavigation } from "@react-navigation/native";
-import { StackNavigationProp } from "@react-navigation/stack";
 import {
   createContext,
   ReactNode,
@@ -9,12 +7,16 @@ import {
   useMemo,
   useState,
 } from "react";
-import { StackParamList } from "../../navigation/StackNavigationParams";
-import fetchConnectedUser from "../api/requests/auth/fetchConnectedUser";
+import { LoginFormValues } from "../../components/organisms/LoginForm/loginValidationSchema";
+import { User } from "../../models/user";
+import useUserConnected from "../api/hooks/useUserConnected";
+import fetchLoginUser from "../api/requests/auth/fetchLoginUser";
 
 interface AuthContextType {
-  user?: any;
-  logout?: () => Promise<void>;
+  user?: User;
+  logout: () => Promise<void>;
+  login: (data: LoginFormValues) => void;
+  error?: any;
   isLoading?: boolean;
 }
 
@@ -25,21 +27,29 @@ export function AuthProvider({
 }: {
   children: ReactNode;
 }): JSX.Element {
-  const [user, setUser] = useState();
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const { userConnected, isLoading } = useUserConnected();
+  const [user, setUser] = useState<User | undefined>(undefined);
+  const [error, setError] = useState<any>();
 
-  const userToken = async () => await AsyncStorage.getItem("userToken");
-
-  async function getUserConnected() {
+  async function login(data: LoginFormValues) {
     try {
-      if (await userToken()) {
-        const connectedUser = await fetchConnectedUser();
-        setUser(await connectedUser.json());
+      const response = await fetchLoginUser({
+        emailOrUsername: data.email,
+        password: data.password,
+      });
+
+      if (response.status === 403) {
+        setError({ status: true, email: data.email });
       }
+
+      const userToken = await response.json();
+
+      await AsyncStorage.setItem("userToken", userToken.token);
+
+      setError({ status: false, email: "" });
+      setUser(userConnected);
     } catch (err) {
       console.error(err);
-    } finally {
-      setIsLoading(false);
     }
   }
 
@@ -49,20 +59,13 @@ export function AuthProvider({
   }
 
   useEffect(() => {
-    getUserConnected();
+    setUser(userConnected);
   }, []);
 
-  const memoedValue = useMemo(
-    () => ({
-      user,
-      isLoading,
-      logout,
-    }),
-    [user, isLoading]
-  );
-
   return (
-    <AuthContext.Provider value={memoedValue}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ user, logout, login, error, isLoading }}>
+      {children}
+    </AuthContext.Provider>
   );
 }
 

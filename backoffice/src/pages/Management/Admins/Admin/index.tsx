@@ -8,10 +8,11 @@ import ArrowBackTwoToneIcon from '@mui/icons-material/ArrowBackTwoTone';
 import { Box, Container, Grid, IconButton, Tooltip } from '@mui/material';
 
 import Footer from 'src/components/Footer';
-import AdminInfo from './AdminInfo';
+import AdminCard from './AdminCard';
 import { subDays } from 'date-fns';
 import { useApi } from 'src/hooks/useApi';
 import SuspenseLoader from 'src/components/SuspenseLoader';
+import AdminLogsTable from './AdminLogsTable';
 
 function AdminDetails() {
 
@@ -27,7 +28,7 @@ function AdminDetails() {
   return (
     <>
       <Helmet>
-        <title>{`${admin?.firstname } ${admin?.lastname}`}</title>
+        <title>Administrateur {`${admin?.firstname } ${admin?.lastname}`}</title>
       </Helmet>
       <PageTitleWrapper>
         <Box display="flex">
@@ -35,13 +36,13 @@ function AdminDetails() {
             onClick={handleGoBack}
             arrow
             placement="top"
-            title="Retourner aux missions"
+            title="Retourner à la page administrateur"
           >
             <IconButton color="primary" sx={{ p: 2, mr: 2 }}>
               <ArrowBackTwoToneIcon />
             </IconButton>
           </Tooltip>
-          <PageTitle heading={`${admin?.firstname } ${admin?.lastname}`} subHeading={'@' + admin?.username} />
+          {/* <PageTitle heading={`${admin?.firstname } ${admin?.lastname} (@${admin?.username})`}/> */}
         </Box>
       </PageTitleWrapper>
       <Container maxWidth="lg">
@@ -53,7 +54,10 @@ function AdminDetails() {
           spacing={3}
         >
           <Grid item xs={12}>
-            { !(loadingAdmin && loadingLogs) ? <AdminInfo admin={admin} logs={logs?.data} /> : <SuspenseLoader/> }
+            <AdminCard admin={admin} /> 
+          </Grid>
+          <Grid item xs={12}>
+            {logs ? <AdminLogsTable logs={logs?.data} /> : <SuspenseLoader />}
           </Grid>
         </Grid>
       </Container>

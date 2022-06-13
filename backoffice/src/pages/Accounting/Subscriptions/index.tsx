@@ -6,11 +6,6 @@ import { Container, Tabs, Tab, Grid } from '@mui/material';
 import Footer from 'src/components/Footer';
 import { styled } from '@mui/material/styles';
 
-import FreeTab from './FreeTab';
-import PremiumTab from './PremiumTab';
-import ExpiredTab from './ExpiredTab';
-import CanceledTab from './CanceledTab';
-
 const TabsWrapper = styled(Tabs)(
   () => `
     .MuiTabs-scrollableX {
@@ -37,7 +32,7 @@ function ManagementUserSettings() {
   return (
     <>
       <Helmet>
-        <title>User Settings - Applications</title>
+        <title>Comptabilité - Abonnements</title>
       </Helmet>
       <PageTitleWrapper>
         <PageHeader />
@@ -65,10 +60,10 @@ function ManagementUserSettings() {
             </TabsWrapper>
           </Grid>
           <Grid item xs={12}>
-            {currentTab === 'free' && <FreeTab />}
+            {/* {currentTab === 'free' && <FreeTab />}
             {currentTab === 'premium' && <PremiumTab />}
             {currentTab === 'expired' && <ExpiredTab />}
-            {currentTab === 'canceled' && <CanceledTab />}
+            {currentTab === 'canceled' && <CanceledTab />} */}
           </Grid>
         </Grid>
       </Container>
