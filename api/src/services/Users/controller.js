@@ -14,6 +14,7 @@ const {
 	Favorites,
 	Groups,
 	Associations_users,
+	Partners
 } = require("./../../../models");
 const commonsController = require("services/Commons/controller");
 
@@ -78,6 +79,12 @@ const includeUser = [
 					{ model: Status, as: "status", attributes: excludeCommon },
 				],
 			},
+			{
+				model: Partners,
+				as: "partners",
+				attributes: {exclude: ["status_id"]},
+				include: [{ model: Status, as: "status", attributes: excludeCommon }],
+			}
 		],
 	},
 	{ model: Status, as: "status", attributes: excludeCommon },
