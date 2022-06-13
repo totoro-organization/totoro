@@ -1,8 +1,15 @@
 import { Job } from "./job";
-import { Status } from "./status";
+import { Status, StatusEnum } from "./status";
 import { User } from "./user";
 
-export type OrganizationStatus = Status<'active' | 'inactive' | 'freezed' | 'outlawed'>;
+export enum OrganizationStatusEnum {
+    actived = StatusEnum.actived,
+    disabled = StatusEnum.disabled,
+    deleted = StatusEnum.deleted,
+    freezed = StatusEnum.freezed
+}
+
+export type OrganizationStatus = Status<keyof typeof OrganizationStatusEnum>;
 
 export interface Organization {
     id: string,
