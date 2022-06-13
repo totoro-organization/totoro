@@ -6,15 +6,15 @@ export type ErrorResponse = {
 }
 
 export async function requestAxios(method: string, uri: string, data = null) {
-    const server = 'http://localhost:6868/api';
+    
     const token = localStorage.getItem('token') ?? null;
   
     try {
         if (!uri) {
-            console.error('fonction de api requiere uri')
+            console.error('fonction de api requière uri')
             return
         }
-        var url = server + uri
+        var url = config.uri + uri
         var headers = {'Content-Type': 'application/json', 'app_id': config.app_id}
         let request;
         method = method.toLowerCase()

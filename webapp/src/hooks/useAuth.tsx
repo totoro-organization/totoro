@@ -92,7 +92,7 @@ export function AuthProvider({
             return;
           } 
           setUser(response);
-          if(!user.memberships.organization) {
+          if(!user?.memberships?.organization) {
              navigate("/first-login")
           }
           navigate('/');
