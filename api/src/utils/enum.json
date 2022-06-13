@@ -31,6 +31,8 @@
     "jobs": "/jobs",
     "logo": "/logo",
     "partners": "/partners",
+    "qrcodeJobs": "/qrcode-jobs",
+    "qrcodeDiscounts": "/qrcode-discounts",
     "site": "/site"
   }
 }

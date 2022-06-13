@@ -1,17 +1,12 @@
-// @ts-nocheck
-import { Box, Button } from '@mui/material';
+import { Box } from '@mui/material';
 import LitigationObjectsTable from './LitigationObjectsTable';
 import { useApi } from 'src/hooks/useApi';
 import SuspenseLoader from 'src/components/SuspenseLoader';
 import TableWrapper from 'src/components/TableWrapper';
-import { LitigationObject } from 'src/models/litigationObject';
 import { styled } from '@mui/system';
-import Modal from "src/components/Modal";
-import { StatusEnum } from 'src/models/status';
-import { useTable } from 'src/hooks/useTable';
-import { useModal } from 'src/hooks/useModal';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import { CommonsEnum } from 'src/models/commons';
+import { StatusEnum } from 'src/models';
+import { CommonsUriEnum } from 'src/models/commons';
+
 
 const WrapperBox = styled(Box)(
   ({ theme }) => `
@@ -23,16 +18,7 @@ const WrapperBox = styled(Box)(
 
 function LitigationObjects() {
 
-  const { data: defaultLitigationObjects, loading  } = useApi('/commons/litigation-objects');
-
-  const [addModalOpen, handleOpenAddModal, handleCloseAddModal] = useModal();
-
-  const {
-    handleAddItem,
-    handleDeleteItem,
-    handleUpdateItem,
-    items: litigationObjects
-  } = useTable({ model: CommonsEnum.litigationObjects, defaultItems: defaultLitigationObjects?.data, handleCloseModal: handleCloseAddModal })
+  const { data: litigationObjects, loading  } = useApi(CommonsUriEnum.litigationObjects);
 
   const statusOptions = [
     {
@@ -47,16 +33,13 @@ function LitigationObjects() {
 
   return (
     <WrapperBox>
-      <Button size='large' startIcon={<AddCircleOutlineIcon/>} sx={{ alignSelf: 'flex-end'}} onClick={handleOpenAddModal} variant="contained">
-        Ajouter un objet de litige
-      </Button>
       {
-        loading ? <SuspenseLoader/> : 
-        <TableWrapper statusOptions={statusOptions} items={litigationObjects}>
-            <LitigationObjectsTable handleDeleteLitigationObject={handleDeleteItem} handleUpdateLitigationObject={handleUpdateItem} />
+        loading || !litigationObjects ? <SuspenseLoader/> : 
+        <TableWrapper addButton url={CommonsUriEnum.litigationObjects} statusOptions={statusOptions} defaultItems={litigationObjects?.data}>
+            {/* @ts-ignore */}
+            <LitigationObjectsTable />
         </TableWrapper>
       }
-      <Modal callback={handleAddItem} open={addModalOpen} handleClose={handleCloseAddModal} type="add" title="Ajouter un objet de litige"/>
     </WrapperBox>
   );
 }

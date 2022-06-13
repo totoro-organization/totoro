@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { FC, ChangeEvent } from 'react';
 import { format } from 'date-fns';
 
@@ -22,41 +21,35 @@ import { Tag } from 'src/models/tag';
 import Modal from 'src/components/Modal';
 import StatusLabel from 'src/components/StatusLabel';
 import { useModal } from 'src/hooks/useModal';
+import { AddTagContent, DeleteTagContent, EditTagContent } from './TagModalContent';
+import { TableProps } from 'src/components/TableWrapper';
 
-interface TagsTableProps {
-  items: Tag[], 
-  selectedItems: any,
-  handleSelectAllItems: (event: ChangeEvent<HTMLInputElement>) => void, 
-  handleSelectOneItem: (event: ChangeEvent<HTMLInputElement>, itemId: string) => void,
-  selectedSomeItems: any,
-  selectedAllItems: any,
-  handleDeleteTag: () => any,
-  handleUpdateTag: () => any
-}
-
-const TagsTable: FC<TagsTableProps> = ({
+const TagsTable: FC<TableProps<Tag>> = ({
   items: tags, 
   selectedItems,
   handleSelectAllItems, 
   handleSelectOneItem,
   selectedSomeItems,
   selectedAllItems,
-  handleUpdateTag,
-  handleDeleteTag
+  handleUpdateItem,
+  handleDeleteItem,
+  handleAddItem,
+  addModalOpen,
+  handleCloseAddModal
 }) => {
 
   const [editModalOpen, handleOpenEditModal, handleCloseEditModal, editModalItem] = useModal();
   const [deleteModalOpen, handleOpenDeleteModal, handleCloseDeleteModal, deleteModalItem] = useModal();
-  
+
   const theme = useTheme();
 
-  const handleUpdate = ({id, label}) => {
-    handleUpdateTag({id, label});
+  const handleUpdate = (id: string, data: object) => {
+    handleUpdateItem(id, data);
     handleCloseEditModal();
   }
 
-  const handleDelete = ({id}) => {
-    handleDeleteTag(id);
+  const handleDelete = (id: string) => {
+    handleDeleteItem(id);
     handleCloseDeleteModal();
   }
 
@@ -154,8 +147,15 @@ const TagsTable: FC<TagsTableProps> = ({
             })}
           </TableBody>
         </Table>
-        <Modal item={editModalItem} callback={handleUpdate} open={editModalOpen} handleClose={handleCloseEditModal} type="edit" title={`Editer le tag suivant : ${editModalItem?.label}`}/>
-        <Modal item={deleteModalItem} callback={handleDelete} open={deleteModalOpen} handleClose={handleCloseDeleteModal} type="delete" title={`Supprimer le tag suivant : ${deleteModalItem?.label}`}/>
+        <Modal   open={editModalOpen} handleClose={handleCloseEditModal} title={`Editer le tag suivant : ${editModalItem?.label}`}>
+            <EditTagContent handleClose={handleCloseEditModal} handleUpdate={handleUpdate} item={editModalItem}/>
+        </Modal>
+        <Modal open={deleteModalOpen} handleClose={handleCloseDeleteModal} title={`Supprimer le tag suivant : ${deleteModalItem?.label}`}>
+            <DeleteTagContent handleClose={handleCloseDeleteModal} handleDelete={handleDelete} item={deleteModalItem} />
+        </Modal>
+        <Modal open={addModalOpen} handleClose={handleCloseAddModal} title="Ajouter un tag">
+        <AddTagContent handleClose={handleCloseAddModal} handleAdd={handleAddItem}/>
+      </Modal>
       </TableContainer>
   );
 };

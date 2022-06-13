@@ -1,13 +1,22 @@
 import { useState } from "react"
+import { TableItem } from "./useTable";
 
-export const useModal = (initialMode = false) => {   
+type UseModalResponse = [
+    modalOpen: boolean,
+    handleOpenModal: (item: TableItem) => void,
+    handleCloseModal: () => void,
+    modalItem: TableItem,
+    toggle: () => void
+]
+
+export const useModal = (initialMode = false): UseModalResponse => {   
 
     const [modalOpen, setModalOpen] = useState(initialMode);
-    const [modalItem, setModalItem] = useState();   
+    const [modalItem, setModalItem] = useState<TableItem>();   
 
     const toggle = () => setModalOpen(!modalOpen)   
 
-    const handleOpenModal = (item: any) => {
+    const handleOpenModal = (item: TableItem) => {
         setModalOpen(true);
         setModalItem(item);
     } 

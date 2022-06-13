@@ -175,7 +175,7 @@ module.exports = {
 				},
 				function (user, resByCrypt, done) {
 					if (resByCrypt) {
-						const updateData = {password: data.password};
+						const updateData = {password: bcrypt.hashSync(data.password, 10)};
 						updateField(res, user, updateData, done);
 					}
 					else {

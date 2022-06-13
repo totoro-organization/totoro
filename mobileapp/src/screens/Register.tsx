@@ -8,7 +8,7 @@ import Spacer from "../components/atoms/Spacer";
 
 import { Heading } from "../components/atoms/Text";
 
-import MainLayout from "../components/layouts/MainLayout";
+import SimpleLayout from "../components/layouts/SimpleLayout";
 import RegisterStepFinal from "../components/organisms/RegisterSteps/RegisterStepFinal";
 import RegisterStepOne from "../components/organisms/RegisterSteps/RegisterStepOne";
 import RegisterStepTwo from "../components/organisms/RegisterSteps/RegisterStepTwo";
@@ -22,7 +22,7 @@ enum RegisterSteps {
 
 export default function Register() {
   const [currentStep, setCurrentStep] = useState<RegisterSteps>(
-    RegisterSteps.STEP_FINAL
+    RegisterSteps.STEP_ONE
   );
   const navigation = useNavigation<StackNavigationProp<AuthParamList>>();
 
@@ -42,7 +42,7 @@ export default function Register() {
   }
 
   return (
-    <MainLayout withBackButton>
+    <SimpleLayout withBackButton>
       <Heading variant="h1">Inscription&nbsp;👋</Heading>
 
       <Spacer axis="vertical" size={3} />
@@ -78,7 +78,7 @@ export default function Register() {
           J'ai déjà un compte
         </Button>
       </StepWrapper>
-    </MainLayout>
+    </SimpleLayout>
   );
 }
 

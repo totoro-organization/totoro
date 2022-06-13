@@ -27,8 +27,6 @@ export const registerStepTwoSchema = Yup.object({
   lastname: Yup.string().required(REQUIRED_MSG),
   // TODO: fix validation
   birthday: Yup.string().required(REQUIRED_MSG),
-  // TODO: fix validation
-  phone: Yup.string().required(REQUIRED_MSG),
 }).required();
 
 export type RegisterStepFinalFormValues = Yup.InferType<

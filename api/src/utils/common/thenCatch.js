@@ -93,49 +93,63 @@ module.exports = {
       .catch((err) => {
         return res
           .status(error.syntax_error.status)
-          .json({ message: err + "" });
+          .json({ message: error.syntax_error.message });
       });
   },
   createField: function (res, model, data, done, isContinue = false) {
-    if (data.files) {
-      let object = data.files;
-      for (const key in object) {
-        if (Object.hasOwnProperty.call(object, key)) {
-          const element = object[key];
-          data[key] = `${data.path}/${element[0].filename}`;
-          if (data.file_type) {
-            data.original_name = element[0].originalname;
-            data.type = element[0].mimetype;
-            delete data.file_type;
+    if(Array.isArray(data)){
+      model
+        .bulkCreate(data)
+        .then((newFields) => {
+          if (isContinue) done(null, newFields);
+          else done(newFields);
+        })
+        .catch((err) => {
+          return res
+            .status(error.during_creation.status)
+            .json({ message: error.during_creation.message });
+        });
+    } else {
+      if (data.files) {
+        let object = data.files;
+        for (const key in object) {
+          if (Object.hasOwnProperty.call(object, key)) {
+            const element = object[key];
+            data[key] = `${data.path}/${element[0].filename}`;
+            if (data.file_type) {
+              data.original_name = element[0].originalname;
+              data.type = element[0].mimetype;
+              delete data.file_type;
+            }
           }
         }
+        delete data.files;
+        delete data.path;
       }
-      delete data.files;
-      delete data.path;
-    }
-
-    if (data.file) {
-      data[data.file.fieldname] = `${data.path}/${data.file.filename}`;
-      if (data.file_type) {
-        data.original_name = data.file.originalname;
-        data.type = data.file.mimetype;
-        delete data.file_type;
+  
+      if (data.file) {
+        data[data.file.fieldname] = `${data.path}/${data.file.filename}`;
+        if (data.file_type) {
+          data.original_name = data.file.originalname;
+          data.type = data.file.mimetype;
+          delete data.file_type;
+        }
+        delete data.file;
+        delete data.path;
       }
-      delete data.file;
-      delete data.path;
+  
+      model
+        .create(data)
+        .then((newField) => {
+          if (isContinue) done(null, newField);
+          else done(newField);
+        })
+        .catch((err) => {
+          return res
+            .status(error.syntax_error.status)
+            .json({ message: error.syntax_error.message });
+        });
     }
-
-    model
-      .create(data)
-      .then((newField) => {
-        if (isContinue) done(null, newField);
-        else done(newField);
-      })
-      .catch((err) => {
-        return res
-          .status(error.syntax_error.status)
-          .json({ message: error.syntax_error.message });
-      });
   },
   updateField: function (res, model, data, done) {
     if (data.files) {
@@ -174,9 +188,10 @@ module.exports = {
           .json({ message: error.syntax_error.message });
       });
   },
-  getRow: async function (res, model, condition = null, include = null) {
+  getRow: async function (res, model, condition = null, include = null, exclude = null) {
     try {
       const params = {
+        attributes: { exclude },
         where: condition,
         include,
       };
@@ -192,9 +207,10 @@ module.exports = {
       console.log(error);
     }
   },
-  getRows: async function (model, condition = null, include = null) {
+  getRows: async function (model, condition = null, include = null, exclude = null) {
     try {
       const params = {
+        attributes: { exclude },
         where: condition,
         include,
       };

@@ -1,11 +1,10 @@
 import React from "react";
 import styled from "styled-components/native";
 import { Heading, Text } from "../../components/atoms/Text";
-import MainLayout from "../../components/layouts/MainLayout";
+import GlobalLayout from "../../components/layouts/GlobalLayout";
 import { StackScreenProps } from "@react-navigation/stack";
 import { StackParamList } from "../../navigation/StackNavigationParams";
 import Button from "../../components/atoms/Button";
-import { FAKE_MISSIONS } from "../Missions";
 import Spacer from "../../components/atoms/Spacer";
 import Heart from "../../assets/icons/Heart";
 import Box from "../../components/atoms/Box";
@@ -14,22 +13,64 @@ import MissionDetail from "../../components/molecules/MissionDetail";
 import Location from "../../assets/icons/Location";
 import Calendar from "../../assets/icons/Calendar";
 import { Link } from "@react-navigation/native";
+import { FAKE_MISSIONS_DATA } from "../../common/mockedData";
+import useUserFavorites from "../../common/api/hooks/useUserFavorites";
+import addUserFavorite from "../../common/api/requests/addUserFavorite";
+import Toast from "react-native-toast-message";
+import Check from "../../assets/icons/Check";
+import useAuth from "../../common/contexts/AuthContext";
+import deleteFavorite from "../../common/api/requests/deleteFavorite";
 
 export default function Mission({
   route,
 }: StackScreenProps<StackParamList, "Mission">) {
   const missionId = route.params.id;
-
-  // TODO: Replace me by the real data.
-  const mission = FAKE_MISSIONS[missionId];
+  const { user } = useAuth();
+  const { userFavorites } = useUserFavorites(user?.id || "");
 
   // TODO: Create hook with fetch API to get mission by id.
   //   const { mission } = useMission(missionId);
+  const mission = FAKE_MISSIONS_DATA[missionId];
+
+  const currentFavorite = userFavorites?.filter(
+    (fav) => fav.organization.id === mission.organization.id
+  );
+  const isOrganizationFollow =
+    currentFavorite !== undefined && currentFavorite.length > 0;
+
+  async function handleFollowOrganization(assos_id: string) {
+    try {
+      const response = await addUserFavorite(assos_id);
+
+      if (response.status === 201) {
+        Toast.show({
+          type: "success",
+          props: {
+            title: "Tout est bon",
+            text: `Merci d'avoir follow ${mission.organization.name} !`,
+          },
+        });
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  async function handleUnfollowOrganization(favoriteId: string) {
+    try {
+      await deleteFavorite(favoriteId);
+    } catch (err) {
+      console.error(err);
+    }
+  }
 
   return (
-    <MainLayout>
-      <StyledImage source={{ uri: mission.banner }} resizeMode="cover" />
-
+    <GlobalLayout
+      header={<></>}
+      fullBanner={
+        <StyledImage source={{ uri: mission.banner }} resizeMode="cover" />
+      }
+    >
       {/* TODO: Add Tag atom.*/}
       <Text color="info">{mission.tags[0]}</Text>
 
@@ -49,7 +90,7 @@ export default function Mission({
             params: { id: { missionId }, type: "organization" },
           }}
         >
-          {mission.organization}
+          {mission.organization.name}
         </Link>
       </Text>
 
@@ -91,6 +132,7 @@ export default function Mission({
         <Link
           to={{
             screen: "Profile",
+            // TODO: Replace me with organization id
             params: { id: { missionId }, type: "organization" },
           }}
         >
@@ -104,15 +146,37 @@ export default function Mission({
             <Spacer axis="horizontal" size={1} />
 
             <Box flexDirection="column">
-              <Text>{mission.organization}</Text>
+              <Text>{mission.organization.name}</Text>
               <Text color="grey">{mission.location}</Text>
             </Box>
           </Box>
         </Link>
 
-        <Button size="sm" color="black">
-          Suivre
-        </Button>
+        {isOrganizationFollow && (
+          <Button
+            size="sm"
+            color="grey"
+            variant="outline"
+            Icon={<Check />}
+            handlePress={() =>
+              handleUnfollowOrganization(currentFavorite[0].id)
+            }
+          >
+            Suivi
+          </Button>
+        )}
+
+        {!isOrganizationFollow && (
+          <Button
+            size="sm"
+            color="black"
+            handlePress={() =>
+              handleFollowOrganization(mission.organization.id)
+            }
+          >
+            Suivre
+          </Button>
+        )}
       </Box>
 
       <Spacer axis="vertical" size={4} />
@@ -121,14 +185,13 @@ export default function Mission({
       <FixedView>
         <Button>Je participe !</Button>
       </FixedView>
-    </MainLayout>
+    </GlobalLayout>
   );
 }
 
 const StyledImage = styled.ImageBackground`
   width: 100%;
-  height: 140px;
-  margin-bottom: ${({ theme }) => theme.spacing[6]};
+  height: 200px;
 `;
 
 const TextLight = styled(Text)`

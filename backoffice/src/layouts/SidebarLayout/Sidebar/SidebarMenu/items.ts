@@ -3,7 +3,10 @@ import { ReactNode } from 'react';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
 import ReportProblemIcon from '@mui/icons-material/ReportProblem';
+import SpeedIcon from '@mui/icons-material/Speed';
 import QueryStatsIcon from '@mui/icons-material/QueryStats';
+import LocalOfferIcon from '@mui/icons-material/LocalOffer';
+import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 import CardMembershipIcon from '@mui/icons-material/CardMembership';
 import GroupWorkIcon from '@mui/icons-material/GroupWork';
 import AssignmentIcon from '@mui/icons-material/Assignment';
@@ -125,9 +128,14 @@ const menuItems: MenuItems[] = [
             link: '/app-reglages/parametrage/tags'
           },
           {
-            name: 'Abonnements',
+            name: 'Roles',
+            icon: AssignmentIndIcon,
+            link: '/app-reglages/parametrage/roles'
+          },
+          {
+            name: 'Pricings',
             icon: CardMembershipIcon,
-            link: '/app-reglages/parametrage/abonnements'
+            link: '/app-reglages/parametrage/pricings'
           },
           {
             name: 'Statuts',
@@ -135,9 +143,19 @@ const menuItems: MenuItems[] = [
             link: '/app-reglages/parametrage/status'
           },
           {
+            name: 'Difficultés de mission',
+            icon: SpeedIcon,
+            link: '/app-reglages/parametrage/difficultes'
+          },
+          {
             name: 'Objets de litiges',
             icon: ReportProblemIcon,
             link: '/app-reglages/parametrage/objets-litiges'
+          },
+          {
+            name: 'Types de promotions',
+            icon: LocalOfferIcon,
+            link: '/app-reglages/parametrage/types-de-promotion'
           },
         ]
       },

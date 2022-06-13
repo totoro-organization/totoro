@@ -1,22 +1,22 @@
-import { CommonsEnum } from "src/models/commons";
+import { CommonsUriEnum } from "src/models/commons";
 import { requestAxios } from "./requestApi";
 
-export async function addItem(model: CommonsEnum, data: { label: string }) {
-    const response = await requestAxios('POST', `/commons/${model}`, data);
+export async function addItem(uri: CommonsUriEnum | string, data: object) {
+    const response = await requestAxios('POST', `${uri}`, data);
     return response;
 }
 
-export async function updateItem(model: CommonsEnum, tagId: string, data: { label: string }) {
-    const response = await requestAxios('PUT', `/commons/${model}/${tagId}`, data);
+export async function updateItem(uri: CommonsUriEnum | string, id: string, data: object) {
+    const response = await requestAxios('PUT', `${uri}/${id}`, data);
     return response;
 }
 
-export async function deleteItem(model: CommonsEnum, tagId: string) {
-    const response = await requestAxios('DELETE', `/commons/${model}/${tagId}`);
+export async function deleteItem(uri: CommonsUriEnum | string, id: string) {
+    const response = await requestAxios('DELETE', `${uri}/${id}`);
     return response;
 }
 
-export async function getItems(model: CommonsEnum) {
-    const response = await requestAxios('GET', `/commons/${model}`);
+export async function getItems(uri: CommonsUriEnum | string) {
+    const response = await requestAxios('GET', uri);
     return response;
 }

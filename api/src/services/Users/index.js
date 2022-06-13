@@ -3,6 +3,9 @@ const { passport, passportAdmin } = require("utils/session");
 const controller = require("./controller");
 const { path } = require("utils/enum.json");
 const { upload } = require("utils/storage");
+const { getUser } = require("~/utils/session/index");
+const { error } = require("utils/common/messages.json");
+
 
 exports.router = (function () {
 	const UsersRouter = express.Router();
@@ -48,6 +51,22 @@ exports.router = (function () {
 		},
 	]);
 
+	UsersRouter.put("/reset/password",
+		async function (req, res) {
+			const data = req.body;
+			const token = getUser(data.token);
+			if(token){
+				delete data.token;
+				data.id = token['id'];
+				controller.resetPassword(res, data);
+			} else {
+				return res
+					.status(error.access_denied.status)
+					.json({ message: error.access_denied.message });
+			}
+		}
+	);
+
 
 	UsersRouter.put("/change/avatar", [passport, upload(path.avatar).single("avatar"), async function (req, res) {
 		const id = req.userData.id;
@@ -74,14 +93,6 @@ exports.router = (function () {
 			const data = req.body;
 			data.user_id = req.params.id;
 			controller.createFavorite(res, data);
-		},
-	]);
-
-	UsersRouter.delete("/favorites/:favotiteId", [
-		passport,
-		async function (req, res) {
-			const id = req.params.favotiteId;
-			controller.deleteFavorite(res, id);
 		},
 	]);
 

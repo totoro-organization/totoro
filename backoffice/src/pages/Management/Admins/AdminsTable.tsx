@@ -1,4 +1,6 @@
-import { ChangeEvent, FC } from 'react';
+import { FC, ChangeEvent } from 'react';
+import { format } from 'date-fns';
+
 import {
   Tooltip,
   Checkbox,
@@ -15,34 +17,50 @@ import {
 
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
-import { Link } from 'react-router-dom';
-import StatusLabel from 'src/components/StatusLabel';
 import { Admin } from 'src/models/admin';
+import Modal from 'src/components/Modal';
+import { useModal } from 'src/hooks/useModal';
+import { DeleteAdminContent, EditAdminContent } from './AdminModalContent';
+import { Link } from 'react-router-dom';
+import StatusSelect from 'src/components/StatusSelect';
+import { TableEnum } from 'src/models';
+import { TableProps } from 'src/components/TableWrapper';
+import { updateRoleAdmin } from 'src/services/admins.service';
 
-interface AdminsTableProps {
-  items: Admin[], 
-  selectedItems: any,
-  handleSelectAllItems: (event: ChangeEvent<HTMLInputElement>) => void, 
-  handleSelectOneItem: (event: ChangeEvent<HTMLInputElement>, itemId: string) => void,
-  selectedSomeItems: any,
-  selectedAllItems: any
-}
 
-const AdminsTable: FC<AdminsTableProps> = ({
+const AdminsTable: FC<TableProps<Admin>> = ({
   items: admins, 
   selectedItems,
   handleSelectAllItems, 
   handleSelectOneItem,
   selectedSomeItems,
-  selectedAllItems
+  selectedAllItems,
+  handleDeleteItem,
+  handleGetItems,
+  statusOptions
 }) => {
 
+  const [editModalOpen, handleOpenEditModal, handleCloseEditModal, editModalItem] = useModal();
+  const [deleteModalOpen, handleOpenDeleteModal, handleCloseDeleteModal, deleteModalItem] = useModal();
+  
   const theme = useTheme();
 
+  const handleUpdate = async (id: string, data: object) => {
+    const response = await updateRoleAdmin(id, data);
+    handleCloseEditModal();
+    if('error' in response) return;
+    handleGetItems();
+  }
+
+  const handleDelete = (id: string) => {
+    handleDeleteItem(id);
+    handleCloseDeleteModal();
+  }
+
   return (
-    <TableContainer>
-    <Table>
-      <TableHead>
+      <TableContainer>
+        <Table>
+        <TableHead>
         <TableRow>
           <TableCell padding="checkbox">
             <Checkbox
@@ -113,43 +131,55 @@ const AdminsTable: FC<AdminsTableProps> = ({
                 </Typography>
               </TableCell>
               <TableCell align="right">
-                <StatusLabel status={admin.status.label} />
+                <StatusSelect table={TableEnum.admins} currentItem={{ id: admin.id, status: admin.status}} statusOptions={statusOptions} />
               </TableCell>
-              <TableCell align="right">
-                <Tooltip title="Editer la mission" arrow>
-                  <IconButton
-                    sx={{
-                      '&:hover': {
-                        background: theme.colors.primary.lighter
-                      },
-                      color: theme.palette.primary.main
-                    }}
-                    color="inherit"
-                    size="small"
-                  >
-                    <EditTwoToneIcon fontSize="small" />
-                  </IconButton>
-                </Tooltip>
-                <Tooltip title="Supprimer la mission" arrow>
-                  <IconButton
-                    sx={{
-                      '&:hover': { background: theme.colors.error.lighter },
-                      color: theme.palette.error.main
-                    }}
-                    color="inherit"
-                    size="small"
-                  >
-                    <DeleteTwoToneIcon fontSize="small" />
-                  </IconButton>
-                </Tooltip>
-              </TableCell>
-            </TableRow>
-          );
-        })}
-      </TableBody>
-    </Table>
-  </TableContainer>
-  )
-}
+                  <TableCell align="right">
+                    <Tooltip title="Editer" arrow>
+                        <IconButton
+                          onClick={() => handleOpenEditModal(admin)}
+                          sx={{
+                            '&:hover': {
+                              background: theme.colors.primary.lighter
+                            },
+                            color: theme.palette.primary.main
+                          }}
+                          color="inherit"
+                          size="small"
+                        >
+                          <EditTwoToneIcon fontSize="small" />
+                        </IconButton>
+                      </Tooltip>
+                    <Tooltip title="Supprimer" arrow>
+                      <IconButton
+                      onClick={() => handleOpenDeleteModal(admin)}
+                        sx={{
+                          '&:hover': { background: theme.colors.error.lighter },
+                          color: theme.palette.error.main
+                        }}
+                        color="inherit"
+                        size="small"
+                      >
+                        <DeleteTwoToneIcon fontSize="small" />
+                      </IconButton>
+                    </Tooltip>
+                  </TableCell>
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
+        <Modal   open={editModalOpen} handleClose={handleCloseEditModal} title={`Editer l'administrateur suivant : ${editModalItem?.firstname} ${editModalItem?.lastname}`}>
+            <EditAdminContent handleClose={handleCloseEditModal} handleUpdate={handleUpdate} item={editModalItem}/>
+        </Modal>
+        <Modal open={deleteModalOpen} handleClose={handleCloseDeleteModal} title={`Supprimer l'administrateur suivant : ${deleteModalItem?.firstname} ${deleteModalItem?.lastname}`}>
+            <DeleteAdminContent handleClose={handleCloseDeleteModal} handleDelete={handleDelete} item={deleteModalItem} />
+        </Modal>
+      </TableContainer>
+  );
+};
 
-export default AdminsTable
+export default AdminsTable;
+
+
+
+
