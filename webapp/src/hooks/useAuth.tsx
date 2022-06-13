@@ -92,7 +92,10 @@ export function AuthProvider({
             return;
           } 
           setUser(response);
-          navigate('/')
+          if(!user.memberships.organization) {
+             navigate("/first-login")
+          }
+          navigate('/');
         })
       })
       .catch((error) => setError(error))
