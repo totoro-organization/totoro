@@ -16,7 +16,7 @@ exports.router = (function () {
 
 	jobsRouter.get("/:id", async function (req, res) {
 		const id = req.params.id;
-		controller.getJob(res, id);
+		controller.getJob(res, id, req.query);
 	},);
 
 	jobsRouter.get("/:id/participants", [
@@ -31,7 +31,15 @@ exports.router = (function () {
 		passport,
 		async function (req, res) {
 			const id = req.params.id;
-			controller.getFavorites(res, id);
+			controller.getFavorites(res, id, req.query);
+		},
+	]);
+
+	jobsRouter.get("/:id/litigations", [
+		passport,
+		async function (req, res) {
+			const id = req.params.id;
+			controller.getJobLitigations(res, id, req.query);
 		},
 	]);
 

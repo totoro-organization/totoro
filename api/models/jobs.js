@@ -1,6 +1,7 @@
 "use strict";
 const { v4: uuidv4 } = require("uuid");
 const { Model } = require("sequelize");
+var moment = require('moment');
 
 module.exports = (sequelize, DataTypes) => {
 	class Jobs extends Model {
@@ -50,6 +51,7 @@ module.exports = (sequelize, DataTypes) => {
 			title: DataTypes.STRING,
 			description: DataTypes.STRING,
 			participants_max: DataTypes.INTEGER,
+			remaining_place: DataTypes.INTEGER,
 			address: DataTypes.STRING,
 			cp: DataTypes.INTEGER,
 			commune: DataTypes.STRING,
@@ -58,6 +60,18 @@ module.exports = (sequelize, DataTypes) => {
 			longitude: DataTypes.FLOAT,
 			latitude: DataTypes.FLOAT,      
 			qrcode: DataTypes.STRING,
+			isExpired: {
+				type: DataTypes.VIRTUAL,
+				get() {
+					if(this.end_date){
+						var date = new Date();
+						var data_now = moment(date).format("YYYY-MM-DD");
+						return data_now > moment(this.end_date).format("YYYY-MM-DD");
+					} else {
+						return "infinite"
+					}
+				}
+			}
 		},
 		{
 			sequelize,

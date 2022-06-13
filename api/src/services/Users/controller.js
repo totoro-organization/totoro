@@ -17,7 +17,7 @@ const {
 } = require("./../../../models");
 const commonsController = require("services/Commons/controller");
 
-const { getRow, getField, updateField } = require("utils/common/thenCatch");
+const { getRow, getField, updateField, getPaginationQueries } = require("utils/common/thenCatch");
 
 const excludeCommon = { exclude: ["id", "createdAt", "updatedAt"] };
 
@@ -27,7 +27,7 @@ const include = [
 		model: Associations_users,
 		as: "memberships",
 		attributes: {
-			exclude: ["id", "user_id", "assos_id", "role_id", "status_id"],
+			exclude: ["user_id", "assos_id", "role_id", "status_id"],
 		},
 		include: [
 			{
@@ -56,7 +56,7 @@ const includeUser = [
 				model: Associations_users,
 				as: "author",
 				attributes: {
-					exclude: ["id", "user_id", "assos_id", "role_id", "status_id"],
+					exclude: ["user_id", "assos_id", "role_id", "status_id","createdAt","updatedAt"],
 				},
 				include: [
 					{
@@ -84,15 +84,19 @@ const includeUser = [
 ];
 
 module.exports = {
-	getUsers: async function (res, queries = null) {
+	getUsers: async function (res, queries) {
+		const {size,page,status} = queries
 		let condition = {};
-		if (queries && queries.status) {
-			let statusData = await getRow(res, Status, { label: queries.status });
+		if (status) {
+			let statusData = await getRow(res, Status, { label: status });
 			condition.status_id = statusData.id;
 		}
 
 		condition = Object.keys(condition).length === 0 ? null : condition;
-		commonsController.getAll(res, Users, condition, exclude, include);
+
+		let pagination = getPaginationQueries(size,page)
+
+		commonsController.getAll(res, Users, condition, exclude, include, pagination);
 	},
 
 	getUser: function (res, id) {
@@ -100,8 +104,9 @@ module.exports = {
 	},
 
 	updateUser: function (res, id, data) {
+		const {email} = data
 		const condition = {};
-		if (data.email) condition.email = data.email;
+		if (email) condition.email = email;
 		commonsController.update(res, Users, id, data, condition);
 	},
 
@@ -114,16 +119,17 @@ module.exports = {
 	},
 
 	resetPassword: async function (res, data) {
+		const {id, old_password, password} = data
 		asyncLib.waterfall(
 			[
 				function (done) {
-					const condition = { id: data.id };
+					const condition = { id };
 					getField(res, Users, condition, done, true, include);
 				},
 				function (user, done) {
 					if (user) {
 						bcrypt.compare(
-							data.old_password,
+							old_password,
 							user.password,
 							(errByCrypt, resByCrypt) => {
 								done(null, user, resByCrypt);
@@ -138,7 +144,7 @@ module.exports = {
 				},
 				function (user, resByCrypt, done) {
 					if (resByCrypt) {
-						const updateData = {password: bcrypt.hashSync(data.password, 10)};
+						const updateData = {password: bcrypt.hashSync(password, 10)};
 						updateField(res, user, updateData, done);
 					} else {
 						return res.status(error.access_forbidden.status).json({
@@ -161,8 +167,22 @@ module.exports = {
 		);
 	},
 
-	getFavorites: function (res, id) {
+	getFavorites: async function (res, id, queries) {
+		const {status, size, page} = queries
+		let condition = {};
+
+		if (status) {
+			let statusData = await getRow(res, Status, { label: status });
+			condition.status_id = statusData.id;
+		}
+		condition = Object.keys(condition).length === 0 ? null : condition;
+
 		const includeFavorites = [...includeUser];
+		for (let i = 0; i < includeFavorites.length; i++) {
+			const item = includeFavorites[i];
+			if(item.as == "status") item.where = condition
+		}
+
 		includeFavorites.splice(-1);
 		includeFavorites.push({
 			model: Associations,
@@ -170,74 +190,83 @@ module.exports = {
 			attributes: { exclude: ["status_id"] },
 			include: [{ model: Status, as: "status", attributes: excludeCommon }],
 		});
-		const condition = { user_id: id };
+
+		let pagination = getPaginationQueries(size,page)
 		commonsController.getAll(
 			res,
 			Favorites,
-			condition,
+			{ user_id: id },
 			["assos_id", "jobs_id", "status_id"],
-			includeFavorites
+			includeFavorites,
+			pagination
 		);
 	},
 
 	createFavorite: async function (res, data) {
 		const condition = {};
-		if ((!data.assos_id && !data.jobs_id) || (data.assos_id && data.jobs_id))
+		const {assos_id,jobs_id,} = data
+		if ((!assos_id && !jobs_id) || (assos_id && jobs_id))
 			return res
 				.status(error.parameters.status)
 				.json({ message: "send assos_id or jobs_id in data" });
 
-		if (data.assos_id) {
-			const assos = await getRow(res, Associations, { id: data.assos_id });
-			condition.assos_id = data.assos_id;
+		if (assos_id) {
+			const assos = await getRow(res, Associations, { id: assos_id });
+			condition.assos_id = assos_id;
 		}
 
-		if (data.jobs_id) {
-			const job = await getRow(res, Jobs, { id: data.jobs_id });
-			condition.jobs_id = data.jobs_id;
+		if (jobs_id) {
+			const job = await getRow(res, Jobs, { id: jobs_id });
+			condition.jobs_id = jobs_id;
 		}
 
 		commonsController.create(null, res, Favorites, data, condition);
 	},
 
-	getUserJobs: async function (res, id, queries = null) {
-		let condition = {};
-		if (queries && queries.status) {
-			let statusData = await getRow(res, Status, { label: queries.status });
+	getUserJobs: async function (res, id, queries) {
+		const {status, size, page} = queries
+
+		let condition = {user_id: id};
+		if (status) {
+			let statusData = await getRow(res, Status, { label: status });
 			condition.status_id = statusData.id;
 		}
-		condition = Object.keys(condition).length === 0 ? null : condition;
 		const excludeGroup = ["jobs_id"];
+		let pagination = getPaginationQueries(size,page)
 
 		commonsController.getAll(
 			res,
 			Groups,
-			{ user_id: id },
+			condition,
 			excludeGroup,
-			includeUser
+			includeUser,
+			pagination
 		);
 	},
 
-	getUserLitigations: async function (res, id, queries = null) {
-		let condition = {};
-		if (queries && queries.status) {
-			let statusData = await getRow(res, Status, { label: queries.status });
+	getUserLitigations: async function (res, id, queries) {
+		const {status, size, page} = queries
+
+		let condition = {type: 1};
+		if (status) {
+			let statusData = await getRow(res, Status, { label: status });
 			condition.status_id = statusData.id;
 		}
 
-    condition = Object.keys(condition).length === 0 ? null : condition;
 
-    const includeLitigation = [
-      {model: Status, as: "status", attributes: excludeCommon},
-      {model: Litigation_objects, as: "litigation_object", attributes: excludeCommon},
-      {
-        model: Groups,
-        as: "mission",
-        attributes: { exclude: ["user_id","ads_id","status_id"] },
-        include: [...includeUser],
-        where: {user_id: id}
-      }
-    ];
-    commonsController.getAll(res, Litigations, condition, ['litigation_object_id','group_id','status_id'], includeLitigation);
+		const includeLitigation = [
+		{model: Status, as: "status", attributes: excludeCommon},
+		{model: Litigation_objects, as: "litigation_object", attributes: excludeCommon},
+		{
+			model: Groups,
+			as: "mission",
+			attributes: { exclude: ["user_id","jobs_id","status_id"] },
+			include: [...includeUser],
+			where: {user_id: id}
+		}
+		];
+		let pagination = getPaginationQueries(size,page)
+
+		commonsController.getAll(res, Litigations, condition, ['litigation_object_id','group_id','status_id'], includeLitigation, pagination);
   	}
 };
