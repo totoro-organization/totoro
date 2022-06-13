@@ -1,6 +1,7 @@
 "use strict";
 const { v4: uuidv4 } = require("uuid");
 const { Model } = require("sequelize");
+var moment = require('moment');
 
 module.exports = (sequelize, DataTypes) => {
   class Tokens extends Model {
@@ -30,6 +31,14 @@ module.exports = (sequelize, DataTypes) => {
     {
       qrcode: DataTypes.STRING,
       end_date: DataTypes.DATE,
+			isExpired: {
+				type: DataTypes.VIRTUAL,
+				get() {
+					var date = new Date();
+					var data_now = moment(date).format("YYYY-MM-DD");
+				  return data_now > moment(this.end_date).format("YYYY-MM-DD");
+				}
+			}
     },
     {
       sequelize,
