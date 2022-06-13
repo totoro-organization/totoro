@@ -83,7 +83,7 @@ exports.router = (function () {
 		passport,
 		async function (req, res) {
 			const id = req.params.id;
-			controller.getFavorites(res, id);
+			controller.getFavorites(res, id, req.query);
 		},
 	]);
 

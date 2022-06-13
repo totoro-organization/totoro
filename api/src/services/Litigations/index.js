@@ -9,7 +9,7 @@ exports.router = (function () {
     controller.getLitigations(res, req.query);
   }]);
 
-  litigationsRouter.get("/:id", [passport, async function (req, res) {
+  litigationsRouter.get("/:id", [passportAdmin, async function (req, res) {
     const id = req.params.id;
     controller.getLitigation(res, id);
   }]);
