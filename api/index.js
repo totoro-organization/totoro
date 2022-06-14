@@ -63,16 +63,16 @@ server.get("/",async function(req,res){
     res.status(200).send(`<h1>qrcode link ${link}</h1>`)
 })*/
 
-server.use("/api", [accessApi, commons]);
-server.use("/api/applications", [accessApi, applications]);
-server.use("/api/auth", [accessApi, authentications]);
-server.use("/api/users", [accessApi, users]);
-server.use("/api/admins", [accessApi, admins]);
-server.use("/api/jobs", [accessApi, jobs]);
-server.use('/api/litigations', [accessApi, litigations]);
-// server.use('/api/messagings', [accessApi, messagings]);
-// server.use('/api/transactions', [accessApi, transactions]);
-// server.use('/api/subscriptions', [accessApi, subscriptions]);
+server.use("/", [accessApi, commons]);
+server.use("/applications", [accessApi, applications]);
+server.use("/auth", [accessApi, authentications]);
+server.use("/users", [accessApi, users]);
+server.use("/admins", [accessApi, admins]);
+server.use("/jobs", [accessApi, jobs]);
+server.use('/litigations', [accessApi, litigations]);
+// server.use('/messagings', [accessApi, messagings]);
+// server.use('/transactions', [accessApi, transactions]);
+// server.use('/subscriptions', [accessApi, subscriptions]);
 
 const options = {
 	controllers: "./src/services",
