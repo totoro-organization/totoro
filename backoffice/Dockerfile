@@ -8,10 +8,6 @@ RUN npm install --legacy-peer-deps
 
 COPY . .
 
-ARG BO_APP_API_BASE_URL
-
-ENV BO_APP_API_BASE_URL=$BO_APP_API_BASE_URL
-
 RUN npm run build
 
 FROM nginx:1.17.0-alpine
