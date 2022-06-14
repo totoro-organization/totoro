@@ -8,6 +8,10 @@ RUN npm install --legacy-peer-deps
 
 COPY . .
 
+ARG API_BASE_URL
+
+ENV API_BASE_URL=$API_BASE_URL
+
 RUN npm run build
 
 FROM nginx:1.17.0-alpine
@@ -19,6 +23,6 @@ COPY --from=build-stage /backoffice/build /usr/share/nginx/html
 
 # COPY nginx/nginx.conf /etc/nginx/nginx.conf
 
-EXPOSE $BACKOFFICE_DOCKER_PORT
+EXPOSE $GNIX_PORT
 
 CMD nginx -g "daemon off;"
