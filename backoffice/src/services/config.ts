@@ -1,4 +1,11 @@
+const APP_ID = '82fbd12d-69e8-4190-939d-1f28add0719e';
+
+const SERVER = 'http://127.0.0.1:6868';
+
+const URI = SERVER + '/api';
+
 export const config = {
-    app_id: '4fb3eefe-e007-4fdf-a548-566f045e609b',
-    server: process.env['BO_APP_API_BASE_URL']
+    app_id: APP_ID,
+    server: SERVER,
+    uri: URI
 }
