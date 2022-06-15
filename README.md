@@ -1,4 +1,28 @@
-# fil-rouge
+# Totoro
+
+Totoro est un service de proximité proposant à ses utilisateurs des missions à réaliser avec des associations en échange de `tokens` dépensables directement dans notre boutique contre des bons de réductions chez des commerçants locaux.
+
+## 🛠 Choix techniques
+
+#### Front
+
+- Typescript (React & ReactNative)
+- Atomic Design
+- CSS in JS (styled-components)
+
+#### API
+
+- JavaScript (NodeJS)
+
+#### TEST
+
+- Jest (test unitaire)
+- Cypress (test e2e)
+
+## Documentation
+
+// TODO
+[Swagger - API](https://linktodocumentation)
 
 ## Installation
 
