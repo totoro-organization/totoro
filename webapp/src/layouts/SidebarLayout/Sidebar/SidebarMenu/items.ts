@@ -7,6 +7,7 @@ import QueryStatsIcon from '@mui/icons-material/QueryStats';
 import CardMembershipIcon from '@mui/icons-material/CardMembership';
 import GroupWorkIcon from '@mui/icons-material/GroupWork';
 import AssignmentIcon from '@mui/icons-material/Assignment';
+import ListIcon from '@mui/icons-material/List';
 import PeopleIcon from '@mui/icons-material/People';
 import PaletteIcon from '@mui/icons-material/Palette';
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
@@ -14,6 +15,7 @@ import GroupsIcon from '@mui/icons-material/Groups';
 import StyleIcon from '@mui/icons-material/Style';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import InvertColorsIcon from '@mui/icons-material/InvertColors';
+import AddTaskIcon from '@mui/icons-material/AddTask';
 import SettingsIcon from '@mui/icons-material/Settings';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 
@@ -46,6 +48,23 @@ const menuItems: MenuItems[] = [
     heading: 'Gestion',
     items: [
       {
+        name: 'Mission',
+        icon: AssignmentIcon,
+        link: '/gestion/mission',
+        items: [
+          {
+            name: 'Liste',
+            icon: ListIcon,
+            link: '/gestion/mission/liste'
+          },
+          {
+            name: 'Créer une mission',
+            icon: AddTaskIcon,
+            link: '/gestion/mission/creation'
+          }
+        ]
+      },
+      {
         name: 'Associations',
         icon: VolunteerActivismIcon,
         link: '/gestion/associations'
@@ -71,11 +90,6 @@ const menuItems: MenuItems[] = [
             link: '/gestion/partenaires/membres'
           }
         ]
-      },
-      {
-        name: 'Missions',
-        icon: AssignmentIcon,
-        link: '/gestion/missions',
       },
       {
         name: 'Utilisateurs',

@@ -1,9 +1,8 @@
 import { Helmet } from 'react-helmet-async';
-import PageHeader from './PageHeader';
 import PageTitleWrapper from 'src/components/PageTitleWrapper';
 import Footer from 'src/components/Footer';
 
-function ManagemenMissions() {
+function CreationMissions() {
 
     return (
         <>
@@ -11,7 +10,6 @@ function ManagemenMissions() {
             <title>Manage missions - Applications</title>
         </Helmet>
         <PageTitleWrapper>
-            <PageHeader />
         </PageTitleWrapper>
         <Footer />
         </>
@@ -19,4 +17,4 @@ function ManagemenMissions() {
     
 }
 
-export default ManagemenMissions;
+export default CreationMissions;

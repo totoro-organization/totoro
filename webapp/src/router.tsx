@@ -38,7 +38,8 @@ const UserSettings = Loader(lazy(() => import('src/pages/User/settings')));
 
 //Gestion
 
-const Missions = Loader(lazy(() => import('src/pages/Gestion/missions/indexedDB')));
+const CreationMission = Loader(lazy(() => import('src/pages/Gestion/Mission/Creation/indexedDB')));
+const ListingMissions = Loader(lazy(() => import('src/pages/Gestion/Mission/Liste/indexedDB'))); 
 
 // Status
 
@@ -147,11 +148,25 @@ const routes: PartialRouteObject[] = [
             children: [
               {
                 path: '/',
-                element: <Navigate to="missions" replace />
+                element: <Navigate to="mission/liste" replace />
               },
               {
-                path: 'missions',
-                element: <Missions />
+                path: 'mission',
+                element: <ListingMissions />,
+                children: [
+                  {
+                    path: '/',
+                    element: <Navigate to="liste" replace />
+                  },
+                  {
+                    path: 'liste',
+                    element: <ListingMissions />
+                  },
+                  {
+                    path: 'creation',
+                    element: <CreationMission />
+                  }
+                ]
               }
             ]
           }
