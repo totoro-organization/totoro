@@ -10,18 +10,20 @@ import Footer from 'src/components/Footer';
 import JobCard from './JobCard';
 import SuspenseLoader from 'src/components/SuspenseLoader';
 import { useApi } from 'src/hooks/useApi';
+import ImageGallery from './ImageGallery';
+import ParticipantsTable from './ParticipantsTable';
+import TableWrapper from 'src/components/TableWrapper';
 
 function JobDetails() {
 
   const { id } = useParams();
 
-  const { data: job, loading } = useApi(`/jobs/${id}`);
+  const { data: job, loading: jobLoading } = useApi(`/jobs/${id}`);
   const { data: participants, loading: participantsLoading } = useApi(`/jobs/${id}/participants`);
 
   const navigate = useNavigate();
 
   const handleGoBack = () => navigate('/gestion/missions');
-  console.log(participants);
   
   return (
     <>
@@ -46,7 +48,18 @@ function JobDetails() {
           spacing={3}
         >
           <Grid item xs={12}>
-            { !loading && job ? <JobCard job={job} /> : <SuspenseLoader/>}
+            { !jobLoading && job ? (
+              <> 
+              <JobCard job={job} />
+              {/* <ImageGallery images={job.attachments} /> */}
+              </>
+            ) : <SuspenseLoader/>}
+             
+             { !participantsLoading && participants ? (
+              <TableWrapper title='Participants' defaultItems={participants?.data}>
+                <ParticipantsTable items={participants} /> 
+              </TableWrapper>
+             ): <SuspenseLoader/>}
           </Grid>
         </Grid>
       </Container>

@@ -20,7 +20,9 @@ import {
   const JobCard = ({ job }: JobCardProps) => {
     return (
       <Card>
-        <CardHeader subheader={
+        <CardHeader 
+        action={<StatusLabel status={job.status.label}/>}
+        subheader={
         <Box>
           <Typography variant="h4" gutterBottom>
           {job.title}
@@ -41,6 +43,26 @@ import {
                 <Grid item xs={12} sm={10} md={10}>
                   <Text color="black">
                     <b>{job.title}</b>
+                  </Text>
+                </Grid>
+                <Grid item xs={12} sm={2} md={2} textAlign={{ sm: 'right' }}>
+                  <Box pr={3} pb={2}>
+                    Association :
+                  </Box>
+                </Grid>
+                <Grid item xs={12} sm={10} md={10}>
+                  <Text color="black">
+                    <b>{job.author.organization.name}</b>
+                  </Text>
+                </Grid>
+                <Grid item xs={12} sm={2} md={2} textAlign={{ sm: 'right' }}>
+                  <Box pr={3} pb={2}>
+                    Auteur :
+                  </Box>
+                </Grid>
+                <Grid item xs={12} sm={10} md={10}>
+                  <Text color="black">
+                    <b>{job.author.user.firstname} {job.author.user.lastname} ({job.author.user.username})</b>
                   </Text>
                 </Grid>
                 <Grid item xs={12} sm={2} md={2} textAlign={{ sm: 'right' }}>

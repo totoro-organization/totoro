@@ -58,7 +58,7 @@ const JobsTable: FC<TableProps<Job>> = ({
               </TableCell>
               <TableCell>Details</TableCell>
               <TableCell>Date</TableCell>
-              <TableCell>Participants (capacité)</TableCell>
+              <TableCell>Participants</TableCell>
               <TableCell align="right">Tokens</TableCell>
               <TableCell align="right">Statut</TableCell>
               <TableCell align="right">Actions</TableCell>
@@ -95,7 +95,7 @@ const JobsTable: FC<TableProps<Job>> = ({
                     ><Link to={`/gestion/missions/${job.id}`}>{job.title}</Link>
                     </Typography>
                     <Typography variant="body2" color="text.secondary" noWrap>
-                      {job.organization}
+                      {job.author.organization.name}
                     </Typography>
                   </TableCell>
                   <TableCell>
@@ -117,7 +117,7 @@ const JobsTable: FC<TableProps<Job>> = ({
                       gutterBottom
                       noWrap
                     >
-                      {job.participants_max}
+                      {job.remaining_place} / { job.participants_max }
                     </Typography>
                   </TableCell>
                   <TableCell align="right">

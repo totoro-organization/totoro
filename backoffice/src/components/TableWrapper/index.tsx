@@ -21,7 +21,7 @@ import { useModal } from 'src/hooks/useModal';
 interface TableWrapperProps {
   className?: string;
   defaultItems: any;
-  url: string,
+  url?: string,
   title?: string,
   statusOptions?: StatusOptions,
   children: ReactNode,
