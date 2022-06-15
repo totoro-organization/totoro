@@ -1,7 +1,6 @@
-// @ts-nocheck
 import { FC, ChangeEvent } from 'react';
 import { Link } from "react-router-dom";
-import { format } from 'date-fns';
+
 import {
   Tooltip,
   Checkbox,
@@ -16,29 +15,33 @@ import {
   useTheme,
 } from '@mui/material';
 
-import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
-import StatusLabel from 'src/components/StatusLabel';
 import { Job } from 'src/models/job';
+import { TableProps } from 'src/components/TableWrapper';
+import Modal from "src/components/Modal";
+import { DeleteJobContent } from './JobModalContent';
+import StatusSelect from 'src/components/StatusSelect';
+import { TableEnum } from 'src/models';
+import { useModal } from 'src/hooks/useModal';
 
-interface JobsTableProps {
-  items: Job[], 
-  selectedItems: any,
-  handleSelectAllItems: (event: ChangeEvent<HTMLInputElement>) => void, 
-  handleSelectOneItem: (event: ChangeEvent<HTMLInputElement>, itemId: string) => void,
-  selectedSomeItems: any,
-  selectedAllItems: any
-}
-
-const JobsTable: FC<JobsTableProps> = ({
+const JobsTable: FC<TableProps<Job>> = ({
   items: jobs, 
   selectedItems,
   handleSelectAllItems, 
   handleSelectOneItem,
   selectedSomeItems,
-  selectedAllItems
+  selectedAllItems,
+  statusOptions,
+  handleDeleteItem
 }) => {
   const theme = useTheme();
+
+  const [deleteModalOpen, handleOpenDeleteModal, handleCloseDeleteModal, deleteModalItem] = useModal();
+
+  const handleDelete = (id: string) => {
+    handleDeleteItem(id);
+    handleCloseDeleteModal();
+  }
 
   return (
       <TableContainer>
@@ -55,7 +58,7 @@ const JobsTable: FC<JobsTableProps> = ({
               </TableCell>
               <TableCell>Details</TableCell>
               <TableCell>Date</TableCell>
-              <TableCell>Participants</TableCell>
+              <TableCell>Participants (capacité)</TableCell>
               <TableCell align="right">Tokens</TableCell>
               <TableCell align="right">Statut</TableCell>
               <TableCell align="right">Actions</TableCell>
@@ -77,7 +80,7 @@ const JobsTable: FC<JobsTableProps> = ({
                       color="primary"
                       checked={isJobSelected}
                       onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                        handleSelectOneJob(event, job.id)
+                        handleSelectOneItem(event, job.id)
                       }
                       value={isJobSelected}
                     />
@@ -103,7 +106,7 @@ const JobsTable: FC<JobsTableProps> = ({
                       gutterBottom
                       noWrap
                     >
-                      {format(job.date, 'dd MMMM  yyyy')}
+                      {job.createdAt}
                     </Typography>
                   </TableCell>
                   <TableCell>
@@ -114,7 +117,7 @@ const JobsTable: FC<JobsTableProps> = ({
                       gutterBottom
                       noWrap
                     >
-                      {job.participants} / {job.capacity}
+                      {job.participants_max}
                     </Typography>
                   </TableCell>
                   <TableCell align="right">
@@ -125,29 +128,16 @@ const JobsTable: FC<JobsTableProps> = ({
                       gutterBottom
                       noWrap
                     >
-                      {job.tokens}
+                      {job.difficulty.token}
                     </Typography>
                   </TableCell>
                   <TableCell align="right">
-                    <StatusLabel status={job.status.label} />
+                  <StatusSelect table={TableEnum.jobs} currentItem={{ id: job.id, status: job.status}} statusOptions={statusOptions} />
                   </TableCell>
                   <TableCell align="right">
-                    <Tooltip title="Editer la mission" arrow>
-                      <IconButton
-                        sx={{
-                          '&:hover': {
-                            background: theme.colors.primary.lighter
-                          },
-                          color: theme.palette.primary.main
-                        }}
-                        color="inherit"
-                        size="small"
-                      >
-                        <EditTwoToneIcon fontSize="small" />
-                      </IconButton>
-                    </Tooltip>
                     <Tooltip title="Supprimer la mission" arrow>
                       <IconButton
+                        onClick={() => handleOpenDeleteModal(job)}
                         sx={{
                           '&:hover': { background: theme.colors.error.lighter },
                           color: theme.palette.error.main
@@ -164,6 +154,9 @@ const JobsTable: FC<JobsTableProps> = ({
             })}
           </TableBody>
         </Table>
+        <Modal open={deleteModalOpen} handleClose={handleCloseDeleteModal} title={`Supprimer la mission suivante : ${deleteModalItem?.title}`}>
+            <DeleteJobContent handleClose={handleCloseDeleteModal} handleDelete={handleDelete} item={deleteModalItem} />
+        </Modal>
       </TableContainer>
   );
 };
