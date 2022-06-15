@@ -13,12 +13,14 @@ import { subDays } from 'date-fns';
 import { User } from 'src/models/user';
 import { useApi } from 'src/hooks/useApi';
 import SuspenseLoader from 'src/components/SuspenseLoader';
+import TableWrapper from 'src/components/TableWrapper';
 
 function UserDetails() {
 
   const { id } = useParams();
 
-  const { data: user, loading } = useApi(`/users/${id}`);
+  const { data: user, userLoading } = useApi(`/users/${id}`);
+  const { data: jobs, jobsLoading } = useApi(`/users/${id}/jobs`);
 
   const navigate = useNavigate();
 
@@ -53,7 +55,12 @@ function UserDetails() {
           spacing={3}
         >
           <Grid item xs={12}>
-            { loading ? <SuspenseLoader/> : <UserCard user={user} /> }
+            { userLoading ? <SuspenseLoader/> : <UserCard user={user} /> }
+            {/* { jobsLoading ? <SuspenseLoader/> : (
+              <TableWrapper>
+                <Jobs
+              </TableWrapper>
+            )} */}
           </Grid>
         </Grid>
       </Container>

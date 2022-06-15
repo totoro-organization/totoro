@@ -18,7 +18,7 @@ function Litigations() {
       name: 'Fermé'
     },
   ];
-  
+  console.log(litigations)
   return (
     <h2>Commenté en attendant le back</h2>
     // loading || !litigations ? <SuspenseLoader/> : 
