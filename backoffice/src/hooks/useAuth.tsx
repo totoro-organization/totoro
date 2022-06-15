@@ -52,7 +52,8 @@ export function AuthProvider({
   // Finally, just signal the component that the initial load
   // is over.
   useEffect(() => {
-    sessionsService
+    if(!user) {
+      sessionsService
       .getCurrentUser()
       .then((response) => {
         if("error" in response) {
@@ -63,6 +64,7 @@ export function AuthProvider({
       })
       .catch((_error) => {})
       .finally(() => setLoadingInitial(false));
+    }
   }, []);
 
   // Flags the component loading state and posts the login
