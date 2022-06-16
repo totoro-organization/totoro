@@ -4,17 +4,13 @@ import Box from "../atoms/Box";
 import Spacer from "../atoms/Spacer";
 import { Text } from "../atoms/Text";
 
-type MissionDetailProps = {
+type JobDetailProps = {
   Icon: JSX.Element;
   title: string;
   text: string;
 };
 
-export default function MissionDetail({
-  Icon,
-  title,
-  text,
-}: MissionDetailProps) {
+export default function JobDetail({ Icon, title, text }: JobDetailProps) {
   return (
     <Box alignItems="center">
       <IconWrapper>{Icon}</IconWrapper>
