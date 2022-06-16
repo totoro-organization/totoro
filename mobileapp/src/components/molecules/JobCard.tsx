@@ -6,16 +6,16 @@ import { Card } from "../atoms/Card";
 import { Text } from "../atoms/Text";
 
 // TODO: add model of Mission.
-type MissionCardProps = {
+type JobCardProps = {
   mission: any;
 };
 
 // TODO: Add real design
-export default function MissionCard({ mission }: MissionCardProps) {
+export default function JobCard({ mission }: JobCardProps) {
   const navigation = useNavigation<StackNavigationProp<StackParamList>>();
 
   return (
-    <Card onPress={() => navigation.navigate("Mission", { id: mission.id })}>
+    <Card onPress={() => navigation.navigate("Job", { id: mission.id })}>
       <Text>
         {mission.title} - {mission.organization.name}
       </Text>
