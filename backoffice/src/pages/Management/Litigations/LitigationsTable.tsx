@@ -128,10 +128,10 @@ const LitigationsTable: FC<TableProps<Litigation>> = ({
                       gutterBottom
                       noWrap
                     >
-                      {
+                      {/* {
                         'firstname' in litigation.author ? `${litigation.author.firstname} ${litigation.author.lastname}` 
                         : litigation.author.title
-                      }
+                      } */}
                     </Typography>
                   </TableCell>
                   <TableCell align="left">
@@ -142,10 +142,10 @@ const LitigationsTable: FC<TableProps<Litigation>> = ({
                       gutterBottom
                       noWrap
                     >
-                      {
+                      {/* {
                         'firstname' in litigation.author ? `${litigation.author.firstname} ${litigation.author.lastname}` 
                         : litigation.author.title
-                      }
+                      } */}
                     </Typography>
                   </TableCell>
                   <TableCell align="right">
