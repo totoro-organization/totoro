@@ -23,6 +23,7 @@ import Modal from 'src/components/Modal';
 import { useModal } from 'src/hooks/useModal';
 import { TableEnum } from 'src/models';
 import StatusSelect from 'src/components/StatusSelect';
+import format from 'date-fns/format';
 
 
 const LitigationsTable: FC<TableProps<Litigation>> = ({
@@ -33,7 +34,8 @@ const LitigationsTable: FC<TableProps<Litigation>> = ({
   selectedSomeItems,
   selectedAllItems,
   handleDeleteItem,
-  statusOptions
+  statusOptions,
+  table
 }) => {
 
   const theme = useTheme();
@@ -106,7 +108,7 @@ const LitigationsTable: FC<TableProps<Litigation>> = ({
                       gutterBottom
                       noWrap
                     >
-                      {litigation.createdAt}
+                      {format(new Date(litigation.createdAt), "dd/MM/yyyy HH:mm:ss")}
                     </Typography>
                   </TableCell>
                   <TableCell>
@@ -149,7 +151,7 @@ const LitigationsTable: FC<TableProps<Litigation>> = ({
                     </Typography>
                   </TableCell>
                   <TableCell align="right">
-                    <StatusSelect table={TableEnum.litigations} currentItem={{ id: litigation.id, status: litigation.status}} statusOptions={statusOptions} />
+                    <StatusSelect table={table} currentItem={{ id: litigation.id, status: litigation.status}} statusOptions={statusOptions} />
                   </TableCell>
                   <TableCell align="right">
                     <Tooltip title="Supprimer le litige" arrow>

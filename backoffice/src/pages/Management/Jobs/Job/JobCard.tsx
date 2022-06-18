@@ -5,6 +5,7 @@ import {
   Typography
 } from '@mui/material';
 import { Box } from '@mui/system';
+import { format } from 'date-fns';
 import StatusSelect from 'src/components/StatusSelect';
 import Text from 'src/components/Text';
 import { Job, StatusEnum, TableEnum } from 'src/models';
@@ -116,9 +117,9 @@ const JobCard = ({ job }: JobCardProps) => {
             </Grid>
             <Grid item xs={12} sm={10} md={9}>
               <Text color="black">
-                <b>Commence le : {job.start_date}</b>
+                <b>Commence le : {format(new Date(job.start_date), "dd/MM/yyyy HH:mm:ss")}</b>
                 &emsp;
-                <b>Termine le : {job.end_date}</b>
+                <b>Termine le : {format(new Date(job.end_date), "dd/MM/yyyy HH:mm:ss")}</b>
               </Text>
             </Grid>
             <Grid item xs={12} sm={2} md={3} textAlign={{ sm: 'right' }}>
@@ -128,7 +129,7 @@ const JobCard = ({ job }: JobCardProps) => {
             </Grid>
             <Grid item xs={12} sm={10} md={9}>
               <Box sx={{ maxWidth: { xs: 'auto', sm: 300 } }}>
-                <Text color="black">{job.createdAt}</Text>
+                <Text color="black">{format(new Date(job.createdAt), "dd/MM/yyyy HH:mm:ss")}</Text>
               </Box>
             </Grid>
             <Grid item xs={12} sm={2} md={3} textAlign={{ sm: 'right' }}>
@@ -138,7 +139,7 @@ const JobCard = ({ job }: JobCardProps) => {
             </Grid>
             <Grid item xs={12} sm={10} md={9}>
               <Box sx={{ maxWidth: { xs: 'auto', sm: 300 } }}>
-                <Text color="black">{job.updatedAt}</Text>
+                <Text color="black">{format(new Date(job.updatedAt), "dd/MM/yyyy HH:mm:ss")}</Text>
               </Box>
             </Grid>
             <Grid item xs={12} sm={2} md={3} textAlign={{ sm: 'right' }}>

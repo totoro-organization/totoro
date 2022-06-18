@@ -2,6 +2,11 @@ import { requestAxios } from "./requestApi";
 
 export const ADMIN_BASE_URL = "/admins"
 
+export async function sendLog(id: string, data: object) {
+    const response = await requestAxios("POST", `${ADMIN_BASE_URL}/${id}`, data );
+    return response;
+} 
+
 export async function getAdmins() {
     const response = await requestAxios("GET", ADMIN_BASE_URL );
     return response;

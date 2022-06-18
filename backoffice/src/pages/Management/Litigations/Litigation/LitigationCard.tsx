@@ -5,6 +5,7 @@ import {
     Typography
   } from '@mui/material';
   import { Box } from '@mui/system';
+import { format } from 'date-fns';
   import StatusSelect from 'src/components/StatusSelect';
   import SuspenseLoader from 'src/components/SuspenseLoader';
   import Text from 'src/components/Text';
@@ -80,7 +81,7 @@ import {
                 </Grid>
                 <Grid item xs={12} sm={10} md={10}>
                   <Box sx={{ maxWidth: { xs: 'auto', sm: 300 } }}>
-                    <Text color="black">{litigation.createdAt}</Text>
+                    <Text color="black">{format(new Date(litigation.createdAt), "dd/MM/yyyy HH:mm:ss")}</Text>
                   </Box>
                 </Grid>
                 <Grid item xs={12} sm={2} md={2} textAlign={{ sm: 'right' }}>
@@ -90,7 +91,7 @@ import {
                 </Grid>
                 <Grid item xs={12} sm={10} md={10}>
                   <Box sx={{ maxWidth: { xs: 'auto', sm: 300 } }}>
-                    <Text color="black">{litigation.updatedAt}</Text>
+                    <Text color="black">{format(new Date(litigation.updatedAt), "dd/MM/yyyy HH:mm:ss")}</Text>
                   </Box>
                 </Grid>
                 <Grid item xs={12} sm={2} md={2} textAlign={{ sm: 'right' }}>
