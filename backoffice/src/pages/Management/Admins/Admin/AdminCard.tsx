@@ -7,16 +7,36 @@ import {
   Typography
 } from '@mui/material';
 import { Box } from '@mui/system';
-import StatusLabel from 'src/components/StatusLabel';
+import StatusSelect from 'src/components/StatusSelect';
 import SuspenseLoader from 'src/components/SuspenseLoader';
 import Text from 'src/components/Text';
-import { Admin } from 'src/models';
+import { Admin, StatusEnum, TableEnum } from 'src/models';
 
 interface AdminCardProps {
   admin: Admin;
 }
 
 const AdminCard = ({ admin }: AdminCardProps) => {
+
+  const statusOptions = [
+    {
+      id: StatusEnum.actived,
+      name: 'Actif'
+    },
+    {
+      id: StatusEnum.deleted,
+      name: 'Supprimé'
+    },
+    {
+      id: StatusEnum.freezed,
+      name: 'Gelé'
+    },
+    {
+      id: StatusEnum.disabled,
+      name: 'Désactivé'
+    },
+  ];
+
   return (
     <Card>
       <CardHeader subheader={
@@ -110,7 +130,11 @@ const AdminCard = ({ admin }: AdminCardProps) => {
               </Grid>
               <Grid item xs={12} sm={10} md={10}>
                 <Box sx={{ maxWidth: { xs: 'auto', sm: 300 } }}>
-                  <StatusLabel status={admin.status.label}/>
+                <StatusSelect
+                  table={TableEnum.jobs}
+                  currentItem={{ id: admin.id, status: admin.status }}
+                  statusOptions={statusOptions}
+                />
                 </Box>
               </Grid>
             </Grid>
