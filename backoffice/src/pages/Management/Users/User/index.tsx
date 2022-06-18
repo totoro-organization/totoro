@@ -13,6 +13,7 @@ import { User } from 'src/models/user';
 import { useApi } from 'src/hooks/useApi';
 import SuspenseLoader from 'src/components/SuspenseLoader';
 import TableWrapper from 'src/components/TableWrapper';
+import StatusLabel from 'src/components/StatusLabel';
 
 function UserDetails() {
 
@@ -31,7 +32,7 @@ function UserDetails() {
         <title>Utilisateur {`${user?.firstname } ${user?.lastname}`}</title>
       </Helmet>
       <PageTitleWrapper>
-        <Box display="flex">
+        <Box alignItems={"center"} display="flex">
           <Tooltip
             onClick={handleGoBack}
             arrow
@@ -43,6 +44,7 @@ function UserDetails() {
             </IconButton>
           </Tooltip>
           <PageTitle heading={`${user?.firstname } ${user?.lastname}`} subHeading={'@' + user?.username} />
+          { user && <StatusLabel status={user?.status.label}/>}
         </Box>
       </PageTitleWrapper>
       <Container maxWidth="lg">
