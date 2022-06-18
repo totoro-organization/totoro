@@ -1,13 +1,10 @@
 import {
   Card,
   CardContent,
-  CardHeader,
-  Divider,
   Grid,
   Typography
 } from '@mui/material';
 import { Box } from '@mui/system';
-import StatusLabel from 'src/components/StatusLabel';
 import StatusSelect from 'src/components/StatusSelect';
 import Text from 'src/components/Text';
 import { Job, StatusEnum, TableEnum } from 'src/models';
