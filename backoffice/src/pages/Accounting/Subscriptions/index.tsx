@@ -2,17 +2,9 @@ import { useState, ChangeEvent } from 'react';
 import { Helmet } from 'react-helmet-async';
 import PageHeader from './PageHeader';
 import PageTitleWrapper from 'src/components/PageTitleWrapper';
-import { Container, Tabs, Tab, Grid } from '@mui/material';
+import { Container, Tabs, Tab, Grid, styled } from '@mui/material';
 import Footer from 'src/components/Footer';
-import { styled } from '@mui/material/styles';
-
-const TabsWrapper = styled(Tabs)(
-  () => `
-    .MuiTabs-scrollableX {
-      overflow-x: auto !important;
-    }
-`
-);
+import TabsWrapper from 'src/components/TabsWrapper';
 
 function ManagementUserSettings() {
 
