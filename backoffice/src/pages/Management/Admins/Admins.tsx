@@ -1,20 +1,12 @@
-import { Box } from '@mui/material';
 import AdminsTable from './AdminsTable';
 import { useApi } from 'src/hooks/useApi';
 import SuspenseLoader from 'src/components/SuspenseLoader';
 import TableWrapper from 'src/components/TableWrapper';
-import { styled } from '@mui/system';
 import { StatusEnum } from 'src/models/status';
 
 import { ADMIN_BASE_URL } from 'src/services/admins.service';
+import { TableEnum } from 'src/models';
 
-const WrapperBox = styled(Box)(
-  ({ theme }) => `
-    display: flex;
-    flex-direction: column;
-    row-gap: ${theme.spacing(2)}
-`
-);
 
 function Admins() {
 
@@ -41,7 +33,7 @@ function Admins() {
 
   return (
       loading || !admins ? <SuspenseLoader/> : 
-      <TableWrapper url={ADMIN_BASE_URL} statusOptions={statusOptions} defaultItems={admins?.data}>
+      <TableWrapper table={TableEnum.admins} url={ADMIN_BASE_URL} statusOptions={statusOptions} defaultItems={admins?.data}>
         {/* @ts-ignore */}
           <AdminsTable />
       </TableWrapper>

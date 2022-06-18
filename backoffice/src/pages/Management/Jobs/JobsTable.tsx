@@ -23,6 +23,7 @@ import { DeleteJobContent } from './JobModalContent';
 import StatusSelect from 'src/components/StatusSelect';
 import { TableEnum } from 'src/models';
 import { useModal } from 'src/hooks/useModal';
+import format from 'date-fns/format';
 
 const JobsTable: FC<TableProps<Job>> = ({
   items: jobs, 
@@ -32,7 +33,8 @@ const JobsTable: FC<TableProps<Job>> = ({
   selectedSomeItems,
   selectedAllItems,
   statusOptions,
-  handleDeleteItem
+  handleDeleteItem,
+  table
 }) => {
   const theme = useTheme();
 
@@ -106,7 +108,7 @@ const JobsTable: FC<TableProps<Job>> = ({
                       gutterBottom
                       noWrap
                     >
-                      {job.createdAt}
+                      {format(new Date(job.createdAt), "dd/MM/yyyy HH:mm:ss")}
                     </Typography>
                   </TableCell>
                   <TableCell>
@@ -132,7 +134,7 @@ const JobsTable: FC<TableProps<Job>> = ({
                     </Typography>
                   </TableCell>
                   <TableCell align="right">
-                  <StatusSelect table={TableEnum.jobs} currentItem={{ id: job.id, status: job.status}} statusOptions={statusOptions} />
+                  <StatusSelect table={table} currentItem={{ id: job.id, status: job.status}} statusOptions={statusOptions} />
                   </TableCell>
                   <TableCell align="right">
                     <Tooltip title="Supprimer la mission" arrow>

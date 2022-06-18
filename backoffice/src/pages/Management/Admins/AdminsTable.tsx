@@ -37,7 +37,8 @@ const AdminsTable: FC<TableProps<Admin>> = ({
   selectedAllItems,
   handleDeleteItem,
   handleGetItems,
-  statusOptions
+  statusOptions,
+  table
 }) => {
 
   const [editModalOpen, handleOpenEditModal, handleCloseEditModal, editModalItem] = useModal();
@@ -131,7 +132,7 @@ const AdminsTable: FC<TableProps<Admin>> = ({
                 </Typography>
               </TableCell>
               <TableCell align="right">
-                <StatusSelect table={TableEnum.admins} currentItem={{ id: admin.id, status: admin.status}} statusOptions={statusOptions} />
+                <StatusSelect table={table} currentItem={{ id: admin.id, status: admin.status}} statusOptions={statusOptions} />
               </TableCell>
                   <TableCell align="right">
                     <Tooltip title="Editer" arrow>
