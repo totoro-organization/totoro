@@ -117,7 +117,7 @@ const JobsTable: FC<TableProps<Job>> = ({
                       gutterBottom
                       noWrap
                     >
-                      {job.remaining_place} / { job.participants_max }
+                      {job.participants_max - job.remaining_place} / { job.participants_max }
                     </Typography>
                   </TableCell>
                   <TableCell align="right">

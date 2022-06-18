@@ -1,34 +1,34 @@
 import {
     Card,
     CardContent,
-    CardHeader,
-    Divider,
     Grid,
     Typography
   } from '@mui/material';
   import { Box } from '@mui/system';
-  import StatusLabel from 'src/components/StatusLabel';
+  import StatusSelect from 'src/components/StatusSelect';
   import SuspenseLoader from 'src/components/SuspenseLoader';
   import Text from 'src/components/Text';
-  import { Litigation } from 'src/models';
+  import { Litigation, StatusEnum, TableEnum } from 'src/models';
   
   interface LitigationCardProps {
     litigation: Litigation;
   }
   
   const LitigationCard = ({ litigation }: LitigationCardProps) => {
+
+    const statusOptions = [
+      {
+        id: StatusEnum.opened,
+        name: 'Ouvert'
+      },
+      {
+        id: StatusEnum.closed,
+        name: 'Fermé'
+      },
+    ];
+
     return (
       <Card>
-        <CardHeader subheader={
-        <Box>
-          <Typography variant="h4" gutterBottom>
-            Details du litige
-          </Typography>
-          <Typography variant="subtitle2">
-            Le : {litigation.createdAt}
-          </Typography>
-        </Box>}/>
-        <Divider />
         {litigation ? (
           <CardContent sx={{ p: 4 }}>
             <Typography variant="subtitle2">
@@ -100,7 +100,7 @@ import {
                 </Grid>
                 <Grid item xs={12} sm={10} md={10}>
                   <Box sx={{ maxWidth: { xs: 'auto', sm: 300 } }}>
-                    <StatusLabel status={litigation.status.label}/>
+                  <StatusSelect table={TableEnum.litigations} currentItem={{ id: litigation.id, status: litigation.status}} statusOptions={statusOptions} />
                   </Box>
                 </Grid>
               </Grid>
