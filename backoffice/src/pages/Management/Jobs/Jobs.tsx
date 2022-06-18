@@ -29,7 +29,6 @@ function Jobs() {
       name: 'Supprimé'
     }
   ];
-console.log(jobs);
 
   return (
     <Card>

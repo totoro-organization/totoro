@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { Helmet } from 'react-helmet-async';
 import { useNavigate, useParams } from 'react-router-dom';
 import PageTitle from 'src/components/PageTitle';
@@ -19,8 +18,8 @@ function UserDetails() {
 
   const { id } = useParams();
 
-  const { data: user, userLoading } = useApi(`/users/${id}`);
-  const { data: jobs, jobsLoading } = useApi(`/users/${id}/jobs`);
+  const { data: user, loading: userLoading } = useApi(`/users/${id}`);
+  const { data: jobs, loading: jobsLoading } = useApi(`/users/${id}/jobs`);
 
   const navigate = useNavigate();
 
