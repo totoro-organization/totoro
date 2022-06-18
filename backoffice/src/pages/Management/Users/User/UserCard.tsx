@@ -7,6 +7,7 @@ import {
   Typography
 } from '@mui/material';
 import { Box } from '@mui/system';
+import format from 'date-fns/format';
 import StatusSelect from 'src/components/StatusSelect';
 import SuspenseLoader from 'src/components/SuspenseLoader';
 import Text from 'src/components/Text';
@@ -100,7 +101,7 @@ const UserCard = ({ user }: UserCardProps) => {
               </Grid>
               <Grid item xs={12} sm={10} md={10}>
                 <Box sx={{ maxWidth: { xs: 'auto', sm: 300 } }}>
-                  <Text color="black">{user.createdAt}</Text>
+                  <Text color="black">{format(new Date(user.createdAt), "dd/MM/yyyy HH:mm:ss")}</Text>
                 </Box>
               </Grid>
               <Grid item xs={12} sm={2} md={2} textAlign={{ sm: 'right' }}>
@@ -110,7 +111,7 @@ const UserCard = ({ user }: UserCardProps) => {
               </Grid>
               <Grid item xs={12} sm={10} md={10}>
                 <Box sx={{ maxWidth: { xs: 'auto', sm: 300 } }}>
-                  <Text color="black">{user.updatedAt}</Text>
+                  <Text color="black">{format(new Date(user.updatedAt), "dd/MM/yyyy HH:mm:ss")}</Text>
                 </Box>
               </Grid>
               <Grid item xs={12} sm={2} md={2} textAlign={{ sm: 'right' }}>

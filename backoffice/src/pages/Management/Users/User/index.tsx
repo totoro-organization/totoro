@@ -21,6 +21,7 @@ function UserDetails() {
 
   const { data: user, loading: userLoading } = useApi(`/users/${id}`);
   const { data: jobs, loading: jobsLoading } = useApi(`/users/${id}/jobs`);
+console.log(jobs);
 
   const navigate = useNavigate();
 
