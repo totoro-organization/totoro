@@ -34,7 +34,8 @@ const LitigationsTable: FC<TableProps<Litigation>> = ({
   selectedSomeItems,
   selectedAllItems,
   handleDeleteItem,
-  statusOptions
+  statusOptions,
+  table
 }) => {
 
   const theme = useTheme();
@@ -150,7 +151,7 @@ const LitigationsTable: FC<TableProps<Litigation>> = ({
                     </Typography>
                   </TableCell>
                   <TableCell align="right">
-                    <StatusSelect table={TableEnum.litigations} currentItem={{ id: litigation.id, status: litigation.status}} statusOptions={statusOptions} />
+                    <StatusSelect table={table} currentItem={{ id: litigation.id, status: litigation.status}} statusOptions={statusOptions} />
                   </TableCell>
                   <TableCell align="right">
                     <Tooltip title="Supprimer le litige" arrow>

@@ -26,7 +26,8 @@ const LogsTable: FC<TableProps<any>> = ({
   handleSelectOneItem,
   selectedSomeItems,
   selectedAllItems,
-  handleDeleteItem
+  handleDeleteItem,
+  table
 }) => {
 
   const theme = useTheme();
