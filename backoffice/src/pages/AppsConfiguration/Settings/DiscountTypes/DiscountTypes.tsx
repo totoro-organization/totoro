@@ -6,6 +6,7 @@ import TableWrapper from 'src/components/TableWrapper';
 import { styled } from '@mui/system';
 import { StatusEnum } from 'src/models/status';
 import { CommonsUriEnum } from 'src/models/commons';
+import { TableEnum } from 'src/models';
 
 
 const WrapperBox = styled(Box)(
@@ -35,7 +36,7 @@ function DiscountTypes() {
     <WrapperBox>
       {
         loading || !discountTypes ? <SuspenseLoader/> : 
-        <TableWrapper addButton url={CommonsUriEnum.discountTypes} statusOptions={statusOptions} defaultItems={discountTypes?.data}>
+        <TableWrapper table={TableEnum.discountTypes} addButton url={CommonsUriEnum.discountTypes} statusOptions={statusOptions} defaultItems={discountTypes?.data}>
           {/* @ts-ignore */}
             <DiscountTypesTable />
         </TableWrapper>

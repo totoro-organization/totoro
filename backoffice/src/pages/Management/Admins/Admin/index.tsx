@@ -8,12 +8,12 @@ import { Box, Container, Grid, IconButton, Tooltip } from '@mui/material';
 
 import Footer from 'src/components/Footer';
 import AdminCard from './AdminCard';
-import { subDays } from 'date-fns';
 import { useApi } from 'src/hooks/useApi';
 import SuspenseLoader from 'src/components/SuspenseLoader';
 import AdminLogsTable from './AdminLogsTable';
 import StatusLabel from 'src/components/StatusLabel';
 import TableWrapper from 'src/components/TableWrapper';
+import { TableEnum } from 'src/models';
 
 function AdminDetails() {
 
@@ -63,7 +63,7 @@ function AdminDetails() {
           </Grid>
           <Grid item xs={12}>
             {!loadingLogs && logs ? 
-            <TableWrapper url="/admins/logs" defaultItems={logs?.data}>
+            <TableWrapper table={TableEnum.logs} url="/admins/logs" defaultItems={logs?.data}>
               <AdminLogsTable logs={logs?.data} /> 
             </TableWrapper>
             : <SuspenseLoader />}
