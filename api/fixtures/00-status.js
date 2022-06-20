@@ -90,4 +90,19 @@ module.exports = [
       type: "['jobs']",
     },
   },
+  {
+    model: "Status",
+    data: {
+      label: "requested",
+      type: "['associations_users', 'associations', 'partners']",
+    },
+  },
+  {
+    model: "Status",
+    data: {
+      label: "invited",
+      type: "['associations_users']",
+    },
+  },
+  
 ];

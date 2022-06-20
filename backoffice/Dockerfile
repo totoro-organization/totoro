@@ -8,9 +8,9 @@ RUN npm install --legacy-peer-deps
 
 COPY . .
 
-ARG BO_APP_API_BASE_URL
+ARG API_BASE_URL
 
-ENV BO_APP_API_BASE_URL=$BO_APP_API_BASE_URL
+ENV API_BASE_URL=$API_BASE_URL
 
 RUN npm run build
 
@@ -23,6 +23,6 @@ COPY --from=build-stage /backoffice/build /usr/share/nginx/html
 
 # COPY nginx/nginx.conf /etc/nginx/nginx.conf
 
-EXPOSE $BACKOFFICE_DOCKER_PORT
+EXPOSE $GNIX_PORT
 
 CMD nginx -g "daemon off;"
