@@ -21,7 +21,7 @@
       "security": [{ "ApiKeyAuth": [] }, { "bearerAuth": [] }],
       "tags": [{"name":"Authentification"}, {"name":"Users"}, {"name":"Favorites"}, {"name":"Admins"}, {"name":"Litigations"}, {"name":"Applications"}, {"name":"Commons"}],
       "paths": {
-         "/users": {
+         "/api/users": {
              "get": {
              "tags": ["Users"],
              "x-swagger-router-controller": "users",
@@ -51,7 +51,7 @@
                 }
              }
           },
-          "/users/{id}":{
+          "/api/users/{id}":{
              "get":{
                 "tags":["Users"],
                 "x-swagger-router-controller":"users",
@@ -143,7 +143,7 @@
                 }
              }
           },
-          "/users/change/password":{
+          "/api/users/change/password":{
              "put":{
                 "tags":["Users"],
                 "x-swagger-router-controller":"users",
@@ -175,7 +175,7 @@
                 }
              }
           },
-          "/users/change/avatar":{
+          "/api/users/change/avatar":{
              "put":{
                 "tags":["Users"],
                 "x-swagger-router-controller":"users",
@@ -206,7 +206,7 @@
                 }
              }
           },
-          "/users/{id}/favorites":{
+          "/api/users/{id}/favorites":{
              "get":{
                 "tags":["Users"],
                 "x-swagger-router-controller":"users",
@@ -271,7 +271,7 @@
                }
             }
           },
-          "/favorites/{id}":{
+          "/api/favorites/{id}":{
              "delete":{
                 "tags":["Favorites"],
                 "x-swagger-router-controller":"favorites",
@@ -300,7 +300,7 @@
                 }
              }
           },
-          "/users/{id}/jobs":{
+          "/api/users/{id}/jobs":{
              "get":{
                 "tags":["Users"],
                 "x-swagger-router-controller":"users",
@@ -329,7 +329,7 @@
                 }
              }
           },
-          "/users/{id}/litigations":{
+          "/api/users/{id}/litigations":{
              "get":{
                 "tags":["Users"],
                 "x-swagger-router-controller":"users",
@@ -358,7 +358,7 @@
                 }
              }
           },
-          "/admins": {
+          "/api/admins": {
              "get": {
              "tags": ["Admins"],
              "x-swagger-router-controller": "admins",
@@ -422,7 +422,7 @@
                 }
              }
           },
-          "/admins/{id}":{
+          "/api/admins/{id}":{
             "get":{
                "tags":["Admins"],
                "x-swagger-router-controller":"admins",
@@ -514,7 +514,7 @@
                }
             }
           },
-          "/admins/change/password":{
+          "/api/admins/change/password":{
              "put":{
                 "tags":["Admins"],
                 "x-swagger-router-controller":"admins",
@@ -546,7 +546,7 @@
                 }
              }
           },
-          "/admins/{id}/role":{
+          "/api/admins/{id}/role":{
              "put":{
                 "tags":["Admins"],
                 "x-swagger-router-controller":"admins",
@@ -584,7 +584,7 @@
                 }
              }
           },
-          "/admins/{id}/logs":{
+          "/api/admins/{id}/logs":{
              "get":{
                 "tags":["Admins"],
                 "x-swagger-router-controller":"admins",
@@ -661,7 +661,7 @@
                 }
              }
           },
-          "/admins/logs/getAll":{
+          "/api/admins/logs/getAll":{
              "get":{
                 "tags":["Admins"],
                 "x-swagger-router-controller":"admins",
@@ -696,7 +696,7 @@
                 }
              }
           },
-          "/admins/logs/truncate":{
+          "/api/admins/logs/truncate":{
              "delete":{
                 "tags":["Admins"],
                 "x-swagger-router-controller":"admins",
@@ -731,7 +731,7 @@
                 }
              }
           },
-          "/auth/login": {
+          "/api/auth/login": {
              "post": {
                 "tags": ["Authentification"],
                 "x-swagger-router-controller": "auth",
@@ -763,7 +763,7 @@
                 }
              }
           },
-          "/auth/login/admin": {
+          "/api/auth/login/admin": {
              "post": {
                 "tags": ["Authentification"],
                 "x-swagger-router-controller": "auth",
@@ -795,7 +795,7 @@
                 }
              }
           },
-          "/auth/signup": {
+          "/api/auth/signup": {
              "post": {
                 "tags": ["Authentification"],
                 "x-swagger-router-controller": "auth",
@@ -827,7 +827,7 @@
                 }
              }
           },
-          "/auth/forgot": {
+          "/api/auth/forgot": {
              "post": {
                 "tags": ["Authentification"],
                 "x-swagger-router-controller": "auth",
@@ -859,7 +859,7 @@
                 }
              }
           },
-          "/auth/connected": {
+          "/api/auth/connected": {
              "get": {
                 "tags": ["Authentification"],
                 "x-swagger-router-controller": "auth",
@@ -878,7 +878,7 @@
                 }
              }
           },
-          "/litigations": {
+          "/api/litigations": {
              "get": {
              "tags": ["Litigations"],
              "x-swagger-router-controller": "litigations",
@@ -935,7 +935,7 @@
                 }
              }
           },
-          "/litigations/{id}":{
+          "/api/litigations/{id}":{
              "get":{
                 "tags":["Litigations"],
                 "x-swagger-router-controller":"litigations",
@@ -1027,7 +1027,7 @@
                 }
              }
           },
-          "/applications": {
+          "/api/applications": {
              "get": {
              "tags": ["Applications"],
              "x-swagger-router-controller": "applications",
@@ -1087,7 +1087,7 @@
                 }
              }
           },
-          "/applications/{id}":{
+          "/api/applications/{id}":{
             "get":{
                "tags":["Applications"],
                "x-swagger-router-controller":"applications",
@@ -1179,7 +1179,7 @@
                }
             }
           },
-          "/status": {
+          "/api/status": {
              "get": {
                 "tags": ["Commons"],
                 "x-swagger-router-controller": "commons/status",
@@ -1231,7 +1231,7 @@
                 }
              }
           },
-          "/status/{id}":{
+          "/api/status/{id}":{
             "get":{
                "tags":["Commons"],
                "x-swagger-router-controller":"commons/status",
@@ -1296,7 +1296,7 @@
                }
             }
           },
-          "/change/status":{
+          "/api/change/status":{
             "put":{
                "tags":["Commons"],
                "x-swagger-router-controller":"commons/change",
@@ -1328,7 +1328,7 @@
                }
             }
           },
-          "/roles": {
+          "/api/roles": {
              "get": {
                 "tags": ["Commons"],
                 "x-swagger-router-controller": "commons/roles",
@@ -1388,7 +1388,7 @@
                 }
              }
           },
-          "/roles/{id}":{
+          "/api/roles/{id}":{
             "get":{
                "tags":["Commons"],
                "x-swagger-router-controller":"commons/roles",
@@ -1480,7 +1480,7 @@
                }
             }
           },
-          "/tags": {
+          "/api/tags": {
              "get": {
                 "tags": ["Commons"],
                 "x-swagger-router-controller": "commons/tags",
@@ -1547,7 +1547,7 @@
                 }
              }
           },
-          "/tags/{id}":{
+          "/api/tags/{id}":{
             "get":{
                "tags":["Commons"],
                "x-swagger-router-controller":"commons/tags",
@@ -1639,7 +1639,7 @@
                }
             }
           },
-          "/pricings": {
+          "/api/pricings": {
              "get": {
                 "tags": ["Commons"],
                 "x-swagger-router-controller": "commons/pricings",
@@ -1699,7 +1699,7 @@
                 }
              }
           },
-          "/pricings/{id}":{
+          "/api/pricings/{id}":{
             "get":{
                "tags":["Commons"],
                "x-swagger-router-controller":"commons/pricings",
@@ -1791,7 +1791,7 @@
                }
             }
           },
-          "/difficulties": {
+          "/api/difficulties": {
              "get": {
                 "tags": ["Commons"],
                 "x-swagger-router-controller": "commons/difficulties",
@@ -1851,7 +1851,7 @@
                 }
              }
           },
-          "/difficulties/{id}":{
+          "/api/difficulties/{id}":{
             "get":{
                "tags":["Commons"],
                "x-swagger-router-controller":"commons/difficulties",
@@ -1943,7 +1943,7 @@
                }
             }
           },
-          "/litigation-objects": {
+          "/api/litigation-objects": {
              "get": {
                 "tags": ["Commons"],
                 "x-swagger-router-controller": "commons/litigation-objects",
@@ -2003,7 +2003,7 @@
                 }
              }
           },
-          "/litigation-objects/{id}":{
+          "/api/litigation-objects/{id}":{
             "get":{
                "tags":["Commons"],
                "x-swagger-router-controller":"commons/litigation-objects",
@@ -2095,7 +2095,7 @@
                }
             }
           },
-          "/types-discounts": {
+          "/api/types-discounts": {
              "get": {
                 "tags": ["Commons"],
                 "x-swagger-router-controller": "commons/types-discounts",
@@ -2155,7 +2155,7 @@
                 }
              }
           },
-          "/types-discounts/{id}":{
+          "/api/types-discounts/{id}":{
             "get":{
                "tags":["Commons"],
                "x-swagger-router-controller":"commons/types-discounts",
@@ -2247,7 +2247,7 @@
                }
             }
           },
-          "/appearances": {
+          "/api/appearances": {
              "get": {
                 "tags": ["Commons"],
                 "x-swagger-router-controller": "commons/appearances",
@@ -2341,7 +2341,7 @@
                 }
              }
           },
-          "/appearances/{id}":{
+          "/api/appearances/{id}":{
             "get":{
                "tags":["Commons"],
                "x-swagger-router-controller":"commons/appearances",
