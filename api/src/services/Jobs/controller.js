@@ -1,15 +1,11 @@
-const models = require("./../../../models");
-const asyncLib = require("async");
 const { Op } = require("sequelize");
-var moment = require('moment');
 const commonsController = require("services/Commons/controller");
 const {qrcode} = require("~/utils/generate");
 const { 
 	getRow,
 	getPagingData,
 	getPagination,
-	getPaginationQueries,
-	responseOne
+	getPaginationQueries
  } = require("~/utils/common/thenCatch");
 const {
 	Users,
@@ -68,7 +64,7 @@ const include = [
 		model: Tag_jobs,
 		as: "tags",
 		attributes: {exclude: ["jobs_id","tag_id","createdAt", "updatedAt"]},
-		include: [{ model: Tags,     required: true, as: "tag", attributes: excludeCommon }]
+		include: [{ model: Tags, required: true, as: "tag", attributes: excludeCommon }]
 	}
 ]
 const exclude = ["assos_user_id","difficulty_id","status_id"];
@@ -429,6 +425,7 @@ module.exports = {
 				model: Groups,
 				as: "mission",
 				attributes: { exclude: ["user_id","jobs_id","status_id"] },
+				required: true,
 				include: [
 					{
 						model: Users,
