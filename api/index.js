@@ -15,7 +15,10 @@ const {
   authentications,
   commons,
   applications,
-  litigations
+  litigations,
+  organizations,
+  partners,
+  discounts
 } = require("services");
 
 const PORT = process.env.API_DOCKER_PORT || 8080;
@@ -70,6 +73,9 @@ server.use("/users", [accessApi, users]);
 server.use("/admins", [accessApi, admins]);
 server.use("/jobs", [accessApi, jobs]);
 server.use('/litigations', [accessApi, litigations]);
+server.use('/organizations', [accessApi, organizations]);
+server.use('/partners', [accessApi, partners]);
+server.use('/discounts', [accessApi, discounts]);
 // server.use('/messagings', [accessApi, messagings]);
 // server.use('/transactions', [accessApi, transactions]);
 // server.use('/subscriptions', [accessApi, subscriptions]);
