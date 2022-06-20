@@ -97,7 +97,7 @@ const JobsTable: FC<TableProps<Job>> = ({
                     ><Link to={`/gestion/missions/${job.id}`}>{job.title}</Link>
                     </Typography>
                     <Typography variant="body2" color="text.secondary" noWrap>
-                      {job.author.organization.name}
+                      {job.author.organization ? job.author.organization.name : `${job.author.user.firstname} ${job.author.user.lastname} (${job.author.user.username})`}
                     </Typography>
                   </TableCell>
                   <TableCell>

@@ -11,27 +11,47 @@ import OrganizationCard from './OrganizationCard';
 import SuspenseLoader from 'src/components/SuspenseLoader';
 import { useApi } from 'src/hooks/useApi';
 import ImageGallery from './ImageGallery';
-import ParticipantsTable from './ParticipantsTable';
+import MembersTable from './MembersTable';
 import TableWrapper from 'src/components/TableWrapper';
 import { ChangeEvent, useState } from 'react';
 import TabsWrapper from 'src/components/TabsWrapper';
 import StatusLabel from 'src/components/StatusLabel';
+import JobsTable from '../../Jobs/JobsTable';
+import { StatusEnum, TableEnum } from 'src/models';
 
 function OrganizationDetails() {
   const { id } = useParams();
 
   const { data: organization, loading: organizationLoading } = useApi(`/organizations/${id}`);
-  // const { data: participants, loading: participantsLoading } = useApi(
-  //   `/organizations/${id}/participants`
-  // );
+  const { data: jobs, loading: jobsLoading } = useApi(`/organizations/${id}/jobs`);
 
   const navigate = useNavigate();
 
   const [currentTab, setCurrentTab] = useState<string>('details');
 
+  const userStatusOptions = [
+    {
+      id: StatusEnum.actived,
+      name: 'Actif'
+    },
+    {
+      id: StatusEnum.deleted,
+      name: 'Supprimé'
+    },
+    {
+      id: StatusEnum.freezed,
+      name: 'Gelé'
+    },
+    {
+      id: StatusEnum.disabled,
+      name: 'Désactivé'
+    },
+  ];
+
   const tabs = [
     { value: 'details', label: 'Détails' },
-    { value: 'members', label: 'Membres' }
+    { value: 'members', label: 'Membres' },
+    { value: 'jobs', label: 'Missions'}
   ];
 
   const handleTabsChange = (event: ChangeEvent<{}>, value: string): void => {
@@ -39,6 +59,7 @@ function OrganizationDetails() {
   };
 
   const handleGoBack = () => navigate('/gestion/associations');
+    
 
   return (
     <>
@@ -95,17 +116,32 @@ function OrganizationDetails() {
               ) : (
                 <SuspenseLoader />
               ))}
-            {/* {currentTab === 'participants' &&
-              (!participantsLoading && participants ? (
+            {currentTab === 'members' &&
+              (!organizationLoading && organization.users ? (
                 <TableWrapper
-                  title="Participants"
-                  defaultItems={participants?.data}
+                  title="Membres"
+                  defaultItems={organization.users}
                 >
-                  <ParticipantsTable items={participants} />
+                  <MembersTable />
                 </TableWrapper>
               ) : (
                 <SuspenseLoader />
-              ))} */}
+              ))}
+              {currentTab === 'jobs' &&
+              (!jobsLoading && jobs ? (
+                <TableWrapper
+                  table={TableEnum.jobs}
+                  title="Membres"
+                  defaultItems={jobs?.data}
+                  url="/jobs"
+                  statusOptions={userStatusOptions}
+                >
+                  {/* @ts-ignore */}
+                  <JobsTable />
+                </TableWrapper>
+              ) : (
+                <SuspenseLoader />
+              ))}
           </Grid>
         </Grid>
       </Container>
