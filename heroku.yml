@@ -1,0 +1,5 @@
+build:
+  docker:
+    web: api/Dockerfile
+  config:
+    NODE_ENV: production
