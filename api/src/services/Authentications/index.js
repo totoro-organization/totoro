@@ -1,6 +1,5 @@
 const express = require("express");
 const { passport } = require("utils/session");
-const commonsController = require("../Commons/controller");
 const usersController = require("../Users/controller");
 const adminsController = require("../Admins/controller");
 const controller = require("./controller");
