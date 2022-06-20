@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { FC, ChangeEvent } from 'react';
 import {
   Tooltip,
@@ -11,38 +10,37 @@ import {
   TableRow,
   TableContainer,
   Typography,
-  useTheme,
+  TableProps,
+  useTheme
 } from '@mui/material';
 
-import { Organization } from 'src/models/organization';
-import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
+import Modal from 'src/components/Modal';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
-import { Job } from 'src/models/job';
-import { JobStatus } from 'src/models/job';
 import { Link } from 'react-router-dom';
-import StatusLabel from 'src/components/StatusLabel';
+import StatusSelect from 'src/components/StatusSelect';
+import { DeleteOrganizationContent } from './OrganizationModalContent';
+import { useModal } from 'src/hooks/useModal';
 
-interface OrganizationsTableProps {
-  items: Organization[], 
-  selectedItems: any,
-  handleSelectAllItems: (event: ChangeEvent<HTMLInputElement>) => void, 
-  handleSelectOneItem: (event: ChangeEvent<HTMLInputElement>, itemId: string) => void,
-  selectedSomeItems: any,
-  selectedAllItems: any
-}
-
-const filterJobsByStatus = (jobs: Job[], status: JobStatus["label"]) => jobs.filter(job => job.status.label === status);
-
-const OrganizationsTable: FC<OrganizationsTableProps> = ({
+const OrganizationsTable: FC<TableProps<any>> = ({
   items: organizations, 
   selectedItems,
   handleSelectAllItems, 
   handleSelectOneItem,
   selectedSomeItems,
-  selectedAllItems
+  selectedAllItems,
+  statusOptions,
+  handleDeleteItem,
+  table
 }) => {
 
   const theme = useTheme();
+
+  const [deleteModalOpen, handleOpenDeleteModal, handleCloseDeleteModal, deleteModalItem] = useModal();
+
+  const handleDelete = (id: string) => {
+    handleDeleteItem(id);
+    handleCloseDeleteModal();
+  }
 
   return (
       <TableContainer>
@@ -58,32 +56,26 @@ const OrganizationsTable: FC<OrganizationsTableProps> = ({
                 />
               </TableCell>
               <TableCell>Details</TableCell>
-              <TableCell>Missions</TableCell>
-              <TableCell>Missions actives</TableCell>
-              <TableCell>Missions à venir</TableCell>
+              <TableCell align="left">Siret</TableCell>
+              <TableCell align="left">Siren</TableCell>
+              <TableCell align="left">Membres</TableCell>
               <TableCell align="right">Statut</TableCell>
               <TableCell align="right">Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {organizations.map((organization) => {
-              const isOrganizationSelected = selectedItems.includes(
-                organization.id
-              );
+              const isorganizationSelected = selectedItems.includes(organization.id);
               return (
-                <TableRow
-                  hover
-                  key={organization.id}
-                  selected={isOrganizationSelected}
-                >
+                <TableRow hover key={organization.id} selected={isorganizationSelected}>
                   <TableCell padding="checkbox">
                     <Checkbox
                       color="primary"
-                      checked={isOrganizationSelected}
+                      checked={isorganizationSelected}
                       onChange={(event: ChangeEvent<HTMLInputElement>) =>
                         handleSelectOneItem(event, organization.id)
                       }
-                      value={isOrganizationSelected}
+                      value={isorganizationSelected}
                     />
                   </TableCell>
                   <TableCell>
@@ -94,10 +86,15 @@ const OrganizationsTable: FC<OrganizationsTableProps> = ({
                       gutterBottom
                       noWrap
                     >
-                    <Link to={`/gestion/associations/${organization.id}`}>{organization.name}</Link>
+                      <Link
+                        to={`/gestion/utilisateurs/${organization.id}`}
+                      >{organization.name}</Link>
                     </Typography>
                     <Typography variant="body2" color="text.secondary" noWrap>
-                      {organization.email}
+                      {organization.activity}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary" noWrap>
+                     {organization.address}, {organization.cp}
                     </Typography>
                   </TableCell>
                   <TableCell>
@@ -108,7 +105,7 @@ const OrganizationsTable: FC<OrganizationsTableProps> = ({
                       gutterBottom
                       noWrap
                     >
-                      {organization.jobs.length}
+                      {organization.siret}
                     </Typography>
                   </TableCell>
                   <TableCell>
@@ -119,7 +116,7 @@ const OrganizationsTable: FC<OrganizationsTableProps> = ({
                       gutterBottom
                       noWrap
                     >
-                      {filterJobsByStatus(organization.jobs, "pending").length}
+                      {organization.siren}
                     </Typography>
                   </TableCell>
                   <TableCell>
@@ -130,29 +127,16 @@ const OrganizationsTable: FC<OrganizationsTableProps> = ({
                       gutterBottom
                       noWrap
                     >
-                      {filterJobsByStatus(organization.jobs, "coming").length}
+                      {organization.users.length}
                     </Typography>
                   </TableCell>
                   <TableCell align="right">
-                    <StatusLabel status={organization.status.label} />
+                    <StatusSelect table={table} currentItem={{ id: organization.id, status: organization.status}} statusOptions={statusOptions} />
                   </TableCell>
                   <TableCell align="right">
-                    <Tooltip title="Editer la mission" arrow>
-                      <IconButton
-                        sx={{
-                          '&:hover': {
-                            background: theme.colors.primary.lighter
-                          },
-                          color: theme.palette.primary.main
-                        }}
-                        color="inherit"
-                        size="small"
-                      >
-                        <EditTwoToneIcon fontSize="small" />
-                      </IconButton>
-                    </Tooltip>
                     <Tooltip title="Supprimer la mission" arrow>
                       <IconButton
+                        onClick={() => handleOpenDeleteModal(organization)}
                         sx={{
                           '&:hover': { background: theme.colors.error.lighter },
                           color: theme.palette.error.main
@@ -169,6 +153,9 @@ const OrganizationsTable: FC<OrganizationsTableProps> = ({
             })}
           </TableBody>
         </Table>
+        <Modal open={deleteModalOpen} handleClose={handleCloseDeleteModal} title={`Supprimer l'utilisateur suivant : ${deleteModalItem?.firstname} ${deleteModalItem?.lastname}`}>
+            <DeleteOrganizationContent handleClose={handleCloseDeleteModal} handleDelete={handleDelete} item={deleteModalItem} />
+        </Modal>
       </TableContainer>
   );
 };
