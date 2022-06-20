@@ -101,4 +101,5 @@ const StyledImage = styled(ImageBackground)`
   justify-content: flex-end;
   border-top-left-radius: ${({ theme }) => theme.border.radius.lg};
   border-top-right-radius: ${({ theme }) => theme.border.radius.lg};
+  overflow: hidden;
 `;

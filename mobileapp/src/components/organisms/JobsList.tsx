@@ -1,6 +1,7 @@
 import React from "react";
 import { FlatList } from "react-native";
 import { FAKE_MISSIONS_DATA } from "../../common/mockedData";
+import Spacer from "../atoms/Spacer";
 import MissionCard from "../molecules/JobCard";
 
 export default function JobsList() {
@@ -15,7 +16,12 @@ export default function JobsList() {
       showsHorizontalScrollIndicator={false}
       keyExtractor={(item) => item.title}
       renderItem={({ item, index }) => {
-        return <MissionCard key={index} mission={item} />;
+        return (
+          <>
+            <MissionCard key={index} mission={item} />
+            <Spacer axis="vertical" size={1} />
+          </>
+        );
       }}
     />
   );
