@@ -49,6 +49,8 @@ export default function Jobs() {
         </Modal>
       )}
 
+      <Spacer axis="vertical" size={2} />
+
       <JobsList />
     </GlobalLayout>
   );
