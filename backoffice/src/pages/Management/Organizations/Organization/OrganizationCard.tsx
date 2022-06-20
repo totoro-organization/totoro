@@ -35,7 +35,6 @@ const OrganizationCard = ({ organization }: OrganizationCardProps) => {
       name: 'Supprimé'
     }
   ];
-console.log(organization);
 
   return (
     <Card>
@@ -131,6 +130,16 @@ console.log(organization);
             <Grid item xs={12} sm={10} md={9}>
               <Text color="black">
                {organization.phone}
+              </Text>
+            </Grid>
+            <Grid item xs={12} sm={2} md={3} textAlign={{ sm: 'right' }}>
+              <Box pr={3} pb={2}>
+                Nombre de membres :
+              </Box>
+            </Grid>
+            <Grid item xs={12} sm={10} md={9}>
+              <Text color="black">
+               {organization.users.length}
               </Text>
             </Grid>
             <Grid item xs={12} sm={2} md={3} textAlign={{ sm: 'right' }}>
