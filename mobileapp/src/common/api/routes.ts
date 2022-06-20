@@ -7,6 +7,8 @@ export const API_ROUTES = {
   AUTH_USER_CONNECTED: "/auth/connected", // GET
 
   USER_FAVORITES: (userId: string) => `/users/${userId}/favorites`, // GET, POST
+  USER_JOBS: (userId: string) => `/users/${userId}/jobs`, // GET
 
   FAVORITES: (favoriteId: string) => `/favorites/${favoriteId}`, // DELETE
+  JOBS: () => "/jobs", // GET
 } as const;
