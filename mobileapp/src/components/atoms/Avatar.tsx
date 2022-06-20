@@ -27,21 +27,17 @@ export default function Avatar({
       )}
 
       {src && (
-        <StyledImage
-          size={size}
-          imageStyle={{ borderRadius: type === "user" ? 400 : 6 }}
-          source={{ uri: src }}
-          resizeMode="cover"
-        />
+        <StyledImage size={size} source={{ uri: src }} resizeMode="contain" />
       )}
     </Container>
   );
 }
 
-const Container = styled.View<Pick<AvatarProps, "size" | "type">>`
+const Container = styled.View<Pick<AvatarProps, "size" | "type" | "src">>`
   width: ${({ size }) => (size === "md" ? "80px" : "24px")};
   height: ${({ size }) => (size === "md" ? "80px" : "24px")};
-  background-color: ${({ theme }) => theme.colors.grey[900]};
+  background-color: ${({ theme, src }) =>
+    src ? "white" : theme.colors.grey[900]};
   border-radius: ${({ type, theme }) =>
     type === "user" ? "400px" : theme.border.radius.md};
   align-items: center;
@@ -51,4 +47,6 @@ const Container = styled.View<Pick<AvatarProps, "size" | "type">>`
 const StyledImage = styled.ImageBackground<Pick<AvatarProps, "size">>`
   width: ${({ size }) => (size === "md" ? "80px" : "24px")};
   height: ${({ size }) => (size === "md" ? "80px" : "24px")};
+  overflow: hidden;
+  background-color: white;
 `;
