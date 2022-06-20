@@ -87,7 +87,7 @@ const OrganizationsTable: FC<TableProps<any>> = ({
                       noWrap
                     >
                       <Link
-                        to={`/gestion/utilisateurs/${organization.id}`}
+                        to={`/gestion/associations/${organization.id}`}
                       >{organization.name}</Link>
                     </Typography>
                     <Typography variant="body2" color="text.secondary" noWrap>
