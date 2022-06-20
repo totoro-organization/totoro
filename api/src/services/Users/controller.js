@@ -1,6 +1,5 @@
 const bcrypt = require("bcryptjs");
 const asyncLib = require("async");
-const { Op } = require("sequelize");
 const { error, success } = require("utils/common/messages.json");
 const {
 	Users,
@@ -267,6 +266,7 @@ module.exports = {
 		{
 			model: Groups,
 			as: "mission",
+			required: true,
 			attributes: { exclude: ["user_id","jobs_id","status_id"] },
 			include: [...includeUser],
 			where: {user_id: id}
