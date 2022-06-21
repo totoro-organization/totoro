@@ -33,7 +33,7 @@ export interface MenuItems {
 }
 
 const menuItems: MenuItems[] = [
-  
+
   {
     heading: 'Dashboards',
     items: [
@@ -94,12 +94,12 @@ const menuItems: MenuItems[] = [
       {
         name: 'Utilisateurs',
         icon: PeopleIcon,
-        link: '/gestion/utilisateurs',        
+        link: '/gestion/utilisateurs',
       },
       {
         name: 'Administrateurs',
         icon: AdminPanelSettingsIcon,
-        link: '/gestion/administrateurs',        
+        link: '/gestion/administrateurs',
       },
     ]
   },
