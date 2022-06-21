@@ -37,9 +37,9 @@ const UserProfile = Loader(lazy(() => import('src/pages/User/profile')));
 const UserSettings = Loader(lazy(() => import('src/pages/User/settings')));
 
 //Gestion
-
-const CreationMission = Loader(lazy(() => import('src/pages/Gestion/Mission/Creation/indexedDB')));
-const ListingMissions = Loader(lazy(() => import('src/pages/Gestion/Mission/Liste/indexedDB'))); 
+const Litigation = Loader(lazy(() => import('src/pages/Gestion/Litigation')));
+const CreationJob = Loader(lazy(() => import('src/pages/Gestion/Jobs/Create')));
+const ListingJobs = Loader(lazy(() => import('src/pages/Gestion/Jobs/List'))); 
 
 // Status
 
@@ -151,8 +151,12 @@ const routes: PartialRouteObject[] = [
                 element: <Navigate to="mission/liste" replace />
               },
               {
+                path: 'litiges',
+                element: <Litigation />,
+              },
+              {
                 path: 'mission',
-                element: <ListingMissions />,
+                element: <ListingJobs />,
                 children: [
                   {
                     path: '/',
@@ -160,13 +164,13 @@ const routes: PartialRouteObject[] = [
                   },
                   {
                     path: 'liste',
-                    element: <ListingMissions />
+                    element: <ListingJobs />
                   },
                   {
                     path: 'creation',
-                    element: <CreationMission />
+                    element: <CreationJob />
                   }
-                ]
+                ] 
               }
             ]
           }
