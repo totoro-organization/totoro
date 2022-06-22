@@ -210,7 +210,7 @@ const routes: PartialRouteObject[] = [
                 element: <Partners />
               },
               {
-                path: 'partenaires:id',
+                path: 'partenaires/:id',
                 element: <Partner />
               },
               {
