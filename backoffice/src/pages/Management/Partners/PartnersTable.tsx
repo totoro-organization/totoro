@@ -17,13 +17,14 @@ import {
 import Modal from 'src/components/Modal';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 import { Link } from 'react-router-dom';
-import { TableEnum, User } from 'src/models';
 import StatusSelect from 'src/components/StatusSelect';
-import { DeleteUserContent } from './UserModalContent';
+import { DeletePartnerContent } from './PartnerModalContent';
 import { useModal } from 'src/hooks/useModal';
+import { format } from 'date-fns';
+import { truncateSring } from 'src/utils/functions';
 
-const UsersTable: FC<TableProps<any>> = ({
-  items: users, 
+const PartnersTable: FC<TableProps<any>> = ({
+  items: partners, 
   selectedItems,
   handleSelectAllItems, 
   handleSelectOneItem,
@@ -57,25 +58,26 @@ const UsersTable: FC<TableProps<any>> = ({
                 />
               </TableCell>
               <TableCell>Details</TableCell>
-              <TableCell align="left">Missions</TableCell>
-              <TableCell align="right">Tokens</TableCell>
+              <TableCell align="left">Utilisateur</TableCell>
+              <TableCell align="left">Site web</TableCell>
+              <TableCell align="left">Depuis le</TableCell>
               <TableCell align="right">Statut</TableCell>
               <TableCell align="right">Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {users.map((user) => {
-              const isUserSelected = selectedItems.includes(user.id);
+            {partners.map((partner) => {
+              const isPartnerSelected = selectedItems.includes(partner.id);
               return (
-                <TableRow hover key={user.id} selected={isUserSelected}>
+                <TableRow hover key={partner.id} selected={isPartnerSelected}>
                   <TableCell padding="checkbox">
                     <Checkbox
                       color="primary"
-                      checked={isUserSelected}
+                      checked={isPartnerSelected}
                       onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                        handleSelectOneItem(event, user.id)
+                        handleSelectOneItem(event, partner.id)
                       }
-                      value={isUserSelected}
+                      value={isPartnerSelected}
                     />
                   </TableCell>
                   <TableCell>
@@ -87,11 +89,43 @@ const UsersTable: FC<TableProps<any>> = ({
                       noWrap
                     >
                       <Link
-                        to={`/gestion/utilisateurs/${user.id}`}
-                      >{`${user.firstname} ${user.lastname} (${user.username})`}</Link>
+                        to={`/gestion/partners/${partner.id}`}
+                      >{partner.name}</Link>
                     </Typography>
                     <Typography variant="body2" color="text.secondary" noWrap>
-                      {user.email}
+                      {partner.address}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary" noWrap>
+                      {partner.email}
+                    </Typography>
+                  </TableCell>
+                  <TableCell>
+                  <Typography
+                      variant="body1"
+                      fontWeight="bold"
+                      color="text.primary"
+                      gutterBottom
+                      noWrap
+                    >
+                      <Link
+                        to={`/gestion/utilisateurs/${partner.user.id}`}
+                      >{`${partner.user.firstname} ${partner.user.lastname} (${partner.user.username})`}</Link>
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary" noWrap>
+                      {partner.user.email}
+                    </Typography>
+                  </TableCell>
+                  <TableCell align="right">
+                    <Typography
+                      variant="body1"
+                      fontWeight="bold"
+                      color="text.primary"
+                      gutterBottom
+                      noWrap
+                    >
+                      <Link to={partner.link}>
+                        { truncateSring(partner.link, 20, '...') }
+                      </Link>
                     </Typography>
                   </TableCell>
                   <TableCell>
@@ -102,27 +136,16 @@ const UsersTable: FC<TableProps<any>> = ({
                       gutterBottom
                       noWrap
                     >
-                      {2}
+                      {format(new Date(partner.createdAt), "dd/MM/yyyy HH:mm:ss")}
                     </Typography>
                   </TableCell>
                   <TableCell align="right">
-                    <Typography
-                      variant="body1"
-                      fontWeight="bold"
-                      color="text.primary"
-                      gutterBottom
-                      noWrap
-                    >
-                      {user.total_token}
-                    </Typography>
-                  </TableCell>
-                  <TableCell align="right">
-                    <StatusSelect table={table} currentItem={{ id: user.id, status: user.status}} statusOptions={statusOptions} />
+                    <StatusSelect table={table} currentItem={{ id: partner.id, status: partner.status}} statusOptions={statusOptions} />
                   </TableCell>
                   <TableCell align="right">
                     <Tooltip title="Supprimer la mission" arrow>
                       <IconButton
-                        onClick={() => handleOpenDeleteModal(user)}
+                        onClick={() => handleOpenDeleteModal(partner)}
                         sx={{
                           '&:hover': { background: theme.colors.error.lighter },
                           color: theme.palette.error.main
@@ -140,10 +163,10 @@ const UsersTable: FC<TableProps<any>> = ({
           </TableBody>
         </Table>
         <Modal open={deleteModalOpen} handleClose={handleCloseDeleteModal} title={`Supprimer l'utilisateur suivant : ${deleteModalItem?.firstname} ${deleteModalItem?.lastname}`}>
-            <DeleteUserContent handleClose={handleCloseDeleteModal} handleDelete={handleDelete} item={deleteModalItem} />
+            <DeletePartnerContent handleClose={handleCloseDeleteModal} handleDelete={handleDelete} item={deleteModalItem} />
         </Modal>
       </TableContainer>
   );
 };
 
-export default UsersTable;
+export default PartnersTable;
