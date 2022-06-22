@@ -31,9 +31,11 @@ function Partners() {
       name: 'En attente'
     },
   ];
+  console.log(partners);
+  
 
   return (
-      loading || !partners ? <SuspenseLoader/> :
+      loading || !partners ? <SuspenseLoader/> : 
       <TableWrapper table={TableEnum.partners} url="/partners" statusOptions={statusOptions} defaultItems={partners?.data}>
         {/* @ts-ignore */}
         <PartnersTable />
