@@ -1,6 +1,4 @@
-// @ts-nocheck
 import { FC, ChangeEvent } from 'react';
-import { format } from 'date-fns';
 import {
   Tooltip,
   Checkbox,
@@ -13,32 +11,37 @@ import {
   TableContainer,
   Typography,
   useTheme,
+  TableProps,
 } from '@mui/material';
 
-import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
+import Modal from 'src/components/Modal';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 import { Link } from 'react-router-dom';
-import StatusLabel from 'src/components/StatusLabel';
+import { TableEnum, User } from 'src/models';
+import StatusSelect from 'src/components/StatusSelect';
+import { DeleteUserContent } from './UserModalContent';
+import { useModal } from 'src/hooks/useModal';
 
-interface MembershipRequestsTableProps {
-  items: any, 
-  selectedItems: any,
-  handleSelectAllItems: (event: ChangeEvent<HTMLInputElement>) => void, 
-  handleSelectOneItem: (event: ChangeEvent<HTMLInputElement>, itemId: string) => void,
-  selectedSomeItems: any,
-  selectedAllItems: any
-}
-
-const MembershipRequestsTable: FC<MembershipRequestsTableProps> = ({
-  items: membershipRequests, 
+const UsersTable: FC<TableProps<any>> = ({
+  items: users, 
   selectedItems,
   handleSelectAllItems, 
   handleSelectOneItem,
   selectedSomeItems,
-  selectedAllItems
+  selectedAllItems,
+  statusOptions,
+  handleDeleteItem,
+  table
 }) => {
-  
+
   const theme = useTheme();
+
+  const [deleteModalOpen, handleOpenDeleteModal, handleCloseDeleteModal, deleteModalItem] = useModal();
+
+  const handleDelete = (id: string) => {
+    handleDeleteItem(id);
+    handleCloseDeleteModal();
+  }
 
   return (
       <TableContainer>
@@ -54,24 +57,25 @@ const MembershipRequestsTable: FC<MembershipRequestsTableProps> = ({
                 />
               </TableCell>
               <TableCell>Details</TableCell>
-              <TableCell>Date</TableCell>
+              <TableCell align="left">Missions</TableCell>
+              <TableCell align="right">Tokens</TableCell>
               <TableCell align="right">Statut</TableCell>
               <TableCell align="right">Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {membershipRequests.map((membershipRequest) => {
-              const isMembershipRequestSelected = selectedItems.includes(membershipRequest.id);
+            {users.map((user) => {
+              const isUserSelected = selectedItems.includes(user.id);
               return (
-                <TableRow hover key={membershipRequest.id} selected={isMembershipRequestSelected}>
+                <TableRow hover key={user.id} selected={isUserSelected}>
                   <TableCell padding="checkbox">
                     <Checkbox
                       color="primary"
-                      checked={isMembershipRequestSelected}
+                      checked={isUserSelected}
                       onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                        handleSelectOneItem(event, membershipRequest.id)
+                        handleSelectOneItem(event, user.id)
                       }
-                      value={isMembershipRequestSelected}
+                      value={isUserSelected}
                     />
                   </TableCell>
                   <TableCell>
@@ -82,12 +86,12 @@ const MembershipRequestsTable: FC<MembershipRequestsTableProps> = ({
                       gutterBottom
                       noWrap
                     >
-                      <Link to={`/gestion/partenaires/demandes/${membershipRequest.id}`}>
-                        {membershipRequest.partner.name}
-                      </Link>
+                      <Link
+                        to={`/gestion/utilisateurs/${user.id}`}
+                      >{`${user.firstname} ${user.lastname} (${user.username})`}</Link>
                     </Typography>
                     <Typography variant="body2" color="text.secondary" noWrap>
-                      {membershipRequest.partner.email}
+                      {user.email}
                     </Typography>
                   </TableCell>
                   <TableCell>
@@ -98,29 +102,27 @@ const MembershipRequestsTable: FC<MembershipRequestsTableProps> = ({
                       gutterBottom
                       noWrap
                     >
-                      {format(membershipRequest.date, 'dd MMMM  yyyy')}
+                      {2}
                     </Typography>
                   </TableCell>
                   <TableCell align="right">
-                    <StatusLabel status={membershipRequest.status.label} />
+                    <Typography
+                      variant="body1"
+                      fontWeight="bold"
+                      color="text.primary"
+                      gutterBottom
+                      noWrap
+                    >
+                      {user.total_token}
+                    </Typography>
                   </TableCell>
                   <TableCell align="right">
-                    <Tooltip title="Editer la mission" arrow>
-                      <IconButton
-                        sx={{
-                          '&:hover': {
-                            background: theme.colors.primary.lighter
-                          },
-                          color: theme.palette.primary.main
-                        }}
-                        color="inherit"
-                        size="small"
-                      >
-                        <EditTwoToneIcon fontSize="small" />
-                      </IconButton>
-                    </Tooltip>
+                    <StatusSelect table={table} currentItem={{ id: user.id, status: user.status}} statusOptions={statusOptions} />
+                  </TableCell>
+                  <TableCell align="right">
                     <Tooltip title="Supprimer la mission" arrow>
                       <IconButton
+                        onClick={() => handleOpenDeleteModal(user)}
                         sx={{
                           '&:hover': { background: theme.colors.error.lighter },
                           color: theme.palette.error.main
@@ -137,8 +139,11 @@ const MembershipRequestsTable: FC<MembershipRequestsTableProps> = ({
             })}
           </TableBody>
         </Table>
+        <Modal open={deleteModalOpen} handleClose={handleCloseDeleteModal} title={`Supprimer l'utilisateur suivant : ${deleteModalItem?.firstname} ${deleteModalItem?.lastname}`}>
+            <DeleteUserContent handleClose={handleCloseDeleteModal} handleDelete={handleDelete} item={deleteModalItem} />
+        </Modal>
       </TableContainer>
   );
 };
 
-export default MembershipRequestsTable;
+export default UsersTable;
