@@ -1,5 +1,4 @@
 import { Helmet } from 'react-helmet-async';
-
 import PageTitle from 'src/components/PageTitle';
 import PageTitleWrapper from 'src/components/PageTitleWrapper';
 import {
@@ -8,19 +7,20 @@ import {
 } from '@mui/material';
 
 import Footer from 'src/components/Footer';
-import MembershipRequests from '../MembershipRequests/MembershipRequests';
+import Partners from './Partners';
 
 
-function ManagementMembershipRequests() {
+function ManagementPartners() {
+  
   return (
     <>
       <Helmet>
-        <title>Demandes de partenariat</title>
+        <title>Gestion des partenaires</title>
       </Helmet>
       <PageTitleWrapper>
         <PageTitle
-          heading="Demandes de partenariat"
-          subHeading="Liste des demandes de partenariat."
+          heading="Partenaires"
+          subHeading="Liste des partenaires."
         />
       </PageTitleWrapper>
       <Container maxWidth="lg">
@@ -32,7 +32,7 @@ function ManagementMembershipRequests() {
           spacing={3}
         >
           <Grid item xs={12}>
-            <MembershipRequests/>
+            <Partners/>
           </Grid>
         </Grid>
       </Container>
@@ -41,4 +41,4 @@ function ManagementMembershipRequests() {
   );
 }
 
-export default ManagementMembershipRequests;
+export default ManagementPartners;
