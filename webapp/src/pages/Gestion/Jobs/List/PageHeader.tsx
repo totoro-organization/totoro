@@ -8,6 +8,9 @@ function PageHeader() {
       <Typography variant="h2" component="h1" gutterBottom>
         Création de votre mission
       </Typography>
+      <Typography variant="subtitle2">
+        Remplissez ce formulaire pour ajouter votre mission.
+      </Typography>
     </>
   );
 }
