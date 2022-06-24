@@ -6,16 +6,17 @@ import {
 } from '@mui/material';
 import { Box } from '@mui/system';
 import { format } from 'date-fns';
+import { Link } from 'react-router-dom';
 import StatusSelect from 'src/components/StatusSelect';
 import Text from 'src/components/Text';
-import { Job, StatusEnum, TableEnum } from 'src/models';
+import { Organization, StatusEnum, TableEnum } from 'src/models';
 import { config } from 'src/services/config';
 
-interface JobCardProps {
-  job: Job;
+interface OrganizationCardProps {
+  organization: Organization;
 }
 
-const JobCard = ({ job }: JobCardProps) => {
+const OrganizationCard = ({ organization }: OrganizationCardProps) => {
   const statusOptions = [
     {
       id: StatusEnum.coming,
@@ -39,51 +40,35 @@ const JobCard = ({ job }: JobCardProps) => {
     <Card>
       <CardContent sx={{ p: 4 }}>
         <Typography variant="subtitle2">
-          <Grid justifyItems={'center'} container spacing={0}>
+          <Grid justifyItems={'center'} container spacing={1}>
             <Grid item xs={12} sm={2} md={3} textAlign={{ sm: 'right' }}>
               <Box pr={3} pb={2}>
-                Titre :
+                Nom :
               </Box>
             </Grid>
             <Grid item xs={12} sm={10} md={9}>
               <Text color="black">
-                <b>{job.title}</b>
+                <b>{organization.name}</b>
               </Text>
             </Grid>
             <Grid item xs={12} sm={2} md={3} textAlign={{ sm: 'right' }}>
               <Box pr={3} pb={2}>
-                Association :
+                Activité :
               </Box>
             </Grid>
             <Grid item xs={12} sm={10} md={9}>
               <Text color="black">
-                <b>{job.author.organization.name}</b>
+                <b>{organization.activity}</b>
               </Text>
             </Grid>
             <Grid item xs={12} sm={2} md={3} textAlign={{ sm: 'right' }}>
               <Box pr={3} pb={2}>
-                Auteur :
+                Site web :
               </Box>
             </Grid>
             <Grid item xs={12} sm={10} md={9}>
               <Text color="black">
-                <b>
-                  {job.author.user.firstname} {job.author.user.lastname} (
-                  {job.author.user.username})
-                </b>
-              </Text>
-            </Grid>
-            <Grid item xs={12} sm={2} md={3} textAlign={{ sm: 'right' }}>
-              <Box pr={3} pb={2}>
-                Nombre de participants :
-              </Box>
-            </Grid>
-            <Grid item xs={12} sm={10} md={9}>
-              <Text color="black">
-                <b>
-                  {job.participants_max - job.remaining_place} /{' '}
-                  {job.participants_max}
-                </b>
+               { organization.link ? <Link to={organization.link}>{organization.link}</Link> : "Aucun"}
               </Text>
             </Grid>
             <Grid item xs={12} sm={2} md={3} textAlign={{ sm: 'right' }}>
@@ -92,34 +77,69 @@ const JobCard = ({ job }: JobCardProps) => {
               </Box>
             </Grid>
             <Grid item xs={12} sm={10} md={9}>
-              <Text color="black">
-                <b>
-                  {job.address}, {job.cp} {job.commune}
-                </b>
-              </Text>
+              <Box display={"flex"} flexDirection="column">
+                <Text color="black">
+                  {organization.address}
+                </Text>
+                <Text color="black">
+                    {organization.commune}, {organization.cp}
+                </Text>
+              </Box>
             </Grid>
             <Grid item xs={12} sm={2} md={3} textAlign={{ sm: 'right' }}>
               <Box pr={3} pb={2}>
-                Difficulté :
+                N°SIREN :
               </Box>
             </Grid>
             <Grid item xs={12} sm={10} md={9}>
               <Text color="black">
                 <b>
-                  {job.difficulty.level} ({job.difficulty.token})
+                  {organization.siren}
                 </b>
               </Text>
             </Grid>
             <Grid item xs={12} sm={2} md={3} textAlign={{ sm: 'right' }}>
               <Box pr={3} pb={2}>
-                Dates :
+                N°SIRET :
               </Box>
             </Grid>
             <Grid item xs={12} sm={10} md={9}>
               <Text color="black">
-                <b>Commence le : {format(new Date(job.start_date), "dd/MM/yyyy HH:mm:ss")}</b>
-                &emsp;
-                <b>Termine le : {format(new Date(job.end_date), "dd/MM/yyyy HH:mm:ss")}</b>
+                <b>
+                  {organization.siret}
+                </b>
+              </Text>
+            </Grid>
+            <Grid item xs={12} sm={2} md={3} textAlign={{ sm: 'right' }}>
+              <Box pr={3} pb={2}>
+                Email :
+              </Box>
+            </Grid>
+            <Grid item xs={12} sm={10} md={9}>
+              <Text color="black">
+                <b>
+                  {organization.email ?? 'Aucun'} 
+                </b>
+              </Text>
+            </Grid>
+            <Grid item xs={12} sm={2} md={3} textAlign={{ sm: 'right' }}>
+              <Box pr={3} pb={2}>
+                Téléphone :
+              </Box>
+            </Grid>
+            <Grid item xs={12} sm={10} md={9}>
+              <Text color="black">
+               {organization.phone}
+              </Text>
+            </Grid>
+            <Grid item xs={12} sm={2} md={3} textAlign={{ sm: 'right' }}>
+              <Box pr={3} pb={2}>
+                Nombre de membres :
+              </Box>
+            </Grid>
+            <Grid item xs={12} sm={10} md={9}>
+              <Text color="black">
+               {organization.users.length}
               </Text>
             </Grid>
             <Grid item xs={12} sm={2} md={3} textAlign={{ sm: 'right' }}>
@@ -129,7 +149,7 @@ const JobCard = ({ job }: JobCardProps) => {
             </Grid>
             <Grid item xs={12} sm={10} md={9}>
               <Box sx={{ maxWidth: { xs: 'auto', sm: 300 } }}>
-                <Text color="black">{format(new Date(job.createdAt), "dd/MM/yyyy HH:mm:ss")}</Text>
+                <Text color="black">{format(new Date(organization.createdAt), "dd/MM/yyyy HH:mm:ss")}</Text>
               </Box>
             </Grid>
             <Grid item xs={12} sm={2} md={3} textAlign={{ sm: 'right' }}>
@@ -139,7 +159,7 @@ const JobCard = ({ job }: JobCardProps) => {
             </Grid>
             <Grid item xs={12} sm={10} md={9}>
               <Box sx={{ maxWidth: { xs: 'auto', sm: 300 } }}>
-                <Text color="black">{format(new Date(job.updatedAt), "dd/MM/yyyy HH:mm:ss")}</Text>
+                <Text color="black">{format(new Date(organization.updatedAt), "dd/MM/yyyy HH:mm:ss")}</Text>
               </Box>
             </Grid>
             <Grid item xs={12} sm={2} md={3} textAlign={{ sm: 'right' }}>
@@ -150,20 +170,10 @@ const JobCard = ({ job }: JobCardProps) => {
             <Grid item xs={12} sm={10} md={9}>
               <Box sx={{ maxWidth: { xs: 'auto', sm: 300 } }}>
                 <StatusSelect
-                  table={TableEnum.jobs}
-                  currentItem={{ id: job.id, status: job.status }}
+                  table={TableEnum.organizations}
+                  currentItem={{ id: organization.id, status: organization.status }}
                   statusOptions={statusOptions}
                 />
-              </Box>
-            </Grid>
-            <Grid item xs={12} sm={2} md={3} textAlign={{ sm: 'right' }}>
-              <Box pr={3} pb={2}>
-                QR Code :
-              </Box>
-            </Grid>
-            <Grid item xs={12} sm={10} md={9}>
-              <Box sx={{ maxWidth: { xs: 'auto', sm: 300 } }}>
-                <img src={config.server + job.qrcode} alt="Qr Code" />
               </Box>
             </Grid>
             <Grid item xs={12} sm={2} md={3} textAlign={{ sm: 'right' }}>
@@ -173,7 +183,7 @@ const JobCard = ({ job }: JobCardProps) => {
             </Grid>
             <Grid item xs={12} sm={10} md={9}>
               <Text color="black">
-                <b>{job.description}</b>
+                <b>{organization.description ?? "Aucune"}</b>
               </Text>
             </Grid>
           </Grid>
@@ -183,4 +193,4 @@ const JobCard = ({ job }: JobCardProps) => {
   );
 };
 
-export default JobCard;
+export default OrganizationCard;

@@ -1,7 +1,9 @@
 import { MenuItem, Select } from "@mui/material"
 import { useContext, useEffect, useState } from "react";
 import { StatusContext } from "src/contexts/StatusContext";
+import useAuth from "src/hooks/useAuth";
 import { Status, StatusEnum, StatusOptions } from "src/models";
+import { sendLog } from "src/services/admins.service";
 import { changeStatus } from "src/services/status.service";
 import StatusLabel from "../StatusLabel";
 
@@ -21,6 +23,7 @@ function StatusSelect({ statusOptions, currentItem, table }: StatusSelectProps) 
     const allStatuses = useContext(StatusContext);
     const [options, setOptions] = useState<any>([]);
     const [selectedOption, setSelectedOption] = useState<any>(null);
+    const { user } = useAuth();
 
     useEffect(() => {
         if(allStatuses.length) {
@@ -40,6 +43,7 @@ function StatusSelect({ statusOptions, currentItem, table }: StatusSelectProps) 
             status_id: status.id
         });
         if('error' in response) return;
+        await sendLog(user?.id, { table, action: "Updated"});
     }
 
 

@@ -7,6 +7,7 @@ import SuspenseLoader from 'src/components/SuspenseLoader';
 import TableWrapper from 'src/components/TableWrapper';
 import { styled } from '@mui/system';
 import { CommonsUriEnum } from 'src/models/commons';
+import { TableEnum } from 'src/models';
 
 
 const WrapperBox = styled(Box)(
@@ -25,7 +26,7 @@ function Statuses() {
     <WrapperBox>
       {
         loading || !statuses ? <SuspenseLoader/> : 
-        <TableWrapper addButton url={CommonsUriEnum.status} defaultItems={statuses?.data}>
+        <TableWrapper table={TableEnum.status} addButton url={CommonsUriEnum.status} defaultItems={statuses?.data}>
           {/* @ts-ignore */}
             <StatusesTable />
         </TableWrapper>

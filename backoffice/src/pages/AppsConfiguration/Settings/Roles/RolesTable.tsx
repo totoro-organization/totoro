@@ -108,7 +108,7 @@ const RolesTable: FC<TableProps<Role>> = ({
                       gutterBottom
                       noWrap
                     >
-                      {role.createdAt} 
+                      {format(new Date(role.createdAt), "dd/MM/yyyy HH:mm:ss")} 
                     </Typography>
                   </TableCell>
                   <TableCell align="right">

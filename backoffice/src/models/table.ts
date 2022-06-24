@@ -13,6 +13,7 @@ export enum TableEnum {
     discounts = "Discounts",
     discountTypes = "DiscountTypes",
     roles = "Roles",
-    status = "Status"
+    status = "Status",
+    difficulties = "Difficulties"
 }
 

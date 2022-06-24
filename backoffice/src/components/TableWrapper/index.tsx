@@ -17,12 +17,16 @@ import BulkActions from './BulkActions';
 import { StatusEnum, StatusOptions } from 'src/models/status';
 import { addItem, deleteItem, getItems, updateItem } from 'src/services/commons.service';
 import { useModal } from 'src/hooks/useModal';
+import { sendLog } from 'src/services/admins.service';
+import useAuth from 'src/hooks/useAuth';
+import { TableEnum } from 'src/models';
 
 interface TableWrapperProps {
   className?: string;
   defaultItems: any;
-  url: string,
+  url?: string,
   title?: string,
+  table?: TableEnum,
   statusOptions?: StatusOptions,
   children: ReactNode,
   addButton?: boolean
@@ -41,6 +45,7 @@ export interface TableProps<T> {
   addModalOpen: boolean,
   handleCloseAddModal: () => void,
   handleGetItems: () => void,
+  table?: TableEnum,
   statusOptions: StatusOptions
 }
 
@@ -76,6 +81,7 @@ const TableWrapper: FC<TableWrapperProps> = ({
   title = '', 
   statusOptions, 
   children,
+  table,
   addButton = false 
 }) => {
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
@@ -94,6 +100,8 @@ const TableWrapper: FC<TableWrapperProps> = ({
       setItems(defaultItems);
     }
   }, [defaultItems])
+
+  const { user } = useAuth();
 
   if(statusOptions) {
       statusOptions = [
@@ -115,12 +123,14 @@ const TableWrapper: FC<TableWrapperProps> = ({
     const updateResponse = await updateItem(url, id, data);
     if('error' in updateResponse) return;
     handleGetItems();
+    await sendLog(user?.id, {table, action: "Updated"});
   }
 
   const handleDeleteItem = async (id: string) => {
     const deleteResponse = await deleteItem(url, id);
     if('error' in deleteResponse) return;
     handleGetItems();
+    await sendLog(user?.id, {table, action: "Deleted"})
   }
 
   const handleAddItem = async (data: object) => {
@@ -128,6 +138,7 @@ const TableWrapper: FC<TableWrapperProps> = ({
     if('error' in addResponse) return;
     handleGetItems();
     handleCloseAddModal();
+    await sendLog(user?.id, {table, action: "Added"})
   }
 
 
@@ -225,7 +236,8 @@ const TableWrapper: FC<TableWrapperProps> = ({
             handleAddItem,
             handleGetItems,
             addModalOpen,
-            handleCloseAddModal
+            handleCloseAddModal,
+            table
             }) 
         } 
       <Box p={2}>

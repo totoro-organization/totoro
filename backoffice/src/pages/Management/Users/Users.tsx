@@ -4,6 +4,7 @@ import { useApi } from 'src/hooks/useApi';
 import SuspenseLoader from 'src/components/SuspenseLoader';
 import TableWrapper from 'src/components/TableWrapper';
 import { StatusEnum } from 'src/models/status';
+import { TableEnum } from 'src/models';
 
 function Users() {
 
@@ -30,7 +31,7 @@ function Users() {
 
   return (
       loading || !users ? <SuspenseLoader/> :
-      <TableWrapper url="/users" statusOptions={statusOptions} defaultItems={users?.data}>
+      <TableWrapper table={TableEnum.users} url="/users" statusOptions={statusOptions} defaultItems={users?.data}>
         {/* @ts-ignore */}
         <UsersTable />
       </TableWrapper>
