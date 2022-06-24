@@ -20,10 +20,10 @@
 		}
 	},
 	"production": {
-		"username": "root",
-		"password": "root",
-		"database": "database_production",
-		"host": "db",
+		"username": "epiz_31954240",
+		"password": "NZvPWGWvCfVef",
+		"database": "epiz_31954240_totoro",
+		"host": "sql211.epizy.com",
 		"dialect": "mysql",
 		"define": {
 			"freezeTableName": true
