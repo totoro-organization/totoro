@@ -89,7 +89,7 @@ const PartnersTable: FC<TableProps<any>> = ({
                       noWrap
                     >
                       <Link
-                        to={`/gestion/partners/${partner.id}`}
+                        to={`/gestion/partenaires/${partner.id}`}
                       >{partner.name}</Link>
                     </Typography>
                     <Typography variant="body2" color="text.secondary" noWrap>
