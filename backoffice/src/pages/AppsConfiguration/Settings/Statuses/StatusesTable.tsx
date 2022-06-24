@@ -98,7 +98,7 @@ const StatusesTable: FC<TableProps<Status<any>>> = ({
                       gutterBottom
                       noWrap
                     >
-                      {status.createdAt} 
+                      {format(new Date(status.createdAt), "dd/MM/yyyy HH:mm:ss")} 
                     </Typography>
                   </TableCell>
                   <TableCell align="right">

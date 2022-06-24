@@ -4,7 +4,7 @@ import { useApi } from 'src/hooks/useApi';
 import SuspenseLoader from 'src/components/SuspenseLoader';
 import TableWrapper from 'src/components/TableWrapper';
 import { styled } from '@mui/system';
-import { StatusEnum } from 'src/models';
+import { StatusEnum, TableEnum } from 'src/models';
 import { CommonsUriEnum } from 'src/models/commons';
 
 
@@ -35,7 +35,7 @@ function LitigationObjects() {
     <WrapperBox>
       {
         loading || !litigationObjects ? <SuspenseLoader/> : 
-        <TableWrapper addButton url={CommonsUriEnum.litigationObjects} statusOptions={statusOptions} defaultItems={litigationObjects?.data}>
+        <TableWrapper table={TableEnum.litigationObjects} addButton url={CommonsUriEnum.litigationObjects} statusOptions={statusOptions} defaultItems={litigationObjects?.data}>
             {/* @ts-ignore */}
             <LitigationObjectsTable />
         </TableWrapper>
