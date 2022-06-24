@@ -8,16 +8,17 @@ import {
 } from '@mui/material';
 import { Box } from '@mui/system';
 import format from 'date-fns/format';
+import { Link } from 'react-router-dom';
 import StatusSelect from 'src/components/StatusSelect';
 import SuspenseLoader from 'src/components/SuspenseLoader';
 import Text from 'src/components/Text';
-import { StatusEnum, TableEnum, User } from 'src/models';
+import { StatusEnum, TableEnum, Partner } from 'src/models';
 
-interface UserCardProps {
-  user: User;
+interface PartnerCardProps {
+  partner: Partner;
 }
 
-const UserCard = ({ user }: UserCardProps) => {
+const PartnerCard = ({ partner }: PartnerCardProps) => {
 
   const statusOptions = [
     {
@@ -50,7 +51,7 @@ const UserCard = ({ user }: UserCardProps) => {
         </Typography>
       </Box>}/>
       <Divider />
-      {user ? (
+      {partner ? (
         <CardContent sx={{ p: 4 }}>
           <Typography variant="subtitle2">
             <Grid justifyItems={'center'} container spacing={0}>
@@ -61,28 +62,26 @@ const UserCard = ({ user }: UserCardProps) => {
               </Grid>
               <Grid item xs={12} sm={10} md={10}>
                 <Text color="black">
-                  <b>{user.lastname}</b>
+                  <b>{partner.name}</b>
                 </Text>
               </Grid>
               <Grid item xs={12} sm={2} md={2} textAlign={{ sm: 'right' }}>
                 <Box pr={3} pb={2}>
-                  Prénom :
+                  Adresse :
                 </Box>
               </Grid>
               <Grid item xs={12} sm={10} md={10}>
                 <Text color="black">
-                  <b>{user.firstname}</b>
+                  <b>{partner.address}</b>
                 </Text>
               </Grid>
               <Grid item xs={12} sm={2} md={2} textAlign={{ sm: 'right' }}>
                 <Box pr={3} pb={2}>
-                  Pseudo :
+                  Site web :
                 </Box>
               </Grid>
               <Grid item xs={12} sm={10} md={10}>
-                <Text color="black">
-                  <b>{user.username}</b>
-                </Text>
+                  <Link to={partner.link}>{ partner.link }</Link>
               </Grid>
               <Grid item xs={12} sm={2} md={2} textAlign={{ sm: 'right' }}>
                 <Box pr={3} pb={2}>
@@ -91,7 +90,27 @@ const UserCard = ({ user }: UserCardProps) => {
               </Grid>
               <Grid item xs={12} sm={10} md={10}>
                 <Text color="black">
-                  <b>{user.email}</b>
+                  <b>{partner.email}</b>
+                </Text>
+              </Grid>
+              <Grid item xs={12} sm={2} md={2} textAlign={{ sm: 'right' }}>
+                <Box pr={3} pb={2}>
+                  Téléphone :
+                </Box>
+              </Grid>
+              <Grid item xs={12} sm={10} md={10}>
+                <Text color="black">
+                 {partner.phone}
+                </Text>
+              </Grid>
+              <Grid item xs={12} sm={2} md={2} textAlign={{ sm: 'right' }}>
+                <Box pr={3} pb={2}>
+                  Utilisateur :
+                </Box>
+              </Grid>
+              <Grid item xs={12} sm={10} md={10}>
+                <Text color="black">
+                  <Link to={`/gestion/utilisateurs/${partner.user.id}`}>{partner.user.firstname} {partner.user.lastname} ({partner.user.username})</Link>
                 </Text>
               </Grid>
               <Grid item xs={12} sm={2} md={2} textAlign={{ sm: 'right' }}>
@@ -101,7 +120,7 @@ const UserCard = ({ user }: UserCardProps) => {
               </Grid>
               <Grid item xs={12} sm={10} md={10}>
                 <Box sx={{ maxWidth: { xs: 'auto', sm: 300 } }}>
-                  <Text color="black">{format(new Date(user.createdAt), "dd/MM/yyyy HH:mm:ss")}</Text>
+                  <Text color="black">{format(new Date(partner.createdAt), "dd/MM/yyyy HH:mm:ss")}</Text>
                 </Box>
               </Grid>
               <Grid item xs={12} sm={2} md={2} textAlign={{ sm: 'right' }}>
@@ -111,7 +130,17 @@ const UserCard = ({ user }: UserCardProps) => {
               </Grid>
               <Grid item xs={12} sm={10} md={10}>
                 <Box sx={{ maxWidth: { xs: 'auto', sm: 300 } }}>
-                  <Text color="black">{format(new Date(user.updatedAt), "dd/MM/yyyy HH:mm:ss")}</Text>
+                  <Text color="black">{format(new Date(partner.updatedAt), "dd/MM/yyyy HH:mm:ss")}</Text>
+                </Box>
+              </Grid>
+              <Grid item xs={12} sm={2} md={2} textAlign={{ sm: 'right' }}>
+                <Box pr={3} pb={2}>
+                  Description :
+                </Box>
+              </Grid>
+              <Grid item xs={12} sm={10} md={10}>
+                <Box pr={3} pb={2}>
+                  <Text color="black">{partner.description ?? "Aucune"}</Text>
                 </Box>
               </Grid>
               <Grid item xs={12} sm={2} md={2} textAlign={{ sm: 'right' }}>
@@ -122,8 +151,8 @@ const UserCard = ({ user }: UserCardProps) => {
               <Grid item xs={12} sm={10} md={10}>
                 <Box sx={{ maxWidth: { xs: 'auto', sm: 300 } }}>
                 <StatusSelect
-                  table={TableEnum.users}
-                  currentItem={{ id: user.id, status: user.status }}
+                  table={TableEnum.partners}
+                  currentItem={{ id: partner.id, status: partner.status }}
                   statusOptions={statusOptions}
                 />
                 </Box>
@@ -138,4 +167,4 @@ const UserCard = ({ user }: UserCardProps) => {
   );
 };
 
-export default UserCard;
+export default PartnerCard;

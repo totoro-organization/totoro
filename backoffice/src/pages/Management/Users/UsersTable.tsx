@@ -30,7 +30,8 @@ const UsersTable: FC<TableProps<any>> = ({
   selectedSomeItems,
   selectedAllItems,
   statusOptions,
-  handleDeleteItem
+  handleDeleteItem,
+  table
 }) => {
 
   const theme = useTheme();
@@ -116,7 +117,7 @@ const UsersTable: FC<TableProps<any>> = ({
                     </Typography>
                   </TableCell>
                   <TableCell align="right">
-                    <StatusSelect table={TableEnum.users} currentItem={{ id: user.id, status: user.status}} statusOptions={statusOptions} />
+                    <StatusSelect table={table} currentItem={{ id: user.id, status: user.status}} statusOptions={statusOptions} />
                   </TableCell>
                   <TableCell align="right">
                     <Tooltip title="Supprimer la mission" arrow>

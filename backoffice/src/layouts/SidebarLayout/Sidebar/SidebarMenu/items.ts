@@ -62,18 +62,6 @@ const menuItems: MenuItems[] = [
         name: 'Partenaires',
         icon: GroupWorkIcon,
         link: '/gestion/partenaires',
-        items: [
-          {
-            name: 'Demandes',
-            icon: GroupAddIcon,
-            link: '/gestion/partenaires/demandes',
-          },
-          {
-            name: 'Membres',
-            icon: GroupsIcon,
-            link: '/gestion/partenaires/membres'
-          }
-        ]
       },
       {
         name: 'Missions',

@@ -14,9 +14,10 @@ import {
 } from '@mui/material';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import { useNavigate } from 'react-router';
+import { format } from 'date-fns';
 
-const ParticipantsTable: FC<TableProps<any>> = ({
-  items: users, 
+const MembersTable: FC<TableProps<any>> = ({
+  items: members, 
 }) => {
 
   const theme = useTheme();
@@ -30,13 +31,14 @@ const ParticipantsTable: FC<TableProps<any>> = ({
               <TableCell>Nom</TableCell>
               <TableCell align="left">Prénom</TableCell>
               <TableCell align="left">Date</TableCell>
+              <TableCell align="left">Rôle</TableCell>
               <TableCell align="right">Action</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {users.map((user) => {
+            {members.map((member) => {
               return (
-                <TableRow hover key={user.participant.id}>
+                <TableRow hover key={member.user.id}>
                   <TableCell>
                     <Typography
                       variant="body1"
@@ -45,7 +47,7 @@ const ParticipantsTable: FC<TableProps<any>> = ({
                       gutterBottom
                       noWrap
                     >
-                      {user.participant.lastname}
+                      {member.user.lastname}
                     </Typography>
                   </TableCell>
                   <TableCell>
@@ -56,7 +58,7 @@ const ParticipantsTable: FC<TableProps<any>> = ({
                       gutterBottom
                       noWrap
                     >
-                      {user.participant.firstname}
+                      {member.user.firstname}
                     </Typography>
                   </TableCell>
                   <TableCell>
@@ -67,13 +69,24 @@ const ParticipantsTable: FC<TableProps<any>> = ({
                       gutterBottom
                       noWrap
                     >
-                      {user.createdAt}
+                      {format(new Date(member.user.createdAt), "dd/MM/yyyy HH:mm:ss")}
+                    </Typography>
+                  </TableCell>
+                  <TableCell>
+                  <Typography
+                      variant="body1"
+                      fontWeight="bold"
+                      color="text.primary"
+                      gutterBottom
+                      noWrap
+                    >
+                      {member.role.label}
                     </Typography>
                   </TableCell>
                   <TableCell align="right">
                     <Tooltip title="Voir le profil" arrow>
                       <IconButton
-                        onClick={() => navigate(`/gestion/utilisateurs/${user.participant.id}`)}
+                        onClick={() => navigate(`/gestion/utilisateurs/${member.user.id}`)}
                         sx={{
                           '&:hover': { background: theme.colors.error.lighter },
                           color: theme.palette.error.main
@@ -94,4 +107,4 @@ const ParticipantsTable: FC<TableProps<any>> = ({
   );
 };
 
-export default ParticipantsTable;
+export default MembersTable;

@@ -11,7 +11,7 @@ import useAuth from './hooks/useAuth';
 import { I18nextProvider } from 'react-i18next';
 import i18next from 'i18next';
 
-import { common_en, common_fr } from 'src/translate';
+import { common_en, common_fr } from 'src/translations';
 import { LangEnum } from './models';
 import { SidebarProvider } from './contexts/SidebarContext';
 

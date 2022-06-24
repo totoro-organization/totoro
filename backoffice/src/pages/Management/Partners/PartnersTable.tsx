@@ -11,34 +11,38 @@ import {
   TableContainer,
   Typography,
   useTheme,
+  TableProps,
 } from '@mui/material';
 
-import { Partner } from 'src/models/partner';
-import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
+import Modal from 'src/components/Modal';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 import { Link } from 'react-router-dom';
-import StatusLabel from 'src/components/StatusLabel';
+import StatusSelect from 'src/components/StatusSelect';
+import { DeletePartnerContent } from './PartnerModalContent';
+import { useModal } from 'src/hooks/useModal';
+import { format } from 'date-fns';
+import { truncateSring } from 'src/utils/functions';
 
-
-interface PartnersTableProps {
-  items: Partner[], 
-  selectedItems: any,
-  handleSelectAllItems: (event: ChangeEvent<HTMLInputElement>) => void, 
-  handleSelectOneItem: (event: ChangeEvent<HTMLInputElement>, itemId: string) => void,
-  selectedSomeItems: any,
-  selectedAllItems: any
-}
-
-const PartnersTable: FC<PartnersTableProps> = ({
+const PartnersTable: FC<TableProps<any>> = ({
   items: partners, 
   selectedItems,
   handleSelectAllItems, 
   handleSelectOneItem,
   selectedSomeItems,
-  selectedAllItems
+  selectedAllItems,
+  statusOptions,
+  handleDeleteItem,
+  table
 }) => {
- 
+
   const theme = useTheme();
+
+  const [deleteModalOpen, handleOpenDeleteModal, handleCloseDeleteModal, deleteModalItem] = useModal();
+
+  const handleDelete = (id: string) => {
+    handleDeleteItem(id);
+    handleCloseDeleteModal();
+  }
 
   return (
       <TableContainer>
@@ -54,7 +58,9 @@ const PartnersTable: FC<PartnersTableProps> = ({
                 />
               </TableCell>
               <TableCell>Details</TableCell>
-              <TableCell>Réductions</TableCell>
+              <TableCell align="left">Utilisateur</TableCell>
+              <TableCell align="left">Site web</TableCell>
+              <TableCell align="left">Depuis le</TableCell>
               <TableCell align="right">Statut</TableCell>
               <TableCell align="right">Actions</TableCell>
             </TableRow>
@@ -82,12 +88,44 @@ const PartnersTable: FC<PartnersTableProps> = ({
                       gutterBottom
                       noWrap
                     >
-                      <Link to={`/gestion/partenaires/membres/${partner.id}`}>
-                        {partner.name}
-                      </Link>
+                      <Link
+                        to={`/gestion/partenaires/${partner.id}`}
+                      >{partner.name}</Link>
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary" noWrap>
+                      {partner.address}
                     </Typography>
                     <Typography variant="body2" color="text.secondary" noWrap>
                       {partner.email}
+                    </Typography>
+                  </TableCell>
+                  <TableCell>
+                  <Typography
+                      variant="body1"
+                      fontWeight="bold"
+                      color="text.primary"
+                      gutterBottom
+                      noWrap
+                    >
+                      <Link
+                        to={`/gestion/utilisateurs/${partner.user.id}`}
+                      >{`${partner.user.firstname} ${partner.user.lastname} (${partner.user.username})`}</Link>
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary" noWrap>
+                      {partner.user.email}
+                    </Typography>
+                  </TableCell>
+                  <TableCell align="right">
+                    <Typography
+                      variant="body1"
+                      fontWeight="bold"
+                      color="text.primary"
+                      gutterBottom
+                      noWrap
+                    >
+                      <Link to={partner.link}>
+                        { truncateSring(partner.link, 20, '...') }
+                      </Link>
                     </Typography>
                   </TableCell>
                   <TableCell>
@@ -98,29 +136,16 @@ const PartnersTable: FC<PartnersTableProps> = ({
                       gutterBottom
                       noWrap
                     >
-                      {partner.discount.length}
+                      {format(new Date(partner.createdAt), "dd/MM/yyyy HH:mm:ss")}
                     </Typography>
                   </TableCell>
                   <TableCell align="right">
-                    <StatusLabel status={partner.status.label} />
+                    <StatusSelect table={table} currentItem={{ id: partner.id, status: partner.status}} statusOptions={statusOptions} />
                   </TableCell>
                   <TableCell align="right">
-                    <Tooltip title="Editer la mission" arrow>
-                      <IconButton
-                        sx={{
-                          '&:hover': {
-                            background: theme.colors.primary.lighter
-                          },
-                          color: theme.palette.primary.main
-                        }}
-                        color="inherit"
-                        size="small"
-                      >
-                        <EditTwoToneIcon fontSize="small" />
-                      </IconButton>
-                    </Tooltip>
                     <Tooltip title="Supprimer la mission" arrow>
                       <IconButton
+                        onClick={() => handleOpenDeleteModal(partner)}
                         sx={{
                           '&:hover': { background: theme.colors.error.lighter },
                           color: theme.palette.error.main
@@ -137,6 +162,9 @@ const PartnersTable: FC<PartnersTableProps> = ({
             })}
           </TableBody>
         </Table>
+        <Modal open={deleteModalOpen} handleClose={handleCloseDeleteModal} title={`Supprimer l'utilisateur suivant : ${deleteModalItem?.firstname} ${deleteModalItem?.lastname}`}>
+            <DeletePartnerContent handleClose={handleCloseDeleteModal} handleDelete={handleDelete} item={deleteModalItem} />
+        </Modal>
       </TableContainer>
   );
 };

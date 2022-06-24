@@ -7,64 +7,44 @@ import ArrowBackTwoToneIcon from '@mui/icons-material/ArrowBackTwoTone';
 import { Box, Container, Grid, IconButton, Tab, Tooltip } from '@mui/material';
 
 import Footer from 'src/components/Footer';
-import OrganizationCard from './OrganizationCard';
+import PartnerCard from './PartnerCard';
 import SuspenseLoader from 'src/components/SuspenseLoader';
 import { useApi } from 'src/hooks/useApi';
-import ImageGallery from './ImageGallery';
-import MembersTable from './MembersTable';
 import TableWrapper from 'src/components/TableWrapper';
 import { ChangeEvent, useState } from 'react';
 import TabsWrapper from 'src/components/TabsWrapper';
 import StatusLabel from 'src/components/StatusLabel';
-import JobsTable from '../../Jobs/JobsTable';
-import { StatusEnum, TableEnum } from 'src/models';
+import DiscountsTable from './DiscountsTable';
 
-function OrganizationDetails() {
+function PartnerDetails() {
   const { id } = useParams();
 
-  const { data: organization, loading: organizationLoading } = useApi(`/organizations/${id}`);
-  const { data: jobs, loading: jobsLoading } = useApi(`/organizations/${id}/jobs`);
+  const { data: partner, loading: partnerLoading } = useApi(`/partners/${id}`);
+  const { data: discounts, loading: discountsLoading } = useApi(
+    `/partners/${id}/discounts`
+  );
 
+  console.log(discounts);
+  
   const navigate = useNavigate();
 
   const [currentTab, setCurrentTab] = useState<string>('details');
 
-  const userStatusOptions = [
-    {
-      id: StatusEnum.actived,
-      name: 'Actif'
-    },
-    {
-      id: StatusEnum.deleted,
-      name: 'Supprimé'
-    },
-    {
-      id: StatusEnum.freezed,
-      name: 'Gelé'
-    },
-    {
-      id: StatusEnum.disabled,
-      name: 'Désactivé'
-    },
-  ];
-
   const tabs = [
     { value: 'details', label: 'Détails' },
-    { value: 'members', label: 'Membres' },
-    { value: 'jobs', label: 'Missions'}
+    { value: 'discounts', label: 'Coupons' }
   ];
 
   const handleTabsChange = (event: ChangeEvent<{}>, value: string): void => {
     setCurrentTab(value);
   };
 
-  const handleGoBack = () => navigate('/gestion/associations');
-    
+  const handleGoBack = () => navigate('/gestion/partenaires');
 
   return (
     <>
       <Helmet>
-        <title>{organization?.name}</title>
+        <title>{partner?.title}</title>
       </Helmet>
       <PageTitleWrapper>
         <Box alignItems={"center"} display="flex">
@@ -72,17 +52,17 @@ function OrganizationDetails() {
             onClick={handleGoBack}
             arrow
             placement="top"
-            title="Retourner aux associations"
+            title="Retourner aux missions"
           >
             <IconButton color="primary" sx={{ p: 2, mr: 2 }}>
               <ArrowBackTwoToneIcon />
             </IconButton>
           </Tooltip>
           <PageTitle
-            heading={organization?.name}
-            subHeading={organization?.activity}
+            heading={partner?.name}
+            subHeading={partner?.adress}
           />
-          { organization && <StatusLabel status={organization?.status.label}/>}
+          { partner && <StatusLabel status={partner?.status.label}/>}
         </Box>
        
       </PageTitleWrapper>
@@ -108,36 +88,21 @@ function OrganizationDetails() {
           </TabsWrapper>
           <Grid item xs={12}>
             {currentTab === 'details' &&
-              (!organizationLoading && organization ? (
+              (!partnerLoading && partner ? (
                 <>
-                  <OrganizationCard organization={organization} />
-                  {/* <ImageGallery images={organization.attachments} /> */}
+                  <PartnerCard partner={partner} />
+                  {/* <ImageGallery images={partner.attachments} /> */}
                 </>
               ) : (
                 <SuspenseLoader />
               ))}
-            {currentTab === 'members' &&
-              (!organizationLoading && organization.users ? (
+            {currentTab === 'discounts' &&
+              (!discountsLoading && discounts ? (
                 <TableWrapper
-                  title="Membres"
-                  defaultItems={organization.users}
+                  title="Coupons de réduction"
+                  defaultItems={discounts?.data}
                 >
-                  <MembersTable />
-                </TableWrapper>
-              ) : (
-                <SuspenseLoader />
-              ))}
-              {currentTab === 'jobs' &&
-              (!jobsLoading && jobs ? (
-                <TableWrapper
-                  table={TableEnum.jobs}
-                  title="Membres"
-                  defaultItems={jobs?.data}
-                  url="/jobs"
-                  statusOptions={userStatusOptions}
-                >
-                  {/* @ts-ignore */}
-                  <JobsTable />
+                  <DiscountsTable items={discounts} />
                 </TableWrapper>
               ) : (
                 <SuspenseLoader />
@@ -150,4 +115,4 @@ function OrganizationDetails() {
   );
 }
 
-export default OrganizationDetails;
+export default PartnerDetails;
