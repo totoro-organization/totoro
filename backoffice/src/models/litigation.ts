@@ -12,8 +12,14 @@ export interface Litigation {
     litigation_object: LitigationObject,
     author: User | Job,
     target: User | Job,
-    date: string,
     message?: string,
+    mission: {
+        id: string,
+        createdAt: string,
+        updatedAt: string,
+        job: Job
+    },
+    type: boolean,
     status: LitigationStatus
     createdAt: string,
     updatedAt: string

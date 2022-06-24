@@ -1,6 +1,6 @@
 import { Discount } from "./discount";
 import { Status, StatusEnum } from "./status";
-
+import { User } from "./user";
 
 
 export enum PartnerStatusEnum {
@@ -20,6 +20,8 @@ export interface Partner {
     address: string,
     logo: string,
     link: string,
+    user: User,
+    description?: string,
     in_internet: boolean,
     in_store: boolean,
     discount: Discount[],

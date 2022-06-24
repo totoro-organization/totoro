@@ -6,6 +6,7 @@ import TableWrapper from 'src/components/TableWrapper';
 import { StatusEnum } from 'src/models/status';
 import SuspenseLoader from 'src/components/SuspenseLoader';
 import { useApi } from 'src/hooks/useApi';
+import { TableEnum } from 'src/models';
 
 function Jobs() {
 
@@ -29,13 +30,12 @@ function Jobs() {
       name: 'Supprimé'
     }
   ];
-console.log(jobs);
 
   return (
     <Card>
       {
         !loading && jobs ? 
-          <TableWrapper url="/jobs" statusOptions={statusOptions} defaultItems={jobs?.data}>
+          <TableWrapper table={TableEnum.jobs} url="/jobs" statusOptions={statusOptions} defaultItems={jobs?.data}>
           {/* @ts-ignore */} 
             <JobsTable />
           </TableWrapper> : <SuspenseLoader/>

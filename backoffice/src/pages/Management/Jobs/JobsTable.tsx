@@ -23,6 +23,7 @@ import { DeleteJobContent } from './JobModalContent';
 import StatusSelect from 'src/components/StatusSelect';
 import { TableEnum } from 'src/models';
 import { useModal } from 'src/hooks/useModal';
+import format from 'date-fns/format';
 
 const JobsTable: FC<TableProps<Job>> = ({
   items: jobs, 
@@ -32,7 +33,8 @@ const JobsTable: FC<TableProps<Job>> = ({
   selectedSomeItems,
   selectedAllItems,
   statusOptions,
-  handleDeleteItem
+  handleDeleteItem,
+  table
 }) => {
   const theme = useTheme();
 
@@ -58,7 +60,7 @@ const JobsTable: FC<TableProps<Job>> = ({
               </TableCell>
               <TableCell>Details</TableCell>
               <TableCell>Date</TableCell>
-              <TableCell>Participants (capacité)</TableCell>
+              <TableCell>Participants</TableCell>
               <TableCell align="right">Tokens</TableCell>
               <TableCell align="right">Statut</TableCell>
               <TableCell align="right">Actions</TableCell>
@@ -95,7 +97,7 @@ const JobsTable: FC<TableProps<Job>> = ({
                     ><Link to={`/gestion/missions/${job.id}`}>{job.title}</Link>
                     </Typography>
                     <Typography variant="body2" color="text.secondary" noWrap>
-                      {job.organization}
+                      {job.author.organization ? job.author.organization.name : `${job.author.user.firstname} ${job.author.user.lastname} (${job.author.user.username})`}
                     </Typography>
                   </TableCell>
                   <TableCell>
@@ -106,7 +108,7 @@ const JobsTable: FC<TableProps<Job>> = ({
                       gutterBottom
                       noWrap
                     >
-                      {job.createdAt}
+                      {format(new Date(job.createdAt), "dd/MM/yyyy HH:mm:ss")}
                     </Typography>
                   </TableCell>
                   <TableCell>
@@ -117,7 +119,7 @@ const JobsTable: FC<TableProps<Job>> = ({
                       gutterBottom
                       noWrap
                     >
-                      {job.participants_max}
+                      {job.participants_max - job.remaining_place} / { job.participants_max }
                     </Typography>
                   </TableCell>
                   <TableCell align="right">
@@ -132,7 +134,7 @@ const JobsTable: FC<TableProps<Job>> = ({
                     </Typography>
                   </TableCell>
                   <TableCell align="right">
-                  <StatusSelect table={TableEnum.jobs} currentItem={{ id: job.id, status: job.status}} statusOptions={statusOptions} />
+                  <StatusSelect table={table} currentItem={{ id: job.id, status: job.status}} statusOptions={statusOptions} />
                   </TableCell>
                   <TableCell align="right">
                     <Tooltip title="Supprimer la mission" arrow>

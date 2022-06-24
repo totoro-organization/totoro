@@ -109,7 +109,7 @@ const DiscountTypesTable: FC<TableProps<DiscountType>> = ({
                       gutterBottom
                       noWrap
                     >
-                      {discountType.createdAt} 
+                      {format(new Date(discountType.createdAt), "dd/MM/yyyy HH:mm:ss")}
                     </Typography>
                   </TableCell>
                   <TableCell align="right">

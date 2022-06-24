@@ -3,6 +3,7 @@ import TableWrapper from 'src/components/TableWrapper';
 import { StatusEnum } from 'src/models/status';
 import SuspenseLoader from 'src/components/SuspenseLoader';
 import { useApi } from 'src/hooks/useApi';
+import { TableEnum } from 'src/models';
 
 function Litigations() {
 
@@ -20,12 +21,11 @@ function Litigations() {
   ];
   console.log(litigations)
   return (
-    <h2>Commenté en attendant le back</h2>
-    // loading || !litigations ? <SuspenseLoader/> : 
-    //   <TableWrapper url="/litigations" statusOptions={statusOptions} defaultItems={litigations?.data}>
-    //     {/* @ts-ignore */}
-    //       <LitigationsTable />
-    //   </TableWrapper>
+    loading || !litigations ? <SuspenseLoader/> : 
+      <TableWrapper table={TableEnum.litigations} url="/litigations" statusOptions={statusOptions} defaultItems={litigations?.data}>
+        {/* @ts-ignore */}
+          <LitigationsTable />
+      </TableWrapper>
   );
 }
 

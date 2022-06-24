@@ -155,7 +155,7 @@ const PricingsTable: FC<TableProps<Pricing>> = ({
                       gutterBottom
                       noWrap
                     >
-                      {pricing.createdAt} 
+                      {format(new Date(pricing.createdAt), "dd/MM/yyyy HH:mm:ss")} 
                     </Typography>
                   </TableCell>
                   <TableCell align="right">

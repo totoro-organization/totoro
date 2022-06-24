@@ -34,12 +34,9 @@ const Litigations = Loader(
   lazy(() => import('src/pages/Management/Litigations'))
 );
 const Partners = Loader(
-  lazy(() => import('src/pages/Management/Partners/Members'))
+  lazy(() => import('src/pages/Management/Partners'))
 );
 const Admins = Loader(lazy(() => import('src/pages/Management/Admins')));
-const MembershipRequests = Loader(
-  lazy(() => import('src/pages/Management/Partners/MembershipRequests'))
-);
 
 // single pages
 const Litigation = Loader(
@@ -52,10 +49,7 @@ const Organization = Loader(
 const User = Loader(lazy(() => import('src/pages/Management/Users/User')));
 const Admin = Loader(lazy(() => import('src/pages/Management/Admins/Admin')));
 const Partner = Loader(
-  lazy(() => import('src/pages/Management/Partners/Members/Partner'))
-);
-const MembershipRequest = Loader(
-  lazy(() => import('src/pages/Management/Partners/MembershipRequests/Request'))
+  lazy(() => import('src/pages/Management/Partners/Partner'))
 );
 
 const UserSettings = Loader(lazy(() => import('src/pages/User/settings')));
@@ -212,19 +206,11 @@ const routes: PartialRouteObject[] = [
                 element: <Litigation />
               },
               {
-                path: 'partenaires/demandes',
-                element: <MembershipRequests />
-              },
-              {
-                path: 'partenaires/demandes/:id',
-                element: <MembershipRequest />
-              },
-              {
-                path: 'partenaires/membres',
+                path: 'partenaires',
                 element: <Partners />
               },
               {
-                path: 'partenaires/membres/:id',
+                path: 'partenaires/:id',
                 element: <Partner />
               },
               {
