@@ -29,6 +29,7 @@ export interface Job {
     end_date: string,
     tags: Tag[],
     attachments?: AttachmentJob[],
+    qrcode: string,
     status: JobStatus,
     createdAt: string,
     updatedAt: string

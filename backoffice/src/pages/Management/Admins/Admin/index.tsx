@@ -57,7 +57,7 @@ function AdminDetails() {
             <AdminCard admin={admin} /> 
           </Grid>
           <Grid item xs={12}>
-            {logs ? <AdminLogsTable logs={logs?.data} /> : <SuspenseLoader />}
+            {!loadingLogs && logs ? <AdminLogsTable logs={logs?.data} /> : <SuspenseLoader />}
           </Grid>
         </Grid>
       </Container>

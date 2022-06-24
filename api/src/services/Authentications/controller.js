@@ -2,7 +2,7 @@ const asyncLib = require("async");
 const bcrypt = require("bcryptjs");
 const { Op } = require("sequelize");
 const { generateToken } = require("utils/session");
-const { getNearestTerminal } = require("utils/localisation");
+//const { getNearestTerminal } = require("utils/localisation");
 const { getRow, getField } = require("utils/common/thenCatch");
 const { error, success } = require("utils/common/messages.json");
 const { Terminals, Status } = require("../../../models");
@@ -12,7 +12,6 @@ const commonsController = require("services/Commons/controller");
 const {
   mail: { signup },
 } = require("./../../../html");
-const { sign } = require("jsonwebtoken");
 const { label_status } = require("utils/enum.json");
 const excludeCommon = { exclude: ["id", "createdAt", "updatedAt"] };
 
