@@ -3,7 +3,7 @@ import { requestAxios } from "./requestApi";
 export const ADMIN_BASE_URL = "/admins"
 
 export async function sendLog(id: string, data: object) {
-    const response = await requestAxios("POST", `${ADMIN_BASE_URL}/${id}`, data );
+    const response = await requestAxios("POST", `${ADMIN_BASE_URL}/${id}/logs`, data );
     return response;
 } 
 
