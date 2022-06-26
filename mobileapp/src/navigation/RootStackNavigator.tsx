@@ -12,6 +12,7 @@ import Profile from "../screens/single/Profile";
 
 import BottomTabNavigator from "./BottomTabNavigator";
 import ForgotPassword from "../screens/auth/ForgotPassword";
+import ChangePassword from "../screens/auth/ChangePassword";
 
 const RootStack = createStackNavigator();
 
@@ -32,11 +33,16 @@ export default function RootStackNavigator() {
         <>
           <RootStack.Screen name="Explications" component={Explanation} />
           <RootStack.Screen name="Se connecter" component={Login} />
+          <RootStack.Screen name="S'inscrire" component={Register} />
+
           <RootStack.Screen
             name="Mot de passe oublié"
             component={ForgotPassword}
           />
-          <RootStack.Screen name="S'inscrire" component={Register} />
+          <RootStack.Screen
+            name="Changement mot de passe"
+            component={ChangePassword}
+          />
         </>
       )}
 

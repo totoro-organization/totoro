@@ -12,6 +12,7 @@ export type AuthParamList = {
   "Se connecter": undefined;
   "S'inscrire": undefined;
   "Mot de passe oublié": undefined;
+  "Changement mot de passe": undefined;
 };
 
 export type AppParamList = {
