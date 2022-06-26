@@ -1,5 +1,4 @@
 import React from "react";
-import styled from "styled-components/native";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Controller, useForm } from "react-hook-form";
 
@@ -29,68 +28,58 @@ export default function LoginForm() {
   return (
     <>
       {error?.status && (
-        <Alert type="error">
-          Il semblerait que l'email suivante&nbsp;:{" "}
-          <Text weight="medium">{error?.email}</Text> soit inexistante.
-        </Alert>
+        <>
+          <Alert type="error">
+            Il semblerait que l'email suivante&nbsp;:{" "}
+            <Text weight="medium">{error?.email}</Text> soit inexistante.
+          </Alert>
+
+          <Spacer axis="vertical" size={2} />
+        </>
       )}
 
-      <Spacer axis="vertical" size={2} />
+      <Controller
+        name="email"
+        control={control}
+        render={({
+          field: { onChange, onBlur, value },
+          fieldState: { error },
+        }) => (
+          <InputGroup
+            label="Adresse email"
+            onBlur={onBlur}
+            onChangeText={onChange}
+            value={value}
+            placeholder="marie-zoli@gmail.com"
+            error={error}
+          />
+        )}
+      />
 
-      <InputWrapper>
-        <Text>Adresse email</Text>
+      <Spacer axis="vertical" size={1} />
 
-        <Spacer axis="vertical" size={0.5} />
+      <Controller
+        name="password"
+        control={control}
+        render={({
+          field: { onChange, onBlur, value },
+          fieldState: { error },
+        }) => (
+          <InputGroup
+            secureTextEntry
+            label="Mot de passe"
+            onBlur={onBlur}
+            onChangeText={onChange}
+            value={value}
+            placeholder="*******"
+            error={error}
+          />
+        )}
+      />
 
-        <Controller
-          name="email"
-          control={control}
-          render={({
-            field: { onChange, onBlur, value },
-            fieldState: { error },
-          }) => (
-            <InputGroup
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-              placeholder="marie-zoli@gmail.com"
-              error={error}
-            />
-          )}
-        />
-      </InputWrapper>
-
-      <InputWrapper>
-        <Text>Mot de passe</Text>
-
-        <Spacer axis="vertical" size={0.5} />
-
-        <Controller
-          name="password"
-          control={control}
-          render={({
-            field: { onChange, onBlur, value },
-            fieldState: { error },
-          }) => (
-            <InputGroup
-              secureTextEntry
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-              placeholder="*******"
-              error={error}
-            />
-          )}
-        />
-      </InputWrapper>
+      <Spacer axis="vertical" size={3} />
 
       <Button handlePress={handleSubmit(login)}>Se connecter</Button>
     </>
   );
 }
-
-const InputWrapper = styled.View`
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: ${({ theme }) => theme.spacing[4]};
-`;
