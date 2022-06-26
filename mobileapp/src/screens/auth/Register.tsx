@@ -2,17 +2,17 @@ import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import React, { useState } from "react";
 import styled from "styled-components/native";
-import Button from "../components/atoms/Button";
-import ProgressBar from "../components/atoms/ProgressBar";
-import Spacer from "../components/atoms/Spacer";
+import Button from "../../components/atoms/Button";
+import ProgressBar from "../../components/atoms/ProgressBar";
+import Spacer from "../../components/atoms/Spacer";
 
-import { Heading } from "../components/atoms/Text";
+import { Heading } from "../../components/atoms/Text";
 
-import SimpleLayout from "../components/layouts/SimpleLayout";
-import RegisterStepFinal from "../components/organisms/RegisterSteps/RegisterStepFinal";
-import RegisterStepOne from "../components/organisms/RegisterSteps/RegisterStepOne";
-import RegisterStepTwo from "../components/organisms/RegisterSteps/RegisterStepTwo";
-import { AuthParamList } from "../navigation/StackNavigationParams";
+import SimpleLayout from "../../components/layouts/SimpleLayout";
+import RegisterStepFinal from "../../components/organisms/RegisterSteps/RegisterStepFinal";
+import RegisterStepOne from "../../components/organisms/RegisterSteps/RegisterStepOne";
+import RegisterStepTwo from "../../components/organisms/RegisterSteps/RegisterStepTwo";
+import { AuthParamList } from "../../navigation/StackNavigationParams";
 
 enum RegisterSteps {
   STEP_ONE = "StepOne",

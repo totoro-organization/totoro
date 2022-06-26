@@ -1,12 +1,12 @@
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import React from "react";
-import Button from "../components/atoms/Button";
-import Spacer from "../components/atoms/Spacer";
-import { Heading } from "../components/atoms/Text";
-import SimpleLayout from "../components/layouts/SimpleLayout";
-import LoginForm from "../components/organisms/LoginForm/LoginForm";
-import { AuthParamList } from "../navigation/StackNavigationParams";
+import Button from "../../components/atoms/Button";
+import Spacer from "../../components/atoms/Spacer";
+import { Heading } from "../../components/atoms/Text";
+import SimpleLayout from "../../components/layouts/SimpleLayout";
+import LoginForm from "../../components/organisms/LoginForm/LoginForm";
+import { AuthParamList } from "../../navigation/StackNavigationParams";
 
 // TODO: Add new layout
 export default function Login() {
