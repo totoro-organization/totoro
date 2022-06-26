@@ -9,6 +9,7 @@ import styled from "styled-components/native";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import type { DateTimePickerEvent } from "@react-native-community/datetimepicker";
 import { useForm } from "react-hook-form";
+import useBoolean from "../../common/hooks/useBoolean";
 
 type DateTimePickerInputProps = {
   label?: string;
@@ -26,18 +27,14 @@ export default function DateTimePickerInput({
   const [selectedDate, setSelectedDate] = useState<Date | DateTimePickerEvent>(
     DEFAULT_DATE
   );
-  const [showCalendar, setShowCalendar] = useState<boolean>(false);
+  const [showCalendar, setShowCalendar] = useBoolean();
 
   const { setValue } = useForm();
-
-  function handleShowCalendar() {
-    setShowCalendar(!showCalendar);
-  }
 
   function getSelectedDate(date: Date | DateTimePickerEvent) {
     setSelectedDate(date);
     setValue(name, date);
-    setShowCalendar(!showCalendar);
+    setShowCalendar.toggle();
   }
 
   return (
@@ -47,7 +44,7 @@ export default function DateTimePickerInput({
       <Spacer axis="vertical" size={0.5} />
 
       <Input
-        onPressIn={handleShowCalendar}
+        onPressIn={setShowCalendar.toggle}
         placeholder={getFormatDateFrenchLocale(DEFAULT_DATE)}
         value={getFormatDateFrenchLocale(selectedDate as Date)}
         editable={false}
@@ -59,7 +56,7 @@ export default function DateTimePickerInput({
           isVisible={showCalendar}
           mode="date"
           onConfirm={(date) => getSelectedDate(date)}
-          onCancel={handleShowCalendar}
+          onCancel={setShowCalendar.toggle}
           onChange={onChange}
         />
       )}
