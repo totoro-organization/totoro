@@ -42,7 +42,7 @@ export default function Register() {
   }
 
   return (
-    <SimpleLayout withBackButton>
+    <SimpleLayout>
       <Heading variant="h1">Inscription&nbsp;👋</Heading>
 
       <Spacer axis="vertical" size={3} />
