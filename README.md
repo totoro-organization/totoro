@@ -17,7 +17,7 @@ Totoro est un service de proximité proposant à ses utilisateurs des missions �
 #### TEST
 
 - Jest (test unitaire)
-- Cypress (test e2e)
+- [Detox](https://github.com/wix/Detox) (test e2e mobile)
 
 ## Documentation
 
