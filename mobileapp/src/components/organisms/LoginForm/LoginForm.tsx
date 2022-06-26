@@ -29,13 +29,15 @@ export default function LoginForm() {
   return (
     <>
       {error?.status && (
-        <Alert type="error">
-          Il semblerait que l'email suivante&nbsp;:{" "}
-          <Text weight="medium">{error?.email}</Text> soit inexistante.
-        </Alert>
-      )}
+        <>
+          <Alert type="error">
+            Il semblerait que l'email suivante&nbsp;:{" "}
+            <Text weight="medium">{error?.email}</Text> soit inexistante.
+          </Alert>
 
-      <Spacer axis="vertical" size={2} />
+          <Spacer axis="vertical" size={2} />
+        </>
+      )}
 
       <InputWrapper>
         <Text>Adresse email</Text>
