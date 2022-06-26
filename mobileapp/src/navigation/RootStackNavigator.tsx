@@ -2,8 +2,8 @@ import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
 import useAuth from "../common/contexts/AuthContext";
 import Explanation from "../screens/Explanation";
-import Login from "../screens/Login";
-import Register from "../screens/Register";
+import Login from "../screens/auth/Login";
+import Register from "../screens/auth/Register";
 import MissionsFilter from "../screens/MissionsFilter";
 import Mission from "../screens/single/Mission";
 import Conversation from "../screens/single/Conversation";
@@ -11,7 +11,7 @@ import Scanner from "../screens/Scanner";
 import Profile from "../screens/single/Profile";
 
 import BottomTabNavigator from "./BottomTabNavigator";
-import ForgotPassword from "../screens/ForgotPassword";
+import ForgotPassword from "../screens/auth/ForgotPassword";
 
 const RootStack = createStackNavigator();
 
