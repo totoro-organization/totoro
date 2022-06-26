@@ -5,10 +5,10 @@ import Explanation from "../screens/Explanation";
 import Login from "../screens/Login";
 import Register from "../screens/Register";
 import MissionsFilter from "../screens/MissionsFilter";
-import Mission from "../screens/uniques/Mission";
-import Conversation from "../screens/uniques/Conversation";
+import Mission from "../screens/single/Mission";
+import Conversation from "../screens/single/Conversation";
 import Scanner from "../screens/Scanner";
-import Profile from "../screens/uniques/Profile";
+import Profile from "../screens/single/Profile";
 
 import BottomTabNavigator from "./BottomTabNavigator";
 import ForgotPassword from "../screens/ForgotPassword";
