@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { TextInputProps } from "react-native";
 import styled from "styled-components/native";
+import useBoolean from "../../common/hooks/useBoolean";
 
 export type InputProps = { error?: boolean } & TextInputProps;
 
@@ -8,15 +9,15 @@ export default function Input({
   error = false,
   ...nativeTextInputProps
 }: InputProps) {
-  const [isActive, setIsActive] = useState<boolean>(false);
+  const [isActive, setIsActive] = useBoolean();
 
   return (
     <StyledInput
       $error={error}
       $active={isActive}
       {...nativeTextInputProps}
-      onFocus={() => setIsActive(true)}
-      onBlur={() => setIsActive(false)}
+      onFocus={setIsActive.on}
+      onBlur={setIsActive.off}
     />
   );
 }

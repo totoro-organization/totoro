@@ -6,19 +6,20 @@ import { Text } from "../atoms/Text";
 import getLocaleCurrencyNotation from "../../common/utils/getLocaleCurrencyNotation";
 import Spacer from "../atoms/Spacer";
 import Token from "../../assets/icons/Token";
+import useBoolean from "../../common/hooks/useBoolean";
 
 /* TODO: Add real user data. */
 const FAKE_DATA_TOKEN = 9328;
 
 export default function TokenButton() {
-  const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [modalOpen, setModalOpen] = useBoolean();
   return (
     <View>
       <Button
         size="sm"
         color="primary"
         variant="outline"
-        handlePress={() => setModalOpen(!modalOpen)}
+        handlePress={setModalOpen.toggle}
       >
         {getLocaleCurrencyNotation(FAKE_DATA_TOKEN)}
 
@@ -27,7 +28,7 @@ export default function TokenButton() {
         <Token color="primary" /> */}
       </Button>
 
-      <Modal visible={modalOpen} onCloseModal={() => setModalOpen(!modalOpen)}>
+      <Modal visible={modalOpen} onCloseModal={setModalOpen.toggle}>
         <Token color="primary" size={48} />
 
         <Spacer axis="vertical" size={1.5} />

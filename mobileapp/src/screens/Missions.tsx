@@ -3,6 +3,7 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import React, { useState } from "react";
 import Filter from "../assets/icons/Filter";
 import Sort from "../assets/icons/Sort";
+import useBoolean from "../common/hooks/useBoolean";
 import Box from "../components/atoms/Box";
 import Button from "../components/atoms/Button";
 import Modal from "../components/atoms/Modal";
@@ -15,7 +16,7 @@ import { AppParamList } from "../navigation/StackNavigationParams";
 
 export default function Missions() {
   const navigation = useNavigation<StackNavigationProp<AppParamList>>();
-  const [showSortByModal, setShowSortByModal] = useState<boolean>(false);
+  const [showSortByModal, setShowSortByModal] = useBoolean();
 
   return (
     <GlobalLayout>
@@ -24,7 +25,7 @@ export default function Missions() {
           Icon={<Sort />}
           color="grey"
           variant="outline"
-          handlePress={() => setShowSortByModal(true)}
+          handlePress={setShowSortByModal.on}
         >
           Trier
         </Button>
@@ -43,7 +44,7 @@ export default function Missions() {
 
       {showSortByModal && (
         // TODO: Add this code on dedicated organism file.
-        <Modal center={false} onCloseModal={() => setShowSortByModal(false)}>
+        <Modal center={false} onCloseModal={setShowSortByModal.off}>
           <Text weight="semiBold">Trier par</Text>
         </Modal>
       )}
