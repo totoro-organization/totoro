@@ -43,11 +43,9 @@ export default function RegisterStepTwo({ nextStep }: RegisterStepTwoProps) {
       username: createUsername(data.firstname, data.lastname),
     };
 
-    console.log("ui");
-    console.log(data);
-    // await AsyncStorage.mergeItem?.("userFormData", JSON.stringify(body));
+    await AsyncStorage.mergeItem?.("userFormData", JSON.stringify(body));
 
-    // nextStep();
+    nextStep();
   }
 
   return (
@@ -103,13 +101,13 @@ export default function RegisterStepTwo({ nextStep }: RegisterStepTwoProps) {
       </InputWrapper>
 
       <Controller
-        name="lastname"
+        name="birthday"
         control={control}
         render={({ field: { onChange } }) => (
           <DateTimePickerInput
             label="Date de naissance"
-            onChange={(value: any) => onChange(value)}
-            name="lastname"
+            onChange={(value: Date) => onChange(value)}
+            name="birthday"
           />
         )}
       />
