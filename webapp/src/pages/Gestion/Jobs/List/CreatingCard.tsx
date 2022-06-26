@@ -22,8 +22,12 @@ import InputAdornment from '@mui/material/InputAdornment';
 import { useState } from 'react';
 import DateFnsProvider from 'src/components/DateFnsProvider';
 import { DatePicker } from '@mui/x-date-pickers';
+import { createJob } from 'src/services/job.service';
+import { useNavigate } from 'react-router-dom';
 
 function CreatingCard() {
+
+    const navigate = useNavigate();
 
     const jobOptions = [
         'Environnement', 'Culture', 'Communication','Enseignement','Social'
@@ -31,24 +35,30 @@ function CreatingCard() {
 
     const [date, setDate] = useState<Date | null>(null);
 
-
-/*     const { createmission, loading } = createdMission();
-
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
 
-        createmission({
+        createJob ({
             missionstype: data.get('missiontype'),
             tag: data.get('tag'),
             tokens: data.get('tokens'),
             startingdate: date,
-        }) */
+        }) 
+
+        .then (response => {
+            if('error' in response) {
+                console.log('error');
+                return
+            }
+            navigate('/missions')
+        })
+    }
 
     return (
         <Container maxWidth="md">
-            <Card component="form">
-                <Box p={4}>
+            <Card>
+                <Box p={4} component="form" onSubmit={handleSubmit}>
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
                             <TextField
