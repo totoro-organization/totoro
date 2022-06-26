@@ -30,6 +30,7 @@ const FirstLogin = Loader(lazy(() => import('src/pages/SignIn/FirstLogin')));
 // Dashboards 
 
 const Crypto = Loader(lazy(() => import('src/pages/Dashboards/Crypto')));
+const Resume = Loader(lazy(() => import('src/pages/Dashboards/Resume')));
 
 // Applications
 
@@ -116,11 +117,15 @@ const routes: PartialRouteObject[] = [
             children: [
               {
                 path: '/',
-                element: <Navigate to="/dashboards/statistiques" replace />
+                element: <Navigate to="/dashboards/resume" replace />
               },
               {
                 path: 'statistiques',
                 element: <Crypto />
+              },
+              {
+                path: 'resume',
+                element: <Resume />
               }
             ]
           },
@@ -148,29 +153,15 @@ const routes: PartialRouteObject[] = [
             children: [
               {
                 path: '/',
-                element: <Navigate to="mission/liste" replace />
+                element: <Navigate to="missions" replace />
               },
               {
-                path: 'litiges',
-                element: <Litigation />,
+                path: '/missions',
+                element: <ListingJobs />
               },
               {
-                path: 'mission',
-                element: <ListingJobs />,
-                children: [
-                  {
-                    path: '/',
-                    element: <Navigate to="liste" replace />
-                  },
-                  {
-                    path: 'liste',
-                    element: <ListingJobs />
-                  },
-                  {
-                    path: 'creation',
-                    element: <CreationJob />
-                  }
-                ] 
+                path: '/missions/creation',
+                element: <CreationJob />
               }
             ]
           }

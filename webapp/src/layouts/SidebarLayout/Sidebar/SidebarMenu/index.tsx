@@ -210,6 +210,7 @@ function SidebarMenu() {
           })}
         </MenuWrapper>
       ))}
+      <p>test</p>
     </>
   );
 }
