@@ -1,8 +1,6 @@
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
-import styled from "styled-components/native";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Text } from "../../atoms/Text";
 import Button from "../../atoms/Button";
 
 import { registerStepOneSchema } from "./registerValidationSchemas";
@@ -38,84 +36,73 @@ export default function RegisterStepOne({ nextStep }: RegisterStepOneProps) {
 
   return (
     <>
-      <InputWrapper>
-        <Text>Adresse e-mail</Text>
+      <Controller
+        name="email"
+        control={control}
+        render={({
+          field: { onChange, onBlur, value },
+          fieldState: { error },
+        }) => (
+          <InputGroup
+            keyboardType="email-address"
+            textContentType="emailAddress"
+            label="Adresse email"
+            onBlur={onBlur}
+            onChangeText={onChange}
+            value={value}
+            placeholder="marie-zoli@gmail.com"
+            error={error}
+          />
+        )}
+      />
 
-        <Spacer axis="vertical" size={0.5} />
+      <Spacer axis="vertical" size={1} />
 
-        <Controller
-          name="email"
-          control={control}
-          render={({
-            field: { onChange, onBlur, value },
-            fieldState: { error },
-          }) => (
-            <InputGroup
-              keyboardType="email-address"
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-              placeholder="marie-zoli@gmail.com"
-              error={error}
-            />
-          )}
-        />
-      </InputWrapper>
+      <Controller
+        name="password"
+        control={control}
+        render={({
+          field: { onChange, onBlur, value },
+          fieldState: { error },
+        }) => (
+          <InputGroup
+            secureTextEntry
+            label="Mot de passe"
+            textContentType="password"
+            onBlur={onBlur}
+            onChangeText={onChange}
+            value={value}
+            placeholder="********"
+            error={error}
+          />
+        )}
+      />
 
-      <InputWrapper>
-        <Text>Mot de passe</Text>
+      <Spacer axis="vertical" size={1} />
 
-        <Spacer axis="vertical" size={0.5} />
+      <Controller
+        name="confirmPassword"
+        control={control}
+        render={({
+          field: { onChange, onBlur, value },
+          fieldState: { error },
+        }) => (
+          <InputGroup
+            secureTextEntry
+            textContentType="password"
+            label="Confirmation du mot de passe"
+            onBlur={onBlur}
+            onChangeText={onChange}
+            value={value}
+            placeholder="********"
+            error={error}
+          />
+        )}
+      />
 
-        <Controller
-          name="password"
-          control={control}
-          render={({
-            field: { onChange, onBlur, value },
-            fieldState: { error },
-          }) => (
-            <InputGroup
-              secureTextEntry
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-              placeholder="********"
-              error={error}
-            />
-          )}
-        />
-      </InputWrapper>
-
-      <InputWrapper>
-        <Text>Confirmation du mot de passe</Text>
-
-        <Spacer axis="vertical" size={0.5} />
-
-        <Controller
-          name="confirmPassword"
-          control={control}
-          render={({
-            field: { onChange, onBlur, value },
-            fieldState: { error },
-          }) => (
-            <InputGroup
-              secureTextEntry
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-              placeholder="********"
-              error={error}
-            />
-          )}
-        />
-      </InputWrapper>
+      <Spacer axis="vertical" size={3} />
 
       <Button onPress={handleSubmit(onSubmit)}>Suivant</Button>
     </>
   );
 }
-
-const InputWrapper = styled.View`
-  display: flex;
-  margin-bottom: ${({ theme }) => theme.spacing[4]};
-`;

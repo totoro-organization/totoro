@@ -6,16 +6,12 @@ import {
   registerStepFinalSchema,
 } from "./registerValidationSchemas";
 
-import { Text } from "../../atoms/Text";
 import Button from "../../atoms/Button";
-import styled from "styled-components/native";
 import InputGroup from "../../molecules/InputGroup";
 import Spacer from "../../atoms/Spacer";
 import Alert from "../../atoms/Alert";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import fetchRegisterUser, {
-  LoginUser,
-} from "../../../common/api/requests/auth/fetchRegisterUser";
+import fetchRegisterUser from "../../../common/api/requests/auth/fetchRegisterUser";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { StackParamList } from "../../../navigation/StackNavigationParams";
@@ -74,35 +70,27 @@ export default function RegisterStepFinal() {
 
       <Spacer axis="vertical" size={3} />
 
-      <InputWrapper>
-        <Text>Adresse de résidence</Text>
+      <Controller
+        name="address"
+        control={control}
+        render={({
+          field: { onChange, onBlur, value },
+          fieldState: { error },
+        }) => (
+          <InputGroup
+            label="Adresse de résidence"
+            onBlur={onBlur}
+            onChangeText={onChange}
+            value={value}
+            placeholder="8 rue de la résidence des ploucs"
+            error={error}
+          />
+        )}
+      />
 
-        <Spacer axis="vertical" size={0.5} />
+      <Spacer axis="vertical" size={3} />
 
-        <Controller
-          name="address"
-          control={control}
-          render={({
-            field: { onChange, onBlur, value },
-            fieldState: { error },
-          }) => (
-            <InputGroup
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-              placeholder="8 rue de la résidence des ploucs"
-              error={error}
-            />
-          )}
-        />
-
-        <Button handlePress={handleSubmit(onSubmit)}>Je m'inscris !</Button>
-      </InputWrapper>
+      <Button handlePress={handleSubmit(onSubmit)}>Je m'inscris !</Button>
     </>
   );
 }
-
-const InputWrapper = styled.View`
-  display: flex;
-  margin-bottom: ${({ theme }) => theme.spacing[4]};
-`;
