@@ -16,7 +16,7 @@ export default function Login() {
     <SimpleLayout>
       <Heading variant="h1">Connexion&nbsp;👋</Heading>
 
-      <Spacer axis="vertical" size={3} />
+      <Spacer axis="vertical" size={2} />
 
       <LoginForm />
 
@@ -25,9 +25,9 @@ export default function Login() {
       <Button
         variant="ghost"
         color="black"
-        onPress={() => navigation.navigate("S'inscrire")}
+        onPress={() => navigation.navigate("Mot de passe oublié")}
       >
-        Pas de compte ? S’inscrire
+        J'ai oublié mont mot de passe
       </Button>
     </SimpleLayout>
   );

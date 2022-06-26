@@ -11,6 +11,7 @@ import Scanner from "../screens/Scanner";
 import Profile from "../screens/uniques/Profile";
 
 import BottomTabNavigator from "./BottomTabNavigator";
+import ForgotPassword from "../screens/ForgotPassword";
 
 const RootStack = createStackNavigator();
 
@@ -31,6 +32,10 @@ export default function RootStackNavigator() {
         <>
           <RootStack.Screen name="Explications" component={Explanation} />
           <RootStack.Screen name="Se connecter" component={Login} />
+          <RootStack.Screen
+            name="Mot de passe oublié"
+            component={ForgotPassword}
+          />
           <RootStack.Screen name="S'inscrire" component={Register} />
         </>
       )}
