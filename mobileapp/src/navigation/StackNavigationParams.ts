@@ -1,4 +1,4 @@
-import type { ProfileType } from "../screens/uniques/Profile";
+import type { ProfileType } from "../screens/single/Profile";
 
 export type StackParamList = {
   Mission: { id: number };
