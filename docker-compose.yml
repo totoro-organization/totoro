@@ -57,10 +57,9 @@ services:
       - api
     env_file: ./.env
     build:
-      context: .
-      dockerfile: Dockerfile
+      context: ./landingpage
     ports:
-      - $LANDINGPAGE_LOCAL_PORT:$LANDINGPAGE_DOCKER_PORT
+      - $LANDINGPAGE_LOCAL_PORT:$GNIX_PORT
     volumes:
       - ./landingpage:/var/www/html
     networks:
@@ -73,9 +72,9 @@ services:
     build:
       context: ./webapp
       args:
-        - WA_APP_API_BASE_URL=$CLIENT_API_BASE_URL
+        - API_BASE_URL=$API_BASE_URL
     ports:
-      - $WEBAPP_LOCAL_PORT:$WEBAPP_DOCKER_PORT
+      - $WEBAPP_LOCAL_PORT:$GNIX_PORT
     networks:
       - frontend
 
@@ -86,9 +85,9 @@ services:
     build:
       context: ./backoffice
       args:
-        - BO_APP_API_BASE_URL=$CLIENT_API_BASE_URL
+        - API_BASE_URL=$API_BASE_URL
     ports:
-      - $BACKOFFICE_LOCAL_PORT:$BACKOFFICE_DOCKER_PORT
+      - $BACKOFFICE_LOCAL_PORT:$GNIX_PORT
     networks:
       - frontend
 
@@ -99,7 +98,7 @@ services:
     build:
       context: ./mobileapp
       args:
-        - APPM_APP_API_BASE_URL=$CLIENT_API_BASE_URL
+        - API_BASE_URL=$API_BASE_URL
     ports:
       - $REACTNATIVE_LOCAL_PORT:$REACTNATIVE_DOCKER_PORT
       - $REACTNATIVE_LOCAL_PORT2:$REACTNATIVE_DOCKER_PORT2

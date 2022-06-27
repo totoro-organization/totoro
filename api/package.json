@@ -5,7 +5,7 @@
 	"main": "index.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"start": "sequelize db:migrate && nodemon -L --inspect=0.0.0.0 --exec babel-node --config-file ./babel.config.json index.js"
+		"start": "sequelize db:migrate && node ./swagger/index.js && nodemon -L --inspect=0.0.0.0 --exec babel-node --config-file ./babel.config.json index.js"
 	},
 	"author": "",
 	"license": "ISC",

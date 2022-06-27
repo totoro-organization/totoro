@@ -11,15 +11,15 @@ const partners = require("./partners");
 const users = require("./users");
 
 module.exports = {
-	admins,
-	applications,
-	auth,
-	commons,
-	discounts,
-	favorites,
-	jobs,
-	litigations,
-	organizations,
-	partners,
-	users,
+	...admins,
+	...applications,
+	...auth,
+	...commons,
+	...discounts,
+	...favorites,
+	...jobs,
+	...litigations,
+	...organizations,
+	...partners,
+	...users,
 };
