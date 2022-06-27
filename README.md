@@ -28,7 +28,9 @@ Totoro est un service de proximité proposant à ses utilisateurs des missions �
 
 `create a .env file and copy the config`
 
-`sh build.sh` ou `.\build.sh`
+- Build all project : `sh build.sh` ou `.\build.sh`
+- Build only the api service to work locally : `sh build.sh --build-local` or `.\build.sh --build-local`
+- Build only the services of your choice : `sh build.sh --projects="image1;image2;image3..."` or `.\build.sh --projects="image1;image2;image3..."`
 
 ## ip infra
 
@@ -39,3 +41,8 @@ Totoro est un service de proximité proposant à ses utilisateurs des missions �
 - mobileapp : http://127.0.0.1:19002
 - webapp : http://localhost:3000
 - phpmyadmin: http://localhost:8888
+
+
+## deployment
+
+`sh deploy.sh "folder app" "your message commit"`

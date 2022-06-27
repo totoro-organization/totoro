@@ -249,7 +249,6 @@ module.exports = {
     return {
       type: "object",
       properties,
-      required: [],
       example
     }
   }

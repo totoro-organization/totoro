@@ -34,6 +34,7 @@ module.exports = {
     putRole: function(){
       return objPut(module.exports.postRole);
     },
+    /*
     getCommon: function(){
       return {
         type: "object",
@@ -50,8 +51,9 @@ module.exports = {
       }
     },
     getAllCommons: function(){
-      return arrayType(module.exports.getCommon);
-    },  
+      return arrayType(module.exports.getCommon());
+    }, 
+    */ 
     postCommon: function(){
       return {
         type: "object",
