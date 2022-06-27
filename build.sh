@@ -10,7 +10,7 @@ do
             ;;
         --projects) 
             req="docker-compose up db phpmyadmin api"
-            IFS=";" read -a images <<< "$val";
+            IFS=";" read -a images <<< "$val"
             for i in "${images[@]}"
             do
                 req+=" $i"

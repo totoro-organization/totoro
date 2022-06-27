@@ -52,19 +52,6 @@ services:
       - backend
       - frontend
 
-  landingpage:
-    depends_on:
-      - api
-    env_file: ./.env
-    build:
-      context: ./landingpage
-    ports:
-      - $LANDINGPAGE_LOCAL_PORT:$GNIX_PORT
-    volumes:
-      - ./landingpage:/var/www/html
-    networks:
-      - frontend
-
   webapp:
     depends_on:
       - api
@@ -100,14 +87,14 @@ services:
       args:
         - API_BASE_URL=$API_BASE_URL
     ports:
-      - $REACTNATIVE_LOCAL_PORT:$REACTNATIVE_DOCKER_PORT
-      - $REACTNATIVE_LOCAL_PORT2:$REACTNATIVE_DOCKER_PORT2
-      - $REACTNATIVE_LOCAL_PORT3:$REACTNATIVE_DOCKER_PORT3
+      - $MOBILEAPP_LOCAL_PORT:$MOBILEAPP_DOCKER_PORT
+      - $MOBILEAPP_LOCAL_PORT2:$MOBILEAPP_DOCKER_PORT2
+      - $MOBILEAPP_LOCAL_PORT3:$MOBILEAPP_DOCKER_PORT3
     volumes:
       - ./mobileapp:/usr/src/app_mobile
       - /usr/src/app_mobile/node_modules
     environment:
-      - EXPO_DEVTOOLS_LISTEN_ADDRESS=$REACT_NATIVE_PUBLIC_IP
+      - EXPO_DEVTOOLS_LISTEN_ADDRESS=$MOBILE_APP_PUBLIC_IP
       - REACT_NATIVE_PACKAGER_HOSTNAME=127.0.0.1
     networks:
       - frontend
