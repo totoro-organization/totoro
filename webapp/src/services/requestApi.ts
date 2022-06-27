@@ -7,7 +7,7 @@ export type ErrorResponse = {
 
 export async function requestAxios(method: string, uri: string, data = null) {
     const token = localStorage.getItem('token') ?? null;
-  
+    
     try {
         if (!uri) {
             console.error('fonction de api requiere uri')
