@@ -23,27 +23,32 @@ const ProtectedRoute = (props: RouteProps) => {
   return <Route {...props} />;
 };
 
-/* Pages */
+/* APPLICATIONS */
 
+  /* Organization */
+
+  // Gestion
+  const CreationJob = Loader(lazy(() => import('src/applications/Organization/Gestion/Jobs/Create')));
+  const ListingJobs = Loader(lazy(() => import('src/applications/Organization/Gestion/Jobs/List'))); 
+
+  // Dashboards
+  const Crypto = Loader(lazy(() => import('src/applications/Organization/Dashboards/Crypto')));
+  const Resume = Loader(lazy(() => import('src/applications/Organization/Dashboards/Resume')));
+
+  /* Partner */
+
+/* PAGES */
+
+// Authentication
+const SignIn = Loader(lazy(() => import('src/pages/SignIn')));
+const SignUp = Loader(lazy(() => import('src/pages/SignUp')));
 const FirstLogin = Loader(lazy(() => import('src/pages/SignIn/FirstLogin')));
 
-// Dashboards 
-
-const Crypto = Loader(lazy(() => import('src/pages/Dashboards/Crypto')));
-const Resume = Loader(lazy(() => import('src/pages/Dashboards/Resume')));
-
-// Applications
-
+// User
 const UserProfile = Loader(lazy(() => import('src/pages/User/profile')));
 const UserSettings = Loader(lazy(() => import('src/pages/User/settings')));
 
-//Gestion
-const Litigation = Loader(lazy(() => import('src/pages/Gestion/Litigation')));
-const CreationJob = Loader(lazy(() => import('src/pages/Gestion/Jobs/Create')));
-const ListingJobs = Loader(lazy(() => import('src/pages/Gestion/Jobs/List'))); 
-
 // Status
-
 const Status404 = Loader(lazy(() => import('src/pages/Status/Status404')));
 const Status500 = Loader(lazy(() => import('src/pages/Status/Status500')));
 const StatusComingSoon = Loader(
@@ -53,10 +58,7 @@ const StatusMaintenance = Loader(
   lazy(() => import('src/pages/Status/Maintenance'))
 );
 
-/* Authentication */
 
-const SignIn = Loader(lazy(() => import('src/pages/SignIn')));
-const SignUp = Loader(lazy(() => import('src/pages/SignUp')));
 
 const routes: PartialRouteObject[] = [
   {
