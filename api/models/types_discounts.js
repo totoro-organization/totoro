@@ -25,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
 
   Types_discounts.init(
     {
-      name: DataTypes.STRING,
+      label: DataTypes.STRING,
       type: DataTypes.STRING,
     },
     {

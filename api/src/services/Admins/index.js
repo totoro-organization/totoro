@@ -61,10 +61,6 @@ exports.router = (function () {
 		data.id = req.userData.id;
 		controller.resetPassword(res, data);
 	}]);
-	
-	adminRouter.get("/logs/getAll",[passportAdmin, async function (req, res) {
-		controller.getLogs(res, req.query);
-	}]);
 
   adminRouter.get("/logs/getAll", [
     passportAdmin,

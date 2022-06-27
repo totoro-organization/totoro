@@ -215,14 +215,14 @@ exports.router = (function () {
     const data = req.body;
     const statusData = await getRow(res, Status, { label: label_status.actived });
     data.status_id = statusData.id
-    const condition = { name: data.name };
+    const condition = { label: data.label };
     controller.create(null, res, Types_discounts, data, condition);
   }]);
 
   commonsRouter.put("/types-discounts/:id", [passportAdmin, async function (req, res) {
     const id = req.params.id;
     const data = req.body;
-    const condition = { name: data.name };
+    const condition = { label: data.label };
     controller.update(res, Types_discounts, id, data, condition);
   }]);
 

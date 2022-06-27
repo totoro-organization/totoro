@@ -19,6 +19,11 @@ interface AuthContextType {
   logout: () => void;
 }
 
+interface App {
+  type: string;
+  id: string;
+}
+
 const AuthContext = createContext<AuthContextType>({} as AuthContextType);
 
 // Export the provider as we need to wrap the entire app with it
@@ -28,6 +33,7 @@ export function AuthProvider({
   children: ReactNode;
 }): JSX.Element {
   const [user, setUser] = useState<User>();
+  const [currentApp, setCurrentApp] = useState<any>();
   const [error, setError] = useState<any>();
   const [loading, setLoading] = useState<boolean>(false);
   const [loadingInitial, setLoadingInitial] = useState<boolean>(true);
@@ -53,15 +59,42 @@ export function AuthProvider({
     sessionsService
       .getCurrentUser()
       .then((response) => {
-        if('error' in response) {
+        if ('error' in response) {
           setError(response.error);
           return;
-        } 
+        }
         setUser(response);
       })
       .catch((_error) => {})
       .finally(() => setLoadingInitial(false));
   }, []);
+
+  useEffect(() => {
+    if (user) {
+      console.log(1);
+      
+      let app = JSON.parse(localStorage.getItem('currentApp')) ?? null;
+      let app_id;
+      console.log(app);
+      
+      if (!app) {
+        console.log(2);
+        if (user.memberships.length) {
+          app_id = JSON.stringify(user.memberships[0].organization.id);
+          app = { type: 'organization', id: app_id };
+        } else if (user.partners.length) {
+          console.log(3);
+          app_id = JSON.stringify(user.memberships[0].organization.id);
+          app = { type: 'partner', id: app_id };
+        } else {
+          console.log(4);
+          navigate('/first-login');
+          return
+        }
+      } 
+      handleCurrentApp(app)
+    }
+  }, [user]);
 
   // Flags the component loading state and posts the login
   // data to the server.
@@ -83,42 +116,41 @@ export function AuthProvider({
         }
         localStorage.setItem('token', response.token);
       })
-      .then(_ => {
-        sessionsService
-      .getCurrentUser()
-      .then((response) => {
-          if('error' in response) {
+      .then((_) => {
+        sessionsService.getCurrentUser().then((response) => {
+          if ('error' in response) {
             setError(response.error);
             return;
-          } 
-          setUser(response);
-          if(!user.memberships.organization) {
-             navigate("/first-login")
           }
-          navigate('/');
-        })
+          setUser(response);
+        });
       })
       .catch((error) => setError(error))
       .finally(() => setLoading(false));
   }
 
   function signup(params: sessionsService.SignUpType) {
-    sessionsService.signup(params)
-    .then(response => {
+    sessionsService.signup(params).then((response) => {
       if ('error' in response) {
         setError(response.error);
         return;
       }
       navigate('/login');
-    })
+    });
   }
-
 
   // Call the logout endpoint and then remove the user
   // from the state.
   function logout() {
-      localStorage.removeItem('token');
-      setUser(undefined);
+    localStorage.removeItem('token');
+    localStorage.removeItem('currentApp');
+    setUser(undefined);
+  }
+
+  function handleCurrentApp(app: App) {
+    setCurrentApp(app);
+    localStorage.setItem('currentApp', JSON.stringify(app));
+    navigate('/');
   }
   // Make the provider update only when it should.
   // We only want to force re-renders if the user,
@@ -136,7 +168,8 @@ export function AuthProvider({
       error,
       login,
       signup,
-      logout
+      logout,
+      handleCurrentApp
     }),
     [user, loading, error]
   );

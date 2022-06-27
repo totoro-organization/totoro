@@ -1,5 +1,5 @@
 import React from "react";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, FormProvider, useForm } from "react-hook-form";
 import styled from "styled-components/native";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Text } from "../../atoms/Text";
@@ -15,6 +15,8 @@ import Alert from "../../atoms/Alert";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import createUsername from "../../../common/utils/createUsername";
 
+import DateTimePickerInput from "../../molecules/DateTimePickerInput";
+
 const ALERT_CONTENT_LASTNAME =
   "Votre nom de famille nous permet de récupérer seulement votre initial. Cette information ne sera pas accessible par l’ensemble des utilisateurs.";
 
@@ -27,7 +29,6 @@ export default function RegisterStepTwo({ nextStep }: RegisterStepTwoProps) {
     defaultValues: {
       firstname: "",
       lastname: "",
-      birthday: "",
     },
     mode: "onBlur",
     resolver: yupResolver(registerStepTwoSchema),
@@ -53,80 +54,61 @@ export default function RegisterStepTwo({ nextStep }: RegisterStepTwoProps) {
 
       <Spacer axis="vertical" size={3} />
 
-      <InputWrapper>
-        <Text>Prénom</Text>
+      <Controller
+        name="firstname"
+        control={control}
+        render={({
+          field: { onChange, onBlur, value },
+          fieldState: { error },
+        }) => (
+          <InputGroup
+            label="Prénom"
+            onBlur={onBlur}
+            onChangeText={onChange}
+            value={value}
+            placeholder="Marie"
+            error={error}
+          />
+        )}
+      />
 
-        <Spacer axis="vertical" size={0.5} />
+      <Spacer axis="vertical" size={1} />
 
-        <Controller
-          name="firstname"
-          control={control}
-          render={({
-            field: { onChange, onBlur, value },
-            fieldState: { error },
-          }) => (
-            <InputGroup
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-              placeholder="Marie"
-              error={error}
-            />
-          )}
-        />
-      </InputWrapper>
+      <Controller
+        name="lastname"
+        control={control}
+        render={({
+          field: { onChange, onBlur, value },
+          fieldState: { error },
+        }) => (
+          <InputGroup
+            label="Nom"
+            onBlur={onBlur}
+            onChangeText={onChange}
+            value={value}
+            placeholder="Zoli"
+            error={error}
+          />
+        )}
+      />
 
-      <InputWrapper>
-        <Text>Nom</Text>
+      <Spacer axis="vertical" size={1} />
 
-        <Spacer axis="vertical" size={0.5} />
+      <Controller
+        name="birthday"
+        control={control}
+        render={({ field: { onChange } }) => (
+          <DateTimePickerInput
+            label="Date de naissance"
+            onChange={(value: Date) => onChange(value)}
+            name="birthday"
+          />
+        )}
+      />
 
-        <Controller
-          name="lastname"
-          control={control}
-          render={({
-            field: { onChange, onBlur, value },
-            fieldState: { error },
-          }) => (
-            <InputGroup
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-              placeholder="Zoli"
-              error={error}
-            />
-          )}
-        />
-      </InputWrapper>
-
-      <InputWrapper>
-        <Text>Date de naissance</Text>
-
-        <Spacer axis="vertical" size={0.5} />
-
-        <Controller
-          name="birthday"
-          control={control}
-          render={({
-            field: { onChange, onBlur, value },
-            fieldState: { error },
-          }) => (
-            <InputGroup
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-              error={error}
-            />
-          )}
-        />
-      </InputWrapper>
+      <Spacer axis="vertical" size={3} />
 
       <Button handlePress={handleSubmit(onSubmit)}>Suivant</Button>
     </>
   );
 }
-
-const InputWrapper = styled.View`
-  display: flex;
-  margin-bottom: ${({ theme }) => theme.spacing[4]};
-`;

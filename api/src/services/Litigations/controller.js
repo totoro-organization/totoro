@@ -1,7 +1,3 @@
-const models = require("./../../../models");
-const asyncLib = require("async");
-const { Op } = require("sequelize");
-const { error, success } = require("utils/common/messages.json");
 const { label_status } = require("utils/enum.json");
 const {
   Users,
@@ -15,7 +11,7 @@ const {
   Associations_users,
 } = require("./../../../models");
 const commonsController = require("services/Commons/controller");
-const { getRow, getField, updateField, getPaginationQueries } = require("utils/common/thenCatch");
+const { getRow, getPaginationQueries } = require("utils/common/thenCatch");
 
 const excludeCommon = { exclude: ["id", "createdAt", "updatedAt"] }
 

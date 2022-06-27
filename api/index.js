@@ -6,7 +6,7 @@ const { Applications } = require("./models");
 const { loadFixtures } = require("./fixtures");
 const server = express();
 const swaggerTools = require("swagger-tools");
-let swaggerDoc = require("./swagger.json");
+const swaggerDoc = require("./swagger.json");
 
 const {
   jobs,
@@ -15,7 +15,10 @@ const {
   authentications,
   commons,
   applications,
-  litigations
+  litigations,
+  organizations,
+  partners,
+  discounts
 } = require("services");
 
 const PORT = process.env.API_DOCKER_PORT || 8080;
@@ -70,9 +73,12 @@ server.use("/api/users", [accessApi, users]);
 server.use("/api/admins", [accessApi, admins]);
 server.use("/api/jobs", [accessApi, jobs]);
 server.use('/api/litigations', [accessApi, litigations]);
-// server.use('/api/messagings', [accessApi, messagings]);
-// server.use('/api/transactions', [accessApi, transactions]);
-// server.use('/api/subscriptions', [accessApi, subscriptions]);
+server.use('/api/organizations', [accessApi, organizations]);
+server.use('/api/partners', [accessApi, partners]);
+server.use('/api/discounts', [accessApi, discounts]);
+// server.use('/messagings', [accessApi, messagings]);
+// server.use('/transactions', [accessApi, transactions]);
+// server.use('/subscriptions', [accessApi, subscriptions]);
 
 const options = {
 	controllers: "./src/services",

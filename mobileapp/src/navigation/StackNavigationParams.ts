@@ -1,7 +1,7 @@
-import type { ProfileType } from "../screens/uniques/Profile";
+import type { ProfileType } from "../screens/single/Profile";
 
 export type StackParamList = {
-  Mission: { id: number };
+  Job: { id: number };
   Conversation: { id: number };
   Profile: { id: number; type: ProfileType };
 } & AuthParamList &
@@ -11,16 +11,18 @@ export type AuthParamList = {
   Explications: undefined;
   "Se connecter": undefined;
   "S'inscrire": undefined;
+  "Mot de passe oublié": undefined;
+  "Changement mot de passe": undefined;
 };
 
 export type AppParamList = {
-  // TODO: Add filters param for Missions page.
-  Missions: undefined;
+  // TODO: Add filters param for Jobs page.
+  Jobs: undefined;
   Boutique: undefined;
   Profil: undefined;
   Messagerie: undefined;
   Scanner: undefined;
-  MissionsFilter: undefined;
+  JobsFilter: undefined;
 };
 
 export type BottomTabParamList = {

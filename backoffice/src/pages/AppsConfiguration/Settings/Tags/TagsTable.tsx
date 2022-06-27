@@ -106,7 +106,7 @@ const TagsTable: FC<TableProps<Tag>> = ({
                       gutterBottom
                       noWrap
                     >
-                      {tag.createdAt} 
+                      {format(new Date(tag.createdAt), "dd/MM/yyyy HH:mm:ss")} 
                     </Typography>
                   </TableCell>
                   <TableCell align="right">

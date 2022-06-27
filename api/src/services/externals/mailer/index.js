@@ -1,32 +1,39 @@
+
 const nodemailer = require("nodemailer");
+const hbs = require('nodemailer-express-handlebars');
 
-module.exports = {
-  transporter: function (host, user, pass) {
-    return nodemailer.createTransport({
-      host,
-      port: 587,
-      secure: false,
-      requireTLS: true,
-      auth: {
-        user,
-        pass,
-      },
-      tls: {
-        chiffers: "SSLv3",
-      },
-    });
-  },
+//Etape 1
+let transporter = nodemailer.createTransport({
+    service:'gmail',
+    auth: {
+      user:"test.api.mailer@gmail.com",
+      pass:"lhqbdxcjtkddetbh"
+    }
+}); 
 
-  mailOptions: function (from, to, subject, html) {
-    return { from, to, subject, html };
+transporter.use('compile',hbs({
+  viewEngine: {
+      extname: '.handlebars',
+      layoutsDir: 'mail/',
+      defaultLayout : 'index',
   },
+  viewPath: 'mail/'
+}))
 
-  sendMail: function (service, from, password, to, subject, html) {
-    const transporter = module.exports.transporter(service, from, password);
-    const mailOptions = module.exports.mailOptions(from, to, subject, html);
-    transporter.sendMail(mailOptions, (error, info) => {
-      if (error) console.log("Email error: " + error);
-      else console.log("Email sent : " + info.response);
-    });
-  },
-};
+//Etape 2
+let mailOptions = {
+  from:'test.api.mailer@gmail.com',
+  to: 'test.api.mailer@gmail.com',
+  subject:'Testing and testing',
+  text:'ça marche!',
+  template:'index'
+}; 
+
+//Etape 3 
+transporter.sendMail(mailOptions, function(err, data) {
+  if (err) {
+      console.log('Error', err);
+  } else {
+      console.log('Email envoye!!!');
+  }
+});

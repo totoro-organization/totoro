@@ -23,25 +23,32 @@ const ProtectedRoute = (props: RouteProps) => {
   return <Route {...props} />;
 };
 
-/* Pages */
+/* APPLICATIONS */
 
+  /* Organization */
+
+  // Gestion
+  const CreationJob = Loader(lazy(() => import('src/applications/Organization/Gestion/Jobs/Create')));
+  const ListingJobs = Loader(lazy(() => import('src/applications/Organization/Gestion/Jobs/List'))); 
+
+  // Dashboards
+  const Crypto = Loader(lazy(() => import('src/applications/Organization/Dashboards/Crypto')));
+  const Resume = Loader(lazy(() => import('src/applications/Organization/Dashboards/Resume')));
+
+  /* Partner */
+
+/* PAGES */
+
+// Authentication
+const SignIn = Loader(lazy(() => import('src/pages/SignIn')));
+const SignUp = Loader(lazy(() => import('src/pages/SignUp')));
 const FirstLogin = Loader(lazy(() => import('src/pages/SignIn/FirstLogin')));
 
-// Dashboards 
-
-const Crypto = Loader(lazy(() => import('src/pages/Dashboards/Crypto')));
-
-// Applications
-
+// User
 const UserProfile = Loader(lazy(() => import('src/pages/User/profile')));
 const UserSettings = Loader(lazy(() => import('src/pages/User/settings')));
 
-//Gestion
-
-const Missions = Loader(lazy(() => import('src/pages/Gestion/missions/indexedDB')));
-
 // Status
-
 const Status404 = Loader(lazy(() => import('src/pages/Status/Status404')));
 const Status500 = Loader(lazy(() => import('src/pages/Status/Status500')));
 const StatusComingSoon = Loader(
@@ -51,10 +58,7 @@ const StatusMaintenance = Loader(
   lazy(() => import('src/pages/Status/Maintenance'))
 );
 
-/* Authentication */
 
-const SignIn = Loader(lazy(() => import('src/pages/SignIn')));
-const SignUp = Loader(lazy(() => import('src/pages/SignUp')));
 
 const routes: PartialRouteObject[] = [
   {
@@ -115,11 +119,15 @@ const routes: PartialRouteObject[] = [
             children: [
               {
                 path: '/',
-                element: <Navigate to="/dashboards/statistiques" replace />
+                element: <Navigate to="/dashboards/resume" replace />
               },
               {
                 path: 'statistiques',
                 element: <Crypto />
+              },
+              {
+                path: 'resume',
+                element: <Resume />
               }
             ]
           },
@@ -150,8 +158,12 @@ const routes: PartialRouteObject[] = [
                 element: <Navigate to="missions" replace />
               },
               {
-                path: 'missions',
-                element: <Missions />
+                path: '/missions',
+                element: <ListingJobs />
+              },
+              {
+                path: '/missions/creation',
+                element: <CreationJob />
               }
             ]
           }

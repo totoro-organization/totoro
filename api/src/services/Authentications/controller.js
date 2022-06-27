@@ -2,17 +2,13 @@ const asyncLib = require("async");
 const bcrypt = require("bcryptjs");
 const { Op } = require("sequelize");
 const { generateToken } = require("utils/session");
-const { getNearestTerminal } = require("utils/localisation");
+//const { getNearestTerminal } = require("utils/localisation");
 const { getRow, getField } = require("utils/common/thenCatch");
 const { error, success } = require("utils/common/messages.json");
 const { Terminals, Status } = require("../../../models");
-const mailer = require("services/externals/mailer");
+//Send mail
 const { from, subject, host } = require("utils/common/mail.json");
 const commonsController = require("services/Commons/controller");
-const {
-  mail: { signup },
-} = require("./../../../html");
-const { sign } = require("jsonwebtoken");
 const { label_status } = require("utils/enum.json");
 const excludeCommon = { exclude: ["id", "createdAt", "updatedAt"] };
 
@@ -66,18 +62,7 @@ module.exports = {
 
         const token = generateToken(user, isAdmin);
         if (user.status.label !== label_status.actived) {
-          if (
-            !mailer.sendMail(
-              host.gmail,
-              from.email,
-              from.password,
-              user.email,
-              subject.signup,
-              signup(user, token)
-            )
-          ) {
-            console.log("mail inexistant");
-          }
+          //Send mail
 
           return res
             .status(success.user_inactive.status)
@@ -118,18 +103,7 @@ module.exports = {
         delete result.dataValues.password;
 
         const token = generateToken(result);
-        if (
-          !mailer.sendMail(
-            host.gmail,
-            from.email,
-            from.password,
-            result.email,
-            subject.signup,
-            signup(result, token)
-          )
-        ) {
-          console.log("mail inexistant");
-        }
+        //Send mail
 
         return res
           .status(success.create.status)
@@ -159,18 +133,7 @@ module.exports = {
       function (found) {
         if (found) {
           const token = generateToken(found);
-          if (
-            !mailer.sendMail(
-              host.gmail,
-              from.email,
-              from.password,
-              found.email,
-              subject.signup,
-              signup(found, token)
-            )
-          ) {
-            console.log("mail inexistant");
-          }
+          //Send mail
 
           return res
             .status(success.get.status)

@@ -6,10 +6,7 @@ const commonsController = require("../Commons/controller");
 const { error, success } = require("utils/common/messages.json");
 const { label_status } = require("utils/enum.json");
 const { getRow, getField, updateField, getPaginationQueries } = require("utils/common/thenCatch");
-const mailer = require("services/externals/mailer");
-const {
-  mail: { signup },
-} = require("./../../../html");
+//Send mail
 const { from, subject, host } = require("utils/common/mail.json");
 const { Status, Roles, Logs, Admins } = require("../../../models");
 
@@ -59,16 +56,7 @@ module.exports = {
 
 		commonsController.create(function(result){
 				const token = generateToken(result, true);
-				if(!mailer.sendMail(
-					host.gmail,
-					from.email,
-					from.password,
-					result.email,
-					subject.signup,
-					signup(result, token)
-				)){
-					console.log("mail inexistant");
-				}
+				//Send mail
 
 				return res
 					.status(success.create.status)

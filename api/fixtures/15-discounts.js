@@ -5,7 +5,7 @@ module.exports = [
     data: {
       name: "40",
       type: {
-        name: "Pourcentage",
+        label: "Pourcentage",
       },
       partner: {
         name: "Le Moulin de la Croix Nivert",
