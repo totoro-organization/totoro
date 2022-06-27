@@ -1,3 +1,5 @@
+const pagination = require('./../generique/pagination')
+
 module.exports = {
     "/api/admins": {
         get: {
@@ -28,7 +30,8 @@ module.exports = {
                 "Administrateur",
                 "Comptable"
               ]
-            }
+            },
+            ...pagination
           ],
           responses: {
             200: {
@@ -272,7 +275,8 @@ module.exports = {
               in: "query",
               type: "string",
               required: false
-            }
+            },
+            ...pagination
           ],
           responses: {
             200: {
@@ -347,7 +351,8 @@ module.exports = {
               in: "query",
               type: "string",
               required: false
-            }
+            },
+            ...pagination
           ],
           responses: {
             200: {

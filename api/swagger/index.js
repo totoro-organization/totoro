@@ -1,34 +1,27 @@
 const fs = require('fs');
+var onlyPath = process.cwd();
+const controllers = require("./controllers");
+const dtoModels = require("./dto.models")
 
-const {
-  admins,
-	applications,
-	auth,
-	commons,
-	discounts,
-	favorites,
-	jobs,
-	litigations,
-	organizations,
-	partners,
-	users,
-} = require("./controllers");
+function getObject(params) {
+  let object = {}
+  for (const key in params) {
+    if (Object.hasOwnProperty.call(params, key)) {
+      const element = params[key];
+      for (const keyFunc in element) {
+        if (Object.hasOwnProperty.call(element, keyFunc)) {
+          const func = element[keyFunc];
+          object[keyFunc] = func()
+        }
+      }
 
-const {
-  adminsModel,
-	applicationsModel,
-	authModel,
-	commonsModel,
-	discountsModel,
-	favoritesModel,
-	jobsModel,
-	litigationsModel,
-	organizationsModel,
-	partnersModel,
-	usersModel,
-} = require("./dto.models")
+    }
+  }
 
-const jsonString = {
+  return object;
+}
+
+const swagger = {
   swagger: "2.0",
   info: {
     title: "API",
@@ -79,19 +72,7 @@ const jsonString = {
       name: "Commons"
     }
   ],
-  paths: {
-     ...admins,
-     ...applications,
-     ...auth,
-     ...commons,
-     ...discounts,
-     ...favorites,
-     ...jobs,
-     ...litigations,
-     ...organizations,
-     ...partners,
-     ...users,
-  },
+  paths: controllers,
   definitions: {
     Error: {
       required: [
@@ -119,18 +100,14 @@ const jsonString = {
         }
       }
     },
-    ...adminsModel,
-    ...applicationsModel,
-    ...authModel,
-    ...commonsModel,
-    ...discountsModel,
-    ...favoritesModel,
-    ...jobsModel,
-    ...litigationsModel,
-    ...organizationsModel,
-    ...partnersModel,
-    ...usersModel, 
+    ...getObject(dtoModels), 
   }
 }
-
-fs.writeFileSync('./../swagger.json', jsonString);
+const jsonString = JSON.stringify(swagger, null, 2);
+try {
+  fs.writeFileSync(onlyPath+'/swagger.json', jsonString);
+  console.log('Swagger uploaded');
+} catch(err) {
+  // An error occurred
+  console.error(err);
+}
