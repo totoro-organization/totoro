@@ -6,6 +6,7 @@ import TableWrapper from 'src/components/TableWrapper';
 import { styled } from '@mui/system';
 import { StatusEnum } from 'src/models/status';
 import { CommonsUriEnum } from 'src/models/commons';
+import { TableEnum } from 'src/models';
 
 
 const WrapperBox = styled(Box)(
@@ -35,7 +36,7 @@ function Roles() {
     <WrapperBox>
       {
         loading || !roles ? <SuspenseLoader/> : 
-        <TableWrapper addButton url={CommonsUriEnum.roles} statusOptions={statusOptions} defaultItems={roles?.data}>
+        <TableWrapper table={TableEnum.roles} addButton url={CommonsUriEnum.roles} statusOptions={statusOptions} defaultItems={roles?.data}>
             {/* @ts-ignore */} 
             <RolesTable />
         </TableWrapper>

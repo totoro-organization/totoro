@@ -4,7 +4,7 @@ import React from "react";
 import { Message, Missions, Shop, User } from "../assets/icons";
 import { Text } from "../components/atoms/Text";
 import MessagingScreen from "../screens/Messaging";
-import MissionsScreen from "../screens/Missions";
+import JobsScreen from "../screens/Jobs";
 import MyAccountScreen from "../screens/MyAccount";
 import ShopScreen from "../screens/Shop";
 import theme from "../theme/theme";
@@ -19,7 +19,7 @@ export type NavigationPagesProps = {
 const NAVIGATION_PAGES: NavigationPagesProps[] = [
   {
     title: "Missions",
-    component: MissionsScreen,
+    component: JobsScreen,
     Icon: Missions,
   },
   {

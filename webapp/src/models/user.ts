@@ -1,4 +1,5 @@
 import { Organization } from "./organization";
+import { Partner } from "./partner";
 import { Role } from "./role";
 import { Status, StatusEnum } from "./status";
 
@@ -29,7 +30,8 @@ export interface User {
         role: Role,
         createdAt: string,
         updatedAt: string
-    },
+    }[],
+    partners: Partner[],
     createdAt: string,
     updatedAt: string
 }

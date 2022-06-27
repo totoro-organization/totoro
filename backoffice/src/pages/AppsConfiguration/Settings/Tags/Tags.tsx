@@ -7,6 +7,7 @@ import { styled } from '@mui/system';
 import { StatusEnum } from 'src/models/status';
 
 import { CommonsUriEnum } from 'src/models/commons';
+import { TableEnum } from 'src/models';
 
 
 const WrapperBox = styled(Box)(
@@ -36,7 +37,7 @@ function Tags() {
     <WrapperBox>
       {
         loading || !tags ? <SuspenseLoader/> : 
-        <TableWrapper addButton url={CommonsUriEnum.tags} statusOptions={statusOptions} defaultItems={tags?.data}>
+        <TableWrapper table={TableEnum.tags} addButton url={CommonsUriEnum.tags} statusOptions={statusOptions} defaultItems={tags?.data}>
           {/* @ts-ignore */}
             <TagsTable  />
         </TableWrapper>

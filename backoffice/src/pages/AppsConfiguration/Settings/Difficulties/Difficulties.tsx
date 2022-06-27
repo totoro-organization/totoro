@@ -4,7 +4,7 @@ import { useApi } from 'src/hooks/useApi';
 import SuspenseLoader from 'src/components/SuspenseLoader';
 import TableWrapper from 'src/components/TableWrapper';
 import { styled } from '@mui/system';
-import { StatusEnum } from 'src/models';
+import { StatusEnum, TableEnum } from 'src/models';
 import { CommonsUriEnum } from 'src/models/commons';
 
 
@@ -35,7 +35,7 @@ function Difficultys() {
     <WrapperBox>
       {
         loading || !difficulties ? <SuspenseLoader/> : 
-        <TableWrapper addButton url={CommonsUriEnum.difficulties} statusOptions={statusOptions} defaultItems={difficulties?.data}>
+        <TableWrapper table={TableEnum.difficulties} addButton url={CommonsUriEnum.difficulties} statusOptions={statusOptions} defaultItems={difficulties?.data}>
           {/* @ts-ignore */}
             <DifficultiesTable />
         </TableWrapper>
