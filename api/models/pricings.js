@@ -30,6 +30,10 @@ module.exports = (sequelize, DataTypes) => {
 			duration: DataTypes.INTEGER,
 			nb_account: DataTypes.INTEGER,
 			nb_jobs_by_month: DataTypes.INTEGER,
+			nb_attachments_by_publish: DataTypes.INTEGER,
+			social_publish: DataTypes.BOOLEAN,
+			flux_activities: DataTypes.BOOLEAN,
+			certifate: DataTypes.BOOLEAN,
 		},
 		{
 			sequelize,

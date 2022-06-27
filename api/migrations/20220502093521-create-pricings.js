@@ -33,12 +33,28 @@ module.exports = {
 				type: Sequelize.INTEGER,
 			},
 			nb_account: {
-				allowNull: false,
+				allowNull: true,
 				type: Sequelize.INTEGER,
 			},
 			nb_jobs_by_month: {
+				allowNull: true,
+				type: Sequelize.INTEGER,
+			},
+			nb_attachments_by_publish: {
 				allowNull: false,
 				type: Sequelize.INTEGER,
+			},
+			social_publish: {
+				allowNull: false,
+				type: Sequelize.BOOLEAN,
+			},
+			flux_activities: {
+				allowNull: false,
+				type: Sequelize.BOOLEAN,
+			},
+			certifate: {
+				allowNull: false,
+				type: Sequelize.BOOLEAN,
 			},
 			createdAt: {
 				allowNull: false,
