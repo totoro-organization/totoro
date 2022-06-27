@@ -18,6 +18,7 @@ exports.router = (function () {
 		passport,
 		async function (req, res) {
 			const data = req.body;
+			data["user_id"] = req.userData.id;
 			controller.createOrganization(res, data);
 		},
 	]);
@@ -55,6 +56,22 @@ exports.router = (function () {
 		async function (req, res) {
 			const id = req.params.id;
 			controller.getFavorites(res, id, req.query);
+		},
+	]);
+
+	organizationsRouter.get("/:id/current-subscription", [
+		passport,
+		async function (req, res) {
+			const id = req.params.id;
+			controller.getCurrentSubscription(res, id);
+		},
+	]);
+
+	organizationsRouter.get("/:id/subscriptions", [
+		passport,
+		async function (req, res) {
+			const id = req.params.id;
+			controller.getSubscriptions(res, id, req.query);
 		},
 	]);
 

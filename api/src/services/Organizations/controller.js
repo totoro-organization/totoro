@@ -1,11 +1,8 @@
 
 const axios = require("axios");
-const { success } = require("utils/common/messages.json");
-const { label_status } = require("utils/enum.json");
-const mailer = require("services/externals/mailer");
-const {
-  mail: { signup },
-} = require("./../../../html");
+const { success, error } = require("utils/common/messages.json");
+const { label_status, role } = require("utils/enum.json");
+//Send mail
 const { from, subject, host } = require("utils/common/mail.json");
 const { generateToken } = require("utils/session");
 const {
@@ -19,10 +16,11 @@ const {
 	Associations_users,
 	Attachment_jobs,
 	Tag_jobs,
-	Tags
+	Tags,
+	Subscriptions,
+	Pricings,
 } = require("./../../../models");
 const commonsController = require("services/Commons/controller");
-
 const { getRow, getPaginationQueries } = require("utils/common/thenCatch");
 
 const excludeCommon = { exclude: ["id", "createdAt", "updatedAt"] };
@@ -71,7 +69,7 @@ module.exports = {
 	},
 
 	createOrganization: async function (res, data) {
-		const { email, phone, type, typeValue } = data
+		const { email, phone, type, typeValue, user_id } = data
 		const request = await axios.get(`https://entreprise.data.gouv.fr/api/sirene/v1/${type}/${typeValue}`);
 		if(request.data.message){
 			return res
@@ -98,22 +96,25 @@ module.exports = {
 
 		const condition = { email, phone, siren: data.siren, siret: data.siret };
 
-		commonsController.create(function(result){
-				const token = generateToken(result, true);
-				if(!mailer.sendMail(
-					host.gmail,
-					from.email,
-					from.password,
-					result.email,
-					subject.signup,
-					signup(result, token)
-				)){
-					console.log("mail inexistant");
-				}
+		commonsController.create( async function(resultCreateAssociation){
+			const statusDataAdd = await getRow(res, Status, { label: label_status.actived });
+			const roleDataAdd = await getRow(res, Roles, { label: role.administrator });
+
+			const dataAdd = {
+				user_id, 
+				assos_id: resultCreateAssociation.id, 
+				status_id: statusDataAdd.id,
+				role_id: roleDataAdd.id
+			}
+			commonsController.create(function(resultAddToAssos){
+				const token = generateToken(resultCreateAssociation, true);
+				//Send mail
 
 				return res
 					.status(success.create.status)
 					.json({ entity: Associations.name, message: success.create.message });
+			},
+			res, Associations_users, dataAdd, null, null, true);
 		},
 		res, Associations, data, condition, null, true);
 	},
@@ -261,4 +262,76 @@ module.exports = {
 		let condition = {user_id, assos_id}
 		commonsController.create(null, res, Associations_users, data, condition);
 	},
+
+	getSubscriptions: async function (res, id, queries) {
+		const {status, size, page} = queries
+
+		let condition = {assos_id: id};
+		if (status) {
+			let statusData = await getRow(res, Status, { label: status });
+			condition.status_id = statusData.id;
+		}
+		const excludeSub = ["pricing_id", "assos_id", "status_id"];
+		const includeSub = [
+			{
+				model: Associations,
+				as: "organization",
+				attributes: { exclude: ["status_id"] },
+				include: [{ model: Status, as: "status", attributes: excludeCommon }],
+			},
+			{ 
+				model: Pricings, 
+				as: "pricing", 
+				attributes: excludeCommon,
+				include: [{ model: Status, as: "status", attributes: excludeCommon }],
+			},
+			{ model: Status, as: "status", attributes: excludeCommon },
+		];
+		
+		let pagination = getPaginationQueries(size,page)
+
+		commonsController.getAll(
+			res,
+			Subscriptions,
+			condition,
+			excludeSub,
+			includeSub,
+			pagination
+		);
+	},
+
+	getCurrentSubscription: function (res, id) {
+		const current = 1;
+		const excludeSub = ["pricing_id", "status_id"];
+		const includeSub = [
+			{ 
+				model: Pricings, 
+				as: "pricing", 
+				attributes: excludeCommon,
+				include: [{ model: Status, as: "status", attributes: excludeCommon }],
+			},
+			{ model: Status, as: "status", attributes: excludeCommon },
+		];
+
+		const params = {
+			include : includeSub,
+			attributes: { exclude: excludeSub },
+			where: { id, current }
+		};
+
+		Subscriptions
+		.findOne(params)
+		.then((result) => {
+			if (result) return res.status(200).json(result);
+			else
+			return res
+				.status(error.not_found.status)
+				.json({ message: error.not_found.message });
+		})
+		.catch((err) => {
+			return res
+			.status(error.syntax_error.status)
+			.json({ message: error.syntax_error.message });
+		});
+	}
 };

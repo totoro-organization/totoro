@@ -29,6 +29,7 @@ module.exports = (sequelize, DataTypes) => {
 	Subscriptions.init(
 		{
 			expirate: DataTypes.DATE,
+			current: DataTypes.BOOLEAN,
 			isExpired: {
 				type: DataTypes.VIRTUAL,
 				get() {
