@@ -15,8 +15,8 @@ export default function Token({ color = "grey", size = 16 }: TokenProps) {
         stroke={theme.colors[color][500]}
         strokeWidth="1.5"
         strokeMiterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <Path
         d="M7.1002 7.10001C4.4002 9.80001 4.4002 14.3 7.1002 17"

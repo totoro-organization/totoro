@@ -9,7 +9,7 @@ import { AppParamList } from "../navigation/StackNavigationParams";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { TouchableOpacity } from "react-native";
 
-export default function MissionsFilter() {
+export default function JobsFilter() {
   const navigation = useNavigation<StackNavigationProp<AppParamList>>();
 
   return (
@@ -25,7 +25,7 @@ export default function MissionsFilter() {
       <Spacer axis="vertical" size={2} />
 
       <CategorySection>
-        <CategoryTitle>Type de mission</CategoryTitle>
+        <CategoryTitle>TyJob</CategoryTitle>
 
         <Spacer axis="vertical" size={0.5} />
 
@@ -54,7 +54,7 @@ export default function MissionsFilter() {
             "Ajouter les filtres dans le param avec la redirection vers la page mission"
           );
 
-          navigation.navigate("Missions");
+          navigation.navigate("Jobs");
         }}
       >
         Appliquer les filtres

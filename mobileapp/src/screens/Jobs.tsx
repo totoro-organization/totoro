@@ -11,10 +11,10 @@ import Spacer from "../components/atoms/Spacer";
 import { Text } from "../components/atoms/Text";
 
 import GlobalLayout from "../components/layouts/GlobalLayout";
-import MissionsList from "../components/organisms/MissionsList";
+import JobsList from "../components/organisms/JobsList";
 import { AppParamList } from "../navigation/StackNavigationParams";
 
-export default function Missions() {
+export default function Jobs() {
   const navigation = useNavigation<StackNavigationProp<AppParamList>>();
   const [showSortByModal, setShowSortByModal] = useBoolean();
 
@@ -36,7 +36,7 @@ export default function Missions() {
           Icon={<Filter />}
           color="grey"
           variant="outline"
-          handlePress={() => navigation.navigate("MissionsFilter")}
+          handlePress={() => navigation.navigate("JobsFilter")}
         >
           Filtrer
         </Button>
@@ -48,7 +48,10 @@ export default function Missions() {
           <Text weight="semiBold">Trier par</Text>
         </Modal>
       )}
-      <MissionsList />
+
+      <Spacer axis="vertical" size={2} />
+
+      <JobsList />
     </GlobalLayout>
   );
 }

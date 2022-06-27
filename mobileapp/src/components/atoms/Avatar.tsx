@@ -7,12 +7,19 @@ import { Text } from "./Text";
 type AvatarProps = {
   src?: string;
   user?: User;
+  size?: "md" | "sm";
+  type?: "user" | "organization";
 };
 
 // FIXME: Remove src prop and replace by user.avatar
-export default function Avatar({ user, src }: AvatarProps) {
+export default function Avatar({
+  user,
+  src,
+  size = "md",
+  type = "user",
+}: AvatarProps) {
   return (
-    <Container>
+    <Container size={size} type={type}>
       {user && (
         <Text color="white" size="xl">
           {getNameInitials(`${user.firstname} ${user.lastname}`)}
@@ -20,26 +27,26 @@ export default function Avatar({ user, src }: AvatarProps) {
       )}
 
       {src && (
-        <StyledImage
-          imageStyle={{ borderRadius: 400 }}
-          source={{ uri: src }}
-          resizeMode="cover"
-        />
+        <StyledImage size={size} source={{ uri: src }} resizeMode="contain" />
       )}
     </Container>
   );
 }
 
-const Container = styled.View`
-  width: 80px;
-  height: 80px;
-  background-color: ${({ theme }) => theme.colors.grey[900]};
-  border-radius: 400px;
+const Container = styled.View<Pick<AvatarProps, "size" | "type" | "src">>`
+  width: ${({ size }) => (size === "md" ? "80px" : "24px")};
+  height: ${({ size }) => (size === "md" ? "80px" : "24px")};
+  background-color: ${({ theme, src }) =>
+    src ? "white" : theme.colors.grey[900]};
+  border-radius: ${({ type, theme }) =>
+    type === "user" ? "400px" : theme.border.radius.md};
   align-items: center;
   justify-content: center;
 `;
 
-const StyledImage = styled.ImageBackground`
-  width: 80px;
-  height: 80px;
+const StyledImage = styled.ImageBackground<Pick<AvatarProps, "size">>`
+  width: ${({ size }) => (size === "md" ? "80px" : "24px")};
+  height: ${({ size }) => (size === "md" ? "80px" : "24px")};
+  overflow: hidden;
+  background-color: white;
 `;
