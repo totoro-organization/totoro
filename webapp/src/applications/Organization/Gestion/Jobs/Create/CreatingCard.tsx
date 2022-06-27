@@ -19,15 +19,21 @@ import {
     Autocomplete
 } from '@mui/material';
 import InputAdornment from '@mui/material/InputAdornment';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import DateFnsProvider from 'src/components/DateFnsProvider';
 import { DatePicker } from '@mui/x-date-pickers';
 import { createJob } from 'src/services/job.service';
 import { useNavigate } from 'react-router-dom';
+import { TagsContext } from 'src/contexts/TagsContext';
 
 function CreatingCard() {
 
     const navigate = useNavigate();
+
+    const tags = useContext(TagsContext);
+
+    console.log(tags);
+    
 
     const jobOptions = [
         'Environnement', 'Culture', 'Communication','Enseignement','Social'

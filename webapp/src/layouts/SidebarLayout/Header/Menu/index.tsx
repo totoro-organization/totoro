@@ -82,28 +82,6 @@ function HeaderMenu() {
           <ListItem
             classes={{ root: 'MuiListItem-indicators' }}
             button
-            component={NavLink}
-            to="/components/buttons"
-          >
-            <ListItemText
-              primaryTypographyProps={{ noWrap: true }}
-              primary="Buttons"
-            />
-          </ListItem>
-          <ListItem
-            classes={{ root: 'MuiListItem-indicators' }}
-            button
-            component={NavLink}
-            to="/components/forms"
-          >
-            <ListItemText
-              primaryTypographyProps={{ noWrap: true }}
-              primary="Forms"
-            />
-          </ListItem>
-          <ListItem
-            classes={{ root: 'MuiListItem-indicators' }}
-            button
             ref={ref}
             onClick={handleOpen}
           >
@@ -119,6 +97,17 @@ function HeaderMenu() {
               }
             />
           </ListItem>
+          {/* <ListItem
+            classes={{ root: 'MuiListItem-indicators' }}
+            button
+            component={NavLink}
+            to="/components/buttons"
+          >
+            <ListItemText
+              primaryTypographyProps={{ noWrap: true }}
+              primary="Buttons"
+            />
+          </ListItem> */}
         </List>
       </ListWrapper>
       <Menu anchorEl={ref.current} onClose={handleClose} open={isOpen}>

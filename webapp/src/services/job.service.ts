@@ -1,5 +1,3 @@
-import axios from "axios";
-import { User } from "../models/user";
 import { ErrorResponse, requestAxios } from "./requestApi";
 
 const JOB_BASE_URL = '/jobs';
