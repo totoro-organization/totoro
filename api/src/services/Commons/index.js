@@ -17,7 +17,8 @@ const {
 
 const models = require("./../../../models");
 const {
-  getRow
+  getRow,
+  getPaginationQueries
 } = require("utils/common/thenCatch");
 const { path } = require("utils/enum.json");
 const { upload } = require("utils/storage");
@@ -34,15 +35,19 @@ exports.router = (function () {
 
   // Roles
   commonsRouter.get("/roles", async function (req, res) {
+    const {status,type,page,size} = req.query
     let condition = {};
-		if(req.query && req.query.status){
-			let statusData = await getRow(res, Status, { label: req.query.status });
+		if(status){
+			let statusData = await getRow(res, Status, { label: status });
 			condition.status_id=statusData.id
 		}
-    if(req.query && req.query.type){
-			condition.type= {[Op.like]: '%'+req.query.type+'%'}
+    if(type){
+			condition.type= {[Op.like]: '%'+type+'%'}
 		}
-    controller.getAll(res, Roles, condition, exclude, include);
+
+    let pagination = getPaginationQueries(size,page)
+
+    controller.getAll(res, Roles, condition, exclude, include, pagination);
   });
 
   commonsRouter.get("/roles/:id", async function (req, res) {
@@ -72,12 +77,16 @@ exports.router = (function () {
 
   // Pricings
   commonsRouter.get("/pricings", async function (req, res) {
+    const {status,page,size} = req.query
     let condition = {};
-		if(req.query && req.query.status){
-			let statusData = await getRow(res, Status, { label: req.query.status });
+		if(status){
+			let statusData = await getRow(res, Status, { label: status });
 			condition.status_id=statusData.id
 		}
-    controller.getAll(res, Pricings, condition, exclude, include);
+
+    let pagination = getPaginationQueries(size,page)
+
+    controller.getAll(res, Pricings, condition, exclude, include, pagination);
   });
 
   commonsRouter.get("/pricings/:id", async function (req, res) {
@@ -107,15 +116,19 @@ exports.router = (function () {
 
   // Tags
   commonsRouter.get("/tags", async function (req, res) {
+    const {status,type,page,size} = req.query
     let condition = {};
-		if(req.query && req.query.status){
-			let statusData = await getRow(res, Status, { label: req.query.status });
+		if(status){
+			let statusData = await getRow(res, Status, { label: status });
 			condition.status_id=statusData.id
 		}
-    if(req.query && req.query.type){
-			condition.type= {[Op.like]: '%'+req.query.type+'%'}
+    if(type){
+			condition.type= {[Op.like]: '%'+type+'%'}
 		}
-    controller.getAll(res, Tags, condition, exclude, include);
+
+    let pagination = getPaginationQueries(size,page)
+
+    controller.getAll(res, Tags, condition, exclude, include, pagination);
   });
 
   commonsRouter.get("/tags/:id", async function (req, res) {
@@ -145,7 +158,11 @@ exports.router = (function () {
 
   // Status
   commonsRouter.get("/status", async function (req, res) {
-    controller.getAll(res, Status);
+    const {page, size} = req.query
+
+    let pagination = getPaginationQueries(size,page)
+
+    controller.getAll(res, Status, null, null, null, pagination);
   });
 
   commonsRouter.get("/status/:id", async function (req, res) {
@@ -177,12 +194,16 @@ exports.router = (function () {
 
   // types-discounts
   commonsRouter.get("/types-discounts", async function (req, res) {
+    const {status, page, size} = req.query
     let condition = {};
-		if(req.query && req.query.status){
-			let statusData = await getRow(res, Status, { label: req.query.status });
+		if(status){
+			let statusData = await getRow(res, Status, { label: status });
 			condition.status_id=statusData.id
 		}
-    controller.getAll(res, Types_discounts, condition, exclude, include);
+
+    let pagination = getPaginationQueries(size,page)
+
+    controller.getAll(res, Types_discounts, condition, exclude, include, pagination);
   });
 
   commonsRouter.get("/types-discounts/:id", async function (req, res) {
@@ -212,12 +233,16 @@ exports.router = (function () {
 
   // Litigation_objects
   commonsRouter.get("/litigation-objects", async function (req, res) {
+    const {status, page, size} = req.query
     let condition = {};
-		if(req.query && req.query.status){
-			let statusData = await getRow(res, Status, { label: req.query.status });
+		if(status){
+			let statusData = await getRow(res, Status, { label: status });
 			condition.status_id=statusData.id
 		}
-    controller.getAll(res, Litigation_objects, condition, exclude, include);
+
+    let pagination = getPaginationQueries(size,page)
+
+    controller.getAll(res, Litigation_objects, condition, exclude, include, pagination);
   });
 
   commonsRouter.get("/litigation-objects/:id", async function (req, res) {
@@ -247,12 +272,16 @@ exports.router = (function () {
 
   // Difficulties
   commonsRouter.get("/difficulties", async function (req, res) {
+    const {status,page,size} = req.query
     let condition = {};
-		if(req.query && req.query.status){
-			let statusData = await getRow(res, Status, { label: req.query.status });
+		if(status){
+			let statusData = await getRow(res, Status, { label: status });
 			condition.status_id=statusData.id
 		}
-    controller.getAll(res, Difficulties, Difficulties, exclude, include);
+    
+    let pagination = getPaginationQueries(size,page)
+
+    controller.getAll(res, Difficulties, Difficulties, exclude, include, pagination);
   });
 
   commonsRouter.get("/difficulties/:id", async function (req, res) {
@@ -282,13 +311,17 @@ exports.router = (function () {
 
   // Appearances
   commonsRouter.get("/appearances", async function (req, res) {
+    const {status,page,size} = req.query
     let condition = {};
-		if(req.query && req.query.status){
-			let statusData = await getRow(res, Status, { label: req.query.status });
+		if(status){
+			let statusData = await getRow(res, Status, { label: status });
 			condition.status_id=statusData.id
 		}
     const includeAp = [...include, { model: Applications, as: "application", attributes: excludeCommon}]
-    controller.getAll(res, Appearances, condition, ['status_id','app_id'], includeAp);
+
+    let pagination = getPaginationQueries(size,page)
+
+    controller.getAll(res, Appearances, condition, ['status_id','app_id'], includeAp, pagination);
   });
 
   commonsRouter.get("/appearances/:id", async function (req, res) {

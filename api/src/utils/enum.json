@@ -12,7 +12,9 @@
     "freezed": "freezed",
     "canceled": "canceled",
     "pending": "pending",
-    "coming": "coming"
+    "coming": "coming",
+    "requested": "requested",
+    "invited": "invited"
   },
   "search": {
     "siren": "siren",

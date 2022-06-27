@@ -107,7 +107,7 @@ const LitigationObjectsTable: FC<TableProps<LitigationObject>> = ({
                       gutterBottom
                       noWrap
                     >
-                      {litigationObject.createdAt} 
+                      {format(new Date(litigationObject.createdAt), "dd/MM/yyyy HH:mm:ss")} 
                     </Typography>
                   </TableCell>
                   <TableCell align="right">

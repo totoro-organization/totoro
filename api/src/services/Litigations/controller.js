@@ -1,7 +1,3 @@
-const models = require("./../../../models");
-const asyncLib = require("async");
-const { Op } = require("sequelize");
-const { error, success } = require("utils/common/messages.json");
 const { label_status } = require("utils/enum.json");
 const {
   Users,
@@ -10,12 +6,12 @@ const {
   Associations,
   Litigations,
   Litigation_objects,
-  Ads,
+  Jobs,
   Groups,
   Associations_users,
 } = require("./../../../models");
 const commonsController = require("services/Commons/controller");
-const { getRow, getField, updateField } = require("utils/common/thenCatch");
+const { getRow, getPaginationQueries } = require("utils/common/thenCatch");
 
 const excludeCommon = { exclude: ["id", "createdAt", "updatedAt"] }
 
@@ -31,10 +27,10 @@ const include = [
   {
     model: Groups,
     as: "mission",
-    attributes: { exclude: ["status_id", "user_id", "ads_id"] },
+    attributes: { exclude: ["status_id", "user_id", "jobs_id"] },
     include: [
       {
-        model: Ads, 
+        model: Jobs, 
         as: "job", 
         attributes: {exclude:['assos_user_id', 'status_id', 'difficulty_id']}, 
         include:[
@@ -43,7 +39,7 @@ const include = [
           {
             model: Associations_users,
             as: "author",
-            attributes: { exclude: ["id", "user_id", "assos_id", "role_id","status_id"] },
+            exclude: ["user_id", "assos_id", "role_id", "status_id","createdAt","updatedAt"],
             include: [
               {
                 model: Associations,
@@ -67,29 +63,36 @@ const include = [
 ];
 
 module.exports = {
-  getLitigations: async function (res, queries = null) {
+  getLitigations: async function (res, queries) {
+    const {status, size, page} = queries;
     let condition = {};
-    if (queries && queries.status) {
-      let statusData = await getRow(res, Status, { label: queries.status });
+    if (status) {
+      let statusData = await getRow(res, Status, { label: status });
       condition.status_id = statusData.id;
     }
 
     condition = Object.keys(condition).length === 0 ? null : condition;
-    commonsController.getAll(res, Litigations, condition, exclude, include);
+
+    let pagination = getPaginationQueries(size,page)
+
+    commonsController.getAll(res, Litigations, condition, exclude, include, pagination);
   },
   getLitigation: function (res, id) {
     commonsController.getOne(res, Litigations, id, exclude, include);
   },
   createLitigation: async function (res, data) {
-    const group = await getRow(res, Litigation_objects, { id: data.litigation_object_id });
-    const object = await getRow(res, Groups, { id: data.group_id });
+    const {group_id, litigation_object_id} = data
+    const group = await getRow(res, Litigation_objects, { id: litigation_object_id });
+    const object = await getRow(res, Groups, { id: group_id });
 		const statusData = await getRow(res, Status, { label: label_status.opened });
 
     data.status_id = statusData.id;
     commonsController.create(null, res, Litigations, data);
   },
   updateLitigation: async function (res, id, data) {
-    const status = await getRow(res, Status, { id: data.status_id });
+    const {status_id} = data
+
+    const status = await getRow(res, Status, { id: status_id });
 		commonsController.update(res, Users, id, data);
   },
   deleteLitigation: function (res, id) {
