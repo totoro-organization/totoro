@@ -16,7 +16,7 @@ module.exports = {
           key: 'id'
         }
       },
-      name: {
+      label: {
         allowNull: false,
         type: Sequelize.STRING
       },

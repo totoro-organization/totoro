@@ -6,7 +6,7 @@ const { Applications } = require("./models");
 const { loadFixtures } = require("./fixtures");
 const server = express();
 const swaggerTools = require("swagger-tools");
-let swaggerDoc = require("./swagger.json");
+const swaggerDoc = require("./swagger.json");
 
 const {
   jobs,
