@@ -119,7 +119,7 @@ const DifficultiesTable: FC<TableProps<JobDifficulty>> = ({
                       gutterBottom
                       noWrap
                     >
-                      {difficulty.createdAt} 
+                      {format(new Date(difficulty.createdAt), "dd/MM/yyyy HH:mm:ss")} 
                     </Typography>
                   </TableCell>
                   <TableCell align="right">

@@ -1,20 +1,38 @@
 const express = require("express");
-const { passport } = require("utils/session");
+const { passport, passportAdmin } = require("utils/session");
 const controller = require("services/Commons/controller");
-const { Applications } = require("./../../../models");
-const { passportAdmin } = require("utils/session");
+const { Applications, Status } = require("./../../../models");
+const {
+  getRow,
+  getPaginationQueries
+} = require("utils/common/thenCatch");
+
+const excludeCommon = { exclude: ["id", "createdAt", "updatedAt"] }
+const include = [
+  { model: Status, as: "status", attributes: excludeCommon }
+];
+const exclude = ['status_id']
 
 exports.router = (function () {
   const applicationsRouter = express.Router();
 
-  applicationsRouter.get("/", [passportAdmin, async function (req, res) {
-    controller.getAll(res, Applications);
-  }]);
+  applicationsRouter.get("/", async function (req, res) {
+    const {status,page,size} = req.query
+    let condition = {};
+		if(status){
+			let statusData = await getRow(res, Status, { label: status });
+			condition.status_id=statusData.id
+		}
 
-  applicationsRouter.get("/:id",[passportAdmin, async function (req, res) {
+    let pagination = getPaginationQueries(size,page)
+
+    controller.getAll(res, Applications, condition, exclude, include, pagination);
+  });
+
+  applicationsRouter.get("/:id", async function (req, res) {
     const id = req.params.id;
     controller.getOne(res, Applications, id);
-  }]);
+  });
 
   applicationsRouter.post("/", [passportAdmin, async function (req, res) {
     const data = req.body;

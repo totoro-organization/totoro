@@ -1,4 +1,4 @@
-import type { ProfileType } from "../screens/uniques/Profile";
+import type { ProfileType } from "../screens/single/Profile";
 
 export type StackParamList = {
   Mission: { id: number };
@@ -11,6 +11,8 @@ export type AuthParamList = {
   Explications: undefined;
   "Se connecter": undefined;
   "S'inscrire": undefined;
+  "Mot de passe oublié": undefined;
+  "Changement mot de passe": undefined;
 };
 
 export type AppParamList = {

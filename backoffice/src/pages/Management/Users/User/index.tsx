@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { Helmet } from 'react-helmet-async';
 import { useNavigate, useParams } from 'react-router-dom';
 import PageTitle from 'src/components/PageTitle';
@@ -13,12 +12,16 @@ import { subDays } from 'date-fns';
 import { User } from 'src/models/user';
 import { useApi } from 'src/hooks/useApi';
 import SuspenseLoader from 'src/components/SuspenseLoader';
+import TableWrapper from 'src/components/TableWrapper';
+import StatusLabel from 'src/components/StatusLabel';
 
 function UserDetails() {
 
   const { id } = useParams();
 
-  const { data: user, loading } = useApi(`/users/${id}`);
+  const { data: user, loading: userLoading } = useApi(`/users/${id}`);
+  const { data: jobs, loading: jobsLoading } = useApi(`/users/${id}/jobs`);
+console.log(jobs);
 
   const navigate = useNavigate();
 
@@ -30,7 +33,7 @@ function UserDetails() {
         <title>Utilisateur {`${user?.firstname } ${user?.lastname}`}</title>
       </Helmet>
       <PageTitleWrapper>
-        <Box display="flex">
+        <Box alignItems={"center"} display="flex">
           <Tooltip
             onClick={handleGoBack}
             arrow
@@ -42,6 +45,7 @@ function UserDetails() {
             </IconButton>
           </Tooltip>
           <PageTitle heading={`${user?.firstname } ${user?.lastname}`} subHeading={'@' + user?.username} />
+          { user && <StatusLabel status={user?.status.label}/>}
         </Box>
       </PageTitleWrapper>
       <Container maxWidth="lg">
@@ -53,7 +57,12 @@ function UserDetails() {
           spacing={3}
         >
           <Grid item xs={12}>
-            { loading ? <SuspenseLoader/> : <UserCard user={user} /> }
+            { userLoading ? <SuspenseLoader/> : <UserCard user={user} /> }
+            {/* { jobsLoading ? <SuspenseLoader/> : (
+              <TableWrapper>
+                <Jobs
+              </TableWrapper>
+            )} */}
           </Grid>
         </Grid>
       </Container>

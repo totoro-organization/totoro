@@ -1,6 +1,7 @@
 "use strict";
 const { v4: uuidv4 } = require("uuid");
 const { Model } = require("sequelize");
+var moment = require('moment');
 
 module.exports = (sequelize, DataTypes) => {
 	class Subscriptions extends Model {
@@ -28,6 +29,18 @@ module.exports = (sequelize, DataTypes) => {
 	Subscriptions.init(
 		{
 			expirate: DataTypes.DATE,
+			isExpired: {
+				type: DataTypes.VIRTUAL,
+				get() {
+					if(this.expirate){
+						var date = new Date();
+						var data_now = moment(date).format("YYYY-MM-DD");
+						return data_now > moment(this.expirate).format("YYYY-MM-DD");
+					} else {
+						return "infinite"
+					}
+				}
+			}
 		},
 		{
 			sequelize,

@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { Card } from '@mui/material';
 import { Job } from 'src/models/job';
 import JobsTable from './JobsTable';
@@ -6,23 +5,12 @@ import { subDays } from 'date-fns';
 import TableWrapper from 'src/components/TableWrapper';
 import { StatusEnum } from 'src/models/status';
 import SuspenseLoader from 'src/components/SuspenseLoader';
+import { useApi } from 'src/hooks/useApi';
+import { TableEnum } from 'src/models';
 
 function Jobs() {
-   const jobs: Job[] = [
-    {
-      id: '1',
-      title: 'Ma super mission',
-      organization: "Une association",
-      status: {id: '1', label: 'coming'},
-      participants: 15,
-      address: '3 rue de la paix',
-      capacity: 20,
-      tokens: 150,
-      description: ' Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus efficitur accumsan suscipit. Etiam lacus elit, condimentum ut orci eu, vulputate tincidunt velit. Aenean ac suscipit quam, sit amet tempus risus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Aenean at erat magna. Nam bibendum sem sem, sit amet sagittis mi tincidunt et. Nulla at vehicula tortor. Etiam faucibus rhoncus nibh eget vulputate. Suspendisse sit amet lacus laoreet mi lacinia porttitor. Nam sapien lacus, tincidunt in odio ut, scelerisque laoreet lorem. Etiam in porta tortor. Nunc venenatis elit nec nulla egestas semper. Cras rhoncus velit id ipsum maximus, ac egestas enim vestibulum. Ut nec pharetra turpis. Morbi iaculis bibendum nisl et vulputate. ',
-      date: subDays(new Date(), 1).getTime(),
-      tags: [{id:'1', label: 'humanitaire'}]
-    }
-  ]
+
+  const { data: jobs, loading } = useApi('/jobs');
 
   const statusOptions = [
     {
@@ -36,20 +24,22 @@ function Jobs() {
     {
       id: StatusEnum.disabled,
       name: 'Inactif'
+    },
+    {
+      id: StatusEnum.deleted,
+      name: 'Supprimé'
     }
   ];
 
   return (
     <Card>
-      {/* {
-        loading ? <SuspenseLoader/> :
-        <TableWrapper statusOptions={statusOptions} items={jobs}>
+      {
+        !loading && jobs ? 
+          <TableWrapper table={TableEnum.jobs} url="/jobs" statusOptions={statusOptions} defaultItems={jobs?.data}>
+          {/* @ts-ignore */} 
             <JobsTable />
-        </TableWrapper>
-      } */}
-      <TableWrapper statusOptions={statusOptions} items={jobs}>
-            <JobsTable />
-        </TableWrapper>
+          </TableWrapper> : <SuspenseLoader/>
+      }
     </Card>
   );
 }

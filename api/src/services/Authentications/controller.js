@@ -2,7 +2,7 @@ const asyncLib = require("async");
 const bcrypt = require("bcryptjs");
 const { Op } = require("sequelize");
 const { generateToken } = require("utils/session");
-const { getNearestTerminal } = require("utils/localisation");
+//const { getNearestTerminal } = require("utils/localisation");
 const { getRow, getField } = require("utils/common/thenCatch");
 const { error, success } = require("utils/common/messages.json");
 const { Terminals, Status } = require("../../../models");
@@ -12,7 +12,6 @@ const commonsController = require("services/Commons/controller");
 const {
   mail: { signup },
 } = require("./../../../html");
-const { sign } = require("jsonwebtoken");
 const { label_status } = require("utils/enum.json");
 const excludeCommon = { exclude: ["id", "createdAt", "updatedAt"] };
 
@@ -21,13 +20,15 @@ const exclude = ["status_id", "terminal_id"];
 
 module.exports = {
   login: async function (res, model, data, isAdmin) {
+    const {emailOrUsername, password} = data
+
     asyncLib.waterfall(
       [
         function (done) {
           const condition = {
             [Op.or]: [
-              { email: data.emailOrUsername },
-              { username: data.emailOrUsername },
+              { email: emailOrUsername },
+              { username: emailOrUsername },
             ],
           };
           getField(res, model, condition, done, true, include, exclude);
@@ -36,7 +37,7 @@ module.exports = {
         function (user, done) {
           if (user) {
             bcrypt.compare(
-              data.password,
+              password,
               user.password,
               (errByCrypt, resByCrypt) => {
                 done(null, user, resByCrypt);
@@ -63,7 +64,7 @@ module.exports = {
         delete user.dataValues.password;
 
         const token = generateToken(user, isAdmin);
-        if (user.status.label === label_status.disabled) {
+        if (user.status.label !== label_status.actived) {
           if (
             !mailer.sendMail(
               host.gmail,
@@ -88,6 +89,7 @@ module.exports = {
   },
 
   signup: async function (res, model, data) {
+    const {password,email,username} = data
     const inactiveStatus = await getRow(res, Status, {
       label: label_status.disabled,
     });
@@ -104,11 +106,11 @@ module.exports = {
 		*/
     data["status_id"] = inactiveStatus.id;
     data["total_token"] = 0;
-    data["password"] = bcrypt.hashSync(data["password"], 10);
+    data["password"] = bcrypt.hashSync(password, 10);
     data["avatar"] = "/avatar/avatar.svg";
     //data["terminal_id"] = nearestTerminal.id;
 
-    const condition = { email: data.email, username: data.username };
+    const condition = { email, username };
 
     commonsController.create(
       function (result) {
@@ -142,12 +144,13 @@ module.exports = {
   },
 
   forgot: async function (res, model, data) {
+    const {email} = data
     const activeStatus = await getRow(Status, { label: label_status.actived });
 
     asyncLib.waterfall(
       [
         function (done) {
-          const condition = { email: data.email, status_id: activeStatus.id };
+          const condition = { email, status_id: activeStatus.id };
           exclude.push("password");
           getField(res, model, condition, done, false, include, exclude);
         },

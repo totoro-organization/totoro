@@ -3,22 +3,35 @@ import { FieldError } from "react-hook-form";
 import { TextInputProps } from "react-native";
 import styled from "styled-components/native";
 import Input from "../atoms/Input";
+import Spacer from "../atoms/Spacer";
 import { Text } from "../atoms/Text";
 
 export type InputGroupProps = {
   error: FieldError | undefined;
+  label?: string;
 } & TextInputProps;
 
 export default function InputGroup({
   error,
+  label,
   ...nativeTextInputProps
 }: InputGroupProps) {
   return (
-    <Container>
-      <Input {...nativeTextInputProps} error={!!error} />
+    <>
+      {label && (
+        <>
+          <Text>{label}</Text>
 
-      <ErrorMessage>{error?.message}</ErrorMessage>
-    </Container>
+          <Spacer axis="vertical" size={0.5} />
+        </>
+      )}
+
+      <Container>
+        <Input {...nativeTextInputProps} error={!!error} />
+
+        <ErrorMessage>{error?.message}</ErrorMessage>
+      </Container>
+    </>
   );
 }
 
