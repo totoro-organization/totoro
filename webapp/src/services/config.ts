@@ -1,13 +1,10 @@
-
-const APP_ID = '7f299834-ecde-464b-8858-b56d062efc31';
-
-const SERVER = 'http://127.0.0.1:6868';
+const { REACT_APP_APP_ID: APP_ID, REACT_APP_API_BASE_URL: API_BASE_URL } = process.env;
 
 const URI = '/api'
 
 export const config = {
     app_id: APP_ID,
-    server: SERVER,
+    server: API_BASE_URL,
     uri: URI,
-    baseUrl: SERVER + URI
+    baseUrl: API_BASE_URL + URI
 }
