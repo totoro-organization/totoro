@@ -8,9 +8,9 @@ RUN npm install --legacy-peer-deps
 
 COPY . .
 
-ARG WA_APP_API_BASE_URL
+ARG API_BASE_URL
 
-ENV WA_APP_API_BASE_URL=$WA_APP_API_BASE_URL
+ENV REACT_APP_API_BASE_URL=$API_BASE_URL
 
 RUN npm run build
 
@@ -23,6 +23,6 @@ COPY --from=build-stage /webapp/build /usr/share/nginx/html
 
 # COPY nginx/nginx.conf /etc/nginx/nginx.conf
 
-EXPOSE $WEBAPP_DOCKER_PORT
+EXPOSE $GNIX_PORT
 
 CMD nginx -g "daemon off;"
