@@ -3,105 +3,105 @@ module.exports = [
     model: "Status",
     data: {
       label: "actived",
-      type: "['admins', 'users', 'partners', 'jobs', 'groups', 'associations', 'commons']",
+      type: "['Admins', 'Users', 'Partners', 'Jobs', 'Groups', 'Associations', 'Commons']",
     },
   },
   {
     model: "Status",
     data: {
       label: "disabled",
-      type: "['admins', 'users', 'partners', 'jobs', 'groups', 'associations', 'commons']",
+      type: "['Admins', 'Users', 'Partners', 'Jobs', 'Groups', 'Associations', 'Commons']",
     },
   },
   {
     model: "Status",
     data: {
       label: "deleted",
-      type: "['admins', 'users', 'partners', 'jobs', 'groups', 'associations', 'commons']",
+      type: "['Admins', 'Users', 'Partners', 'Jobs', 'Groups', 'Associations', 'Commons']",
     },
   },
   {
     model: "Status",
     data: {
       label: "accepted",
-      type: "['parterns','jobs','groups','associations']",
+      type: "['Partners','Jobs','Groups','Associations']",
     },
   },
   {
     model: "Status",
     data: {
       label: "denied",
-      type: "['admins','users', 'partners','associations','groups']",
+      type: "['Admins','Users', 'Partners','Associations','Groups']",
     },
   },
   {
     model: "Status",
     data: {
       label: "published",
-      type: "['jobs', 'discounts']",
+      type: "['Jobs', 'Discounts']",
     },
   },
   {
     model: "Status",
     data: {
       label: "expired",
-      type: "['partners', 'discounts', 'subscriptions', 'litigations']",
+      type: "['Partners', 'Discounts', 'Subscriptions', 'Litigations']",
     },
   },
   {
     model: "Status",
     data: {
       label: "opened",
-      type: "['litigations']",
+      type: "['Litigations']",
     },
   },
   {
     model: "Status",
     data: {
       label: "closed",
-      type: "['litigations','jobs','groups']",
+      type: "['Litigations','Jobs','Groups']",
     },
   },
   {
     model: "Status",
     data: {
       label: "freezed",
-      type: "['users', 'admins', 'partners', 'associations']",
+      type: "['Users', 'Admins', 'Partners', 'Associations']",
     },
   },
   {
     model: "Status",
     data: {
       label: "canceled",
-      type: "['jobs']",
+      type: "['Jobs']",
     },
   },
   {
     model: "Status",
     data: {
       label: "pending",
-      type: "['partners']",
+      type: "['Partners']",
     },
   },
   {
     model: "Status",
     data: {
       label: "coming",
-      type: "['jobs']",
+      type: "['Jobs']",
     },
   },
   {
     model: "Status",
     data: {
       label: "requested",
-      type: "['associations_users', 'associations', 'partners']",
+      type: "['Associations_users', 'Associations', 'Partners']",
     },
   },
   {
     model: "Status",
     data: {
       label: "invited",
-      type: "['associations_users']",
+      type: "['Associations_users']",
     },
   },
   

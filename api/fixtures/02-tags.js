@@ -3,7 +3,7 @@ module.exports = [
     model: "Tags",
     data: {
       label: "Sport",
-      type: "caterory",
+      type: "category",
       status: {
 				label: "actived",
 			},
@@ -33,7 +33,7 @@ module.exports = [
     model: "Tags",
     data: {
       label: "Aide sociale",
-      type: "caterory",
+      type: "category",
       status: {
 				label: "actived",
 			},

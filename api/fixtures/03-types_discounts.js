@@ -1,9 +1,9 @@
 module.exports = [
   {
     model: "Types_discounts",
-    keys: ["name"],
+    keys: ["label"],
     data: {
-      name: "Pourcentage",
+      label: "Pourcentage",
       type: "number",
       status: {
 				label: "actived",
@@ -12,9 +12,9 @@ module.exports = [
   },
   {
     model: "Types_discounts",
-    keys: ["name"],
+    keys: ["label"],
     data: {
-      name: "Montant",
+      label: "Montant",
       type: "number",
       status: {
 				label: "actived",
@@ -23,9 +23,9 @@ module.exports = [
   },
   {
     model: "Types_discounts",
-    keys: ["name"],
+    keys: ["label"],
     data: {
-      name: "Autre",
+      label: "Autre",
       type: "text",
       status: {
 				label: "actived",
