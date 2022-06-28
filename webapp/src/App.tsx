@@ -6,7 +6,7 @@ import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import ThemeProvider from './theme/ThemeProvider';
 import { CssBaseline } from '@mui/material';
 import { AuthProvider } from './hooks/useAuth';
-import { TagsProvider } from './contexts/TagsContext';
+import { CommonsProvider } from './contexts/CommonsContext';
 
 const App = () => {
 
@@ -17,9 +17,9 @@ const App = () => {
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <CssBaseline />
         <AuthProvider>
-          <TagsProvider>
+          <CommonsProvider>
             {content}
-          </TagsProvider>
+          </CommonsProvider>
         </AuthProvider>
       </LocalizationProvider>
     </ThemeProvider>
