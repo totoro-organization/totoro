@@ -24,15 +24,17 @@ import DateFnsProvider from 'src/components/DateFnsProvider';
 import { DatePicker } from '@mui/x-date-pickers';
 import { createJob } from 'src/services/job.service';
 import { useNavigate } from 'react-router-dom';
-import { TagsContext } from 'src/contexts/TagsContext';
+import { CommonsContext } from 'src/contexts/CommonsContext';
 
 function CreatingCard() {
 
     const navigate = useNavigate();
 
-    const tags = useContext(TagsContext);
+    const { tags, difficulties, categories } = useContext(CommonsContext);
 
     console.log(tags);
+    console.log(categories);
+    console.log(difficulties);
     
 
     const jobOptions = [
