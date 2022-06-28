@@ -1,12 +1,13 @@
 import { createContext, useEffect, useState } from "react";
+import { JobDifficulty, Tag } from "src/models";
 import { getItems } from "src/services/common.service";
 
 export const CommonsContext = createContext<any>({});
 
 export const CommonsProvider = props => {
-    const [tags, setTags] = useState<any>([]);
-    const [categories, setCategories] = useState([]);
-    const [difficulties, setDifficulties] = useState<any>([]);
+    const [tags, setTags] = useState<Array<Tag>>([]);
+    const [categories, setCategories] = useState<Array<Tag>>([]);
+    const [difficulties, setDifficulties] = useState<Array<JobDifficulty>>([]);
 
 
     useEffect(() => {
@@ -18,8 +19,8 @@ export const CommonsProvider = props => {
         const {data} = await getItems('/tags', { status: 'actived'});
         
         if (data) {
-            const tagArray = data.filter(item => item.type === "mission");
-            const categoryArray = data.filter(item => item.type === "category");
+            const tagArray = data.filter((tag: Tag) => tag.type === "mission");
+            const categoryArray = data.filter((tag: Tag )=> tag.type === "category");
             setTags(tagArray);
             setCategories(categoryArray);
         } else {
