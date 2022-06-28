@@ -18,7 +18,6 @@ export type { AttachmentJob } from './attachment_job';
 export type { Partner } from './partner';
 export type { Pricing } from './pricing';
 export type { Subscription } from './subscription';
-export type { Log } from './log';
 
 
 export { CommonsUriEnum } from './commons';
