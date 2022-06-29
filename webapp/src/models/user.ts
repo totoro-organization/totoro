@@ -1,3 +1,4 @@
+import { Membership } from "./membership";
 import { Organization } from "./organization";
 import { Partner } from "./partner";
 import { Role } from "./role";
@@ -25,12 +26,7 @@ export interface User {
     birthday?: Date,
     avatar: string,
     status: UserStatus,
-    memberships: {
-        organization: Organization,
-        role: Role,
-        createdAt: string,
-        updatedAt: string
-    }[],
+    memberships: Membership[],
     partners: Partner[],
     createdAt: string,
     updatedAt: string
