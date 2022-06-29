@@ -4,12 +4,13 @@ import SuspenseLoader from 'src/components/SuspenseLoader';
 import { useApi } from 'src/hooks/useApi';
 import { StatusEnum } from 'src/models';
 import useAuth from 'src/hooks/useAuth';
+import { API_ROUTES } from 'src/services/routes';
 
 function Jobs() {
   const { currentApp } = useAuth();
 
   const { data: jobs, loading } = useApi(
-    () => `/organizations/${currentApp.id}/jobs`
+   () => API_ROUTES.ORGANIZATIONS_JOBS(currentApp.id)
   );
 
   const statusOptions = [
