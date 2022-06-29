@@ -7,12 +7,15 @@ import {
   useState
 } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Role } from 'src/models';
+import { Membership, Partner, Role } from 'src/models';
 import { User } from 'src/models/user';
 import * as sessionsService from 'src/services/auth.service';
 
 interface AuthContextType {
   user?: User;
+  // memberships?: Membership[],
+  // partners?: Partner[],
+  currentApp: App,
   loading: boolean;
   error?: any;
   login: (params: sessionsService.LoginType) => void;
@@ -34,7 +37,9 @@ export function AuthProvider({
   children: ReactNode;
 }): JSX.Element {
   const [user, setUser] = useState<User>();
-  const [currentApp, setCurrentApp] = useState<any>();
+  // const [memberships, setMemberships] = useState<Array<Membership>>();
+  // const [partners, setPartners] = useState<Array<Partner>>();
+  const [currentApp, setCurrentApp] = useState<any>({});
   const [error, setError] = useState<any>();
   const [loading, setLoading] = useState<boolean>(false);
   const [loadingInitial, setLoadingInitial] = useState<boolean>(true);
@@ -66,7 +71,6 @@ export function AuthProvider({
 
       let app = JSON.parse(localStorage.getItem('currentApp')) ?? null;
       let app_id;
-      console.log(user);
       
       if (!app) {
         if (user.memberships.length) {
@@ -143,6 +147,8 @@ export function AuthProvider({
   const memoedValue = useMemo(
     () => ({
       user,
+      // memberships,
+      // partners,
       loading,
       error,
       login,
