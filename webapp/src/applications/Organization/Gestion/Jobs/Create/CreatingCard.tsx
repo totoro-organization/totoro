@@ -28,6 +28,7 @@ import { DatePicker } from '@mui/x-date-pickers';
 import { addItem } from 'src/services/common.service'
 import { useNavigate } from 'react-router-dom';
 import { CommonsContext } from 'src/contexts/CommonsContext';
+import { API_ROUTES } from 'src/services/routes';
 
 function CreatingCard() {
 
@@ -49,7 +50,7 @@ function CreatingCard() {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
 
-        addItem ('/jobs', {
+        addItem(API_ROUTES.JOBS, {
             title: data.get('jobTitle'),
             participants_max: data.get('participantsMax'),
             tags: data.get('tag'),
