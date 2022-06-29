@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { requestAxios } from 'src/services/requestApi';
+import { ApiRoutesType } from 'src/services/routes';
 
 export type ApiResponse = {
   data: any;
@@ -7,7 +8,7 @@ export type ApiResponse = {
   loading: Boolean;
 };
 
-export const useApi = (url: string): ApiResponse => {
+export const useApi = (url: ApiRoutesType): ApiResponse => {
   const [data, setData] = useState<any>();
   const [error, setError] = useState<any>();
   const [loading, setLoading] = useState<boolean>(false);

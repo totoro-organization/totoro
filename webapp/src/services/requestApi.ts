@@ -1,11 +1,12 @@
 import axios from 'axios';
 import { config } from './config';
+import { ApiRoutesType } from './routes';
 
 export type ErrorResponse = {
     error: string
 }
 
-export async function requestAxios(method: string, uri: string, data = null) {
+export async function requestAxios(method: string, uri: ApiRoutesType, data = null) {
     const token = localStorage.getItem('token') ?? null;
     
     try {
