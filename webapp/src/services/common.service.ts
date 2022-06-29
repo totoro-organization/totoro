@@ -1,3 +1,4 @@
+import { CommonsUriEnum } from "src/models";
 import { requestAxios } from "./requestApi";
 
 export async function getItems(uri: string, query?: any) {
@@ -12,3 +13,19 @@ export async function getItems(uri: string, query?: any) {
     const response = await requestAxios('GET', uri);
     return response;
 }
+
+export async function addItem(uri: string, data: object) {
+    const response = await requestAxios('POST', `${uri}`, data);
+    return response;
+}
+
+export async function updateItem(uri: string, id: string, data: object) {
+    const response = await requestAxios('PUT', `${uri}/${id}`, data);
+    return response;
+}
+
+export async function deleteItem(uri: string, id: string) {
+    const response = await requestAxios('DELETE', `${uri}/${id}`);
+    return response;
+}
+
