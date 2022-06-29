@@ -9,10 +9,11 @@ import { TableEnum, StatusEnum } from 'src/models';
 import useAuth from 'src/hooks/useAuth';
 
 function Jobs() {
-
   const { currentApp } = useAuth();
 
-  const { data: jobs, loading } = useApi(`/organizations/${currentApp.id}/jobs`);
+  const { data: jobs, loading } = useApi(
+    () => `/organizations/${currentApp.id}/jobs`
+  );
 
   const statusOptions = [
     {
@@ -33,12 +34,17 @@ function Jobs() {
     }
   ];
 
-  return (
-        !loading && jobs ? 
-          <TableWrapper url="/jobs" statusOptions={statusOptions} defaultItems={jobs?.data}>
-          {/* @ts-ignore  */}
-            <JobsTable />
-          </TableWrapper> : <SuspenseLoader/>
+  return !loading && jobs ? (
+    <TableWrapper
+      url="/jobs"
+      statusOptions={statusOptions}
+      defaultItems={jobs?.data}
+    >
+      {/* @ts-ignore  */}
+      <JobsTable />
+    </TableWrapper>
+  ) : (
+    <SuspenseLoader />
   );
 }
 
