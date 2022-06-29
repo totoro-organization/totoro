@@ -1,4 +1,4 @@
-import { StatusEnum } from "src/models/status";
+import { StatusEnum } from "src/models";
 import Label from "../Label";
 
 const statuses = {

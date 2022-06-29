@@ -1,11 +1,8 @@
-import { Card } from '@mui/material';
-import { Job } from 'src/models/job';
 import JobsTable from './JobsTable';
-import { subDays } from 'date-fns';
 import TableWrapper from 'src/components/TableWrapper';
 import SuspenseLoader from 'src/components/SuspenseLoader';
 import { useApi } from 'src/hooks/useApi';
-import { TableEnum, StatusEnum } from 'src/models';
+import { StatusEnum } from 'src/models';
 import useAuth from 'src/hooks/useAuth';
 
 function Jobs() {

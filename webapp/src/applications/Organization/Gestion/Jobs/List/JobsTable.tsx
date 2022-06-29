@@ -16,10 +16,9 @@ import {
 } from '@mui/material';
 
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
-import { Job } from 'src/models/job';
+import { Job } from 'src/models';
 import { TableProps } from 'src/components/TableWrapper';
 import{ CustomModal as Modal, DeleteContent } from "src/components/Modal";
-import { TableEnum } from 'src/models';
 import { useModal } from 'src/hooks/useModal';
 import format from 'date-fns/format';
 import StatusLabel from 'src/components/StatusLabel';

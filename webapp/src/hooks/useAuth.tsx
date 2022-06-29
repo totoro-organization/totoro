@@ -7,8 +7,7 @@ import {
   useState
 } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Membership, Partner, Role } from 'src/models';
-import { User } from 'src/models/user';
+import { User, Membership, Partner, Role, LoginData, SignUpData } from 'src/models';
 import * as sessionsService from 'src/services/auth.service';
 
 interface AuthContextType {
@@ -18,8 +17,8 @@ interface AuthContextType {
   currentApp: App,
   loading: boolean;
   error?: any;
-  login: (params: sessionsService.LoginType) => void;
-  signup: (params: sessionsService.SignUpType) => void;
+  login: (params: LoginData) => void;
+  signup: (params: SignUpData) => void;
   logout: () => void;
 }
 
@@ -89,7 +88,7 @@ export function AuthProvider({
   }, [user]);
 
 
-  function login(params: sessionsService.LoginType) {
+  function login(params: LoginData) {
     setLoading(true);
 
     sessionsService
@@ -114,7 +113,7 @@ export function AuthProvider({
       .finally(() => setLoading(false));
   }
 
-  function signup(params: sessionsService.SignUpType) {
+  function signup(params: SignUpData) {
     sessionsService.signup(params).then((response) => {
       if ('error' in response) {
         setError(response.error);

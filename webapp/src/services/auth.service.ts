@@ -1,36 +1,17 @@
-import axios from "axios";
-import { User } from "../models/user";
-import { ErrorResponse, requestAxios } from "./requestApi";
+import { BaseUrlEnum, LoginData, SignUpData, Token, User, ErrorResponse } from "src/models";
+import { requestAxios } from "./requestApi";
 
-export type Token = {
-  token: string
-}
-
-export type LoginType = {
-  emailOrUsername: FormDataEntryValue;
-  password: FormDataEntryValue;
-}
-
-export type SignUpType = {
-  username: FormDataEntryValue,
-  firstname: FormDataEntryValue,
-  lastname: FormDataEntryValue,
-  email: FormDataEntryValue,
-  birthday: Date,
-  password: FormDataEntryValue
-}
-
-export async function signup(params: SignUpType) {
-  const response: Token | ErrorResponse = await requestAxios("POST", "/auth/signup", params );
+export async function signup(params: SignUpData) {
+  const response: Token | ErrorResponse = await requestAxios("POST", `${BaseUrlEnum.AUTH}/signup`, params );
   return response;
 }
 
-export async function login(params: LoginType): Promise<Token | ErrorResponse> {
-  const response: Token | ErrorResponse = await requestAxios("POST", "/auth/login", params );
+export async function login(params: LoginData): Promise<Token | ErrorResponse> {
+  const response: Token | ErrorResponse = await requestAxios("POST", `${BaseUrlEnum.AUTH}/login`, params );
   return response;
 }
 
 export async function getCurrentUser(): Promise<User | ErrorResponse> {
-  const response: User | ErrorResponse = await requestAxios("GET", "/auth/connected");
+  const response: User | ErrorResponse = await requestAxios("GET", `${BaseUrlEnum.AUTH}/connected`);
   return response;
 }
