@@ -27,7 +27,7 @@ const statusOptions = [
 function Jobs() {
 
   const { currentApp } = useAuth();
-  const { data: jobs, loading } = useApi(`/organizations/${currentApp.id}/jobs`);
+  const { data: jobs, loading } = useApi(`/organizations/${currentApp.data.id}/jobs`);
 
   return (
         !loading && jobs ? 
