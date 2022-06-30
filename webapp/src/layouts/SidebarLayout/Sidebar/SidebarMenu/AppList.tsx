@@ -8,15 +8,15 @@ import {
   ListSubheader
 } from '@mui/material';
 import { Box } from '@mui/system';
-import { useState } from 'react';
+import React, { useState } from 'react';
+import FallbackAvatar from 'src/components/FallbackAvatar';
 import useAuth from 'src/hooks/useAuth';
-import { config } from 'src/services/config'
+import { config } from 'src/services/config';
 
 function MenuAppList() {
-
   const [openOrganizations, setOpenOrganizations] = useState(false);
   const [openPartners, setOpenPartners] = useState(false);
-  const { user } = useAuth();
+  const { user, currentApp } = useAuth();
 
   const handleClickOrganizations = () => {
     setOpenOrganizations(!openOrganizations);
@@ -38,49 +38,84 @@ function MenuAppList() {
       }
     >
       <ListItemButton onClick={handleClickOrganizations}>
-      <img src={config.server + user.memberships[0].organization.logo} alt="organization logo" />
-        <ListItemText primary={user.memberships[0].organization.name} />
+        <ListItemIcon>
+          <FallbackAvatar
+            variant="rounded"
+            src={config.server + currentApp.data.logo}
+            fallback={currentApp.data.name}
+            alt="Organization name"
+          />
+        </ListItemIcon>
+        <Box display="flex" flexDirection="column">
+          <ListItemText primary={currentApp.data.name} />
+          <ListItemText secondary={currentApp.role.label} />
+        </Box> 
         {openOrganizations ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
       <Collapse in={openOrganizations} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
           <ListItemButton sx={{ pl: 4 }}>
-           
-            {
-                user.memberships.map(membership => (
-                    <Box key={membership.organization.id}>
-                        <img src={config.server + membership.organization.logo} alt="organization logo" />
-                        <ListItemText primary={`${membership.organization.name}`} />
-                    </Box>
-                ))
-            }
+            {user.memberships.map((membership) => ( 
+              <>
+              <ListItemIcon>
+                 <FallbackAvatar
+                  variant="rounded"
+                  src={config.server + membership.organization.logo}
+                  fallback={membership.organization.name}
+                  alt="Organization name"
+                />
+              </ListItemIcon>
+             
+              <Box display="flex" flexDirection="column" key={membership.organization.id}>
+               
+                <ListItemText primary={membership.organization.name} />
+                <ListItemText secondary={membership.role.label} />
+              </Box></>
+            ))}
           </ListItemButton>
         </List>
       </Collapse>
       <ListItemButton onClick={handleClickPartners}>
-        { user.partners.length ? (
-            <>
-                <img src={config.server + user.partners[0].logo} alt="partner logo" />
-                <ListItemText primary={user.partners[0]} />
-            </> 
-        ) : <p>Ajouter un partenaire</p> }
-        
+        {user.partners.length ? (
+          <>
+          <ListItemIcon>
+            <FallbackAvatar
+              variant="rounded"
+              src={config.server + currentApp.data.logo}
+              fallback={currentApp.data.name}
+              alt="Partner name"
+            />
+          </ListItemIcon>
+            
+            <ListItemText primary={currentApp.data.name} />
+          </>
+        ) : (
+          <p>Ajouter un partenaire</p>
+        )}
+
         {openPartners ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
       <Collapse in={openPartners} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
           <ListItemButton sx={{ pl: 4 }}>
-            <ListItemIcon>
-              <StarBorder />
-            </ListItemIcon>
-            {
-               user.partners.length ? user.partners.map(partner => (
-                    <Box key={partner.id}>
-                        <img src={config.server + partner.logo} alt="partner logo" />
-                        <ListItemText primary={`${partner.name}`} />
-                    </Box>
-                )) : <p>Ajouter un partenaire</p>
-            }
+            {user.partners.length ? (
+              user.partners.map((partner) => (
+                <React.Fragment key={partner.id}>
+                  <ListItemIcon>
+                    <FallbackAvatar
+                    variant="rounded"
+                    src={config.server + partner.logo}
+                    fallback={partner.name}
+                    alt="Partner name"
+                  />
+                  </ListItemIcon>
+                  
+                  <ListItemText primary={partner.name} />
+                </React.Fragment>
+              ))
+            ) : (
+              <p>Ajouter un partenaire</p>
+            )}
           </ListItemButton>
         </List>
       </Collapse>
