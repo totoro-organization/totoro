@@ -2,7 +2,7 @@ import { Button } from "@mui/material";
 import { FormEvent } from "react";
 import { Form } from "src/components/Form";
 import { ButtonsBox } from "src/components/Modal";
-import { TableMethods } from "src/components/TableWrapper";
+import { TableMethods } from "src/models";
 
   interface DeleteContentProps {
     item: any,
