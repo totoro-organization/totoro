@@ -12,7 +12,7 @@ import {
   CardHeader,
 } from '@mui/material';
 import BulkActions from './BulkActions';
-import { StatusEnum, StatusOptions } from 'src/models';
+import { StatusEnum, StatusOptions, TableItem } from 'src/models';
 import { deleteItem, getItems, updateItem } from 'src/services/common.service';
 import { useModal } from 'src/hooks/useModal';
 import useAuth from 'src/hooks/useAuth';
@@ -82,7 +82,7 @@ const TableWrapper: FC<TableWrapperProps> = ({
   const [filters, setFilters] = useState<Filters>({
     status: null
   });
-  const [items, setItems] = useState<Array<any>>(defaultItems);
+  const [items, setItems] = useState<Array<TableItem>>(defaultItems);
 
   const [addModalOpen, handleOpenAddModal, handleCloseAddModal] = useModal();
 
@@ -91,8 +91,6 @@ const TableWrapper: FC<TableWrapperProps> = ({
       setItems(defaultItems);
     }
   }, [defaultItems])
-
-  const { user } = useAuth();
 
   if(statusOptions) {
       statusOptions = [
