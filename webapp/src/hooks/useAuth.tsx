@@ -7,7 +7,7 @@ import {
   useState
 } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { User, Membership, Partner, Role, LoginData, SignUpData } from 'src/models';
+import { User, Membership, Partner, Role, LoginData, SignUpData, Organization } from 'src/models';
 import * as sessionsService from 'src/services/auth.service';
 
 interface AuthContextType {
@@ -24,7 +24,8 @@ interface AuthContextType {
 
 interface App {
   type: 'partner' | 'organization';
-  id: string;
+  member_id?: string;
+  data: Organization | Partner,
   role?: Role
 }
 
@@ -69,15 +70,15 @@ export function AuthProvider({
     if (user) {
 
       let app = JSON.parse(localStorage.getItem('currentApp')) ?? null;
-      let app_id;
+      let data;
       
       if (!app) {
         if (user.memberships.length) {
-          app_id = JSON.stringify(user.memberships[0].organization.id);
-          app = { type: 'organization', id: app_id, role: user.memberships[0].role };
+          data = user.memberships[0].organization;
+          app = { type: 'organization', data, role: user.memberships[0].role, member_id: user.memberships[0].id };
         } else if (user.partners.length) {
-          app_id = JSON.stringify(user.memberships[0].organization.id);
-          app = { type: 'partner', id: app_id };
+          data = user.partners[0];
+          app = { type: 'partner', data };
         } else {
           navigate('/first-login');
           return
@@ -131,12 +132,8 @@ export function AuthProvider({
 
   function handleCurrentApp(app: App) {
     setCurrentApp(app);
-    localStorage.setItem('currentApp', JSON.stringify(app));
-    navigate('/');
+    localStorage.setItem('currentApp', JSON.stringify(app))
   }
-  // Make the provider update only when it should.
-  // We only want to force re-renders if the user,
-  // loading or error states change.
   //
   // Whenever the `value` passed into a provider changes,
   // the whole tree under the provider re-renders, and
@@ -156,7 +153,7 @@ export function AuthProvider({
       currentApp,
       handleCurrentApp
     }),
-    [user, loading, error]
+    [user, loading, error, currentApp]
   );
 
   return (
