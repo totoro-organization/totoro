@@ -1,24 +1,13 @@
-import { DataUsageTwoTone } from '@mui/icons-material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {
     Button,
     Card,
     Box,
     Grid,
-    Input,
-    Typography,
-    IconButton,
-    Hidden,
-    Avatar,
-    Divider,
-    ListItem,
-    ListItemText,
     TextField,
     Select, 
     MenuItem,
     Container,
-    List,
-    ListItemAvatar,
     Autocomplete
 } from '@mui/material';
 import InputAdornment from '@mui/material/InputAdornment';
@@ -28,6 +17,7 @@ import { DatePicker } from '@mui/x-date-pickers';
 import { addItem } from 'src/services/common.service'
 import { useNavigate } from 'react-router-dom';
 import { CommonsContext } from 'src/contexts/CommonsContext';
+import { API_ROUTES } from 'src/services/routes';
 
 function CreatingCard() {
 
@@ -41,7 +31,7 @@ function CreatingCard() {
 
     const [image, setImage] = useState<File>();
 
-    const [preview, setPreview] = useState<string>();
+    const [preview, setPreview] = useState<string | null>();
     
     const fileInputRef = useRef<HTMLInputElement>();
 
@@ -49,7 +39,7 @@ function CreatingCard() {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
 
-        addItem ('/jobs', {
+        addItem (API_ROUTES.JOBS, {
             title: data.get('jobTitle'),
             participants_max: data.get('participantsMax'),
             tags: data.get('tag'),
@@ -169,10 +159,9 @@ function CreatingCard() {
                             <div style={{ display: "flex"}}>
                                 <img
                                     src={preview}
+                                    alt="preview attachment"
                                     style={{ objectFit: "cover", width: '200px' }}
-                                    onClick={() => {
-                                    setImage(null);
-                                    }}
+                                    onClick={() => setImage(null)}
                                 />
                                 <p> {image.name}</p>
                                 <p> {(image.size / (1024*1024)).toFixed(2)} MB</p>
