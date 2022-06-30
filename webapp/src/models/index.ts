@@ -14,6 +14,5 @@ export type { Subscription } from './subscription';
 export type { TableItem, TableMethods } from './table'
 export type { Token, LoginData, SignUpData, ErrorResponse } from './services'
 
-export { BaseUrlEnum, CommonsBaseUrlEnum } from './services';
 export { StatusEnum } from './status';
 export { LangEnum } from './lang';
