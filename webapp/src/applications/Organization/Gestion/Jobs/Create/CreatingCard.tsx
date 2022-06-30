@@ -6,8 +6,10 @@ import {
     Grid,
     TextField,
     Select, 
+    InputLabel,
     MenuItem,
     Container,
+    FormControl,
     Autocomplete
 } from '@mui/material';
 import InputAdornment from '@mui/material/InputAdornment';
@@ -46,6 +48,7 @@ function CreatingCard() {
             startingdate: date,
             difficulties: level
         }) 
+       
 
         .then (response => {
             if('error' in response) {
@@ -67,6 +70,15 @@ function CreatingCard() {
           setPreview(null);
         }
       }, [image]);
+
+    difficulties.sort(function(x,y){
+        var firstIndex = new Date(x.level),
+        secondIndex = new Date(y.level);
+
+        if (firstIndex < secondIndex) return -1;
+        if (firstIndex > secondIndex) return 1;
+        return 0
+    })
 
     return (
         <Container maxWidth="md">
@@ -115,19 +127,22 @@ function CreatingCard() {
                             </DateFnsProvider>
                         </Grid>
                         <Grid item xs={12} sm={6}>
-                            <Select
-                                value={level}
-                                fullWidth
-                                required
-                                onChange={(e) => setLevel(e.target.value)}
-                                label="Difficulté"
-                                >
-                                {difficulties.map((difficulty) => (
-                                    <MenuItem key={difficulty.id} value={difficulty}>
-                                        {`${difficulty.level} (${difficulty.token} tokens)`}
-                                    </MenuItem>
-                                ))}
-                            </Select>
+                            <FormControl fullWidth>
+                                <InputLabel id="demo-simple-select-label">Difficulté</InputLabel>
+                                <Select
+                                    fullWidth
+                                    required
+                                    value={level}
+                                    label="Difficulté"
+                                    onChange={(e) => setLevel(e.target.value)}
+                                    >
+                                    {difficulties.map((difficulty) => (
+                                        <MenuItem key={difficulty.id} value={difficulty}>
+                                            {`${difficulty.level} (${difficulty.token} tokens)`}
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
                         </Grid>
                         <Grid item xs={12} sm={6}>
                             <TextField
@@ -156,16 +171,18 @@ function CreatingCard() {
                         </Grid>
                         <Grid item xs={12}>
                             {preview && image ? (
-                            <div style={{ display: "flex"}}>
+                            <div style={{ display: "flex", gap: "1rem"}}>
                                 <img
                                     src={preview}
                                     alt="preview attachment"
                                     style={{ objectFit: "cover", width: '200px' }}
                                     onClick={() => setImage(null)}
                                 />
-                                <p> {image.name}</p>
-                                <p> {(image.size / (1024*1024)).toFixed(2)} MB</p>
-                                <DeleteIcon onClick={() => {setImage(null)}}></DeleteIcon>
+                                <div>
+                                    <p> {image.name}</p>
+                                    <p> {(image.size / (1024*1024)).toFixed(2)} MB</p>
+                                    <DeleteIcon onClick={() => {setImage(null)}}></DeleteIcon>
+                                </div>
                             </div>
                             ) : (
                                 <Button variant="outlined"
