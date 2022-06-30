@@ -56,7 +56,7 @@ function MenuAppList() {
         <List component="div" disablePadding>
           <ListItemButton sx={{ pl: 4 }}>
             {user.memberships.map((membership) => ( 
-              <>
+              <React.Fragment key={membership.organization.id}>
               <ListItemIcon>
                  <FallbackAvatar
                   variant="rounded"
@@ -70,7 +70,8 @@ function MenuAppList() {
                
                 <ListItemText primary={membership.organization.name} />
                 <ListItemText secondary={membership.role.label} />
-              </Box></>
+              </Box>
+              </React.Fragment>
             ))}
           </ListItemButton>
         </List>
