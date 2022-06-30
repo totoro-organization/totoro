@@ -65,6 +65,8 @@ function HeaderUserbox() {
   const ref = useRef<any>(null);
   const [isOpen, setOpen] = useState<boolean>(false);
 
+  const userFullname = `${user.firstname} ${user.lastname}`;
+
   const handleOpen = (): void => {
     setOpen(true);
   };
@@ -76,10 +78,10 @@ function HeaderUserbox() {
   return (
     <>
       <UserBoxButton color="secondary" ref={ref} onClick={handleOpen}>
-        <FallbackAvatar fallback={`${user.firstname} ${user.lastname}`} variant="circular" alt={user.username} src={user.avatar} />
+        <FallbackAvatar fallback={userFullname} variant="circular" alt={user.username} src={user.avatar} />
         <Hidden mdDown>
           <UserBoxText>
-            <UserBoxLabel variant="body1">{`${user.firstname} ${user.lastname}`}</UserBoxLabel>
+            <UserBoxLabel variant="body1">{userFullname}</UserBoxLabel>
             <UserBoxDescription variant="body2">
               {user.email}
             </UserBoxDescription>
@@ -103,7 +105,7 @@ function HeaderUserbox() {
         }}
       >
         <MenuUserBox sx={{ minWidth: 210 }} display="flex">
-          <FallbackAvatar fallback={`${user.firstname} ${user.lastname}`} variant="circular" alt={user.username} src={user.avatar} />
+          <FallbackAvatar fallback={userFullname} variant="circular" alt={user.username} src={user.avatar} />
           <UserBoxText>
             <UserBoxLabel variant="body1">{user.username}</UserBoxLabel>
             <UserBoxDescription variant="body2">
