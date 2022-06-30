@@ -1,4 +1,3 @@
-import { CommonsUriEnum } from "src/models";
 import { requestAxios } from "./requestApi";
 
 export async function getItems(uri: string, query?: any) {

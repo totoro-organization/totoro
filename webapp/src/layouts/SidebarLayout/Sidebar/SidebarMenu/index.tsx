@@ -1,8 +1,9 @@
-import { ListSubheader, List } from '@mui/material';
+import { ListSubheader, List, Menu } from '@mui/material';
 import { useLocation, matchPath } from 'react-router-dom';
 import SidebarMenuItem from './item';
 import menuItems, { MenuItem } from './items';
 import { styled } from '@mui/material/styles';
+import MenuAppList from './AppList';
 
 
 const MenuWrapper = styled(List)(
@@ -210,7 +211,7 @@ function SidebarMenu() {
           })}
         </MenuWrapper>
       ))}
-      <p>test</p>
+      <MenuAppList/>
     </>
   );
 }

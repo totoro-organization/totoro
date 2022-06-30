@@ -1,4 +1,4 @@
-import { StatusEnum } from "src/models/status";
+import { StatusEnum } from "src/models";
 import Label from "../Label";
 
 const statuses = {
@@ -54,14 +54,14 @@ const statuses = {
         name: 'Annulé',
         color: 'warning',
     }
-}
+} as const
 
 interface StatusLabelProps {
     status: keyof typeof StatusEnum
 }
 
 const StatusLabel = ({ status }: StatusLabelProps ): JSX.Element => {
-    const { name, color }: any = statuses[status];
+    const { name, color }: typeof statuses[StatusEnum] = statuses[status];
 
     return <Label color={color}>{name}</Label>;
    
