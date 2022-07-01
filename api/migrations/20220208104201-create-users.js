@@ -57,7 +57,7 @@ module.exports = {
         type: Sequelize.FLOAT
       },
       avatar: {
-        allowNull: false,
+        allowNull: true,
         type: Sequelize.STRING
       },
       bio: {
