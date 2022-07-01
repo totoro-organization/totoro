@@ -19,6 +19,12 @@ Totoro est un service de proximité proposant à ses utilisateurs des missions �
 - Jest (test unitaire)
 - Cypress (test e2e)
 
+example:
+
+```code
+cd webapp && npm start && npm run cypress
+```
+
 ## Documentation
 
 // TODO
@@ -44,7 +50,6 @@ Totoro est un service de proximité proposant à ses utilisateurs des missions �
 - mobileapp : http://127.0.0.1:19002
 - webapp : http://localhost:3000
 - phpmyadmin: http://localhost:8888
-
 
 ## deployment
 
