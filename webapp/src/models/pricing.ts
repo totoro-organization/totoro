@@ -1,12 +1,4 @@
-import { Status, StatusEnum } from "./status";
-
-enum PricingStatusEnum {
-    actived = StatusEnum.actived,
-    disabled = StatusEnum.disabled,
-}
-
-export type PricingStatus = Status<keyof typeof PricingStatusEnum>;
-
+import { PricingStatus } from "./status";
 
 export interface Pricing {
     id: string, 

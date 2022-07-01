@@ -1,10 +1,6 @@
 import axios from 'axios';
 import { config } from './config';
 
-export type ErrorResponse = {
-    error: string
-}
-
 export async function requestAxios(method: string, uri: string, data = null) {
     const token = localStorage.getItem('token') ?? null;
     

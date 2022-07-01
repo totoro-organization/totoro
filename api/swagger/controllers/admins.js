@@ -1,4 +1,5 @@
 const pagination = require('./../generique/pagination')
+const {response201, response200, bodyParam, param} = require("../generique");
 
 module.exports = {
     "/api/admins": {
@@ -33,20 +34,7 @@ module.exports = {
             },
             ...pagination
           ],
-          responses: {
-            200: {
-              description: "Successful request.",
-              schema: {
-                $ref: "#/definitions/getAllAdmins"
-              }
-            },
-            default: {
-              description: "Unexpected error",
-              schema: {
-                $ref: "#/definitions/Error"
-              }
-            }
-          }
+          responses: response200("getAllAdmins")
         },
         post: {
           tags: [
@@ -55,27 +43,9 @@ module.exports = {
           "x-swagger-router-controller": "admins",
           operationId: "postAdmin",
           parameters: [
-            {
-              name: "data",
-              in: "body",
-              description: "Create Admin",
-              required: true,
-              schema: {
-                $ref: "#/definitions/postAdmin"
-              }
-            }
+            ...bodyParam("Create Admin","postAdmin")
           ],
-          responses: {
-            201: {
-              description: "Admin Created"
-            },
-            default: {
-              description: "Unexpected error",
-              schema: {
-                $ref: "#/definitions/Error"
-              }
-            }
-          }
+          responses: response201("Admin Created")
         }
     },
     "/api/admins/{id}": {
@@ -86,27 +56,9 @@ module.exports = {
           "x-swagger-router-controller": "admins",
           operationId: "getAdminById",
           parameters: [
-            {
-              name: "id",
-              in: "path",
-              type: "string",
-              required: true
-            }
+            ...param("id","path","string"),
           ],
-          responses: {
-            200: {
-              description: "Successful request.",
-              schema: {
-                $ref: "#/definitions/getAdmin"
-              }
-            },
-            default: {
-              description: "Unexpected error",
-              schema: {
-                $ref: "#/definitions/Error"
-              }
-            }
-          }
+          responses: response200("getAdmin")
         },
         put: {
           tags: [
@@ -115,36 +67,10 @@ module.exports = {
           "x-swagger-router-controller": "admins",
           operationId: "putAdmin",
           parameters: [
-            {
-              name: "id",
-              in: "path",
-              type: "string",
-              required: true
-            },
-            {
-              name: "data",
-              in: "body",
-              description: "Update Admin",
-              required: true,
-              schema: {
-                $ref: "#/definitions/putAdmin"
-              }
-            }
+            ...param("id","path","string"),
+            ...bodyParam("Update Admin", "putAdmin")
           ],
-          responses: {
-            201: {
-              description: "Admin Updated",
-              schema: {
-                $ref: "#/definitions/Success"
-              }
-            },
-            default: {
-              description: "Unexpected error",
-              schema: {
-                $ref: "#/definitions/Error"
-              }
-            }
-          }
+          responses: response201("Admin Updated")
         },
         delete: {
           tags: [
@@ -152,28 +78,8 @@ module.exports = {
           ],
           "x-swagger-router-controller": "admins",
           operationId: "deleteAdmin",
-          parameters: [
-            {
-              name: "id",
-              in: "path",
-              type: "string",
-              required: true
-            }
-          ],
-          responses: {
-            201: {
-              description: "Successful request.",
-              schema: {
-                $ref: "#/definitions/Success"
-              }
-            },
-            default: {
-              description: "Unexpected error",
-              schema: {
-                $ref: "#/definitions/Error"
-              }
-            }
-          }
+          parameters: param("id","path","string"),
+          responses: response201()
         }
     },
     "/api/admins/change/password": {
@@ -184,30 +90,9 @@ module.exports = {
           "x-swagger-router-controller": "admins",
           operationId: "changePasswordAdmin",
           parameters: [
-            {
-              name: "data",
-              in: "body",
-              description: "Change password Admin",
-              required: true,
-              schema: {
-                $ref: "#/definitions/putPasswordAdmin"
-              }
-            }
+            ...bodyParam("Change password Admin", "putPasswordAdmin")
           ],
-          responses: {
-            201: {
-              description: "Password Updated",
-              schema: {
-                $ref: "#/definitions/Success"
-              }
-            },
-            default: {
-              description: "Unexpected error",
-              schema: {
-                $ref: "#/definitions/Error"
-              }
-            }
-          }
+          responses: response201("Password Updated")
         }
     },
     "/api/admins/{id}/role": {
@@ -218,36 +103,10 @@ module.exports = {
           "x-swagger-router-controller": "admins",
           operationId: "putAdmin",
           parameters: [
-            {
-              name: "id",
-              in: "path",
-              type: "string",
-              required: true
-            },
-            {
-              name: "data",
-              in: "body",
-              description: "Update Admin role",
-              required: true,
-              schema: {
-                $ref: "#/definitions/putRoleAdmin"
-              }
-            }
+            ...param("id","path","string"),
+            ...bodyParam("Update Admin role", "putRoleAdmin")
           ],
-          responses: {
-            201: {
-              description: "Role Updated",
-              schema: {
-                $ref: "#/definitions/Success"
-              }
-            },
-            default: {
-              description: "Unexpected error",
-              schema: {
-                $ref: "#/definitions/Error"
-              }
-            }
-          }
+          responses: response201("Role Updated")
         }
     },
     "/api/admins/{id}/logs": {
@@ -258,40 +117,12 @@ module.exports = {
           "x-swagger-router-controller": "admins",
           operationId: "getLogsAdminById",
           parameters: [
-            {
-              name: "id",
-              in: "path",
-              type: "string",
-              required: true
-            },
-            {
-              name: "start_date",
-              in: "query",
-              type: "string",
-              required: false
-            },
-            {
-              name: "end_date",
-              in: "query",
-              type: "string",
-              required: false
-            },
+            ...param("id","path","string"),
+            ...param("start_date","query","string",false),
+            ...param("end_date","query","string",false),
             ...pagination
           ],
-          responses: {
-            200: {
-              description: "Successful request.",
-              schema: {
-                $ref: "#/definitions/getLogsAdmin"
-              }
-            },
-            default: {
-              description: "Unexpected error",
-              schema: {
-                $ref: "#/definitions/Error"
-              }
-            }
-          }
+          responses: response200("getLogsAdmin")
         },
         post: {
           tags: [
@@ -300,36 +131,10 @@ module.exports = {
           "x-swagger-router-controller": "admins",
           operationId: "postLogAdmin",
           parameters: [
-            {
-              name: "id",
-              in: "path",
-              type: "string",
-              required: true
-            },
-            {
-              name: "data",
-              in: "body",
-              description: "Post log Admin",
-              required: true,
-              schema: {
-                $ref: "#/definitions/postLogAdmin"
-              }
-            }
+            ...param("id","path","string"),
+            ...bodyParam("Post log Admin", "postLogAdmin")
           ],
-          responses: {
-            201: {
-              description: "Successful request.",
-              schema: {
-                $ref: "#/definitions/Success"
-              }
-            },
-            default: {
-              description: "Unexpected error",
-              schema: {
-                $ref: "#/definitions/Error"
-              }
-            }
-          }
+          responses: response201()
         }
     },
     "/api/admins/logs/getAll": {
@@ -340,34 +145,11 @@ module.exports = {
           "x-swagger-router-controller": "admins",
           operationId: "getLogsAdmins",
           parameters: [
-            {
-              name: "start_date",
-              in: "query",
-              type: "string",
-              required: false
-            },
-            {
-              name: "end_date",
-              in: "query",
-              type: "string",
-              required: false
-            },
+            ...param("start_date","query","string",false),
+            ...param("end_date","query","string",false),
             ...pagination
           ],
-          responses: {
-            200: {
-              description: "Successful request.",
-              schema: {
-                $ref: "#/definitions/getLogsAdmins"
-              }
-            },
-            default: {
-              description: "Unexpected error",
-              schema: {
-                $ref: "#/definitions/Error"
-              }
-            }
-          }
+          responses: response200("getLogsAdmins")
         }
     },
     "/api/admins/logs/truncate": {
@@ -378,33 +160,10 @@ module.exports = {
           "x-swagger-router-controller": "admins",
           operationId: "truncateLogsAdmins",
           parameters: [
-            {
-              name: "start_date",
-              in: "query",
-              type: "string",
-              required: false
-            },
-            {
-              name: "end_date",
-              in: "query",
-              type: "string",
-              required: false
-            }
+            ...param("start_date","query","string",false),
+            ...param("end_date","query","string",false)
           ],
-          responses: {
-            201: {
-              description: "Successful request.",
-              schema: {
-                $ref: "#/definitions/Success"
-              }
-            },
-            default: {
-              description: "Unexpected error",
-              schema: {
-                $ref: "#/definitions/Error"
-              }
-            }
-          }
+          responses: response201()
         }
     },
 }

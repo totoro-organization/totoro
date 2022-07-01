@@ -1,3 +1,6 @@
+const pagination = require('./../generique/pagination')
+const {response201, response200, bodyParam, param} = require("../generique");
+
 module.exports = {
     "/api/litigations": {
         get: {
@@ -16,22 +19,10 @@ module.exports = {
                 "closed",
                 "deleted"
               ]
-            }
-          ],
-          responses: {
-            200: {
-              description: "Successful request.",
-              schema: {
-                $ref: "#/definitions/getAllLitigations"
-              }
             },
-            default: {
-              description: "Unexpected error",
-              schema: {
-                $ref: "#/definitions/Error"
-              }
-            }
-          }
+            ...pagination
+          ],
+          responses: response200("getAllLitigations")
         },
         post: {
           tags: [
@@ -40,27 +31,9 @@ module.exports = {
           "x-swagger-router-controller": "litigations",
           operationId: "postLitigation",
           parameters: [
-            {
-              name: "data",
-              in: "body",
-              description: "Create Litigation",
-              required: true,
-              schema: {
-                $ref: "#/definitions/postLitigation"
-              }
-            }
+            ...bodyParam("Create Litigation","postLitigation")
           ],
-          responses: {
-            201: {
-              description: "Litigation Created"
-            },
-            default: {
-              description: "Unexpected error",
-              schema: {
-                $ref: "#/definitions/Error"
-              }
-            }
-          }
+          responses: response201("Litigation Created")
         }
     },
     "/api/litigations/{id}": {
@@ -71,27 +44,9 @@ module.exports = {
           "x-swagger-router-controller": "litigations",
           operationId: "getLitigationById",
           parameters: [
-            {
-              name: "id",
-              in: "path",
-              type: "string",
-              required: true
-            }
+            ...param("id", "path", "string")
           ],
-          responses: {
-            200: {
-              description: "Successful request.",
-              schema: {
-                $ref: "#/definitions/getLitigation"
-              }
-            },
-            default: {
-              description: "Unexpected error",
-              schema: {
-                $ref: "#/definitions/Error"
-              }
-            }
-          }
+          responses: response200("getLitigation")
         },
         put: {
           tags: [
@@ -100,36 +55,10 @@ module.exports = {
           "x-swagger-router-controller": "litigations",
           operationId: "putLitigation",
           parameters: [
-            {
-              name: "id",
-              in: "path",
-              type: "string",
-              required: true
-            },
-            {
-              name: "data",
-              in: "body",
-              description: "Update Litigation",
-              required: true,
-              schema: {
-                $ref: "#/definitions/putLitigation"
-              }
-            }
+            ...param("id", "path", "string"),
+            ...bodyParam("Update Litigation", "putLitigation")
           ],
-          responses: {
-            201: {
-              description: "Litigation Updated",
-              schema: {
-                $ref: "#/definitions/Success"
-              }
-            },
-            default: {
-              description: "Unexpected error",
-              schema: {
-                $ref: "#/definitions/Error"
-              }
-            }
-          }
+          responses: response201("Litigation Updated")
         },
         delete: {
           tags: [
@@ -137,28 +66,8 @@ module.exports = {
           ],
           "x-swagger-router-controller": "litigations",
           operationId: "deleteLitigation",
-          parameters: [
-            {
-              name: "id",
-              in: "path",
-              type: "string",
-              required: true
-            }
-          ],
-          responses: {
-            201: {
-              description: "Successful request.",
-              schema: {
-                $ref: "#/definitions/Success"
-              }
-            },
-            default: {
-              description: "Unexpected error",
-              schema: {
-                $ref: "#/definitions/Error"
-              }
-            }
-          }
+          parameters: param("id", "path", "string"),
+          responses: response201()
         }
     },
 }
