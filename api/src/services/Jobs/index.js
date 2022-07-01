@@ -11,10 +11,26 @@ exports.router = (function () {
 		controller.getJobs(res, req.query);
 	});
 
+	jobsRouter.post("/", [passport, controller.createJob]);
+
 	jobsRouter.get("/:id", async function (req, res) {
 		const id = req.params.id;
 		controller.getJob(res, id, req.query);
 	},);
+
+	jobsRouter.put("/:id", [passport, async function (req, res) {
+		const id = req.params.id;
+		const data = req.body;
+		controller.updateJob(res, id, data);
+	}]);
+
+	jobsRouter.delete("/:id", [
+		passport,
+		async function (req, res) {
+			const id = req.params.id;
+			controller.deleteJob(res, id);
+		},
+	]);
 
 	jobsRouter.get("/:id/participants", [
 		passport,
@@ -40,23 +56,7 @@ exports.router = (function () {
 		},
 	]);
 
-	jobsRouter.post("/", [passport, controller.createJob]);
-
-	jobsRouter.put("/:id", [passport, async function (req, res) {
-		const id = req.params.id;
-		const data = req.body;
-		controller.updateJob(res, id, data);
-	}]);
-
-	jobsRouter.delete("/:id", [
-		passport,
-		async function (req, res) {
-			const id = req.params.id;
-			controller.deleteJob(res, id);
-		},
-	]);
-
-	jobsRouter.put("/image/:id", [passport, upload(path.jobs).single("image"), async function (req, res) {
+	jobsRouter.put("/image/:attachment_jobs_id", [passport, upload(path.jobs).single("image"), async function (req, res) {
 		const id = req.params.id;
 		const data = {};
 		if (req.file) {
@@ -68,7 +68,7 @@ exports.router = (function () {
 		controller.updateImage(res, id, data);
 	}]);
 
-	jobsRouter.delete("/image/:id", [
+	jobsRouter.delete("/image/:attachment_jobs_id", [
 		passport,
 		async function (req, res) {
 			const id = req.params.id;

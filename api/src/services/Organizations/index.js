@@ -4,7 +4,7 @@ const controller = require("./controller");
 const { path } = require("utils/enum.json");
 const { upload } = require("utils/storage");
 const { getRow } = require("utils/common/thenCatch");
-const { Status, Roles } = require("./../../../models");
+const { Status, Roles, Users } = require("./../../../models");
 const { label_status, role } = require("utils/enum.json");
 
 exports.router = (function () {
@@ -33,6 +33,14 @@ exports.router = (function () {
 		const data = req.body;
 		controller.updateOrganization(res, id, data);
 	}]);
+
+	organizationsRouter.delete("/:id", [
+		passport,
+		async function (req, res) {
+			const id = req.params.id;
+			controller.deleteOrganization(res, id);
+		},
+	]);
 
 	organizationsRouter.get("/:id/jobs", [
 		passport,
@@ -84,7 +92,7 @@ exports.router = (function () {
 			const roleData = await getRow(res, Roles, { label: role.moderator });
 			data["role_id"] = roleData.id;
 			data["assos_id"] = req.params.id;
-
+			data["user_id"] = req.userData.id;
 			controller.addToOrganization(res, data);
 		},
 	]);
@@ -95,21 +103,14 @@ exports.router = (function () {
 		const statusData = await getRow(res, Status, { label: label_status.invited });
 		data["status_id"] = statusData.id;		
 		const roleData = await getRow(res, Roles, { label: role.moderator });
+		const userData = await getRow(res, Users, { id: data.user_id });
 		data["role_id"] = roleData.id;
 		data["assos_id"] = req.params.id;
 
 		controller.addToOrganization(res, data);
 	});
 
-	organizationsRouter.delete("/:id", [
-		passport,
-		async function (req, res) {
-			const id = req.params.id;
-			controller.deleteOrganization(res, id);
-		},
-	]);
-
-	organizationsRouter.put("/response/memberId", [
+	organizationsRouter.put("/response/:memberId", [
 		passport,
 		async function (req, res) {
 			const id = req.params.memberId;
@@ -118,7 +119,7 @@ exports.router = (function () {
 		},
 	]);
 
-	organizationsRouter.put("/member/memberId", [
+	organizationsRouter.put("/member/:memberId", [
 		passport,
 		async function (req, res) {
 			const id = req.params.memberId;
@@ -128,7 +129,7 @@ exports.router = (function () {
 	]);
 
 
-	organizationsRouter.put("/:id/logo", [passport, upload(path.logo).single("logo"), async function (req, res) {
+	organizationsRouter.put("/logo/:id", [passport, upload(path.logo).single("logo"), async function (req, res) {
 		const id = req.params.id;
 		const data = {};
 		if (req.file) {
@@ -138,6 +139,13 @@ exports.router = (function () {
 
 		controller.updateLogo(res, id, data);
 	}]);
+
+	organizationsRouter.put("/:id/subscriptions/change", [passport, async function (req, res) {
+		const id = req.params.id;
+		const data = req.body;
+		controller.changeSubscription(res, id, data);
+	}]);
+
 
 	return organizationsRouter;
 })();

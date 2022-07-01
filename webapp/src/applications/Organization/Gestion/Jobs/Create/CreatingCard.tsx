@@ -1,30 +1,24 @@
-import { DataUsageTwoTone } from '@mui/icons-material';
+import DeleteIcon from '@mui/icons-material/Delete';
 import {
     Button,
     Card,
     Box,
     Grid,
-    Input,
-    Typography,
-    IconButton,
-    Hidden,
-    Avatar,
-    Divider,
-    ListItem,
-    ListItemText,
     TextField,
+    Select, 
+    MenuItem,
     Container,
-    List,
-    ListItemAvatar,
-    Autocomplete
+    Autocomplete,
+    SelectChangeEvent
 } from '@mui/material';
 import InputAdornment from '@mui/material/InputAdornment';
-import { useContext, useState } from 'react';
+import { useContext, useState, useRef, useEffect } from 'react';
 import DateFnsProvider from 'src/components/DateFnsProvider';
 import { DatePicker } from '@mui/x-date-pickers';
-import { createJob } from 'src/services/job.service';
+import { addItem } from 'src/services/common.service'
 import { useNavigate } from 'react-router-dom';
 import { CommonsContext } from 'src/contexts/CommonsContext';
+import { API_ROUTES } from 'src/services/routes';
 
 function CreatingCard() {
 
@@ -32,26 +26,26 @@ function CreatingCard() {
 
     const { tags, difficulties, categories } = useContext(CommonsContext);
 
-    console.log(tags);
-    console.log(categories);
-    console.log(difficulties);
-    
-
-    const jobOptions = [
-        'Environnement', 'Culture', 'Communication','Enseignement','Social'
-       ];
-
     const [date, setDate] = useState<Date | null>(null);
+
+    const [level, setLevel] = useState<Object | null>(null);;
+
+    const [image, setImage] = useState<File>();
+
+    const [preview, setPreview] = useState<string | null>();
+    
+    const fileInputRef = useRef<HTMLInputElement>();
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
 
-        createJob ({
-            missionstype: data.get('missiontype'),
-            tag: data.get('tag'),
-            tokens: data.get('tokens'),
+        addItem (API_ROUTES.JOBS, {
+            title: data.get('jobTitle'),
+            participants_max: data.get('participantsMax'),
+            tags: data.get('tag'),
             startingdate: date,
+            difficulties: level
         }) 
 
         .then (response => {
@@ -63,6 +57,18 @@ function CreatingCard() {
         })
     }
 
+    useEffect(() => {
+        if (image) {   
+          const reader = new FileReader();
+          reader.onloadend = () => {
+            setPreview(reader.result as string);
+          };
+          reader.readAsDataURL(image);
+        } else {
+          setPreview(null);
+        }
+      }, [image]);
+
     return (
         <Container maxWidth="md">
             <Card>
@@ -72,18 +78,28 @@ function CreatingCard() {
                             <TextField
                             required
                             fullWidth
-                            id="missionType"
-                            label="Type de mission"
-                            name="missionstype"
+                            id="jobTitle"
+                            label="Titre de la mission"
+                            name="jobTitle"
                         />
                         </Grid>
                         <Grid item xs={12}>
                             <Autocomplete
-                                limitTags={2}
+                                multiple
+                                limitTags={4}
                                 id="multiple-limit-tags"
-                                options={jobOptions}
+                                options={tags.map(tag => tag.label)}
                                 renderInput={(params) => (
-                                    <TextField {...params} label="Choisissez un tag" placeholder="Favorites" />
+                                    <TextField {...params} label="Choisissez un tag" placeholder="tag" />
+                                )}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Autocomplete
+                                id="category"
+                                options={categories}
+                                renderInput={(params) => (
+                                    <TextField {...params} label="Choisissez une catégorie" placeholder="catégorie" />
                                 )}
                             />
                         </Grid>
@@ -100,17 +116,19 @@ function CreatingCard() {
                             </DateFnsProvider>
                         </Grid>
                         <Grid item xs={12} sm={6}>
-                            <TextField
+                            <Select
+                                value={level}
                                 fullWidth
                                 required
-                                inputProps={{ min: 0 }}
-                                label="Tokens gagnés"
-                                type='number'
-                                id="outlined-start-adornment"
-                                InputProps={{
-                                    endAdornment: <InputAdornment position="end">tokens</InputAdornment>,
-                                }}
-                            />
+                                onChange={(e: SelectChangeEvent<HTMLInputElement>) => setLevel(e.target.value)}
+                                label="Difficulté"
+                                >
+                                {difficulties.map((difficulty) => (
+                                    <MenuItem key={difficulty.id} value={difficulty}>
+                                        {`${difficulty.level} (${difficulty.token} tokens)`}
+                                    </MenuItem>
+                                ))}
+                            </Select>
                         </Grid>
                         <Grid item xs={12} sm={6}>
                             <TextField
@@ -118,8 +136,9 @@ function CreatingCard() {
                                 required
                                 inputProps={{ min: 0 }}
                                 type='number'
+                                name="participantsMax"
                                 label="Nombre de places"
-                                id="outlined-start-adornment"
+                                id="participantsMax"
                                 InputProps={{
                                     endAdornment: <InputAdornment position="end">places</InputAdornment>,
                                 }}
@@ -136,30 +155,56 @@ function CreatingCard() {
                                 name="missiondescription"
                             />
                         </Grid>
-                        <label htmlFor="contained-button-file">
-                            <Input style={{display:'none'}} id="contained-button-file" type="file" />
-                            <Button variant="contained" component="span">
-                                Upload
-                            </Button>
-                        </label>
-                        {/* <TextField
-                            name="upload-photo"
-                            type="file"
-                        /> */}
+                        <Grid item xs={12}>
+                            {preview && image ? (
+                            <div style={{ display: "flex"}}>
+                                <img
+                                    src={preview}
+                                    alt="preview attachment"
+                                    style={{ objectFit: "cover", width: '200px' }}
+                                    onClick={() => setImage(null)}
+                                />
+                                <p> {image.name}</p>
+                                <p> {(image.size / (1024*1024)).toFixed(2)} MB</p>
+                                <DeleteIcon onClick={() => {setImage(null)}}></DeleteIcon>
+                            </div>
+                            ) : (
+                                <Button variant="outlined"
+                                    component="button"
+                                    onClick={(event) => {
+                                    event.preventDefault();
+                                    fileInputRef.current.click();
+                                    }}
+                                >
+                                    Ajouter une image
+                                </Button>
+                            )}
+                            <input
+                                type="file"
+                                required
+                                style={{ display: "none" }}
+                                ref={fileInputRef}
+                                accept="image/*"
+                                onChange={(event) => {
+                                    const file = event.target.files[0];
+                                    if (file && file.type.substr(0, 5) === "image") setImage(file);
+                                    else setImage(null);
+                                }}
+                            />
+   
+                        </Grid>
                         <Button
                             type="submit"
                             fullWidth
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
-                            >
-                            Create your job
+                        >
+                            Créer la mission
                         </Button>
                     </Grid>
                 </Box>
             </Card>
         </Container>
-    )
-        
+    )  
   }
-
 export default CreatingCard;

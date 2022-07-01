@@ -1,4 +1,4 @@
-const {labelType, date, arrayType, objPut} = require("../generique");
+const {labelType, date, arrayType, objPut, roleAndDiscountTypeProps, pricingProperties} = require("../generique");
 
 module.exports = {
     getRole: function(){
@@ -32,7 +32,7 @@ module.exports = {
       }
     },
     putRole: function(){
-      return objPut(module.exports.postRole);
+      return objPut(module.exports.postRole());
     },
     /*
     getCommon: function(){
@@ -213,39 +213,7 @@ module.exports = {
       return {
         type: "object",
         properties: {
-          id: {
-            type: "string"
-          },
-          label: {
-            type: "string"
-          },
-          description: {
-            type: "string"
-          },
-          duration: {
-            type: "integer"
-          },
-          nb_account: {
-            type: "integer"
-          },
-          nb_jobs_by_month: {
-            type: "integer"
-          },
-          price: {
-            type: "integer"
-          },
-          nb_attachments_by_publish: {
-            type: "integer"
-          },
-          social_publish: {
-            type: "boolean"
-          },
-          flux_activities: {
-            type: "boolean"
-          },
-          certifate: {
-            type: "boolean"
-          },
+          ...pricingProperties(),
           ...date(),
           status: labelType()
         }

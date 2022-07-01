@@ -14,7 +14,6 @@ module.exports = [
       commune: "PARIS 6E ARRONDISSEMENT",
       creation_date: "1900-01-01",
       longitude: 2.319089,
-      logo: "/logo/default.svg",
       latitude: 48.84661,
       description: null,
       link: "http://www.voirensemble.asso.fr/",
