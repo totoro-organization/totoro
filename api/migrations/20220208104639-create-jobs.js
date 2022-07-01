@@ -41,11 +41,11 @@ module.exports = {
 				type: Sequelize.STRING,
 			},
 			participants_max: {
-				allowNull: false,
+				allowNull: true,
 				type: Sequelize.INTEGER,
 			},
 			remaining_place: {
-				allowNull: false,
+				allowNull: true,
 				type: Sequelize.INTEGER,
 			},
 			start_date: {
@@ -69,11 +69,11 @@ module.exports = {
 				type: Sequelize.STRING,
 			},
 			longitude: {
-				allowNull: true,
+				allowNull: false,
 				type: Sequelize.FLOAT
 			},
 			latitude: {
-				allowNull: true,
+				allowNull: false,
 				type: Sequelize.FLOAT
 			},
 			qrcode: {

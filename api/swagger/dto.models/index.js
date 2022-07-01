@@ -9,6 +9,7 @@ const litigationsModel = require("./litigations.model");
 const organizationsModel = require("./organizations.model");
 const partnersModel = require("./partners.model");
 const usersModel = require("./users.model");
+const subscriptionsModel = require("./subscriptions.model");
 
 module.exports = {
 	adminsModel,
@@ -22,4 +23,5 @@ module.exports = {
 	organizationsModel,
 	partnersModel,
 	usersModel,
+	subscriptionsModel
 };
