@@ -1,0 +1,19 @@
+name: app
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  run-linters:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install modules
+        run: npm i
+        working-directory: .
+      - name: Build
+        run: npm run build
+        working-directory: .
