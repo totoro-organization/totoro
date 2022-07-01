@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "assos_id",
       });
       models.Associations.hasMany(models.Associations_users, {
-        as: "users",
+        as: "members",
         onDelete: "cascade",
         foreignKey: "assos_id",
       });

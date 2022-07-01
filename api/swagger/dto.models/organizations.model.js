@@ -173,7 +173,7 @@ module.exports = {
               ...organizationProperties(),
               ...date(),
               status: labelType(),
-              memberships: arrayType(memberships())
+              members: arrayType(memberships())
             }
         }
     },
