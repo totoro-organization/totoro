@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { TableItem } from "./useTable";
+import { TableItem } from "src/models";
 
 type UseModalResponse = [
     modalOpen: boolean,

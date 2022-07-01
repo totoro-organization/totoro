@@ -17,12 +17,11 @@ import {
 
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
-import { Pricing } from 'src/models/pricing';
 import Modal from 'src/components/Modal';
 import StatusLabel from 'src/components/StatusLabel';
 import { useModal } from 'src/hooks/useModal';
 import { AddPricingContent, DeletePricingContent, EditPricingContent } from './PricingModalContent';
-import { TableProps } from 'src/components/TableWrapper';
+import type { TableProps, Pricing } from 'src/models';
 
 
 const PricingsTable: FC<TableProps<Pricing>> = ({

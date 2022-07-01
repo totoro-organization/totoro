@@ -1,4 +1,4 @@
-function truncateSring(str: string, length: number, ending: string) {
+export function getTruncateSring(str: string, length: number, ending: string) {
     if (length == null) {
       length = 100;
     }
@@ -12,7 +12,3 @@ function truncateSring(str: string, length: number, ending: string) {
     }
   };
 
-
-  export {
-    truncateSring
-  }

@@ -5,7 +5,7 @@ import SuspenseLoader from 'src/components/SuspenseLoader';
 import TableWrapper from 'src/components/TableWrapper';
 import { styled } from '@mui/system';
 import { StatusEnum, TableEnum } from 'src/models';
-import { CommonsUriEnum } from 'src/models/commons';
+import { API_ROUTES } from 'src/services/routes';
 
 
 const WrapperBox = styled(Box)(
@@ -18,7 +18,7 @@ const WrapperBox = styled(Box)(
 
 function LitigationObjects() {
 
-  const { data: litigationObjects, loading  } = useApi(CommonsUriEnum.litigationObjects);
+  const { data: litigationObjects, loading  } = useApi(API_ROUTES.LITIGATION_OBJECTS);
 
   const statusOptions = [
     {
@@ -35,7 +35,7 @@ function LitigationObjects() {
     <WrapperBox>
       {
         loading || !litigationObjects ? <SuspenseLoader/> : 
-        <TableWrapper table={TableEnum.litigationObjects} addButton url={CommonsUriEnum.litigationObjects} statusOptions={statusOptions} defaultItems={litigationObjects?.data}>
+        <TableWrapper table={TableEnum.litigationObjects} addButton url={API_ROUTES.LITIGATION_OBJECTS} statusOptions={statusOptions} defaultItems={litigationObjects?.data}>
             {/* @ts-ignore */}
             <LitigationObjectsTable />
         </TableWrapper>
