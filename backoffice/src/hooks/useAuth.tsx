@@ -28,7 +28,7 @@ export function AuthProvider({
 }: {
   children: ReactNode;
 }): JSX.Element {
-  const [user, setUser] = useState<Admin>();
+  const [user, setUser] = useState<Admin | null>();
   const [lang, setLang] = useState<keyof typeof LangEnum>(LangEnum.fr || localStorage.getItem('lang') as keyof typeof LangEnum);
   const [error, setError] = useState<any>();
   const [loading, setLoading] = useState<boolean>(false);
@@ -107,7 +107,7 @@ export function AuthProvider({
   // from the state.
   function logout() {
       localStorage.removeItem('token');
-      setUser(undefined);
+      setUser(null);
   }
   // Make the provider update only when it should.
   // We only want to force re-renders if the user,
