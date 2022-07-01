@@ -1,9 +1,7 @@
-import { CommonStatusEnum } from "./commons";
-import { DiscountType } from "./discount_type";
 import { Partner } from "./partner";
-import { Status } from "./status";
+import { DiscountStatus } from "./status";
+import { User } from "./user";
 
-export type DiscountStatus = Status<keyof typeof CommonStatusEnum>;
 
 export interface Discount {
     id: string,
@@ -15,6 +13,24 @@ export interface Discount {
     partner: Partner,
     cost: number,
     status: DiscountStatus
+    createdAt: string,
+    updatedAt: string
+}
+
+export interface DiscountTransaction {
+    id: string,
+    user: User,
+    discount: Discount,
+    qrCode: string,
+    code: string,
+    createdAt: string,
+    updatedAt: string
+}
+
+export interface DiscountType {
+    id: string,
+    name: string, 
+    type: string,
     createdAt: string,
     updatedAt: string
 }
