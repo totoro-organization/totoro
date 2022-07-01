@@ -1,19 +1,9 @@
-name: app
-
-on:
-  push:
-    branches:
-      - main
-  pull_request:
-
-jobs:
-  run-linters:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Install modules
-        run: npm i
-        working-directory: .
-      - name: Build
-        run: npm run build
-        working-directory: .
+strategy:
+  matrix:
+    node-version: [12.x, 14.x, 15.x]
+- name: Use Node.js ${{ matrix.node-version }}
+  uses: actions/setup-node@v2
+  with:
+    node-version: ${{ matrix.node-version }}
+- name: build
+  run: npm run build --if-present
