@@ -67,6 +67,7 @@
   },
   "devDependencies": {
     "@babel/eslint-parser": "7.15.8",
+    "@types/jest": "^28.1.4",
     "@types/node": "^17.0.31",
     "@types/numeral": "2.0.2",
     "@types/react": "17.0.29",
