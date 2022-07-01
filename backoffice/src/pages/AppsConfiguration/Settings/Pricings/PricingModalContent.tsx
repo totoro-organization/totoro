@@ -2,7 +2,7 @@ import { Button, TextField } from "@mui/material";
 import { FormEvent, useState } from "react";
 import { Form } from "src/components/Form";
 import { ButtonsBox } from "src/components/Modal";
-import { TableMethods } from "src/hooks/useTable";
+import { TableMethods } from "src/models";
 import { Pricing } from "src/models";
 
 interface EditPricingContentProps {

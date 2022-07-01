@@ -17,12 +17,11 @@ import {
 
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
-import { Tag } from 'src/models/tag';
+import type { Tag, TableProps } from 'src/models';
 import Modal from 'src/components/Modal';
 import StatusLabel from 'src/components/StatusLabel';
 import { useModal } from 'src/hooks/useModal';
 import { AddTagContent, DeleteTagContent, EditTagContent } from './TagModalContent';
-import { TableProps } from 'src/components/TableWrapper';
 
 const TagsTable: FC<TableProps<Tag>> = ({
   items: tags, 

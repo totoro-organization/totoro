@@ -5,7 +5,7 @@ import SuspenseLoader from 'src/components/SuspenseLoader';
 import TableWrapper from 'src/components/TableWrapper';
 import { styled } from '@mui/system';
 import { StatusEnum, TableEnum } from 'src/models';
-import { CommonsUriEnum } from 'src/models/commons';
+import { API_ROUTES } from 'src/services/routes';
 
 
 const WrapperBox = styled(Box)(
@@ -18,7 +18,7 @@ const WrapperBox = styled(Box)(
 
 function Difficultys() {
 
-  const { data: difficulties, loading  } = useApi(CommonsUriEnum.difficulties);
+  const { data: difficulties, loading  } = useApi(API_ROUTES.DIFFICULTIES);
 
   const statusOptions = [
     {
@@ -35,7 +35,7 @@ function Difficultys() {
     <WrapperBox>
       {
         loading || !difficulties ? <SuspenseLoader/> : 
-        <TableWrapper table={TableEnum.difficulties} addButton url={CommonsUriEnum.difficulties} statusOptions={statusOptions} defaultItems={difficulties?.data}>
+        <TableWrapper table={TableEnum.difficulties} addButton url={API_ROUTES.DIFFICULTIES} statusOptions={statusOptions} defaultItems={difficulties?.data}>
           {/* @ts-ignore */}
             <DifficultiesTable />
         </TableWrapper>

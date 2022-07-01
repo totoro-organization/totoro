@@ -5,8 +5,8 @@ import SuspenseLoader from 'src/components/SuspenseLoader';
 import TableWrapper from 'src/components/TableWrapper';
 import { styled } from '@mui/system';
 import { StatusEnum } from 'src/models/status';
-import { CommonsUriEnum } from 'src/models/commons';
 import { TableEnum } from 'src/models';
+import { API_ROUTES } from 'src/services/routes';
 
 
 const WrapperBox = styled(Box)(
@@ -19,7 +19,7 @@ const WrapperBox = styled(Box)(
 
 function Roles() {
 
-  const { data: roles, loading  } = useApi(CommonsUriEnum.roles);
+  const { data: roles, loading  } = useApi(API_ROUTES.ROLES);
 
   const statusOptions = [
     {
@@ -36,7 +36,7 @@ function Roles() {
     <WrapperBox>
       {
         loading || !roles ? <SuspenseLoader/> : 
-        <TableWrapper table={TableEnum.roles} addButton url={CommonsUriEnum.roles} statusOptions={statusOptions} defaultItems={roles?.data}>
+        <TableWrapper table={TableEnum.roles} addButton url={API_ROUTES.ROLES} statusOptions={statusOptions} defaultItems={roles?.data}>
             {/* @ts-ignore */} 
             <RolesTable />
         </TableWrapper>

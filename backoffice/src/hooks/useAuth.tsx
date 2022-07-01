@@ -7,7 +7,7 @@ import {
   useState
 } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Admin } from 'src/models';
+import { Admin, LoginData } from 'src/models';
 import * as sessionsService from 'src/services/auth.service';
 import { LangEnum } from 'src/models';
 
@@ -16,7 +16,7 @@ interface AuthContextType {
   lang: keyof typeof LangEnum;
   loading: boolean;
   error?: any;
-  login: (params: sessionsService.LoginType) => void;
+  login: (params: LoginData) => void;
   logout: () => void;
 }
 
@@ -75,7 +75,7 @@ export function AuthProvider({
   //
   // Finally, just signal the component that loading the
   // loading state is over.
-  function login(params: sessionsService.LoginType) {
+  function login(params: LoginData) {
     setLoading(true);
 
     sessionsService
