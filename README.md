@@ -28,9 +28,12 @@ Totoro est un service de proximité proposant à ses utilisateurs des missions �
 
 `create a .env file and copy the config`
 
-- Build all project : `sh build.sh` ou `.\build.sh`
-- Build only the api service to work locally : `sh build.sh --build-local` or `.\build.sh --build-local`
-- Build only the services of your choice : `sh build.sh --projects="image1;image2;image3..."` or `.\build.sh --projects="image1;image2;image3..."`
+- Update project : `sh cmd/update-project.sh` or `.\cmd\update-project.sh`
+- Build all project : `sh cmd/build.sh` or `.\cmd\build.sh`
+- Build only the api service to work locally : `sh cmd/build.sh --build-local` or `.\cmd\build.sh --build-local`
+- Build only the services of your choice : `sh cmd/build.sh --projects="image1;image2;image3..."` or `.\cmd\build.sh --projects="image1;image2;image3..."`
+- Update the database if the api structure has changed : `sh cmd/maj-db.sh` or `.\cmd\maj-db.sh`
+- Restart services docker : `sh cmd/restart.sh` or `.\cmd\restart.sh` or for example restart deux services `sh cmd/restart.sh api webapp` or `.\cmd\restart.sh api webapp`
 
 ## ip infra
 
