@@ -14,7 +14,6 @@ module.exports = [
       bio: "Je ne suis pas sympa",
       birthday: "1991-10-08",
       longitude: 2.437956,
-      avatar: "avatar/avatar.svg",
       latitude: 48.8267951,
       status: {
         label: "actived",
@@ -35,7 +34,6 @@ module.exports = [
       bio: "Je suis très sympa",
       birthday: "1990-07-04",
       longitude: 2.437956,
-      avatar: "/avatar/avatar.svg",
       latitude: 48.8267951,
       status: {
         label: "actived",

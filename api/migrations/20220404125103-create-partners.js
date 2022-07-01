@@ -33,7 +33,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       logo: {
-        allowNull: false,
+        allowNull: true,
         type: Sequelize.STRING
       },
       description: {

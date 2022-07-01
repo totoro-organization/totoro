@@ -93,7 +93,6 @@ module.exports = {
     data["status_id"] = inactiveStatus.id;
     data["total_token"] = 0;
     data["password"] = bcrypt.hashSync(password, 10);
-    data["avatar"] = "/avatar/avatar.svg";
     //data["terminal_id"] = nearestTerminal.id;
 
     const condition = { email, username };

@@ -19,7 +19,7 @@ module.exports = {
         },
       })
       .then(function () {
-        console.log("after load data");
+        console.log("DEPLOIEMENT EFFECTUE AVEC SUCCES");
       });
   },
 };

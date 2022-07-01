@@ -5,6 +5,7 @@ const {
 	Types_discounts
 } = require("./../../../models");
 const commonsController = require("services/Commons/controller");
+const { label_status } = require("utils/enum.json");
 
 const { getRow, getPaginationQueries } = require("utils/common/thenCatch");
 
@@ -52,10 +53,10 @@ module.exports = {
 		commonsController.getOne(res, Discounts, id, exclude, include);
 	},
 
-	createPartner: async function (res, data) {
-		const { name, status_id, type_disc_id, partner_id } = data
+	createDiscount: async function (res, data) {
+		const { name, type_disc_id, partner_id } = data
 
-		const statusData = await getRow(res, Status, { id: status_id });
+		const statusData = await getRow(res, Status, { id: label_status.actived });
 		const typeData = await getRow(res, Types_discounts, { id: type_disc_id });
 		const partnerData = await getRow(res, Partners, { id: partner_id });
 		const condition = { name };
@@ -64,8 +65,9 @@ module.exports = {
 
 	},
 
-	updateDiscount: function (res, id, data) {
-		const {name} = data
+	updateDiscount: async function (res, id, data) {
+		const { name, type_disc_id } = data
+		const typeData = await getRow(res, Types_discounts, { id: type_disc_id });
 		const condition = {};
 		if (name) condition.name = name;
 		commonsController.update(res, Discounts, id, data, condition);
