@@ -31,7 +31,7 @@ const include = [
 	{ model: Status, as: "status", attributes: excludeCommon },
 	{
 		model: Associations_users,
-		as: "memberships",
+		as: "members",
 		attributes: {
 			exclude: ["user_id", "assos_id", "role_id", "status_id"],
 		},
