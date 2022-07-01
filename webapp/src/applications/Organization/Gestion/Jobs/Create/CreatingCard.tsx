@@ -8,7 +8,8 @@ import {
     Select, 
     MenuItem,
     Container,
-    Autocomplete
+    Autocomplete,
+    SelectChangeEvent
 } from '@mui/material';
 import InputAdornment from '@mui/material/InputAdornment';
 import { useContext, useState, useRef, useEffect } from 'react';
@@ -119,7 +120,7 @@ function CreatingCard() {
                                 value={level}
                                 fullWidth
                                 required
-                                onChange={(e) => setLevel(e.target.value)}
+                                onChange={(e: SelectChangeEvent<HTMLInputElement>) => setLevel(e.target.value)}
                                 label="Difficulté"
                                 >
                                 {difficulties.map((difficulty) => (
