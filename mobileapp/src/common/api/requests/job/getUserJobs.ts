@@ -1,9 +1,9 @@
-import config from "../config";
+import config from "../../config";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import { API_HOST, API_ROUTES } from "../routes";
+import { API_HOST, API_ROUTES } from "../../routes";
 
-export default async function getJob(jobId: string): Promise<any> {
+export default async function getUserJobs(userId: string): Promise<any> {
   const userToken = await AsyncStorage.getItem("userToken");
   const bearer = "Bearer" + " " + userToken;
 
@@ -13,7 +13,7 @@ export default async function getJob(jobId: string): Promise<any> {
     Authorization: bearer,
   });
 
-  const response = await fetch(`${API_HOST}${API_ROUTES.JOB(jobId)}`, {
+  const response = await fetch(`${API_HOST}${API_ROUTES.USER_JOBS(userId)}`, {
     method: "GET",
     headers: myHeaders,
   });
