@@ -13,6 +13,7 @@ type ConversationItemsProps = {
   chats: any;
 };
 
+// TODO: Add text when the job is expired "Mission terminée" (cf figma).
 export default function ConversationItem({ chats }: ConversationItemsProps) {
   const navigation = useNavigation<StackNavigationProp<StackParamList>>();
 

@@ -5,7 +5,8 @@ export type StackParamList = {
   Conversation: { id: number };
   Profile: { id: number; type: ProfileType };
 } & AuthParamList &
-  BottomTabParamList;
+  BottomTabParamList &
+  AppParamList;
 
 export type AuthParamList = {
   Explications: undefined;
