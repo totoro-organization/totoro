@@ -7,31 +7,6 @@ import {
 } from "./status";
 import { User } from "./user";
 
-export interface AttachmentJob {
-  id: string;
-  original_name: string;
-  type: string;
-  image: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
-export interface JobDifficulty {
-  id: string;
-  level: number;
-  token: number;
-  status: JobDifficultyStatus;
-  createdAt: string;
-  updatedAt: string;
-}
-
-export interface Author {
-  id: string;
-  organization: Organization;
-  user: User;
-  status: Status<any>;
-}
-
 export interface Job {
   id: string;
   title: string;
@@ -60,9 +35,36 @@ export interface Job {
 
 export interface Tag {
   id: string;
-  label: string;
-  type: "mission" | "category";
-  status: SubscriptionStatus;
+  tag: {
+    label: string;
+    type: "mission" | "category";
+    status: SubscriptionStatus;
+    createdAt: string;
+    updatedAt: string;
+  };
+}
+
+export interface AttachmentJob {
+  id: string;
+  original_name: string;
+  type: string;
+  image: string;
   createdAt: string;
   updatedAt: string;
+}
+
+export interface JobDifficulty {
+  id: string;
+  level: number;
+  token: number;
+  status: JobDifficultyStatus;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface Author {
+  id: string;
+  organization: Organization;
+  user: User;
+  status: Status<any>;
 }
