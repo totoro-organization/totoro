@@ -1,3 +1,6 @@
+const pagination = require('./../generique/pagination')
+const {response201, response200, bodyParam, param} = require("../generique");
+
 module.exports = {
     "/api/applications": {
         get: {
@@ -16,22 +19,10 @@ module.exports = {
                 "actived",
                 "deleted"
               ]
-            }
-          ],
-          responses: {
-            200: {
-              description: "Successful request.",
-              schema: {
-                $ref: "#/definitions/getAllApplications"
-              }
             },
-            default: {
-              description: "Unexpected error",
-              schema: {
-                $ref: "#/definitions/Error"
-              }
-            }
-          }
+            ...pagination
+          ],
+          responses: response200("getAllApplications")
         },
         post: {
           tags: [
@@ -40,30 +31,9 @@ module.exports = {
           "x-swagger-router-controller": "applications",
           operationId: "postApplication",
           parameters: [
-            {
-              name: "data",
-              in: "body",
-              description: "Create Application",
-              required: true,
-              schema: {
-                $ref: "#/definitions/postApplication"
-              }
-            }
+            ...bodyParam("Create Application", "postApplication")
           ],
-          responses: {
-            201: {
-              description: "Application Created",
-              schema: {
-                $ref: "#/definitions/Success"
-              }
-            },
-            default: {
-              description: "Unexpected error",
-              schema: {
-                $ref: "#/definitions/Error"
-              }
-            }
-          }
+          responses: response201("Application Created")
         }
     },
     "/api/applications/{id}": {
@@ -74,27 +44,9 @@ module.exports = {
           "x-swagger-router-controller": "applications",
           operationId: "getApplicationById",
           parameters: [
-            {
-              name: "id",
-              in: "path",
-              type: "string",
-              required: true
-            }
+            ...param("id","path","string")
           ],
-          responses: {
-            200: {
-              description: "Successful request.",
-              schema: {
-                $ref: "#/definitions/getApplication"
-              }
-            },
-            default: {
-              description: "Unexpected error",
-              schema: {
-                $ref: "#/definitions/Error"
-              }
-            }
-          }
+          responses: response200("getApplication")
         },
         put: {
           tags: [
@@ -103,36 +55,10 @@ module.exports = {
           "x-swagger-router-controller": "applications",
           operationId: "putApplication",
           parameters: [
-            {
-              name: "id",
-              in: "path",
-              type: "string",
-              required: true
-            },
-            {
-              name: "data",
-              in: "body",
-              description: "Update Application",
-              required: true,
-              schema: {
-                $ref: "#/definitions/putApplication"
-              }
-            }
+            ...param("id","path","string"),
+            ...bodyParam("Update Application","putApplication")
           ],
-          responses: {
-            201: {
-              description: "Application Updated",
-              schema: {
-                $ref: "#/definitions/Success"
-              }
-            },
-            default: {
-              description: "Unexpected error",
-              schema: {
-                $ref: "#/definitions/Error"
-              }
-            }
-          }
+          responses: response201("Application Updated")
         },
         delete: {
           tags: [
@@ -140,28 +66,8 @@ module.exports = {
           ],
           "x-swagger-router-controller": "applications",
           operationId: "deleteApplication",
-          parameters: [
-            {
-              name: "id",
-              in: "path",
-              type: "string",
-              required: true
-            }
-          ],
-          responses: {
-            201: {
-              description: "Successful request.",
-              schema: {
-                $ref: "#/definitions/Success"
-              }
-            },
-            default: {
-              description: "Unexpected error",
-              schema: {
-                $ref: "#/definitions/Error"
-              }
-            }
-          }
+          parameters: param("id","path","string"),
+          responses: response201()
         }
     },
 }

@@ -1,3 +1,6 @@
+const pagination = require('./../generique/pagination')
+const {response201, response200, bodyParam, param} = require("../generique");
+
 module.exports = {
     "/api/users": {
         get: {
@@ -17,22 +20,10 @@ module.exports = {
                 "disabled",
                 "deleted"
               ]
-            }
-          ],
-          responses: {
-            200: {
-              description: "Successful request.",
-              schema: {
-                $ref: "#/definitions/getAllUsers"
-              }
             },
-            default: {
-              description: "Unexpected error",
-              schema: {
-                $ref: "#/definitions/Error"
-              }
-            }
-          }
+            ...pagination
+          ],
+          responses: response200("getAllUsers")
         }
     },
     "/api/users/{id}": {
@@ -43,27 +34,9 @@ module.exports = {
           "x-swagger-router-controller": "users",
           operationId: "getUserById",
           parameters: [
-            {
-              name: "id",
-              in: "path",
-              type: "string",
-              required: true
-            }
+            ...param("id", "path", "string")
           ],
-          responses: {
-            200: {
-              description: "Successful request.",
-              schema: {
-                $ref: "#/definitions/getUser"
-              }
-            },
-            default: {
-              description: "Unexpected error",
-              schema: {
-                $ref: "#/definitions/Error"
-              }
-            }
-          }
+          responses: response200("getUser")
         },
         put: {
           tags: [
@@ -72,36 +45,10 @@ module.exports = {
           "x-swagger-router-controller": "users",
           operationId: "putUser",
           parameters: [
-            {
-              name: "id",
-              in: "path",
-              type: "string",
-              required: true
-            },
-            {
-              name: "data",
-              in: "body",
-              description: "Update User",
-              required: true,
-              schema: {
-                $ref: "#/definitions/putUser"
-              }
-            }
+            ...param("id", "path", "string"),
+            ...bodyParam("Update User", "putUser")
           ],
-          responses: {
-            201: {
-              description: "User Updated",
-              schema: {
-                $ref: "#/definitions/Success"
-              }
-            },
-            default: {
-              description: "Unexpected error",
-              schema: {
-                $ref: "#/definitions/Error"
-              }
-            }
-          }
+          responses: response201("User Updated")
         },
         delete: {
           tags: [
@@ -109,28 +56,8 @@ module.exports = {
           ],
           "x-swagger-router-controller": "users",
           operationId: "deleteUser",
-          parameters: [
-            {
-              name: "id",
-              in: "path",
-              type: "string",
-              required: true
-            }
-          ],
-          responses: {
-            201: {
-              description: "Successful request.",
-              schema: {
-                $ref: "#/definitions/Success"
-              }
-            },
-            default: {
-              description: "Unexpected error",
-              schema: {
-                $ref: "#/definitions/Error"
-              }
-            }
-          }
+          parameters: param("id", "path", "string"),
+          responses: response201()
         }
     },
     "/api/users/change/password": {
@@ -141,30 +68,9 @@ module.exports = {
           "x-swagger-router-controller": "users",
           operationId: "changePasswordUser",
           parameters: [
-            {
-              name: "data",
-              in: "body",
-              description: "Change password User",
-              required: true,
-              schema: {
-                $ref: "#/definitions/putPasswordAdmin"
-              }
-            }
+            ...bodyParam("Change password User", "putPasswordAdmin")
           ],
-          responses: {
-            201: {
-              description: "Password Updated",
-              schema: {
-                $ref: "#/definitions/Success"
-              }
-            },
-            default: {
-              description: "Unexpected error",
-              schema: {
-                $ref: "#/definitions/Error"
-              }
-            }
-          }
+          responses: response201("Password Updated")
         }
     },
     "/api/users/change/avatar": {
@@ -178,28 +84,9 @@ module.exports = {
             "multipart/form-data"
           ],
           parameters: [
-            {
-              name: "avatar",
-              in: "formData",
-              description: "avatar for user",
-              required: true,
-              type: "file"
-            }
+            ...param("avatar","formData","file", true, "avatar for user")
           ],
-          responses: {
-            201: {
-              description: "Updated Avatar User",
-              schema: {
-                $ref: "#/definitions/Success"
-              }
-            },
-            default: {
-              description: "Unexpected error",
-              schema: {
-                $ref: "#/definitions/Error"
-              }
-            }
-          }
+          responses: response201("Updated Avatar User")
         }
     },
     "/api/users/{id}/favorites": {
@@ -210,27 +97,21 @@ module.exports = {
           "x-swagger-router-controller": "users",
           operationId: "getFavotitesUser",
           parameters: [
+            ...param("id", "path", "string"),
             {
-              name: "id",
-              in: "path",
+              name: "status",
+              in: "query",
               type: "string",
-              required: true
-            }
-          ],
-          responses: {
-            200: {
-              description: "Successful request.",
-              schema: {
-                $ref: "#/definitions/getFavoritesUser"
-              }
+              required: false,
+              enum: [
+                "actived",
+                "disabled",
+                "deleted"
+              ]
             },
-            default: {
-              description: "Unexpected error",
-              schema: {
-                $ref: "#/definitions/Error"
-              }
-            }
-          }
+            ...pagination
+          ],
+          responses: response200("getFavoritesUser")
         },
         post: {
           tags: [
@@ -239,36 +120,10 @@ module.exports = {
           "x-swagger-router-controller": "users",
           operationId: "postFavotitesUser",
           parameters: [
-            {
-              name: "id",
-              in: "path",
-              type: "string",
-              required: true
-            },
-            {
-              name: "data",
-              in: "body",
-              description: "Add Favorite for User",
-              required: true,
-              schema: {
-                $ref: "#/definitions/postFavotitesUser"
-              }
-            }
+            ...param("id", "path", "string"),
+            ...bodyParam("Add Favorite for User", "postFavotitesUser")
           ],
-          responses: {
-            201: {
-              description: "Favorite added",
-              schema: {
-                $ref: "#/definitions/Success"
-              }
-            },
-            default: {
-              description: "Unexpected error",
-              schema: {
-                $ref: "#/definitions/Error"
-              }
-            }
-          }
+          responses: response201("Favorite added")
         }
     
     },
@@ -280,27 +135,21 @@ module.exports = {
           "x-swagger-router-controller": "users",
           operationId: "getJobsUser",
           parameters: [
+            ...param("id", "path", "string"),
             {
-              name: "id",
-              in: "path",
+              name: "status",
+              in: "query",
               type: "string",
-              required: true
-            }
-          ],
-          responses: {
-            200: {
-              description: "Successful request.",
-              schema: {
-                $ref: "#/definitions/getJobsUser"
-              }
+              required: false,
+              enum: [
+                "actived",
+                "disabled",
+                "deleted"
+              ]
             },
-            default: {
-              description: "Unexpected error",
-              schema: {
-                $ref: "#/definitions/Error"
-              }
-            }
-          }
+            ...pagination
+          ],
+          responses: response200("getJobsUser")
         }
     },
     "/api/users/{id}/litigations": {
@@ -311,27 +160,21 @@ module.exports = {
           "x-swagger-router-controller": "users",
           operationId: "getLitigationsUser",
           parameters: [
+            ...param("id", "path", "string"),
             {
-              name: "id",
-              in: "path",
+              name: "status",
+              in: "query",
               type: "string",
-              required: true
-            }
-          ],
-          responses: {
-            200: {
-              description: "Successful request.",
-              schema: {
-                $ref: "#/definitions/getLitigationsUser"
-              }
+              required: false,
+              enum: [
+                "actived",
+                "disabled",
+                "deleted"
+              ]
             },
-            default: {
-              description: "Unexpected error",
-              schema: {
-                $ref: "#/definitions/Error"
-              }
-            }
-          }
+            ...pagination
+          ],
+          responses: response200("getLitigationsUser")
         }
     },
 }

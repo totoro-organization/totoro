@@ -65,7 +65,6 @@ module.exports = {
 		delete data.typeValue
 		data["name"] = request.data.siege_social.nom_raison_sociale
 		data["address"] = request.data.siege_social.l4_normalisee || request.data.siege_social.l4_declaree || `${request.data.siege_social.numero_voie} ${request.data.siege_social.type_voie} ${request.data.siege_social.libelle_voie}`
-		data["logo"] = "/partners/store-placeholder.png";
 		data["in_internet"] = 0;
 		data["in_store"] = 0;
 
@@ -85,11 +84,13 @@ module.exports = {
 		res, Partners, data, condition, null, true);
 	},
 
-	updatePartner: function (res, id, data) {
-		const {phone, email} = data
+	updatePartner: async function (res, id, data) {
+		const {phone, email, status_id} = data
 		const condition = {};
 		if (phone) condition.phone = phone;
 		if (email) condition.email = email;
+		const statusData = await getRow(res, Status, { id: status_id });
+
 		commonsController.update(res, Partners, id, data, condition);
 	},
 

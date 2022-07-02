@@ -63,7 +63,22 @@ const swagger = {
       name: "Admins"
     },
     {
+      name: "Organizations"
+    },
+    {
+      name: "Jobs"
+    },
+    {
+      name: "Partners"
+    },
+    {
+      name: "Discounts"
+    },
+    {
       name: "Litigations"
+    },
+    {
+      name: "Subscriptions"
     },
     {
       name: "Applications"
