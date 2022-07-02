@@ -60,7 +60,7 @@ export function AuthProvider({
           setError(response.error);
           return;
         } 
-        setUser(response);
+        setUser(response as Admin);
       })
       .catch((_error) => {})
       .finally(() => setLoadingInitial(false));
@@ -96,7 +96,7 @@ export function AuthProvider({
             setError(response.error);
             return;
           } 
-          setUser(response);
+          setUser(response as Admin);
           navigate('/')
         })
       })
