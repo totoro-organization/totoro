@@ -24,18 +24,23 @@ const statusOptions = [
   }
 ];
 
-function Jobs() {
-
+export default function Jobs() {
   const { currentApp } = useAuth();
-  const { data: jobs, loading } = useApi(`/organizations/${currentApp.data.id}/jobs`);
+  const { data: jobs, loading } = useApi(
+    `/organizations/${currentApp.data.id}/jobs`
+  );
+
+  if (loading && !jobs) return <SuspenseLoader />;
 
   return (
-        !loading && jobs ? 
-          <TableWrapper url="/jobs" statusOptions={statusOptions} defaultItems={jobs?.data}>
-          {/* @ts-ignore  */}
-            <JobsTable />
-          </TableWrapper> : <SuspenseLoader/>
+    <TableWrapper
+      url="/jobs"
+      statusOptions={statusOptions}
+      defaultItems={jobs?.data}
+    >
+      {/* TODO: Fix type here. Maybe add optional mention to TableProps */}
+      {/* @ts-ignore */}
+      <JobsTable />
+    </TableWrapper>
   );
 }
-
-export default Jobs;
