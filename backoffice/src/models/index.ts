@@ -12,7 +12,7 @@ export type { Chat, AttachmentChat } from './chat';
 export type { Partner } from './partner';
 export type { Pricing } from './pricing';
 export type { Subscription } from './subscription';
-export type { Token, LoginData, SignUpData, ErrorResponse } from './services'
+export type { Token, LoginData, SignUpData, Response } from './services'
 export type { TableItem, TableMethods, Filters, TableProps } from './table'
 export { StatusEnum } from './status';
 export { TableEnum } from './table';
