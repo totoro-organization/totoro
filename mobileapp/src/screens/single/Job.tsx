@@ -64,6 +64,8 @@ export default function Job({
     }
   }
 
+  console.log(job?.tags);
+
   return (
     <GlobalLayout
       header={<></>}
@@ -76,7 +78,7 @@ export default function Job({
       }
     >
       {/* TODO: Add Tag atom.*/}
-      <Text color="info">{job?.tags[0].label}</Text>
+      <Text color="info">{job?.tags[0].tag.label}</Text>
 
       <Spacer axis="vertical" size={1} />
 
