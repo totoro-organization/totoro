@@ -25,8 +25,8 @@ export default function JobCard({ job }: JobCardProps) {
   return (
     <Container onPress={() => navigation.navigate("Job", { id: job.id })}>
       <JobBanner
-        // FIXME: The url returns 504 error.
-        source={{ uri: `${API_HOST}${job?.attachments[0]?.image}` }}
+        // FIXME
+        source={{ uri: `http://localhost:6868${job?.attachments[0]?.image}` }}
         resizeMode="cover"
       />
 

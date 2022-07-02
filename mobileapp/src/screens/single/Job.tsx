@@ -69,8 +69,8 @@ export default function Job({
       header={<></>}
       fullBanner={
         <StyledImage
-          // FIXME: The url returns 504 error.
-          source={{ uri: `${API_HOST}${job?.attachments[0]?.image}` }}
+          // FIXME
+          source={{ uri: `http://localhost:6868${job?.attachments[0]?.image}` }}
           resizeMode="cover"
         />
       }
@@ -184,9 +184,8 @@ export default function Job({
 
       <Spacer axis="vertical" size={4} />
 
-      <FixedView>
-        <Button>Je participe !</Button>
-      </FixedView>
+      {/* TODO: Add call api */}
+      <Button>Je participe !</Button>
     </GlobalLayout>
   );
 }
@@ -204,12 +203,4 @@ const HeadingSection = styled(Text)`
   margin-top: ${({ theme }) => theme.spacing[8]};
   margin-bottom: ${({ theme }) => theme.spacing[3]};
   font-size: ${({ theme }) => theme.fonts.sizes.lg};
-`;
-
-// FIXME
-const FixedView = styled.View`
-  /* position: absolute;
-  left: 24px;
-  right: 24px;
-  bottom: 32px; */
 `;
