@@ -25,5 +25,7 @@ describe('Login page', () => {
       cy.get('input[name="emailOrUsername"]').type(USER_EMAIL);
       cy.get('input[name="password"]').type(USER_PASSWORD);
     });
+
+    // TODO: Add intercept call api.
   });
 });
