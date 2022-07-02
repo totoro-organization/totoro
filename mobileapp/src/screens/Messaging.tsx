@@ -3,8 +3,10 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import React from "react";
 import { TouchableOpacity } from "react-native";
 import { FAKE_MESSAGES_DATA } from "../common/mockedData";
+import Spacer from "../components/atoms/Spacer";
 import { Text } from "../components/atoms/Text";
 import GlobalLayout from "../components/layouts/GlobalLayout";
+import ConversationItem from "../components/molecules/Conversation/ConversationItem";
 import { StackParamList } from "../navigation/StackNavigationParams";
 
 export default function Messaging() {
@@ -12,19 +14,13 @@ export default function Messaging() {
 
   return (
     <GlobalLayout>
-      {/* TODO: Create a dedicated component */}
-      {FAKE_MESSAGES_DATA.map((conversation) => (
-        <TouchableOpacity
-          onPress={() =>
-            navigation.navigate("Conversation", { id: conversation.id })
-          }
-        >
-          <Text>{conversation.mission.title}</Text>
-          <Text color="grey">
-            {conversation.messages[0].user.username}:{" "}
-            {conversation.messages[0].text}
-          </Text>
-        </TouchableOpacity>
+      {/* TODO: Replace me with real data (hooks) */}
+      {FAKE_MESSAGES_DATA.map((conversation, index) => (
+        <>
+          <ConversationItem chats={conversation} key={index} />
+
+          <Spacer axis="vertical" size={1} />
+        </>
       ))}
     </GlobalLayout>
   );
