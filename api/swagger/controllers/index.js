@@ -9,6 +9,7 @@ const litigations = require("./litigations");
 const organizations = require("./organizations");
 const partners = require("./partners");
 const users = require("./users");
+const subscriptions = require("./subscriptions");
 
 module.exports = {
 	...admins,
@@ -22,4 +23,5 @@ module.exports = {
 	...organizations,
 	...partners,
 	...users,
+	...subscriptions,
 };

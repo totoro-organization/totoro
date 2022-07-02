@@ -1,5 +1,7 @@
 
 const axios = require("axios");
+const moment = require("moment");
+const asyncLib = require("async");
 const { success, error } = require("utils/common/messages.json");
 const { label_status, role } = require("utils/enum.json");
 //Send mail
@@ -21,7 +23,7 @@ const {
 	Pricings,
 } = require("./../../../models");
 const commonsController = require("services/Commons/controller");
-const { getRow, getPaginationQueries } = require("utils/common/thenCatch");
+const { getRow, getPaginationQueries, getField, updateField } = require("utils/common/thenCatch");
 
 const excludeCommon = { exclude: ["id", "createdAt", "updatedAt"] };
 
@@ -29,7 +31,7 @@ const include = [
 	{ model: Status, as: "status", attributes: excludeCommon },
 	{
 		model: Associations_users,
-		as: "users",
+		as: "members",
 		attributes: {
 			exclude: ["user_id", "assos_id", "role_id", "status_id"],
 		},
@@ -89,7 +91,6 @@ module.exports = {
 		data["address"] = request.data.siege_social.l4_normalisee || request.data.siege_social.l4_declaree || `${request.data.siege_social.numero_voie} ${request.data.siege_social.type_voie} ${request.data.siege_social.libelle_voie}`
 		data["cp"] = request.data.siege_social.code_postal
 		data["commune"] = request.data.siege_social.libelle_commune
-		data["logo"] = "/logo/default.svg";
 
 		const statusData = await getRow(res, Status, { label: label_status.requested });
 		data["status_id"] = statusData.id;
@@ -119,11 +120,13 @@ module.exports = {
 		res, Associations, data, condition, null, true);
 	},
 
-	updateOrganization: function (res, id, data) {
-		const {phone, email} = data
+	updateOrganization: async function (res, id, data) {
+		const {phone, email, status_id} = data
 		const condition = {};
 		if (phone) condition.phone = phone;
 		if (email) condition.email = email;
+		const statusData = await getRow(res, Status, { id: status_id });
+
 		commonsController.update(res, Associations, id, data, condition);
 	},
 
@@ -333,5 +336,43 @@ module.exports = {
 			.status(error.syntax_error.status)
 			.json({ message: error.syntax_error.message });
 		});
+	},
+
+	changeSubscription: async function (res, id, data) {
+		asyncLib.waterfall(
+			[
+			  function (done) {
+				getField(res, Subscriptions, { assos_id: id, current: 1 }, done, true);
+			  },
+			  async function (found, done) {
+				  if(!found){
+					return res
+						.status(error.not_found.status)
+						.json({ entity: Associations.name, message: error.not_found.message });
+				  } else {
+					const statusData = await getRow(res, Status, { label: label_status.disabled });
+					updateField(res, found, {status_id: statusData.id, current: 0}, done);
+				  } 
+			  },
+			],
+			async function (updateFound) {
+			  if (updateFound){
+				const { pricing_id } = data
+				const statusData = await getRow(res, Status, { label: label_status.actived });
+				const pricingData = await getRow(res, Pricings, { id: pricing_id });
+				
+				data.current = 1;
+				data.status_id = statusData.id;
+				if(pricingData.label !== "Standard") data.expirate = moment().add(pricingData.duration, 'months').format("YYYY-MM-DD");
+
+				commonsController.create(null, res, Subscriptions, data);
+			  }
+			  else
+				return res
+				  .status(error.op_failed.status)
+				  .json({ entity: Subscriptions.name, message: error.op_failed.message });
+			}
+		);
+
 	}
 };

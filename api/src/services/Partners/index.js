@@ -15,6 +15,7 @@ exports.router = (function () {
 		passport,
 		async function (req, res) {
 			const data = req.body;
+			data.user_id = req.userData.id;
 			controller.createPartner(res, data);
 		},
 	]);
@@ -30,6 +31,14 @@ exports.router = (function () {
 		controller.updatePartner(res, id, data);
 	}]);
 
+	partnersRouter.delete("/:id", [
+		passport,
+		async function (req, res) {
+			const id = req.params.id;
+			controller.deletePartner(res, id);
+		},
+	]);
+
 	partnersRouter.get("/:id/discounts", [
 		passport,
 		async function (req, res) {
@@ -43,14 +52,6 @@ exports.router = (function () {
 		async function (req, res) {
 			const id = req.params.id;
 			controller.getTransactions(res, id, req.query);
-		},
-	]);
-
-	partnersRouter.delete("/:id", [
-		passport,
-		async function (req, res) {
-			const id = req.params.id;
-			controller.deletePartner(res, id);
 		},
 	]);
 
