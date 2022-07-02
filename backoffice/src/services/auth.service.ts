@@ -1,5 +1,5 @@
-import { Admin, LoginData, Token } from "src/models";
-import { ErrorResponse, requestAxios } from "./requestApi";
+import { Admin, ErrorResponse, LoginData, Token } from "src/models";
+import { requestAxios } from "./requestApi";
 import { API_ROUTES } from "./routes";
 
 export async function login(params: LoginData): Promise<Token | ErrorResponse> {

@@ -1,7 +1,16 @@
 import { Job } from "./job";
-import { OrganizationStatus } from "./status";
+import { Role } from "./role";
+import { OrganizationStatus, Status } from "./status";
 import { User } from "./user";
 
+interface Member {
+    id: string,
+    user: User,
+    role: Role,
+    status: Status<any>
+    createdAt: string,
+    updatedAt: string
+}
 
 export interface Organization {
     id: string,
@@ -21,7 +30,7 @@ export interface Organization {
     status: OrganizationStatus,
     creation_date?: string,
     activity?: string,
-    users: User[],
+    members: Member[],
     jobs: Job[],
     createdAt: string,
     updatedAt: string
