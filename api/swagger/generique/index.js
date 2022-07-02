@@ -349,6 +349,20 @@ module.exports = {
             status: module.exports.labelType(),
           }
         },
+        participants: module.exports.arrayType({
+          type: "object",
+          properties: {
+            id: {
+              type: "string"
+            },
+            qrcode: {
+              type: "string"
+            },
+            ...module.exports.date(),
+            participant: module.exports.user(),
+            status: module.exports.labelType()
+          }
+        }),
         difficulty: module.exports.difficulty(),
         tags: {
           type: "object",
