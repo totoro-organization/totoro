@@ -1,6 +1,6 @@
 const config = {
   // FIXME
-  APP_ID: "4a82a9d0-c093-451c-9957-f5f5d6f1b9d8",
+  APP_ID: "2371cc34-3f5c-4e88-b0ff-35d44ec9171b",
 };
 
 export default config;
