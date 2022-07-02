@@ -4,13 +4,14 @@ import { FAKE_MISSIONS_DATA } from "../../common/mockedData";
 import Spacer from "../atoms/Spacer";
 import MissionCard from "../molecules/JobCard";
 
-export default function JobsList() {
-  // TODO: Add this hook.
-  // const { missions } = useMissions();
+type JobsListProps = {
+  data: any;
+};
 
+export default function JobsList({ data }: JobsListProps) {
   return (
     <FlatList
-      data={FAKE_MISSIONS_DATA}
+      data={data}
       style={{ flex: 1 }}
       pagingEnabled
       showsHorizontalScrollIndicator={false}
@@ -18,7 +19,7 @@ export default function JobsList() {
       renderItem={({ item, index }) => {
         return (
           <>
-            <MissionCard key={index} mission={item} />
+            <MissionCard key={index} job={item} />
             <Spacer axis="vertical" size={1} />
           </>
         );
