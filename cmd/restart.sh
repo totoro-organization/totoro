@@ -1,4 +1,4 @@
-req="docker compose restart"
+req="docker-compose restart"
 
 while test $# -gt 0
 do

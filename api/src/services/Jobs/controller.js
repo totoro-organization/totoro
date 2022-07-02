@@ -33,7 +33,7 @@ const excludeCommon = { exclude: ["id", "createdAt", "updatedAt"] };
 const include = [
 	{ model: Status, as: "status", attributes: excludeCommon },
 	{ model: Difficulties, as: "difficulty", attributes: excludeCommon },
-	{ model: Attachment_jobs, as: "attachments", attributes: excludeCommon },
+	{ model: Attachment_jobs, as: "attachments", attributes: excludeCommon, order: [['createdAt', 'ASC']]},
 	{
 		model: Associations_users,
 		as: "author",
@@ -58,6 +58,24 @@ const include = [
 				],
 			},
 			{ model: Status, as: "status", attributes: excludeCommon }
+		],
+	},
+	{
+		model: Groups,
+		as: "participants",
+		attributes: {
+			exclude: ["user_id", "jobs_id"],
+		},
+		include: [
+			{
+				model: Users,
+				as: "participant",
+				attributes: { exclude: ["terminal_id", "status_id", "password"] },
+				include: [
+					{ model: Status, as: "status", attributes: excludeCommon },
+				],
+			},
+			{ model: Status, as: "status", attributes: excludeCommon, where: { label: label_status.actived } }
 		],
 	},
 	{
@@ -221,12 +239,15 @@ module.exports = {
 		const {status, size, page} = queries
 
 		let condition = {};
+		let statusData = null;
 		const excludeGroup = ["user_id"];
 
 		if (status) {
-			let statusData = await getRow(res, Status, { label: status });
-			condition.status_id = statusData.id;
+			statusData = await getRow(res, Status, { label: status });
+		} else {
+			statusData = await getRow(res, Status, { label: label_status.actived });
 		}
+		condition.status_id = statusData.id;
 		condition = Object.keys(condition).length === 0 ? null : condition;
 
 		const includeGroup = [
@@ -274,6 +295,7 @@ module.exports = {
 		const tagsJob = tags;
 		delete data.tags;
 		const condition = {title};
+		if(data.participants_max) data.remaining_place = data.participants_max
 		
 		commonsController.create(
 			async function (result) {
@@ -363,6 +385,7 @@ module.exports = {
 		if (difficulty_id) {
 			const diff = await getRow(res, Difficulties, { id: difficulty_id });
 		}
+		if(data.participants_max) data.remaining_place = data.participants_max
 
 		const tagsJob = tags;
 		delete data.tags; 
