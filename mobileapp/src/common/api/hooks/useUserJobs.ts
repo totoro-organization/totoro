@@ -1,7 +1,7 @@
 import { useQuery } from "react-query";
 import type { Job } from "../../../models/job";
 import PaginatedDataType from "../interfaces/PaginatedDataType";
-import getUserJobs from "../requests/getUserJobs";
+import getUserJobs from "../requests/job/getUserJobs";
 
 export default function useUserJobs(userId: string) {
   const { data, isLoading, error } = useQuery<PaginatedDataType<Job>>(
