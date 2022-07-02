@@ -71,14 +71,15 @@ function CreatingCard() {
         }
       }, [image]);
 
-    difficulties.sort(function(x,y){
-        var firstIndex = new Date(x.level),
-        secondIndex = new Date(y.level);
+    //Fonction pour trier dans l'ordre croissant les niveaux de difficultés récupéré du back
+    difficulties.sort(function(compared: any,comparing: any){
+        let comparedLevel: number = compared.level,
+        comparingLevel: number = comparing.level;
 
-        if (firstIndex < secondIndex) return -1;
-        if (firstIndex > secondIndex) return 1;
+        if (comparedLevel < comparingLevel) return -1;
+        if (comparedLevel > comparingLevel) return 1;
         return 0
-    })
+    }) 
 
     return (
         <Container maxWidth="md">
