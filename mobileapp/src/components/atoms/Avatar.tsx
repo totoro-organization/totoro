@@ -4,6 +4,7 @@ import getNameInitials from "../../common/utils/getNameInitials";
 import { User } from "../../models/user";
 import { Text } from "./Text";
 
+// TODO: Rename user to fallback or initials props.
 type AvatarProps = {
   src?: string;
   user?: User;
@@ -11,7 +12,6 @@ type AvatarProps = {
   type?: "user" | "organization";
 };
 
-// FIXME: Remove src prop and replace by user.avatar
 export default function Avatar({
   user,
   src,
