@@ -6,8 +6,8 @@ import { useApi } from 'src/hooks/useApi';
 import SuspenseLoader from 'src/components/SuspenseLoader';
 import TableWrapper from 'src/components/TableWrapper';
 import { styled } from '@mui/system';
-import { CommonsUriEnum } from 'src/models/commons';
 import { TableEnum } from 'src/models';
+import { API_ROUTES } from 'src/services/routes';
 
 
 const WrapperBox = styled(Box)(
@@ -20,13 +20,13 @@ const WrapperBox = styled(Box)(
 
 function Statuses() {
 
-  const { data: statuses, loading  } = useApi(CommonsUriEnum.status);
+  const { data: statuses, loading  } = useApi(API_ROUTES.STATUS);
 
   return (
     <WrapperBox>
       {
         loading || !statuses ? <SuspenseLoader/> : 
-        <TableWrapper table={TableEnum.status} addButton url={CommonsUriEnum.status} defaultItems={statuses?.data}>
+        <TableWrapper table={TableEnum.status} addButton url={API_ROUTES.STATUS} defaultItems={statuses?.data}>
           {/* @ts-ignore */}
             <StatusesTable />
         </TableWrapper>

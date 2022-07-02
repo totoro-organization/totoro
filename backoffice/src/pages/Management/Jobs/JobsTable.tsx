@@ -1,6 +1,6 @@
 import { FC, ChangeEvent } from 'react';
 import { Link } from "react-router-dom";
-
+import format from 'date-fns/format';
 import {
   Tooltip,
   Checkbox,
@@ -14,16 +14,13 @@ import {
   Typography,
   useTheme,
 } from '@mui/material';
-
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
-import { Job } from 'src/models/job';
-import { TableProps } from 'src/components/TableWrapper';
+import type { Job, TableProps } from 'src/models';
 import Modal from "src/components/Modal";
 import { DeleteJobContent } from './JobModalContent';
 import StatusSelect from 'src/components/StatusSelect';
-import { TableEnum } from 'src/models';
 import { useModal } from 'src/hooks/useModal';
-import format from 'date-fns/format';
+
 
 const JobsTable: FC<TableProps<Job>> = ({
   items: jobs, 

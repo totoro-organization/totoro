@@ -14,43 +14,23 @@ import {
 } from '@mui/material';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import BulkActions from './BulkActions';
-import { StatusEnum, StatusOptions } from 'src/models/status';
-import { addItem, deleteItem, getItems, updateItem } from 'src/services/commons.service';
+import { StatusOptions } from 'src/models/status';
+import { addItem, deleteItem, getItems, updateItem } from 'src/services/common.service';
 import { useModal } from 'src/hooks/useModal';
 import { sendLog } from 'src/services/admins.service';
 import useAuth from 'src/hooks/useAuth';
-import { TableEnum } from 'src/models';
+import type { TableEnum, Filters } from 'src/models';
+import type { Route } from 'src/services/routes';
 
 interface TableWrapperProps {
   className?: string;
   defaultItems: any;
-  url?: string,
+  url?: Route,
   title?: string,
   table?: TableEnum,
   statusOptions?: StatusOptions,
   children: ReactNode,
   addButton?: boolean
-}
-
-export interface TableProps<T> {
-  items: T[], 
-  selectedItems: any,
-  handleSelectAllItems: (event: ChangeEvent<HTMLInputElement>) => void, 
-  handleSelectOneItem: (event: ChangeEvent<HTMLInputElement>, itemId: string) => void,
-  selectedSomeItems: any,
-  selectedAllItems: any,
-  handleDeleteItem: (id: string) => any,
-  handleUpdateItem: (id: string, data: object) => any,
-  handleAddItem: (data: object) => any,
-  addModalOpen: boolean,
-  handleCloseAddModal: () => void,
-  handleGetItems: () => void,
-  table?: TableEnum,
-  statusOptions: StatusOptions
-}
-
-interface Filters {
-  status?: keyof typeof StatusEnum | 'all';
 }
 
 const applyFilters = (items: any, filters: Filters): any => {

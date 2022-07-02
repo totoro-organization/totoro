@@ -16,11 +16,10 @@ import {
 } from '@mui/material';
 
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
-import { Status } from 'src/models';
+import type { Status, TableProps } from 'src/models';
 import Modal from 'src/components/Modal';
 import { useModal } from 'src/hooks/useModal';
 import { AddStatusContent, EditStatusContent } from './StatusModalContent';
-import { TableProps } from 'src/components/TableWrapper';
 
 
 const StatusesTable: FC<TableProps<Status<any>>> = ({

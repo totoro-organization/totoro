@@ -5,9 +5,8 @@ import SuspenseLoader from 'src/components/SuspenseLoader';
 import TableWrapper from 'src/components/TableWrapper';
 import { styled } from '@mui/system';
 import { StatusEnum } from 'src/models/status';
-
-import { CommonsUriEnum } from 'src/models/commons';
 import { TableEnum } from 'src/models';
+import { API_ROUTES } from 'src/services/routes';
 
 
 const WrapperBox = styled(Box)(
@@ -20,7 +19,7 @@ const WrapperBox = styled(Box)(
 
 function Tags() {
 
-  const { data: tags, loading  } = useApi(CommonsUriEnum.tags);
+  const { data: tags, loading  } = useApi(API_ROUTES.TAGS);
 
   const statusOptions = [
     {
@@ -37,7 +36,7 @@ function Tags() {
     <WrapperBox>
       {
         loading || !tags ? <SuspenseLoader/> : 
-        <TableWrapper table={TableEnum.tags} addButton url={CommonsUriEnum.tags} statusOptions={statusOptions} defaultItems={tags?.data}>
+        <TableWrapper table={TableEnum.tags} addButton url={API_ROUTES.TAGS} statusOptions={statusOptions} defaultItems={tags?.data}>
           {/* @ts-ignore */}
             <TagsTable  />
         </TableWrapper>

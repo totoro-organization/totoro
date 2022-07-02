@@ -22,7 +22,7 @@ import Modal from 'src/components/Modal';
 import StatusLabel from 'src/components/StatusLabel';
 import { useModal } from 'src/hooks/useModal';
 import { AddDifficultyContent, DeleteDifficultyContent, EditDifficultyContent } from './DifficultyModalContent';
-import { TableProps } from 'src/components/TableWrapper';
+import { TableProps } from 'src/models';
 
 
 const DifficultiesTable: FC<TableProps<JobDifficulty>> = ({
