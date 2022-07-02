@@ -11,32 +11,40 @@ import Avatar from "../atoms/Avatar";
 import Location from "../../assets/icons/Location";
 import Calendar from "../../assets/icons/Calendar";
 import Token from "../../assets/icons/Token";
+import { Job } from "../../models/job";
+import { API_HOST } from "../../common/api/routes";
 
-// TODO: add model of Mission.
 type JobCardProps = {
-  mission: any;
+  job: Job;
 };
 
-// TODO: Add real design
-export default function JobCard({ mission }: JobCardProps) {
+export default function JobCard({ job }: JobCardProps) {
   const navigation = useNavigation<StackNavigationProp<StackParamList>>();
 
   return (
-    <Container onPress={() => navigation.navigate("Job", { id: mission.id })}>
-      <JobBanner source={{ uri: mission.banner }} resizeMode="cover" />
+    <Container onPress={() => navigation.navigate("Job", { id: job.id })}>
+      <JobBanner
+        // FIXME: The url returns 504 error.
+        source={{ uri: `${API_HOST}${job?.attachments[0]?.image}` }}
+        resizeMode="cover"
+      />
 
       <Box display="flex" flexDirection="column" padding={1}>
-        <Text size="lg">{mission.title}</Text>
+        <Text size="lg">{job.title}</Text>
 
         <Spacer axis="vertical" size={0.5} />
 
         <Box display="flex" alignItems="center">
-          <Avatar size="sm" type="organization" src={mission.logo} />
+          <Avatar
+            size="sm"
+            type="organization"
+            src={job.author.organization.logo}
+          />
 
           <Spacer axis="horizontal" size={0.5} />
 
           <Text size="xs" color="grey">
-            {mission.organization.name}
+            {job.author.organization.name}
           </Text>
         </Box>
       </Box>
@@ -69,7 +77,7 @@ export default function JobCard({ mission }: JobCardProps) {
           <Spacer axis="horizontal" size={0.25} />
 
           <Text size="xs" color="primary">
-            {mission.tokens}
+            {job.difficulty.token}
           </Text>
         </FlexWrapper>
       </JobDetails>

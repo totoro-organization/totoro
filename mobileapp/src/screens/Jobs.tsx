@@ -3,6 +3,7 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import React, { useState } from "react";
 import Filter from "../assets/icons/Filter";
 import Sort from "../assets/icons/Sort";
+import useJobs from "../common/api/hooks/useJobs";
 import useBoolean from "../common/hooks/useBoolean";
 import Box from "../components/atoms/Box";
 import Button from "../components/atoms/Button";
@@ -16,6 +17,8 @@ import { AppParamList } from "../navigation/StackNavigationParams";
 
 export default function Jobs() {
   const navigation = useNavigation<StackNavigationProp<AppParamList>>();
+  const { jobs, isLoading: loadingJobs } = useJobs();
+
   const [showSortByModal, setShowSortByModal] = useBoolean();
 
   return (
@@ -51,7 +54,9 @@ export default function Jobs() {
 
       <Spacer axis="vertical" size={2} />
 
-      <JobsList />
+      {/* TODO!!!! */}
+      {loadingJobs && <Text>Add loading screen</Text>}
+      {!loadingJobs && <JobsList data={jobs} />}
     </GlobalLayout>
   );
 }
