@@ -64,8 +64,6 @@ export default function Job({
     }
   }
 
-  console.log(job?.tags);
-
   return (
     <GlobalLayout
       header={<></>}
@@ -150,7 +148,7 @@ export default function Job({
 
             <Box flexDirection="column">
               <Text>{job?.author.organization.name}</Text>
-              <Text color="grey" size="sm">
+              <Text color="grey" size="xs">
                 {job?.author.organization.commune}
               </Text>
             </Box>
