@@ -18,10 +18,10 @@ import {
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 import { Job } from 'src/models';
 import { TableProps } from 'src/components/TableWrapper';
-import { CustomModal as Modal, DeleteContent } from 'src/components/Modal';
 import { useModal } from 'src/hooks/useModal';
 import format from 'date-fns/format';
 import StatusLabel from 'src/components/StatusLabel';
+import DeleteJobModal from './subComponents/DeleteJobModal';
 
 const JobsTable: FC<TableProps<Job>> = ({
   items: jobs,
@@ -42,7 +42,7 @@ const JobsTable: FC<TableProps<Job>> = ({
     deleteModalItem
   ] = useModal();
 
-  const handleDelete = (id: string) => {
+  const handleDeleteJob = (id: string) => {
     handleDeleteItem(id);
     handleCloseDeleteModal();
   };
@@ -68,6 +68,7 @@ const JobsTable: FC<TableProps<Job>> = ({
             <TableCell align="right">Actions</TableCell>
           </TableRow>
         </TableHead>
+
         <TableBody>
           {jobs.map((job) => {
             const isJobSelected = selectedItems.includes(job.id);
@@ -156,20 +157,15 @@ const JobsTable: FC<TableProps<Job>> = ({
           })}
         </TableBody>
       </Table>
-      {jobs.length ? (
-        <Modal
-          open={deleteModalOpen}
-          handleClose={handleCloseDeleteModal}
-          title={`Supprimer la mission suivante : ${deleteModalItem?.title}`}
-        >
-          <DeleteContent
-            message={`Etes vous sûr de vouloir supprimer la mission suivante : ${deleteModalItem.title} `}
-            handleClose={handleCloseDeleteModal}
-            handleDelete={handleDelete}
-            item={deleteModalItem}
-          />
-        </Modal>
-      ) : null}
+
+      {jobs.length && (
+        <DeleteJobModal
+          modalOpen={deleteModalOpen}
+          handleCloseDeleteModal={handleCloseDeleteModal}
+          deleteModalItem={deleteModalItem}
+          handleDeleteItem={handleDeleteJob}
+        />
+      )}
     </TableContainer>
   );
 };

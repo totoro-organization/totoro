@@ -1,4 +1,12 @@
-import { FC, ChangeEvent, useState, isValidElement, cloneElement, ReactNode, useEffect } from 'react';
+import {
+  FC,
+  ChangeEvent,
+  useState,
+  isValidElement,
+  cloneElement,
+  ReactNode,
+  useEffect
+} from 'react';
 
 import {
   Divider,
@@ -9,7 +17,7 @@ import {
   TablePagination,
   Select,
   MenuItem,
-  CardHeader,
+  CardHeader
 } from '@mui/material';
 import BulkActions from './BulkActions';
 import { StatusEnum, StatusOptions, TableItem } from 'src/models';
@@ -20,26 +28,28 @@ import useAuth from 'src/hooks/useAuth';
 interface TableWrapperProps {
   className?: string;
   defaultItems: any;
-  url?: string,
-  title?: string,
-  statusOptions?: StatusOptions,
-  children: ReactNode,
+  url?: string;
+  title?: string;
+  statusOptions?: StatusOptions;
+  children: ReactNode;
 }
 
-
 export interface TableProps<T> {
-  items: T[], 
-  selectedItems: any,
-  handleSelectAllItems: (event: ChangeEvent<HTMLInputElement>) => void, 
-  handleSelectOneItem: (event: ChangeEvent<HTMLInputElement>, itemId: string) => void,
-  selectedSomeItems: any,
-  selectedAllItems: any,
-  handleDeleteItem: (id: string) => any,
-  handleUpdateItem: (id: string, data: object) => any,
-  addModalOpen: boolean,
-  handleCloseAddModal: () => void,
-  handleGetItems: () => void,
-  statusOptions: StatusOptions
+  items: T[];
+  selectedItems: any;
+  handleSelectAllItems: (event: ChangeEvent<HTMLInputElement>) => void;
+  handleSelectOneItem: (
+    event: ChangeEvent<HTMLInputElement>,
+    itemId: string
+  ) => void;
+  selectedSomeItems: any;
+  selectedAllItems: any;
+  handleDeleteItem: (id: string) => any;
+  handleUpdateItem: (id: string, data: object) => any;
+  addModalOpen: boolean;
+  handleCloseAddModal: () => void;
+  handleGetItems: () => void;
+  statusOptions: StatusOptions;
 }
 
 interface Filters {
@@ -58,22 +68,16 @@ const applyFilters = (items: any, filters: Filters): any => {
   });
 };
 
-const applyPagination = (
-  items: any,
-  page: number,
-  limit: number
-): any => {
+const applyPagination = (items: any, page: number, limit: number): any => {
   return items.slice(page * limit, page * limit + limit);
 };
 
-
-
-const TableWrapper: FC<TableWrapperProps> = ({ 
-  defaultItems, 
-  url, 
-  title = '', 
-  statusOptions, 
-  children,
+const TableWrapper: FC<TableWrapperProps> = ({
+  defaultItems,
+  url,
+  title = '',
+  statusOptions,
+  children
 }) => {
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const selectedBulkActions = selectedItems.length > 0;
@@ -84,41 +88,41 @@ const TableWrapper: FC<TableWrapperProps> = ({
   });
   const [items, setItems] = useState<Array<TableItem>>(defaultItems);
 
-  const [addModalOpen, handleOpenAddModal, handleCloseAddModal] = useModal();
+  const [addModalOpen, handleCloseAddModal] = useModal();
 
   useEffect(() => {
-    if(defaultItems) {
+    if (defaultItems) {
       setItems(defaultItems);
     }
-  }, [defaultItems])
+  }, [defaultItems]);
 
-  if(statusOptions) {
-      statusOptions = [
+  if (statusOptions) {
+    statusOptions = [
       {
         id: 'all',
         name: 'Tous'
       },
       ...statusOptions
-    ]
+    ];
   }
 
   const handleGetItems = async () => {
     const itemsResponse = await getItems(url);
-    if('error' in itemsResponse) return;
+    if ('error' in itemsResponse) return;
     setItems(itemsResponse?.data);
-  }
- 
+  };
+
   const handleUpdateItem = async (id: string, data: object) => {
     const updateResponse = await updateItem(url, id, data);
-    if('error' in updateResponse) return;
+    if ('error' in updateResponse) return;
     handleGetItems();
-  }
+  };
 
   const handleDeleteItem = async (id: string) => {
     const deleteResponse = await deleteItem(url, id);
-    if('error' in deleteResponse) return;
+    if ('error' in deleteResponse) return;
     handleGetItems();
-  }
+  };
 
   const handleStatusChange = (e: ChangeEvent<HTMLInputElement>): void => {
     let value = null;
@@ -163,7 +167,6 @@ const TableWrapper: FC<TableWrapperProps> = ({
   const selectedSomeItems =
     selectedItems.length > 0 && selectedItems.length < items.length;
   const selectedAllItems = selectedItems.length === items.length;
-  
 
   return (
     <Card>
@@ -172,7 +175,7 @@ const TableWrapper: FC<TableWrapperProps> = ({
           <BulkActions />
         </Box>
       )}
-      {(!selectedBulkActions && statusOptions) &&  (
+      {!selectedBulkActions && statusOptions && (
         <CardHeader
           action={
             <Box width={150}>
@@ -197,21 +200,21 @@ const TableWrapper: FC<TableWrapperProps> = ({
         />
       )}
       <Divider />
-        { isValidElement(children) && cloneElement(children, {
-            items: paginatedItems, 
-            selectedItems,
-            handleSelectAllItems, 
-            handleSelectOneItem,
-            selectedSomeItems,
-            selectedAllItems,
-            statusOptions,
-            handleUpdateItem,
-            handleDeleteItem,
-            handleGetItems,
-            addModalOpen,
-            handleCloseAddModal,
-            }) 
-        } 
+      {isValidElement(children) &&
+        cloneElement(children, {
+          items: paginatedItems,
+          selectedItems,
+          handleSelectAllItems,
+          handleSelectOneItem,
+          selectedSomeItems,
+          selectedAllItems,
+          statusOptions,
+          handleUpdateItem,
+          handleDeleteItem,
+          handleGetItems,
+          addModalOpen,
+          handleCloseAddModal
+        })}
       <Box p={2}>
         <TablePagination
           component="div"
