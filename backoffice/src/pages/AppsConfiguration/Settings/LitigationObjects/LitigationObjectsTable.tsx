@@ -17,12 +17,11 @@ import {
 
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
-import { LitigationObject } from 'src/models/litigation_object';
+import type { LitigationObject, TableProps } from 'src/models';
 import Modal from 'src/components/Modal';
 import StatusLabel from 'src/components/StatusLabel';
 import { useModal } from 'src/hooks/useModal';
 import { AddLitigationObjectContent, DeleteLitigationObjectContent, EditLitigationObjectContent } from './LitigationObjectModalContent';
-import { TableProps } from 'src/components/TableWrapper';
 
 
 const LitigationObjectsTable: FC<TableProps<LitigationObject>> = ({

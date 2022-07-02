@@ -1,14 +1,6 @@
 import { Organization } from "./organization";
 import { Pricing } from "./pricing";
-import { Status, StatusEnum } from "./status";
-
-enum SubscriptionStatusEnum {
-    actived = StatusEnum.actived,
-    expired = StatusEnum.expired,
-    canceled = StatusEnum.canceled
-}
-
-export type SubscriptionStatus = Status<keyof typeof SubscriptionStatusEnum>;
+import { SubscriptionStatus } from "./status";
 
 export interface Subscription {
     id: string,
