@@ -19,7 +19,8 @@ const {
   organizations,
   partners,
   discounts,
-  subscriptions
+  subscriptions,
+  participations
 } = require("services");
 
 const PORT = process.env.API_DOCKER_PORT || 8080;
@@ -78,6 +79,7 @@ server.use('/api/organizations', [accessApi, organizations]);
 server.use('/api/partners', [accessApi, partners]);
 server.use('/api/discounts', [accessApi, discounts]);
 server.use('/subscriptions', [accessApi, subscriptions]);
+server.use('/participations', [accessApi, participations]);
 // server.use('/messagings', [accessApi, messagings]);
 // server.use('/transactions', [accessApi, transactions]);
 
