@@ -22,8 +22,6 @@ export default function RootStackNavigator() {
   // TODO: Add Launching screen is `isLoading` on useAuth is true?
   if (isLoading) return null;
 
-  console.log(user);
-
   return (
     <RootStack.Navigator
       screenOptions={{
