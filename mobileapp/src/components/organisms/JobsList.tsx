@@ -1,11 +1,11 @@
 import React from "react";
 import { FlatList } from "react-native";
-import { FAKE_MISSIONS_DATA } from "../../common/mockedData";
+import type { Job } from "../../models/job";
 import Spacer from "../atoms/Spacer";
 import MissionCard from "../molecules/JobCard";
 
 type JobsListProps = {
-  data: any;
+  data: Job[] | undefined;
 };
 
 export default function JobsList({ data }: JobsListProps) {
