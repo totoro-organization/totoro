@@ -1,6 +1,4 @@
 const asyncLib = require("async");
-const {qrcode} = require("~/utils/generate");
-const { path } = require("utils/enum.json");
 const {
 	Status,
 	Associations,
@@ -87,94 +85,6 @@ module.exports = {
 		commonsController.getOne(res, Groups, id, exclude, include);
 	},
 
-	createParticipation: async function (res, data) {
-		const { jobs_id, user_id } = data
-		const statusData = await getRow(res, Status, { label: label_status.actived });
-		data.status_id = statusData.id;
-
-		const jobData = await getRow(
-			res, 
-			Jobs, 
-			{ id: jobs_id },
-			[{ model: Associations_users, as: "author"}]
-		);
-		const condition = { jobs_id,  user_id };
-
-		if(jobData.remaining_place !== null && parseInt(jobData.remaining_place) == 0){
-			return res
-				.status(error.access_forbidden.status)
-				.json({ entity: Groups.name, message: "sorry the number of participants is full"});
-		} else {
-			asyncLib.waterfall([
-				function (done) {
-				  getField(res, Associations_users, { assos_id: jobData.author.assos_id, user_id }, done);
-				},
-			  ],
-			  function (found) {
-				if (!found){
-				  commonsController.create(
-					  async function (result) {
-						  const linkQrcode = await qrcode(path.qrcodeParticipations, result.id)
-						  asyncLib.waterfall([
-							  function (done) {
-								  result.update({ qrcode: linkQrcode })
-								  .then(function() {
-									  done(null, result);
-								  }).catch(function(err) {
-									  return res
-										  .status(error.syntax_error.status)
-										  .json({ message: error.syntax_error.message });
-								  });							  
-							  },
-							  function (result, done) {
-								  if(jobData.remaining_place !== null){
-									Jobs.update(
-										{ remaining_place: parseInt(jobData.remaining_place) - 1 },
-										{ where: { id: result.jobs_id } }
-									)
-									.then(function() {
-										done(result);
-									}).catch(function(err) {
-										return res
-											.status(error.syntax_error.status)
-											.json({ message: error.syntax_error.message });
-									});
-
-								  } else {
-									done(result);
-								  }	
-							  }
-						  ],
-							  async function (result) {
-								if (result){
-									return res
-											.status(success.create.status)
-											.json({ entity: Jobs.name, message: success.create.message });	  
-								}
-								else
-								  return res
-									.status(error.during_creation.status)
-									.json({ entity: Groups.name, message: error.during_creation.message});
-							  }
-						  );
-					  },
-					  res,
-					  Groups,
-					  data,
-					  condition,
-					  null,
-					  true
-				  );		
-				}
-				else
-				  return res
-					.status(error.access_denied.status)
-					.json({ entity: Associations.name, message: "Cannot participate in a mission of your association" });
-			  }
-		  );
-		}
-	},
-
 	updateParticipation: async function (res, id, data) {
 		const {status_id} = data
 		const statusData = await getRow(res, Status, { id: status_id });
@@ -182,11 +92,49 @@ module.exports = {
 			res, 
 			Groups, 
 			{ id },
-			[{ model: Jobs, as: "job"}]
+			[
+				{ 
+					model: Jobs, as: "job",
+					include : [{model: Difficulties, as: "difficulty"}]
+				},
+				{ 
+					model: Users, 
+					as: "participant"
+				},
+				{ model: Status, as: "status" },
+			]
 		);
 
 		if(statusData.label !== label_status.deleted){
-			commonsController.update(res, Groups, id, data);
+			if(participationData.status.label === label_status.actived){
+				asyncLib.waterfall([
+					function (done) {
+						Users.update(
+							{ total_token: parseInt(participationData.participant.total_token) + parseInt(participationData.job.difficulty.token) },
+							{ where: { id: participationData.participant.id } }
+						)
+						.then(function() {
+							done(Users);
+						}).catch(function(err) {
+							return res
+								.status(error.syntax_error.status)
+								.json({ message: error.syntax_error.message });
+						});	
+					}
+				  ],
+				  function (Users) {
+					if (Users)
+						commonsController.update(res, Groups, id, data);
+					else
+						return res
+							.status(error.op_failed.status)
+							.json({ entity: Users.name, message: error.op_failed.message });
+				  }
+			  );
+			} else {
+				commonsController.update(res, Groups, id, data);
+			}
+			
 		} else {
 			asyncLib.waterfall([
 				function (done) {

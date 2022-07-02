@@ -69,6 +69,9 @@ const swagger = {
       name: "Jobs"
     },
     {
+      name: "Participations"
+    },
+    {
       name: "Partners"
     },
     {

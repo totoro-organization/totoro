@@ -10,6 +10,7 @@ const organizationsModel = require("./organizations.model");
 const partnersModel = require("./partners.model");
 const usersModel = require("./users.model");
 const subscriptionsModel = require("./subscriptions.model");
+const participationsModel = require("./participations.model");
 
 module.exports = {
 	adminsModel,
@@ -23,5 +24,6 @@ module.exports = {
 	organizationsModel,
 	partnersModel,
 	usersModel,
-	subscriptionsModel
+	subscriptionsModel,
+	participationsModel
 };
