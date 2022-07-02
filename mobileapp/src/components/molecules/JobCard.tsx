@@ -13,6 +13,7 @@ import Calendar from "../../assets/icons/Calendar";
 import Token from "../../assets/icons/Token";
 import { Job } from "../../models/job";
 import { API_HOST } from "../../common/api/routes";
+import getFormatDateFrenchLocale from "../../common/utils/getFormatDateFrenchLocale";
 
 type JobCardProps = {
   job: Job;
@@ -67,7 +68,7 @@ export default function JobCard({ job }: JobCardProps) {
           <Spacer axis="horizontal" size={0.25} />
 
           <Text size="xs" color="grey">
-            10/01/2023
+            {getFormatDateFrenchLocale(job.start_date)}
           </Text>
         </FlexWrapper>
 
