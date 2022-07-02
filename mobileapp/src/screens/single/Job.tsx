@@ -20,20 +20,20 @@ import Toast from "react-native-toast-message";
 import Check from "../../assets/icons/Check";
 import useAuth from "../../common/contexts/AuthContext";
 import deleteFavorite from "../../common/api/requests/deleteFavorite";
+import useJob from "../../common/api/hooks/useJob";
+import { API_HOST } from "../../common/api/routes";
 
 export default function Job({
   route,
 }: StackScreenProps<StackParamList, "Job">) {
-  const missionId = route.params.id;
+  const jobId = route.params.id;
   const { user } = useAuth();
   const { userFavorites } = useUserFavorites(user?.id || "");
 
-  // TODO: Create hook with fetch API to get mission by id.
-  //   const { mission } = useMission(missionId);
-  const mission = FAKE_MISSIONS_DATA[missionId];
+  const { job } = useJob(jobId);
 
   const currentFavorite = userFavorites?.filter(
-    (fav) => fav.organization.id === mission.organization.id
+    (fav) => fav.organization.id === job?.author.organization.id
   );
   const isOrganizationFollow =
     currentFavorite !== undefined && currentFavorite.length > 0;
@@ -47,7 +47,7 @@ export default function Job({
           type: "success",
           props: {
             title: "Tout est bon",
-            text: `Merci d'avoir follow ${mission.organization.name} !`,
+            text: `Merci d'avoir follow ${job?.author.organization.name} !`,
           },
         });
       }
@@ -68,16 +68,20 @@ export default function Job({
     <GlobalLayout
       header={<></>}
       fullBanner={
-        <StyledImage source={{ uri: mission.banner }} resizeMode="cover" />
+        <StyledImage
+          // FIXME: The url returns 504 error.
+          source={{ uri: `${API_HOST}${job?.attachments[0]?.image}` }}
+          resizeMode="cover"
+        />
       }
     >
       {/* TODO: Add Tag atom.*/}
-      <Text color="info">{mission.tags[0]}</Text>
+      <Text color="info">{job?.tags[0].label}</Text>
 
       <Spacer axis="vertical" size={1} />
 
       <Heading variant="h1" weight="regular">
-        {mission.title}
+        {job?.title}
       </Heading>
 
       <Spacer axis="vertical" size={0.5} />
@@ -87,10 +91,10 @@ export default function Job({
         <Link
           to={{
             screen: "Profile",
-            params: { id: { missionId }, type: "organization" },
+            params: { id: job?.author.id, type: "organization" },
           }}
         >
-          {mission.organization.name}
+          {job?.author.organization.name}
         </Link>
       </Text>
 
@@ -103,17 +107,15 @@ export default function Job({
 
         <Spacer axis="horizontal" size={0.75} />
 
-        <TextLight size="sm">
-          {mission.interestedParticipants} personnes intéressé.e.s
-        </TextLight>
+        <TextLight size="sm">{/* FIXME */}8 personnes intéressé.e.s</TextLight>
       </Box>
 
       <Spacer axis="vertical" size={3} />
 
       <JobDetail
         Icon={<Location size={24} />}
-        title={mission.location}
-        text="21 bis rue du Progrès"
+        title={job?.commune}
+        text={job?.address}
       />
 
       <Spacer axis="vertical" size={0.5} />
@@ -125,20 +127,19 @@ export default function Job({
       />
 
       <HeadingSection>Description</HeadingSection>
-      <Text color="grey">{mission.description}</Text>
+      <Text color="grey">{job?.description}</Text>
 
       <HeadingSection>Organisé par</HeadingSection>
       <Box justifyContent="space-between" alignItems="center">
         <Link
           to={{
             screen: "Profile",
-            // TODO: Replace me with organization id
-            params: { id: { missionId }, type: "organization" },
+            params: { id: job?.author.organization.id, type: "organization" },
           }}
         >
           <Box alignItems="center">
             <ImageBackground
-              source={{ uri: mission.logo }}
+              source={{ uri: job?.author.organization.logo }}
               style={{ width: 80, height: 40 }}
               resizeMode="contain"
             />
@@ -146,8 +147,10 @@ export default function Job({
             <Spacer axis="horizontal" size={1} />
 
             <Box flexDirection="column">
-              <Text>{mission.organization.name}</Text>
-              <Text color="grey">{mission.location}</Text>
+              <Text>{job?.author.organization.name}</Text>
+              <Text color="grey" size="sm">
+                {job?.author.organization.commune}
+              </Text>
             </Box>
           </Box>
         </Link>
@@ -171,7 +174,7 @@ export default function Job({
             size="sm"
             color="black"
             handlePress={() =>
-              handleFollowOrganization(mission.organization.id)
+              handleFollowOrganization(job?.author.organization.id as string)
             }
           >
             Suivre
@@ -181,7 +184,6 @@ export default function Job({
 
       <Spacer axis="vertical" size={4} />
 
-      {/* FIXME: Add fixed position. */}
       <FixedView>
         <Button>Je participe !</Button>
       </FixedView>
