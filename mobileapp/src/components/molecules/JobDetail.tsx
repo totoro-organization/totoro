@@ -6,8 +6,8 @@ import { Text } from "../atoms/Text";
 
 type JobDetailProps = {
   Icon: JSX.Element;
-  title: string;
-  text: string;
+  title: string | undefined;
+  text: string | undefined;
 };
 
 export default function JobDetail({ Icon, title, text }: JobDetailProps) {
