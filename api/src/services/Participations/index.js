@@ -5,14 +5,6 @@ const controller = require("./controller");
 exports.router = (function () {
 	const participationsRouter = express.Router();
 
-	participationsRouter.post("/", [
-		passport,
-		async function (req, res) {
-			const data = req.body;
-			controller.createParticipation(res, data);
-		},
-	]);
-
 	participationsRouter.get("/:id", async function (req, res) {
 		const id = req.params.id;
 		controller.getParticipation(res, id);
