@@ -72,11 +72,9 @@ module.exports = {
 
 	updateSubscription: async function (res, id, data) {
 		const {status_id} = data
-		const condition = {};
 		if (status_id) {
 			const statusData = await getRow(res, Status, { id: status_id });
-			condition.status_id = statusData.id
 		}
-		commonsController.update(res, Subscriptions, id, data, condition);
+		commonsController.update(res, Subscriptions, id, data);
 	},
 };

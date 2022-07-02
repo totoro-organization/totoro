@@ -22,7 +22,7 @@
     },
     "not_exist": {
       "status": 404,
-      "message": "value not exist"
+      "message": "Value not exist"
     },
     "duplicate": {
       "status": 409,
@@ -34,7 +34,7 @@
     },
     "during_creation": {
       "status": 400,
-      "message": "error during creation, one of the id does not exist"
+      "message": "Error during creation, one of the id does not exist"
     }
   },
   "success": {
