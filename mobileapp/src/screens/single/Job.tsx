@@ -22,14 +22,16 @@ import useAuth from "../../common/contexts/AuthContext";
 import deleteFavorite from "../../common/api/requests/deleteFavorite";
 import useJob from "../../common/api/hooks/useJob";
 import { API_HOST } from "../../common/api/routes";
+import useJobFavorites from "../../common/api/hooks/useJobFavorites";
 
 export default function Job({
   route,
 }: StackScreenProps<StackParamList, "Job">) {
   const jobId = route.params.id;
+
   const { user } = useAuth();
   const { userFavorites } = useUserFavorites(user?.id || "");
-
+  const { total: totalJobFavorites } = useJobFavorites(jobId);
   const { job } = useJob(jobId);
 
   const currentFavorite = userFavorites?.filter(
@@ -63,6 +65,8 @@ export default function Job({
       console.error(err);
     }
   }
+
+  console.log(totalJobFavorites);
 
   return (
     <GlobalLayout
@@ -101,13 +105,19 @@ export default function Job({
       <Spacer axis="vertical" size={2} />
 
       <Box alignItems="center">
+        {/* TODO: Add call api */}
         <Button size="sm" color="black" Icon={<Heart color="white" />}>
           Sauvegarder
         </Button>
 
         <Spacer axis="horizontal" size={0.75} />
 
-        <TextLight size="sm">{/* FIXME */}8 personnes intéressé.e.s</TextLight>
+        <TextLight size="sm">
+          {totalJobFavorites}{" "}
+          {totalJobFavorites || 0 > 1
+            ? "personnes intéressées"
+            : "personne intéressée"}
+        </TextLight>
       </Box>
 
       <Spacer axis="vertical" size={3} />

@@ -10,6 +10,8 @@ export const API_ROUTES = {
   USER_JOBS: (userId: string) => `/users/${userId}/jobs`, // GET
 
   FAVORITES: (favoriteId: string) => `/favorites/${favoriteId}`, // DELETE
+
   JOBS: "/jobs", // GET
   JOB: (jobId: string) => `/jobs/${jobId}`, // GET
+  JOB_FAVORITES: (jobId: string) => `/jobs/${jobId}/favorites`,
 } as const;
