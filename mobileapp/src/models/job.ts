@@ -33,6 +33,14 @@ export interface Job {
   updatedAt: string;
 }
 
+export interface JobFavorite {
+  id: string;
+  jobs_id: string;
+  createdAt: string;
+  updatedAt: string;
+  user: User;
+}
+
 export interface Tag {
   id: string;
   tag: {
