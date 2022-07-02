@@ -114,6 +114,19 @@ module.exports = {
           responses: response201()
         }
     },
+    "/api/jobs/{id}/register": {
+        post: {
+          tags: [
+            "Jobs"
+          ],
+          "x-swagger-router-controller": "jobs",
+          operationId: "registerToJob",
+          parameters: [
+            ...param("id","path","string"),
+          ],
+          responses: response201("Register Created")
+        }
+    },
     "/api/jobs/{id}/participants": {
         get: {
           tags: [
