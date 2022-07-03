@@ -54,6 +54,7 @@ export const colors = {
   icon: {
     grey: "#6C737F",
     black: core.black.base,
+    white: core.white.base,
     success: core.success.base,
     info: core.info.base,
     warning: core.warning.base,
