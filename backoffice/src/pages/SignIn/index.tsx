@@ -34,11 +34,13 @@ export default function SignIn() {
 
   const { login, loading, error } = useAuth();
 
-  // const { addToast } = useToastContext();
+  const { addToast } = useToastContext();
 
-  // useEffect(() => {
-  //   addToast( { message: "Salut jarce le boss", variant: "success", duration: 9000 });
-  // }, [])
+  useEffect(() => {
+    if(error) {
+      addToast( { message: error.message, variant: "error", duration: 9000 });
+    }
+  }, [error])
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
