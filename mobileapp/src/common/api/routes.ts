@@ -1,6 +1,6 @@
 import { MOBILEAPP_API_BASE_URL } from "@env";
 
-export const API_HOST = `${MOBILEAPP_API_BASE_URL}api`;
+export const API_HOST = `${MOBILEAPP_API_BASE_URL}/api`;
 
 export const API_ROUTES = {
   AUTH_LOGIN: "/auth/login", // POST
