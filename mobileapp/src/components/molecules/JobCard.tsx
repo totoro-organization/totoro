@@ -26,7 +26,7 @@ export default function JobCard({ job }: JobCardProps) {
     <Container onPress={() => navigation.navigate("Job", { id: job.id })}>
       <JobBanner
         source={{
-          uri: `${MOBILEAPP_API_BASE_URL}${job?.attachments[0]?.image}`,
+          uri: `${MOBILEAPP_API_BASE_URL}/${job?.attachments[0]?.image}`,
         }}
         resizeMode="cover"
       />
