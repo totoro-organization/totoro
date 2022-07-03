@@ -1,4 +1,5 @@
 import React from "react";
+import { View } from "react-native";
 import { FAKE_MESSAGES_DATA } from "../common/mockedData";
 import Spacer from "../components/atoms/Spacer";
 import GlobalLayout from "../components/layouts/GlobalLayout";
@@ -12,11 +13,11 @@ export default function Messaging() {
 
       {/* TODO: Replace me with real data (hooks) */}
       {FAKE_MESSAGES_DATA.map((conversation, index) => (
-        <>
-          <ConversationItem chats={conversation} key={index} />
+        <View key={`${conversation.id}-${index}`}>
+          <ConversationItem chats={conversation} />
 
           <Spacer axis="vertical" size={1} />
-        </>
+        </View>
       ))}
     </GlobalLayout>
   );
