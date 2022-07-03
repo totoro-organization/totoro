@@ -23,6 +23,7 @@ import deleteFavorite from "../../common/api/requests/deleteFavorite";
 import useJob from "../../common/api/hooks/useJob";
 import { API_HOST } from "../../common/api/routes";
 import useJobFavorites from "../../common/api/hooks/useJobFavorites";
+import { MOBILEAPP_API_BASE_URL } from "@env";
 
 export default function Job({
   route,
@@ -72,7 +73,9 @@ export default function Job({
       fullBanner={
         <StyledImage
           // FIXME
-          source={{ uri: `http://localhost:6868${job?.attachments[0]?.image}` }}
+          source={{
+            uri: `${MOBILEAPP_API_BASE_URL}${job?.attachments[0]?.image}`,
+          }}
           resizeMode="cover"
         />
       }
