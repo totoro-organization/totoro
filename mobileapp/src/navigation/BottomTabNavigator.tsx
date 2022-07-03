@@ -50,7 +50,7 @@ export default function BottomTabNavigator() {
         tabBarStyle: {
           paddingBottom: 24,
           paddingTop: 2,
-          backgroundColor: theme.colors.white[600],
+          backgroundColor: theme.colors.core.white.base,
           height: 70,
         },
       }}
