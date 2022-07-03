@@ -12,10 +12,10 @@ import {
 } from '@mui/material';
 
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
-import { Job } from '../../../../../../models';
+import { Job } from '../../../../../../../models';
 
 import format from 'date-fns/format';
-import StatusLabel from '../../../../../../components/StatusLabel';
+import StatusLabel from '../../../../../../../components/StatusLabel';
 
 interface JobTableItemProps {
   job: Job;
