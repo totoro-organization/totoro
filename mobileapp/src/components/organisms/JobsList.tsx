@@ -1,5 +1,5 @@
 import React from "react";
-import { FlatList } from "react-native";
+import { FlatList, View } from "react-native";
 import type { Job } from "../../models/job";
 import Spacer from "../atoms/Spacer";
 import MissionCard from "../molecules/JobCard";
@@ -18,10 +18,10 @@ export default function JobsList({ data }: JobsListProps) {
       keyExtractor={(item) => item.title}
       renderItem={({ item, index }) => {
         return (
-          <>
+          <View key={`${item.id}`}>
             <MissionCard key={index} job={item} />
             <Spacer axis="vertical" size={1} />
-          </>
+          </View>
         );
       }}
     />
