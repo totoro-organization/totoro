@@ -8,7 +8,7 @@ import Button from "../../components/atoms/Button";
 import Spacer from "../../components/atoms/Spacer";
 import Heart from "../../assets/icons/Heart";
 import Box from "../../components/atoms/Box";
-import { ImageBackground } from "react-native";
+import { ActivityIndicator, ImageBackground, View } from "react-native";
 import JobDetail from "../../components/molecules/JobDetail";
 import Location from "../../assets/icons/Location";
 import Calendar from "../../assets/icons/Calendar";
@@ -33,7 +33,7 @@ export default function Job({
   const { user } = useAuth();
   const { userFavorites } = useUserFavorites(user?.id || "");
   const { total: totalJobFavorites } = useJobFavorites(jobId);
-  const { job } = useJob(jobId);
+  const { job, isLoading: jobLoading } = useJob(jobId);
   const { userJobs } = useUserJobs(user?.id || "");
 
   const userAlreadyParticipate = userJobs?.filter(
@@ -64,6 +64,9 @@ export default function Job({
   async function handleRegisterJob() {
     await fetchRegisterJob(job?.id as string, job?.title as string);
   }
+
+  // TODO: Add Loading screen here (cf lauching screen from figma).
+  if (jobLoading) return <></>;
 
   return (
     <GlobalLayout
