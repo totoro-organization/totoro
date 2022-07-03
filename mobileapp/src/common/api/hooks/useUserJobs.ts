@@ -4,7 +4,8 @@ import PaginatedDataType from "../interfaces/PaginatedDataType";
 import getUserJobs from "../requests/job/getUserJobs";
 
 export default function useUserJobs(userId: string) {
-  const { data, isLoading, error } = useQuery<PaginatedDataType<Job>>(
+  // FIXME: add type
+  const { data, isLoading, error } = useQuery<PaginatedDataType<any>>(
     "getUserJobs",
     async () => await getUserJobs(userId)
   );

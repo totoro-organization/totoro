@@ -36,7 +36,9 @@ export default function Job({
   const { job } = useJob(jobId);
   const { userJobs } = useUserJobs(user?.id || "");
 
-  console.log(userJobs);
+  const userAlreadyParticipate = userJobs?.filter(
+    (jobRegistered) => jobRegistered.job.id === job?.id
+  ).length;
 
   const currentFavorite = userFavorites?.filter(
     (fav) => fav.organization.id === job?.author.organization.id
@@ -76,7 +78,7 @@ export default function Job({
       }
     >
       {/* TODO: Add Tag atom.*/}
-      <Text color="info">{job?.tags[0].tag.label}</Text>
+      {/* <Text color="info">{job?.tags[0].tag.label}</Text> */}
 
       <Spacer axis="vertical" size={1} />
 
@@ -188,7 +190,14 @@ export default function Job({
 
       <Spacer axis="vertical" size={4} />
 
-      <Button handlePress={handleRegisterJob}>Je participe !</Button>
+      {/* TODO: Add call api to unregister job */}
+      <Button
+        handlePress={handleRegisterJob}
+        variant={userAlreadyParticipate ? "outline" : "default"}
+        color={userAlreadyParticipate ? "grey" : "primary"}
+      >
+        {userAlreadyParticipate ? "Tu es déjà inscrit.e" : "Je participe"}
+      </Button>
     </GlobalLayout>
   );
 }
