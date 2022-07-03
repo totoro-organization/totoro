@@ -37,7 +37,7 @@ const Container = styled.View<Pick<AvatarProps, "size" | "type" | "src">>`
   width: ${({ size }) => (size === "md" ? "80px" : "24px")};
   height: ${({ size }) => (size === "md" ? "80px" : "24px")};
   background-color: ${({ theme, src }) =>
-    src ? "white" : theme.colors.grey[900]};
+    src ? "white" : theme.colors.core.black.base};
   border-radius: ${({ type, theme }) =>
     type === "user" ? "400px" : theme.border.radius.md};
   align-items: center;

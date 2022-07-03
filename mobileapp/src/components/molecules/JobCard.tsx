@@ -88,7 +88,7 @@ export default function JobCard({ job }: JobCardProps) {
 
 const Container = styled(Card)`
   border: ${({ theme }) => theme.border.width[1]} solid
-    ${({ theme }) => theme.colors.grey[200]};
+    ${({ theme }) => theme.colors.v1.grey[200]};
   padding: 0;
 `;
 

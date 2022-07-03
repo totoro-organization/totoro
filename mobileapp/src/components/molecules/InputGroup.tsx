@@ -41,7 +41,7 @@ const Container = styled.View`
 `;
 
 const ErrorMessage = styled(Text)`
-  color: ${({ theme }) => theme.colors.error[500]};
+  color: ${({ theme }) => theme.colors.core.error.base};
   min-height: 16px;
   font-size: 12px;
   margin-top: ${({ theme }) => theme.spacing[1]};
