@@ -66,6 +66,7 @@ const JobsTable: FC<TableProps<Job>> = ({
 
             return (
               <JobTableItem
+                key={job.id}
                 job={job}
                 isSelectedJob={isSelectedJob}
                 handleCheckboxChange={(
@@ -80,7 +81,7 @@ const JobsTable: FC<TableProps<Job>> = ({
         </TableBody>
       </Table>
 
-      {jobs.length && (
+      {deleteModalItem && (
         <DeleteJobModal
           modalOpen={deleteModalOpen}
           handleCloseDeleteModal={handleCloseDeleteModal}
