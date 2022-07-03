@@ -47,13 +47,22 @@ const brand = {
   },
 };
 
-/**
- * @deprecated
- */
 export const colors = {
   core,
   brand,
 
+  icon: {
+    grey: "#6C737F",
+    black: core.black.base,
+    success: core.success.base,
+    info: core.info.base,
+    warning: core.warning.base,
+    primary: brand.primary.base,
+  },
+
+  /**
+   * @deprecated
+   */
   v1: {
     white: {
       500: "#FFFF",
