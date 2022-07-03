@@ -28,12 +28,12 @@ const ProtectedRoute = (props: RouteProps) => {
   /* Organization */
 
   // Gestion
-  const CreationJob = Loader(lazy(() => import('src/applications/Organization/Gestion/Jobs/Create')));
-  const ListingJobs = Loader(lazy(() => import('src/applications/Organization/Gestion/Jobs/List'))); 
+  const CreationJob = Loader(lazy(() => import('src/pages/applications/Organization/Gestion/Jobs/Create')));
+  const ListingJobs = Loader(lazy(() => import('src/pages/applications/Organization/Gestion/Jobs/List'))); 
 
   // Dashboards
-  const Crypto = Loader(lazy(() => import('src/applications/Organization/Dashboards/Crypto')));
-  const Resume = Loader(lazy(() => import('src/applications/Organization/Dashboards/Resume')));
+  const Crypto = Loader(lazy(() => import('src/pages/applications/Organization/Dashboards/Crypto')));
+  const Resume = Loader(lazy(() => import('src/pages/applications/Organization/Dashboards/Resume')));
 
   /* Partner */
 
