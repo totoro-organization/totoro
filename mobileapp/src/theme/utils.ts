@@ -13,16 +13,17 @@ export type Colors =
 export function getColors(color: Colors) {
   switch (color) {
     case "black":
-      return theme.colors.grey[900];
+      return theme.colors.core.black.base;
     case "primary":
-      return theme.colors.primary[500];
+      return theme.colors.brand.primary.base;
     case "white":
-      return theme.colors.white[600];
+      return theme.colors.core.white.base;
     case "grey":
-      return theme.colors.grey[500];
+      // FIXME
+      return theme.colors.v1.grey[500];
     case "info":
-      return theme.colors.info[500];
+      return theme.colors.core.info.base;
     case "success":
-      return theme.colors.success[500];
+      return theme.colors.core.success.base;
   }
 }
