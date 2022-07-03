@@ -60,21 +60,7 @@ export default function Job({
   }
 
   async function handleRegisterJob() {
-    try {
-      const response = await fetchRegisterJob(job?.id as string);
-
-      if (response.status === 201) {
-        Toast.show({
-          type: "success",
-          props: {
-            title: "Tout est bon",
-            text: `Tu t'es bien inscrit à la mission ${job?.title} !`,
-          },
-        });
-      }
-    } catch (err) {
-      console.error(err);
-    }
+    await fetchRegisterJob(job?.id as string, job?.title as string);
   }
 
   return (
