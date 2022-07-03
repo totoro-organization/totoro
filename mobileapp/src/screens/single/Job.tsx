@@ -71,7 +71,7 @@ export default function Job({
       fullBanner={
         <StyledImage
           source={{
-            uri: `${MOBILEAPP_API_BASE_URL}${job?.attachments[0]?.image}`,
+            uri: `${MOBILEAPP_API_BASE_URL}/${job?.attachments[0]?.image}`,
           }}
           resizeMode="cover"
         />
