@@ -2,8 +2,12 @@ import config from "../config";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { API_HOST, API_ROUTES } from "../routes";
+import Toast from "react-native-toast-message";
 
-export default async function addUserFavorite(assos_id: string): Promise<any> {
+export default async function addUserFavorite(
+  organizationId: string,
+  organizationName: string
+): Promise<any> {
   const userToken = await AsyncStorage.getItem("userToken");
   const bearer = "Bearer" + " " + userToken;
 
@@ -13,11 +17,28 @@ export default async function addUserFavorite(assos_id: string): Promise<any> {
     Authorization: bearer,
   });
 
-  const body = { assos_id };
+  const body = { assos_id: organizationId };
 
-  return fetch(`${API_HOST}${API_ROUTES.USER_FAVORITES(assos_id)}`, {
-    method: "POST",
-    headers: myHeaders,
-    body: JSON.stringify(body),
-  });
+  try {
+    const response = await fetch(
+      `${API_HOST}${API_ROUTES.USER_FAVORITES(organizationId)}`,
+      {
+        method: "POST",
+        headers: myHeaders,
+        body: JSON.stringify(body),
+      }
+    );
+
+    if (response.status === 201) {
+      Toast.show({
+        type: "success",
+        props: {
+          title: "Tout est bon",
+          text: `Merci d'avoir follow ${organizationName} !`,
+        },
+      });
+    }
+  } catch (err) {
+    console.error(err);
+  }
 }

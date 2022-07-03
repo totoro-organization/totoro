@@ -44,22 +44,11 @@ export default function Job({
   const isOrganizationFollow =
     currentFavorite !== undefined && currentFavorite.length > 0;
 
-  async function handleFollowOrganization(assos_id: string) {
-    try {
-      const response = await addUserFavorite(assos_id);
-
-      if (response.status === 201) {
-        Toast.show({
-          type: "success",
-          props: {
-            title: "Tout est bon",
-            text: `Merci d'avoir follow ${job?.author.organization.name} !`,
-          },
-        });
-      }
-    } catch (err) {
-      console.error(err);
-    }
+  async function handleFollowOrganization() {
+    await addUserFavorite(
+      job?.author.organization.id as string,
+      job?.author.organization.name as string
+    );
   }
 
   async function handleUnfollowOrganization(favoriteId: string) {
@@ -204,9 +193,7 @@ export default function Job({
           <Button
             size="sm"
             color="black"
-            handlePress={() =>
-              handleFollowOrganization(job?.author.organization.id as string)
-            }
+            handlePress={handleFollowOrganization}
           >
             Suivre
           </Button>
