@@ -12,7 +12,6 @@ import Location from "../../assets/icons/Location";
 import Calendar from "../../assets/icons/Calendar";
 import Token from "../../assets/icons/Token";
 import { Job } from "../../models/job";
-import { API_HOST } from "../../common/api/routes";
 import getFormatDateFrenchLocale from "../../common/utils/getFormatDateFrenchLocale";
 import { MOBILEAPP_API_BASE_URL } from "@env";
 
@@ -26,7 +25,6 @@ export default function JobCard({ job }: JobCardProps) {
   return (
     <Container onPress={() => navigation.navigate("Job", { id: job.id })}>
       <JobBanner
-        // FIXME
         source={{
           uri: `${MOBILEAPP_API_BASE_URL}${job?.attachments[0]?.image}`,
         }}

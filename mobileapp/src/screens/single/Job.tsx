@@ -13,7 +13,6 @@ import JobDetail from "../../components/molecules/JobDetail";
 import Location from "../../assets/icons/Location";
 import Calendar from "../../assets/icons/Calendar";
 import { Link } from "@react-navigation/native";
-import { FAKE_MISSIONS_DATA } from "../../common/mockedData";
 import useUserFavorites from "../../common/api/hooks/useUserFavorites";
 import addUserFavorite from "../../common/api/requests/addUserFavorite";
 import Toast from "react-native-toast-message";
@@ -21,7 +20,6 @@ import Check from "../../assets/icons/Check";
 import useAuth from "../../common/contexts/AuthContext";
 import deleteFavorite from "../../common/api/requests/deleteFavorite";
 import useJob from "../../common/api/hooks/useJob";
-import { API_HOST } from "../../common/api/routes";
 import useJobFavorites from "../../common/api/hooks/useJobFavorites";
 import { MOBILEAPP_API_BASE_URL } from "@env";
 
@@ -72,7 +70,6 @@ export default function Job({
       header={<></>}
       fullBanner={
         <StyledImage
-          // FIXME
           source={{
             uri: `${MOBILEAPP_API_BASE_URL}${job?.attachments[0]?.image}`,
           }}
