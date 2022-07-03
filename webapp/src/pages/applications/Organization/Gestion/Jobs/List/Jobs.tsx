@@ -31,10 +31,8 @@ export default function Jobs() {
     `/organizations/${currentApp.data.id}/jobs`
   );
 
-  // if (!jobs && loading) return <SuspenseLoader />;
-
-  return (
-   jobs && !loading ? ( <TableWrapper
+  return jobs && !loading ? (
+    <TableWrapper
       url={API_ROUTES.JOBS}
       statusOptions={statusOptions}
       defaultItems={jobs.data}
@@ -42,6 +40,8 @@ export default function Jobs() {
       {/* TODO: Fix type here. Maybe add optional mention to TableProps */}
       {/* @ts-ignore */}
       <JobsTable />
-    </TableWrapper> ) : <SuspenseLoader/>
+    </TableWrapper>
+  ) : (
+    <SuspenseLoader />
   );
 }
