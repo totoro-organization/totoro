@@ -66,8 +66,6 @@ export default function Job({
     }
   }
 
-  console.log(totalJobFavorites);
-
   return (
     <GlobalLayout
       header={<></>}
