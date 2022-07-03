@@ -18,21 +18,25 @@ const core = {
   success: {
     base: "#22C55E",
     light: "#DCFCE7",
+    lightest: "#F0FDF4",
   },
 
   info: {
     base: "#0EA5E9",
     light: "#E0F2FE",
+    lightest: "#F0F9FF",
   },
 
   error: {
     base: "#EF4444",
     light: "#FEE2E2",
+    lightest: "#FEF2F2",
   },
 
   warning: {
     base: "#F59E0B",
     light: "#FEF3C7",
+    lightest: "#FFFBEB",
   },
 };
 
