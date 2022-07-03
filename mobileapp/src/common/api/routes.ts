@@ -1,6 +1,6 @@
 import { MOBILEAPP_API_BASE_URL } from "@env";
 
-export const API_HOST = `${MOBILEAPP_API_BASE_URL}api`;
+export const API_HOST = `${MOBILEAPP_API_BASE_URL}/api`;
 
 export const API_ROUTES = {
   AUTH_LOGIN: "/auth/login", // POST
@@ -15,4 +15,5 @@ export const API_ROUTES = {
   JOBS: "/jobs", // GET
   JOB: (jobId: string) => `/jobs/${jobId}`, // GET
   JOB_FAVORITES: (jobId: string) => `/jobs/${jobId}/favorites`,
+  JOB_REGISTER: (jobId: string) => `/jobs/${jobId}/register`,
 } as const;
