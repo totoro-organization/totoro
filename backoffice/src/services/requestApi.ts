@@ -36,8 +36,8 @@ export async function requestAxios(method: string, uri: string, data = null) {
             }
             let options = {
                 headers: headers
-            }
-            request = await axios[method](url, data, options);
+            }            
+            request = await axios[method](url, data, options);                        
         } else {
             return 'cette methode n\'est pas prise en compte par l\'api'
         }
@@ -48,7 +48,8 @@ export async function requestAxios(method: string, uri: string, data = null) {
             return "offline";
         } else {
             return {
-                error: error.response.data.message
+                error: true,
+                ...error.response.data
             }
         }
     }

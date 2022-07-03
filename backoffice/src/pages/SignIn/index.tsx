@@ -13,7 +13,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import useAuth from 'src/hooks/useAuth';
 import { useEffect } from 'react';
-import { useToast } from 'src/contexts/ToastContext';
+import { useToastContext } from 'src/contexts/ToastContext';
 
 function Copyright(props: any) {
   return (
@@ -34,14 +34,13 @@ export default function SignIn() {
 
   const { login, loading, error } = useAuth();
 
-  const { addToast } = useToast();
+  const { addToast } = useToastContext();
 
   useEffect(() => {
-    addToast( { text: "Salut jarce le boss", variant: "success", duration: 6000 });
-    addToast( { text: "Salut jarce le boss", variant: "success", duration: 6000 });
-    addToast( { text: "Salut jarce le boss", variant: "success", duration: 6000 });
-    addToast( { text: "Salut jarce le boss", variant: "success", duration: 6000 });
-  }, [])
+    if(error) {
+      addToast( { message: error.message, variant: "error", duration: 9000 });
+    }
+  }, [error])
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();

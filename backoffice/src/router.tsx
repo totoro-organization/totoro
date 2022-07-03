@@ -67,28 +67,28 @@ const Crypto = Loader(lazy(() => import('src/pages/Dashboards/Crypto')));
 /* Apps Configuration */
 
 const TagSettings = Loader(
-  lazy(() => import('src/pages/AppsConfiguration/Settings/Tags'))
+  lazy(() => import('src/pages/Applications/Settings/Tags'))
 );
 const RoleSettings = Loader(
-  lazy(() => import('src/pages/AppsConfiguration/Settings/Roles'))
+  lazy(() => import('src/pages/Applications/Settings/Roles'))
 );
 const PricingSettings = Loader(
-  lazy(() => import('src/pages/AppsConfiguration/Settings/Pricings'))
+  lazy(() => import('src/pages/Applications/Settings/Pricings'))
 );
 const StatusSettings = Loader(
-  lazy(() => import('src/pages/AppsConfiguration/Settings/Statuses'))
+  lazy(() => import('src/pages/Applications/Settings/Statuses'))
 );
 const DifficultySettings = Loader(
-  lazy(() => import('src/pages/AppsConfiguration/Settings/Difficulties'))
+  lazy(() => import('src/pages/Applications/Settings/Difficulties'))
 );
 const LitigationObjectSettings = Loader(
-  lazy(() => import('src/pages/AppsConfiguration/Settings/LitigationObjects'))
+  lazy(() => import('src/pages/Applications/Settings/LitigationObjects'))
 );
 const DiscountTypeSettings = Loader(
-  lazy(() => import('src/pages/AppsConfiguration/Settings/DiscountTypes'))
+  lazy(() => import('src/pages/Applications/Settings/DiscountTypes'))
 );
 const ThemeSettings = Loader(
-  lazy(() => import('src/pages/AppsConfiguration/Appearance/Themes'))
+  lazy(() => import('src/pages/Applications/Appearance/Themes'))
 );
 
 /* Status */
