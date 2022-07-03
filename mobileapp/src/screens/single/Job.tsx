@@ -23,6 +23,7 @@ import useJob from "../../common/api/hooks/useJob";
 import useJobFavorites from "../../common/api/hooks/useJobFavorites";
 import { MOBILEAPP_API_BASE_URL } from "@env";
 import useUserJobs from "../../common/api/hooks/useUserJobs";
+import fetchRegisterJob from "../../common/api/requests/job/fetchRegisterJob";
 
 export default function Job({
   route,
@@ -64,6 +65,24 @@ export default function Job({
   async function handleUnfollowOrganization(favoriteId: string) {
     try {
       await deleteFavorite(favoriteId);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  async function handleRegisterJob() {
+    try {
+      const response = await fetchRegisterJob(job?.id as string);
+
+      if (response.status === 201) {
+        Toast.show({
+          type: "success",
+          props: {
+            title: "Tout est bon",
+            text: `Tu t'es bien inscrit à la mission ${job?.title} !`,
+          },
+        });
+      }
     } catch (err) {
       console.error(err);
     }
@@ -196,8 +215,7 @@ export default function Job({
 
       <Spacer axis="vertical" size={4} />
 
-      {/* TODO: Add call api */}
-      <Button>Je participe !</Button>
+      <Button handlePress={handleRegisterJob}>Je participe !</Button>
     </GlobalLayout>
   );
 }
