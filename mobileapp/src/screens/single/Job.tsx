@@ -22,6 +22,7 @@ import deleteFavorite from "../../common/api/requests/deleteFavorite";
 import useJob from "../../common/api/hooks/useJob";
 import useJobFavorites from "../../common/api/hooks/useJobFavorites";
 import { MOBILEAPP_API_BASE_URL } from "@env";
+import useUserJobs from "../../common/api/hooks/useUserJobs";
 
 export default function Job({
   route,
@@ -32,6 +33,9 @@ export default function Job({
   const { userFavorites } = useUserFavorites(user?.id || "");
   const { total: totalJobFavorites } = useJobFavorites(jobId);
   const { job } = useJob(jobId);
+  const { userJobs } = useUserJobs(user?.id || "");
+
+  console.log(userJobs);
 
   const currentFavorite = userFavorites?.filter(
     (fav) => fav.organization.id === job?.author.organization.id
