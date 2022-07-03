@@ -12,10 +12,10 @@ import {
 } from '@mui/material';
 
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
-import { Job } from '../../../../../../models';
+import { Job } from '../../../../../../../models';
 
 import format from 'date-fns/format';
-import StatusLabel from '../../../../../../components/StatusLabel';
+import StatusLabel from '../../../../../../../components/StatusLabel';
 
 interface JobTableItemProps {
   job: Job;
@@ -33,7 +33,7 @@ export default function JobTableItem({
   const theme = useTheme();
 
   return (
-    <TableRow hover key={job?.id} selected={isSelectedJob}>
+    <TableRow hover key={job.id} selected={isSelectedJob}>
       <TableCell padding="checkbox">
         <Checkbox
           color="primary"
@@ -51,13 +51,13 @@ export default function JobTableItem({
           gutterBottom
           noWrap
         >
-          <Link to={`/gestion/missions/${job?.id}`}>{job?.title}</Link>
+          <Link to={`/gestion/missions/${job.id}`}>{job.title}</Link>
         </Typography>
 
         <Typography variant="body2" color="text.secondary" noWrap>
-          {job?.author.organization
-            ? job?.author.organization.name
-            : `${job?.author.user.firstname} ${job?.author.user.lastname} (${job?.author.user.username})`}
+          {job.author.organization
+            ? job.author.organization.name
+            : `${job.author.user.firstname} ${job.author.user.lastname} (${job.author.user.username})`}
         </Typography>
       </TableCell>
 
@@ -69,7 +69,7 @@ export default function JobTableItem({
           gutterBottom
           noWrap
         >
-          {format(new Date(job?.createdAt), 'dd/MM/yyyy HH:mm:ss')}
+          {format(new Date(job.createdAt), 'dd/MM/yyyy HH:mm:ss')}
         </Typography>
       </TableCell>
 
@@ -81,8 +81,7 @@ export default function JobTableItem({
           gutterBottom
           noWrap
         >
-          {job?.participants_max - job?.remaining_place} /{' '}
-          {job?.participants_max}
+          {job.participants_max - job.remaining_place} / {job.participants_max}
         </Typography>
       </TableCell>
 
@@ -94,7 +93,7 @@ export default function JobTableItem({
           gutterBottom
           noWrap
         >
-          {job?.difficulty.token}
+          {job.difficulty.token}
         </Typography>
       </TableCell>
 
