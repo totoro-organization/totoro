@@ -206,7 +206,7 @@ const StyledImage = styled.ImageBackground`
 `;
 
 const TextLight = styled(Text)`
-  color: ${({ theme }) => theme.colors.grey[400]};
+  color: ${({ theme }) => theme.colors.v1.grey[400]};
 `;
 
 const HeadingSection = styled(Text)`
