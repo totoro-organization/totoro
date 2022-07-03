@@ -1,3 +1,5 @@
+// TODO: ADD THIS COMMAND TO COMMAND.TS
+
 /**
  *
  * @param testId string to get
