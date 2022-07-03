@@ -38,7 +38,11 @@ export default function ExplanationCarousel() {
 
       <ButtonWrapper $direction={lastStep ? "row" : "column"}>
         {!lastStep && (
-          <Button horizontalPosition="center" onPress={handlePreviousItem}>
+          <Button
+            horizontalPosition="center"
+            onPress={handlePreviousItem}
+            testID="button-next"
+          >
             Suivant
           </Button>
         )}
@@ -48,6 +52,7 @@ export default function ExplanationCarousel() {
             <Button
               variant="outline"
               onPress={() => navigation.navigate("Se connecter")}
+              testID="button-login"
             >
               Se connecter
             </Button>
