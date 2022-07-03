@@ -74,7 +74,7 @@ const Dot = styled.View<{ $active?: boolean }>`
   width: ${({ $active }) => ($active ? "12px" : "8px")};
   height: ${({ $active }) => ($active ? "12px" : "8px")};
   background: ${({ theme, $active }) =>
-    $active ? theme.colors.grey[900] : theme.colors.grey[300]};
+    $active ? theme.colors.core.black.base : theme.colors.v1.grey[300]};
   border-radius: ${({ theme }) => theme.border.radius.circle};
 `;
 

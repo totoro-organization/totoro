@@ -29,11 +29,11 @@ const StyledInput = styled.TextInput<{ $error: boolean; $active: boolean }>`
       $error
         ? "red"
         : $active
-        ? theme.colors.grey[900]
-        : theme.colors.grey[200]};
+        ? theme.colors.core.black
+        : theme.colors.v1.grey[200]};
   border-radius: ${({ theme }) => theme.border.radius.md};
   background-color: ${({ theme, $error }) =>
-    $error ? theme.colors.primary[50] : theme.colors.grey[50]};
-  color: ${({ theme }) => theme.colors.grey[900]};
+    $error ? theme.colors.core.error.lightest : theme.colors.v1.grey[50]};
+  color: ${({ theme }) => theme.colors.core.black.base};
   font-family: ${({ theme }) => theme.fonts.weight.medium};
 `;

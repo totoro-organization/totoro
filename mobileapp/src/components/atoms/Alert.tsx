@@ -34,7 +34,7 @@ const Container = styled.View<{ type: AlertType }>`
   flex-direction: row;
   width: 100%;
   padding: ${({ theme }) => theme.spacing[2]};
-  background-color: ${({ theme, type }) => theme.colors[type][50]};
+  background-color: ${({ theme, type }) => theme.colors.core[type].lightest};
   border-radius: ${({ theme }) => theme.border.radius.md};
-  border: 1px solid ${({ theme, type }) => theme.colors[type][100]};
+  border: 1px solid ${({ theme, type }) => theme.colors.core[type].light};
 `;

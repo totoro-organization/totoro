@@ -1,11 +1,11 @@
 import React from "react";
 import { Text } from "../components/atoms/Text";
-import MainLayout from "../components/layouts/MainLayout";
+import GlobalLayout from "../components/layouts/GlobalLayout";
 
 export default function Chat() {
   return (
-    <MainLayout>
+    <GlobalLayout>
       <Text>Chat</Text>
-    </MainLayout>
+    </GlobalLayout>
   );
 }

@@ -20,7 +20,7 @@ export type TextProps = {
 
 export const Text = styled.Text<TextProps>`
   color: ${({ color }) =>
-    (color && getColors(color)) || theme.colors.grey[900]};
+    (color && getColors(color)) || theme.colors.core.black.base};
   font-size: ${({ theme, size }) =>
     size ? theme.fonts.sizes[size] : theme.fonts.sizes.md};
   font-family: ${({ theme, weight }) =>
@@ -49,7 +49,7 @@ export type HeadingProps = TextProps & { variant: keyof typeof Variant };
 
 export const Heading = styled.Text<HeadingProps>`
   color: ${({ color }) =>
-    (color && getColors(color)) || theme.colors.grey[900]};
+    (color && getColors(color)) || theme.colors.core.black.base};
   font-family: ${({ theme, weight }) =>
     weight ? theme.fonts.weight[weight] : theme.fonts.weight.semiBold};
   flex-shrink: 1;
