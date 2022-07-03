@@ -29,6 +29,6 @@ export default function JobDetail({ Icon, title, text }: JobDetailProps) {
 
 const IconWrapper = styled.View`
   padding: ${({ theme }) => theme.spacing[3.5]};
-  background-color: ${({ theme }) => theme.colors.grey[100]};
+  background-color: ${({ theme }) => theme.colors.v1.grey[100]};
   border-radius: ${({ theme }) => theme.border.radius.md};
 `;

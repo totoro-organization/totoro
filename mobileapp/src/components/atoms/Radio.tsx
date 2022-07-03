@@ -40,7 +40,7 @@ const Dot = styled.View`
   width: 24px;
   height: 24px;
   border: ${({ theme }) => theme.border.width[1]} solid
-    ${({ theme }) => theme.colors.grey[900]};
+    ${({ theme }) => theme.colors.core.black.base};
   border-radius: ${({ theme }) => theme.border.radius.circle};
   align-items: center;
   justify-content: center;
@@ -50,11 +50,11 @@ const DotActive = styled.View<{ $checked: boolean }>`
   width: 16px;
   height: 16px;
   border-radius: ${({ theme }) => theme.border.radius.circle};
-  background-color: ${({ theme }) => theme.colors.grey[900]};
+  background-color: ${({ theme }) => theme.colors.core.black.base};
   opacity: ${({ $checked }) => ($checked ? "1" : "0")};
 `;
 
 const Label = styled(Text)<{ $checked: boolean }>`
   color: ${({ $checked, theme }) =>
-    $checked ? theme.colors.grey[900] : theme.colors.grey[500]};
+    $checked ? theme.colors.core.black.base : theme.colors.v1.grey[500]};
 `;
