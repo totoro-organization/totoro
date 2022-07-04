@@ -51,7 +51,6 @@ module.exports = {
 					item.where = {label}
 				}
 			}
-			condition.label = label;
 		}
 		if(current) condition.current = current
 
