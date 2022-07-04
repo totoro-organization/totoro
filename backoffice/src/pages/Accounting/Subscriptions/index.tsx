@@ -2,17 +2,18 @@ import { useState, ChangeEvent } from 'react';
 import { Helmet } from 'react-helmet-async';
 import PageHeader from './PageHeader';
 import PageTitleWrapper from 'src/components/PageTitleWrapper';
-import { Container, Tabs, Tab, Grid, styled } from '@mui/material';
+import { Container, Tab, Grid } from '@mui/material';
 import Footer from 'src/components/Footer';
 import TabsWrapper from 'src/components/TabsWrapper';
+import FreeTab from './components/StandardSubscriptionsTab';
 
 function ManagementUserSettings() {
 
-  const [currentTab, setCurrentTab] = useState<string>('free');
+  const [currentTab, setCurrentTab] = useState<string>('standard');
 
   const tabs = [
-    { value: 'free', label: 'Abonnements gratuits' },
-    { value: 'premium', label: 'Abonnements premium' },
+    { value: 'standard', label: 'Abonnements Standards' },
+    { value: 'pro', label: 'Abonnements Pro' },
     { value: 'expired', label: 'Abonnements expirés' },
     { value: 'canceled', label: 'Abonnements annulés' }
   ];
@@ -52,8 +53,9 @@ function ManagementUserSettings() {
             </TabsWrapper>
           </Grid>
           <Grid item xs={12}>
-            {/* {currentTab === 'free' && <FreeTab />}
-            {currentTab === 'premium' && <PremiumTab />}
+            {currentTab === 'standard' && <FreeTab />}
+            {/* {currentTab === 'standard' && <FreeTab />}
+            {currentTab === 'pro' && <PremiumTab />}
             {currentTab === 'expired' && <ExpiredTab />}
             {currentTab === 'canceled' && <CanceledTab />} */}
           </Grid>
