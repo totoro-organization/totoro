@@ -106,7 +106,7 @@ module.exports = {
 		);
 
 		if(statusData.label !== label_status.deleted){
-			if(participationData.status.label === label_status.actived){
+			if(participationData.status.label === label_status.actived && statusData.label === label_status.closed){
 				asyncLib.waterfall([
 					function (done) {
 						Users.update(
@@ -132,7 +132,13 @@ module.exports = {
 				  }
 			  );
 			} else {
-				commonsController.update(res, Groups, id, data);
+				if(participationData.status.label === label_status.closed){
+					return res
+						.status(error.duplicate.status)
+						.json({ entity: Groups.name, message: "This mission has already been validated"});
+				} else {
+					commonsController.update(res, Groups, id, data);
+				}
 			}
 			
 		} else {
