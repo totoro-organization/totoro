@@ -14,13 +14,8 @@ import {
   Typography,
   useTheme,
 } from '@mui/material';
-import CancelIcon from '@mui/icons-material/Cancel';
 import type { Subscription, TableProps } from 'src/models';
-import Modal from "src/components/Modal";
-import { DeleteSubscriptionContent } from './SubscriptionModalContent';
-import { useModal } from 'src/hooks/useModal';
-import StatusLabel from 'src/components/StatusLabel';
-
+import StatusSelect from 'src/components/StatusSelect';
 
 const SubscriptionsTable: FC<TableProps<Subscription>> = ({
   items: subscriptions, 
@@ -30,17 +25,8 @@ const SubscriptionsTable: FC<TableProps<Subscription>> = ({
   selectedSomeItems,
   selectedAllItems,
   statusOptions,
-  handleDeleteItem,
   table
 }) => {
-  const theme = useTheme();
-
-  const [deleteModalOpen, handleOpenDeleteModal, handleCloseDeleteModal, deleteModalItem] = useModal();
-
-  const handleDelete = (id: string) => {
-    handleDeleteItem(id);
-    handleCloseDeleteModal();
-  }
 
   return (
       <TableContainer>
@@ -59,7 +45,6 @@ const SubscriptionsTable: FC<TableProps<Subscription>> = ({
               <TableCell>Pricing</TableCell>
               <TableCell>Dates</TableCell>
               <TableCell align="right">Statut</TableCell>
-              <TableCell align="right">Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -115,35 +100,17 @@ const SubscriptionsTable: FC<TableProps<Subscription>> = ({
                       gutterBottom
                       noWrap
                     >
-                      Du {format(new Date(subscription.createdAt), "dd/MM/yyyy")} au {format(new Date(subscription.createdAt), "dd/MM/yyyy")}
+                      { subscription.expirate ? `Du ${format(new Date(subscription.createdAt), "dd/MM/yyyy")} au ${format(new Date(subscription.createdAt), "dd/MM/yyyy")}` : "-"}
                     </Typography>
                   </TableCell>
                   <TableCell align="right">
-                    <StatusLabel status={subscription.status.label} />
-                  </TableCell>
-                  <TableCell align="right">
-                    <Tooltip title="Annuler l'abonnement" arrow>
-                      <IconButton
-                        onClick={() => handleOpenDeleteModal(subscription)}
-                        sx={{
-                          '&:hover': { background: theme.colors.error.lighter },
-                          color: theme.palette.error.main
-                        }}
-                        color="inherit"
-                        size="small"
-                      >
-                        <CancelIcon fontSize="small" />
-                      </IconButton>
-                    </Tooltip>
+                    <StatusSelect table={table} currentItem={{ id: subscription.id, status: subscription.status}} statusOptions={statusOptions} />
                   </TableCell>
                 </TableRow>
               );
             })}
           </TableBody>
         </Table>
-        <Modal open={deleteModalOpen} handleClose={handleCloseDeleteModal} title={`Supprimer la mission suivante : ${deleteModalItem?.title}`}>
-            <DeleteSubscriptionContent handleClose={handleCloseDeleteModal} handleDelete={handleDelete} item={deleteModalItem} />
-        </Modal>
       </TableContainer>
   );
 };

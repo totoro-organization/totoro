@@ -6,6 +6,8 @@ import { TableEnum } from 'src/models';
 import { API_ROUTES } from 'src/services/routes';
 import SubscriptionsTable from './SubscriptionsTable';
 import { Button } from '@mui/material';
+import type { TabProps } from './tab.types';
+import { useEffect } from 'react';
 
 const statusOptions = [
   {
@@ -22,11 +24,15 @@ const statusOptions = [
   }
 ];
 
-function StandardSubscriptionTab() {
+function StandardSubscriptionTab({ handleSetTabs }: TabProps) {
 
   const { data: subscriptions, loading, error, getData } = useApi(API_ROUTES.SUBSCRIPTIONS, { label: "Standard" });
   
-  console.log(subscriptions);
+  useEffect(() => {
+    if(subscriptions) {
+      handleSetTabs('standard', subscriptions.totalRows)
+    }
+  }, [subscriptions])
   
   return !loading && subscriptions ?(
           <TableWrapper table={TableEnum.subscriptions} url={API_ROUTES.SUBSCRIPTIONS} statusOptions={statusOptions} defaultItems={subscriptions?.data}>
