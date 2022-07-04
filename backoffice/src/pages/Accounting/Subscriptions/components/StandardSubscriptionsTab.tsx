@@ -5,6 +5,7 @@ import { useApi } from 'src/hooks/useApi';
 import { TableEnum } from 'src/models';
 import { API_ROUTES } from 'src/services/routes';
 import SubscriptionsTable from './SubscriptionsTable';
+import { Button } from '@mui/material';
 
 const statusOptions = [
   {
@@ -23,7 +24,7 @@ const statusOptions = [
 
 function StandardSubscriptionTab() {
 
-  const { data: subscriptions, loading } = useApi(API_ROUTES.SUBSCRIPTIONS);
+  const { data: subscriptions, loading, error, getData } = useApi(API_ROUTES.SUBSCRIPTIONS, { label: "Standard" });
   
   console.log(subscriptions);
   
@@ -32,7 +33,7 @@ function StandardSubscriptionTab() {
           {/* @ts-ignore */} 
             <SubscriptionsTable />
           </TableWrapper> 
-  ): <SuspenseLoader/>;
+  ): error ? <Button variant="outlined" color='warning' onClick={getData}>Réessayer</Button> : <SuspenseLoader/>;
 }
 
 export default StandardSubscriptionTab;
