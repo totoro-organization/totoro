@@ -156,18 +156,10 @@ module.exports = {
 			{
 				model: Discounts,
 				as: "discount",
-				attributes: { exclude: ["type_disc_id","status_id","partner_id"] },
+				attributes: { exclude: ["type_disc_id","status_id"] },
 				required: true,
 				include: [
 					{ model: Status, as: "status", attributes: excludeCommon },
-					{ 
-						model: Partners, 
-						as: "partner", 
-						attributes: { exclude: ["status_id"] },
-						include: [
-							{ model: Status, as: "status", attributes: excludeCommon },
-						]
-					},
 					{
 						model: Types_discounts,
 						as: "type",
@@ -184,6 +176,6 @@ module.exports = {
 		let pagination = getPaginationQueries(size,page)
 		condition = Object.keys(condition).length === 0 ? null : condition;
 
-		commonsController.getAll(res, Tokens, null, excludeTransactions, includeTransactions, pagination);
+		commonsController.getAll(res, Tokens, condition, excludeTransactions, includeTransactions, pagination);
 	}
 };
