@@ -57,10 +57,9 @@ export function AuthProvider({
       .getCurrentUser()
       .then((response) => {
         if("error" in response) {
-          setError(response.error);
           return;
         } 
-        setUser(response);
+        setUser(response as Admin);
       })
       .catch((_error) => {})
       .finally(() => setLoadingInitial(false));
@@ -82,7 +81,7 @@ export function AuthProvider({
       .login(params)
       .then((response) => {
         if ('error' in response) {
-          setError(response.error);
+          setError(response);
           return;
         }
         localStorage.setItem('token', response.token);
@@ -93,10 +92,10 @@ export function AuthProvider({
       .getCurrentUser()
       .then((response) => {
           if('error' in response) {
-            setError(response.error);
+            setError(response);
             return;
           } 
-          setUser(response);
+          setUser(response as Admin);
           navigate('/')
         })
       })

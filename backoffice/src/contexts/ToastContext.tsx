@@ -6,7 +6,7 @@ import ToastComponent from 'src/components/Toast';
 
 export interface Toast {
     variant: "error" | "warning" | "info" | "success",
-    text: string,
+    message: string,
     duration?: number
 }
 
@@ -29,27 +29,27 @@ const ToastWrapper = styled(Box)({
 export function ToastProvider({ children }) {
   const [toasts, setToasts] = useState<Toast[]>([]);
     
-    const addToast = useCallback(
-        function (toast: Toast) {
-            setToasts((toasts) => [...toasts, toast]);
-            setTimeout(() => setToasts((toasts) => toasts.slice(1)), toast.duration ?? 3000);
-        },
-        [setToasts]
-    );
+  const addToast = useCallback(
+      function (toast: Toast) {
+          setToasts((toasts) => [...toasts, toast]);
+          setTimeout(() => setToasts((toasts) => toasts.slice(1)), toast.duration ?? 3000);
+      },
+      [setToasts]
+  );
 
   return (
     <ToastContext.Provider value={{addToast}}>
       {children}
       <ToastWrapper>
         {toasts.map((toast, i) => (
-            <ToastComponent key={i} variant={toast.variant} text={toast.text}/>
+            <ToastComponent key={i} variant={toast.variant} text={toast.message}/>
         ))}
       </ToastWrapper>
     </ToastContext.Provider>
   );
 }
 
-export function useToast() {
+export function useToastContext() {
   return useContext(ToastContext);
 }
 
