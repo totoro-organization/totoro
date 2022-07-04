@@ -13,7 +13,10 @@ const {
 	Favorites,
 	Groups,
 	Associations_users,
-	Partners
+	Partners,
+	Tokens,
+	Types_discounts,
+	Discounts
 } = require("./../../../models");
 const commonsController = require("services/Commons/controller");
 
@@ -275,5 +278,48 @@ module.exports = {
 		let pagination = getPaginationQueries(size,page)
 
 		commonsController.getAll(res, Litigations, condition, ['litigation_object_id','group_id','status_id'], includeLitigation, pagination);
-  	}
+  	},
+
+	getTransactions: async function (res, id, queries) {
+		const {size, page} = queries
+		let condition = {user_id : id};
+
+		if (status) {
+			let statusData = await getRow(res, Status, { label: status });
+			condition.status_id = statusData.id;
+		}
+
+		const excludeTransactions = ["discount_id", "status_id"];
+		const includeTransactions = [
+			{
+				model: Discounts,
+				as: "discount",
+				attributes: { exclude: ["type_disc_id","status_id","partner_id"] },
+				required: true,
+				include: [
+					{ model: Status, as: "status", attributes: excludeCommon },
+					{ 
+						model: Partners, 
+						as: "partner", 
+						attributes: { exclude: ["status_id"] },
+						include: [
+							{ model: Status, as: "status", attributes: excludeCommon },
+						]
+					},
+					{
+						model: Types_discounts,
+						as: "type",
+						attributes: {
+							exclude: ["status_id"],
+						},
+						include: [{ model: Status, as: "status", attributes: excludeCommon }],
+					}
+				],
+			},
+			{ model: Status, as: "status", attributes: excludeCommon },
+		]
+		let pagination = getPaginationQueries(size,page)
+
+		commonsController.getAll(res, Tokens, condition, excludeTransactions, includeTransactions, pagination);
+	}
 };
