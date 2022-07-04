@@ -4,7 +4,7 @@ import { SubscriptionStatus } from "./status";
 
 export interface Subscription {
     id: string,
-    type: Pricing,
+    pricing: Pricing,
     organization: Organization,
     expirate: string,
     status: SubscriptionStatus,
