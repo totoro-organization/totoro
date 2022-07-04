@@ -1,12 +1,12 @@
-import config from "../config";
+import config from "../../config";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import { API_HOST, API_ROUTES } from "../routes";
+import { API_HOST, API_ROUTES } from "../../routes";
 import Toast from "react-native-toast-message";
 
-export default async function addUserFavorite(
-  organizationId: string,
-  organizationName: string
+export default async function fetchRegisterJob(
+  job_id: string,
+  jobName: string
 ): Promise<any> {
   const userToken = await AsyncStorage.getItem("userToken");
   const bearer = "Bearer" + " " + userToken;
@@ -17,15 +17,12 @@ export default async function addUserFavorite(
     Authorization: bearer,
   });
 
-  const body = { assos_id: organizationId };
-
   try {
     const response = await fetch(
-      `${API_HOST}${API_ROUTES.USER_FAVORITES(organizationId)}`,
+      `${API_HOST}${API_ROUTES.JOB_REGISTER(job_id)}`,
       {
         method: "POST",
         headers: myHeaders,
-        body: JSON.stringify(body),
       }
     );
 
@@ -34,7 +31,7 @@ export default async function addUserFavorite(
         type: "success",
         props: {
           title: "Tout est bon",
-          text: `Merci d'avoir follow ${organizationName} !`,
+          text: `Tu t'es bien inscrit à la mission ${jobName} !`,
         },
       });
     }

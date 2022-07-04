@@ -59,6 +59,7 @@ export const colors = {
     info: core.info.base,
     warning: core.warning.base,
     primary: brand.primary.base,
+    error: core.error.base,
   },
 
   /**

@@ -8,7 +8,7 @@ import Button from "../../components/atoms/Button";
 import Spacer from "../../components/atoms/Spacer";
 import Heart from "../../assets/icons/Heart";
 import Box from "../../components/atoms/Box";
-import { ImageBackground } from "react-native";
+import { ActivityIndicator, ImageBackground, View } from "react-native";
 import JobDetail from "../../components/molecules/JobDetail";
 import Location from "../../assets/icons/Location";
 import Calendar from "../../assets/icons/Calendar";
@@ -22,6 +22,8 @@ import deleteFavorite from "../../common/api/requests/deleteFavorite";
 import useJob from "../../common/api/hooks/useJob";
 import useJobFavorites from "../../common/api/hooks/useJobFavorites";
 import { MOBILEAPP_API_BASE_URL } from "@env";
+import useUserJobs from "../../common/api/hooks/useUserJobs";
+import fetchRegisterJob from "../../common/api/requests/job/fetchRegisterJob";
 
 export default function Job({
   route,
@@ -31,7 +33,12 @@ export default function Job({
   const { user } = useAuth();
   const { userFavorites } = useUserFavorites(user?.id || "");
   const { total: totalJobFavorites } = useJobFavorites(jobId);
-  const { job } = useJob(jobId);
+  const { job, isLoading: jobLoading } = useJob(jobId);
+  const { userJobs } = useUserJobs(user?.id || "");
+
+  const userAlreadyParticipate = userJobs?.filter(
+    (jobRegistered) => jobRegistered.job.id === job?.id
+  ).length;
 
   const currentFavorite = userFavorites?.filter(
     (fav) => fav.organization.id === job?.author.organization.id
@@ -39,22 +46,11 @@ export default function Job({
   const isOrganizationFollow =
     currentFavorite !== undefined && currentFavorite.length > 0;
 
-  async function handleFollowOrganization(assos_id: string) {
-    try {
-      const response = await addUserFavorite(assos_id);
-
-      if (response.status === 201) {
-        Toast.show({
-          type: "success",
-          props: {
-            title: "Tout est bon",
-            text: `Merci d'avoir follow ${job?.author.organization.name} !`,
-          },
-        });
-      }
-    } catch (err) {
-      console.error(err);
-    }
+  async function handleFollowOrganization() {
+    await addUserFavorite(
+      job?.author.organization.id as string,
+      job?.author.organization.name as string
+    );
   }
 
   async function handleUnfollowOrganization(favoriteId: string) {
@@ -64,6 +60,13 @@ export default function Job({
       console.error(err);
     }
   }
+
+  async function handleRegisterJob() {
+    await fetchRegisterJob(job?.id as string, job?.title as string);
+  }
+
+  // TODO: Add Loading screen here (cf lauching screen from figma).
+  if (jobLoading) return <></>;
 
   return (
     <GlobalLayout
@@ -78,7 +81,7 @@ export default function Job({
       }
     >
       {/* TODO: Add Tag atom.*/}
-      <Text color="info">{job?.tags[0].tag.label}</Text>
+      {/* <Text color="info">{job?.tags[0].tag.label}</Text> */}
 
       <Spacer axis="vertical" size={1} />
 
@@ -181,9 +184,7 @@ export default function Job({
           <Button
             size="sm"
             color="black"
-            handlePress={() =>
-              handleFollowOrganization(job?.author.organization.id as string)
-            }
+            handlePress={handleFollowOrganization}
           >
             Suivre
           </Button>
@@ -192,8 +193,14 @@ export default function Job({
 
       <Spacer axis="vertical" size={4} />
 
-      {/* TODO: Add call api */}
-      <Button>Je participe !</Button>
+      {/* TODO: Add call api to unregister job */}
+      <Button
+        handlePress={handleRegisterJob}
+        variant={userAlreadyParticipate ? "outline" : "default"}
+        color={userAlreadyParticipate ? "grey" : "primary"}
+      >
+        {userAlreadyParticipate ? "Tu es déjà inscrit.e" : "Je participe"}
+      </Button>
     </GlobalLayout>
   );
 }
