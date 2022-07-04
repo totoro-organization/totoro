@@ -37,12 +37,23 @@ const exclude = ["pricing_id", "assos_id", "status_id"];
 
 module.exports = {
 	getSubscriptions: async function (res, queries) {
-		const {size,page,status} = queries
+		const {size,page,status, label, current} = queries
 		let condition = {};
 		if (status) {
 			let statusData = await getRow(res, Status, { label: status });
 			condition.status_id = statusData.id;
 		}
+		if (label) {
+			for (let i = 0; i < include.length; i++) {
+				const item = include[i];
+				if(item.as == "pricing"){
+					item.required = true
+					item.where = {label}
+				}
+			}
+			condition.label = label;
+		}
+		if(current) condition.current = current
 
 		condition = Object.keys(condition).length === 0 ? null : condition;
 
