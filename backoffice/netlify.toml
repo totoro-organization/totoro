@@ -1,7 +1,4 @@
 [build]
-    base = "backoffice/"
-    publish = "build/"
-    command = "npm run build"
     ignore = "git diff --quiet HEAD^ HEAD .
 
 [build.environment]
