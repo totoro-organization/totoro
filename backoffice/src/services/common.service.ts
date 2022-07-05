@@ -17,7 +17,16 @@ export async function deleteItem(uri: Route, id: string): Promise<Response> {
     return response;
 }
 
-export async function getItems(uri: Route) {
+export async function getItems(uri: Route, query?: any) {
+    if(query) {
+        uri += '?';
+        for (const key in query) {
+            uri += key + '=' + query[key] + '&';
+        }
+        (uri as string) = uri.slice(0, -1); // Remove last '&'
+    }
     const response = await requestAxios('GET', uri);
     return response;
 }
+
+
