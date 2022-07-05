@@ -1,6 +1,0 @@
-[build]
-    ignore = "git diff --quiet HEAD^ HEAD .
-
-[build.environment]
-    REACT_APP_API_BASE_URL=https://api-totoro.herokuapp.com
-    REACT_APP_APP_ID=8ea4d6f2-596f-483f-aca6-dfe5e993fdde
