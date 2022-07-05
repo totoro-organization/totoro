@@ -7,6 +7,7 @@ const { loadFixtures } = require("./fixtures");
 const server = express();
 const swaggerTools = require("swagger-tools");
 const swaggerDoc = require("./swagger.json");
+const { ui_api } = require("./html");
 
 const {
   jobs,
@@ -24,7 +25,7 @@ const {
   transactions
 } = require("services");
 
-const PORT = process.env.API_DOCKER_PORT || 5000;
+const PORT = process.env.PORT || 5000;
 
 loadFixtures();
 
@@ -62,12 +63,10 @@ const accessApi = async (req, res, next) => {
 	}
 };
 
-/*
 server.get("/",async function(req,res){
-	const link = await qrcode("/qrcode-jobs", "je suis jarce le boss");
     res.setHeader("Content-Type","text/html")
-    res.status(200).send(`<h1>qrcode link ${link}</h1>`)
-})*/
+    res.status(200).send(ui_api())
+})
 
 server.use("/api", [accessApi, commons]);
 server.use("/api/applications", [accessApi, applications]);
