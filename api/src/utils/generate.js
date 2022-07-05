@@ -1,4 +1,5 @@
 const QRCode = require("qrcode");
+const crypto = require('crypto');
 var onlyPath = process.cwd();
 
 module.exports = {
@@ -18,5 +19,10 @@ module.exports = {
         const File = await QRCode.toFile(onlyPath + "/data" +path+"/"+filename, text, opts);
         return path+"/"+filename;
     },
+    randomValueHex: function(len){
+        return crypto.randomBytes(Math.ceil(len/2))
+            .toString('hex')
+            .slice(0,len).toUpperCase();
+    }
 }
   

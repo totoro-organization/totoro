@@ -20,6 +20,7 @@
 		"bcryptjs": "^2.4.3",
 		"body-parser": "^1.19.1",
 		"cors": "^2.8.5",
+		"crypto": "^1.0.1",
 		"dotenv": "^8.2.0",
 		"express": "^4.17.2",
 		"express-handlebars": "^6.0.6",
