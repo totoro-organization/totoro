@@ -55,7 +55,10 @@ export default function ExplanationCarousel() {
               Se connecter
             </Button>
 
-            <Button onPress={() => navigation.navigate("S'inscrire")}>
+            <Button
+              onPress={() => navigation.navigate("S'inscrire")}
+              testID="button-register"
+            >
               S'inscrire
             </Button>
           </>
