@@ -4,6 +4,7 @@ import SuspenseLoader from 'src/components/SuspenseLoader';
 import { useApi } from 'src/hooks/useApi';
 import { StatusEnum } from 'src/models';
 import useAuth from 'src/hooks/useAuth';
+import { API_ROUTES } from 'src/services/routes';
 
 const statusOptions = [
   {
@@ -30,17 +31,17 @@ export default function Jobs() {
     `/organizations/${currentApp.data.id}/jobs`
   );
 
-  if (loading && !jobs) return <SuspenseLoader />;
-
-  return (
+  return jobs && !loading ? (
     <TableWrapper
-      url="/jobs"
+      url={API_ROUTES.JOBS}
       statusOptions={statusOptions}
-      defaultItems={jobs?.data}
+      defaultItems={jobs.data}
     >
       {/* TODO: Fix type here. Maybe add optional mention to TableProps */}
       {/* @ts-ignore */}
       <JobsTable />
     </TableWrapper>
+  ) : (
+    <SuspenseLoader />
   );
 }
