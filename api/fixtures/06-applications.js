@@ -20,6 +20,7 @@ module.exports = [
   {
     model: "Applications",
     data: {
+      id: "ad7258a1-bc27-4b04-882b-eeca86afcc7e",
       name: "BACK OFFICE",
       status: {
 				label: "actived",
