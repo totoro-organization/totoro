@@ -9,7 +9,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { User, Partner, Role, LoginData, SignUpData, Organization } from 'src/models';
 import * as sessionsService from 'src/services/auth.service';
 
-interface AuthContextType {
+interface SessionContextType {
   user?: User;
   currentApp: App,
   loading: boolean;
@@ -26,7 +26,7 @@ interface App {
   role?: Role
 }
 
-export const AuthContext = createContext<AuthContextType>({} as AuthContextType);
+export const SessionContext = createContext<SessionContextType>({} as SessionContextType);
 
 export function AuthProvider({
   children
@@ -151,9 +151,9 @@ export function AuthProvider({
   );
 
   return (
-    <AuthContext.Provider value={memoedValue}>
+    <SessionContext.Provider value={memoedValue}>
       {!loadingInitial && children}
-    </AuthContext.Provider>
+    </SessionContext.Provider>
   );
 }
 
