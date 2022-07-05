@@ -171,6 +171,47 @@ const routes: PartialRouteObject[] = [
                 ]
               }
             ]
+          },
+          {
+            path: 'partnenaire',
+            children: [
+              {
+                path: 'dashboards',
+                element: <SidebarLayout />,
+                children: [
+                  {
+                    path: '/',
+                    element: <Navigate to="resume" replace />
+                  },
+                  {
+                    path: 'statistiques',
+                    element: <Crypto />
+                  },
+                  {
+                    path: 'resume',
+                    element: <Resume />
+                  }
+                ]
+              },
+              {
+                path: 'gestion',
+                element: <SidebarLayout />,
+                children: [
+                  {
+                    path: '/',
+                    element: <Navigate to="reductions" replace />
+                  },
+                  {
+                    path: '/reductions',
+                    element: <ListingJobs />
+                  },
+                  {
+                    path: '/reductions/creation',
+                    element: <CreationJob />
+                  }
+                ]
+              }
+            ]
           }
         ]
       },
