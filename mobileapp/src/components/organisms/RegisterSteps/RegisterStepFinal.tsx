@@ -39,15 +39,13 @@ export default function RegisterStepFinal() {
 
   async function onSubmit(data: RegisterStepFinalFormValues) {
     const body = {
-      // TODO: FIX TYPO!!!!!!!
-      adress: data.address,
+      address: data.address,
       longitude: 48.88039283558442,
       latitude: 2.4123843153442976,
       cp: 93310,
     };
 
-    // TODO: Add this step
-    // await AsyncStorage.mergeItem?.("userFormData", JSON.stringify(body));
+    await AsyncStorage.mergeItem?.("userFormData", JSON.stringify(body));
     const userData = (await AsyncStorage.getItem("userFormData")) || "";
 
     await fetchRegisterUser({ user: JSON.parse(userData) })
