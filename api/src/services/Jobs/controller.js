@@ -250,7 +250,7 @@ module.exports = {
 		} else {
 			statusData = await getRow(res, Status, { label: label_status.actived });
 		}
-		condition.status_id = statusData.id;
+		condition.id = statusData.id;
 		condition = Object.keys(condition).length === 0 ? null : condition;
 
 		const includeGroup = [

@@ -10,7 +10,7 @@ module.exports = [
         label: "Standard",
       },
       status: {
-        label: "coming",
+        label: "actived",
       },
     },
   },
