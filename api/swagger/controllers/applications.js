@@ -1,4 +1,4 @@
-const pagination = require('./../generique/pagination')
+const pagination = require('../generique/pagination')
 const {response201, response200, bodyParam, param} = require("../generique");
 
 module.exports = {

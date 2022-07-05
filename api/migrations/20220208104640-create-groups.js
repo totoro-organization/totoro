@@ -32,6 +32,10 @@ module.exports = {
 					key: "id",
 				},
 			},
+			qrcode: {
+				allowNull: true,
+				type: Sequelize.STRING
+			},
 			createdAt: {
 				allowNull: false,
 				type: Sequelize.DATE,

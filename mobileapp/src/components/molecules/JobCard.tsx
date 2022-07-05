@@ -11,32 +11,42 @@ import Avatar from "../atoms/Avatar";
 import Location from "../../assets/icons/Location";
 import Calendar from "../../assets/icons/Calendar";
 import Token from "../../assets/icons/Token";
+import { Job } from "../../models/job";
+import getFormatDateFrenchLocale from "../../common/utils/getFormatDateFrenchLocale";
+import { MOBILEAPP_API_BASE_URL } from "@env";
 
-// TODO: add model of Mission.
 type JobCardProps = {
-  mission: any;
+  job: Job;
 };
 
-// TODO: Add real design
-export default function JobCard({ mission }: JobCardProps) {
+export default function JobCard({ job }: JobCardProps) {
   const navigation = useNavigation<StackNavigationProp<StackParamList>>();
 
   return (
-    <Container onPress={() => navigation.navigate("Job", { id: mission.id })}>
-      <JobBanner source={{ uri: mission.banner }} resizeMode="cover" />
+    <Container onPress={() => navigation.navigate("Job", { id: job.id })}>
+      <JobBanner
+        source={{
+          uri: `${MOBILEAPP_API_BASE_URL}/${job?.attachments[0]?.image}`,
+        }}
+        resizeMode="cover"
+      />
 
       <Box display="flex" flexDirection="column" padding={1}>
-        <Text size="lg">{mission.title}</Text>
+        <Text size="lg">{job.title}</Text>
 
         <Spacer axis="vertical" size={0.5} />
 
         <Box display="flex" alignItems="center">
-          <Avatar size="sm" type="organization" src={mission.logo} />
+          <Avatar
+            size="sm"
+            type="organization"
+            src={job.author.organization.logo}
+          />
 
           <Spacer axis="horizontal" size={0.5} />
 
           <Text size="xs" color="grey">
-            {mission.organization.name}
+            {job.author.organization.name}
           </Text>
         </Box>
       </Box>
@@ -59,7 +69,7 @@ export default function JobCard({ mission }: JobCardProps) {
           <Spacer axis="horizontal" size={0.25} />
 
           <Text size="xs" color="grey">
-            10/01/2023
+            {getFormatDateFrenchLocale(job.start_date)}
           </Text>
         </FlexWrapper>
 
@@ -69,7 +79,7 @@ export default function JobCard({ mission }: JobCardProps) {
           <Spacer axis="horizontal" size={0.25} />
 
           <Text size="xs" color="primary">
-            {mission.tokens}
+            {job.difficulty.token}
           </Text>
         </FlexWrapper>
       </JobDetails>
@@ -79,7 +89,7 @@ export default function JobCard({ mission }: JobCardProps) {
 
 const Container = styled(Card)`
   border: ${({ theme }) => theme.border.width[1]} solid
-    ${({ theme }) => theme.colors.grey[200]};
+    ${({ theme }) => theme.colors.v1.grey[200]};
   padding: 0;
 `;
 

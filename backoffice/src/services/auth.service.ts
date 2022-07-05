@@ -1,24 +1,13 @@
-import axios from "axios";
-import { User, Admin } from "../models";
-import { ErrorResponse, requestAxios } from "./requestApi";
+import { Admin, LoginData, Response } from "src/models";
+import { requestAxios } from "./requestApi";
+import { API_ROUTES } from "./routes";
 
-export const AUTH_BASE_URL = "/auth";
-
-export interface Token {
-  token: string
-}
-
-export interface LoginType {
-  emailOrUsername: FormDataEntryValue;
-  password: FormDataEntryValue;
-}
-
-export async function login(params: LoginType): Promise<Token | ErrorResponse> {
-  const response: Token | ErrorResponse = await requestAxios("POST", `${AUTH_BASE_URL}/login/admin`, params );
+export async function login(params: LoginData): Promise<Response> {
+  const response: Response = await requestAxios("POST", `${API_ROUTES.AUTH}/login/admin`, params );
   return response;
 }
 
-export async function getCurrentUser(): Promise<Admin | ErrorResponse> {
-  const response: Admin | ErrorResponse = await requestAxios("GET", `${AUTH_BASE_URL}/connected`);
+export async function getCurrentUser(): Promise<Admin | Response> {
+  const response: Admin | Response = await requestAxios("GET", `${API_ROUTES.AUTH}/connected`);
   return response;
 }

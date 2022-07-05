@@ -14,43 +14,24 @@ import {
 } from '@mui/material';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import BulkActions from './BulkActions';
-import { StatusEnum, StatusOptions } from 'src/models/status';
-import { addItem, deleteItem, getItems, updateItem } from 'src/services/commons.service';
+import { StatusOptions } from 'src/models/status';
+import { addItem, deleteItem, getItems, updateItem } from 'src/services/common.service';
 import { useModal } from 'src/hooks/useModal';
 import { sendLog } from 'src/services/admins.service';
 import useAuth from 'src/hooks/useAuth';
-import { TableEnum } from 'src/models';
+import type { TableEnum, Filters } from 'src/models';
+import type { Route } from 'src/services/routes';
+import { useToast } from 'src/hooks/useToast';
 
 interface TableWrapperProps {
   className?: string;
   defaultItems: any;
-  url?: string,
+  url?: Route,
   title?: string,
   table?: TableEnum,
   statusOptions?: StatusOptions,
   children: ReactNode,
   addButton?: boolean
-}
-
-export interface TableProps<T> {
-  items: T[], 
-  selectedItems: any,
-  handleSelectAllItems: (event: ChangeEvent<HTMLInputElement>) => void, 
-  handleSelectOneItem: (event: ChangeEvent<HTMLInputElement>, itemId: string) => void,
-  selectedSomeItems: any,
-  selectedAllItems: any,
-  handleDeleteItem: (id: string) => any,
-  handleUpdateItem: (id: string, data: object) => any,
-  handleAddItem: (data: object) => any,
-  addModalOpen: boolean,
-  handleCloseAddModal: () => void,
-  handleGetItems: () => void,
-  table?: TableEnum,
-  statusOptions: StatusOptions
-}
-
-interface Filters {
-  status?: keyof typeof StatusEnum | 'all';
 }
 
 const applyFilters = (items: any, filters: Filters): any => {
@@ -92,8 +73,8 @@ const TableWrapper: FC<TableWrapperProps> = ({
     status: null
   });
   const [items, setItems] = useState<Array<any>>(defaultItems);
-
   const [addModalOpen, handleOpenAddModal, handleCloseAddModal] = useModal();
+  const { setToast } = useToast();
 
   useEffect(() => {
     if(defaultItems) {
@@ -114,28 +95,40 @@ const TableWrapper: FC<TableWrapperProps> = ({
   }
 
   const handleGetItems = async () => {
-    const itemsResponse = await getItems(url);
-    if('error' in itemsResponse) return;
-    setItems(itemsResponse?.data);
+    const response = await getItems(url);
+    if('error' in response) return;
+    setItems(response?.data);
   }
  
   const handleUpdateItem = async (id: string, data: object) => {
-    const updateResponse = await updateItem(url, id, data);
-    if('error' in updateResponse) return;
+    const response = await updateItem(url, id, data);
+    setToast({ 
+      variant: 'error' in response ? 'error' : 'success',
+      message: response.message
+    })
+    if('error' in response) return;
     handleGetItems();
     await sendLog(user?.id, {table, action: "Updated"});
   }
 
   const handleDeleteItem = async (id: string) => {
-    const deleteResponse = await deleteItem(url, id);
-    if('error' in deleteResponse) return;
+    const response = await deleteItem(url, id);
+    setToast({ 
+      variant: 'error' in response ? 'error' : 'success',
+      message: response.message
+    })
+    if('error' in response) return;
     handleGetItems();
     await sendLog(user?.id, {table, action: "Deleted"})
   }
 
   const handleAddItem = async (data: object) => {
-    const addResponse = await addItem(url, data);
-    if('error' in addResponse) return;
+    const response = await addItem(url, data);
+    setToast({ 
+      variant: 'error' in response ? 'error' : 'success',
+      message: response.message
+    })
+    if('error' in response) return;
     handleGetItems();
     handleCloseAddModal();
     await sendLog(user?.id, {table, action: "Added"})

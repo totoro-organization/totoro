@@ -168,7 +168,7 @@ module.exports = {
 		const includeJobs = [
 			{ model: Status, as: "status", attributes: excludeCommon },
 			{ model: Difficulties, as: "difficulty", attributes: excludeCommon },
-			{ model: Attachment_jobs, as: "attachments", attributes: excludeCommon },
+			{ model: Attachment_jobs, as: "attachments", attributes: excludeCommon, order: [['createdAt', 'ASC']] },
 			{
 				model: Associations_users,
 				as: "author",
@@ -373,6 +373,5 @@ module.exports = {
 				  .json({ entity: Subscriptions.name, message: error.op_failed.message });
 			}
 		);
-
 	}
 };
