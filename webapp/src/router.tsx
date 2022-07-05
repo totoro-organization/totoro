@@ -114,24 +114,6 @@ const routes: PartialRouteObject[] = [
             element: <Status404 />
           },
           {
-            path: 'dashboards',
-            element: <SidebarLayout />,
-            children: [
-              {
-                path: '/',
-                element: <Navigate to="/dashboards/resume" replace />
-              },
-              {
-                path: 'statistiques',
-                element: <Crypto />
-              },
-              {
-                path: 'resume',
-                element: <Resume />
-              }
-            ]
-          },
-          {
             path: 'profile',
             element: <SidebarLayout />,
             children: [
@@ -150,20 +132,43 @@ const routes: PartialRouteObject[] = [
             ]
           },
           {
-            path: 'gestion',
-            element: <SidebarLayout />,
+            path: 'association',
             children: [
               {
-                path: '/',
-                element: <Navigate to="missions" replace />
+                path: 'dashboards',
+                element: <SidebarLayout />,
+                children: [
+                  {
+                    path: '/',
+                    element: <Navigate to="resume" replace />
+                  },
+                  {
+                    path: 'statistiques',
+                    element: <Crypto />
+                  },
+                  {
+                    path: 'resume',
+                    element: <Resume />
+                  }
+                ]
               },
               {
-                path: '/missions',
-                element: <ListingJobs />
-              },
-              {
-                path: '/missions/creation',
-                element: <CreationJob />
+                path: 'gestion',
+                element: <SidebarLayout />,
+                children: [
+                  {
+                    path: '/',
+                    element: <Navigate to="missions" replace />
+                  },
+                  {
+                    path: '/missions',
+                    element: <ListingJobs />
+                  },
+                  {
+                    path: '/missions/creation',
+                    element: <CreationJob />
+                  }
+                ]
               }
             ]
           }
