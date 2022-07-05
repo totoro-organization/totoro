@@ -19,23 +19,34 @@ const ProtectedRoute = (props: RouteProps) => {
   const { user } = useAuth();
 
   if (!user) return <Navigate to="/login" />;
-   
+
   return <Route {...props} />;
 };
 
 /* APPLICATIONS */
 
-  /* Organization */
+/* Organization */
 
-  // Gestion
-  const CreationJob = Loader(lazy(() => import('src/pages/applications/Organization/Gestion/Jobs/Create')));
-  const ListingJobs = Loader(lazy(() => import('src/pages/applications/Organization/Gestion/Jobs/List'))); 
+// Gestion
+const CreationJob = Loader(
+  lazy(() => import('src/pages/applications/Organization/Gestion/Jobs/Create'))
+);
+const ListingJobs = Loader(
+  lazy(() => import('src/pages/applications/Organization/Gestion/Jobs/List'))
+);
+const Job = Loader(
+  lazy(() => import('src/applications/Organization/Gestion/Jobs'))
+);
 
-  // Dashboards
-  const Crypto = Loader(lazy(() => import('src/pages/applications/Organization/Dashboards/Crypto')));
-  const Resume = Loader(lazy(() => import('src/pages/applications/Organization/Dashboards/Resume')));
+// Dashboards
+const Crypto = Loader(
+  lazy(() => import('src/pages/applications/Organization/Dashboards/Crypto'))
+);
+const Resume = Loader(
+  lazy(() => import('src/pages/applications/Organization/Dashboards/Resume'))
+);
 
-  /* Partner */
+/* Partner */
 
 /* PAGES */
 
@@ -58,8 +69,6 @@ const StatusMaintenance = Loader(
   lazy(() => import('src/pages/Status/Maintenance'))
 );
 
-
-
 const routes: PartialRouteObject[] = [
   {
     path: '*',
@@ -74,7 +83,7 @@ const routes: PartialRouteObject[] = [
         element: <SignUp />
       },
       {
-        element: <ProtectedRoute/>, 
+        element: <ProtectedRoute />,
         children: [
           {
             path: '/',
@@ -210,12 +219,19 @@ const routes: PartialRouteObject[] = [
                     element: <CreationJob />
                   }
                 ]
+              },
+              {
+                path: 'missions/:id',
+                element: <Job />
+              },
+              {
+                path: '/missions/creation',
+                element: <CreationJob />
               }
             ]
           }
         ]
-      },
-      
+      }
     ]
   }
 ];
