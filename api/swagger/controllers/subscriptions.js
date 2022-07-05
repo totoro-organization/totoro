@@ -21,7 +21,7 @@ module.exports = {
               ]
             },
             ...param("current","query", "boolean",false),
-            ...param("label","query", "boolean",false),
+            ...param("label","query", "string",false),
             ...pagination
           ],
           responses: response200("getAllSubscriptions")

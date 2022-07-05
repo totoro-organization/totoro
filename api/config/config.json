@@ -20,11 +20,16 @@
 		}
 	},
 	"production": {
-		"username": "epiz_31954240",
-		"password": "NZvPWGWvCfVef",
-		"database": "epiz_31954240_totoro",
-		"host": "sql211.epizy.com",
-		"dialect": "mysql",
+		"use_env_variable": "HEROKU_POSTGRESQL_CYAN_URL",
+		"dialect":  "postgres",
+		"protocol": "postgres",
+		"ssl":true, 
+		"dialectOptions":{ 
+		  "ssl": {
+			"require": true,
+			"rejectUnauthorized": false
+		  } 
+		},
 		"define": {
 			"freezeTableName": true
 		}
