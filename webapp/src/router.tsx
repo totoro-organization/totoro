@@ -29,7 +29,8 @@ const ProtectedRoute = (props: RouteProps) => {
 
   // Gestion
   const CreationJob = Loader(lazy(() => import('src/pages/applications/Organization/Gestion/Jobs/Create')));
-  const ListingJobs = Loader(lazy(() => import('src/pages/applications/Organization/Gestion/Jobs/List'))); 
+  const ListingJobs = Loader(lazy(() => import('src/pages/applications/Organization/Gestion/Jobs/List')));
+  const Job = Loader(lazy(() => import('src/pages/applications/Organization/Gestion/Jobs')));  
 
   // Dashboards
   const Crypto = Loader(lazy(() => import('src/pages/applications/Organization/Dashboards/Crypto')));
@@ -160,6 +161,10 @@ const routes: PartialRouteObject[] = [
               {
                 path: '/missions',
                 element: <ListingJobs />
+              },
+              {
+                path: 'missions/:id',
+                element: <Job />
               },
               {
                 path: '/missions/creation',
