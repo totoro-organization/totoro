@@ -17,11 +17,10 @@ import DoneTwoToneIcon from '@mui/icons-material/DoneTwoTone';
 import Text from 'src/components/Text';
 import Label from 'src/components/Label';
 import { useState } from 'react';
-import { updateAdmin, updatePasswordAdmin } from 'src/services/admins.service';
+import { updateUser, updatePasswordUser, updateAvatarUser } from 'src/services/users.service';
 import CheckIcon from '@mui/icons-material/Check';
 import CancelIcon from '@mui/icons-material/Cancel';
 import TextField from '@mui/material/TextField';
-import { Admin } from 'src/models';
 import { getCurrentUser } from 'src/services/auth.service';
 
 function EditProfileTab() {
@@ -31,6 +30,8 @@ function EditProfileTab() {
   const { user: currentUser } = useAuth();
   const [editPassword, setEditPassword] = useState(false);
   const [user, setUser] = useState(currentUser);
+  const [editAvatar, setEditAvatar] = useState(false);
+  const [preview,setPreview] = useState<string | null>();
 
   const handleChangeEdit = (event: React.FormEvent<HTMLFormElement>) => {
     const value = event.currentTarget.value;
@@ -42,7 +43,7 @@ function EditProfileTab() {
   };
 
   const handleEditUser = async () => {
-    const updateResponse = await updateAdmin(user.id, valueEdit);
+    const updateResponse = await updateUser(user.id, valueEdit);
     if ('error' in updateResponse) return;
     setEditUser(false);
     const userResponse = await getCurrentUser();
@@ -51,13 +52,22 @@ function EditProfileTab() {
   };
 
   const handleEditUserPassword = async () => {
-    const updateResponse = await updatePasswordAdmin(valueEdit);
+    const updateResponse = await updatePasswordUser(valueEdit);
     if ('error' in updateResponse) return;
     setEditPassword(false);
     const userResponse = await getCurrentUser();
     if ('error' in userResponse) return;
     setUser(userResponse);
   };
+
+  const handleEditUserAvatar = async () => {
+    const updateResponse = await updateAvatarUser(valueEdit);
+    if ('error' in updateResponse) return;
+    setEditAvatar(false);
+    const userResponse = await getCurrentUser();
+    if ('error' in userResponse) return;
+    setUser(userResponse);
+  }
 
   //Provisoire
   function formatPhoneNumber(phoneNumberString) {
@@ -275,6 +285,83 @@ function EditProfileTab() {
               </Grid>
             </Typography>
           </CardContent>
+        </Card>
+      </Grid>
+      <Grid item xs={12}>
+        <Card>
+          <List>
+            <ListItem sx={{ p: 3 }}>
+              <ListItemText
+                primaryTypographyProps={{ variant: 'h5', gutterBottom: true }}
+                secondaryTypographyProps={{
+                  variant: 'subtitle2',
+                  lineHeight: 1
+                }}
+                primary="Change Avatar"
+                secondary="You can change your avatar here"
+              />
+              {!editAvatar ? (
+                <Button
+                  onClick={() => setEditAvatar(true)}
+                  size="large"
+                  variant="outlined"
+                >
+                  Change avatar
+                </Button>
+              ) : (
+                <div>
+                  <Button
+                    variant="text"
+                    color="success"
+                    startIcon={<CheckIcon />}
+                    onClick={handleEditUserAvatar}
+                  >
+                    validé{' '}
+                  </Button>
+                  <Button
+                    variant="text"
+                    startIcon={<CancelIcon />}
+                    onClick={() => {
+                      setEditAvatar(false);
+                    }}
+                  >
+                    annuler
+                  </Button>
+                </div>
+              )}
+            </ListItem>
+            {editAvatar && (
+              <>
+                <Divider />
+                <ListItem sx={{ p: 3 }}>
+                  <TextField
+                    label="Old avatar"
+                    type="avatar"
+                    id="user-old-avatar"
+                    name="old_avatar"
+                    onChange={(e: any) => {
+                      handleChangeEdit(e);
+                    }}
+                    variant="standard"
+                    size="small"
+                  />
+                </ListItem>
+                <ListItem sx={{ p: 3 }}>
+                  <TextField
+                    label="New avatar"
+                    type="avatar"
+                    id="user-avatar"
+                    name="avatar"
+                    onChange={(e: any) => {
+                      handleChangeEdit(e);
+                    }}
+                    variant="standard"
+                    size="small"
+                  />
+                </ListItem>
+              </>
+            )}
+          </List>
         </Card>
       </Grid>
       <Grid item xs={12}>
