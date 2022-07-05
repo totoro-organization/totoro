@@ -2,7 +2,7 @@ module.exports = [
   {
     model: "Subscriptions",
     data: {
-      current: 1,
+      current: true,
       organization: {
         siren: "775664410",
       },

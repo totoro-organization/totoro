@@ -304,7 +304,7 @@ module.exports = {
 	},
 
 	getCurrentSubscription: function (res, id) {
-		const current = 1;
+		const current = true;
 		const excludeSub = ["pricing_id", "status_id"];
 		const includeSub = [
 			{ 
@@ -342,7 +342,7 @@ module.exports = {
 		asyncLib.waterfall(
 			[
 			  function (done) {
-				getField(res, Subscriptions, { assos_id: id, current: 1 }, done, true);
+				getField(res, Subscriptions, { assos_id: id, current: true }, done, true);
 			  },
 			  async function (found, done) {
 				  if(!found){
@@ -351,7 +351,7 @@ module.exports = {
 						.json({ entity: Associations.name, message: error.not_found.message });
 				  } else {
 					const statusData = await getRow(res, Status, { label: label_status.disabled });
-					updateField(res, found, {status_id: statusData.id, current: 0}, done);
+					updateField(res, found, {status_id: statusData.id, current: false}, done);
 				  } 
 			  },
 			],

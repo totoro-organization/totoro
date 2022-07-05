@@ -438,7 +438,7 @@ module.exports = {
 	getJobLitigations: async function (res, id, queries) {
 		const {status, size, page} = queries
 
-		let condition = {type: 0};
+		let condition = {type: false};
 		if (status) {
 			let statusData = await getRow(res, Status, { label: status });
 			condition.status_id = statusData.id;
