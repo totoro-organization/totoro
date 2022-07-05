@@ -21,7 +21,7 @@ import StatusSelect from 'src/components/StatusSelect';
 import { DeletePartnerContent } from './PartnerModalContent';
 import { useModal } from 'src/hooks/useModal';
 import { format } from 'date-fns';
-import { truncateSring } from 'src/utils/functions';
+import { getTruncateSring } from 'src/utils/getTruncateString';
 
 const PartnersTable: FC<TableProps<any>> = ({
   items: partners, 
@@ -124,7 +124,7 @@ const PartnersTable: FC<TableProps<any>> = ({
                       noWrap
                     >
                       <Link to={partner.link}>
-                        { truncateSring(partner.link, 20, '...') }
+                        { getTruncateSring(partner.link, 20, '...') }
                       </Link>
                     </Typography>
                   </TableCell>

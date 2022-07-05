@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -13,6 +12,8 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import useAuth from 'src/hooks/useAuth';
+import { useEffect } from 'react';
+import { useToastContext } from 'src/contexts/ToastContext';
 
 function Copyright(props: any) {
   return (
@@ -31,7 +32,15 @@ const theme = createTheme();
 
 export default function SignIn() {
 
-  const { login, loading } = useAuth();
+  const { login, loading, error } = useAuth();
+
+  const { addToast } = useToastContext();
+
+  useEffect(() => {
+    if(error) {
+      addToast( { message: error.message, variant: "error", duration: 9000 });
+    }
+  }, [error])
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();

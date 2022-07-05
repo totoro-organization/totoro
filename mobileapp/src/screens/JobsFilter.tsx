@@ -69,7 +69,7 @@ const CategorySection = styled.View`
 
 const CategoryTitle = styled(Text)`
   text-transform: uppercase;
-  color: ${({ theme }) => theme.colors.grey[500]};
+  color: ${({ theme }) => theme.colors.v1.grey[500]};
   font-size: ${({ theme }) => theme.fonts.sizes.xs};
   letter-spacing: 2px;
 `;

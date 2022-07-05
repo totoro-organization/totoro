@@ -46,6 +46,9 @@
       "name": "Jobs"
     },
     {
+      "name": "Participations"
+    },
+    {
       "name": "Partners"
     },
     {
@@ -2923,6 +2926,37 @@
         }
       }
     },
+    "/api/jobs/{id}/register": {
+      "post": {
+        "tags": [
+          "Jobs"
+        ],
+        "x-swagger-router-controller": "jobs",
+        "operationId": "registerToJob",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Register Created",
+            "schema": {
+              "$ref": "#/definitions/Success"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
     "/api/jobs/{id}/participants": {
       "get": {
         "tags": [
@@ -4843,6 +4877,75 @@
           }
         }
       }
+    },
+    "/api/participations/{id}": {
+      "get": {
+        "tags": [
+          "Participations"
+        ],
+        "x-swagger-router-controller": "participations",
+        "operationId": "getParticipationById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful request.",
+            "schema": {
+              "$ref": "#/definitions/getParticipation"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Participations"
+        ],
+        "x-swagger-router-controller": "participations",
+        "operationId": "putParticipation",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "description": "Update Participation",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/putParticipation"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Participation Updated",
+            "schema": {
+              "$ref": "#/definitions/Success"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -5481,13 +5584,18 @@
       "properties": {
         "label": {
           "type": "string"
+        },
+        "type": {
+          "type": "string"
         }
       },
       "required": [
-        "label"
+        "label",
+        "type"
       ],
       "example": {
-        "label": "Test"
+        "label": "Test",
+        "type": "['Admins']"
       }
     },
     "putCommon": {
@@ -5495,10 +5603,14 @@
       "properties": {
         "label": {
           "type": "string"
+        },
+        "type": {
+          "type": "string"
         }
       },
       "example": {
-        "label": "Test"
+        "label": "Test",
+        "type": "['Admins']"
       }
     },
     "changeStatus": {
@@ -6679,6 +6791,97 @@
                   }
                 }
               },
+              "participants": {
+                "type": "object",
+                "properties": {
+                  "total_rows": {
+                    "type": "integer"
+                  },
+                  "data": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "qrcode": {
+                          "type": "string"
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        },
+                        "updatedAt": {
+                          "type": "string"
+                        },
+                        "participant": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "username": {
+                              "type": "string"
+                            },
+                            "firstname": {
+                              "type": "string"
+                            },
+                            "lastname": {
+                              "type": "string"
+                            },
+                            "email": {
+                              "type": "string"
+                            },
+                            "birthday": {
+                              "type": "string"
+                            },
+                            "longitude": {
+                              "type": "integer"
+                            },
+                            "latitude": {
+                              "type": "integer"
+                            },
+                            "avatar": {
+                              "type": "string"
+                            },
+                            "bio": {
+                              "type": "string"
+                            },
+                            "phone": {
+                              "type": "string"
+                            },
+                            "total_token": {
+                              "type": "integer"
+                            },
+                            "status": {
+                              "type": "object",
+                              "properties": {
+                                "label": {
+                                  "type": "string"
+                                },
+                                "type": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "status": {
+                          "type": "object",
+                          "properties": {
+                            "label": {
+                              "type": "string"
+                            },
+                            "type": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
               "difficulty": {
                 "type": "object",
                 "properties": {
@@ -6953,6 +7156,97 @@
             }
           }
         },
+        "participants": {
+          "type": "object",
+          "properties": {
+            "total_rows": {
+              "type": "integer"
+            },
+            "data": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "qrcode": {
+                    "type": "string"
+                  },
+                  "createdAt": {
+                    "type": "string"
+                  },
+                  "updatedAt": {
+                    "type": "string"
+                  },
+                  "participant": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "username": {
+                        "type": "string"
+                      },
+                      "firstname": {
+                        "type": "string"
+                      },
+                      "lastname": {
+                        "type": "string"
+                      },
+                      "email": {
+                        "type": "string"
+                      },
+                      "birthday": {
+                        "type": "string"
+                      },
+                      "longitude": {
+                        "type": "integer"
+                      },
+                      "latitude": {
+                        "type": "integer"
+                      },
+                      "avatar": {
+                        "type": "string"
+                      },
+                      "bio": {
+                        "type": "string"
+                      },
+                      "phone": {
+                        "type": "string"
+                      },
+                      "total_token": {
+                        "type": "integer"
+                      },
+                      "status": {
+                        "type": "object",
+                        "properties": {
+                          "label": {
+                            "type": "string"
+                          },
+                          "type": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "status": {
+                    "type": "object",
+                    "properties": {
+                      "label": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
         "difficulty": {
           "type": "object",
           "properties": {
@@ -7112,6 +7406,9 @@
             "type": "object",
             "properties": {
               "id": {
+                "type": "string"
+              },
+              "qrcode": {
                 "type": "string"
               },
               "jobs_id": {
@@ -7676,6 +7973,97 @@
                     }
                   }
                 },
+                "participants": {
+                  "type": "object",
+                  "properties": {
+                    "total_rows": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "qrcode": {
+                            "type": "string"
+                          },
+                          "createdAt": {
+                            "type": "string"
+                          },
+                          "updatedAt": {
+                            "type": "string"
+                          },
+                          "participant": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "username": {
+                                "type": "string"
+                              },
+                              "firstname": {
+                                "type": "string"
+                              },
+                              "lastname": {
+                                "type": "string"
+                              },
+                              "email": {
+                                "type": "string"
+                              },
+                              "birthday": {
+                                "type": "string"
+                              },
+                              "longitude": {
+                                "type": "integer"
+                              },
+                              "latitude": {
+                                "type": "integer"
+                              },
+                              "avatar": {
+                                "type": "string"
+                              },
+                              "bio": {
+                                "type": "string"
+                              },
+                              "phone": {
+                                "type": "string"
+                              },
+                              "total_token": {
+                                "type": "integer"
+                              },
+                              "status": {
+                                "type": "object",
+                                "properties": {
+                                  "label": {
+                                    "type": "string"
+                                  },
+                                  "type": {
+                                    "type": "string"
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "status": {
+                            "type": "object",
+                            "properties": {
+                              "label": {
+                                "type": "string"
+                              },
+                              "type": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
                 "difficulty": {
                   "type": "object",
                   "properties": {
@@ -8058,6 +8446,97 @@
                               },
                               "type": {
                                 "type": "string"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "participants": {
+                        "type": "object",
+                        "properties": {
+                          "total_rows": {
+                            "type": "integer"
+                          },
+                          "data": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string"
+                                },
+                                "qrcode": {
+                                  "type": "string"
+                                },
+                                "createdAt": {
+                                  "type": "string"
+                                },
+                                "updatedAt": {
+                                  "type": "string"
+                                },
+                                "participant": {
+                                  "type": "object",
+                                  "properties": {
+                                    "id": {
+                                      "type": "string"
+                                    },
+                                    "username": {
+                                      "type": "string"
+                                    },
+                                    "firstname": {
+                                      "type": "string"
+                                    },
+                                    "lastname": {
+                                      "type": "string"
+                                    },
+                                    "email": {
+                                      "type": "string"
+                                    },
+                                    "birthday": {
+                                      "type": "string"
+                                    },
+                                    "longitude": {
+                                      "type": "integer"
+                                    },
+                                    "latitude": {
+                                      "type": "integer"
+                                    },
+                                    "avatar": {
+                                      "type": "string"
+                                    },
+                                    "bio": {
+                                      "type": "string"
+                                    },
+                                    "phone": {
+                                      "type": "string"
+                                    },
+                                    "total_token": {
+                                      "type": "integer"
+                                    },
+                                    "status": {
+                                      "type": "object",
+                                      "properties": {
+                                        "label": {
+                                          "type": "string"
+                                        },
+                                        "type": {
+                                          "type": "string"
+                                        }
+                                      }
+                                    }
+                                  }
+                                },
+                                "status": {
+                                  "type": "object",
+                                  "properties": {
+                                    "label": {
+                                      "type": "string"
+                                    },
+                                    "type": {
+                                      "type": "string"
+                                    }
+                                  }
+                                }
                               }
                             }
                           }
@@ -8918,7 +9397,7 @@
             }
           }
         },
-        "memberships": {
+        "members": {
           "type": "object",
           "properties": {
             "total_rows": {
@@ -9095,7 +9574,7 @@
                   }
                 }
               },
-              "memberships": {
+              "members": {
                 "type": "object",
                 "properties": {
                   "total_rows": {
@@ -10549,6 +11028,97 @@
                       }
                     }
                   },
+                  "participants": {
+                    "type": "object",
+                    "properties": {
+                      "total_rows": {
+                        "type": "integer"
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "qrcode": {
+                              "type": "string"
+                            },
+                            "createdAt": {
+                              "type": "string"
+                            },
+                            "updatedAt": {
+                              "type": "string"
+                            },
+                            "participant": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string"
+                                },
+                                "username": {
+                                  "type": "string"
+                                },
+                                "firstname": {
+                                  "type": "string"
+                                },
+                                "lastname": {
+                                  "type": "string"
+                                },
+                                "email": {
+                                  "type": "string"
+                                },
+                                "birthday": {
+                                  "type": "string"
+                                },
+                                "longitude": {
+                                  "type": "integer"
+                                },
+                                "latitude": {
+                                  "type": "integer"
+                                },
+                                "avatar": {
+                                  "type": "string"
+                                },
+                                "bio": {
+                                  "type": "string"
+                                },
+                                "phone": {
+                                  "type": "string"
+                                },
+                                "total_token": {
+                                  "type": "integer"
+                                },
+                                "status": {
+                                  "type": "object",
+                                  "properties": {
+                                    "label": {
+                                      "type": "string"
+                                    },
+                                    "type": {
+                                      "type": "string"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "status": {
+                              "type": "object",
+                              "properties": {
+                                "label": {
+                                  "type": "string"
+                                },
+                                "type": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
                   "difficulty": {
                     "type": "object",
                     "properties": {
@@ -10843,6 +11413,97 @@
                           },
                           "type": {
                             "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "participants": {
+                    "type": "object",
+                    "properties": {
+                      "total_rows": {
+                        "type": "integer"
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "qrcode": {
+                              "type": "string"
+                            },
+                            "createdAt": {
+                              "type": "string"
+                            },
+                            "updatedAt": {
+                              "type": "string"
+                            },
+                            "participant": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string"
+                                },
+                                "username": {
+                                  "type": "string"
+                                },
+                                "firstname": {
+                                  "type": "string"
+                                },
+                                "lastname": {
+                                  "type": "string"
+                                },
+                                "email": {
+                                  "type": "string"
+                                },
+                                "birthday": {
+                                  "type": "string"
+                                },
+                                "longitude": {
+                                  "type": "integer"
+                                },
+                                "latitude": {
+                                  "type": "integer"
+                                },
+                                "avatar": {
+                                  "type": "string"
+                                },
+                                "bio": {
+                                  "type": "string"
+                                },
+                                "phone": {
+                                  "type": "string"
+                                },
+                                "total_token": {
+                                  "type": "integer"
+                                },
+                                "status": {
+                                  "type": "object",
+                                  "properties": {
+                                    "label": {
+                                      "type": "string"
+                                    },
+                                    "type": {
+                                      "type": "string"
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "status": {
+                              "type": "object",
+                              "properties": {
+                                "label": {
+                                  "type": "string"
+                                },
+                                "type": {
+                                  "type": "string"
+                                }
+                              }
+                            }
                           }
                         }
                       }
@@ -11187,6 +11848,97 @@
                               },
                               "type": {
                                 "type": "string"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "participants": {
+                        "type": "object",
+                        "properties": {
+                          "total_rows": {
+                            "type": "integer"
+                          },
+                          "data": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string"
+                                },
+                                "qrcode": {
+                                  "type": "string"
+                                },
+                                "createdAt": {
+                                  "type": "string"
+                                },
+                                "updatedAt": {
+                                  "type": "string"
+                                },
+                                "participant": {
+                                  "type": "object",
+                                  "properties": {
+                                    "id": {
+                                      "type": "string"
+                                    },
+                                    "username": {
+                                      "type": "string"
+                                    },
+                                    "firstname": {
+                                      "type": "string"
+                                    },
+                                    "lastname": {
+                                      "type": "string"
+                                    },
+                                    "email": {
+                                      "type": "string"
+                                    },
+                                    "birthday": {
+                                      "type": "string"
+                                    },
+                                    "longitude": {
+                                      "type": "integer"
+                                    },
+                                    "latitude": {
+                                      "type": "integer"
+                                    },
+                                    "avatar": {
+                                      "type": "string"
+                                    },
+                                    "bio": {
+                                      "type": "string"
+                                    },
+                                    "phone": {
+                                      "type": "string"
+                                    },
+                                    "total_token": {
+                                      "type": "integer"
+                                    },
+                                    "status": {
+                                      "type": "object",
+                                      "properties": {
+                                        "label": {
+                                          "type": "string"
+                                        },
+                                        "type": {
+                                          "type": "string"
+                                        }
+                                      }
+                                    }
+                                  }
+                                },
+                                "status": {
+                                  "type": "object",
+                                  "properties": {
+                                    "label": {
+                                      "type": "string"
+                                    },
+                                    "type": {
+                                      "type": "string"
+                                    }
+                                  }
+                                }
                               }
                             }
                           }
@@ -11600,6 +12352,359 @@
       }
     },
     "putSubscription": {
+      "type": "object",
+      "properties": {
+        "status_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "status_id"
+      ],
+      "example": {
+        "status_id": "561a448e-5ad9-4dd5-8b08-7cc0419824d1"
+      }
+    },
+    "getParticipation": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "object",
+          "properties": {
+            "label": {
+              "type": "string"
+            },
+            "type": {
+              "type": "string"
+            }
+          }
+        },
+        "participant": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "username": {
+              "type": "string"
+            },
+            "firstname": {
+              "type": "string"
+            },
+            "lastname": {
+              "type": "string"
+            },
+            "email": {
+              "type": "string"
+            },
+            "birthday": {
+              "type": "string"
+            },
+            "longitude": {
+              "type": "integer"
+            },
+            "latitude": {
+              "type": "integer"
+            },
+            "avatar": {
+              "type": "string"
+            },
+            "bio": {
+              "type": "string"
+            },
+            "phone": {
+              "type": "string"
+            },
+            "total_token": {
+              "type": "integer"
+            },
+            "status": {
+              "type": "object",
+              "properties": {
+                "label": {
+                  "type": "string"
+                },
+                "type": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "job": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "title": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "participants_max": {
+              "type": "integer"
+            },
+            "address": {
+              "type": "string"
+            },
+            "cp": {
+              "type": "integer"
+            },
+            "commune": {
+              "type": "string"
+            },
+            "start_date": {
+              "type": "string"
+            },
+            "end_date": {
+              "type": "string"
+            },
+            "longitude": {
+              "type": "integer"
+            },
+            "latitude": {
+              "type": "integer"
+            },
+            "isExpired": {
+              "type": "boolean"
+            },
+            "qrcode": {
+              "type": "string"
+            },
+            "remaining_place": {
+              "type": "integer"
+            },
+            "createdAt": {
+              "type": "string"
+            },
+            "updatedAt": {
+              "type": "string"
+            },
+            "author": {
+              "type": "object",
+              "properties": {
+                "createdAt": {
+                  "type": "string"
+                },
+                "updatedAt": {
+                  "type": "string"
+                },
+                "organization": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "siren": {
+                      "type": "string"
+                    },
+                    "siret": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "longitude": {
+                      "type": "integer"
+                    },
+                    "latitude": {
+                      "type": "integer"
+                    },
+                    "creation_date": {
+                      "type": "string"
+                    },
+                    "activity": {
+                      "type": "string"
+                    },
+                    "address": {
+                      "type": "string"
+                    },
+                    "cp": {
+                      "type": "integer"
+                    },
+                    "commune": {
+                      "type": "string"
+                    },
+                    "logo": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "link": {
+                      "type": "string"
+                    },
+                    "phone": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "object",
+                      "properties": {
+                        "label": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "user": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "username": {
+                      "type": "string"
+                    },
+                    "firstname": {
+                      "type": "string"
+                    },
+                    "lastname": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "birthday": {
+                      "type": "string"
+                    },
+                    "longitude": {
+                      "type": "integer"
+                    },
+                    "latitude": {
+                      "type": "integer"
+                    },
+                    "avatar": {
+                      "type": "string"
+                    },
+                    "bio": {
+                      "type": "string"
+                    },
+                    "phone": {
+                      "type": "string"
+                    },
+                    "total_token": {
+                      "type": "integer"
+                    },
+                    "status": {
+                      "type": "object",
+                      "properties": {
+                        "label": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "status": {
+                  "type": "object",
+                  "properties": {
+                    "label": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "difficulty": {
+              "type": "object",
+              "properties": {
+                "level": {
+                  "type": "integer"
+                },
+                "token": {
+                  "type": "integer"
+                }
+              }
+            },
+            "tags": {
+              "type": "object",
+              "properties": {
+                "total_rows": {
+                  "type": "integer"
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "tag": {
+                        "type": "object",
+                        "properties": {
+                          "label": {
+                            "type": "string"
+                          },
+                          "type": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "attachments": {
+              "type": "object",
+              "properties": {
+                "total_rows": {
+                  "type": "integer"
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "original_name": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "type": "string"
+                      },
+                      "image": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "status": {
+              "type": "object",
+              "properties": {
+                "label": {
+                  "type": "string"
+                },
+                "type": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "putParticipation": {
       "type": "object",
       "properties": {
         "status_id": {

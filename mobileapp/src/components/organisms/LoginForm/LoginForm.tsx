@@ -52,6 +52,7 @@ export default function LoginForm() {
             value={value}
             placeholder="marie-zoli@gmail.com"
             error={error}
+            testID="input-email"
           />
         )}
       />
@@ -73,13 +74,16 @@ export default function LoginForm() {
             value={value}
             placeholder="*******"
             error={error}
+            testID="input-password"
           />
         )}
       />
 
       <Spacer axis="vertical" size={3} />
 
-      <Button handlePress={handleSubmit(login)}>Se connecter</Button>
+      <Button handlePress={handleSubmit(login)} testID="button-user-login">
+        Se connecter
+      </Button>
     </>
   );
 }

@@ -1,6 +1,5 @@
-import { AttachmentChat } from "./attachment_chat"
-import { Job } from "./job"
-import { User } from "./user"
+import { Job } from "./job";
+import { User } from "./user";
 
 export interface Chat {
     id: string,
@@ -9,6 +8,15 @@ export interface Chat {
     sender: User,
     message: string,
     attachments?: AttachmentChat[],
+    createdAt: string,
+    updatedAt: string
+}
+
+export interface AttachmentChat {
+    id: string,
+    original_name: string,
+    type: string,
+    attachment: string,
     createdAt: string,
     updatedAt: string
 }
