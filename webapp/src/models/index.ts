@@ -12,7 +12,7 @@ export type { Partner } from './partner';
 export type { Pricing } from './pricing';
 export type { Subscription } from './subscription';
 export type { TableItem, TableMethods } from './table'
-export type { Token, LoginData, SignUpData, ErrorResponse } from './services'
+export type { Token, LoginData, SignUpData, Response } from './services'
 
 export { StatusEnum } from './status';
 export { LangEnum } from './lang';

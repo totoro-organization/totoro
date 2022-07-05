@@ -17,3 +17,7 @@ export const API_ROUTES = {
     FAVORITES: "/favorites",
     AUTH: "/auth"
 } as const
+
+type BaseRoute = typeof API_ROUTES[keyof typeof API_ROUTES]
+
+export type Route = BaseRoute | `${BaseRoute}/${string}` 
