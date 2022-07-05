@@ -117,10 +117,10 @@ function OrganizationDetails() {
                 <SuspenseLoader />
               ))}
             {currentTab === 'members' &&
-              (!organizationLoading && organization.users ? (
+              (!organizationLoading && organization.members ? (
                 <TableWrapper
                   title="Membres"
-                  defaultItems={organization.users}
+                  defaultItems={organization.members}
                 >
                   <MembersTable />
                 </TableWrapper>

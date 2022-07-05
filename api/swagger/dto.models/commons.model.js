@@ -55,20 +55,7 @@ module.exports = {
     }, 
     */ 
     postCommon: function(){
-      return {
-        type: "object",
-        properties: {
-          label: {
-            type: "string"
-          }
-        },
-        required: [
-          "label"
-        ],
-        example: {
-          label: "Test"
-        }
-      }
+      return module.exports.postRole()
     },
     putCommon: function(){
       return objPut(module.exports.postCommon())

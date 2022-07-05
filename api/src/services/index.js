@@ -11,6 +11,8 @@ const organizations = require("./Organizations").router;
 const partners = require("./Partners").router;
 const discounts = require("./Discounts").router;
 const subscriptions = require("./Subscriptions").router;
+const participations = require("./Participations").router;
+const transactions = require("./Transactions").router;
 
 module.exports = {
 	users,
@@ -25,5 +27,7 @@ module.exports = {
 	organizations,
 	partners,
 	discounts,
-	subscriptions
+	subscriptions,
+	participations,
+	transactions
 };

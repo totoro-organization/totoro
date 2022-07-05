@@ -19,7 +19,9 @@ const {
   organizations,
   partners,
   discounts,
-  subscriptions
+  subscriptions,
+  participations,
+  transactions
 } = require("services");
 
 const PORT = process.env.API_DOCKER_PORT || 8080;
@@ -77,9 +79,10 @@ server.use('/api/litigations', [accessApi, litigations]);
 server.use('/api/organizations', [accessApi, organizations]);
 server.use('/api/partners', [accessApi, partners]);
 server.use('/api/discounts', [accessApi, discounts]);
-server.use('/subscriptions', [accessApi, subscriptions]);
+server.use('/api/subscriptions', [accessApi, subscriptions]);
+server.use('/api/participations', [accessApi, participations]);
+server.use('/api/transactions', [accessApi, transactions]);
 // server.use('/messagings', [accessApi, messagings]);
-// server.use('/transactions', [accessApi, transactions]);
 
 const options = {
 	controllers: "./src/services",

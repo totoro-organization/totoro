@@ -1,6 +1,6 @@
 import { FC, ChangeEvent } from 'react';
 import { Link } from "react-router-dom";
-
+import format from 'date-fns/format';
 import {
   Tooltip,
   Checkbox,
@@ -14,16 +14,12 @@ import {
   Typography,
   useTheme,
 } from '@mui/material';
-
-import { Litigation } from 'src/models/litigation';
+import type { Litigation, TableProps } from 'src/models';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
-import { TableProps } from 'src/components/TableWrapper';
 import { DeleteLitigationContent } from './LitigationModalContent';
 import Modal from 'src/components/Modal';
 import { useModal } from 'src/hooks/useModal';
-import { TableEnum } from 'src/models';
 import StatusSelect from 'src/components/StatusSelect';
-import format from 'date-fns/format';
 
 
 const LitigationsTable: FC<TableProps<Litigation>> = ({

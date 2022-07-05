@@ -1,13 +1,13 @@
+import { Response } from "src/models/services";
 import { requestAxios } from "./requestApi";
-
-export const STATUS_BASE_URL = "/status"
+import { API_ROUTES } from "./routes";
 
 export async function getStatuses() {
-    const response = await requestAxios("GET", STATUS_BASE_URL);
+    const response = await requestAxios("GET", API_ROUTES.STATUS);
     return response;
 } 
 
-export async function changeStatus(data: object) {
-    const response = await requestAxios("PUT", `/change${STATUS_BASE_URL}`, data);
+export async function changeStatus(data: object): Promise<Response> {
+    const response = await requestAxios("PUT", `/change${API_ROUTES.STATUS}`, data);
     return response;
 }

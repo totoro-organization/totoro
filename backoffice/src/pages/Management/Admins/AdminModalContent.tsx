@@ -3,8 +3,9 @@ import { FormEvent, useEffect, useState } from "react";
 import { Form } from "src/components/Form";
 import { ButtonsBox } from "src/components/Modal";
 import { useApi } from "src/hooks/useApi";
-import { TableMethods } from "src/hooks/useTable";
-import { Admin, CommonsUriEnum, Role } from "src/models";
+import { TableMethods } from "src/models";
+import { Admin, Role } from "src/models";
+import { API_ROUTES } from "src/services/routes";
 
 interface EditAdminContentProps {
     item: Admin,
@@ -14,7 +15,7 @@ interface EditAdminContentProps {
 
 export const EditAdminContent = ({item, handleUpdate, handleClose}: EditAdminContentProps) => {
 
-    const { data: roles, loading  } = useApi(CommonsUriEnum.roles);
+    const { data: roles, loading  } = useApi(API_ROUTES.ROLES);
     
     const [data, setData] = useState({
         role_id: item?.role.id

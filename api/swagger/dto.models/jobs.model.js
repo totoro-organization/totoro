@@ -5,7 +5,7 @@ module.exports = {
         return arrayType(module.exports.getJob());
     },
     getJob: function(){
-        return job();
+      return job();
     },
     putJob: function(){
         return {
@@ -74,6 +74,9 @@ module.exports = {
             type: "object",
             properties: {
               id: {
+                type: "string"
+              },
+              qrcode: {
                 type: "string"
               },
               jobs_id: {
