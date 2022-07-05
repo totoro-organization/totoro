@@ -26,13 +26,13 @@ const menuItems: MenuItems[] = [
     items: [
       {
         name: 'Statistiques',
-        link: '/dashboards/statistiques',
+        link: '/association/dashboards/statistiques',
         icon: QueryStatsIcon
       },
       {
         name:'Résumé',
         icon: DashboardIcon,
-        link: '/dashboards/resume'
+        link: '/association/dashboards/resume'
       }
     ]
   },
@@ -42,16 +42,49 @@ const menuItems: MenuItems[] = [
       {
         name: 'Mes missions',
         icon: ListIcon,
-        link: '/gestion/missions'
+        link: '/association/gestion/missions'
       },
       {
         name: 'Créer une mission',
         icon: AddTaskIcon,
-        link: '/gestion/missions/creation'
+        link: '/association/gestion/missions/creation'
       }
     ]
   },
+];
 
+export const PartnerMenuItems: MenuItems[] = [
+
+  {
+    heading: 'Dashboards',
+    items: [
+      {
+        name: 'Statistiques',
+        link: '/partenaire/dashboards/statistiques',
+        icon: QueryStatsIcon
+      },
+      {
+        name:'Résumé',
+        icon: DashboardIcon,
+        link: '/partenaire/dashboards/resume'
+      }
+    ]
+  },
+  {
+    heading: 'Gestion',
+    items: [
+      {
+        name: 'Mes réductions',
+        icon: ListIcon,
+        link: '/partenaire/gestion/reductions'
+      },
+      {
+        name: 'Ajouter une réduction',
+        icon: AddTaskIcon,
+        link: '/partenaire/gestion/reductions/creation'
+      }
+    ]
+  },
 ];
 
 export default menuItems;
