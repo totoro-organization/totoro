@@ -8,7 +8,6 @@ branch_name=${branch_name:-HEAD}
 cd ./$app
 rm -rf node_modules
 rm package-lock.json
-npm install
 git add .
 git commit -m "$commit_message"
 git remote add $app-heroku https://git.heroku.com/$app-totoro.git
