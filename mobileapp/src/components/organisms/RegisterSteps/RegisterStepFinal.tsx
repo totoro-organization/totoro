@@ -1,5 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import React from "react";
+import * as Location from "expo-location";
+
+import React, { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import {
   RegisterStepFinalFormValues,
@@ -16,9 +18,11 @@ import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { StackParamList } from "../../../navigation/StackNavigationParams";
 import Toast from "react-native-toast-message";
+import type { LocationGeocodedLocation, LocationObject } from "expo-location";
 
 export default function RegisterStepFinal() {
   const navigation = useNavigation<StackNavigationProp<StackParamList>>();
+  const [location, setLocation] = useState<LocationObject | null>(null);
 
   const { control, handleSubmit } = useForm<RegisterStepFinalFormValues>({
     defaultValues: {
@@ -27,6 +31,21 @@ export default function RegisterStepFinal() {
     mode: "onBlur",
     resolver: yupResolver(registerStepFinalSchema),
   });
+
+  useEffect(() => {
+    const getLocationPermission = async () => {
+      const { status } = await Location.requestForegroundPermissionsAsync();
+
+      if (status !== "granted") return null;
+
+      const currentLocation = await Location.getCurrentPositionAsync({});
+      setLocation(currentLocation);
+    };
+
+    getLocationPermission();
+  }, []);
+
+  console.log(location);
 
   const registerErrorToast = () =>
     Toast.show({
@@ -40,8 +59,8 @@ export default function RegisterStepFinal() {
   async function onSubmit(data: RegisterStepFinalFormValues) {
     const body = {
       address: data.address,
-      longitude: 48.88039283558442,
-      latitude: 2.4123843153442976,
+      longitude: location?.coords.longitude,
+      latitude: location?.coords.latitude,
       cp: 93310,
     };
 
