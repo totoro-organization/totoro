@@ -3,7 +3,7 @@ module.exports = [
 		model: "Groups",
 		keys: ["jobs_id", "user_id"],
 		data: {
-			id: "f7f5bbf1-5af6-402e-a5ac-d3ec4cd6494g",
+			id: "50dec1ee-109b-409e-9cbf-023c2f81d228",
 			qrcode: "/qrcode-participants/jobs-1654763206879.png",
 			job: {
 				title: "Tournoi de football 14-18 ans",

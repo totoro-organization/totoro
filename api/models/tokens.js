@@ -30,6 +30,7 @@ module.exports = (sequelize, DataTypes) => {
   Tokens.init(
     {
       qrcode: DataTypes.STRING,
+      code: DataTypes.STRING,
       end_date: DataTypes.DATE,
 			isExpired: {
 				type: DataTypes.VIRTUAL,
