@@ -35,7 +35,7 @@ const ListingJobs = Loader(
   lazy(() => import('src/pages/applications/Organization/Gestion/Jobs/List'))
 );
 const Job = Loader(
-  lazy(() => import('src/applications/Organization/Gestion/Jobs'))
+  lazy(() => import('src/pages/applications/Organization/Gestion/Jobs'))
 );
 
 // Dashboards
@@ -219,6 +219,10 @@ const routes: PartialRouteObject[] = [
                     element: <CreationJob />
                   }
                 ]
+              },
+              {
+                path: 'missions/:id',
+                element: <Job />
               },
               {
                 path: 'missions/:id',
