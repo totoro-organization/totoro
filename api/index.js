@@ -24,7 +24,7 @@ const {
   transactions
 } = require("services");
 
-const PORT = process.env.API_DOCKER_PORT || 8080;
+const PORT = process.env.API_DOCKER_PORT || 5000;
 
 loadFixtures();
 
