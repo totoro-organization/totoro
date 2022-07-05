@@ -16,7 +16,6 @@ import useAuth from 'src/hooks/useAuth';
 import { DatePicker } from '@mui/x-date-pickers';
 import DateFnsProvider from 'src/components/DateFnsProvider';
 import { useState } from 'react';
-import { LocalizationProvider } from '@mui/lab';
 
 function Copyright(props: any) {
   return (

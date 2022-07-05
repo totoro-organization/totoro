@@ -5,8 +5,8 @@ import LocalizationProvider from '@mui/lab/LocalizationProvider';
 
 import ThemeProvider from './theme/ThemeProvider';
 import { CssBaseline } from '@mui/material';
-import { AuthProvider } from './hooks/useAuth';
-import { CommonsProvider } from './contexts/CommonsContext';
+import { AuthProvider } from 'src/contexts/AuthContext';
+import { CommonsProvider } from 'src/contexts/CommonsContext';
 
 const App = () => {
 
