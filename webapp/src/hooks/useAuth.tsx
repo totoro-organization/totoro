@@ -7,7 +7,7 @@ import {
   useState
 } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { User, Membership, Partner, Role, LoginData, SignUpData, Organization } from 'src/models';
+import { User, Partner, Role, LoginData, SignUpData, Organization } from 'src/models';
 import * as sessionsService from 'src/services/auth.service';
 
 interface AuthContextType {
@@ -37,8 +37,6 @@ export function AuthProvider({
   children: ReactNode;
 }): JSX.Element {
   const [user, setUser] = useState<User>();
-  // const [memberships, setMemberships] = useState<Array<Membership>>();
-  // const [partners, setPartners] = useState<Array<Partner>>();
   const [currentApp, setCurrentApp] = useState<any>({});
   const [error, setError] = useState<any>();
   const [loading, setLoading] = useState<boolean>(false);
@@ -60,7 +58,7 @@ export function AuthProvider({
           setError(response.error);
           return;
         }
-        setUser(response);
+        setUser(response as User);
       })
       .catch((_error) => {})
       .finally(() => setLoadingInitial(false));
@@ -107,7 +105,7 @@ export function AuthProvider({
             setError(response.error);
             return;
           }
-          setUser(response);
+          setUser(response as User);
         });
       })
       .catch((error) => setError(error))

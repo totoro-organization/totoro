@@ -1,9 +1,10 @@
-export interface Token {
-    token: string
-}
+export type Token = string;
 
-export interface ErrorResponse {
-    error: string
+export interface Response {
+    error?: boolean
+    message: string,
+    entity?: string,
+    token?: Token
 }
   
 export interface LoginData {
