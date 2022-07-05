@@ -65,7 +65,7 @@ const accessApi = async (req, res, next) => {
 
 server.get("/",async function(req,res){
     res.setHeader("Content-Type","text/html")
-    res.status(200).send(ui_api())
+    res.status(200).send(ui_api.home())
 })
 
 server.use("/api", [accessApi, commons]);
