@@ -1,6 +1,6 @@
 import { useContext } from "react";
-import { AuthContext } from "src/contexts/AuthContext";
+import { SessionContext } from "src/contexts/SessionContext";
 
 export default function useAuth() {
-    return useContext(AuthContext);
+    return useContext(SessionContext);
 }
