@@ -56,7 +56,7 @@ const InnerWrapper = styled.View<{ $center?: boolean }>`
   width: 90%;
   align-items: ${({ $center }) => ($center ? "center" : "flex-start")};
   justify-content: center;
-  background-color: ${({ theme }) => theme.colors.white[600]};
+  background-color: ${({ theme }) => theme.colors.core.white.base};
   padding: ${({ theme }) => theme.spacing[6]};
   border-radius: ${({ theme }) => theme.border.radius.md};
 `;

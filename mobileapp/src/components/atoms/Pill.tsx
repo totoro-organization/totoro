@@ -66,21 +66,21 @@ const PillContainer = styled.TouchableOpacity<StyledPillProps>`
   padding: ${({ theme }) => theme.spacing[2]} ${({ theme }) => theme.spacing[4]};
 
   background-color: ${({ theme, checked }) =>
-    checked ? theme.colors.grey[900] : "transparent"};
+    checked ? theme.colors.core.black.base : "transparent"};
   border: 1px solid
     ${({ theme, variant, checked }) =>
       variant === "default"
         ? "transparent"
         : checked
         ? "transparent"
-        : theme.colors.grey[900]};
+        : theme.colors.core.black.base};
 `;
 
 const StyledText = styled(Text)<StyledPillProps>`
   color: ${({ variant, color, theme, checked }) =>
     variant === "default"
-      ? theme.colors.grey[900]
+      ? theme.colors.core.black.base
       : checked
-      ? theme.colors.white[600]
+      ? theme.colors.core.white.base
       : getColors(color as Colors)};
 `;

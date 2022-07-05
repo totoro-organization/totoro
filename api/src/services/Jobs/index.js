@@ -32,6 +32,14 @@ exports.router = (function () {
 		},
 	]);
 
+	jobsRouter.post("/:id/register", [passport, async function (req, res) {
+		const data = {
+			jobs_id: req.params.id,
+			user_id: req.userData.id
+		};
+		controller.registerToJob(res, data);
+	}]);
+
 	jobsRouter.get("/:id/participants", [
 		passport,
 		async function (req, res) {

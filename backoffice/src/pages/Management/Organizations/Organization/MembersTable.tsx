@@ -69,7 +69,7 @@ const MembersTable: FC<TableProps<any>> = ({
                       gutterBottom
                       noWrap
                     >
-                      {format(new Date(member.user.createdAt), "dd/MM/yyyy HH:mm:ss")}
+                      {format(new Date(member.createdAt), "dd/MM/yyyy HH:mm:ss")}
                     </Typography>
                   </TableCell>
                   <TableCell>
