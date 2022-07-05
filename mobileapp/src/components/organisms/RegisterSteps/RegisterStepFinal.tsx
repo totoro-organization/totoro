@@ -45,8 +45,6 @@ export default function RegisterStepFinal() {
     getLocationPermission();
   }, []);
 
-  console.log(location);
-
   const registerErrorToast = () =>
     Toast.show({
       type: "error",
