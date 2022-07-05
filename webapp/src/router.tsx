@@ -6,7 +6,7 @@ import SidebarLayout from 'src/layouts/SidebarLayout';
 import BaseLayout from 'src/layouts/BaseLayout';
 
 import SuspenseLoader from 'src/components/SuspenseLoader';
-import useAuth from './hooks/useAuth';
+import useAuth from 'src/hooks/useAuth';
 
 const Loader = (Component) => (props) =>
   (
