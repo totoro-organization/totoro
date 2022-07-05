@@ -12,8 +12,6 @@ import * as sessionsService from 'src/services/auth.service';
 
 interface AuthContextType {
   user?: User;
-  // memberships?: Membership[],
-  // partners?: Partner[],
   currentApp: App,
   loading: boolean;
   error?: any;
@@ -106,6 +104,7 @@ export function AuthProvider({
             return;
           }
           setUser(response as User);
+          navigate('/')
         });
       })
       .catch((error) => setError(error))
