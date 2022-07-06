@@ -19,7 +19,7 @@ export interface MenuItems {
   heading: string;
 }
 
-const organizationMenuItems: MenuItems[] = [
+export const organizationMenuItems: MenuItems[] = [
 
   {
     heading: 'Dashboards',
@@ -86,5 +86,3 @@ export const partnerMenuItems: MenuItems[] = [
     ]
   },
 ];
-
-export default organizationMenuItems;

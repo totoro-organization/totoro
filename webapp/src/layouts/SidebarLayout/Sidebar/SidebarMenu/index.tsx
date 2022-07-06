@@ -1,9 +1,10 @@
 import { ListSubheader, List, Menu } from '@mui/material';
 import { useLocation, matchPath } from 'react-router-dom';
 import SidebarMenuItem from './item';
-import menuItems, { MenuItem } from './items';
 import { styled } from '@mui/material/styles';
 import MenuAppList from './AppList';
+import useMenuItems from 'src/hooks/useMenuItems';
+import { MenuItem } from './items';
 
 
 const MenuWrapper = styled(List)(
@@ -194,8 +195,7 @@ const reduceChildRoutes = ({
 
 function SidebarMenu() {
   const location = useLocation();
-
-
+  const menuItems = useMenuItems();
   return (
     <>
       {menuItems.map((section) => (
