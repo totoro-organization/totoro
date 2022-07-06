@@ -5,6 +5,7 @@ import { ActivityIndicator } from "react-native";
 import Filter from "../assets/icons/Filter";
 import Sort from "../assets/icons/Sort";
 import useJobs from "../common/api/hooks/useJobs";
+import useAuth from "../common/contexts/AuthContext";
 import useBoolean from "../common/hooks/useBoolean";
 import Box from "../components/atoms/Box";
 import Button from "../components/atoms/Button";
@@ -20,7 +21,14 @@ import theme from "../theme/theme";
 
 export default function Jobs() {
   const navigation = useNavigation<StackNavigationProp<AppParamList>>();
-  const { jobs, isLoading: loadingJobs } = useJobs();
+  const { user } = useAuth();
+  const { jobs, isLoading: loadingJobs } = useJobs({
+    longitude: user?.longitude || 0,
+    latitude: user?.latitude || 0,
+  });
+
+  console.log(user);
+  console.log(jobs);
 
   const [showSortByModal, setShowSortByModal] = useBoolean();
 

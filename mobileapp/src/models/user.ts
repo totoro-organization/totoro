@@ -28,4 +28,6 @@ export interface User {
   partners: Partner[];
   createdAt: string;
   updatedAt: string;
+  latitude?: number;
+  longitude?: number;
 }
