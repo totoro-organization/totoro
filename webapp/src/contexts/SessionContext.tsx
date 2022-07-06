@@ -1,6 +1,7 @@
 import {
   createContext,
   ReactNode,
+  useContext,
   useEffect,
   useMemo,
   useState
@@ -28,7 +29,7 @@ interface App {
 
 export const SessionContext = createContext<SessionContextType>({} as SessionContextType);
 
-export function AuthProvider({
+export function SessionProvider({
   children
 }: {
   children: ReactNode;
@@ -156,5 +157,6 @@ export function AuthProvider({
     </SessionContext.Provider>
   );
 }
+
 
 
