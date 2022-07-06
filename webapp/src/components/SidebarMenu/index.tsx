@@ -1,8 +1,8 @@
 import { ListSubheader, List, Menu } from '@mui/material';
 import { useLocation, matchPath } from 'react-router-dom';
-import SidebarMenuItem from './item';
+import SidebarMenuItem from '../SidebarMenuItem';
 import { styled } from '@mui/material/styles';
-import MenuAppList from './AppList';
+import MenuAppList from '../SidebarApplications';
 import useMenuItems from 'src/hooks/useMenuItems';
 import { MenuItem } from './items';
 

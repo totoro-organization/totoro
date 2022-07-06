@@ -6,7 +6,7 @@ import Logo from 'src/components/Logo';
 import { Box, Drawer, Hidden } from '@mui/material';
 
 import { styled } from '@mui/material/styles';
-import SidebarMenu from './SidebarMenu';
+import SidebarMenu from '../SidebarMenu';
 
 const SidebarWrapper = styled(Box)(
   ({ theme }) => `

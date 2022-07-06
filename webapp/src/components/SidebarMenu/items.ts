@@ -2,7 +2,6 @@ import { ReactNode } from 'react';
 
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import QueryStatsIcon from '@mui/icons-material/QueryStats';
-import AssignmentIcon from '@mui/icons-material/Assignment';
 import ListIcon from '@mui/icons-material/List';
 import AddTaskIcon from '@mui/icons-material/AddTask';
 
