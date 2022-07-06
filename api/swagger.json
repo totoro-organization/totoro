@@ -4749,12 +4749,6 @@
             "required": false
           },
           {
-            "name": "label",
-            "in": "query",
-            "type": "boolean",
-            "required": false
-          },
-          {
             "name": "size",
             "in": "query",
             "type": "integer",
