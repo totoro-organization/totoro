@@ -15,6 +15,7 @@ export interface Job {
   participants: User[];
   participants_max: number;
   remaining_place: number;
+  distance?: number;
   latitude: number;
   longitude: number;
   address: string;

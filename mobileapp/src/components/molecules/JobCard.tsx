@@ -58,8 +58,7 @@ export default function JobCard({ job }: JobCardProps) {
           <Spacer axis="horizontal" size={0.25} />
 
           <Text size="xs" color="grey">
-            {/* TODO: Add real distance */}
-            &gt; 10km
+            {job.distance?.toFixed(2)}km
           </Text>
         </FlexWrapper>
 
