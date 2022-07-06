@@ -3,21 +3,20 @@ import { getStringToColor } from 'src/utils/getStringToColor';
 
 interface FallbackAvatarProps extends AvatarProps {
   fallback: string;
+  fallbackIcon?: JSX.Element
 }
 
 export default function FallbackAvatar(props: FallbackAvatarProps) {
-  const { fallback, ...avatarProps } = props;
-
+  const { fallback, fallbackIcon, ...avatarProps } = props;
   
-
-  function stringAvatar(name: string) {
-    return {
-      sx: {
-        bgcolor: getStringToColor(name)
-      },
-      children: `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`
-    };
+  function handleFallback() {
+      return {
+        sx: {
+          bgcolor: getStringToColor(fallback ?? "N O")
+        },
+        children: fallback ? `${fallback.split(' ')[0][0]}${fallback.split(' ')[1][0]}` : fallbackIcon
+      };
   }
 
-  return <Avatar {...stringAvatar(fallback)} {...avatarProps} />;
+  return <Avatar {...handleFallback()} {...avatarProps} />;
 }
