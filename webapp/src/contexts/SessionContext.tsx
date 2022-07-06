@@ -13,6 +13,7 @@ import * as sessionsService from 'src/services/auth.service';
 interface SessionContextType {
   user?: User;
   currentApp: App,
+  handleCurrentApp: (app: App) => void,
   loading: boolean;
   error?: any;
   login: (params: LoginData) => void;
@@ -130,6 +131,9 @@ export function SessionProvider({
   function handleCurrentApp(app: App) {
     setCurrentApp(app);
     localStorage.setItem('currentApp', JSON.stringify(app))
+    if(app.type !== currentApp) {
+      return navigate('/');
+    }
   }
   //
   // Whenever the `value` passed into a provider changes,
