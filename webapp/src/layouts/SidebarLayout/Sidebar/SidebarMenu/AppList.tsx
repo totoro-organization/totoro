@@ -10,14 +10,13 @@ import {
 import { Box } from '@mui/system';
 import React, { useState } from 'react';
 import FallbackAvatar from 'src/components/FallbackAvatar';
-import useAuth from 'src/hooks/useAuth';
+import { useSession } from 'src/hooks/useSession';
 import { config } from 'src/services/config';
 
 function MenuAppList() {
   const [openOrganizations, setOpenOrganizations] = useState(false);
   const [openPartners, setOpenPartners] = useState(false);
-  const { user, currentApp } = useAuth();
-
+  const { user, currentApp } = useSession();
   const handleClickOrganizations = () => {
     setOpenOrganizations(!openOrganizations);
   };
