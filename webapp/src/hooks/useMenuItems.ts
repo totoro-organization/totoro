@@ -3,7 +3,7 @@ import {
   MenuItems,
   organizationMenuItems,
   partnerMenuItems
-} from 'src/layouts/SidebarLayout/Sidebar/SidebarMenu/items';
+} from 'src/components/SidebarMenu/items';
 
 const useMenuItems = (): MenuItems[] => {
   const { currentApp } = useSession();
