@@ -19,7 +19,6 @@ const ProtectedRoute = (props: RouteProps) => {
   const session = useSession();
 
   if (!session.user) return <Navigate to="/login" />;
-
   return <Route {...props} />;
 };
 
@@ -28,9 +27,9 @@ const AppIndexRoute = () => {
   const session = useSession();
 
   if (session.currentApp.type === 'organization')
-    return <Navigate to="/association/dashboards/resume" replace />;
+    return <Navigate to="/association/dashboards/resume" />;
 
-  return <Navigate to="/partenaire/dashboards/resume" replace />;
+  return <Navigate to="/partenaire/dashboards/resume" />;
 };
 
 /* Applications - Organization */
@@ -190,8 +189,12 @@ const routes: PartialRouteObject[] = [
             ]
           },
           {
-            path: 'partnenaire',
+            path: 'partenaire',
             children: [
+              {
+                path: '/',
+                element: <Navigate to="dashboards" replace />
+              },
               {
                 path: 'dashboards',
                 element: <SidebarLayout />,
