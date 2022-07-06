@@ -32,7 +32,7 @@ export default function RootStackNavigator() {
     >
       {!user && (
         <>
-          <RootStack.Screen name="Explications" component={Explanation} />
+          {/* <RootStack.Screen name="Explications" component={Explanation} /> */}
           <RootStack.Screen name="Se connecter" component={Login} />
           <RootStack.Screen name="S'inscrire" component={Register} />
 
