@@ -45,7 +45,7 @@ export function SessionProvider({
   children: ReactNode;
 }): JSX.Element {
   const [user, setUser] = useState<User>();
-  const [currentApp, setCurrentApp] = useState<any>({});
+  const [currentApp, setCurrentApp] = useState<any>(JSON.parse(localStorage.getItem("currentApp")) ?? null);
   const [error, setError] = useState<any>();
   const [loading, setLoading] = useState<boolean>(false);
   const [loadingInitial, setLoadingInitial] = useState<boolean>(true);
@@ -64,7 +64,7 @@ export function SessionProvider({
 
   useEffect(() => {
     if (user) {
-      let app = JSON.parse(localStorage.getItem('currentApp')) ?? null;
+      let app = currentApp;
       let data;
 
       if (!app) {
@@ -135,8 +135,8 @@ export function SessionProvider({
 
   function handleCurrentApp(app: App) {
     setCurrentApp(app);
-    localStorage.setItem('currentApp', JSON.stringify(app));
-    if (app.type !== currentApp) {
+    localStorage.setItem('currentApp', JSON.stringify(app));    
+    if (app !== currentApp) {
       return navigate('/');
     }
   }
