@@ -49,7 +49,7 @@ export default function GlobalLayout({
 }
 
 const Container = styled.ScrollView<{ $withHeader: boolean }>`
-  padding-top: ${({ $withHeader }) => ($withHeader ? "52px" : "0")}
+  padding-top: ${({ $withHeader }) => ($withHeader ? "52px" : "0")};
   min-height: 100%;
   background-color: #fcfcfc;
 `;

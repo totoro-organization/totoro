@@ -158,11 +158,14 @@ exports.router = (function () {
 
   // Status
   commonsRouter.get("/status", async function (req, res) {
-    const {page, size} = req.query
-
+    const {page, size, type} = req.query
+    let condition = {};
+    if(type){
+			condition.type= {[Op.like]: '%'+type+'%'}
+		}
     let pagination = getPaginationQueries(size,page)
 
-    controller.getAll(res, Status, null, null, null, pagination);
+    controller.getAll(res, Status, condition, null, null, pagination);
   });
 
   commonsRouter.get("/status/:id", async function (req, res) {

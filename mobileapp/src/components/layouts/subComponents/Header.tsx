@@ -10,6 +10,7 @@ import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { AppParamList } from "../../../navigation/StackNavigationParams";
 import TokenButton from "../../organisms/TokenButton";
+import TotoroLogo from "../../brand/TotoroLogo";
 
 type HeaderProps = {
   title?: string;
@@ -21,11 +22,7 @@ export default function Header({ title, withScanner }: HeaderProps) {
 
   return (
     <Container>
-      {!title && (
-        <Text weight="extraBold" size="xl">
-          totoro
-        </Text>
-      )}
+      {!title && <TotoroLogo />}
 
       {title && <Text size="xl">{title}</Text>}
 

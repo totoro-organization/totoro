@@ -1,3 +1,5 @@
+const {response201, bodyParam, defaultResponse} = require("../generique");
+
 module.exports = {
     "/api/auth/login": {
         post: {
@@ -7,30 +9,9 @@ module.exports = {
           "x-swagger-router-controller": "auth",
           operationId: "login",
           parameters: [
-            {
-              name: "data",
-              in: "body",
-              description: "Login user",
-              required: true,
-              schema: {
-                $ref: "#/definitions/loginUser"
-              }
-            }
+            ...bodyParam("Login user", "loginUser")
           ],
-          responses: {
-            201: {
-              description: "User logged",
-              schema: {
-                $ref: "#/definitions/responseLogin"
-              }
-            },
-            default: {
-              description: "Unexpected error",
-              schema: {
-                $ref: "#/definitions/Error"
-              }
-            }
-          }
+          responses: response201("User logged")
         }
     },
     "/api/auth/login/admin": {
@@ -41,30 +22,9 @@ module.exports = {
           "x-swagger-router-controller": "auth",
           operationId: "loginAmin",
           parameters: [
-            {
-              name: "data",
-              in: "body",
-              description: "Login admin",
-              required: true,
-              schema: {
-                $ref: "#/definitions/loginUser"
-              }
-            }
+            ...bodyParam("Login admin", "loginUser")
           ],
-          responses: {
-            201: {
-              description: "Admin logged",
-              schema: {
-                $ref: "#/definitions/responseLogin"
-              }
-            },
-            default: {
-              description: "Unexpected error",
-              schema: {
-                $ref: "#/definitions/Error"
-              }
-            }
-          }
+          responses: response201("Admin logged", "responseLogin")
         }
     },
     "/api/auth/signup": {
@@ -75,30 +35,9 @@ module.exports = {
           "x-swagger-router-controller": "auth",
           operationId: "signup",
           parameters: [
-            {
-              name: "data",
-              in: "body",
-              description: "create an account",
-              required: true,
-              schema: {
-                $ref: "#/definitions/signup"
-              }
-            }
+            ...bodyParam("create an account", "signup")
           ],
-          responses: {
-            201: {
-              description: "User created",
-              schema: {
-                $ref: "#/definitions/Success"
-              }
-            },
-            default: {
-              description: "Unexpected error",
-              schema: {
-                $ref: "#/definitions/Error"
-              }
-            }
-          }
+          responses: response201("User created")
         }
     },
     "/api/auth/forgot": {
@@ -109,30 +48,9 @@ module.exports = {
           "x-swagger-router-controller": "auth",
           operationId: "forgot",
           parameters: [
-            {
-              name: "data",
-              in: "body",
-              description: "Forgot password",
-              required: true,
-              schema: {
-                $ref: "#/definitions/forgot"
-              }
-            }
+            ...bodyParam("Forgot password", "forgot")
           ],
-          responses: {
-            201: {
-              description: "Forgot your password",
-              schema: {
-                $ref: "#/definitions/Success"
-              }
-            },
-            default: {
-              description: "Unexpected error",
-              schema: {
-                $ref: "#/definitions/Error"
-              }
-            }
-          }
+          responses: response201("Forgot your password")
         }
     },
     "/api/auth/connected": {
@@ -147,12 +65,7 @@ module.exports = {
             201: {
               description: "get user connected (getAdmin or getUser model)"
             },
-            default: {
-              description: "Unexpected error",
-              schema: {
-                $ref: "#/definitions/Error"
-              }
-            }
+            ...defaultResponse()
           }
         }
     },

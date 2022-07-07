@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from "react";
-import GlobalLayout from "../components/layouts/GlobalLayout";
-
 import {
   BarCodeScanner,
   BarCodeScannerResult,
   PermissionStatus,
 } from "expo-barcode-scanner";
-import Button from "../components/atoms/Button";
+import { StyleSheet, View } from "react-native";
+
 import { Text } from "../components/atoms/Text";
 
-import { StyleSheet, View } from "react-native";
-import styled from "styled-components/native";
+import ValidateJobModal from "../components/molecules/Scanner/ValidateJobModal";
+import SuccessModal from "../components/molecules/Scanner/SuccessModal";
 
-export default function Scanner() {
+export default function ScannerPage() {
   const [hasPermission, setHasPermission] = useState<boolean | null>(false);
   const [scanned, setScanned] = useState(false);
 
@@ -41,6 +40,8 @@ export default function Scanner() {
 
       {!hasPermission && <Text color="white">Pas d'accès caméra.</Text>}
 
+      <ValidateJobModal />
+
       <BarCodeScanner
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
         barCodeTypes={[BarCodeScanner.Constants.BarCodeType.qr]}
@@ -49,22 +50,12 @@ export default function Scanner() {
       />
 
       {scanned && (
-        <FixedWrapper>
-          <Button
-            handlePress={() => setScanned(false)}
-            horizontalPosition="stretch"
-          >
-            Scanner une autre mission
-          </Button>
-        </FixedWrapper>
+        <SuccessModal
+          // TODO: Add real tokens here
+          numberOfTokens={32}
+          handleCloseModal={() => setScanned(false)}
+        />
       )}
     </View>
   );
 }
-
-const FixedWrapper = styled.View`
-  width: 100%;
-  position: absolute;
-  bottom: 24px;
-  padding: 0 24px;
-`;

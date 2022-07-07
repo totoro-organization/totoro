@@ -114,5 +114,13 @@ exports.router = (function () {
 		},
 	]);
 
+	UsersRouter.get("/:id/transactions", [
+		passport,
+		async function (req, res) {
+			const id = req.params.id;
+			controller.getTransactions(res, id, req.query);
+		},
+	]);
+
 	return UsersRouter;
 })();

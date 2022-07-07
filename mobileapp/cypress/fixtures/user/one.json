@@ -1,0 +1,22 @@
+{
+  "id": "92772183-a2d2-419b-a40f-260481923bcf",
+  "firstname": "Jarce",
+  "lastname": "Boukoro",
+  "username": "j2frise",
+  "email": "jarce2frise@gmail.com",
+  "birthday": "1991-10-08",
+  "longitude": 2.43796,
+  "latitude": 48.8268,
+  "avatar": null,
+  "bio": "Je ne suis pas sympa",
+  "phone": "0751932695",
+  "total_token": 0,
+  "createdAt": "2022-07-02T19:21:19.000Z",
+  "updatedAt": "2022-07-02T19:21:19.000Z",
+  "status": {
+    "label": "actived",
+    "type": "['Admins', 'Users', 'Partners', 'Jobs', 'Groups', 'Associations', 'Commons']"
+  },
+  "memberships": [],
+  "partners": []
+}

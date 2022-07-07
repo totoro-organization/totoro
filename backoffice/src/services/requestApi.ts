@@ -1,10 +1,6 @@
 import axios from 'axios';
 import { config } from './config';
 
-export type ErrorResponse = {
-    error: string
-}
-
 export async function requestAxios(method: string, uri: string, data = null) {
     const token = localStorage.getItem('token') ?? null;
   
@@ -40,8 +36,8 @@ export async function requestAxios(method: string, uri: string, data = null) {
             }
             let options = {
                 headers: headers
-            }
-            request = await axios[method](url, data, options);
+            }            
+            request = await axios[method](url, data, options);                        
         } else {
             return 'cette methode n\'est pas prise en compte par l\'api'
         }
@@ -52,7 +48,8 @@ export async function requestAxios(method: string, uri: string, data = null) {
             return "offline";
         } else {
             return {
-                error: error.response.data.message
+                error: true,
+                ...error.response.data
             }
         }
     }

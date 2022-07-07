@@ -65,7 +65,6 @@ module.exports = {
 		delete data.typeValue
 		data["name"] = request.data.siege_social.nom_raison_sociale
 		data["address"] = request.data.siege_social.l4_normalisee || request.data.siege_social.l4_declaree || `${request.data.siege_social.numero_voie} ${request.data.siege_social.type_voie} ${request.data.siege_social.libelle_voie}`
-		data["logo"] = "/partners/store-placeholder.png";
 		data["in_internet"] = 0;
 		data["in_store"] = 0;
 
@@ -85,11 +84,13 @@ module.exports = {
 		res, Partners, data, condition, null, true);
 	},
 
-	updatePartner: function (res, id, data) {
-		const {phone, email} = data
+	updatePartner: async function (res, id, data) {
+		const {phone, email, status_id} = data
 		const condition = {};
 		if (phone) condition.phone = phone;
 		if (email) condition.email = email;
+		const statusData = await getRow(res, Status, { id: status_id });
+
 		commonsController.update(res, Partners, id, data, condition);
 	},
 
@@ -155,18 +156,10 @@ module.exports = {
 			{
 				model: Discounts,
 				as: "discount",
-				attributes: { exclude: ["type_disc_id","status_id","partner_id"] },
+				attributes: { exclude: ["type_disc_id","status_id"] },
 				required: true,
 				include: [
 					{ model: Status, as: "status", attributes: excludeCommon },
-					{ 
-						model: Partners, 
-						as: "partner", 
-						attributes: { exclude: ["status_id"] },
-						include: [
-							{ model: Status, as: "status", attributes: excludeCommon },
-						]
-					},
 					{
 						model: Types_discounts,
 						as: "type",
@@ -183,6 +176,6 @@ module.exports = {
 		let pagination = getPaginationQueries(size,page)
 		condition = Object.keys(condition).length === 0 ? null : condition;
 
-		commonsController.getAll(res, Tokens, null, excludeTransactions, includeTransactions, pagination);
+		commonsController.getAll(res, Tokens, condition, excludeTransactions, includeTransactions, pagination);
 	}
 };
