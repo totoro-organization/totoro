@@ -72,11 +72,11 @@ const Container = styled.View`
   flex-direction: row;
   height: auto;
   flex: 1;
-  background-color: ${({ theme }) => theme.colors.white[600]};
+  background-color: ${({ theme }) => theme.colors.core.white.base};
   padding: ${({ theme }) => theme.spacing[4]};
   border-radius: ${({ theme }) => theme.border.radius.md};
   border: ${({ theme }) => theme.border.width[1]}
-    ${({ theme }) => theme.colors.grey[100]};
+    ${({ theme }) => theme.colors.v1.grey[100]};
   shadow-color: #000;
   shadow-opacity: 0.1;
   shadow-radius: 4px;

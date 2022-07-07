@@ -24,6 +24,7 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import TextField from '@mui/material/TextField';
 import { Admin } from 'src/models';
 import { getCurrentUser } from 'src/services/auth.service';
+import { useToast } from 'src/hooks/useToast';
 
 function EditProfileTab() {
   const [EditUser, setEditUser] = useState(false);
@@ -31,6 +32,7 @@ function EditProfileTab() {
   const { user: currentUser } = useAuth();
   const [editPassword, setEditPassword] = useState(false);
   const [user, setUser] = useState<Admin>(currentUser);
+  const { setToast } = useToast();
 
   const handleChangeEdit = (event: React.FormEvent<HTMLFormElement>) => {
     const value = event.currentTarget.value;
@@ -43,20 +45,36 @@ function EditProfileTab() {
 
   const handleEditUser = async () => {
     const updateResponse = await updateAdmin(user.id, valueEdit);
+    setToast({ 
+      variant: 'error' in updateResponse ? 'error' : 'success',
+      message: updateResponse.message
+    })
     if ('error' in updateResponse) return;
     setEditUser(false);
     const userResponse = await getCurrentUser();
+    setToast({ 
+      variant: 'error' in updateResponse ? 'error' : 'success',
+      message: updateResponse.message
+    })
     if ('error' in userResponse) return;
-    setUser(userResponse);
+    setUser(userResponse as Admin);
   };
 
   const handleEditUserPassword = async () => {
     const updateResponse = await updatePasswordAdmin(valueEdit);
+    setToast({ 
+      variant: 'error' in updateResponse ? 'error' : 'success',
+      message: updateResponse.message
+    })
     if ('error' in updateResponse) return;
     setEditPassword(false);
     const userResponse = await getCurrentUser();
+    setToast({ 
+      variant: 'error' in updateResponse ? 'error' : 'success',
+      message: updateResponse.message
+    })
     if ('error' in userResponse) return;
-    setUser(userResponse);
+    setUser(userResponse as Admin);
   };
 
   return (

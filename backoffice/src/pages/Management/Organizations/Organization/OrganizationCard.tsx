@@ -139,7 +139,7 @@ const OrganizationCard = ({ organization }: OrganizationCardProps) => {
             </Grid>
             <Grid item xs={12} sm={10} md={9}>
               <Text color="black">
-               {organization.users.length}
+               {organization.members.length}
               </Text>
             </Grid>
             <Grid item xs={12} sm={2} md={3} textAlign={{ sm: 'right' }}>

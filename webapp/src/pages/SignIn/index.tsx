@@ -12,11 +12,16 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import useAuth from 'src/hooks/useAuth';
+import { useSession } from 'src/hooks/useSession';
 
 function Copyright(props: any) {
   return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
+    <Typography
+      variant="body2"
+      color="text.secondary"
+      align="center"
+      {...props}
+    >
       {'Copyright © '}
       <Link color="inherit" href="">
         Totoro Admin
@@ -30,18 +35,17 @@ function Copyright(props: any) {
 const theme = createTheme();
 
 export default function SignIn() {
-
-  const { login, loading } = useAuth();
+  const { login, loading } = useSession();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    
+
     const data = new FormData(event.currentTarget);
 
     login({
-      emailOrUsername: data.get("emailOrUsername"),
-      password: data.get("password")
-    })
+      emailOrUsername: data.get('emailOrUsername'),
+      password: data.get('password')
+    });
   };
 
   return (
@@ -53,7 +57,7 @@ export default function SignIn() {
             marginTop: 8,
             display: 'flex',
             flexDirection: 'column',
-            alignItems: 'center',
+            alignItems: 'center'
           }}
         >
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
@@ -62,7 +66,12 @@ export default function SignIn() {
           <Typography component="h1" variant="h5">
             Se connecter
           </Typography>
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          <Box
+            component="form"
+            onSubmit={handleSubmit}
+            noValidate
+            sx={{ mt: 1 }}
+          >
             <TextField
               margin="normal"
               required
@@ -103,9 +112,9 @@ export default function SignIn() {
                 </Link>
               </Grid>
               <Grid item>
-                  <Link to="/signup" component={NavLink} variant="body2">
-                    Pas encore inscrit ? Je m'inscris
-                  </Link>
+                <Link to="/signup" component={NavLink} variant="body2">
+                  Pas encore inscrit ? Je m'inscris
+                </Link>
               </Grid>
             </Grid>
           </Box>

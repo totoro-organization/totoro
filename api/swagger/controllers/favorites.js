@@ -1,3 +1,5 @@
+const {response201, param} = require("../generique");
+
 module.exports = {
     "/api/favorites/{id}": {
         delete: {
@@ -7,27 +9,9 @@ module.exports = {
           "x-swagger-router-controller": "favorites",
           operationId: "deleteFavoriteUser",
           parameters: [
-            {
-              name: "id",
-              in: "path",
-              type: "string",
-              required: true
-            }
+            ...param("id", "path", "string")
           ],
-          responses: {
-            201: {
-              description: "Successful request.",
-              schema: {
-                $ref: "#/definitions/Success"
-              }
-            },
-            default: {
-              description: "Unexpected error",
-              schema: {
-                $ref: "#/definitions/Error"
-              }
-            }
-          }
+          responses: response201()
         }
     },
 }

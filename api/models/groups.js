@@ -2,7 +2,7 @@
 const { v4: uuidv4 } = require("uuid");
 const { Model } = require("sequelize");
 
-module.exports = (sequelize) => {
+module.exports = (sequelize, DataTypes) => {
 	class Groups extends Model {
 		/**
 		 * Helper method for defining associations.
@@ -37,7 +37,9 @@ module.exports = (sequelize) => {
 	}
 
 	Groups.init(
-		{},
+		{
+			qrcode: DataTypes.STRING,
+		},
 		{
 			sequelize,
 			modelName: "Groups",
