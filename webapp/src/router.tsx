@@ -53,6 +53,8 @@ const Resume = Loader(
 
 /* Applications - Partner */
 
+/* PAGES */
+
 /* Authentication */
 const SignIn = Loader(lazy(() => import('src/pages/SignIn')));
 const SignUp = Loader(lazy(() => import('src/pages/SignUp')));
@@ -61,6 +63,11 @@ const FirstLogin = Loader(lazy(() => import('src/pages/SignIn/FirstLogin')));
 /* User */
 const UserProfile = Loader(lazy(() => import('src/pages/User/profile')));
 const UserSettings = Loader(lazy(() => import('src/pages/User/settings')));
+
+/* Participants */
+const Participant = Loader(
+  lazy(() => import('src/pages/applications/Participant'))
+);
 
 /* Status */
 const Status404 = Loader(lazy(() => import('src/pages/Status/Status404')));
@@ -242,6 +249,10 @@ const routes: PartialRouteObject[] = [
               {
                 path: '/missions/creation',
                 element: <CreationJob />
+              },
+              {
+                path: '/utilisateurs/:id',
+                element: <Participant />
               }
             ]
           }
