@@ -1,13 +1,31 @@
+import { ReactJSXElementChildrenAttribute } from '@emotion/react/types/jsx-namespace';
+import { useEffect, useState, createContext } from 'react';
 
-import { ReactJSXElementChildrenAttribute } from "@emotion/react/types/jsx-namespace";
-import { createContext } from "react";
+const SOCKET_URL = "ws://test.fr";
+const SOCKET_RECONNECTION_TIMEOUT = 3000;
+const webSocket = new WebSocket(SOCKET_URL);
 
-const ws = new WebSocket('ws://test.fr');
+export const SocketContext = createContext(webSocket);
 
-const SocketContext = createContext(ws);
+export const SocketProvider = (props: ReactJSXElementChildrenAttribute) => {
+  const [ws, setWs] = useState<WebSocket>(webSocket);
 
-export function SocketProvider({ children }: ReactJSXElementChildrenAttribute) {
-  return <SocketContext.Provider value={ws}>{children}</SocketContext.Provider>
-}
+  useEffect(() => {
+    const onClose = () => {
+      setTimeout(() => {
+        setWs(new WebSocket(SOCKET_URL));
+      }, SOCKET_RECONNECTION_TIMEOUT);
+    };
 
-export default SocketContext;
+    ws.addEventListener('close', onClose);
+
+    return () => {
+      ws.removeEventListener('close', onClose);
+    };
+  }, [ws, setWs]);
+
+  return (
+    <SocketContext.Provider value={ws}>{props.children}</SocketContext.Provider>
+  );
+};
+
