@@ -27,9 +27,9 @@ const ProtectedRoute = (props: RouteProps) => {
 const AppIndexRoute = () => {
   const session = useSession();
 
-  if(session.currentApp.type === "organization") return <Navigate to="/association/dashboards/resume" />
+  if(session.currentApp.type === "organization") return <Navigate to="/association/dashboards/resume" replace />
 
-  return <Navigate to="/partenaire/dashboards/resume" />
+  return <Navigate to="/partenaire/dashboards/resume" replace />
 }
 
 /* Applications - Organization */

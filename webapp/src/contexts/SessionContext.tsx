@@ -1,19 +1,26 @@
 import {
   createContext,
   ReactNode,
-  useContext,
   useEffect,
   useMemo,
   useState
 } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { User, Partner, Role, LoginData, SignUpData, Organization } from 'src/models';
+import {
+  User,
+  Partner,
+  Role,
+  LoginData,
+  SignUpData,
+  Organization
+} from 'src/models';
 import * as sessionsService from 'src/services/auth.service';
 
 interface SessionContextType {
   user?: User;
-  currentApp: App,
-  handleCurrentApp: (app: App) => void,
+  getCurrentUser: () => Promise<void>;
+  currentApp: App;
+  handleCurrentApp: (app: App) => void;
   loading: boolean;
   error?: any;
   login: (params: LoginData) => void;
@@ -24,11 +31,13 @@ interface SessionContextType {
 interface App {
   type: 'partner' | 'organization';
   member_id?: string;
-  data: Organization | Partner,
-  role?: Role
+  data: Organization | Partner;
+  role?: Role;
 }
 
-export const SessionContext = createContext<SessionContextType>({} as SessionContextType);
+export const SessionContext = createContext<SessionContextType>(
+  {} as SessionContextType
+);
 
 export function SessionProvider({
   children
@@ -36,7 +45,7 @@ export function SessionProvider({
   children: ReactNode;
 }): JSX.Element {
   const [user, setUser] = useState<User>();
-  const [currentApp, setCurrentApp] = useState<any>({});
+  const [currentApp, setCurrentApp] = useState<any>(JSON.parse(localStorage.getItem("currentApp")) ?? null);
   const [error, setError] = useState<any>();
   const [loading, setLoading] = useState<boolean>(false);
   const [loadingInitial, setLoadingInitial] = useState<boolean>(true);
@@ -50,7 +59,37 @@ export function SessionProvider({
   }, [location.pathname]);
 
   useEffect(() => {
-    sessionsService
+    getCurrentUser().finally(() => setLoadingInitial(false));
+  }, []);
+
+  useEffect(() => {
+    if (user) {
+      let app = currentApp;
+      let data;
+
+      if (!app) {
+        if (user.memberships.length) {
+          data = user.memberships[0].organization;
+          app = {
+            type: 'organization',
+            data,
+            role: user.memberships[0].role,
+            member_id: user.memberships[0].id
+          };
+        } else if (user.partners.length) {
+          data = user.partners[0];
+          app = { type: 'partner', data };
+        } else {
+          navigate('/first-login');
+          return;
+        }
+      }
+      handleCurrentApp(app);
+    }
+  }, [user]);
+
+  function getCurrentUser(): Promise<void> {
+    return sessionsService
       .getCurrentUser()
       .then((response) => {
         if ('error' in response) {
@@ -59,32 +98,8 @@ export function SessionProvider({
         }
         setUser(response as User);
       })
-      .catch((_error) => {})
-      .finally(() => setLoadingInitial(false));
-  }, []);
-
-  useEffect(() => {
-    if (user) {
-
-      let app = JSON.parse(localStorage.getItem('currentApp')) ?? null;
-      let data;
-      
-      if (!app) {
-        if (user.memberships.length) {
-          data = user.memberships[0].organization;
-          app = { type: 'organization', data, role: user.memberships[0].role, member_id: user.memberships[0].id };
-        } else if (user.partners.length) {
-          data = user.partners[0];
-          app = { type: 'partner', data };
-        } else {
-          navigate('/first-login');
-          return
-        }
-      } 
-      handleCurrentApp(app)
-    }
-  }, [user]);
-
+      .catch((error) => setError(error));
+  }
 
   function login(params: LoginData) {
     setLoading(true);
@@ -98,17 +113,7 @@ export function SessionProvider({
         }
         localStorage.setItem('token', response.token);
       })
-      .then((_) => {
-        sessionsService.getCurrentUser().then((response) => {
-          if ('error' in response) {
-            setError(response.error);
-            return;
-          }
-          setUser(response as User);
-          navigate('/')
-        });
-      })
-      .catch((error) => setError(error))
+      .then((_) => getCurrentUser())
       .finally(() => setLoading(false));
   }
 
@@ -130,8 +135,8 @@ export function SessionProvider({
 
   function handleCurrentApp(app: App) {
     setCurrentApp(app);
-    localStorage.setItem('currentApp', JSON.stringify(app))
-    if(app.type !== currentApp) {
+    localStorage.setItem('currentApp', JSON.stringify(app));    
+    if (app !== currentApp) {
       return navigate('/');
     }
   }
@@ -144,6 +149,7 @@ export function SessionProvider({
   const memoedValue = useMemo(
     () => ({
       user,
+      getCurrentUser,
       loading,
       error,
       login,
@@ -161,6 +167,3 @@ export function SessionProvider({
     </SessionContext.Provider>
   );
 }
-
-
-
