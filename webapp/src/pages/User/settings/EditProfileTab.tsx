@@ -12,7 +12,6 @@ import {
 } from '@mui/material';
 
 import formatPhoneNumber from 'src/services/format.phone';
-import useAuth from '../../../hooks/useAuth';
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import DoneTwoToneIcon from '@mui/icons-material/DoneTwoTone';
 import Text from 'src/components/Text';
@@ -23,12 +22,14 @@ import CheckIcon from '@mui/icons-material/Check';
 import CancelIcon from '@mui/icons-material/Cancel';
 import TextField from '@mui/material/TextField';
 import { getCurrentUser } from 'src/services/auth.service';
+import { useSession } from 'src/hooks/useSession';
+import { User } from 'src/models';
 
 function EditProfileTab() {
 
   const [EditUser, setEditUser] = useState(false);
   const [valueEdit, setValueEdit] = useState({});
-  const { user: currentUser } = useAuth();
+  const { user: currentUser } = useSession();
   const [editPassword, setEditPassword] = useState(false);
   const [user, setUser] = useState(currentUser);
   const [editAvatar, setEditAvatar] = useState(false);
@@ -49,7 +50,7 @@ function EditProfileTab() {
     setEditUser(false);
     const userResponse = await getCurrentUser();
     if ('error' in userResponse) return;
-    setUser(userResponse);
+    setUser(userResponse as User);
   };
 
   const handleEditUserPassword = async () => {
@@ -58,7 +59,7 @@ function EditProfileTab() {
     setEditPassword(false);
     const userResponse = await getCurrentUser();
     if ('error' in userResponse) return;
-    setUser(userResponse);
+    setUser(userResponse as User);
   };
 
   const handleEditUserAvatar = async () => {
@@ -67,7 +68,7 @@ function EditProfileTab() {
     setEditAvatar(false);
     const userResponse = await getCurrentUser();
     if ('error' in userResponse) return;
-    setUser(userResponse);
+    setUser(userResponse as User);
   }
 
   const formatedPhoneNumber = (formatPhoneNumber(user.phone));
@@ -274,83 +275,6 @@ function EditProfileTab() {
               </Grid>
             </Typography>
           </CardContent>
-        </Card>
-      </Grid>
-      <Grid item xs={12}>
-        <Card>
-          <List>
-            <ListItem sx={{ p: 3 }}>
-              <ListItemText
-                primaryTypographyProps={{ variant: 'h5', gutterBottom: true }}
-                secondaryTypographyProps={{
-                  variant: 'subtitle2',
-                  lineHeight: 1
-                }}
-                primary="Change Avatar"
-                secondary="You can change your avatar here"
-              />
-              {!editAvatar ? (
-                <Button
-                  onClick={() => setEditAvatar(true)}
-                  size="large"
-                  variant="outlined"
-                >
-                  Change avatar
-                </Button>
-              ) : (
-                <div>
-                  <Button
-                    variant="text"
-                    color="success"
-                    startIcon={<CheckIcon />}
-                    onClick={handleEditUserAvatar}
-                  >
-                    validé{' '}
-                  </Button>
-                  <Button
-                    variant="text"
-                    startIcon={<CancelIcon />}
-                    onClick={() => {
-                      setEditAvatar(false);
-                    }}
-                  >
-                    annuler
-                  </Button>
-                </div>
-              )}
-            </ListItem>
-            {editAvatar && (
-              <>
-                <Divider />
-                <ListItem sx={{ p: 3 }}>
-                  <TextField
-                    label="Old avatar"
-                    type="avatar"
-                    id="user-old-avatar"
-                    name="old_avatar"
-                    onChange={(e: any) => {
-                      handleChangeEdit(e);
-                    }}
-                    variant="standard"
-                    size="small"
-                  />
-                </ListItem>
-                <ListItem sx={{ p: 3 }}>
-                  <TextField
-                    label="New avatar"
-                    type="avatar"
-                    id="user-avatar"
-                    name="avatar"
-                    onChange={(e: any) => {
-                      handleChangeEdit(e);
-                    }}
-                    variant="standard"
-                    size="small"
-                  />
-                </ListItem>
-              </>
-            )}
-          </List>
         </Card>
       </Grid>
       <Grid item xs={12}>
