@@ -78,6 +78,9 @@ const swagger = {
       name: "Discounts"
     },
     {
+      name: "Transactions"
+    },
+    {
       name: "Litigations"
     },
     {

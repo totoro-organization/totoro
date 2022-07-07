@@ -11,6 +11,7 @@ const partners = require("./partners");
 const users = require("./users");
 const subscriptions = require("./subscriptions");
 const participations = require("./participations");
+const transactions = require("./transactions");
 
 module.exports = {
 	...admins,
@@ -26,4 +27,5 @@ module.exports = {
 	...users,
 	...subscriptions,
 	...participations,
+	...transactions,
 };
