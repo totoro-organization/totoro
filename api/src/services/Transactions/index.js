@@ -20,7 +20,12 @@ exports.router = (function () {
 
 	transactionsRouter.get("/:id", [passport, async function (req, res) {
 		const id = req.params.id;
-		controller.getTransaction(res, id, req.query);
+		controller.getTransaction(res, id);
+	}]);
+
+	transactionsRouter.get("/verify/:code", [passport, async function (req, res) {
+		const code = req.params.code;
+		controller.getTransactionByCode(res, code);
 	}]);
 
 	transactionsRouter.put("/:id", [passport, async function (req, res) {

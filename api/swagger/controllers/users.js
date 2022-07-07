@@ -177,4 +177,29 @@ module.exports = {
           responses: response200("getLitigationsUser")
         }
     },
+    "/api/users/{id}/transactions": {
+      get: {
+        tags: [
+          "Users"
+        ],
+        "x-swagger-router-controller": "users",
+        operationId: "getTransactionsUser",
+        parameters: [
+          ...param("id", "path", "string"),
+          {
+            name: "status",
+            in: "query",
+            type: "string",
+            required: false,
+            enum: [
+              "actived",
+              "disabled",
+              "deleted"
+            ]
+          },
+          ...pagination
+        ],
+        responses: response200("getTransactionsUser")
+      }
+    },
 }
