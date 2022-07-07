@@ -1,20 +1,26 @@
 import {
   createContext,
   ReactNode,
-  useContext,
   useEffect,
   useMemo,
   useState
 } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { User, Partner, Role, LoginData, SignUpData, Organization } from 'src/models';
+import {
+  User,
+  Partner,
+  Role,
+  LoginData,
+  SignUpData,
+  Organization
+} from 'src/models';
 import * as sessionsService from 'src/services/auth.service';
 
-interface AuthContextType {
+interface SessionContextType {
   user?: User;
-  // memberships?: Membership[],
-  // partners?: Partner[],
-  currentApp: App,
+  getCurrentUser: () => Promise<void>;
+  currentApp: App;
+  handleCurrentApp: (app: App) => void;
   loading: boolean;
   error?: any;
   login: (params: LoginData) => void;
@@ -25,19 +31,21 @@ interface AuthContextType {
 interface App {
   type: 'partner' | 'organization';
   member_id?: string;
-  data: Organization | Partner,
-  role?: Role
+  data: Organization | Partner;
+  role?: Role;
 }
 
-const AuthContext = createContext<AuthContextType>({} as AuthContextType);
+export const SessionContext = createContext<SessionContextType>(
+  {} as SessionContextType
+);
 
-export function AuthProvider({
+export function SessionProvider({
   children
 }: {
   children: ReactNode;
 }): JSX.Element {
   const [user, setUser] = useState<User>();
-  const [currentApp, setCurrentApp] = useState<any>({});
+  const [currentApp, setCurrentApp] = useState<any>(JSON.parse(localStorage.getItem("currentApp")) ?? null);
   const [error, setError] = useState<any>();
   const [loading, setLoading] = useState<boolean>(false);
   const [loadingInitial, setLoadingInitial] = useState<boolean>(true);
@@ -51,7 +59,37 @@ export function AuthProvider({
   }, [location.pathname]);
 
   useEffect(() => {
-    sessionsService
+    getCurrentUser().finally(() => setLoadingInitial(false));
+  }, []);
+
+  useEffect(() => {
+    if (user) {
+      let app = currentApp;
+      let data;
+
+      if (!app) {
+        if (user.memberships.length) {
+          data = user.memberships[0].organization;
+          app = {
+            type: 'organization',
+            data,
+            role: user.memberships[0].role,
+            member_id: user.memberships[0].id
+          };
+        } else if (user.partners.length) {
+          data = user.partners[0];
+          app = { type: 'partner', data };
+        } else {
+          navigate('/first-login');
+          return;
+        }
+      }
+      handleCurrentApp(app);
+    }
+  }, [user]);
+
+  function getCurrentUser(): Promise<void> {
+    return sessionsService
       .getCurrentUser()
       .then((response) => {
         if ('error' in response) {
@@ -60,32 +98,8 @@ export function AuthProvider({
         }
         setUser(response as User);
       })
-      .catch((_error) => {})
-      .finally(() => setLoadingInitial(false));
-  }, []);
-
-  useEffect(() => {
-    if (user) {
-
-      let app = JSON.parse(localStorage.getItem('currentApp')) ?? null;
-      let data;
-      
-      if (!app) {
-        if (user.memberships.length) {
-          data = user.memberships[0].organization;
-          app = { type: 'organization', data, role: user.memberships[0].role, member_id: user.memberships[0].id };
-        } else if (user.partners.length) {
-          data = user.partners[0];
-          app = { type: 'partner', data };
-        } else {
-          navigate('/first-login');
-          return
-        }
-      } 
-      handleCurrentApp(app)
-    }
-  }, [user]);
-
+      .catch((error) => setError(error));
+  }
 
   function login(params: LoginData) {
     setLoading(true);
@@ -99,16 +113,7 @@ export function AuthProvider({
         }
         localStorage.setItem('token', response.token);
       })
-      .then((_) => {
-        sessionsService.getCurrentUser().then((response) => {
-          if ('error' in response) {
-            setError(response.error);
-            return;
-          }
-          setUser(response as User);
-        });
-      })
-      .catch((error) => setError(error))
+      .then((_) => getCurrentUser())
       .finally(() => setLoading(false));
   }
 
@@ -130,7 +135,10 @@ export function AuthProvider({
 
   function handleCurrentApp(app: App) {
     setCurrentApp(app);
-    localStorage.setItem('currentApp', JSON.stringify(app))
+    localStorage.setItem('currentApp', JSON.stringify(app));    
+    if (app !== currentApp) {
+      return navigate('/');
+    }
   }
   //
   // Whenever the `value` passed into a provider changes,
@@ -141,8 +149,7 @@ export function AuthProvider({
   const memoedValue = useMemo(
     () => ({
       user,
-      // memberships,
-      // partners,
+      getCurrentUser,
       loading,
       error,
       login,
@@ -155,12 +162,8 @@ export function AuthProvider({
   );
 
   return (
-    <AuthContext.Provider value={memoedValue}>
+    <SessionContext.Provider value={memoedValue}>
       {!loadingInitial && children}
-    </AuthContext.Provider>
+    </SessionContext.Provider>
   );
-}
-
-export default function useAuth() {
-  return useContext(AuthContext);
 }
