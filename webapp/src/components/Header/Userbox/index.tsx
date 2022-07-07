@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useContext, useRef, useState } from 'react';
 
 import { NavLink } from 'react-router-dom';
 
@@ -20,8 +20,9 @@ import ExpandMoreTwoToneIcon from '@mui/icons-material/ExpandMoreTwoTone';
 import AccountBoxTwoToneIcon from '@mui/icons-material/AccountBoxTwoTone';
 import LockOpenTwoToneIcon from '@mui/icons-material/LockOpenTwoTone';
 import AccountTreeTwoToneIcon from '@mui/icons-material/AccountTreeTwoTone';
-import useAuth from 'src/hooks/useAuth';
 import FallbackAvatar from 'src/components/FallbackAvatar';
+import { SessionContext } from 'src/contexts/SessionContext';
+import { useSession } from 'src/hooks/useSession';
 
 const UserBoxButton = styled(Button)(
   ({ theme }) => `
@@ -59,8 +60,8 @@ const UserBoxDescription = styled(Typography)(
 );
 
 function HeaderUserbox() {
-
-  const { user, logout } = useAuth();
+  const { user } = useContext(SessionContext);
+  const { logout } = useSession();
 
   const ref = useRef<any>(null);
   const [isOpen, setOpen] = useState<boolean>(false);
