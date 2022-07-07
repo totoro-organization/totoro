@@ -3,7 +3,6 @@ import { useRef, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
 import {
-  Avatar,
   Box,
   Button,
   Divider,
@@ -22,6 +21,7 @@ import AccountBoxTwoToneIcon from '@mui/icons-material/AccountBoxTwoTone';
 import LockOpenTwoToneIcon from '@mui/icons-material/LockOpenTwoTone';
 import AccountTreeTwoToneIcon from '@mui/icons-material/AccountTreeTwoTone';
 import useAuth from 'src/hooks/useAuth';
+import FallbackAvatar from 'src/components/FallbackAvatar';
 
 const UserBoxButton = styled(Button)(
   ({ theme }) => `
@@ -65,6 +65,8 @@ function HeaderUserbox() {
   const ref = useRef<any>(null);
   const [isOpen, setOpen] = useState<boolean>(false);
 
+  const userFullname = `${user.firstname} ${user.lastname}`;
+
   const handleOpen = (): void => {
     setOpen(true);
   };
@@ -76,10 +78,10 @@ function HeaderUserbox() {
   return (
     <>
       <UserBoxButton color="secondary" ref={ref} onClick={handleOpen}>
-        <Avatar variant="rounded" alt={user.username} src={user.avatar} />
+        <FallbackAvatar fallback={userFullname} variant="circular" alt={user.username} src={user.avatar} />
         <Hidden mdDown>
           <UserBoxText>
-            <UserBoxLabel variant="body1">{user.username}</UserBoxLabel>
+            <UserBoxLabel variant="body1">{userFullname}</UserBoxLabel>
             <UserBoxDescription variant="body2">
               {user.email}
             </UserBoxDescription>
@@ -103,7 +105,7 @@ function HeaderUserbox() {
         }}
       >
         <MenuUserBox sx={{ minWidth: 210 }} display="flex">
-          <Avatar variant="rounded" alt={user.username} src={user.avatar} />
+          <FallbackAvatar fallback={userFullname} variant="circular" alt={user.username} src={user.avatar} />
           <UserBoxText>
             <UserBoxLabel variant="body1">{user.username}</UserBoxLabel>
             <UserBoxDescription variant="body2">

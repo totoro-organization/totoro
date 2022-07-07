@@ -1,11 +1,12 @@
 import type { ProfileType } from "../screens/single/Profile";
 
 export type StackParamList = {
-  Job: { id: number };
+  Job: { id: string };
   Conversation: { id: number };
   Profile: { id: number; type: ProfileType };
 } & AuthParamList &
-  BottomTabParamList;
+  BottomTabParamList &
+  AppParamList;
 
 export type AuthParamList = {
   Explications: undefined;

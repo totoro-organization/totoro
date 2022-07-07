@@ -7,39 +7,43 @@ import {
   useState
 } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { User } from 'src/models/user';
+import { User, Membership, Partner, Role, LoginData, SignUpData, Organization } from 'src/models';
 import * as sessionsService from 'src/services/auth.service';
 
 interface AuthContextType {
   user?: User;
+  // memberships?: Membership[],
+  // partners?: Partner[],
+  currentApp: App,
   loading: boolean;
   error?: any;
-  login: (params: sessionsService.LoginType) => void;
-  signup: (params: sessionsService.SignUpType) => void;
+  login: (params: LoginData) => void;
+  signup: (params: SignUpData) => void;
   logout: () => void;
 }
 
 interface App {
-  type: string;
-  id: string;
+  type: 'partner' | 'organization';
+  member_id?: string;
+  data: Organization | Partner,
+  role?: Role
 }
 
 const AuthContext = createContext<AuthContextType>({} as AuthContextType);
 
-// Export the provider as we need to wrap the entire app with it
 export function AuthProvider({
   children
 }: {
   children: ReactNode;
 }): JSX.Element {
   const [user, setUser] = useState<User>();
-  const [currentApp, setCurrentApp] = useState<any>();
+  // const [memberships, setMemberships] = useState<Array<Membership>>();
+  // const [partners, setPartners] = useState<Array<Partner>>();
+  const [currentApp, setCurrentApp] = useState<any>({});
   const [error, setError] = useState<any>();
   const [loading, setLoading] = useState<boolean>(false);
   const [loadingInitial, setLoadingInitial] = useState<boolean>(true);
-  // We are using `react-router` for this example,
-  // but feel free to omit this or use the
-  // router of your choice.
+
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -48,13 +52,6 @@ export function AuthProvider({
     if (error) setError(null);
   }, [location.pathname]);
 
-  // Check if there is a currently active session
-  // when the provider is mounted for the first time.
-  //
-  // If there is an error, it means there is no session.
-  //
-  // Finally, just signal the component that the initial load
-  // is over.
   useEffect(() => {
     sessionsService
       .getCurrentUser()
@@ -71,23 +68,18 @@ export function AuthProvider({
 
   useEffect(() => {
     if (user) {
-      console.log(1);
-      
+
       let app = JSON.parse(localStorage.getItem('currentApp')) ?? null;
-      let app_id;
-      console.log(app);
+      let data;
       
       if (!app) {
-        console.log(2);
         if (user.memberships.length) {
-          app_id = JSON.stringify(user.memberships[0].organization.id);
-          app = { type: 'organization', id: app_id };
+          data = user.memberships[0].organization;
+          app = { type: 'organization', data, role: user.memberships[0].role, member_id: user.memberships[0].id };
         } else if (user.partners.length) {
-          console.log(3);
-          app_id = JSON.stringify(user.memberships[0].organization.id);
-          app = { type: 'partner', id: app_id };
+          data = user.partners[0];
+          app = { type: 'partner', data };
         } else {
-          console.log(4);
           navigate('/first-login');
           return
         }
@@ -96,15 +88,8 @@ export function AuthProvider({
     }
   }, [user]);
 
-  // Flags the component loading state and posts the login
-  // data to the server.
-  //
-  // An error means that the email/password combination is
-  // not valid.
-  //
-  // Finally, just signal the component that loading the
-  // loading state is over.
-  function login(params: sessionsService.LoginType) {
+
+  function login(params: LoginData) {
     setLoading(true);
 
     sessionsService
@@ -129,7 +114,7 @@ export function AuthProvider({
       .finally(() => setLoading(false));
   }
 
-  function signup(params: sessionsService.SignUpType) {
+  function signup(params: SignUpData) {
     sessionsService.signup(params).then((response) => {
       if ('error' in response) {
         setError(response.error);
@@ -139,8 +124,6 @@ export function AuthProvider({
     });
   }
 
-  // Call the logout endpoint and then remove the user
-  // from the state.
   function logout() {
     localStorage.removeItem('token');
     localStorage.removeItem('currentApp');
@@ -149,12 +132,8 @@ export function AuthProvider({
 
   function handleCurrentApp(app: App) {
     setCurrentApp(app);
-    localStorage.setItem('currentApp', JSON.stringify(app));
-    navigate('/');
+    localStorage.setItem('currentApp', JSON.stringify(app))
   }
-  // Make the provider update only when it should.
-  // We only want to force re-renders if the user,
-  // loading or error states change.
   //
   // Whenever the `value` passed into a provider changes,
   // the whole tree under the provider re-renders, and
@@ -164,18 +143,19 @@ export function AuthProvider({
   const memoedValue = useMemo(
     () => ({
       user,
+      // memberships,
+      // partners,
       loading,
       error,
       login,
       signup,
       logout,
+      currentApp,
       handleCurrentApp
     }),
-    [user, loading, error]
+    [user, loading, error, currentApp]
   );
 
-  // We only want to render the underlying app after we
-  // assert for the presence of a current user.
   return (
     <AuthContext.Provider value={memoedValue}>
       {!loadingInitial && children}
@@ -183,8 +163,6 @@ export function AuthProvider({
   );
 }
 
-// Let's only export the `useAuth` hook instead of the context.
-// We only want to use the hook directly and never the context component.
 export default function useAuth() {
   return useContext(AuthContext);
 }

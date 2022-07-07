@@ -1,5 +1,4 @@
 import { FC, ChangeEvent } from 'react';
-import { format } from 'date-fns';
 
 import {
   Tooltip,
@@ -17,14 +16,12 @@ import {
 
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
-import { Admin } from 'src/models/admin';
+import type { Admin, TableProps } from 'src/models';
 import Modal from 'src/components/Modal';
 import { useModal } from 'src/hooks/useModal';
 import { DeleteAdminContent, EditAdminContent } from './AdminModalContent';
 import { Link } from 'react-router-dom';
 import StatusSelect from 'src/components/StatusSelect';
-import { TableEnum } from 'src/models';
-import { TableProps } from 'src/components/TableWrapper';
 import { updateRoleAdmin } from 'src/services/admins.service';
 
 

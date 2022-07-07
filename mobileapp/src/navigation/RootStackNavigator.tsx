@@ -13,6 +13,7 @@ import Profile from "../screens/single/Profile";
 import BottomTabNavigator from "./BottomTabNavigator";
 import ForgotPassword from "../screens/auth/ForgotPassword";
 import ChangePassword from "../screens/auth/ChangePassword";
+import Jobs from "../screens/Jobs";
 
 const RootStack = createStackNavigator();
 
@@ -51,8 +52,11 @@ export default function RootStackNavigator() {
           <RootStack.Screen name="BottomTab" component={BottomTabNavigator} />
 
           <RootStack.Screen name="Scanner" component={Scanner} />
+
+          <RootStack.Screen name="Jobs" component={Jobs} />
           <RootStack.Screen name="JobsFilter" component={JobsFilter} />
           <RootStack.Screen name="Job" component={Job} />
+
           <RootStack.Screen name="Profile" component={Profile} />
 
           <RootStack.Screen name="Conversation" component={Conversation} />

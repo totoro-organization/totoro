@@ -36,14 +36,14 @@ const ProgressBarContainer = styled.View`
   position: relative;
   width: 100%;
   height: 4px;
-  background-color: ${({ theme }) => theme.colors.grey[200]};
+  background-color: ${({ theme }) => theme.colors.v1.grey[200]};
   border-radius: ${({ theme }) => theme.border.radius.md};
 `;
 
 const Progress = styled.View<{ progressValue: number }>`
   position: absolute;
-  width: ${({ progressValue }) => progressValue && `${progressValue}%`}
+  width: ${({ progressValue }) => progressValue && `${progressValue}%`};
   height: 4px;
-  background-color: ${({ theme }) => theme.colors.grey[900]};
+  background-color: ${({ theme }) => theme.colors.core.black.base};
   border-radius: ${({ theme }) => theme.border.radius.md};
 `;

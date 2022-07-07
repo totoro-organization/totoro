@@ -24,13 +24,11 @@ export default function ExplanationCarousel() {
 
       <Box alignItems="center" justifyContent="center">
         {explanationSteps.map((_, index) => (
-          <>
-            <View key={index}>
-              <Dot $active={carouselIndex === index} />
-            </View>
+          <View key={index}>
+            <Dot $active={carouselIndex === index} />
 
             <Spacer axis="horizontal" size={0.5} />
-          </>
+          </View>
         ))}
       </Box>
 
@@ -38,7 +36,11 @@ export default function ExplanationCarousel() {
 
       <ButtonWrapper $direction={lastStep ? "row" : "column"}>
         {!lastStep && (
-          <Button horizontalPosition="center" onPress={handlePreviousItem}>
+          <Button
+            horizontalPosition="center"
+            onPress={handlePreviousItem}
+            testID="button-next"
+          >
             Suivant
           </Button>
         )}
@@ -48,11 +50,15 @@ export default function ExplanationCarousel() {
             <Button
               variant="outline"
               onPress={() => navigation.navigate("Se connecter")}
+              testID="button-login"
             >
               Se connecter
             </Button>
 
-            <Button onPress={() => navigation.navigate("S'inscrire")}>
+            <Button
+              onPress={() => navigation.navigate("S'inscrire")}
+              testID="button-register"
+            >
               S'inscrire
             </Button>
           </>
@@ -74,7 +80,7 @@ const Dot = styled.View<{ $active?: boolean }>`
   width: ${({ $active }) => ($active ? "12px" : "8px")};
   height: ${({ $active }) => ($active ? "12px" : "8px")};
   background: ${({ theme, $active }) =>
-    $active ? theme.colors.grey[900] : theme.colors.grey[300]};
+    $active ? theme.colors.core.black.base : theme.colors.v1.grey[300]};
   border-radius: ${({ theme }) => theme.border.radius.circle};
 `;
 

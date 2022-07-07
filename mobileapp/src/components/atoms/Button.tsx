@@ -98,18 +98,18 @@ function getButtonVariables(variables: ColorVariables) {
 
 const styleColor: { [key in ButtonColor]: FlattenSimpleInterpolation } = {
   black: getButtonVariables({
-    background: theme.colors.grey[900],
-    border: theme.colors.grey[900],
+    background: theme.colors.core.black.base,
+    border: theme.colors.core.black.base,
   }),
 
   primary: getButtonVariables({
-    background: theme.colors.primary[500],
-    border: theme.colors.primary[500],
+    background: theme.colors.brand.primary.base,
+    border: theme.colors.brand.primary.base,
   }),
 
   grey: getButtonVariables({
-    background: theme.colors.grey[300],
-    border: theme.colors.grey[300],
+    background: theme.colors.v1.grey[300],
+    border: theme.colors.v1.grey[300],
   }),
 };
 
@@ -194,6 +194,6 @@ const StyledText = styled(Text)<ContentProps>`
   opacity: ${({ $isHidden }) => ($isHidden ? "0" : "1")};
   color: ${({ variant, color, theme }) =>
     variant === "default"
-      ? theme.colors.white[600]
+      ? theme.colors.core.white.base
       : getColors(color as Colors)};
 `;

@@ -4,6 +4,7 @@ import getNameInitials from "../../common/utils/getNameInitials";
 import { User } from "../../models/user";
 import { Text } from "./Text";
 
+// TODO: Rename user to fallback or initials props.
 type AvatarProps = {
   src?: string;
   user?: User;
@@ -11,7 +12,6 @@ type AvatarProps = {
   type?: "user" | "organization";
 };
 
-// FIXME: Remove src prop and replace by user.avatar
 export default function Avatar({
   user,
   src,
@@ -37,7 +37,7 @@ const Container = styled.View<Pick<AvatarProps, "size" | "type" | "src">>`
   width: ${({ size }) => (size === "md" ? "80px" : "24px")};
   height: ${({ size }) => (size === "md" ? "80px" : "24px")};
   background-color: ${({ theme, src }) =>
-    src ? "white" : theme.colors.grey[900]};
+    src ? "white" : theme.colors.core.black.base};
   border-radius: ${({ type, theme }) =>
     type === "user" ? "400px" : theme.border.radius.md};
   align-items: center;
