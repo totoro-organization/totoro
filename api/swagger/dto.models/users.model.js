@@ -1,4 +1,4 @@
-const { labelType, date, organization, userProperties, arrayType, job, partner } = require("../generique");
+const { labelType, date, organization, userProperties, arrayType, job, partner, tokenProperties, discount } = require("../generique");
 module.exports = {
   getUser: function() {
     return {
@@ -154,4 +154,18 @@ module.exports = {
       }
     })
   },
+  getTransactionsUser: function () {
+    return arrayType({
+      type: "object",
+      properties: {
+        ...tokenProperties(),
+        user_id: {
+          type: "string"
+        },
+        ...date,
+        status: labelType(),
+        discount: discount()
+      }
+    })
+  }
 }

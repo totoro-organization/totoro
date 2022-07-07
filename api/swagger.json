@@ -4749,6 +4749,12 @@
             "required": false
           },
           {
+            "name": "label",
+            "in": "query",
+            "type": "string",
+            "required": false
+          },
+          {
             "name": "size",
             "in": "query",
             "type": "integer",
