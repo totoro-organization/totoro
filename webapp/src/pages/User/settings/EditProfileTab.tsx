@@ -14,26 +14,17 @@ import DoneTwoToneIcon from '@mui/icons-material/DoneTwoTone';
 import Text from 'src/components/Text';
 import Label from 'src/components/Label';
 import { useState } from 'react';
-import {
-  updateUser,
-  updatePasswordUser,
-  updateAvatarUser
-} from 'src/services/users.service';
+import { updateUser, updatePasswordUser } from 'src/services/users.service';
 import CheckIcon from '@mui/icons-material/Check';
 import CancelIcon from '@mui/icons-material/Cancel';
 import TextField from '@mui/material/TextField';
-import { getCurrentUser } from 'src/services/auth.service';
 import { useSession } from 'src/hooks/useSession';
-import { User } from 'src/models';
 
 function EditProfileTab() {
   const [EditUser, setEditUser] = useState(false);
   const [valueEdit, setValueEdit] = useState({});
-  const { user: currentUser } = useSession();
+  const { user, getCurrentUser } = useSession();
   const [editPassword, setEditPassword] = useState(false);
-  const [user, setUser] = useState(currentUser);
-  const [editAvatar, setEditAvatar] = useState(false);
-  const [preview, setPreview] = useState<string | null>();
 
   const handleChangeEdit = (event: React.FormEvent<HTMLFormElement>) => {
     const value = event.currentTarget.value;
@@ -48,18 +39,14 @@ function EditProfileTab() {
     const updateResponse = await updateUser(user.id, valueEdit);
     if ('error' in updateResponse) return;
     setEditUser(false);
-    const userResponse = await getCurrentUser();
-    if ('error' in userResponse) return;
-    setUser(userResponse as User);
+    getCurrentUser();
   };
 
   const handleEditUserPassword = async () => {
     const updateResponse = await updatePasswordUser(valueEdit);
     if ('error' in updateResponse) return;
     setEditPassword(false);
-    const userResponse = await getCurrentUser();
-    if ('error' in userResponse) return;
-    setUser(userResponse as User);
+    getCurrentUser();
   };
 
   const handleEditUserAvatar = async () => {
@@ -178,7 +165,20 @@ function EditProfileTab() {
                 </Grid>
                 <Grid item xs={12} sm={8} md={9}>
                   <Text color="black">
-                    <b>GMT +2</b>
+                    {!EditUser ? (
+                      <b>{formatedPhoneNumber}</b>
+                    ) : (
+                      <TextField
+                        id="phone-number"
+                        label="Phone number"
+                        name="phonenumber"
+                        onChange={(e: any) => {
+                          handleChangeEdit(e);
+                        }}
+                        variant="standard"
+                        size="small"
+                      />
+                    )}
                   </Text>
                 </Grid>
                 <Grid item xs={12} sm={4} md={3} textAlign={{ sm: 'right' }}>
@@ -187,10 +187,25 @@ function EditProfileTab() {
                   </Box>
                 </Grid>
                 <Grid item xs={12} sm={8} md={9}>
-                  <Label color="success">
-                    <DoneTwoToneIcon fontSize="small" />
-                    <b>Active</b>
-                  </Label>
+                  <Text color="black">
+                    {!EditUser ? (
+                      <Text color="black">
+                        1749 High Meadow Lane, SEQUOIA NATIONAL PARK,
+                        California, 93262
+                      </Text>
+                    ) : (
+                      <TextField
+                        id="address"
+                        label="Adress"
+                        name="adress"
+                        onChange={(e: any) => {
+                          handleChangeEdit(e);
+                        }}
+                        variant="standard"
+                        size="small"
+                      />
+                    )}
+                  </Text>
                 </Grid>
               </Grid>
             </Typography>
