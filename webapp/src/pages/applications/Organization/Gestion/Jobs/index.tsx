@@ -125,7 +125,7 @@ function Job() {
                               </Text>
                             </JobItem>
                             <JobItem title='Difficulté :'>
-                            <Text color="black">
+                              <Text color="black">
                                 <b>
                                   {job.difficulty.level} ({job.difficulty.token})
                                 </b>

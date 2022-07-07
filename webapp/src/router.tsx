@@ -38,6 +38,10 @@ const ProtectedRoute = (props: RouteProps) => {
 
   /* Partner */
 
+  /* Participants */
+
+  const Participant = Loader(lazy(() => import('src/pages/applications/Participant')));
+
 /* PAGES */
 
 // Authentication
@@ -169,6 +173,10 @@ const routes: PartialRouteObject[] = [
               {
                 path: '/missions/creation',
                 element: <CreationJob />
+              },
+              {
+                path: '/utilisateurs/:id',
+                element: <Participant />
               }
             ]
           }
