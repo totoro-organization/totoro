@@ -6,7 +6,6 @@ import { Container, Tabs, Tab, Grid } from '@mui/material';
 import Footer from 'src/components/Footer';
 import { styled } from '@mui/material/styles';
 
-import ActivityTab from './ActivityTab';
 import EditProfileTab from './EditProfileTab';
 import NotificationsTab from './NotificationsTab';
 
@@ -62,7 +61,6 @@ function ManagementUserSettings() {
             </TabsWrapper>
           </Grid>
           <Grid item xs={12}>
-            {currentTab === 'activity' && <ActivityTab />}
             {currentTab === 'edit_profile' && <EditProfileTab />}
             {currentTab === 'notifications' && <NotificationsTab />}
           </Grid>
