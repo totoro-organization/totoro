@@ -2,7 +2,7 @@
 import { ReactJSXElementChildrenAttribute } from "@emotion/react/types/jsx-namespace";
 import { createContext } from "react";
 
-const ws = new WebSocket('');
+const ws = new WebSocket('ws://test.fr');
 
 const SocketContext = createContext(ws);
 
