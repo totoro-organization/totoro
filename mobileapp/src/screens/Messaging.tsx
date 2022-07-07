@@ -1,30 +1,23 @@
-import { useNavigation } from "@react-navigation/native";
-import { StackNavigationProp } from "@react-navigation/stack";
 import React from "react";
-import { TouchableOpacity } from "react-native";
+import { View } from "react-native";
 import { FAKE_MESSAGES_DATA } from "../common/mockedData";
-import { Text } from "../components/atoms/Text";
+import Spacer from "../components/atoms/Spacer";
 import GlobalLayout from "../components/layouts/GlobalLayout";
-import { StackParamList } from "../navigation/StackNavigationParams";
+import ConversationItem from "../components/molecules/Conversation/ConversationItem";
+import ConversationsNotFound from "../components/molecules/Conversation/ConversationsNotFound";
 
 export default function Messaging() {
-  const navigation = useNavigation<StackNavigationProp<StackParamList>>();
-
   return (
     <GlobalLayout>
-      {/* TODO: Create a dedicated component */}
-      {FAKE_MESSAGES_DATA.map((conversation) => (
-        <TouchableOpacity
-          onPress={() =>
-            navigation.navigate("Conversation", { id: conversation.id })
-          }
-        >
-          <Text>{conversation.mission.title}</Text>
-          <Text color="grey">
-            {conversation.messages[0].user.username}:{" "}
-            {conversation.messages[0].text}
-          </Text>
-        </TouchableOpacity>
+      {FAKE_MESSAGES_DATA.length < 0 && <ConversationsNotFound />}
+
+      {/* TODO: Replace me with real data (hooks) */}
+      {FAKE_MESSAGES_DATA.map((conversation, index) => (
+        <View key={`${conversation.id}-${index}`}>
+          <ConversationItem chats={conversation} />
+
+          <Spacer axis="vertical" size={1} />
+        </View>
       ))}
     </GlobalLayout>
   );

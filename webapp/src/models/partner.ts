@@ -1,16 +1,6 @@
 import { Discount } from "./discount";
-import { Status, StatusEnum } from "./status";
-
-
-
-export enum PartnerStatusEnum {
-    actived = StatusEnum.actived,
-    disabled = StatusEnum.disabled,
-    deleted = StatusEnum.deleted,
-    freezed = StatusEnum.freezed
-}
-
-export type PartnerStatus = Status<keyof typeof PartnerStatusEnum>;
+import { PartnerStatus } from "./status";
+import { User } from "./user";
 
 export interface Partner {
     id: string,
@@ -20,6 +10,8 @@ export interface Partner {
     address: string,
     logo: string,
     link: string,
+    user: User,
+    description?: string,
     in_internet: boolean,
     in_store: boolean,
     discount: Discount[],

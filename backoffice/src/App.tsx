@@ -14,6 +14,7 @@ import i18next from 'i18next';
 import { common_en, common_fr } from 'src/translations';
 import { LangEnum } from './models';
 import { SidebarProvider } from './contexts/SidebarContext';
+import { ToastProvider } from './contexts/ToastContext';
 
 const App = () => {
   const { lang } = useAuth();
@@ -35,16 +36,18 @@ const App = () => {
 
   return (
     <I18nextProvider i18n={i18next}>
-      <SidebarProvider>
-        <ThemeProvider>
-          <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <CssBaseline />
-            <AuthProvider>
-              <StatusProvider>{content}</StatusProvider>
-            </AuthProvider>
-          </LocalizationProvider>
-        </ThemeProvider>
-      </SidebarProvider>
+      <ToastProvider>
+        <SidebarProvider>
+          <ThemeProvider>
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <CssBaseline />
+              <AuthProvider>
+                <StatusProvider>{content}</StatusProvider>
+              </AuthProvider>
+            </LocalizationProvider>
+          </ThemeProvider>
+        </SidebarProvider>
+      </ToastProvider>
     </I18nextProvider>
   );
 };
