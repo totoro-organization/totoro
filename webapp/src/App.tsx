@@ -5,8 +5,8 @@ import LocalizationProvider from '@mui/lab/LocalizationProvider';
 
 import ThemeProvider from './theme/ThemeProvider';
 import { CssBaseline } from '@mui/material';
-import { AuthProvider } from './hooks/useAuth';
-import { CommonsProvider } from './contexts/CommonsContext';
+import { SessionProvider } from 'src/contexts/SessionContext';
+import { CommonsProvider } from 'src/contexts/CommonsContext';
 
 const App = () => {
 
@@ -16,11 +16,11 @@ const App = () => {
     <ThemeProvider>
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <CssBaseline />
-        <AuthProvider>
+        <SessionProvider>
           <CommonsProvider>
             {content}
           </CommonsProvider>
-        </AuthProvider>
+        </SessionProvider>
       </LocalizationProvider>
     </ThemeProvider>
   );

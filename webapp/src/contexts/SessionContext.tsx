@@ -10,11 +10,10 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { User, Partner, Role, LoginData, SignUpData, Organization } from 'src/models';
 import * as sessionsService from 'src/services/auth.service';
 
-interface AuthContextType {
+interface SessionContextType {
   user?: User;
-  // memberships?: Membership[],
-  // partners?: Partner[],
   currentApp: App,
+  handleCurrentApp: (app: App) => void,
   loading: boolean;
   error?: any;
   login: (params: LoginData) => void;
@@ -29,9 +28,9 @@ interface App {
   role?: Role
 }
 
-const AuthContext = createContext<AuthContextType>({} as AuthContextType);
+export const SessionContext = createContext<SessionContextType>({} as SessionContextType);
 
-export function AuthProvider({
+export function SessionProvider({
   children
 }: {
   children: ReactNode;
@@ -106,6 +105,7 @@ export function AuthProvider({
             return;
           }
           setUser(response as User);
+          navigate('/')
         });
       })
       .catch((error) => setError(error))
@@ -131,6 +131,9 @@ export function AuthProvider({
   function handleCurrentApp(app: App) {
     setCurrentApp(app);
     localStorage.setItem('currentApp', JSON.stringify(app))
+    if(app.type !== currentApp) {
+      return navigate('/');
+    }
   }
   //
   // Whenever the `value` passed into a provider changes,
@@ -141,8 +144,6 @@ export function AuthProvider({
   const memoedValue = useMemo(
     () => ({
       user,
-      // memberships,
-      // partners,
       loading,
       error,
       login,
@@ -155,12 +156,11 @@ export function AuthProvider({
   );
 
   return (
-    <AuthContext.Provider value={memoedValue}>
+    <SessionContext.Provider value={memoedValue}>
       {!loadingInitial && children}
-    </AuthContext.Provider>
+    </SessionContext.Provider>
   );
 }
 
-export default function useAuth() {
-  return useContext(AuthContext);
-}
+
+
