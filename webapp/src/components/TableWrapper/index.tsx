@@ -23,7 +23,6 @@ import BulkActions from './BulkActions';
 import { StatusEnum, StatusOptions, TableItem } from 'src/models';
 import { deleteItem, getItems, updateItem } from 'src/services/common.service';
 import { useModal } from 'src/hooks/useModal';
-import useAuth from 'src/hooks/useAuth';
 
 interface TableWrapperProps {
   className?: string;

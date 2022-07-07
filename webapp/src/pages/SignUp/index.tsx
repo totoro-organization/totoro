@@ -2,8 +2,6 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-// import FormControlLabel from '@mui/material/FormControlLabel';
-// import Checkbox from '@mui/material/Checkbox';
 import { NavLink } from 'react-router-dom';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
@@ -12,11 +10,10 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import useAuth from 'src/hooks/useAuth';
 import { DatePicker } from '@mui/x-date-pickers';
 import DateFnsProvider from 'src/components/DateFnsProvider';
 import { useState } from 'react';
-import { LocalizationProvider } from '@mui/lab';
+import { useSession } from 'src/hooks/useSession';
 
 function Copyright(props: any) {
   return (
@@ -35,7 +32,7 @@ const theme = createTheme();
 
 export default function SignUp() {
 
-  const { signup, loading } = useAuth();
+  const { signup, loading } = useSession();
 
   const [date, setDate] = useState<Date | null>(null);
 

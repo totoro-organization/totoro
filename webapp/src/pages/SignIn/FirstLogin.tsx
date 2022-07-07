@@ -1,7 +1,7 @@
-import useAuth from 'src/hooks/useAuth';
+import { useSession } from 'src/hooks/useSession';
 
 const FirstLogin = () => {
-  const { user,logout } = useAuth();
+  const { logout } = useSession();
 
   return( 
     <h2 onClick={logout}>Première connexion</h2>
