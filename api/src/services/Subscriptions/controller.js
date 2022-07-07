@@ -73,7 +73,7 @@ module.exports = {
 		const associationData = await getRow(res, Associations, { id: assos_id });
 		const condition = { assos_id };
 		
-		data.current = 1;
+		data.current = true;
 		data.status_id = statusData.id;
 		if(pricingData.label !== "Standard") data.expirate = moment().add(pricingData.duration, 'months').format("YYYY-MM-DD");
 

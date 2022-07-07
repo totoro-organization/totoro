@@ -32,7 +32,11 @@ module.exports = {
           key: 'id'
         }
       },
-      qrcode: {
+      barcode: {
+        allowNull: true,
+        type: Sequelize.STRING
+      },
+      code: {
         allowNull: false,
         type: Sequelize.STRING
       },

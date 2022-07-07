@@ -317,6 +317,25 @@ module.exports = {
       }
     }
   },
+  tokenProperties: function() {
+    return {
+      id: {
+        type: "string"
+      },
+      barcode: {
+        type: "string"
+      },
+      code: {
+        type: "string"
+      },
+      end_date: {
+        type: "string"
+      },
+      isExpired: {
+        type: "boolean"
+      }
+    }
+  },
   organization: function() {
     return {
       type: "object",
@@ -340,6 +359,7 @@ module.exports = {
       type: "object",
       properties: {
         ...module.exports.jobProperties(),
+        distance: {type:"integer"},
         author: {
           type: "object",
           properties: {

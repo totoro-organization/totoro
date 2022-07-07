@@ -2,7 +2,7 @@ module.exports = [
   {
     model: "Subscriptions",
     data: {
-      current: 1,
+      current: true,
       organization: {
         siren: "775664410",
       },
@@ -10,7 +10,7 @@ module.exports = [
         label: "Standard",
       },
       status: {
-        label: "coming",
+        label: "actived",
       },
     },
   },

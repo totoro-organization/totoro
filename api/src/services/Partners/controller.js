@@ -65,8 +65,8 @@ module.exports = {
 		delete data.typeValue
 		data["name"] = request.data.siege_social.nom_raison_sociale
 		data["address"] = request.data.siege_social.l4_normalisee || request.data.siege_social.l4_declaree || `${request.data.siege_social.numero_voie} ${request.data.siege_social.type_voie} ${request.data.siege_social.libelle_voie}`
-		data["in_internet"] = 0;
-		data["in_store"] = 0;
+		data["in_internet"] = false;
+		data["in_store"] = false
 
 		const statusData = await getRow(res, Status, { label: label_status.requested });
 		data["status_id"] = statusData.id;
