@@ -7,16 +7,19 @@ import { BrowserRouter } from 'react-router-dom';
 import 'nprogress/nprogress.css';
 import { SidebarProvider } from './contexts/SidebarContext';
 import { ToastProvider } from './contexts/ToastContext';
+import { SocketProvider } from './contexts/SocketContext';
 
 ReactDOM.render(
   <HelmetProvider>
-    <ToastProvider>
-      <SidebarProvider>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      </SidebarProvider>
-    </ToastProvider>
+    <SocketProvider>
+      <ToastProvider>
+        <SidebarProvider>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </SidebarProvider>
+      </ToastProvider>
+    </SocketProvider>
   </HelmetProvider>,
   document.getElementById('root')
 );
