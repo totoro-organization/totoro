@@ -8,7 +8,7 @@ import {
   Button
 } from '@mui/material';
 
-import formatPhoneNumber from 'src/services/format.phone';
+import formatPhoneNumber from 'src/utils/formatPhoneNumber';
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import DoneTwoToneIcon from '@mui/icons-material/DoneTwoTone';
 import Text from 'src/components/Text';
@@ -71,7 +71,7 @@ function EditProfileTab() {
     setUser(userResponse as User);
   };
 
-  const formatedPhoneNumber = formatPhoneNumber(user.phone);
+  const formatedPhoneNumber = formatPhoneNumber(String(user.phone));
 
   return (
     <Grid container spacing={3}>
