@@ -114,7 +114,10 @@ export function SessionProvider({
         localStorage.setItem('token', response.token);
       })
       .then((_) => getCurrentUser())
-      .finally(() => setLoading(false));
+      .finally(() => {
+        setLoading(false);
+        navigate('/')
+      });
   }
 
   function signup(params: SignUpData) {
