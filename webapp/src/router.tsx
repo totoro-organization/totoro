@@ -36,16 +36,13 @@ const AppIndexRoute = () => {
 // Gestion
 const CreationJob = Loader(lazy(() => import('src/pages/applications/Organization/Gestion/Jobs/Create')));
 const ListingJobs = Loader(lazy(() => import('src/pages/applications/Organization/Gestion/Jobs/List'))); 
+const JobParticipant = Loader(lazy(() => import('src/pages/applications/Organization/Gestion/Jobs/Participant')));
 const Job = Loader(lazy(() => import('src/pages/applications/Organization/Gestion/Jobs'))); 
 // Dashboards
 const Crypto = Loader(lazy(() => import('src/pages/applications/Organization/Dashboards/Crypto')));
 const Resume = Loader(lazy(() => import('src/pages/applications/Organization/Dashboards/Resume')));
 
 /* Applications - Partner */
-
-/* Applications - Participants */
-
- const Participant = Loader(lazy(() => import('src/pages/applications/Participant')));
 
 /* PAGES */
 
@@ -187,8 +184,8 @@ const routes: PartialRouteObject[] = [
                     element: <CreationJob />
                   },
                   {
-                    path: '/participant/:id',
-                    element: <Participant />
+                    path: '/missions/:jobId/participant/:id',
+                    element: <JobParticipant />
                   }
                 ]
               }

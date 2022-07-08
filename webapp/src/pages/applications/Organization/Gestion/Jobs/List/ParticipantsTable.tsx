@@ -14,12 +14,13 @@ import {
 } from '@mui/material';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import getFormatLocalDate from 'src/utils/getFormatLocalDate';
-import { useNavigate } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 
 const ParticipantsTable: FC<TableProps<any>> = ({
   items: users, 
 }) => {
 
+  const { id } = useParams();
   const theme = useTheme();
   const navigate = useNavigate();
 
@@ -74,7 +75,7 @@ const ParticipantsTable: FC<TableProps<any>> = ({
                   <TableCell align="right">
                     <Tooltip title="Voir le profil" arrow>
                       <IconButton
-                        onClick={() => navigate(`/association/gestion/participant/${user.participant.id}`)}
+                        onClick={() => navigate(`/association/gestion/missions/${id}/participant/${user.participant.id}`)}
                         sx={{
                           '&:hover': { background: theme.colors.error.lighter },
                           color: theme.palette.error.main
