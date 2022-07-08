@@ -40,6 +40,11 @@ const CreationJob = Loader(
 const ListingJobs = Loader(
   lazy(() => import('src/pages/applications/Organization/Gestion/Jobs/List'))
 );
+const JobParticipant = Loader(
+  lazy(
+    () => import('src/pages/applications/Organization/Gestion/Jobs/Participant')
+  )
+);
 const Job = Loader(
   lazy(() => import('src/pages/applications/Organization/Gestion/Jobs'))
 );
@@ -63,11 +68,6 @@ const FirstLogin = Loader(lazy(() => import('src/pages/SignIn/FirstLogin')));
 /* User */
 const UserProfile = Loader(lazy(() => import('src/pages/User/profile')));
 const UserSettings = Loader(lazy(() => import('src/pages/User/settings')));
-
-/* Participants */
-const Participant = Loader(
-  lazy(() => import('src/pages/applications/Participant'))
-);
 
 /* Status */
 const Status404 = Loader(lazy(() => import('src/pages/Status/Status404')));
@@ -190,6 +190,10 @@ const routes: PartialRouteObject[] = [
                   {
                     path: '/missions/creation',
                     element: <CreationJob />
+                  },
+                  {
+                    path: '/missions/:jobId/participant/:id',
+                    element: <JobParticipant />
                   }
                 ]
               }
@@ -249,10 +253,6 @@ const routes: PartialRouteObject[] = [
               {
                 path: '/missions/creation',
                 element: <CreationJob />
-              },
-              {
-                path: '/utilisateurs/:id',
-                element: <Participant />
               }
             ]
           }

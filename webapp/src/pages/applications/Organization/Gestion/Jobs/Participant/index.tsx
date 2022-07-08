@@ -11,13 +11,13 @@ import StatusLabel from 'src/components/StatusLabel';
 import ParticipantCard from './subComponents/ParticipantCard';
 
 function UserDetails() {
-  const { id } = useParams();
+  const { jobId ,id } = useParams();
 
   const { data: user, loading: userLoading } = useApi(`/users/${id}`);
 
   const navigate = useNavigate();
 
-  const handleGoBack = () => navigate('/association/gestion/missions');
+  const handleGoBack = () => navigate(`/association/gestion/missions/${jobId}`);
 
   return (
     <>
