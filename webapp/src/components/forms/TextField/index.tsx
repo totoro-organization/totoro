@@ -4,6 +4,8 @@ import { Controller } from 'react-hook-form';
 const FormTextField = ({
   label,
   name,
+  type = "text",
+  inputProps = {},
   ...props
 }) => {
   return (
@@ -12,6 +14,8 @@ const FormTextField = ({
         render={({ field, fieldState: { error } }) => (
           <TextField
             {...field}
+            inputProps={inputProps}
+            type={type}
             label={label}
             error={!!error}
             helperText={error?.message}
