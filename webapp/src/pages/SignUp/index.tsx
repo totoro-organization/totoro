@@ -10,8 +10,6 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { DatePicker } from '@mui/x-date-pickers';
-import DateFnsProvider from 'src/components/DateFnsProvider';
 import { useState } from 'react';
 import { useSession } from 'src/hooks/useSession';
 
@@ -111,18 +109,6 @@ export default function SignUp() {
                   name="email"
                   autoComplete="email"
                 />
-              </Grid>
-              <Grid item xs={12}>
-                <DateFnsProvider>
-                    <DatePicker
-                        label="Basic example"
-                        value={date}
-                        onChange={(newDate) => {
-                          setDate(newDate);
-                        }}
-                        renderInput={(params) => <TextField {...params} />}
-                    />
-                </DateFnsProvider>
               </Grid>
               <Grid item xs={12}>
                 <TextField
