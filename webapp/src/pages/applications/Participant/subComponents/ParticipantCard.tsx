@@ -6,12 +6,12 @@ import {
     Grid,
     Typography
   } from '@mui/material';
-  import { Box } from '@mui/system';
-  import format from 'date-fns/format';
+import { Box } from '@mui/system';
 import StatusLabel from 'src/components/StatusLabel';
-  import SuspenseLoader from 'src/components/SuspenseLoader';
-  import Text from 'src/components/Text';
-  import { StatusEnum, User } from 'src/models';
+import SuspenseLoader from 'src/components/SuspenseLoader';
+import Text from 'src/components/Text';
+import { User } from 'src/models';
+import getFormatLocalDate from 'src/utils/getFormatLocalDate';
 import ParticipantItem from './ParticipantItem';
   
   interface UserCardProps {
@@ -54,10 +54,10 @@ import ParticipantItem from './ParticipantItem';
                   </Text>
                 </ParticipantItem>
                 <ParticipantItem title='Crée le :'>
-                  <Text color="black">{format(new Date(user.createdAt), "dd/MM/yyyy HH:mm:ss")}</Text>
+                  <Text color="black">{getFormatLocalDate(user.createdAt)}</Text>
                 </ParticipantItem>
                 <ParticipantItem title='Modifié le :'>
-                  <Text color="black">{format(new Date(user.updatedAt), "dd/MM/yyyy HH:mm:ss")}</Text>
+                  <Text color="black">{getFormatLocalDate(user.updatedAt)}</Text>
                 </ParticipantItem>
                 <ParticipantItem title='Statut '>
                   <StatusLabel status={user.status.label}/>

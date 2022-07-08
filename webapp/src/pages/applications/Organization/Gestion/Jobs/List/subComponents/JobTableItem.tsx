@@ -52,6 +52,9 @@ export default function JobTableItem({
           noWrap
         >
           <Link to={`/gestion/missions/${job.id}`}>{job.title}</Link>
+          <Link to={`/association/gestion/missions/${job?.id}`}>
+            {job?.title}
+          </Link>
         </Typography>
 
         <Typography variant="body2" color="text.secondary" noWrap>
