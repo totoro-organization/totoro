@@ -12,7 +12,7 @@ import { Container } from '@mui/system';
 import SuspenseLoader from 'src/components/SuspenseLoader';
 import TableWrapper from 'src/components/TableWrapper';
 import { ChangeEvent, useState } from 'react';
-import { format } from 'date-fns';
+import getFormatLocalDate from 'src/utils/getFormatLocalDate';
 import Footer from 'src/components/Footer';
 import ParticipantsTable from './List/ParticipantsTable';
 import { config } from 'src/services/config';
@@ -133,16 +133,16 @@ function Job() {
                             </JobItem>
                             <JobItem title='Dates :'>
                               <Text color="black">
-                                <b>Commence le : {format(new Date(job.start_date), "dd/MM/yyyy HH:mm:ss")}</b>
+                                <b>Commence le : {getFormatLocalDate(job.start_date)}</b>
                                 &emsp;
-                                <b>Termine le : {format(new Date(job.end_date), "dd/MM/yyyy HH:mm:ss")}</b>
+                                <b>Termine le : {getFormatLocalDate(job.end_date)}</b>
                               </Text>                     
                             </JobItem>
                             <JobItem title='Créée le :'>
-                              <Text color="black">{format(new Date(job.createdAt), "dd/MM/yyyy HH:mm:ss")}</Text>
+                              <Text color="black">{getFormatLocalDate(job.createdAt)}</Text>
                             </JobItem>
                             <JobItem title='Modifiée le :'>
-                              <Text color="black">{format(new Date(job.updatedAt), "dd/MM/yyyy HH:mm:ss")}</Text>                
+                              <Text color="black">{getFormatLocalDate(job.updatedAt)}</Text>                
                             </JobItem>
                             <JobItem title='QR code :'>
                               <img src={config.server + job.qrcode} alt="Qr Code" />

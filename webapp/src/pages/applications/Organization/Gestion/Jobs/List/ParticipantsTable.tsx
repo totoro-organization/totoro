@@ -13,6 +13,7 @@ import {
   TableProps,
 } from '@mui/material';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import getFormatLocalDate from 'src/utils/getFormatLocalDate';
 import { useNavigate } from 'react-router';
 
 const ParticipantsTable: FC<TableProps<any>> = ({
@@ -67,13 +68,13 @@ const ParticipantsTable: FC<TableProps<any>> = ({
                       gutterBottom
                       noWrap
                     >
-                      {user.createdAt}
+                      {getFormatLocalDate(user.createdAt)}
                     </Typography>
                   </TableCell>
                   <TableCell align="right">
                     <Tooltip title="Voir le profil" arrow>
                       <IconButton
-                        onClick={() => navigate(`/gestion/utilisateurs/${user.participant.id}`)}
+                        onClick={() => navigate(`/association/gestion/participant/${user.participant.id}`)}
                         sx={{
                           '&:hover': { background: theme.colors.error.lighter },
                           color: theme.palette.error.main
