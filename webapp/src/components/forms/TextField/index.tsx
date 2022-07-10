@@ -1,15 +1,27 @@
+// @ts-noCheck
 import { TextField } from '@mui/material';
-import { Controller } from 'react-hook-form';
+import { Control, Controller, Path } from 'react-hook-form';
 
-const FormTextField = ({
+interface IFormTextField<FormFieldTypes> {
+  name: Path<FormFieldTypes>,
+  label: string,
+  control?: Control<FormFieldTypes, object>,
+  defaultValue?: string,
+  inputProps?: any,
+}
+
+function FormTextField<FormFieldTypes> ({
   label,
   name,
+  control,
   type = "text",
   inputProps = {},
   ...props
-}) => {
+}: IFormTextField<FormFieldTypes>) : JSX.Element {
+
   return (
       <Controller
+        control={control}
         name={name}
         render={({ field, fieldState: { error } }) => (
           <TextField
@@ -21,7 +33,6 @@ const FormTextField = ({
             helperText={error?.message}
           />
         )}
-        {...props}
       />
   );
 };

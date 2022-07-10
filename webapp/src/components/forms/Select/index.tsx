@@ -1,28 +1,32 @@
-import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
-import { Controller } from 'react-hook-form';
-import { JobDifficulty } from 'src/models';
+// @ts-noCheck
+import { FormControl, Select, SelectChangeEvent } from '@mui/material';
+import { Control, Controller, Path } from 'react-hook-form';
 
-function FormSelect({ name, label, options, ...props }) {
-  console.log(props.defaultValue);
+interface IFormSelect<FormFieldTypes> {
+  name: Path<FormFieldTypes>,
+  label: string,
+  control?: Control<FormFieldTypes, object>,
+  children: JSX.Element[],
+  defaultValue?: string
+}
+
+function FormSelect<FormFieldTypes>({ name, label, control, children, ...props }: IFormSelect<FormFieldTypes>): JSX.Element {
 
   return (
     <FormControl fullWidth>
       <Controller
+        control={control}
         name={name}
         render={({ field, fieldState: { error } }) => (
           <Select
+            // value={props.defaultValue}
             fullWidth
             required
+            children={children}
             label={label}
-            onChange={(_, data) => field.onChange(data)}
+            onChange={(e) => field.onChange(e.target.value)}
             error={!!error}
-          >
-            {options.map((difficulty: JobDifficulty) => (
-              <MenuItem key={difficulty.id} value={difficulty.id}>
-                {`${difficulty.level} (${difficulty.token} tokens)`}
-              </MenuItem>
-            ))}
-          </Select>
+          />
         )}
         {...props}
       />
