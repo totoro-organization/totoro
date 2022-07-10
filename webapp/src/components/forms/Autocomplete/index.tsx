@@ -1,12 +1,30 @@
+// @ts-noCheck
 import { Autocomplete, TextField } from '@mui/material';
-import { Controller } from 'react-hook-form';
+import { Control, Controller, Path } from 'react-hook-form';
 
-const FormAutocomplete = ({ options, label, name, multiple = false, ...props }) => {
+interface IFormAutocomplete<FormFieldTypes, Option> {
+  name: Path<FormFieldTypes>;
+  label: string;
+  control?: Control<FormFieldTypes, object>;
+  defaultValue?: string;
+  options: Option[]
+}
 
-    // const handleGetOptionsKey = (options, field) => {
-    //     const optionsKeys = options.map(option => option[value]);
-    //     field.onChange(optionsKeys);
-    // }
+function FormAutocomplete<FormFieldValues, Option>({
+  options,
+  label,
+  name,
+  multiple = false,
+  ...props
+}: IFormAutocomplete<FormFieldValues, Option>) {
+  // const handleGetOptionsKey = (options, field) => {
+  //     const optionsKeys = options.map(option => option[value]);
+  //     field.onChange(optionsKeys);
+  // }
+
+  // const test = () => {
+
+  // }
 
   return (
     <Controller
@@ -14,7 +32,7 @@ const FormAutocomplete = ({ options, label, name, multiple = false, ...props }) 
       render={({ field, fieldState: { error } }) => (
         <Autocomplete
           {...field}
-            multiple={multiple}
+          multiple={multiple}
           limitTags={4}
           options={options}
           renderInput={(params) => (
@@ -31,6 +49,6 @@ const FormAutocomplete = ({ options, label, name, multiple = false, ...props }) 
       {...props}
     />
   );
-};
+}
 
 export default FormAutocomplete;

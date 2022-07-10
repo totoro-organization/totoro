@@ -3,28 +3,31 @@ import { FormControl, TextField } from '@mui/material';
 import { DateTimePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { format } from 'date-fns';
 import { useState } from 'react';
-import { Controller, UseControllerProps } from 'react-hook-form';
+import { Control, Controller, Path } from 'react-hook-form';
 
-interface IFormDateTimePicker {
-  name: string,
+interface IFormDateTimePicker<FormFieldTypes> {
+  name: Path<FormFieldTypes>,
   label: string,
   minDate?: Date,
   maxDate?: Date,
   handleChangeDate?: (date: Date) => void,
+  control?: Control<FormFieldTypes, object>
 }
 
-function FormDateTimePicker({
+function FormDateTimePicker<FormFieldTypes>({
   label,
+  name,
   minDate = null,
   maxDate = null,
   handleChangeDate,
+  control,
   ...props
-}: IFormDateTimePicker & UseControllerProps<any>) {
+}: IFormDateTimePicker<FormFieldTypes>) : JSX.Element{
   const [value, setValue] = useState<Date>(new Date() ?? minDate);
 
-  const handleChange = (data, field) => {
+  const handleChange = (data, onChange) => {
     setValue(data);
-    field.onChange(format(new Date(data), 'dd/MM/yyyy HH:mm'));
+    onChange(format(new Date(data), 'dd/MM/yyyy HH:mm'));
     handleChangeDate(data);
   };
 
@@ -32,6 +35,8 @@ function FormDateTimePicker({
     <FormControl fullWidth>
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <Controller
+          control={control}
+          name={name}
           render={({ field, fieldState: { error } }) => (
             <DateTimePicker
               minDate={minDate}
@@ -39,7 +44,7 @@ function FormDateTimePicker({
               inputFormat="dd/MM/yyyy HH:mm"
               label={label}
               value={value}
-              onChange={(data) => handleChange(data, field)}
+              onChange={(data) => handleChange(data, field.onChange)}
               renderInput={(params) => <TextField {...params} />}
             />
           )}
