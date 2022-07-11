@@ -171,9 +171,9 @@ module.exports = {
 			const haversine = `(
 				6371 * acos(
 					cos(radians(${lat}))
-					* cos(radians(Jobs.latitude))
-					* cos(radians(Jobs.longitude) - radians(${lng}))
-					+ sin(radians(${lat})) * sin(radians(Jobs.latitude))
+					* cos(radians(\`Jobs\`.\`latitude\`))
+					* cos(radians(\`Jobs\`.\`longitude\`) - radians(${lng}))
+					+ sin(radians(${lat})) * sin(radians(\`Jobs\`.\`latitude\`))
 				)
 			)`;
 			params.attributes['include'] = [[Jobs.sequelize.literal(haversine), 'distance']]
