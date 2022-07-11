@@ -14,8 +14,8 @@ import {
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 import { Job } from '../../../../../../../models';
 
-import format from 'date-fns/format';
 import StatusLabel from '../../../../../../../components/StatusLabel';
+import getFormatLocalDate from 'src/utils/getFormatLocalDate';
 
 interface JobTableItemProps {
   job: Job;
@@ -51,7 +51,7 @@ export default function JobTableItem({
           gutterBottom
           noWrap
         >
-          <Link to={`/gestion/missions/${job?.id}`}>{job?.title}</Link>
+          <Link to={`/association/gestion/missions/${job?.id}`}>{job?.title}</Link>
         </Typography>
 
         <Typography variant="body2" color="text.secondary" noWrap>
@@ -69,7 +69,7 @@ export default function JobTableItem({
           gutterBottom
           noWrap
         >
-          {format(new Date(job?.createdAt), 'dd/MM/yyyy HH:mm:ss')}
+          {getFormatLocalDate(job?.createdAt)}
         </Typography>
       </TableCell>
 
