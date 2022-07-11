@@ -1,10 +1,10 @@
 const express = require("express");
-const { passport } = require("utils/session");
-const usersController = require("../Users/controller");
-const adminsController = require("../Admins/controller");
+const { passport } = require("~utils/session");
+const usersController = require("~services/Users/controller");
+const adminsController = require("~services/Admins/controller");
 const controller = require("./controller");
 
-const { Users, Admins } = require("../../../models");
+const { Users, Admins } = require("~orm/models");
 
 exports.router = (function () {
   const authRouter = express.Router();

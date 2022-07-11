@@ -1,9 +1,11 @@
 const axios = require("axios");
-const { success } = require("utils/common/messages.json");
-const { label_status } = require("utils/enum.json");
+const { success, error } = require("~utils/common/messages.json");
+const { label_status } = require("~utils/enum.json");
+const { isEmailValid } = require("~utils/verify");
+
 //Send mail
-const { from, subject, host } = require("utils/common/mail.json");
-const { generateToken } = require("utils/session");
+const { from, subject, host } = require("~utils/common/mail.json");
+const { generateToken } = require("~utils/session");
 const {
 	Users,
 	Status,
@@ -11,10 +13,10 @@ const {
 	Partners,
 	Discounts,
 	Types_discounts
-} = require("./../../../models");
-const commonsController = require("services/Commons/controller");
+} = require("~orm/models");
+const commonsController = require("~services/Commons/controller");
 
-const { getRow, getPaginationQueries } = require("utils/common/thenCatch");
+const { getRow, getPaginationQueries } = require("~utils/common/thenCatch");
 
 const excludeCommon = { exclude: ["id", "createdAt", "updatedAt"] };
 
@@ -54,6 +56,12 @@ module.exports = {
 
 	createPartner: async function (res, data) {
 		const { email, phone, type, typeValue } = data
+		const emailValid = await isEmailValid(email);
+		if(emailValid !== "ok")
+			return res
+				.status(error.parameters.status)
+				.json({ message: emailValid });
+
 		const request = await axios.get(`https://entreprise.data.gouv.fr/api/sirene/v1/${type}/${typeValue}`);
 		if(request.data.message){
 			return res
@@ -88,7 +96,15 @@ module.exports = {
 		const {phone, email, status_id} = data
 		const condition = {};
 		if (phone) condition.phone = phone;
-		if (email) condition.email = email;
+		if (email) {
+			const emailValid = await isEmailValid(email);
+			if(emailValid !== "ok")
+				return res
+					.status(error.parameters.status)
+					.json({ message: emailValid });
+					
+			condition.email = email
+		};
 		const statusData = await getRow(res, Status, { id: status_id });
 
 		commonsController.update(res, Partners, id, data, condition);
