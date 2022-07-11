@@ -48,6 +48,9 @@ services:
       - DB_PASSWORD=$MYSQLDB_ROOT_PASSWORD
       - DB_NAME=$MYSQLDB_DATABASE
       - DB_PORT=$MYSQLDB_DOCKER_PORT
+      - MAILER_USER=$MAILER_USER
+      - MAILER_PASS=$MAILER_PASS
+      - API_BASE_URL=$API_BASE_URL
     networks:
       - backend
       - frontend

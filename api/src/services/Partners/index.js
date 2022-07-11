@@ -1,8 +1,8 @@
 const express = require("express");
-const { passport, passportAdmin } = require("utils/session");
+const { passport, passportAdmin } = require("~utils/session");
 const controller = require("./controller");
-const { path } = require("utils/enum.json");
-const { upload } = require("utils/storage");
+const { path } = require("~utils/enum.json");
+const { upload } = require("~utils/storage");
 
 exports.router = (function () {
 	const partnersRouter = express.Router();

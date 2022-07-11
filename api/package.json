@@ -2,10 +2,10 @@
 	"name": "api",
 	"version": "1.0.0",
 	"description": "",
-	"main": "index.js",
+	"main": "./src/main.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"start": "sequelize db:migrate && node ./swagger/index.js && nodemon -L --inspect=0.0.0.0 --exec babel-node --config-file ./babel.config.json index.js"
+		"start": "sequelize db:migrate && node ./src/swagger/index.js && nodemon -L --inspect=0.0.0.0 --exec babel-node --config-file ./babel.config.json ./src/main.js"
 	},
 	"author": "",
 	"license": "ISC",
@@ -21,10 +21,12 @@
 		"body-parser": "^1.19.1",
 		"cors": "^2.8.5",
 		"crypto": "^1.0.1",
+		"deep-email-validator": "^0.1.21",
 		"dotenv": "^8.2.0",
 		"express": "^4.17.2",
 		"express-handlebars": "^6.0.6",
 		"fs": "0.0.1-security",
+		"http": "0.0.1-security",
 		"jsbarcode": "^3.11.5",
 		"jsdom": "^20.0.0",
 		"jsonwebtoken": "^8.5.1",
@@ -44,6 +46,7 @@
 		"sequelize": "^6.15.1",
 		"sequelize-cli": "^6.4.1",
 		"sequelize-fixtures": "^1.2.0",
+		"socket.io": "^4.5.1",
 		"swagger-tools": "^0.10.4",
 		"uuid": "^8.3.2",
 		"xmldom": "^0.6.0"

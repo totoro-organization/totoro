@@ -9,7 +9,7 @@ var onlyPath = process.cwd();
 module.exports = {
     qrcode: async function (path, content) {
         const filename = "qrcode-"+Date.now()+".svg";
-        const outfile = `${onlyPath}/data${path}/${filename}`;
+        const outfile = `${onlyPath}/public/data${path}/${filename}`;
 
         const qrcode = new QRCode({
             content,
@@ -33,7 +33,7 @@ module.exports = {
     },
     barcode: async function(path, data){
         const filename = "barcode-"+Date.now()+".svg";
-        const outfile = `${onlyPath}/data${path}/${filename}`;
+        const outfile = `${onlyPath}/public/data${path}/${filename}`;
 
         const xmlSerializer = new XMLSerializer();
         const document = new DOMImplementation().createDocument('http://www.w3.org/1999/xhtml', 'html', null);

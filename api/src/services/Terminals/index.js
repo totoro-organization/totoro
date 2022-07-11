@@ -1,12 +1,12 @@
 const express = require("express");
-const { passport, passportAdmin } = require("utils/session");
-const { Terminals, Status } = require("./../../../models");
-const controller = require("services/Commons/controller");
+const { passport, passportAdmin } = require("~utils/session");
+const { Terminals, Status } = require("~orm/models");
+const controller = require("~services/Commons/controller");
 const {
   getRow,
   getPaginationQueries
-} = require("utils/common/thenCatch");
-const { label_status } = require("utils/enum.json");
+} = require("~utils/common/thenCatch");
+const { label_status } = require("~utils/enum.json");
 
 const excludeCommon = { exclude: ["id", "createdAt", "updatedAt"] }
 const include = [

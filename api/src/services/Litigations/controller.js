@@ -1,4 +1,4 @@
-const { label_status } = require("utils/enum.json");
+const { label_status } = require("~utils/enum.json");
 const {
   Users,
   Status,
@@ -9,9 +9,9 @@ const {
   Jobs,
   Groups,
   Associations_users,
-} = require("./../../../models");
-const commonsController = require("services/Commons/controller");
-const { getRow, getPaginationQueries } = require("utils/common/thenCatch");
+} = require("~orm/models");
+const commonsController = require("~services/Commons/controller");
+const { getRow, getPaginationQueries } = require("~utils/common/thenCatch");
 
 const excludeCommon = { exclude: ["id", "createdAt", "updatedAt"] }
 
