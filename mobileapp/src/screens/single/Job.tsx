@@ -141,9 +141,9 @@ export default function Job({
 
       <Spacer axis="vertical" size={1} />
 
-      {job?.tags.map(({ id, tag }) => (
+      {job?.tags.map(({ id, label }) => (
         <Fragment key={id}>
-          <Text color="primary">#{tag}</Text>
+          <Text color="primary">#{label}</Text>
 
           <Spacer axis="horizontal" size={0.5} />
         </Fragment>
