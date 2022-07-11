@@ -1,4 +1,4 @@
-import { FC, ReactNode } from 'react';
+import { ReactNode } from 'react';
 import { Box, Grid } from '@mui/material';
 
 interface ParticipantItemProps {
@@ -6,7 +6,7 @@ interface ParticipantItemProps {
   children?: ReactNode
 }
 
-const ParticipantItem: FC<ParticipantItemProps> = ({children,title}) => {
+function ParticipantItem({children, title}: ParticipantItemProps) {
   return (
     <>
       <Grid item xs={12} sm={2} md={3} textAlign={{ sm: 'right' }}>

@@ -1,4 +1,4 @@
-import { FC, ReactNode } from 'react';
+import { ReactNode } from 'react';
 import { Box, Grid } from '@mui/material';
 
 interface JobItemProps {
@@ -6,7 +6,7 @@ interface JobItemProps {
   children?: ReactNode
 }
 
-const JobItem: FC<JobItemProps> = ({children,title}) => {
+function JobItem({children, title}: JobItemProps) {
   return (
     <>
       <Grid item xs={12} sm={2} md={3} textAlign={{ sm: 'right' }}>
