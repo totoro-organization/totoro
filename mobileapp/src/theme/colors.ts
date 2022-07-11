@@ -42,8 +42,12 @@ const core = {
 
 const brand = {
   primary: {
-    base: "#7B61FF",
-    light: "#F5F4FC",
+    base: "#7068DC",
+    darkest: "#433E84",
+    dark: "#5A53B0",
+    light: "#CFCCF6",
+    lightest: "#E6E4FF",
+    subtle: "#F5F4FF",
   },
 };
 
