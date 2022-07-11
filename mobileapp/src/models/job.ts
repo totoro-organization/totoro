@@ -44,13 +44,11 @@ export interface JobFavorite {
 
 export interface Tag {
   id: string;
-  tag: {
-    label: string;
-    type: "mission" | "category";
-    status: SubscriptionStatus;
-    createdAt: string;
-    updatedAt: string;
-  };
+  label: string;
+  type: "mission" | "category";
+  status: SubscriptionStatus;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface AttachmentJob {
