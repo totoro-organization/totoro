@@ -7,12 +7,10 @@ import getLocaleCurrencyNotation from "../../common/utils/getLocaleCurrencyNotat
 import Spacer from "../atoms/Spacer";
 import Token from "../../assets/icons/Token";
 import useBoolean from "../../common/hooks/useBoolean";
+import useAuth from "../../common/contexts/AuthContext";
 
-type TokenButtonProps = {
-  userToken: number;
-};
-
-export default function TokenButton({ userToken }: TokenButtonProps) {
+export default function TokenButton() {
+  const { user } = useAuth();
   const [modalOpen, setModalOpen] = useBoolean();
 
   return (
@@ -23,7 +21,7 @@ export default function TokenButton({ userToken }: TokenButtonProps) {
         handlePress={setModalOpen.toggle}
         Icon={<Token color="primary" />}
       >
-        {getLocaleCurrencyNotation(userToken)}
+        {getLocaleCurrencyNotation(user?.total_token || 0)}
       </Button>
 
       <Modal visible={modalOpen} onCloseModal={setModalOpen.toggle}>
@@ -33,7 +31,7 @@ export default function TokenButton({ userToken }: TokenButtonProps) {
 
         <Text>Tu as actuellement</Text>
         <Text size="xl" color="primary" weight="semiBold">
-          {getLocaleCurrencyNotation(userToken)} tokens
+          {getLocaleCurrencyNotation(user?.total_token || 0)} tokens
         </Text>
 
         <Spacer axis="vertical" size={1.5} />
