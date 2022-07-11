@@ -11,7 +11,6 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { AppParamList } from "../../../navigation/StackNavigationParams";
 import TokenButton from "../../organisms/TokenButton";
 import TotoroLogo from "../../brand/TotoroLogo";
-import useAuth from "../../../common/contexts/AuthContext";
 
 type HeaderProps = {
   title?: string;
@@ -19,7 +18,6 @@ type HeaderProps = {
 };
 
 export default function Header({ title, withScanner }: HeaderProps) {
-  const { user } = useAuth();
   const navigation = useNavigation<StackNavigationProp<AppParamList>>();
 
   return (
@@ -39,7 +37,7 @@ export default function Header({ title, withScanner }: HeaderProps) {
           </>
         )}
 
-        <TokenButton userToken={user?.total_token || 0} />
+        <TokenButton />
       </Box>
     </Container>
   );

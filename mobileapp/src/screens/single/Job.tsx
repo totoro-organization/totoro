@@ -8,14 +8,13 @@ import Button from "../../components/atoms/Button";
 import Spacer from "../../components/atoms/Spacer";
 import Heart from "../../assets/icons/Heart";
 import Box from "../../components/atoms/Box";
-import { ActivityIndicator, ImageBackground, View } from "react-native";
+import { ImageBackground } from "react-native";
 import JobDetail from "../../components/molecules/JobDetail";
 import Location from "../../assets/icons/Location";
 import Calendar from "../../assets/icons/Calendar";
 import { Link } from "@react-navigation/native";
 import useUserFavorites from "../../common/api/hooks/useUserFavorites";
 import addUserFavorite from "../../common/api/requests/addUserFavorite";
-import Toast from "react-native-toast-message";
 import Check from "../../assets/icons/Check";
 import useAuth from "../../common/contexts/AuthContext";
 import deleteFavorite from "../../common/api/requests/deleteFavorite";
@@ -24,6 +23,7 @@ import useJobFavorites from "../../common/api/hooks/useJobFavorites";
 import { MOBILEAPP_API_BASE_URL } from "@env";
 import useUserJobs from "../../common/api/hooks/useUserJobs";
 import fetchRegisterJob from "../../common/api/requests/job/fetchRegisterJob";
+import TokenButton from "../../components/organisms/TokenButton";
 
 export default function Job({
   route,
@@ -80,6 +80,10 @@ export default function Job({
         />
       }
     >
+      <TokenButton />
+
+      <Spacer axis="vertical" size={1} />
+
       <Heading variant="h1" weight="regular">
         {job?.title}
       </Heading>
@@ -144,6 +148,8 @@ export default function Job({
           <Spacer axis="horizontal" size={0.5} />
         </Fragment>
       ))}
+
+      <Spacer axis="vertical" size={1} />
 
       <HeadingSection>Organisé par</HeadingSection>
       <Box justifyContent="space-between" alignItems="center">
