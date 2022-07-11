@@ -18,8 +18,7 @@ import ParticipantItem from './ParticipantItem';
     user: User;
   }
   
-  const UserCard = ({ user }: UserCardProps) => {
-  
+  function UserCard({ user }: UserCardProps) {  
     return (
       <Card>
         <CardHeader subheader={
