@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { View } from "react-native";
 import Button from "../atoms/Button";
 import Modal from "../atoms/Modal";
@@ -17,12 +17,13 @@ export default function TokenButton({ userToken }: TokenButtonProps) {
 
   return (
     <View>
-      <Button size="sm" variant="outline" handlePress={setModalOpen.toggle}>
+      <Button
+        size="sm"
+        variant="outline"
+        handlePress={setModalOpen.toggle}
+        Icon={<Token color="primary" />}
+      >
         {getLocaleCurrencyNotation(userToken)}
-
-        {/* TODO: Add icon to Button atom. */}
-        {/* <Spacer axis="horizontal" size={0.5} />
-        <Token color="primary" /> */}
       </Button>
 
       <Modal visible={modalOpen} onCloseModal={setModalOpen.toggle}>
