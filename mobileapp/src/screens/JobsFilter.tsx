@@ -8,9 +8,13 @@ import { useNavigation } from "@react-navigation/native";
 import { AppParamList } from "../navigation/StackNavigationParams";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { TouchableOpacity } from "react-native";
+import useTotoroTags from "../common/api/hooks/useTotoroTags";
 
 export default function JobsFilter() {
   const navigation = useNavigation<StackNavigationProp<AppParamList>>();
+  const { tags } = useTotoroTags();
+
+  console.log(tags);
 
   return (
     <GlobalLayout pageTitle="Filtres">
