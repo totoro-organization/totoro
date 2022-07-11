@@ -37,8 +37,8 @@ export default function Radio({
 }
 
 const Dot = styled.View`
-  width: 24px;
-  height: 24px;
+  width: 20px;
+  height: 20px;
   border: ${({ theme }) => theme.border.width[1]} solid
     ${({ theme }) => theme.colors.core.black.base};
   border-radius: ${({ theme }) => theme.border.radius.circle};
@@ -47,8 +47,8 @@ const Dot = styled.View`
 `;
 
 const DotActive = styled.View<{ $checked: boolean }>`
-  width: 16px;
-  height: 16px;
+  width: 14px;
+  height: 14px;
   border-radius: ${({ theme }) => theme.border.radius.circle};
   background-color: ${({ theme }) => theme.colors.core.black.base};
   opacity: ${({ $checked }) => ($checked ? "1" : "0")};
