@@ -10,7 +10,7 @@ export default function useTotoroTags() {
     const { data } = await getTotoroTags();
 
     if (data) {
-      // TODO: Use groudBy function of lodash here?
+      // TODO: Use groupBy function of lodash here?
       const tagArray = data.filter((tag: Tag) => tag.type === "mission");
       const categoryArray = data.filter((tag: Tag) => tag.type === "category");
       setTags(tagArray);
