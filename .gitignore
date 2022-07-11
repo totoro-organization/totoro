@@ -8,4 +8,4 @@ ui-backoffice/node_modules
 mobileapp/node_modules
 landingpage/node_modules
 webapp/node_modules
-api/swagger.json
+api/src/swagger.json

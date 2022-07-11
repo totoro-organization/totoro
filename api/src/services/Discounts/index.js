@@ -1,5 +1,5 @@
 const express = require("express");
-const { passport, passportAdmin } = require("utils/session");
+const { passport, passportAdmin } = require("~utils/session");
 const controller = require("./controller");
 
 exports.router = (function () {

@@ -5,7 +5,7 @@ module.exports = {
   storage: function (path) {
     return multer.diskStorage({
       destination: (req, file, cb) => {
-        cb(null, onlyPath + "/data" + path);
+        cb(null, onlyPath + "/public/data" + path);
       },
       filename: (req, file, cb) => {
         var fileFormat = file.originalname.split(".");

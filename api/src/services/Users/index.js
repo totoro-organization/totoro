@@ -1,10 +1,17 @@
 const express = require("express");
-const { passport, passportAdmin } = require("utils/session");
+const { passport, passportAdmin } = require("~utils/session");
 const controller = require("./controller");
-const { path } = require("utils/enum.json");
-const { upload } = require("utils/storage");
-const { getUser } = require("~/utils/session/index");
-const { error } = require("utils/common/messages.json");
+const { path } = require("~utils/enum.json");
+const { upload } = require("~utils/storage");
+const { getUser } = require("~utils/session");
+const { error } = require("~utils/common/messages.json");
+const {
+	Status
+} = require("~orm/models");
+const {
+	getRow
+} = require("~utils/common/thenCatch");
+const { label_status } = require("~utils/enum.json");
 
 
 exports.router = (function () {
@@ -47,7 +54,7 @@ exports.router = (function () {
 		async function (req, res) {
 			const data = req.body;
 			data.id = req.userData.id;
-			controller.resetPassword(res, data);
+			controller.changePassword(res, data);
 		},
 	]);
 
@@ -57,8 +64,7 @@ exports.router = (function () {
 			const token = getUser(data.token);
 			if(token){
 				delete data.token;
-				data.id = token['id'];
-				controller.resetPassword(res, data);
+				controller.resetPassword(res, token['id'], data);
 			} else {
 				return res
 					.status(error.access_denied.status)
@@ -121,6 +127,25 @@ exports.router = (function () {
 			controller.getTransactions(res, id, req.query);
 		},
 	]);
+
+	UsersRouter.put("/account/activate",
+		async function (req, res) {
+			const data = req.body;
+			const token = getUser(data.token);
+			if(token){
+				delete data.token;
+				const id = token['id'];
+				const statusData = await getRow(res, Status, { label: label_status.actived });
+    			data.status_id = statusData.id
+				data.status_id = 
+				controller.updateUser(res, id, data);
+			} else {
+				return res
+					.status(error.access_denied.status)
+					.json({ message: error.access_denied.message });
+			}
+		},
+	);
 
 	return UsersRouter;
 })();

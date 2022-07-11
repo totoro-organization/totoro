@@ -1,6 +1,6 @@
 const { Op } = require("sequelize");
-const commonsController = require("services/Commons/controller");
-const {qrcode} = require("~/utils/generate");
+const commonsController = require("~services/Commons/controller");
+const {qrcode} = require("~utils/generate");
 const asyncLib = require("async");
 
 const { 
@@ -9,7 +9,7 @@ const {
 	getPagination,
 	getPaginationQueries,
 	getField
- } = require("~/utils/common/thenCatch");
+ } = require("~utils/common/thenCatch");
 const {
 	Users,
 	Status,
@@ -24,12 +24,12 @@ const {
 	Favorites,
 	Groups,
 	Associations_users,
-} = require("./../../../models");
+} = require("~orm/models");
 
-const { error, success } = require("utils/common/messages.json");
-const { path } = require("utils/enum.json");
-const { upload } = require("utils/storage");
-const { label_status } = require("utils/enum.json");
+const { error, success } = require("~utils/common/messages.json");
+const { path } = require("~utils/enum.json");
+const { upload } = require("~utils/storage");
+const { label_status } = require("~utils/enum.json");
 
 const excludeCommon = { exclude: ["id", "createdAt", "updatedAt"] };
 
