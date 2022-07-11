@@ -23,51 +23,27 @@ export default function Jobs() {
   const navigation = useNavigation<StackNavigationProp<AppParamList>>();
   const { user } = useAuth();
   const { jobs, isLoading: loadingJobs } = useJobs({
-    longitude: user?.longitude || 0,
-    latitude: user?.latitude || 0,
+    longitude: user?.longitude || -0.594,
+    latitude: user?.latitude || 44.8378,
   });
-
-  console.log(user);
-  console.log(jobs);
-
-  const [showSortByModal, setShowSortByModal] = useBoolean();
 
   return (
     <GlobalLayout>
-      <Box width="100%" alignItems="center" justifyContent="center">
-        <Button
-          Icon={<Sort />}
-          color="grey"
-          variant="outline"
-          handlePress={setShowSortByModal.on}
-        >
-          Trier
-        </Button>
-
-        <Spacer axis="horizontal" size={0.5} />
-
-        <Button
-          Icon={<Filter />}
-          color="grey"
-          variant="outline"
-          handlePress={() => navigation.navigate("JobsFilter")}
-        >
-          Filtrer
-        </Button>
-      </Box>
-
-      {showSortByModal && (
-        // TODO: Add this code on dedicated organism file.
-        <Modal center={false} onCloseModal={setShowSortByModal.off}>
-          <Text weight="semiBold">Trier par</Text>
-        </Modal>
-      )}
+      <Button
+        Icon={<Filter />}
+        color="grey"
+        variant="outline"
+        handlePress={() => navigation.navigate("JobsFilter")}
+      >
+        Accéder aux filtres
+      </Button>
 
       <Spacer axis="vertical" size={2} />
 
       {loadingJobs && (
         <ActivityIndicator color={theme.colors.brand.primary.base} />
       )}
+
       {!loadingJobs && <JobsList data={jobs} />}
     </GlobalLayout>
   );
