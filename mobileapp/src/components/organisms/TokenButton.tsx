@@ -8,20 +8,17 @@ import Spacer from "../atoms/Spacer";
 import Token from "../../assets/icons/Token";
 import useBoolean from "../../common/hooks/useBoolean";
 
-/* TODO: Add real user data. */
-const FAKE_DATA_TOKEN = 9328;
+type TokenButtonProps = {
+  userToken: number;
+};
 
-export default function TokenButton() {
+export default function TokenButton({ userToken }: TokenButtonProps) {
   const [modalOpen, setModalOpen] = useBoolean();
+
   return (
     <View>
-      <Button
-        size="sm"
-        color="primary"
-        variant="outline"
-        handlePress={setModalOpen.toggle}
-      >
-        {getLocaleCurrencyNotation(FAKE_DATA_TOKEN)}
+      <Button size="sm" variant="outline" handlePress={setModalOpen.toggle}>
+        {getLocaleCurrencyNotation(userToken)}
 
         {/* TODO: Add icon to Button atom. */}
         {/* <Spacer axis="horizontal" size={0.5} />
@@ -35,7 +32,7 @@ export default function TokenButton() {
 
         <Text>Tu as actuellement</Text>
         <Text size="xl" color="primary" weight="semiBold">
-          {getLocaleCurrencyNotation(FAKE_DATA_TOKEN)} tokens
+          {getLocaleCurrencyNotation(userToken)} tokens
         </Text>
 
         <Spacer axis="vertical" size={1.5} />
