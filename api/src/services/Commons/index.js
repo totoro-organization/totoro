@@ -1,6 +1,6 @@
 const express = require("express");
 const { Op } = require("sequelize");
-const { passport, passportAdmin } = require("utils/session");
+const { passport, passportAdmin } = require("~utils/session");
 const controller = require("./controller");
 const {
   Roles,
@@ -13,16 +13,16 @@ const {
   Litigation_objects,
   Applications,
   Favorites
-} = require("./../../../models");
+} = require("~orm/models");
 
-const models = require("./../../../models");
+const models = require("~orm/models");
 const {
   getRow,
   getPaginationQueries
-} = require("utils/common/thenCatch");
-const { path } = require("utils/enum.json");
-const { upload } = require("utils/storage");
-const { label_status } = require("utils/enum.json");
+} = require("~utils/common/thenCatch");
+const { path } = require("~utils/enum.json");
+const { upload } = require("~utils/storage");
+const { label_status } = require("~utils/enum.json");
 
 const excludeCommon = { exclude: ["id", "createdAt", "updatedAt"] }
 const include = [

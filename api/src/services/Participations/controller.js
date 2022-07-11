@@ -12,12 +12,12 @@ const {
 	Associations_users,
 	Chats,
 	Attachment_chats
-} = require("./../../../models");
-const commonsController = require("services/Commons/controller");
+} = require("~orm/models");
+const commonsController = require("~services/Commons/controller");
 
-const { getRow } = require("utils/common/thenCatch");
-const { error } = require("utils/common/messages.json");
-const { label_status } = require("utils/enum.json");
+const { getRow } = require("~utils/common/thenCatch");
+const { error } = require("~utils/common/messages.json");
+const { label_status } = require("~utils/enum.json");
 
 const excludeCommon = { exclude: ["id", "createdAt", "updatedAt"] };
 

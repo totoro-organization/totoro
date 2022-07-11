@@ -1,11 +1,11 @@
 const express = require("express");
-const { passport, passportAdmin } = require("utils/session");
-const controller = require("services/Commons/controller");
-const { Applications, Status } = require("./../../../models");
+const { passport, passportAdmin } = require("~utils/session");
+const controller = require("~services/Commons/controller");
+const { Applications, Status } = require("~orm/models");
 const {
   getRow,
   getPaginationQueries
-} = require("utils/common/thenCatch");
+} = require("~utils/common/thenCatch");
 
 const excludeCommon = { exclude: ["id", "createdAt", "updatedAt"] }
 const include = [

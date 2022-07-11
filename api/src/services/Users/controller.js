@@ -1,6 +1,8 @@
 const bcrypt = require("bcryptjs");
 const asyncLib = require("async");
-const { error, success } = require("utils/common/messages.json");
+const { error, success } = require("~utils/common/messages.json");
+const { isEmailValid } = require("~utils/verify");
+
 const {
 	Users,
 	Status,
@@ -17,10 +19,10 @@ const {
 	Tokens,
 	Types_discounts,
 	Discounts
-} = require("./../../../models");
-const commonsController = require("services/Commons/controller");
+} = require("~orm/models");
+const commonsController = require("~services/Commons/controller");
 
-const { getRow, getField, updateField, getPaginationQueries } = require("utils/common/thenCatch");
+const { getRow, getField, updateField, getPaginationQueries } = require("~utils/common/thenCatch");
 
 const excludeCommon = { exclude: ["id", "createdAt", "updatedAt"] };
 
@@ -112,10 +114,17 @@ module.exports = {
 		commonsController.getOne(res, Users, id, exclude, include);
 	},
 
-	updateUser: function (res, id, data) {
+	updateUser: async function (res, id, data) {
 		const {email} = data
 		const condition = {};
-		if (email) condition.email = email;
+		if (email) {
+			const emailValid = await isEmailValid(email);
+			if(emailValid !== "ok")
+				return res
+					.status(error.parameters.status)
+					.json({ message: emailValid });
+			condition.email = email
+		};
 		commonsController.update(res, Users, id, data, condition);
 	},
 
@@ -127,7 +136,12 @@ module.exports = {
 		commonsController.delete(res, Users, { id });
 	},
 
-	resetPassword: async function (res, data) {
+	resetPassword: async function (res, id, data) {
+		data.password =  bcrypt.hashSync(data.password, 10);
+		commonsController.update(res, Users, id, data);
+	},
+
+	changePassword: async function (res, data) {
 		const {id, old_password, password} = data
 		asyncLib.waterfall(
 			[
@@ -175,7 +189,6 @@ module.exports = {
 			}
 		);
 	},
-
 	getFavorites: async function (res, id, queries) {
 		const {status, size, page} = queries
 		let condition = {};

@@ -1,4 +1,4 @@
-const models = require("./../../../models");
+const models = require("~orm/models");
 const asyncLib = require("async");
 const { Op } = require("sequelize");
 

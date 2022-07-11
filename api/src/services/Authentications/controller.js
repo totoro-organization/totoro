@@ -1,15 +1,18 @@
 const asyncLib = require("async");
 const bcrypt = require("bcryptjs");
 const { Op } = require("sequelize");
-const { generateToken } = require("utils/session");
-//const { getNearestTerminal } = require("utils/localisation");
-const { getRow, getField } = require("utils/common/thenCatch");
-const { error, success } = require("utils/common/messages.json");
-const { Terminals, Status } = require("../../../models");
+const { generateToken } = require("~utils/session");
+//const { getNearestTerminal } = require("~utils/localisation");
+const { getRow, getField } = require("~utils/common/thenCatch");
+const { error, success } = require("~utils/common/messages.json");
+const { Terminals, Status } = require("~orm/models");
 //Send mail
-const { from, subject, host } = require("utils/common/mail.json");
-const commonsController = require("services/Commons/controller");
-const { label_status } = require("utils/enum.json");
+const { signup } = require("~utils/common/mail.json");
+const { sendMail } = require("~externals/mailer");
+const commonsController = require("~services/Commons/controller");
+const { label_status } = require("~utils/enum.json");
+const { isEmailValid } = require("~utils/verify");
+
 const excludeCommon = { exclude: ["id", "createdAt", "updatedAt"] };
 
 const include = [{ model: Status, as: "status", attributes: excludeCommon }];
@@ -76,6 +79,12 @@ module.exports = {
 
   signup: async function (res, model, data) {
     const {password,email,username} = data
+    const emailValid = await isEmailValid(email);
+    if(emailValid !== "ok")
+      return res
+        .status(error.parameters.status)
+        .json({ message: emailValid });
+
     const inactiveStatus = await getRow(res, Status, {
       label: label_status.disabled,
     });
@@ -103,6 +112,7 @@ module.exports = {
 
         const token = generateToken(result);
         //Send mail
+        sendMail(signup.template, {to: email, subject: signup.subject}, {token})
 
         return res
           .status(success.create.status)
@@ -119,6 +129,13 @@ module.exports = {
 
   forgot: async function (res, model, data) {
     const {email} = data
+
+    const emailValid = await isEmailValid(email);
+    if(emailValid !== "ok")
+      return res
+        .status(error.parameters.status)
+        .json({ message: emailValid });
+
     const activeStatus = await getRow(Status, { label: label_status.actived });
 
     asyncLib.waterfall(
