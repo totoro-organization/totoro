@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import styled from "styled-components/native";
 import { Heading, Text } from "../../components/atoms/Text";
 import GlobalLayout from "../../components/layouts/GlobalLayout";
@@ -80,11 +80,6 @@ export default function Job({
         />
       }
     >
-      {/* TODO: Add Tag atom.*/}
-      {/* <Text color="info">{job?.tags[0].tag.label}</Text> */}
-
-      <Spacer axis="vertical" size={1} />
-
       <Heading variant="h1" weight="regular">
         {job?.title}
       </Heading>
@@ -139,6 +134,16 @@ export default function Job({
 
       <HeadingSection>Description</HeadingSection>
       <Text color="grey">{job?.description}</Text>
+
+      <Spacer axis="vertical" size={1} />
+
+      {job?.tags.map(({ id, tag }) => (
+        <Fragment key={id}>
+          <Text color="primary">#{tag}</Text>
+
+          <Spacer axis="horizontal" size={0.5} />
+        </Fragment>
+      ))}
 
       <HeadingSection>Organisé par</HeadingSection>
       <Box justifyContent="space-between" alignItems="center">
