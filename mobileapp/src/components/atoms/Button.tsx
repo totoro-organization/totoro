@@ -65,13 +65,6 @@ export default function Button({
           </LoadingWrapper>
         )}
 
-        {Icon && (
-          <>
-            {Icon}
-            <Spacer axis="horizontal" size={0.5} />
-          </>
-        )}
-
         <StyledText
           $isHidden={isInternalLoading}
           variant={variant}
@@ -79,6 +72,13 @@ export default function Button({
         >
           {children}
         </StyledText>
+
+        {Icon && (
+          <>
+            <Spacer axis="horizontal" size={0.5} />
+            {Icon}
+          </>
+        )}
       </StyledButton>
     </OuterLayout>
   );
@@ -87,13 +87,17 @@ export default function Button({
 export type ColorVariables = {
   background: string;
   border: string;
+  backgroundLight?: string;
 };
 
+// TODO: Refactor me.
 function getButtonVariables(variables: ColorVariables) {
   const backgroundColor = variables.background;
   const borderColor = variables.border;
 
-  return [backgroundColor, borderColor];
+  const backgroundLightColor = variables.backgroundLight;
+
+  return [backgroundColor, borderColor, backgroundLightColor];
 }
 
 const styleColor: { [key in ButtonColor]: FlattenSimpleInterpolation } = {
@@ -105,11 +109,13 @@ const styleColor: { [key in ButtonColor]: FlattenSimpleInterpolation } = {
   primary: getButtonVariables({
     background: theme.colors.brand.primary.base,
     border: theme.colors.brand.primary.base,
+    backgroundLight: theme.colors.brand.primary.light,
   }),
 
   grey: getButtonVariables({
     background: theme.colors.v1.grey[300],
     border: theme.colors.v1.grey[300],
+    backgroundLight: theme.colors.v1.grey[50],
   }),
 };
 
@@ -125,7 +131,7 @@ function getButtonStyles(variant: ButtonVariant, color: ButtonColor) {
     return css`
       border: 1px solid;
       border-color: ${styleColor[color][1]};
-      background-color: transparent;
+      background-color: ${styleColor[color][2] || "transparent"};
     `;
   }
 
