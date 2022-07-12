@@ -580,8 +580,10 @@ ul.social li{
                     <div class="text" style="padding: 0 2.5em; text-align: center;">
                         <h2>Hello <a href="#">{{username}}. Votre compte a été créé avec succès</a></h2>
                         <h3 style="padding: 1em 0">Veuillez vérifier votre e-mail en cliquant sur le button ci-dessous</h3>
-                        <p><a href="{{bo_url}}/validate-account?access_token={{token}}" class="btn btn-primary">Je Confirme</a></p>
-                    </div>
+						<p>
+                            <a href="{{bo_url}}/validate-account?access_token={{token}}" rel="noopener noreferrer nofollow" target="_blank" style="padding: 5px 15px; display: inline-block; border-radius: 5px; background: #7068DC; color: #ffffff;">Je Confirme</a>
+                        </p>                    
+					</div>
                 </td>
             </tr>
         </table>

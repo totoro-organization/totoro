@@ -3,6 +3,9 @@ const commonsController = require("~services/Commons/controller");
 const {qrcode} = require("~utils/generate");
 const asyncLib = require("async");
 
+const env = process.env.NODE_ENV || "development";
+const config = require("~orm/config/config.json")[env];
+
 const { 
 	getRow,
 	getPagingData,
@@ -168,7 +171,15 @@ module.exports = {
 			var lat = parseFloat(latitude);
 			var lng = parseFloat(longitude);
 			
-			const haversine = `(
+			const haversine = config.dialect ===  "postgres" ? `(
+				6371 * acos(
+					cos(radians(${lat}))
+					* cos(radians("Jobs"."latitude"))
+					* cos(radians("Jobs"."longitude") - radians(${lng}))
+					+ sin(radians(${lat})) * sin(radians("Jobs"."latitude"))
+				)
+			)`:
+			`(
 				6371 * acos(
 					cos(radians(${lat}))
 					* cos(radians(\`Jobs\`.\`latitude\`))
@@ -176,6 +187,7 @@ module.exports = {
 					+ sin(radians(${lat})) * sin(radians(\`Jobs\`.\`latitude\`))
 				)
 			)`;
+
 			params.attributes['include'] = [[Jobs.sequelize.literal(haversine), 'distance']]
 			params.order = Jobs.sequelize.col('distance')
 			if(distance) params.having = Jobs.sequelize.literal(`distance <= ${distance}`)
@@ -211,14 +223,23 @@ module.exports = {
 			var lat = parseFloat(latitude);
 			var lng = parseFloat(longitude);
 			
-			const haversine = `(
+			const haversine = config.dialect ===  "postgres" ? `(
 				6371 * acos(
 					cos(radians(${lat}))
-					* cos(radians(Jobs.latitude))
-					* cos(radians(Jobs.longitude) - radians(${lng}))
-					+ sin(radians(${lat})) * sin(radians(Jobs.latitude))
+					* cos(radians("Jobs"."latitude"))
+					* cos(radians("Jobs"."longitude") - radians(${lng}))
+					+ sin(radians(${lat})) * sin(radians("Jobs"."latitude"))
+				)
+			)`:
+			`(
+				6371 * acos(
+					cos(radians(${lat}))
+					* cos(radians(\`Jobs\`.\`latitude\`))
+					* cos(radians(\`Jobs\`.\`longitude\`) - radians(${lng}))
+					+ sin(radians(${lat})) * sin(radians(\`Jobs\`.\`latitude\`))
 				)
 			)`;
+			
 			params.attributes['include'] = [[Jobs.sequelize.literal(haversine), 'distance']]
 		} 
 
