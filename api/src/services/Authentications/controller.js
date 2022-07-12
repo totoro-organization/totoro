@@ -79,11 +79,13 @@ module.exports = {
 
   signup: async function (res, model, data) {
     const {password,email,username} = data
+    /*
     const emailValid = await isEmailValid(email);
     if(emailValid !== "ok")
       return res
         .status(error.parameters.status)
         .json({ message: emailValid });
+    */
 
     const inactiveStatus = await getRow(res, Status, {
       label: label_status.disabled,
@@ -104,7 +106,7 @@ module.exports = {
     data["password"] = bcrypt.hashSync(password, 10);
     //data["terminal_id"] = nearestTerminal.id;
 
-    const condition = { email, username };
+    const condition = {[Op.or]: [{ email },{ username }],};
 
     commonsController.create(
       function (result) {
@@ -112,7 +114,7 @@ module.exports = {
 
         const token = generateToken(result);
         //Send mail
-        sendMail(signup.template, {to: email, subject: signup.subject}, {token})
+        sendMail(signup.template, {to: email, subject: signup.subject}, {username: result.username, token})
 
         return res
           .status(success.create.status)
@@ -130,11 +132,13 @@ module.exports = {
   forgot: async function (res, model, data) {
     const {email} = data
 
+    /*
     const emailValid = await isEmailValid(email);
     if(emailValid !== "ok")
       return res
         .status(error.parameters.status)
         .json({ message: emailValid });
+    */
 
     const activeStatus = await getRow(Status, { label: label_status.actived });
 
