@@ -4,9 +4,17 @@ const hbs = require('nodemailer-express-handlebars');
 var onlyPath = process.cwd();
 
 module.exports = {
-  sendMail: async function (template, headerMail, contentMail) {
+  sendMail: async function (page, headerMail, contentMail) {
     const {to, subject} = headerMail
-    contentMail = {...contentMail, logo: process.env.API_BASE_URL+"/totoro-logo.svg"}
+    contentMail = {
+      ...contentMail, 
+      base_url: process.env.API_BASE_URL, 
+      landing_page: process.env.LANDING_PAGE_URL,
+      web_app: process.env.WEB_APP_URL,
+      back_office: process.env.BO_URL
+    }
+
+
     const transporter = nodemailer.createTransport({
       service:'gmail',
       auth: {
@@ -19,16 +27,18 @@ module.exports = {
       viewEngine: {
           extname: '.handlebars',
           layoutsDir: onlyPath+"/public/views/templates-mail/",
-          defaultLayout : template,
+          defaultLayout : "template",
+          partialsDir : onlyPath+"/public/views/templates-mail/partials/"
       },
       viewPath: `${onlyPath}/public/views/templates-mail/`
     }))
 
     const mailOptions = {
-      from: process.env.MAILER_USER,
+      from: `Totoro <${process.env.MAILER_USER}>`,
       to,
       subject,
-      template,
+      template: page+".body",
+      text: "Hello. This email is not spam.",
       context: contentMail
     }; 
 
@@ -39,6 +49,7 @@ module.exports = {
       } else {
           console.log('Email envoye!!!');
       }
+      transporter.close();
     });
   },
 }

@@ -51,6 +51,9 @@ services:
       - MAILER_USER=$MAILER_USER
       - MAILER_PASS=$MAILER_PASS
       - API_BASE_URL=$API_BASE_URL
+      - WEB_APP_URL=$WEB_APP_URL
+      - BO_URL=$BO_URL
+      - LANDING_PAGE_URL=$LANDING_PAGE_URL
     networks:
       - backend
       - frontend
