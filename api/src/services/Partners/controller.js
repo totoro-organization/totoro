@@ -1,4 +1,5 @@
 const axios = require("axios");
+const { Op } = require("sequelize");
 const { success, error } = require("~utils/common/messages.json");
 const { label_status } = require("~utils/enum.json");
 const { isEmailValid } = require("~utils/verify");
@@ -56,11 +57,13 @@ module.exports = {
 
 	createPartner: async function (res, data) {
 		const { email, phone, type, typeValue } = data
+		/*
 		const emailValid = await isEmailValid(email);
 		if(emailValid !== "ok")
 			return res
 				.status(error.parameters.status)
 				.json({ message: emailValid });
+		*/
 
 		const request = await axios.get(`https://entreprise.data.gouv.fr/api/sirene/v1/${type}/${typeValue}`);
 		if(request.data.message){
@@ -79,7 +82,8 @@ module.exports = {
 		const statusData = await getRow(res, Status, { label: label_status.requested });
 		data["status_id"] = statusData.id;
 
-		const condition = { email, phone };
+		const condition = {[Op.or]: [{ email },{ phone }],};
+
 
 		commonsController.create(function(result){
 				const token = generateToken(result, true);
@@ -94,17 +98,21 @@ module.exports = {
 
 	updatePartner: async function (res, id, data) {
 		const {phone, email, status_id} = data
-		const condition = {};
-		if (phone) condition.phone = phone;
+		const getCondition = [];
+		if (phone) getCondition.push({phone});
 		if (email) {
+			/*
 			const emailValid = await isEmailValid(email);
 			if(emailValid !== "ok")
 				return res
 					.status(error.parameters.status)
 					.json({ message: emailValid });
-					
-			condition.email = email
+			*/
+			
+			getCondition.push({email})
 		};
+		const condition = {[Op.or]: [...getCondition],};
+
 		const statusData = await getRow(res, Status, { id: status_id });
 
 		commonsController.update(res, Partners, id, data, condition);
