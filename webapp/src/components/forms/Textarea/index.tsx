@@ -1,21 +1,11 @@
-import { TextareaAutosize } from '@mui/material';
+import { TextareaAutosize, TextareaAutosizeProps } from '@mui/material';
 import { Controller, useFormContext } from 'react-hook-form';
-
-interface IFormTextArea {
-  name: string;
-  label?: string;
-  defaultValue?: string;
-  minRows?: number;
-  placeholder?: string;
-}
 
 const FormTextarea = ({
   name,
-  minRows = 3,
   defaultValue,
-  placeholder = null,
   ...props
-}: IFormTextArea) => {
+}: TextareaAutosizeProps) => {
   const { control } = useFormContext();
 
   return (
@@ -26,9 +16,8 @@ const FormTextarea = ({
         <TextareaAutosize
           {...field}
           aria-label="minimum height"
-          minRows={minRows}
-          placeholder={placeholder}
           style={{ width: '100%', height: 150, maxWidth: '' }}
+          {...props}
         />
       )}
       defaultValue={defaultValue}
