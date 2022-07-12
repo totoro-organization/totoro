@@ -1,7 +1,7 @@
 {
     "signup": {
       "subject": "Création de compte",
-      "template": ""
+      "template": "create-account-user"
     },
     "account_activate": {
       "subject": "Activez votre compte",

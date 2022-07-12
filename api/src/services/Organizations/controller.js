@@ -1,6 +1,7 @@
 
 const axios = require("axios");
 const moment = require("moment");
+const { Op } = require("sequelize");
 const asyncLib = require("async");
 const { success, error } = require("~utils/common/messages.json");
 const { label_status, role } = require("~utils/enum.json");
@@ -74,11 +75,14 @@ module.exports = {
 
 	createOrganization: async function (res, data) {
 		const { email, phone, type, typeValue, user_id } = data
+
+		/*
 		const emailValid = await isEmailValid(email);
 		if(emailValid !== "ok")
 			return res
 				.status(error.parameters.status)
 				.json({ message: emailValid });
+		*/
 
     	const activeStatus = await getRow(Status, { label: label_status.actived });
 		const request = await axios.get(`https://entreprise.data.gouv.fr/api/sirene/v1/${type}/${typeValue}`);
@@ -104,7 +108,8 @@ module.exports = {
 		const statusData = await getRow(res, Status, { label: label_status.requested });
 		data["status_id"] = statusData.id;
 
-		const condition = { email, phone, siren: data.siren, siret: data.siret };
+		const condition = {[Op.or]: [{ email },{ phone },{ siren: data.siren},{ siret:  data.siret}],};
+
 
 		commonsController.create( async function(resultCreateAssociation){
 			const statusDataAdd = await getRow(res, Status, { label: label_status.actived });
@@ -131,17 +136,21 @@ module.exports = {
 
 	updateOrganization: async function (res, id, data) {
 		const {phone, email, status_id} = data
-		const condition = {};
-		if (phone) condition.phone = phone;
+		const getCondition = [];
+		if (phone) getCondition.push({phone});
 		if (email) {
+			/*
 			const emailValid = await isEmailValid(email);
 			if(emailValid !== "ok")
 				return res
 					.status(error.parameters.status)
 					.json({ message: emailValid });
-
-			condition.email = email
+			*/
+			
+			getCondition.push({email})
 		};
+		const condition = {[Op.or]: [...getCondition],};
+
 		const statusData = await getRow(res, Status, { id: status_id });
 
 		commonsController.update(res, Associations, id, data, condition);

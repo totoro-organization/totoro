@@ -118,11 +118,13 @@ module.exports = {
 		const {email} = data
 		const condition = {};
 		if (email) {
+			/*
 			const emailValid = await isEmailValid(email);
 			if(emailValid !== "ok")
 				return res
 					.status(error.parameters.status)
 					.json({ message: emailValid });
+			*/
 			condition.email = email
 		};
 		commonsController.update(res, Users, id, data, condition);

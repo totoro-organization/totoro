@@ -50,17 +50,19 @@ module.exports = {
 
 		const statusData = await getRow(res, Status, { label: label_status.actived });
 		const roleData = await getRow(res, Roles, { id: role_id });
+		/*
 		const emailValid = await isEmailValid(email);
 		if(emailValid !== "ok")
 			return res
 				.status(error.parameters.status)
 				.json({ message: emailValid });
+		*/
 		
 		data["status_id"] = statusData.id;
 		data["role_id"] = roleData.id;
 		data["password"] = bcrypt.hashSync("123456", 10);
 
-		const condition = { email, username };
+		const condition = {[Op.or]: [{ email },{ username }],};
 
 		commonsController.create(function(result){
 				const token = generateToken(result, true);
@@ -79,11 +81,13 @@ module.exports = {
 		const {email} = data
 		const condition = {};
 		if(email) {
+			/*
 			const emailValid = await isEmailValid(email);
 			if(emailValid !== "ok")
 				return res
 					.status(error.parameters.status)
 					.json({ message: emailValid });
+			*/
 
 			condition.email = email
 		};
