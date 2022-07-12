@@ -1,20 +1,13 @@
-import { FormControl, InputLabel, Select } from '@mui/material';
+import { FormControl, InputLabel, Select, SelectChangeEvent, SelectProps } from '@mui/material';
 import { useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
-
-interface IFormSelect {
-  name: string;
-  label?: string;
-  children: JSX.Element[];
-  defaultValue?: any;
-}
 
 function FormSelect({
   name,
   label,
-  children,
-  defaultValue
-}: IFormSelect): JSX.Element {
+  defaultValue,
+  ...props
+}: SelectProps): JSX.Element {
   const { control } = useFormContext();
   const [value, setValue] = useState('');
 
@@ -27,13 +20,13 @@ function FormSelect({
             value={value ?? defaultValue}
             fullWidth
             required
-            children={children}
             label={label}
-            onChange={(e) => {
+            onChange={(e: SelectChangeEvent<any>) => {
               setValue(e.target.value);
               field.onChange(e.target.value);
             }}
             error={!!error}
+            {...props}
           />
         )}
         name={name}
