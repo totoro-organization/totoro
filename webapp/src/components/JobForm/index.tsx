@@ -13,6 +13,7 @@ import { CommonsContext } from 'src/contexts/CommonsContext';
 import { sortObjectArrayByAscOrder } from 'src/utils/sortByAscOrder';
 import type { JobDifficulty, Tag } from 'src/models';
 import format from 'date-fns/format';
+import AddIcon from '@mui/icons-material/Add';
 
 interface JobFormFieldTypes {
   start_date: Date
@@ -56,6 +57,8 @@ const JobForm = () => {
     }
     console.log(data)
   };
+
+  console.log(methods.formState.errors)
   
   const ascDifficulties: JobDifficulty[] = sortObjectArrayByAscOrder(
     difficulties,
@@ -104,7 +107,7 @@ const JobForm = () => {
           placeholder="Description"
           name="description"
         />
-        <FormInputFile/>
+        <FormInputFile startIcon={<AddIcon/>} name="images" multiple buttonLabel='Ajouter des images'/>
         <Button type="submit">Submit</Button>
         <Button onClick={() => methods.reset()} variant={'outlined'}>
           Reset
