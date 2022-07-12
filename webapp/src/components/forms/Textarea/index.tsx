@@ -1,5 +1,5 @@
-import { FormControl, InputLabel, TextareaAutosize } from '@mui/material';
-import { Controller } from 'react-hook-form';
+import { TextareaAutosize } from '@mui/material';
+import { Controller, useFormContext } from 'react-hook-form';
 
 interface IFormTextArea {
   name: string;
@@ -16,9 +16,12 @@ const FormTextarea = ({
   placeholder = null,
   ...props
 }: IFormTextArea) => {
+  const { control } = useFormContext();
+
   return (
     <Controller
       name={name}
+      control={control}
       render={({ field, fieldState: { error } }) => (
         <TextareaAutosize
           {...field}
