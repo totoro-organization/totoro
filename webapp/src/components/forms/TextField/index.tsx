@@ -1,22 +1,11 @@
-import { TextField } from '@mui/material';
+import { TextField, TextFieldProps } from '@mui/material';
 import { Controller, useFormContext } from 'react-hook-form';
 
-interface IFormTextField {
-  name: string,
-  label: string,
-  defaultValue?: string | number,
-  inputProps?: any,
-  type?: string
-}
-
 function FormTextField ({
-  label,
   name,
-  type = "text",
-  inputProps = {},
   defaultValue,
   ...props
-}: IFormTextField) : JSX.Element {
+}: TextFieldProps) : JSX.Element {
 
   const { control } = useFormContext();
 
@@ -27,9 +16,7 @@ function FormTextField ({
         render={({ field, fieldState: { error } }) => (
           <TextField
             {...field}
-            inputProps={inputProps}
-            type={type}
-            label={label}
+            {...props}
             error={!!error}
             helperText={error?.message}
           />
