@@ -1,52 +1,50 @@
-// @ts-noCheck
 import { Autocomplete, TextField } from '@mui/material';
-import { Control, Controller, Path } from 'react-hook-form';
+import { Controller, useFormContext } from 'react-hook-form';
 
-interface IFormAutocomplete<FormFieldTypes, Option> {
-  name: Path<FormFieldTypes>;
-  label: string;
-  control?: Control<FormFieldTypes, object>;
-  defaultValue?: string;
-  options: Option[]
+interface IFormAutocomplete {
+  name: string;
+  label?: string;
+  options: any[];
+  defaultValue?: any;
+  multiple?: boolean;
+  getOptionLabel?: (option) => string,
+  isOptionEqualToValue?: (option: any, value: any) => boolean
 }
 
-function FormAutocomplete<FormFieldValues, Option>({
-  options,
+function FormAutocomplete({
+  options = [],
   label,
   name,
   multiple = false,
+  defaultValue,
+  getOptionLabel,
+  isOptionEqualToValue,
   ...props
-}: IFormAutocomplete<FormFieldValues, Option>) {
-  // const handleGetOptionsKey = (options, field) => {
-  //     const optionsKeys = options.map(option => option[value]);
-  //     field.onChange(optionsKeys);
-  // }
-
-  // const test = () => {
-
-  // }
+}: IFormAutocomplete) {
+  const { control } = useFormContext();
 
   return (
     <Controller
-      name={name}
-      render={({ field, fieldState: { error } }) => (
+      render={({ field: { onChange, ...field} }) => (
         <Autocomplete
           {...field}
           multiple={multiple}
-          limitTags={4}
           options={options}
-          renderInput={(params) => (
+          getOptionLabel={getOptionLabel}
+          isOptionEqualToValue={isOptionEqualToValue}
+          renderInput={params => (
             <TextField
-              label={label}
-              error={!!error}
-              helperText={error?.message}
               {...params}
+              label={label}
             />
           )}
-          onChange={(_, data) => field.onChange(data)}
+          onChange={(e, data) => onChange(data)}
+          {...props}
         />
       )}
-      {...props}
+      defaultValue={defaultValue}
+      name={name}
+      control={control}
     />
   );
 }
