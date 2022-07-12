@@ -1,34 +1,44 @@
-// @ts-noCheck
-import { FormControl, Select, SelectChangeEvent } from '@mui/material';
-import { Control, Controller, Path } from 'react-hook-form';
+import { FormControl, InputLabel, Select } from '@mui/material';
+import { useState } from 'react';
+import { Controller, useFormContext } from 'react-hook-form';
 
-interface IFormSelect<FormFieldTypes> {
-  name: Path<FormFieldTypes>,
-  label: string,
-  control?: Control<FormFieldTypes, object>,
-  children: JSX.Element[],
-  defaultValue?: string
+interface IFormSelect {
+  name: string;
+  label?: string;
+  children: JSX.Element[];
+  defaultValue?: any;
 }
 
-function FormSelect<FormFieldTypes>({ name, label, control, children, ...props }: IFormSelect<FormFieldTypes>): JSX.Element {
+function FormSelect({
+  name,
+  label,
+  children,
+  defaultValue
+}: IFormSelect): JSX.Element {
+  const { control } = useFormContext();
+  const [value, setValue] = useState('');
 
   return (
     <FormControl fullWidth>
+      <InputLabel>{label}</InputLabel>
       <Controller
-        control={control}
-        name={name}
         render={({ field, fieldState: { error } }) => (
           <Select
-            // value={props.defaultValue}
+            value={value ?? defaultValue}
             fullWidth
             required
             children={children}
             label={label}
-            onChange={(e) => field.onChange(e.target.value)}
+            onChange={(e) => {
+              setValue(e.target.value);
+              field.onChange(e.target.value);
+            }}
             error={!!error}
           />
         )}
-        {...props}
+        name={name}
+        control={control}
+        defaultValue={defaultValue}
       />
     </FormControl>
   );
