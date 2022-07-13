@@ -109,7 +109,7 @@ const styleColor: { [key in ButtonColor]: FlattenSimpleInterpolation } = {
   primary: getButtonVariables({
     background: theme.colors.brand.primary.base,
     border: theme.colors.brand.primary.base,
-    backgroundLight: theme.colors.brand.primary.light,
+    backgroundLight: theme.colors.brand.primary.lightest,
   }),
 
   grey: getButtonVariables({
