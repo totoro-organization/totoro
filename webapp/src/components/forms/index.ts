@@ -1,10 +1,12 @@
 import FormTextField from "./TextField";
 import FormAutocomplete from "./Autocomplete";
-import FormContainer from "./FormContainer";
+import FormContainer from "./Container";
 import FormSelect from "./Select";
 import FormTextarea from "./Textarea";
 import FormDateTimePicker from "./DateTimePicker";
 import FormDateTimeRangePicker from "./DateTimeRangePicker";
+import FormUpload from "./Upload";
+import UploadImagePreview from "./UploadImagePreview";
 
 export {
     FormTextField,
@@ -13,5 +15,7 @@ export {
     FormSelect,
     FormDateTimeRangePicker,
     FormDateTimePicker,
-    FormTextarea
+    FormTextarea,
+    FormUpload,
+    UploadImagePreview
 }

@@ -19,7 +19,6 @@ function FormSelect({
           <Select
             value={value ?? defaultValue}
             fullWidth
-            required
             label={label}
             onChange={(e: SelectChangeEvent<any>) => {
               setValue(e.target.value);

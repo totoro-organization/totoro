@@ -17,6 +17,7 @@ const FormTextarea = ({
           {...field}
           aria-label="minimum height"
           style={{ width: '100%', height: 150, maxWidth: '' }}
+          onChange={(e) => console.log(e)}
           {...props}
         />
       )}
