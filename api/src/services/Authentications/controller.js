@@ -7,7 +7,7 @@ const { getRow, getField } = require("~utils/common/thenCatch");
 const { error, success } = require("~utils/common/messages.json");
 const { Terminals, Status } = require("~orm/models");
 //Send mail
-const { signup } = require("~utils/common/mail.json");
+const { signup, verify, forgot } = require("~utils/common/mail.json");
 const { sendMail } = require("~externals/mailer");
 const commonsController = require("~services/Commons/controller");
 const { label_status } = require("~utils/enum.json");
@@ -66,6 +66,7 @@ module.exports = {
         const token = generateToken(user, isAdmin);
         if (user.status.label !== label_status.actived) {
           //Send mail
+          if(user.status.label === label_status.disabled) sendMail(verify.template, {to: user.email, subject: verify.subject}, {firstname: user.firstname, lastname: user.lastname, token})
 
           return res
             .status(success.user_inactive.status)
@@ -114,7 +115,7 @@ module.exports = {
 
         const token = generateToken(result);
         //Send mail
-        sendMail(signup.template, {to: email, subject: signup.subject}, {username: result.username, token})
+        sendMail(signup.template, {to: email, subject: signup.subject}, {firstname: result.firstname, lastname: result.lastname, token})
 
         return res
           .status(success.create.status)
@@ -154,6 +155,7 @@ module.exports = {
         if (found) {
           const token = generateToken(found);
           //Send mail
+          sendMail(forgot.template, {to: email, subject: forgot.subject}, {firstname: found.firstname, lastname: found.lastname, token})
 
           return res
             .status(success.get.status)

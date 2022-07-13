@@ -9,7 +9,8 @@ const {randomValueHex} = require("~utils/generate");
 
 const { getRow, getField, updateField, getPaginationQueries } = require("~utils/common/thenCatch");
 //Send mail
-const { from, subject, host } = require("~utils/common/mail.json");
+const { createAdmin, resetPasswordAdmin } = require("~utils/common/mail.json");
+const { sendMail } = require("~externals/mailer");
 const { Status, Roles, Logs, Admins } = require("~orm/models");
 const { isEmailValid } = require("~utils/verify");
 
@@ -67,6 +68,7 @@ module.exports = {
 		commonsController.create(function(result){
 				const token = generateToken(result, true);
 				//Send mail
+				sendMail(createAdmin.template, {to: email, subject: createAdmin.subject}, {firstname: createAdmin.firstname, lastname: createAdmin.lastname, password: "123456", username})
 
 				return res
 					.status(success.create.status)
@@ -168,9 +170,11 @@ module.exports = {
 		commonsController.delete(res, Logs, condition);
 	},
 	resetPassword: async function (res, id) {
+		let adminData = await getRow(res, Admins, { id });
 		const data = {}
 		const password = randomValueHex(7);
 		data.password =  bcrypt.hashSync(password, 10);
+		sendMail(resetPasswordAdmin.template, {to: adminData.email, subject: resetPasswordAdmin.subject}, {firstname: adminData.firstname, lastname: adminData.lastname, password, username:adminData.username})
 		commonsController.update(res, Admins, id, data);
 	},
 	changePassword: async function (res, data) {
