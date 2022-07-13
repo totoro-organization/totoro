@@ -4,7 +4,7 @@ const hbs = require('nodemailer-express-handlebars');
 var onlyPath = process.cwd();
 
 module.exports = {
-  sendMail: async function (page, headerMail, contentMail) {
+  sendMail: function (page, headerMail, contentMail) {
     const {to, subject} = headerMail
     contentMail = {
       ...contentMail, 

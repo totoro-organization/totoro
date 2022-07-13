@@ -2,12 +2,14 @@ const { Op } = require("sequelize");
 const commonsController = require("~services/Commons/controller");
 const {qrcode} = require("~utils/generate");
 const asyncLib = require("async");
-
+const { updateJob, registerToJob } = require("~utils/common/mail.json");
+const { sendMail } = require("~externals/mailer");
 const env = process.env.NODE_ENV || "development";
 const config = require("~orm/config/config.json")[env];
 
 const { 
 	getRow,
+	getRows,
 	getPagingData,
 	getPagination,
 	getPaginationQueries,
@@ -307,9 +309,9 @@ module.exports = {
 
 		commonsController.getAll(res, Favorites, {jobs_id: id}, excludeFavorites, includeFavorites, pagination);
 	},
-	createJob: async function (res, req) {
-		const {body : data, files} = req
-		const {tags,difficulty_id,assos_user_id,title} = data
+	createJob: async function (req, res) {
+		const {body: data, files} = req;
+		const {tags, difficulty_id, assos_user_id, title} = data
 
 		const statusData = await getRow(res, Status, { label: label_status.disabled });
 		const difficultyData = await getRow(res, Difficulties, { id: difficulty_id });
@@ -400,14 +402,16 @@ module.exports = {
 	updateJob: async function (res, id, data) {
 		const {status_id, title, difficulty_id, tags} = data
 		const condition = {};
+		let stat = null;
+		let diff = null;
 		if(title) condition.title = title;
 
 		if (status_id) {
-			const stat = await getRow(res, Status, { id: status_id });
+			stat = await getRow(res, Status, { id: status_id });
 		}
 
 		if (difficulty_id) {
-			const diff = await getRow(res, Difficulties, { id: difficulty_id });
+			diff = await getRow(res, Difficulties, { id: difficulty_id });
 		}
 		if(data.participants_max) data.remaining_place = data.participants_max
 
@@ -428,6 +432,8 @@ module.exports = {
 				}
 				commonsController.create(
 					function (resultTags) {
+						//
+						if (status_id)
 						commonsController.update(res, Jobs, id, data, condition);
 					},
 					res,
@@ -444,10 +450,21 @@ module.exports = {
 				.json({ message: error.syntax_error.message });
 			});
 		} else {
+			//
+			if (status_id || difficulty_id){
+				const {participants, job} = await module.exports.membersOrganisationJob(res, id);
+				for (const participant of participants) {
+					sendMail(updateJob.template, {to: participant.email, subject: updateJob.subject}, {job, status: stat, difficulty: diff})
+				}
+			}
 			commonsController.update(res, Jobs, id, data, condition);
 		}
 	},
-	deleteJob: function (res, id) {
+	deleteJob: async function (res, id) {
+		const {members, job} = await module.exports.membersOrganisationJob(res, id);
+		for (const member of members) {
+			sendMail(updateJob.template, {to: member.email, subject: updateJob.subject}, {job})
+		}
 		commonsController.delete(res, Jobs, { id });
 	},
 	deleteImageJob: function (res, id) {
@@ -493,6 +510,7 @@ module.exports = {
 	registerToJob: async function (res, data) {
 		const { jobs_id, user_id } = data
 		const statusData = await getRow(res, Status, { label: label_status.actived });
+		const userData = await getRow(res, Users, { id: user_id });
 		data.status_id = statusData.id;
 
 		const jobData = await getRow(
@@ -550,6 +568,10 @@ module.exports = {
 						  ],
 							  async function (result) {
 								if (result){
+									const {members, job} = await module.exports.membersOrganisationJob(res, jobs_id);
+									for (const member of members) {
+										sendMail(registerToJob.template, {to: member.email, subject: registerToJob.subject}, {job, user: userData})
+									}
 									return res
 											.status(success.create.status)
 											.json({ entity: Jobs.name, message: success.create.message });	  
@@ -577,5 +599,34 @@ module.exports = {
 		  );
 		}
 	},
+	membersOrganisationJob: async function(res, id){
+		const data = await getRow(
+			res, 
+			Jobs, 
+			{ id },
+			[
+				{ 
+					model: Associations_users, as: "author",
+					include : [
+						{
+							model: Associations, as: "organization",
+							include : [
+								{
+									model: Associations_users, as: "members"
+								}
+							]
+						}
+					]
+				}
+			]
+		);
+		const job = await getRow(Jobs, {id}, include);
+
+		return {
+			members: data["author"]["organization"]["members"],
+			participants:null,
+			job
+		}
+	}
 };
 
