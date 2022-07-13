@@ -43,6 +43,7 @@ export default function Job({
   const currentFavorite = userFavorites?.filter(
     (fav) => fav.organization.id === job?.author.organization.id
   );
+
   const isOrganizationFollow =
     currentFavorite !== undefined && currentFavorite.length > 0;
 
@@ -205,13 +206,13 @@ export default function Job({
       <Spacer axis="vertical" size={4} />
 
       {/* TODO: Add call api to unregister job */}
-      <Button
-        handlePress={handleRegisterJob}
-        variant={userAlreadyParticipate ? "outline" : "default"}
-        color={userAlreadyParticipate ? "grey" : "primary"}
-      >
-        {userAlreadyParticipate ? "Tu es déjà inscrit.e" : "Je participe"}
-      </Button>
+      {userAlreadyParticipate && <Text>Tu es déjà inscrit.e</Text>}
+
+      {!userAlreadyParticipate && (
+        <Button handlePress={handleRegisterJob} color="primary">
+          Je participe
+        </Button>
+      )}
     </GlobalLayout>
   );
 }
