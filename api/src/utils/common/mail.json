@@ -19,13 +19,13 @@
       "subject": "Mot de passe restauré",
       "template": "new-password"
     },
-    "transaction": {
-      "subject": "Votre tansaction",
-      "template": ""
+    "updateJob": {
+      "subject": "Information sur la mission",
+      "template": "update-job"
     },
-    "subsciption_activate": {
+    "registerToJob": {
       "subject": "Votre abonnement",
-      "template": ""
+      "template": "register-to-job"
     },
     "subcription_expirate": {
       "subject": "Votre abonnement",
