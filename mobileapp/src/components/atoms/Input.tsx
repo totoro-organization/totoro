@@ -31,7 +31,7 @@ const StyledInput = styled.TextInput<{ $error: boolean; $active: boolean }>`
       $error
         ? "red"
         : $active
-        ? theme.colors.core.black
+        ? theme.colors.brand.primary.base
         : theme.colors.v1.grey[200]};
   border-radius: ${({ theme }) => theme.border.radius.md};
   background-color: ${({ theme, $error }) =>
