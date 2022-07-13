@@ -20,6 +20,8 @@ const RootStack = createStackNavigator();
 export default function RootStackNavigator() {
   const { user, isLoading } = useAuth();
 
+  console.log(user);
+
   // TODO: Add Launching screen is `isLoading` on useAuth is true?
   if (isLoading) return null;
 
@@ -28,9 +30,9 @@ export default function RootStackNavigator() {
       screenOptions={{
         headerShown: false,
       }}
-      initialRouteName={user === undefined ? "Explications" : "BottomTab"}
+      initialRouteName={user ? "BottomTab" : "Explications"}
     >
-      {user === undefined && (
+      {!user && (
         <>
           <RootStack.Screen name="Explications" component={Explanation} />
           <RootStack.Screen name="Se connecter" component={Login} />
