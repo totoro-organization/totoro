@@ -28,9 +28,9 @@ export default function RootStackNavigator() {
       screenOptions={{
         headerShown: false,
       }}
-      initialRouteName={user ? "BottomTab" : "Explications"}
+      initialRouteName={user === undefined ? "Explications" : "BottomTab"}
     >
-      {!user && (
+      {user === undefined && (
         <>
           <RootStack.Screen name="Explications" component={Explanation} />
           <RootStack.Screen name="Se connecter" component={Login} />
