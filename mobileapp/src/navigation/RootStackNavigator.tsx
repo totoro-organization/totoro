@@ -20,6 +20,8 @@ const RootStack = createStackNavigator();
 export default function RootStackNavigator() {
   const { user, isLoading } = useAuth();
 
+  console.log(user);
+
   // TODO: Add Launching screen is `isLoading` on useAuth is true?
   if (isLoading) return null;
 

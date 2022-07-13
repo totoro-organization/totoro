@@ -18,11 +18,15 @@ import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { StackParamList } from "../../../navigation/StackNavigationParams";
 import Toast from "react-native-toast-message";
-import type { LocationGeocodedLocation, LocationObject } from "expo-location";
+import type { LocationObject } from "expo-location";
+import { Text } from "../../atoms/Text";
+import { StatusCode } from "../../../common/api/interfaces/StatusCode.enum";
 
 export default function RegisterStepFinal() {
   const navigation = useNavigation<StackNavigationProp<StackParamList>>();
   const [location, setLocation] = useState<LocationObject | null>(null);
+  const [isEmailAlreadyExist, setIsEmailAlreadyExist] =
+    useState<boolean>(false);
 
   const { control, handleSubmit } = useForm<RegisterStepFinalFormValues>({
     defaultValues: {
@@ -67,8 +71,10 @@ export default function RegisterStepFinal() {
 
     await fetchRegisterUser({ user: JSON.parse(userData) })
       .then((res) => {
-        if (res.status === 201) {
+        if (res.status === StatusCode.CREATED) {
           navigation.navigate("Se connecter");
+        } else if (res.status === StatusCode.CONFLICT) {
+          setIsEmailAlreadyExist(true);
         } else {
           registerErrorToast();
         }
@@ -78,34 +84,55 @@ export default function RegisterStepFinal() {
 
   return (
     <>
-      <Alert type="info">
-        Totoro est une application de proximité, votre adresse de résidence nous
-        permet de séléctionner les meilleurs missions près de chez vous.
-      </Alert>
+      {isEmailAlreadyExist && (
+        <>
+          <Text>Ravis de te revoir !</Text>
 
-      <Spacer axis="vertical" size={3} />
+          <Spacer axis="vertical" size={3} />
 
-      <Controller
-        name="address"
-        control={control}
-        render={({
-          field: { onChange, onBlur, value },
-          fieldState: { error },
-        }) => (
-          <InputGroup
-            label="Adresse de résidence"
-            onBlur={onBlur}
-            onChangeText={onChange}
-            value={value}
-            placeholder="8 rue de la résidence des ploucs"
-            error={error}
+          <Text>Il semblerait que tu aies déjà un compte chez nous.</Text>
+
+          <Spacer axis="vertical" size={3} />
+
+          <Button handlePress={() => navigation.navigate("Se connecter")}>
+            Je me connecte
+          </Button>
+        </>
+      )}
+
+      {!isEmailAlreadyExist && (
+        <>
+          <Alert type="info">
+            Totoro est une application de proximité, votre adresse de résidence
+            nous permet de séléctionner les meilleurs missions près de chez
+            vous.
+          </Alert>
+
+          <Spacer axis="vertical" size={3} />
+
+          <Controller
+            name="address"
+            control={control}
+            render={({
+              field: { onChange, onBlur, value },
+              fieldState: { error },
+            }) => (
+              <InputGroup
+                label="Adresse de résidence"
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+                placeholder="8 rue de la résidence des ploucs"
+                error={error}
+              />
+            )}
           />
-        )}
-      />
 
-      <Spacer axis="vertical" size={3} />
+          <Spacer axis="vertical" size={3} />
 
-      <Button handlePress={handleSubmit(onSubmit)}>Je m'inscris !</Button>
+          <Button handlePress={handleSubmit(onSubmit)}>Je m'inscris !</Button>
+        </>
+      )}
     </>
   );
 }
