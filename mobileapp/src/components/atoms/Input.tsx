@@ -2,6 +2,7 @@ import { useState } from "react";
 import { TextInputProps } from "react-native";
 import styled from "styled-components/native";
 import useBoolean from "../../common/hooks/useBoolean";
+import theme from "../../theme/theme";
 
 export type InputProps = { error?: boolean } & TextInputProps;
 
@@ -13,6 +14,7 @@ export default function Input({
 
   return (
     <StyledInput
+      placeholderTextColor={theme.colors.v1.grey[400]}
       $error={error}
       $active={isActive}
       {...nativeTextInputProps}
