@@ -10,5 +10,5 @@ export const JobFormSchema = Yup.object({
   description: Yup.string().min(50).required(REQUIRED_MSG),
   start_date: Yup.date().required(REQUIRED_MSG),
   end_date: Yup.date().required(REQUIRED_MSG),
-  images: Yup.array().of(Yup.string()).min(1)
+  images: Yup.mixed().required(REQUIRED_MSG)
 }).required(REQUIRED_MSG);
