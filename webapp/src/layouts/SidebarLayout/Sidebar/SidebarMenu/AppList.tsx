@@ -55,7 +55,7 @@ function MenuAppList() {
       <Collapse in={openOrganizations} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
           <ListItemButton sx={{ pl: 4 }}>
-            {user.memberships.map((membership) => ( 
+            {user.memberships.length && user.memberships.map((membership) => ( 
               <React.Fragment key={membership.organization.id}>
               <ListItemIcon>
                  <FallbackAvatar

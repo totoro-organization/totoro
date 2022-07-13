@@ -13,7 +13,7 @@ import useUserConnected from "../api/hooks/useUserConnected";
 import fetchLoginUser from "../api/requests/auth/fetchLoginUser";
 
 interface AuthContextType {
-  user?: User;
+  user?: User | null;
   logout: () => Promise<void>;
   login: (data: LoginFormValues) => void;
   error?: any;
@@ -28,7 +28,7 @@ export function AuthProvider({
   children: ReactNode;
 }): JSX.Element {
   const { userConnected, isLoading } = useUserConnected();
-  const [user, setUser] = useState<User | undefined>(undefined);
+  const [user, setUser] = useState<User | null>(null);
   const [error, setError] = useState<any>();
 
   async function login(data: LoginFormValues) {
@@ -40,6 +40,7 @@ export function AuthProvider({
 
       if (response.status === 403) {
         setError({ status: true, email: data.email });
+        setUser(null);
       }
 
       const userToken = await response.json();
@@ -55,12 +56,12 @@ export function AuthProvider({
 
   async function logout() {
     await AsyncStorage.removeItem("userToken");
-    setUser(undefined);
+    setUser(null);
   }
 
   useEffect(() => {
-    setUser(userConnected);
-  }, []);
+    setUser(user);
+  }, [user]);
 
   return (
     <AuthContext.Provider value={{ user, logout, login, error, isLoading }}>

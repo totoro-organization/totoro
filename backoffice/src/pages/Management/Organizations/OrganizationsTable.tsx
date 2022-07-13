@@ -127,7 +127,7 @@ const OrganizationsTable: FC<TableProps<any>> = ({
                       gutterBottom
                       noWrap
                     >
-                      {organization.users.length}
+                      {organization.members.length}
                     </Typography>
                   </TableCell>
                   <TableCell align="right">

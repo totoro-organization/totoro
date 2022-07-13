@@ -1,9 +1,12 @@
 const axios = require("axios");
-const { success } = require("utils/common/messages.json");
-const { label_status } = require("utils/enum.json");
+const { Op } = require("sequelize");
+const { success, error } = require("~utils/common/messages.json");
+const { label_status } = require("~utils/enum.json");
+const { isEmailValid } = require("~utils/verify");
+
 //Send mail
-const { from, subject, host } = require("utils/common/mail.json");
-const { generateToken } = require("utils/session");
+const { from, subject, host } = require("~utils/common/mail.json");
+const { generateToken } = require("~utils/session");
 const {
 	Users,
 	Status,
@@ -11,10 +14,10 @@ const {
 	Partners,
 	Discounts,
 	Types_discounts
-} = require("./../../../models");
-const commonsController = require("services/Commons/controller");
+} = require("~orm/models");
+const commonsController = require("~services/Commons/controller");
 
-const { getRow, getPaginationQueries } = require("utils/common/thenCatch");
+const { getRow, getPaginationQueries } = require("~utils/common/thenCatch");
 
 const excludeCommon = { exclude: ["id", "createdAt", "updatedAt"] };
 
@@ -54,6 +57,14 @@ module.exports = {
 
 	createPartner: async function (res, data) {
 		const { email, phone, type, typeValue } = data
+		/*
+		const emailValid = await isEmailValid(email);
+		if(emailValid !== "ok")
+			return res
+				.status(error.parameters.status)
+				.json({ message: emailValid });
+		*/
+
 		const request = await axios.get(`https://entreprise.data.gouv.fr/api/sirene/v1/${type}/${typeValue}`);
 		if(request.data.message){
 			return res
@@ -65,13 +76,14 @@ module.exports = {
 		delete data.typeValue
 		data["name"] = request.data.siege_social.nom_raison_sociale
 		data["address"] = request.data.siege_social.l4_normalisee || request.data.siege_social.l4_declaree || `${request.data.siege_social.numero_voie} ${request.data.siege_social.type_voie} ${request.data.siege_social.libelle_voie}`
-		data["in_internet"] = 0;
-		data["in_store"] = 0;
+		data["in_internet"] = false;
+		data["in_store"] = false
 
 		const statusData = await getRow(res, Status, { label: label_status.requested });
 		data["status_id"] = statusData.id;
 
-		const condition = { email, phone };
+		const condition = {[Op.or]: [{ email },{ phone }],};
+
 
 		commonsController.create(function(result){
 				const token = generateToken(result, true);
@@ -86,9 +98,21 @@ module.exports = {
 
 	updatePartner: async function (res, id, data) {
 		const {phone, email, status_id} = data
-		const condition = {};
-		if (phone) condition.phone = phone;
-		if (email) condition.email = email;
+		const getCondition = [];
+		if (phone) getCondition.push({phone});
+		if (email) {
+			/*
+			const emailValid = await isEmailValid(email);
+			if(emailValid !== "ok")
+				return res
+					.status(error.parameters.status)
+					.json({ message: emailValid });
+			*/
+			
+			getCondition.push({email})
+		};
+		const condition = {[Op.or]: [...getCondition],};
+
 		const statusData = await getRow(res, Status, { id: status_id });
 
 		commonsController.update(res, Partners, id, data, condition);
@@ -156,18 +180,10 @@ module.exports = {
 			{
 				model: Discounts,
 				as: "discount",
-				attributes: { exclude: ["type_disc_id","status_id","partner_id"] },
+				attributes: { exclude: ["type_disc_id","status_id"] },
 				required: true,
 				include: [
 					{ model: Status, as: "status", attributes: excludeCommon },
-					{ 
-						model: Partners, 
-						as: "partner", 
-						attributes: { exclude: ["status_id"] },
-						include: [
-							{ model: Status, as: "status", attributes: excludeCommon },
-						]
-					},
 					{
 						model: Types_discounts,
 						as: "type",
@@ -184,6 +200,6 @@ module.exports = {
 		let pagination = getPaginationQueries(size,page)
 		condition = Object.keys(condition).length === 0 ? null : condition;
 
-		commonsController.getAll(res, Tokens, null, excludeTransactions, includeTransactions, pagination);
+		commonsController.getAll(res, Tokens, condition, excludeTransactions, includeTransactions, pagination);
 	}
 };

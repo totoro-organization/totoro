@@ -1,11 +1,11 @@
 const express = require("express");
-const { passport, passportAdmin } = require("utils/session");
+const { passport, passportAdmin } = require("~utils/session");
 const controller = require("./controller");
-const { path } = require("utils/enum.json");
-const { upload } = require("utils/storage");
-const { getRow } = require("utils/common/thenCatch");
-const { Status, Roles, Users } = require("./../../../models");
-const { label_status, role } = require("utils/enum.json");
+const { path } = require("~utils/enum.json");
+const { upload } = require("~utils/storage");
+const { getRow } = require("~utils/common/thenCatch");
+const { Status, Roles, Users } = require("~orm/models");
+const { label_status, role } = require("~utils/enum.json");
 
 exports.router = (function () {
 	const organizationsRouter = express.Router();

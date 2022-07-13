@@ -1,22 +1,33 @@
-import { Status } from "./status";
+import { Organization } from "./organization";
+import { Partner } from "./partner";
+import { Role } from "./role";
+import { MembershipStatus, UserStatus } from "./status";
 
-export type UserStatus = Status<"actived" | "freezed" | "disabled">;
+export interface Membership {
+  id: string;
+  organization: Organization;
+  role: Role;
+  status: MembershipStatus;
+  createdAt: string;
+  updatedAt: string;
+}
 
 export interface User {
-  id?: string;
-  firstname?: string;
-  lastname?: string;
-  username?: string;
-  email?: string;
+  id: string;
+  firstname: string;
+  lastname: string;
+  username: string;
+  email: string;
   phone?: number;
-  adress?: any; // FIXME
-  latitude?: any; // REMOVE ME => see with backend guys
-  longitude?: any; // REMOVE ME => see with backend guys
   bio?: string;
   total_token: number;
-  birthday?: any;
-  avatar?: string;
-  status?: UserStatus;
-  createdAt?: string;
-  updatedAt?: string;
+  birthday?: Date;
+  avatar: string;
+  status: UserStatus;
+  memberships: Membership[];
+  partners: Partner[];
+  createdAt: string;
+  updatedAt: string;
+  latitude?: number;
+  longitude?: number;
 }

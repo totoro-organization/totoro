@@ -3,11 +3,11 @@ const {
 	Partners,
 	Discounts,
 	Types_discounts
-} = require("./../../../models");
-const commonsController = require("services/Commons/controller");
-const { label_status } = require("utils/enum.json");
+} = require("~orm/models");
+const commonsController = require("~services/Commons/controller");
+const { label_status } = require("~utils/enum.json");
 
-const { getRow, getPaginationQueries } = require("utils/common/thenCatch");
+const { getRow, getPaginationQueries } = require("~utils/common/thenCatch");
 
 const excludeCommon = { exclude: ["id", "createdAt", "updatedAt"] };
 

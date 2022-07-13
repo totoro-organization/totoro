@@ -1,20 +1,42 @@
 {
-  "from": {
-    "email": "test.api.mailer@gmail.com",
-    "password": "test.api.0"
-  },
-  "subject": {
-    "signup": "Création de compte",
-    "account_activate": "Activez votre compte",
-    "account_banned": "Compte utilisateur banni",
-    "message": "Vous avez reçu un message",
-    "transaction": "Votre tansaction",
-    "subsciption_activate": "Votre abonnement",
-    "subcription_expirate": "Votre abonnement",
-    "subcription_suspended": "Votre abonnement",
-    "forgot_password": "Réinitialiser le mot de passe"
-  },
-  "host": {
-    "gmail": "smtp.gmail.com"
-  }
+    "signup": {
+      "subject": "Création de compte",
+      "template": "create-account-user"
+    },
+    "verify": {
+      "subject": "Vérification de mot de passe",
+      "template": "verify-account-user"
+    },
+    "forgot": {
+      "subject": "Mot de passe oublié ?",
+      "template": "reset-password"
+    },
+    "createAdmin": {
+      "subject": "Accès administrateur Totoro",
+      "template": "create-account-admin"
+    },
+    "resetPasswordAdmin": {
+      "subject": "Mot de passe restauré",
+      "template": "new-password"
+    },
+    "transaction": {
+      "subject": "Votre tansaction",
+      "template": ""
+    },
+    "subsciption_activate": {
+      "subject": "Votre abonnement",
+      "template": ""
+    },
+    "subcription_expirate": {
+      "subject": "Votre abonnement",
+      "template": ""
+    },
+    "subcription_suspended": {
+      "subject": "Votre abonnement",
+      "template": ""
+    },
+    "forgot_password": {
+      "subject": "Réinitialiser le mot de passe",
+      "template": ""
+    }
 }

@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const JWT_SECRET = "totoro";
-const { error } = require("../common/messages.json");
+const { error } = require("~utils/common/messages.json");
 
 module.exports = {
   generateToken: function (data, isAdmin = false) {

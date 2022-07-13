@@ -17,8 +17,9 @@ export default function Conversation({
 
   return (
     <GlobalLayout header={<ConversationHeader conversation={conversation} />}>
-      {conversation.messages.map((message) => (
+      {conversation.messages.map((message, index) => (
         <View
+          key={index}
           style={{
             borderRadius: 6,
             backgroundColor: "blue",

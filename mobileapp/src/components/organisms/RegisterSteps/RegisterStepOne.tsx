@@ -52,6 +52,7 @@ export default function RegisterStepOne({ nextStep }: RegisterStepOneProps) {
             value={value}
             placeholder="marie-zoli@gmail.com"
             error={error}
+            testID="input-email"
           />
         )}
       />
@@ -74,6 +75,7 @@ export default function RegisterStepOne({ nextStep }: RegisterStepOneProps) {
             value={value}
             placeholder="********"
             error={error}
+            testID="input-password"
           />
         )}
       />
@@ -96,13 +98,16 @@ export default function RegisterStepOne({ nextStep }: RegisterStepOneProps) {
             value={value}
             placeholder="********"
             error={error}
+            testID="input-confirm-password"
           />
         )}
       />
 
       <Spacer axis="vertical" size={3} />
 
-      <Button onPress={handleSubmit(onSubmit)}>Suivant</Button>
+      <Button onPress={handleSubmit(onSubmit)} testID="button-next-step-one">
+        Suivant
+      </Button>
     </>
   );
 }

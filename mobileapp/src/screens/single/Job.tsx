@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import styled from "styled-components/native";
 import { Heading, Text } from "../../components/atoms/Text";
 import GlobalLayout from "../../components/layouts/GlobalLayout";
@@ -13,47 +13,45 @@ import JobDetail from "../../components/molecules/JobDetail";
 import Location from "../../assets/icons/Location";
 import Calendar from "../../assets/icons/Calendar";
 import { Link } from "@react-navigation/native";
-import { FAKE_MISSIONS_DATA } from "../../common/mockedData";
 import useUserFavorites from "../../common/api/hooks/useUserFavorites";
 import addUserFavorite from "../../common/api/requests/addUserFavorite";
-import Toast from "react-native-toast-message";
 import Check from "../../assets/icons/Check";
 import useAuth from "../../common/contexts/AuthContext";
 import deleteFavorite from "../../common/api/requests/deleteFavorite";
+import useJob from "../../common/api/hooks/useJob";
+import useJobFavorites from "../../common/api/hooks/useJobFavorites";
+import { MOBILEAPP_API_BASE_URL } from "@env";
+import useUserJobs from "../../common/api/hooks/useUserJobs";
+import fetchRegisterJob from "../../common/api/requests/job/fetchRegisterJob";
+import TokenButton from "../../components/organisms/TokenButton";
 
 export default function Job({
   route,
 }: StackScreenProps<StackParamList, "Job">) {
-  const missionId = route.params.id;
+  const jobId = route.params.id;
+
   const { user } = useAuth();
   const { userFavorites } = useUserFavorites(user?.id || "");
+  const { total: totalJobFavorites } = useJobFavorites(jobId);
+  const { job, isLoading: jobLoading } = useJob(jobId);
+  const { userJobs } = useUserJobs(user?.id || "");
 
-  // TODO: Create hook with fetch API to get mission by id.
-  //   const { mission } = useMission(missionId);
-  const mission = FAKE_MISSIONS_DATA[missionId];
+  const userAlreadyParticipate = userJobs?.filter(
+    (jobRegistered) => jobRegistered.job.id === job?.id
+  ).length;
 
   const currentFavorite = userFavorites?.filter(
-    (fav) => fav.organization.id === mission.organization.id
+    (fav) => fav.organization.id === job?.author.organization.id
   );
+
   const isOrganizationFollow =
     currentFavorite !== undefined && currentFavorite.length > 0;
 
-  async function handleFollowOrganization(assos_id: string) {
-    try {
-      const response = await addUserFavorite(assos_id);
-
-      if (response.status === 201) {
-        Toast.show({
-          type: "success",
-          props: {
-            title: "Tout est bon",
-            text: `Merci d'avoir follow ${mission.organization.name} !`,
-          },
-        });
-      }
-    } catch (err) {
-      console.error(err);
-    }
+  async function handleFollowOrganization() {
+    await addUserFavorite(
+      job?.author.organization.id as string,
+      job?.author.organization.name as string
+    );
   }
 
   async function handleUnfollowOrganization(favoriteId: string) {
@@ -64,20 +62,31 @@ export default function Job({
     }
   }
 
+  async function handleRegisterJob() {
+    await fetchRegisterJob(job?.id as string, job?.title as string);
+  }
+
+  // TODO: Add Loading screen here (cf lauching screen from figma).
+  if (jobLoading) return <></>;
+
   return (
     <GlobalLayout
       header={<></>}
       fullBanner={
-        <StyledImage source={{ uri: mission.banner }} resizeMode="cover" />
+        <StyledImage
+          source={{
+            uri: `${MOBILEAPP_API_BASE_URL}/${job?.attachments[0]?.image}`,
+          }}
+          resizeMode="cover"
+        />
       }
     >
-      {/* TODO: Add Tag atom.*/}
-      <Text color="info">{mission.tags[0]}</Text>
+      <TokenButton />
 
       <Spacer axis="vertical" size={1} />
 
       <Heading variant="h1" weight="regular">
-        {mission.title}
+        {job?.title}
       </Heading>
 
       <Spacer axis="vertical" size={0.5} />
@@ -87,16 +96,17 @@ export default function Job({
         <Link
           to={{
             screen: "Profile",
-            params: { id: { missionId }, type: "organization" },
+            params: { id: job?.author.id, type: "organization" },
           }}
         >
-          {mission.organization.name}
+          {job?.author.organization.name}
         </Link>
       </Text>
 
       <Spacer axis="vertical" size={2} />
 
       <Box alignItems="center">
+        {/* TODO: Add call api */}
         <Button size="sm" color="black" Icon={<Heart color="white" />}>
           Sauvegarder
         </Button>
@@ -104,7 +114,10 @@ export default function Job({
         <Spacer axis="horizontal" size={0.75} />
 
         <TextLight size="sm">
-          {mission.interestedParticipants} personnes intéressé.e.s
+          {totalJobFavorites}{" "}
+          {totalJobFavorites || 0 > 1
+            ? "personnes intéressées"
+            : "personne intéressée"}
         </TextLight>
       </Box>
 
@@ -112,8 +125,8 @@ export default function Job({
 
       <JobDetail
         Icon={<Location size={24} />}
-        title={mission.location}
-        text="21 bis rue du Progrès"
+        title={job?.commune}
+        text={job?.address}
       />
 
       <Spacer axis="vertical" size={0.5} />
@@ -125,20 +138,31 @@ export default function Job({
       />
 
       <HeadingSection>Description</HeadingSection>
-      <Text color="grey">{mission.description}</Text>
+      <Text color="grey">{job?.description}</Text>
+
+      <Spacer axis="vertical" size={1} />
+
+      {job?.tags.map(({ id, label }) => (
+        <Fragment key={id}>
+          <Text color="primary">#{label}</Text>
+
+          <Spacer axis="horizontal" size={0.5} />
+        </Fragment>
+      ))}
+
+      <Spacer axis="vertical" size={1} />
 
       <HeadingSection>Organisé par</HeadingSection>
       <Box justifyContent="space-between" alignItems="center">
         <Link
           to={{
             screen: "Profile",
-            // TODO: Replace me with organization id
-            params: { id: { missionId }, type: "organization" },
+            params: { id: job?.author.organization.id, type: "organization" },
           }}
         >
           <Box alignItems="center">
             <ImageBackground
-              source={{ uri: mission.logo }}
+              source={{ uri: job?.author.organization.logo }}
               style={{ width: 80, height: 40 }}
               resizeMode="contain"
             />
@@ -146,8 +170,10 @@ export default function Job({
             <Spacer axis="horizontal" size={1} />
 
             <Box flexDirection="column">
-              <Text>{mission.organization.name}</Text>
-              <Text color="grey">{mission.location}</Text>
+              <Text>{job?.author.organization.name}</Text>
+              <Text color="grey" size="xs">
+                {job?.author.organization.commune}
+              </Text>
             </Box>
           </Box>
         </Link>
@@ -170,9 +196,7 @@ export default function Job({
           <Button
             size="sm"
             color="black"
-            handlePress={() =>
-              handleFollowOrganization(mission.organization.id)
-            }
+            handlePress={handleFollowOrganization}
           >
             Suivre
           </Button>
@@ -181,10 +205,14 @@ export default function Job({
 
       <Spacer axis="vertical" size={4} />
 
-      {/* FIXME: Add fixed position. */}
-      <FixedView>
-        <Button>Je participe !</Button>
-      </FixedView>
+      {/* TODO: Add call api to unregister job */}
+      {userAlreadyParticipate && <Text>Tu es déjà inscrit.e</Text>}
+
+      {!userAlreadyParticipate && (
+        <Button handlePress={handleRegisterJob} color="primary">
+          Je participe
+        </Button>
+      )}
     </GlobalLayout>
   );
 }
@@ -195,19 +223,11 @@ const StyledImage = styled.ImageBackground`
 `;
 
 const TextLight = styled(Text)`
-  color: ${({ theme }) => theme.colors.grey[400]};
+  color: ${({ theme }) => theme.colors.v1.grey[400]};
 `;
 
 const HeadingSection = styled(Text)`
   margin-top: ${({ theme }) => theme.spacing[8]};
   margin-bottom: ${({ theme }) => theme.spacing[3]};
   font-size: ${({ theme }) => theme.fonts.sizes.lg};
-`;
-
-// FIXME
-const FixedView = styled.View`
-  /* position: absolute;
-  left: 24px;
-  right: 24px;
-  bottom: 32px; */
 `;

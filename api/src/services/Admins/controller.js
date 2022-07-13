@@ -1,14 +1,18 @@
 const bcrypt = require("bcryptjs");
 const asyncLib = require("async");
 const { Op } = require("sequelize");
-const { generateToken } = require("utils/session");
-const commonsController = require("../Commons/controller");
-const { error, success } = require("utils/common/messages.json");
-const { label_status } = require("utils/enum.json");
-const { getRow, getField, updateField, getPaginationQueries } = require("utils/common/thenCatch");
+const { generateToken } = require("~utils/session");
+const commonsController = require("~services/Commons/controller");
+const { error, success } = require("~utils/common/messages.json");
+const { label_status } = require("~utils/enum.json");
+const {randomValueHex} = require("~utils/generate");
+
+const { getRow, getField, updateField, getPaginationQueries } = require("~utils/common/thenCatch");
 //Send mail
-const { from, subject, host } = require("utils/common/mail.json");
-const { Status, Roles, Logs, Admins } = require("../../../models");
+const { createAdmin, resetPasswordAdmin } = require("~utils/common/mail.json");
+const { sendMail } = require("~externals/mailer");
+const { Status, Roles, Logs, Admins } = require("~orm/models");
+const { isEmailValid } = require("~utils/verify");
 
 const excludeCommon = { exclude: ["id", "createdAt", "updatedAt"] };
 
@@ -47,16 +51,24 @@ module.exports = {
 
 		const statusData = await getRow(res, Status, { label: label_status.actived });
 		const roleData = await getRow(res, Roles, { id: role_id });
+		/*
+		const emailValid = await isEmailValid(email);
+		if(emailValid !== "ok")
+			return res
+				.status(error.parameters.status)
+				.json({ message: emailValid });
+		*/
 		
 		data["status_id"] = statusData.id;
 		data["role_id"] = roleData.id;
 		data["password"] = bcrypt.hashSync("123456", 10);
 
-		const condition = { email, username };
+		const condition = {[Op.or]: [{ email },{ username }],};
 
 		commonsController.create(function(result){
 				const token = generateToken(result, true);
 				//Send mail
+				sendMail(createAdmin.template, {to: email, subject: createAdmin.subject}, {firstname: createAdmin.firstname, lastname: createAdmin.lastname, password: "123456", username})
 
 				return res
 					.status(success.create.status)
@@ -67,10 +79,20 @@ module.exports = {
 	deleteAdmin: function (res, id) {
 		commonsController.delete(res, Admins, { id });
 	},
-	updateAdmin: function (res, id, data) {
+	updateAdmin: async function (res, id, data) {
 		const {email} = data
 		const condition = {};
-		if(email) condition.email = email;
+		if(email) {
+			/*
+			const emailValid = await isEmailValid(email);
+			if(emailValid !== "ok")
+				return res
+					.status(error.parameters.status)
+					.json({ message: emailValid });
+			*/
+
+			condition.email = email
+		};
 		
 		commonsController.update(res, Admins, id, data, condition);
 	},
@@ -147,7 +169,15 @@ module.exports = {
 		
 		commonsController.delete(res, Logs, condition);
 	},
-	resetPassword: async function (res, data) {
+	resetPassword: async function (res, id) {
+		let adminData = await getRow(res, Admins, { id });
+		const data = {}
+		const password = randomValueHex(7);
+		data.password =  bcrypt.hashSync(password, 10);
+		sendMail(resetPasswordAdmin.template, {to: adminData.email, subject: resetPasswordAdmin.subject}, {firstname: adminData.firstname, lastname: adminData.lastname, password, username:adminData.username})
+		commonsController.update(res, Admins, id, data);
+	},
+	changePassword: async function (res, data) {
 		const {id,old_password,password} = data
 
 		asyncLib.waterfall(

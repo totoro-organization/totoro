@@ -1,6 +1,8 @@
 const bcrypt = require("bcryptjs");
 const asyncLib = require("async");
-const { error, success } = require("utils/common/messages.json");
+const { error, success } = require("~utils/common/messages.json");
+const { isEmailValid } = require("~utils/verify");
+
 const {
 	Users,
 	Status,
@@ -13,11 +15,14 @@ const {
 	Favorites,
 	Groups,
 	Associations_users,
-	Partners
-} = require("./../../../models");
-const commonsController = require("services/Commons/controller");
+	Partners,
+	Tokens,
+	Types_discounts,
+	Discounts
+} = require("~orm/models");
+const commonsController = require("~services/Commons/controller");
 
-const { getRow, getField, updateField, getPaginationQueries } = require("utils/common/thenCatch");
+const { getRow, getField, updateField, getPaginationQueries } = require("~utils/common/thenCatch");
 
 const excludeCommon = { exclude: ["id", "createdAt", "updatedAt"] };
 
@@ -109,10 +114,19 @@ module.exports = {
 		commonsController.getOne(res, Users, id, exclude, include);
 	},
 
-	updateUser: function (res, id, data) {
+	updateUser: async function (res, id, data) {
 		const {email} = data
 		const condition = {};
-		if (email) condition.email = email;
+		if (email) {
+			/*
+			const emailValid = await isEmailValid(email);
+			if(emailValid !== "ok")
+				return res
+					.status(error.parameters.status)
+					.json({ message: emailValid });
+			*/
+			condition.email = email
+		};
 		commonsController.update(res, Users, id, data, condition);
 	},
 
@@ -124,7 +138,12 @@ module.exports = {
 		commonsController.delete(res, Users, { id });
 	},
 
-	resetPassword: async function (res, data) {
+	resetPassword: async function (res, id, data) {
+		data.password =  bcrypt.hashSync(data.password, 10);
+		commonsController.update(res, Users, id, data);
+	},
+
+	changePassword: async function (res, data) {
 		const {id, old_password, password} = data
 		asyncLib.waterfall(
 			[
@@ -172,7 +191,6 @@ module.exports = {
 			}
 		);
 	},
-
 	getFavorites: async function (res, id, queries) {
 		const {status, size, page} = queries
 		let condition = {};
@@ -253,7 +271,7 @@ module.exports = {
 	getUserLitigations: async function (res, id, queries) {
 		const {status, size, page} = queries
 
-		let condition = {type: 1};
+		let condition = {type: true};
 		if (status) {
 			let statusData = await getRow(res, Status, { label: status });
 			condition.status_id = statusData.id;
@@ -275,5 +293,48 @@ module.exports = {
 		let pagination = getPaginationQueries(size,page)
 
 		commonsController.getAll(res, Litigations, condition, ['litigation_object_id','group_id','status_id'], includeLitigation, pagination);
-  	}
+  	},
+
+	getTransactions: async function (res, id, queries) {
+		const {size, page} = queries
+		let condition = {user_id : id};
+
+		if (status) {
+			let statusData = await getRow(res, Status, { label: status });
+			condition.status_id = statusData.id;
+		}
+
+		const excludeTransactions = ["discount_id", "status_id"];
+		const includeTransactions = [
+			{
+				model: Discounts,
+				as: "discount",
+				attributes: { exclude: ["type_disc_id","status_id","partner_id"] },
+				required: true,
+				include: [
+					{ model: Status, as: "status", attributes: excludeCommon },
+					{ 
+						model: Partners, 
+						as: "partner", 
+						attributes: { exclude: ["status_id"] },
+						include: [
+							{ model: Status, as: "status", attributes: excludeCommon },
+						]
+					},
+					{
+						model: Types_discounts,
+						as: "type",
+						attributes: {
+							exclude: ["status_id"],
+						},
+						include: [{ model: Status, as: "status", attributes: excludeCommon }],
+					}
+				],
+			},
+			{ model: Status, as: "status", attributes: excludeCommon },
+		]
+		let pagination = getPaginationQueries(size,page)
+
+		commonsController.getAll(res, Tokens, condition, excludeTransactions, includeTransactions, pagination);
+	}
 };

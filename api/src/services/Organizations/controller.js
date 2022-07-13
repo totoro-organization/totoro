@@ -1,12 +1,15 @@
 
 const axios = require("axios");
 const moment = require("moment");
+const { Op } = require("sequelize");
 const asyncLib = require("async");
-const { success, error } = require("utils/common/messages.json");
-const { label_status, role } = require("utils/enum.json");
+const { success, error } = require("~utils/common/messages.json");
+const { label_status, role } = require("~utils/enum.json");
+const { isEmailValid } = require("~utils/verify");
+
 //Send mail
-const { from, subject, host } = require("utils/common/mail.json");
-const { generateToken } = require("utils/session");
+const { from, subject, host } = require("~utils/common/mail.json");
+const { generateToken } = require("~utils/session");
 const {
 	Users,
 	Status,
@@ -21,9 +24,9 @@ const {
 	Tags,
 	Subscriptions,
 	Pricings,
-} = require("./../../../models");
-const commonsController = require("services/Commons/controller");
-const { getRow, getPaginationQueries, getField, updateField } = require("utils/common/thenCatch");
+} = require("~orm/models");
+const commonsController = require("~services/Commons/controller");
+const { getRow, getPaginationQueries, getField, updateField } = require("~utils/common/thenCatch");
 
 const excludeCommon = { exclude: ["id", "createdAt", "updatedAt"] };
 
@@ -72,6 +75,16 @@ module.exports = {
 
 	createOrganization: async function (res, data) {
 		const { email, phone, type, typeValue, user_id } = data
+
+		/*
+		const emailValid = await isEmailValid(email);
+		if(emailValid !== "ok")
+			return res
+				.status(error.parameters.status)
+				.json({ message: emailValid });
+		*/
+
+    	const activeStatus = await getRow(Status, { label: label_status.actived });
 		const request = await axios.get(`https://entreprise.data.gouv.fr/api/sirene/v1/${type}/${typeValue}`);
 		if(request.data.message){
 			return res
@@ -95,7 +108,8 @@ module.exports = {
 		const statusData = await getRow(res, Status, { label: label_status.requested });
 		data["status_id"] = statusData.id;
 
-		const condition = { email, phone, siren: data.siren, siret: data.siret };
+		const condition = {[Op.or]: [{ email },{ phone },{ siren: data.siren},{ siret:  data.siret}],};
+
 
 		commonsController.create( async function(resultCreateAssociation){
 			const statusDataAdd = await getRow(res, Status, { label: label_status.actived });
@@ -122,9 +136,21 @@ module.exports = {
 
 	updateOrganization: async function (res, id, data) {
 		const {phone, email, status_id} = data
-		const condition = {};
-		if (phone) condition.phone = phone;
-		if (email) condition.email = email;
+		const getCondition = [];
+		if (phone) getCondition.push({phone});
+		if (email) {
+			/*
+			const emailValid = await isEmailValid(email);
+			if(emailValid !== "ok")
+				return res
+					.status(error.parameters.status)
+					.json({ message: emailValid });
+			*/
+			
+			getCondition.push({email})
+		};
+		const condition = {[Op.or]: [...getCondition],};
+
 		const statusData = await getRow(res, Status, { id: status_id });
 
 		commonsController.update(res, Associations, id, data, condition);
@@ -168,7 +194,7 @@ module.exports = {
 		const includeJobs = [
 			{ model: Status, as: "status", attributes: excludeCommon },
 			{ model: Difficulties, as: "difficulty", attributes: excludeCommon },
-			{ model: Attachment_jobs, as: "attachments", attributes: excludeCommon },
+			{ model: Attachment_jobs, as: "attachments", attributes: excludeCommon, order: [['createdAt', 'ASC']] },
 			{
 				model: Associations_users,
 				as: "author",
@@ -304,7 +330,7 @@ module.exports = {
 	},
 
 	getCurrentSubscription: function (res, id) {
-		const current = 1;
+		const current = true;
 		const excludeSub = ["pricing_id", "status_id"];
 		const includeSub = [
 			{ 
@@ -342,7 +368,7 @@ module.exports = {
 		asyncLib.waterfall(
 			[
 			  function (done) {
-				getField(res, Subscriptions, { assos_id: id, current: 1 }, done, true);
+				getField(res, Subscriptions, { assos_id: id, current: true }, done, true);
 			  },
 			  async function (found, done) {
 				  if(!found){
@@ -351,7 +377,7 @@ module.exports = {
 						.json({ entity: Associations.name, message: error.not_found.message });
 				  } else {
 					const statusData = await getRow(res, Status, { label: label_status.disabled });
-					updateField(res, found, {status_id: statusData.id, current: 0}, done);
+					updateField(res, found, {status_id: statusData.id, current: false}, done);
 				  } 
 			  },
 			],
@@ -373,6 +399,5 @@ module.exports = {
 				  .json({ entity: Subscriptions.name, message: error.op_failed.message });
 			}
 		);
-
 	}
 };

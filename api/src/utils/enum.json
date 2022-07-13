@@ -34,7 +34,8 @@
     "logo": "/logo",
     "partners": "/partners",
     "qrcodeJobs": "/qrcode-jobs",
-    "qrcodeDiscounts": "/qrcode-discounts",
+    "qrcodeParticipations": "/qrcode-participations",
+    "codebareDiscounts": "/codebare-discounts",
     "site": "/site"
   }
 }

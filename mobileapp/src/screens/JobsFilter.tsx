@@ -8,9 +8,23 @@ import { useNavigation } from "@react-navigation/native";
 import { AppParamList } from "../navigation/StackNavigationParams";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { TouchableOpacity } from "react-native";
+import useTotoroTags from "../common/api/hooks/useTotoroTags";
+import RadioGroup from "../components/molecules/RadioGroup";
+import PillGroup from "../components/molecules/PillGroup";
 
+// TODO: Fix header or add this component as Modal?
 export default function JobsFilter() {
   const navigation = useNavigation<StackNavigationProp<AppParamList>>();
+  const { tags, categories } = useTotoroTags();
+
+  const tagsLabel = tags.map(({ label }) => label);
+  const categoriesLabel = categories.map(({ label }) => label);
+
+  const sortLabel = [
+    "Nouvellement publiées",
+    "Mieux récompensées",
+    "Organisées prochainement",
+  ];
 
   return (
     <GlobalLayout pageTitle="Filtres">
@@ -25,25 +39,34 @@ export default function JobsFilter() {
       <Spacer axis="vertical" size={2} />
 
       <CategorySection>
-        <CategoryTitle>TyJob</CategoryTitle>
+        <CategoryTitle>Trier par</CategoryTitle>
 
-        <Spacer axis="vertical" size={0.5} />
-
-        <Text>TODO: Ajouter les boutons</Text>
+        <RadioGroup
+          options={sortLabel}
+          handlePress={(data) => console.log(data)}
+        />
       </CategorySection>
 
       <CategorySection>
-        <CategoryTitle>Catégorie</CategoryTitle>
+        <CategoryTitle>Activité</CategoryTitle>
 
-        <Spacer axis="vertical" size={0.5} />
+        <PillGroup
+          options={tagsLabel}
+          handlePress={(data) => console.log(data)}
+        />
+      </CategorySection>
 
-        <Text>TODO: Ajouter les boutons</Text>
+      <CategorySection>
+        <CategoryTitle>Cause défendue</CategoryTitle>
+
+        <PillGroup
+          options={categoriesLabel}
+          handlePress={(data) => console.log(data)}
+        />
       </CategorySection>
 
       <CategorySection>
         <CategoryTitle>DISTANCE (en km)</CategoryTitle>
-
-        <Spacer axis="vertical" size={0.5} />
 
         <Text>TODO: Ajouter le slider</Text>
       </CategorySection>
@@ -69,7 +92,8 @@ const CategorySection = styled.View`
 
 const CategoryTitle = styled(Text)`
   text-transform: uppercase;
-  color: ${({ theme }) => theme.colors.grey[500]};
+  color: ${({ theme }) => theme.colors.v1.grey[500]};
   font-size: ${({ theme }) => theme.fonts.sizes.xs};
   letter-spacing: 2px;
+  margin-bottom: ${({ theme }) => theme.spacing[3]};
 `;

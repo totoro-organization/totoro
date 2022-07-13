@@ -43,5 +43,5 @@ const StyledBox = styled.View<BoxProps>`
   padding: ${({ padding }) => (padding ? `${padding * 16}px` : "0")};
   margin: ${({ margin }) => (margin ? `${margin * 16}px` : "0")};
   color: ${({ theme, color }) =>
-    (color && getColors(color)) || theme.colors.grey[900]};
+    (color && getColors(color)) || theme.colors.core.black};
 `;

@@ -1,7 +1,7 @@
 const asyncLib = require("async");
 const { Op } = require("sequelize");
 const fs = require("fs");
-const { error, success } = require("utils/common/messages.json");
+const { error, success } = require("~utils/common/messages.json");
 const {
   responseAll,
   responseOne,
@@ -10,9 +10,9 @@ const {
   createField,
   updateField,
   getRow,
-} = require("utils/common/thenCatch");
-const { label_status } = require("utils/enum.json");
-const { Status } = require("./../../../models");
+} = require("~utils/common/thenCatch");
+const { label_status } = require("~utils/enum.json");
+const { Status } = require("~orm/models");
 
 module.exports = {
   getAll: function (

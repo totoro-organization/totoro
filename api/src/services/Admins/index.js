@@ -1,5 +1,5 @@
 const express = require("express");
-const { passportAdmin } = require("utils/session");
+const { passportAdmin } = require("~utils/session");
 const controller = require("./controller");
 
 exports.router = (function () {
@@ -56,10 +56,14 @@ exports.router = (function () {
 		controller.createLog(res, data);
 	}]);
 
+  adminRouter.put("/:id/reset-password", [passportAdmin, async function (req, res) {
+		controller.resetPassword(res, req.params.id);
+	}]);
+
 	adminRouter.put("/change/password",[passportAdmin, async function (req, res) {
 		const data = req.body;
 		data.id = req.userData.id;
-		controller.resetPassword(res, data);
+		controller.changePassword(res, data);
 	}]);
 
   adminRouter.get("/logs/getAll", [

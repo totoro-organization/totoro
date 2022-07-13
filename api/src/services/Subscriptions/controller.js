@@ -4,12 +4,12 @@ const {
 	Associations,
 	Pricings,
 	Subscriptions
-} = require("./../../../models");
-const commonsController = require("services/Commons/controller");
+} = require("~orm/models");
+const commonsController = require("~services/Commons/controller");
 
-const { getRow, getPaginationQueries, getField, updateField } = require("utils/common/thenCatch");
-const { error, success } = require("utils/common/messages.json");
-const { label_status } = require("utils/enum.json");
+const { getRow, getPaginationQueries, getField, updateField } = require("~utils/common/thenCatch");
+const { error, success } = require("~utils/common/messages.json");
+const { label_status } = require("~utils/enum.json");
 
 const excludeCommon = { exclude: ["id", "createdAt", "updatedAt"] };
 
@@ -37,12 +37,22 @@ const exclude = ["pricing_id", "assos_id", "status_id"];
 
 module.exports = {
 	getSubscriptions: async function (res, queries) {
-		const {size,page,status} = queries
+		const {size,page,status, label, current} = queries
 		let condition = {};
 		if (status) {
 			let statusData = await getRow(res, Status, { label: status });
 			condition.status_id = statusData.id;
 		}
+		if (label) {
+			for (let i = 0; i < include.length; i++) {
+				const item = include[i];
+				if(item.as == "pricing"){
+					item.required = true
+					item.where = {label}
+				}
+			}
+		}
+		if(current) condition.current = current
 
 		condition = Object.keys(condition).length === 0 ? null : condition;
 
@@ -63,7 +73,7 @@ module.exports = {
 		const associationData = await getRow(res, Associations, { id: assos_id });
 		const condition = { assos_id };
 		
-		data.current = 1;
+		data.current = true;
 		data.status_id = statusData.id;
 		if(pricingData.label !== "Standard") data.expirate = moment().add(pricingData.duration, 'months').format("YYYY-MM-DD");
 
@@ -72,11 +82,9 @@ module.exports = {
 
 	updateSubscription: async function (res, id, data) {
 		const {status_id} = data
-		const condition = {};
 		if (status_id) {
 			const statusData = await getRow(res, Status, { id: status_id });
-			condition.status_id = statusData.id
 		}
-		commonsController.update(res, Subscriptions, id, data, condition);
+		commonsController.update(res, Subscriptions, id, data);
 	},
 };

@@ -1,12 +1,18 @@
 const { Op } = require("sequelize");
-const commonsController = require("services/Commons/controller");
-const {qrcode} = require("~/utils/generate");
+const commonsController = require("~services/Commons/controller");
+const {qrcode} = require("~utils/generate");
+const asyncLib = require("async");
+
+const env = process.env.NODE_ENV || "development";
+const config = require("~orm/config/config.json")[env];
+
 const { 
 	getRow,
 	getPagingData,
 	getPagination,
-	getPaginationQueries
- } = require("~/utils/common/thenCatch");
+	getPaginationQueries,
+	getField
+ } = require("~utils/common/thenCatch");
 const {
 	Users,
 	Status,
@@ -21,19 +27,19 @@ const {
 	Favorites,
 	Groups,
 	Associations_users,
-} = require("./../../../models");
+} = require("~orm/models");
 
-const { error, success } = require("utils/common/messages.json");
-const { path } = require("utils/enum.json");
-const { upload } = require("utils/storage");
-const { label_status } = require("utils/enum.json");
+const { error, success } = require("~utils/common/messages.json");
+const { path } = require("~utils/enum.json");
+const { upload } = require("~utils/storage");
+const { label_status } = require("~utils/enum.json");
 
 const excludeCommon = { exclude: ["id", "createdAt", "updatedAt"] };
 
 const include = [
 	{ model: Status, as: "status", attributes: excludeCommon },
 	{ model: Difficulties, as: "difficulty", attributes: excludeCommon },
-	{ model: Attachment_jobs, as: "attachments", attributes: excludeCommon },
+	{ model: Attachment_jobs, as: "attachments", attributes: excludeCommon, order: [['createdAt', 'ASC']]},
 	{
 		model: Associations_users,
 		as: "author",
@@ -58,6 +64,24 @@ const include = [
 				],
 			},
 			{ model: Status, as: "status", attributes: excludeCommon }
+		],
+	},
+	{
+		model: Groups,
+		as: "participants",
+		attributes: {
+			exclude: ["user_id", "jobs_id"],
+		},
+		include: [
+			{
+				model: Users,
+				as: "participant",
+				attributes: { exclude: ["terminal_id", "status_id", "password"] },
+				include: [
+					{ model: Status, as: "status", attributes: excludeCommon },
+				],
+			},
+			{ model: Status, as: "status", attributes: excludeCommon, where: { label: label_status.actived } }
 		],
 	},
 	{
@@ -147,14 +171,23 @@ module.exports = {
 			var lat = parseFloat(latitude);
 			var lng = parseFloat(longitude);
 			
-			const haversine = `(
+			const haversine = config.dialect ===  "postgres" ? `(
 				6371 * acos(
 					cos(radians(${lat}))
-					* cos(radians(Jobs.latitude))
-					* cos(radians(Jobs.longitude) - radians(${lng}))
-					+ sin(radians(${lat})) * sin(radians(Jobs.latitude))
+					* cos(radians("Jobs"."latitude"))
+					* cos(radians("Jobs"."longitude") - radians(${lng}))
+					+ sin(radians(${lat})) * sin(radians("Jobs"."latitude"))
+				)
+			)`:
+			`(
+				6371 * acos(
+					cos(radians(${lat}))
+					* cos(radians(\`Jobs\`.\`latitude\`))
+					* cos(radians(\`Jobs\`.\`longitude\`) - radians(${lng}))
+					+ sin(radians(${lat})) * sin(radians(\`Jobs\`.\`latitude\`))
 				)
 			)`;
+
 			params.attributes['include'] = [[Jobs.sequelize.literal(haversine), 'distance']]
 			params.order = Jobs.sequelize.col('distance')
 			if(distance) params.having = Jobs.sequelize.literal(`distance <= ${distance}`)
@@ -190,14 +223,23 @@ module.exports = {
 			var lat = parseFloat(latitude);
 			var lng = parseFloat(longitude);
 			
-			const haversine = `(
+			const haversine = config.dialect ===  "postgres" ? `(
 				6371 * acos(
 					cos(radians(${lat}))
-					* cos(radians(Jobs.latitude))
-					* cos(radians(Jobs.longitude) - radians(${lng}))
-					+ sin(radians(${lat})) * sin(radians(Jobs.latitude))
+					* cos(radians("Jobs"."latitude"))
+					* cos(radians("Jobs"."longitude") - radians(${lng}))
+					+ sin(radians(${lat})) * sin(radians("Jobs"."latitude"))
+				)
+			)`:
+			`(
+				6371 * acos(
+					cos(radians(${lat}))
+					* cos(radians(\`Jobs\`.\`latitude\`))
+					* cos(radians(\`Jobs\`.\`longitude\`) - radians(${lng}))
+					+ sin(radians(${lat})) * sin(radians(\`Jobs\`.\`latitude\`))
 				)
 			)`;
+			
 			params.attributes['include'] = [[Jobs.sequelize.literal(haversine), 'distance']]
 		} 
 
@@ -221,12 +263,15 @@ module.exports = {
 		const {status, size, page} = queries
 
 		let condition = {};
+		let statusData = null;
 		const excludeGroup = ["user_id"];
 
 		if (status) {
-			let statusData = await getRow(res, Status, { label: status });
-			condition.status_id = statusData.id;
+			statusData = await getRow(res, Status, { label: status });
+		} else {
+			statusData = await getRow(res, Status, { label: label_status.actived });
 		}
+		condition.id = statusData.id;
 		condition = Object.keys(condition).length === 0 ? null : condition;
 
 		const includeGroup = [
@@ -274,6 +319,7 @@ module.exports = {
 		const tagsJob = tags;
 		delete data.tags;
 		const condition = {title};
+		if(data.participants_max) data.remaining_place = data.participants_max
 		
 		commonsController.create(
 			async function (result) {
@@ -363,6 +409,7 @@ module.exports = {
 		if (difficulty_id) {
 			const diff = await getRow(res, Difficulties, { id: difficulty_id });
 		}
+		if(data.participants_max) data.remaining_place = data.participants_max
 
 		const tagsJob = tags;
 		delete data.tags; 
@@ -412,7 +459,7 @@ module.exports = {
 	getJobLitigations: async function (res, id, queries) {
 		const {status, size, page} = queries
 
-		let condition = {type: 0};
+		let condition = {type: false};
 		if (status) {
 			let statusData = await getRow(res, Status, { label: status });
 			condition.status_id = statusData.id;
@@ -442,6 +489,93 @@ module.exports = {
 		let pagination = getPaginationQueries(size,page)
 
     	commonsController.getAll(res, Litigations, condition, ['litigation_object_id','group_id','status_id'], includeLitigation, pagination);
-  	}
+  	},
+	registerToJob: async function (res, data) {
+		const { jobs_id, user_id } = data
+		const statusData = await getRow(res, Status, { label: label_status.actived });
+		data.status_id = statusData.id;
+
+		const jobData = await getRow(
+			res, 
+			Jobs, 
+			{ id: jobs_id },
+			[{ model: Associations_users, as: "author"}]
+		);
+		const condition = { jobs_id,  user_id };
+
+		if(jobData.remaining_place !== null && parseInt(jobData.remaining_place) == 0){
+			return res
+				.status(error.access_forbidden.status)
+				.json({ entity: Groups.name, message: "sorry the number of participants is full"});
+		} else {
+			asyncLib.waterfall([
+				function (done) {
+				  getField(res, Associations_users, { assos_id: jobData.author.assos_id, user_id }, done);
+				},
+			  ],
+			  function (found) {
+				if (!found){
+				  commonsController.create(
+					  async function (result) {
+						  const linkQrcode = await qrcode(path.qrcodeParticipations, result.id)
+						  asyncLib.waterfall([
+							  function (done) {
+								  result.update({ qrcode: linkQrcode })
+								  .then(function() {
+									  done(null, result);
+								  }).catch(function(err) {
+									  return res
+										  .status(error.syntax_error.status)
+										  .json({ message: error.syntax_error.message });
+								  });							  
+							  },
+							  function (result, done) {
+								  if(jobData.remaining_place !== null){
+									Jobs.update(
+										{ remaining_place: parseInt(jobData.remaining_place) - 1 },
+										{ where: { id: result.jobs_id } }
+									)
+									.then(function() {
+										done(result);
+									}).catch(function(err) {
+										return res
+											.status(error.syntax_error.status)
+											.json({ message: error.syntax_error.message });
+									});
+
+								  } else {
+									done(result);
+								  }	
+							  }
+						  ],
+							  async function (result) {
+								if (result){
+									return res
+											.status(success.create.status)
+											.json({ entity: Jobs.name, message: success.create.message });	  
+								}
+								else
+								  return res
+									.status(error.during_creation.status)
+									.json({ entity: Groups.name, message: error.during_creation.message});
+							  }
+						  );
+					  },
+					  res,
+					  Groups,
+					  data,
+					  condition,
+					  null,
+					  true
+				  );		
+				}
+				else
+				  return res
+					.status(error.access_denied.status)
+					.json({ entity: Associations.name, message: "Cannot participate in a mission of your association" });
+			  }
+		  );
+		}
+	},
 };
 

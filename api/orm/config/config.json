@@ -1,0 +1,37 @@
+{
+	"development": {
+		"username": "root",
+		"password": "root",
+		"database": "database_development",
+		"host": "db",
+		"dialect": "mysql",
+		"define": {
+			"freezeTableName": true
+		}
+	},
+	"test": {
+		"username": "root",
+		"password": "root",
+		"database": "database_test",
+		"host": "db",
+		"dialect": "mysql",
+		"define": {
+			"freezeTableName": true
+		}
+	},
+	"production": {
+		"use_env_variable": "HEROKU_POSTGRESQL_CYAN_URL",
+		"dialect":  "postgres",
+		"protocol": "postgres",
+		"ssl":true, 
+		"dialectOptions":{ 
+		  "ssl": {
+			"require": true,
+			"rejectUnauthorized": false
+		  } 
+		},
+		"define": {
+			"freezeTableName": true
+		}
+	}
+}
