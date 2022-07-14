@@ -11,7 +11,7 @@ export default function ListingMissions() {
   return (
     <>
       <Helmet>
-        <title>Listes des Missions</title>
+        <title>Créer une mission</title>
       </Helmet>
       <PageTitleWrapper>
         <PageTitle
@@ -33,7 +33,6 @@ export default function ListingMissions() {
                 <JobForm />
               </CardContent>
             </Card>
-            
           </Grid>
         </Grid>
       </Container>
