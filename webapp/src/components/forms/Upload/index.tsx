@@ -1,4 +1,4 @@
-import { Button, styled } from '@mui/material';
+import { Button, FormControl, FormHelperText, styled } from '@mui/material';
 import { ReactNode, useEffect, useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
@@ -19,7 +19,7 @@ function FormUpload({
   buttonLabel,
   startIcon,
   endIcon,
-  multiple = false,
+  multiple = false
 }: IFormUpload) {
   const [files, setFiles] = useState<any>([]);
   const { control } = useFormContext();
@@ -40,33 +40,40 @@ function FormUpload({
       <Controller
         name={name}
         control={control}
-        defaultValue=""
-        render={({ field }) => (
-          <label htmlFor={`${name}-inputFile`}>
-            <Input
-              onChange={(e) => {
-                field.onChange(e.target.files);
-                handleMultipleFiles(e.target.files);
-              }}
-              multiple={multiple}
-              accept="file/*"
-              id={`${name}-inputFile`}
-              type="file"
-              // {...field}
-            />
-            <Button
-              startIcon={startIcon}
-              endIcon={endIcon}
-              variant="outlined"
-              color="primary"
-              component="span"
-            >
-              {buttonLabel}
-            </Button>
-          </label>
+        defaultValue={null}
+        render={({ field, fieldState: { error } }) => (
+          <FormControl>
+            <label htmlFor={`${name}-inputFile`}>
+              <Input
+                onChange={(e) => {
+                  field.onChange(e.target.files);
+                  handleMultipleFiles(e.target.files);
+                }}
+                multiple={multiple}
+                accept="file/*"
+                id={`${name}-inputFile`}
+                type="file"
+                // {...field}
+              />
+              <Button
+                startIcon={startIcon}
+                endIcon={endIcon}
+                variant="outlined"
+                color="primary"
+                component="span"
+              >
+                {buttonLabel}
+              </Button>
+            </label>
+            {!!error && (
+              <FormHelperText error={!!error}>{error.message}</FormHelperText>
+            )}
+          </FormControl>
         )}
       />
-      {files.length ? <span>{files.length} fichier(s) sélectionné(s)</span> : null}
+      {files.length ? (
+        <span>{files.length} fichier(s) sélectionné(s)</span>
+      ) : null}
     </>
   );
 }
