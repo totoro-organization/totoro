@@ -25,7 +25,7 @@ function FormAutocomplete({
 
   return (
     <Controller
-      render={({ field: { onChange, ...field} }) => (
+      render={({ field: { onChange, ...field}, fieldState: { error } }) => (
         <Autocomplete
           {...field}
           multiple={multiple}
@@ -36,6 +36,8 @@ function FormAutocomplete({
             <TextField
               {...params}
               label={label}
+              error={!!error}
+              helperText={error?.message}
             />
           )}
           onChange={(e, data) => onChange(data)}
