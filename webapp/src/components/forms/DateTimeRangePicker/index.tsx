@@ -47,7 +47,8 @@ function FormDateTimeRangePicker({
         // minutesStep={5}
       />
       <FormDateTimePicker
-        disabled={startDate ? false : true}
+        // disabled={startDate ? false : true}
+        defaultValue={endMinDate}
         minDateTime={endMinDate}
         name={'end_date'}
         label={'Date et heure de fin'}
