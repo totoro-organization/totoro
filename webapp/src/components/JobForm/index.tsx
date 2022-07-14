@@ -89,7 +89,7 @@ const JobForm = () => {
           </Button>
         </Box>
           
-        <FormTextField defaultValue="" label="Titre" name="title" />
+        <FormTextField autoFocus={true} defaultValue="" label="Titre" name="title" />
         <FormAutocomplete
           multiple
           options={tags}
@@ -108,7 +108,7 @@ const JobForm = () => {
         <FormSelect
           label="Difficulté"
           name="difficulty"
-          defaultValue={ascDifficulties[0] ?? ''}
+          defaultValue={ascDifficulties[0].id ?? ''}
         >
           {ascDifficulties && ascDifficulties.map((difficulty: JobDifficulty) => (
             <MenuItem key={difficulty.id} value={difficulty.id}>
@@ -124,7 +124,7 @@ const JobForm = () => {
           label="Nombre de participants"
           name="nb_participants"
         />
-        <FormTextarea placeholder="Description" name="description" />
+        <FormTextarea placeholder="Décrivez la mission ! (50 caractères min.)" name="description" />
         <FormUpload buttonLabel='Ajouter une image' name="images" multiple startIcon={<AddIcon/>}/>
         {/* <UploadImagePreview
           name="images"
