@@ -21,7 +21,7 @@ const Container = styled('div')({
 function FormDateTimeRangePicker({
   name
 }: IFormDateTimeRangePicker): JSX.Element {
-  const now: any =  new Date().setSeconds(0,0);;
+  const now: any =  new Date(new Date().setSeconds(0,0));
   const [startDate, setStartDate] = useState<Date>();
   const [endMinDate, setEndMinDate] = useState<Date>(add(now, { minutes: 30 }));
 

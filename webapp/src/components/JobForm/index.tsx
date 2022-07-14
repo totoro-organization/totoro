@@ -36,7 +36,7 @@ interface JobFormFieldTypes {
 }
 
 interface JobFormData {
-  start_date: string;
+  start_date?: string;
   end_date: string;
   nb_participants: number;
   description: string;
@@ -48,6 +48,7 @@ interface JobFormData {
 }
 
 const JobForm = () => {
+  //@ts-ignore
   const methods = useForm<JobFormFieldTypes>({
     resolver: yupResolver(JobFormSchema)
   });
@@ -57,9 +58,11 @@ const JobForm = () => {
 
   const onSubmit = async (formData: JobFormFieldTypes) => {
     const tagsId = formData.tags.map((tag: Tag) => tag.id);
+    console.log(formData.start_date, formData.end_date);
+    
     const data: JobFormData = {
-      start_date: format(formData.start_date, 'yyyy-MM-dd HH:mm'),
-      end_date: format(formData.end_date, 'yyyy-MM-dd HH:mm'),
+      start_date: format(new Date(formData.start_date), 'yyyy-MM-dd HH:mm'),
+      end_date: format(new Date(formData.end_date), 'yyyy-MM-dd HH:mm'),
       tags: [...tagsId, formData.category.id],
       title: formData.title,
       nb_participants: formData.nb_participants,
@@ -68,12 +71,10 @@ const JobForm = () => {
       images: formData.images,
       assos_user_id: currentApp.member_id
     };
-    const response = await addItem(API_ROUTES.JOBS, data);
-    console.log(response);
+    // const response = await addItem(API_ROUTES.JOBS, data);
+    console.log(data);
     
   };
-
-  console.log(methods.formState.errors);
 
   const ascDifficulties: JobDifficulty[] = sortObjectArrayByAscOrder(
     difficulties,
