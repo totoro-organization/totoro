@@ -1,4 +1,4 @@
-import { FormControl, InputLabel, Select, SelectChangeEvent, SelectProps } from '@mui/material';
+import { FormControl, FormHelperText, InputLabel, Select, SelectChangeEvent, SelectProps } from '@mui/material';
 import { useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
@@ -9,15 +9,15 @@ function FormSelect({
   ...props
 }: SelectProps): JSX.Element {
   const { control } = useFormContext();
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState(defaultValue);
 
   return (
-    <FormControl fullWidth>
-      <InputLabel>{label}</InputLabel>
       <Controller
         render={({ field, fieldState: { error } }) => (
-          <Select
-            value={value ?? defaultValue}
+          <FormControl>
+            <InputLabel>{label}</InputLabel>
+           <Select
+            value={value ?? ""}
             fullWidth
             label={label}
             onChange={(e: SelectChangeEvent<any>) => {
@@ -27,12 +27,14 @@ function FormSelect({
             error={!!error}
             {...props}
           />
+            {!!error && <FormHelperText error={!!error}>{error.message}</FormHelperText>}
+          </FormControl>
+          
         )}
         name={name}
         control={control}
         defaultValue={defaultValue}
       />
-    </FormControl>
   );
 }
 
