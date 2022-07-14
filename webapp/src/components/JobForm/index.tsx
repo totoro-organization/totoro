@@ -37,7 +37,7 @@ interface JobFormFieldTypes {
 
 interface JobFormData {
   start_date?: string;
-  end_date: string;
+  end_date?: string;
   nb_participants: number;
   description: string;
   tags: Tag['id'][];
