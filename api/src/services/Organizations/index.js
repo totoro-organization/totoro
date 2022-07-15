@@ -28,11 +28,14 @@ exports.router = (function () {
 		controller.getOrganization(res, id);
 	});
 
-	organizationsRouter.put("/:id", [passport, async function (req, res) {
-		const id = req.params.id;
-		const data = req.body;
-		controller.updateOrganization(res, id, data);
-	}]);
+	organizationsRouter.put("/:id", [
+		passport,
+		async function (req, res) {
+			const id = req.params.id;
+			const data = req.body;
+			controller.updateOrganization(res, id, data);
+		},
+	]);
 
 	organizationsRouter.delete("/:id", [
 		passport,
@@ -49,7 +52,6 @@ exports.router = (function () {
 			controller.getOrganizationJobs(res, id, req.query);
 		},
 	]);
-
 
 	organizationsRouter.get("/:id/members", [
 		passport,
@@ -87,8 +89,10 @@ exports.router = (function () {
 		passport,
 		async function (req, res) {
 			const data = req.body;
-			const statusData = await getRow(res, Status, { label: label_status.requested });
-			data["status_id"] = statusData.id;			
+			const statusData = await getRow(res, Status, {
+				label: label_status.requested,
+			});
+			data["status_id"] = statusData.id;
 			const roleData = await getRow(res, Roles, { label: role.moderator });
 			data["role_id"] = roleData.id;
 			data["assos_id"] = req.params.id;
@@ -96,12 +100,13 @@ exports.router = (function () {
 			controller.addToOrganization(res, data);
 		},
 	]);
-                                                                                    
 
 	organizationsRouter.post("/:id/invite", async function (req, res) {
 		const data = req.body;
-		const statusData = await getRow(res, Status, { label: label_status.invited });
-		data["status_id"] = statusData.id;		
+		const statusData = await getRow(res, Status, {
+			label: label_status.invited,
+		});
+		data["status_id"] = statusData.id;
 		const roleData = await getRow(res, Roles, { label: role.moderator });
 		const userData = await getRow(res, Users, { id: data.user_id });
 		data["role_id"] = roleData.id;
@@ -128,24 +133,29 @@ exports.router = (function () {
 		},
 	]);
 
+	organizationsRouter.put("/logo/:id", [
+		passport,
+		upload(path.logo).single("logo"),
+		async function (req, res) {
+			const id = req.params.id;
+			const data = {};
+			if (req.file) {
+				data.file = req.file;
+				data.path = path.logo;
+			}
 
-	organizationsRouter.put("/logo/:id", [passport, upload(path.logo).single("logo"), async function (req, res) {
-		const id = req.params.id;
-		const data = {};
-		if (req.file) {
-			data.file = req.file;
-			data.path = path.logo;
-		}
+			controller.updateLogo(res, id, data);
+		},
+	]);
 
-		controller.updateLogo(res, id, data);
-	}]);
-
-	organizationsRouter.put("/:id/subscriptions/change", [passport, async function (req, res) {
-		const id = req.params.id;
-		const data = req.body;
-		controller.changeSubscription(res, id, data);
-	}]);
-
+	organizationsRouter.put("/:id/subscriptions/change", [
+		passport,
+		async function (req, res) {
+			const id = req.params.id;
+			const data = req.body;
+			controller.changeSubscription(res, id, data);
+		},
+	]);
 
 	return organizationsRouter;
 })();

@@ -1,5 +1,6 @@
 module.exports = function (api) {
   api.cache(true);
+<<<<<<< HEAD
 
   return {
     presets: ["babel-preset-expo"],
@@ -15,5 +16,10 @@ module.exports = function (api) {
         },
       ],
     ],
+=======
+  return {
+    presets: ["babel-preset-expo"],
+    plugins: ["module:react-native-dotenv"],
+>>>>>>> webapp
   };
 };

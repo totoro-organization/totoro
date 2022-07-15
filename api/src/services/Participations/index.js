@@ -10,11 +10,14 @@ exports.router = (function () {
 		controller.getParticipation(res, id);
 	});
 
-	participationsRouter.put("/:id", [passport, async function (req, res) {
-		const id = req.params.id;
-		const data = req.body;
-		controller.updateParticipation(res, id, data);
-	}]);
-	
+	participationsRouter.put("/:id", [
+		passport,
+		async function (req, res) {
+			const id = req.params.id;
+			const data = req.body;
+			controller.updateParticipation(res, id, data);
+		},
+	]);
+
 	return participationsRouter;
 })();

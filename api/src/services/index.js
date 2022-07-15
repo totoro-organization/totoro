@@ -29,5 +29,5 @@ module.exports = {
 	discounts,
 	subscriptions,
 	participations,
-	transactions
+	transactions,
 };

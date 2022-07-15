@@ -1,0 +1,32 @@
+{
+	"development": {
+		"username": "root",
+		"password": "root",
+		"database": "database_development",
+		"host": "db",
+		"dialect": "mysql",
+		"define": {
+			"freezeTableName": true
+		}
+	},
+	"test": {
+		"username": "root",
+		"password": "root",
+		"database": "database_test",
+		"host": "db",
+		"dialect": "mysql",
+		"define": {
+			"freezeTableName": true
+		}
+	},
+	"production": {
+		"username": "epiz_31954240",
+		"password": "NZvPWGWvCfVef",
+		"database": "epiz_31954240_totoro",
+		"host": "sql211.epizy.com",
+		"dialect": "mysql",
+		"define": {
+			"freezeTableName": true
+		}
+	}
+}

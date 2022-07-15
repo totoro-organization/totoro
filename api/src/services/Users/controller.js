@@ -18,11 +18,16 @@ const {
 	Partners,
 	Tokens,
 	Types_discounts,
-	Discounts
+	Discounts,
 } = require("~orm/models");
 const commonsController = require("~services/Commons/controller");
 
-const { getRow, getField, updateField, getPaginationQueries } = require("~utils/common/thenCatch");
+const {
+	getRow,
+	getField,
+	updateField,
+	getPaginationQueries,
+} = require("~utils/common/thenCatch");
 
 const excludeCommon = { exclude: ["id", "createdAt", "updatedAt"] };
 
@@ -48,9 +53,9 @@ const include = [
 	{
 		model: Partners,
 		as: "partners",
-		attributes: {exclude: ["status_id"]},
+		attributes: { exclude: ["status_id"] },
 		include: [{ model: Status, as: "status", attributes: excludeCommon }],
-	}
+	},
 ];
 
 const exclude = ["terminal_id", "status_id", "password"];
@@ -67,7 +72,14 @@ const includeUser = [
 				model: Associations_users,
 				as: "author",
 				attributes: {
-					exclude: ["user_id", "assos_id", "role_id", "status_id","createdAt","updatedAt"],
+					exclude: [
+						"user_id",
+						"assos_id",
+						"role_id",
+						"status_id",
+						"createdAt",
+						"updatedAt",
+					],
 				},
 				include: [
 					{
@@ -88,7 +100,7 @@ const includeUser = [
 					},
 					{ model: Status, as: "status", attributes: excludeCommon },
 				],
-			}
+			},
 		],
 	},
 	{ model: Status, as: "status", attributes: excludeCommon },
@@ -96,7 +108,7 @@ const includeUser = [
 
 module.exports = {
 	getUsers: async function (res, queries) {
-		const {size,page,status} = queries
+		const { size, page, status } = queries;
 		let condition = {};
 		if (status) {
 			let statusData = await getRow(res, Status, { label: status });
@@ -105,9 +117,16 @@ module.exports = {
 
 		condition = Object.keys(condition).length === 0 ? null : condition;
 
-		let pagination = getPaginationQueries(size,page)
+		let pagination = getPaginationQueries(size, page);
 
-		commonsController.getAll(res, Users, condition, exclude, include, pagination);
+		commonsController.getAll(
+			res,
+			Users,
+			condition,
+			exclude,
+			include,
+			pagination
+		);
 	},
 
 	getUser: function (res, id) {
@@ -115,7 +134,7 @@ module.exports = {
 	},
 
 	updateUser: async function (res, id, data) {
-		const {email} = data
+		const { email } = data;
 		const condition = {};
 		if (email) {
 			/*
@@ -125,8 +144,8 @@ module.exports = {
 					.status(error.parameters.status)
 					.json({ message: emailValid });
 			*/
-			condition.email = email
-		};
+			condition.email = email;
+		}
 		commonsController.update(res, Users, id, data, condition);
 	},
 
@@ -139,12 +158,12 @@ module.exports = {
 	},
 
 	resetPassword: async function (res, id, data) {
-		data.password =  bcrypt.hashSync(data.password, 10);
+		data.password = bcrypt.hashSync(data.password, 10);
 		commonsController.update(res, Users, id, data);
 	},
 
 	changePassword: async function (res, data) {
-		const {id, old_password, password} = data
+		const { id, old_password, password } = data;
 		asyncLib.waterfall(
 			[
 				function (done) {
@@ -169,7 +188,7 @@ module.exports = {
 				},
 				function (user, resByCrypt, done) {
 					if (resByCrypt) {
-						const updateData = {password: bcrypt.hashSync(password, 10)};
+						const updateData = { password: bcrypt.hashSync(password, 10) };
 						updateField(res, user, updateData, done);
 					} else {
 						return res.status(error.access_forbidden.status).json({
@@ -192,7 +211,7 @@ module.exports = {
 		);
 	},
 	getFavorites: async function (res, id, queries) {
-		const {status, size, page} = queries
+		const { status, size, page } = queries;
 		let condition = {};
 
 		if (status) {
@@ -204,7 +223,7 @@ module.exports = {
 		const includeFavorites = [...includeUser];
 		for (let i = 0; i < includeFavorites.length; i++) {
 			const item = includeFavorites[i];
-			if(item.as == "status") item.where = condition
+			if (item.as == "status") item.where = condition;
 		}
 
 		includeFavorites.splice(-1);
@@ -215,7 +234,7 @@ module.exports = {
 			include: [{ model: Status, as: "status", attributes: excludeCommon }],
 		});
 
-		let pagination = getPaginationQueries(size,page)
+		let pagination = getPaginationQueries(size, page);
 		commonsController.getAll(
 			res,
 			Favorites,
@@ -228,7 +247,7 @@ module.exports = {
 
 	createFavorite: async function (res, data) {
 		const condition = {};
-		const {assos_id,jobs_id,} = data
+		const { assos_id, jobs_id } = data;
 		if ((!assos_id && !jobs_id) || (assos_id && jobs_id))
 			return res
 				.status(error.parameters.status)
@@ -248,15 +267,15 @@ module.exports = {
 	},
 
 	getUserJobs: async function (res, id, queries) {
-		const {status, size, page} = queries
+		const { status, size, page } = queries;
 
-		let condition = {user_id: id};
+		let condition = { user_id: id };
 		if (status) {
 			let statusData = await getRow(res, Status, { label: status });
 			condition.status_id = statusData.id;
 		}
 		const excludeGroup = ["jobs_id"];
-		let pagination = getPaginationQueries(size,page)
+		let pagination = getPaginationQueries(size, page);
 
 		commonsController.getAll(
 			res,
@@ -269,35 +288,45 @@ module.exports = {
 	},
 
 	getUserLitigations: async function (res, id, queries) {
-		const {status, size, page} = queries
+		const { status, size, page } = queries;
 
-		let condition = {type: true};
+		let condition = { type: true };
 		if (status) {
 			let statusData = await getRow(res, Status, { label: status });
 			condition.status_id = statusData.id;
 		}
 
-
 		const includeLitigation = [
-		{model: Status, as: "status", attributes: excludeCommon},
-		{model: Litigation_objects, as: "litigation_object", attributes: excludeCommon},
-		{
-			model: Groups,
-			as: "mission",
-			required: true,
-			attributes: { exclude: ["user_id","jobs_id","status_id"] },
-			include: [...includeUser],
-			where: {user_id: id}
-		}
+			{ model: Status, as: "status", attributes: excludeCommon },
+			{
+				model: Litigation_objects,
+				as: "litigation_object",
+				attributes: excludeCommon,
+			},
+			{
+				model: Groups,
+				as: "mission",
+				required: true,
+				attributes: { exclude: ["user_id", "jobs_id", "status_id"] },
+				include: [...includeUser],
+				where: { user_id: id },
+			},
 		];
-		let pagination = getPaginationQueries(size,page)
+		let pagination = getPaginationQueries(size, page);
 
-		commonsController.getAll(res, Litigations, condition, ['litigation_object_id','group_id','status_id'], includeLitigation, pagination);
-  	},
+		commonsController.getAll(
+			res,
+			Litigations,
+			condition,
+			["litigation_object_id", "group_id", "status_id"],
+			includeLitigation,
+			pagination
+		);
+	},
 
 	getTransactions: async function (res, id, queries) {
-		const {size, page} = queries
-		let condition = {user_id : id};
+		const { size, page } = queries;
+		let condition = { user_id: id };
 
 		if (status) {
 			let statusData = await getRow(res, Status, { label: status });
@@ -309,17 +338,17 @@ module.exports = {
 			{
 				model: Discounts,
 				as: "discount",
-				attributes: { exclude: ["type_disc_id","status_id","partner_id"] },
+				attributes: { exclude: ["type_disc_id", "status_id", "partner_id"] },
 				required: true,
 				include: [
 					{ model: Status, as: "status", attributes: excludeCommon },
-					{ 
-						model: Partners, 
-						as: "partner", 
+					{
+						model: Partners,
+						as: "partner",
 						attributes: { exclude: ["status_id"] },
 						include: [
 							{ model: Status, as: "status", attributes: excludeCommon },
-						]
+						],
 					},
 					{
 						model: Types_discounts,
@@ -327,14 +356,23 @@ module.exports = {
 						attributes: {
 							exclude: ["status_id"],
 						},
-						include: [{ model: Status, as: "status", attributes: excludeCommon }],
-					}
+						include: [
+							{ model: Status, as: "status", attributes: excludeCommon },
+						],
+					},
 				],
 			},
 			{ model: Status, as: "status", attributes: excludeCommon },
-		]
-		let pagination = getPaginationQueries(size,page)
+		];
+		let pagination = getPaginationQueries(size, page);
 
-		commonsController.getAll(res, Tokens, condition, excludeTransactions, includeTransactions, pagination);
-	}
+		commonsController.getAll(
+			res,
+			Tokens,
+			condition,
+			excludeTransactions,
+			includeTransactions,
+			pagination
+		);
+	},
 };

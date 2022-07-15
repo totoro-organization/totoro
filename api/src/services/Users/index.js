@@ -54,7 +54,11 @@ exports.router = (function () {
 		async function (req, res) {
 			const data = req.body;
 			data.id = req.userData.id;
+<<<<<<< HEAD
 			controller.changePassword(res, data);
+=======
+			controller.resetPassword(res, data);
+>>>>>>> webapp
 		},
 	]);
 
@@ -64,7 +68,12 @@ exports.router = (function () {
 			const token = getUser(data.token);
 			if(token){
 				delete data.token;
+<<<<<<< HEAD
 				controller.resetPassword(res, token['id'], data);
+=======
+				data.id = token['id'];
+				controller.resetPassword(res, data);
+>>>>>>> webapp
 			} else {
 				return res
 					.status(error.access_denied.status)
@@ -128,6 +137,7 @@ exports.router = (function () {
 		},
 	]);
 
+<<<<<<< HEAD
 	UsersRouter.put("/account/activate",
 		async function (req, res) {
 			const data = req.body;
@@ -147,5 +157,7 @@ exports.router = (function () {
 		},
 	);
 
+=======
+>>>>>>> webapp
 	return UsersRouter;
 })();

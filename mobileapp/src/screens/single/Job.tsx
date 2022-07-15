@@ -43,7 +43,6 @@ export default function Job({
   const currentFavorite = userFavorites?.filter(
     (fav) => fav.organization.id === job?.author.organization.id
   );
-
   const isOrganizationFollow =
     currentFavorite !== undefined && currentFavorite.length > 0;
 

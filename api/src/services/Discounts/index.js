@@ -5,9 +5,12 @@ const controller = require("./controller");
 exports.router = (function () {
 	const discountsRouter = express.Router();
 
-	discountsRouter.get("/", [passport, async function (req, res) {
-		controller.getDiscounts(res, req.query);
-	}]);
+	discountsRouter.get("/", [
+		passport,
+		async function (req, res) {
+			controller.getDiscounts(res, req.query);
+		},
+	]);
 
 	discountsRouter.post("/", [
 		passport,
@@ -22,11 +25,14 @@ exports.router = (function () {
 		controller.getDiscount(res, id);
 	});
 
-	discountsRouter.put("/:id", [passport, async function (req, res) {
-		const id = req.params.id;
-		const data = req.body;
-		controller.updateDiscount(res, id, data);
-	}]);
+	discountsRouter.put("/:id", [
+		passport,
+		async function (req, res) {
+			const id = req.params.id;
+			const data = req.body;
+			controller.updateDiscount(res, id, data);
+		},
+	]);
 
 	discountsRouter.delete("/:id", [
 		passport,

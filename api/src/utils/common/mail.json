@@ -1,42 +1,42 @@
 {
-    "signup": {
-      "subject": "Création de compte",
-      "template": "create-account-user"
-    },
-    "verify": {
-      "subject": "Vérification de mot de passe",
-      "template": "verify-account-user"
-    },
-    "forgot": {
-      "subject": "Mot de passe oublié ?",
-      "template": "reset-password"
-    },
-    "createAdmin": {
-      "subject": "Accès administrateur Totoro",
-      "template": "create-account-admin"
-    },
-    "resetPasswordAdmin": {
-      "subject": "Mot de passe restauré",
-      "template": "new-password"
-    },
-    "updateJob": {
-      "subject": "Information sur la mission",
-      "template": "update-job"
-    },
-    "registerToJob": {
-      "subject": "Votre abonnement",
-      "template": "register-to-job"
-    },
-    "subcription_expirate": {
-      "subject": "Votre abonnement",
-      "template": ""
-    },
-    "subcription_suspended": {
-      "subject": "Votre abonnement",
-      "template": ""
-    },
-    "forgot_password": {
-      "subject": "Réinitialiser le mot de passe",
-      "template": ""
-    }
+	"signup": {
+		"subject": "Création de compte",
+		"template": "create-account-user"
+	},
+	"verify": {
+		"subject": "Vérification de mot de passe",
+		"template": "verify-account-user"
+	},
+	"forgot": {
+		"subject": "Mot de passe oublié ?",
+		"template": "reset-password"
+	},
+	"createAdmin": {
+		"subject": "Accès administrateur Totoro",
+		"template": "create-account-admin"
+	},
+	"resetPasswordAdmin": {
+		"subject": "Mot de passe restauré",
+		"template": "new-password"
+	},
+	"updateJob": {
+		"subject": "Information sur la mission",
+		"template": "update-job"
+	},
+	"registerToJob": {
+		"subject": "Votre abonnement",
+		"template": "register-to-job"
+	},
+	"subcription_expirate": {
+		"subject": "Votre abonnement",
+		"template": ""
+	},
+	"subcription_suspended": {
+		"subject": "Votre abonnement",
+		"template": ""
+	},
+	"forgot_password": {
+		"subject": "Réinitialiser le mot de passe",
+		"template": ""
+	}
 }

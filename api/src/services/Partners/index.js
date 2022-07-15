@@ -25,11 +25,14 @@ exports.router = (function () {
 		controller.getPartner(res, id);
 	});
 
-	partnersRouter.put("/:id", [passport, async function (req, res) {
-		const id = req.params.id;
-		const data = req.body;
-		controller.updatePartner(res, id, data);
-	}]);
+	partnersRouter.put("/:id", [
+		passport,
+		async function (req, res) {
+			const id = req.params.id;
+			const data = req.body;
+			controller.updatePartner(res, id, data);
+		},
+	]);
 
 	partnersRouter.delete("/:id", [
 		passport,
@@ -55,16 +58,20 @@ exports.router = (function () {
 		},
 	]);
 
-	partnersRouter.put("/:id/logo", [passport, upload(path.partners).single("logo"), async function (req, res) {
-		const id = req.params.id;
-		const data = {};
-		if (req.file) {
-			data.file = req.file;
-			data.path = path.logo;
-		}
+	partnersRouter.put("/:id/logo", [
+		passport,
+		upload(path.partners).single("logo"),
+		async function (req, res) {
+			const id = req.params.id;
+			const data = {};
+			if (req.file) {
+				data.file = req.file;
+				data.path = path.logo;
+			}
 
-		controller.updateLogo(res, id, data);
-	}]);
+			controller.updateLogo(res, id, data);
+		},
+	]);
 
 	return partnersRouter;
 })();

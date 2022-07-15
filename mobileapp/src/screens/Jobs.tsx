@@ -43,7 +43,6 @@ export default function Jobs() {
       {loadingJobs && (
         <ActivityIndicator color={theme.colors.brand.primary.base} />
       )}
-
       {!loadingJobs && <JobsList data={jobs} />}
     </GlobalLayout>
   );

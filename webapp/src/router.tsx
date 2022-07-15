@@ -1,4 +1,4 @@
-import { Suspense, lazy } from 'react';
+import { Suspense, lazy, useContext, useEffect } from 'react';
 import { Navigate, Route } from 'react-router-dom';
 import { PartialRouteObject, RouteProps } from 'react-router';
 
@@ -6,7 +6,8 @@ import SidebarLayout from 'src/layouts/SidebarLayout';
 import BaseLayout from 'src/layouts/BaseLayout';
 
 import SuspenseLoader from 'src/components/SuspenseLoader';
-import useAuth from './hooks/useAuth';
+import { useSession } from './hooks/useSession';
+import { element } from 'prop-types';
 
 const Loader = (Component) => (props) =>
   (
@@ -16,26 +17,32 @@ const Loader = (Component) => (props) =>
   );
 
 const ProtectedRoute = (props: RouteProps) => {
-  const { user } = useAuth();
+  const session = useSession();
 
-  if (!user) return <Navigate to="/login" />;
+  if (!session.user) return <Navigate to="/login" />;
    
   return <Route {...props} />;
 };
 
-/* APPLICATIONS */
+const AppIndexRoute = () => {
+  const session = useSession();
 
-  /* Organization */
+  if(session.currentApp.type === "organization") return <Navigate to="/association/dashboards/resume" replace />
 
-  // Gestion
-  const CreationJob = Loader(lazy(() => import('src/pages/applications/Organization/Gestion/Jobs/Create')));
-  const ListingJobs = Loader(lazy(() => import('src/pages/applications/Organization/Gestion/Jobs/List'))); 
+  return <Navigate to="/partenaire/dashboards/resume" replace />
+}
 
-  // Dashboards
-  const Crypto = Loader(lazy(() => import('src/pages/applications/Organization/Dashboards/Crypto')));
-  const Resume = Loader(lazy(() => import('src/pages/applications/Organization/Dashboards/Resume')));
+/* Applications - Organization */
+// Gestion
+const CreationJob = Loader(lazy(() => import('src/pages/applications/Organization/Gestion/Jobs/Create')));
+const ListingJobs = Loader(lazy(() => import('src/pages/applications/Organization/Gestion/Jobs/List'))); 
+const JobParticipant = Loader(lazy(() => import('src/pages/applications/Organization/Gestion/Jobs/Participant')));
+const Job = Loader(lazy(() => import('src/pages/applications/Organization/Gestion/Jobs'))); 
+// Dashboards
+const Crypto = Loader(lazy(() => import('src/pages/applications/Organization/Dashboards/Crypto')));
+const Resume = Loader(lazy(() => import('src/pages/applications/Organization/Dashboards/Resume')));
 
-  /* Partner */
+/* Applications - Partner */
 
 /* PAGES */
 
@@ -44,11 +51,11 @@ const SignIn = Loader(lazy(() => import('src/pages/SignIn')));
 const SignUp = Loader(lazy(() => import('src/pages/SignUp')));
 const FirstLogin = Loader(lazy(() => import('src/pages/SignIn/FirstLogin')));
 
-// User
+/* User */
 const UserProfile = Loader(lazy(() => import('src/pages/User/profile')));
 const UserSettings = Loader(lazy(() => import('src/pages/User/settings')));
 
-// Status
+/* Status */
 const Status404 = Loader(lazy(() => import('src/pages/Status/Status404')));
 const Status500 = Loader(lazy(() => import('src/pages/Status/Status500')));
 const StatusComingSoon = Loader(
@@ -78,7 +85,7 @@ const routes: PartialRouteObject[] = [
         children: [
           {
             path: '/',
-            element: <Navigate to="/dashboards" replace />
+            element: <AppIndexRoute />
           },
           {
             path: '/first-login',
@@ -114,24 +121,6 @@ const routes: PartialRouteObject[] = [
             element: <Status404 />
           },
           {
-            path: 'dashboards',
-            element: <SidebarLayout />,
-            children: [
-              {
-                path: '/',
-                element: <Navigate to="/dashboards/resume" replace />
-              },
-              {
-                path: 'statistiques',
-                element: <Crypto />
-              },
-              {
-                path: 'resume',
-                element: <Resume />
-              }
-            ]
-          },
-          {
             path: 'profile',
             element: <SidebarLayout />,
             children: [
@@ -150,20 +139,100 @@ const routes: PartialRouteObject[] = [
             ]
           },
           {
-            path: 'gestion',
-            element: <SidebarLayout />,
+            path: 'association',
             children: [
               {
                 path: '/',
-                element: <Navigate to="missions" replace />
+                element: <Navigate to="dashboards" replace />
               },
               {
-                path: '/missions',
-                element: <ListingJobs />
+                path: 'dashboards',
+                element: <SidebarLayout />,
+                children: [
+                  {
+                    path: '/',
+                    element: <Navigate to="resume" replace />
+                  },
+                  {
+                    path: 'statistiques',
+                    element: <Crypto />
+                  },
+                  {
+                    path: 'resume',
+                    element: <Resume />
+                  }
+                ]
               },
               {
-                path: '/missions/creation',
-                element: <CreationJob />
+                path: 'gestion',
+                element: <SidebarLayout />,
+                children: [
+                  {
+                    path: '/',
+                    element: <Navigate to="missions" replace />
+                  },
+                  {
+                    path: '/missions',
+                    element: <ListingJobs />
+                  },
+                  {
+                    path: '/missions/:id',
+                    element: <Job />
+                  },
+                  {
+                    path: '/missions/creation',
+                    element: <CreationJob />
+                  },
+                  {
+                    path: '/missions/:jobId/participant/:id',
+                    element: <JobParticipant />
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            path: 'partenaire',
+            children: [
+              {
+                path: '/',
+                element: <Navigate to="dashboards" replace />
+              },
+              {
+                path: 'dashboards',
+                element: <SidebarLayout />,
+                children: [
+                  {
+                    path: '/',
+                    element: <Navigate to="resume" replace />
+                  },
+                  {
+                    path: 'statistiques',
+                    element: <Crypto />
+                  },
+                  {
+                    path: 'resume',
+                    element: <Resume />
+                  }
+                ]
+              },
+              {
+                path: 'gestion',
+                element: <SidebarLayout />,
+                children: [
+                  {
+                    path: '/',
+                    element: <Navigate to="reductions" replace />
+                  },
+                  {
+                    path: '/reductions',
+                    element: <ListingJobs />
+                  },
+                  {
+                    path: '/reductions/creation',
+                    element: <CreationJob />
+                  }
+                ]
               }
             ]
           }

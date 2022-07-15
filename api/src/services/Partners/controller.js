@@ -13,7 +13,7 @@ const {
 	Tokens,
 	Partners,
 	Discounts,
-	Types_discounts
+	Types_discounts,
 } = require("~orm/models");
 const commonsController = require("~services/Commons/controller");
 
@@ -30,14 +30,14 @@ const include = [
 			exclude: ["terminal_id", "status_id", "password"],
 		},
 		include: [{ model: Status, as: "status", attributes: excludeCommon }],
-	}
+	},
 ];
 
 const exclude = ["status_id", "user_id"];
 
 module.exports = {
 	getPartners: async function (res, queries) {
-		const {size,page,status} = queries
+		const { size, page, status } = queries;
 		let condition = {};
 		if (status) {
 			let statusData = await getRow(res, Status, { label: status });
@@ -46,9 +46,16 @@ module.exports = {
 
 		condition = Object.keys(condition).length === 0 ? null : condition;
 
-		let pagination = getPaginationQueries(size,page)
+		let pagination = getPaginationQueries(size, page);
 
-		commonsController.getAll(res, Partners, condition, exclude, include, pagination);
+		commonsController.getAll(
+			res,
+			Partners,
+			condition,
+			exclude,
+			include,
+			pagination
+		);
 	},
 
 	getPartner: function (res, id) {
@@ -56,7 +63,7 @@ module.exports = {
 	},
 
 	createPartner: async function (res, data) {
-		const { email, phone, type, typeValue } = data
+		const { email, phone, type, typeValue } = data;
 		/*
 		const emailValid = await isEmailValid(email);
 		if(emailValid !== "ok")
@@ -65,41 +72,54 @@ module.exports = {
 				.json({ message: emailValid });
 		*/
 
-		const request = await axios.get(`https://entreprise.data.gouv.fr/api/sirene/v1/${type}/${typeValue}`);
-		if(request.data.message){
+		const request = await axios.get(
+			`https://entreprise.data.gouv.fr/api/sirene/v1/${type}/${typeValue}`
+		);
+		if (request.data.message) {
 			return res
-					.status(success.not_found.status)
-					.json({ entity: type, message: request.data.message });
+				.status(success.not_found.status)
+				.json({ entity: type, message: request.data.message });
 		}
 
-		delete data.type
-		delete data.typeValue
-		data["name"] = request.data.siege_social.nom_raison_sociale
-		data["address"] = request.data.siege_social.l4_normalisee || request.data.siege_social.l4_declaree || `${request.data.siege_social.numero_voie} ${request.data.siege_social.type_voie} ${request.data.siege_social.libelle_voie}`
+		delete data.type;
+		delete data.typeValue;
+		data["name"] = request.data.siege_social.nom_raison_sociale;
+		data["address"] =
+			request.data.siege_social.l4_normalisee ||
+			request.data.siege_social.l4_declaree ||
+			`${request.data.siege_social.numero_voie} ${request.data.siege_social.type_voie} ${request.data.siege_social.libelle_voie}`;
 		data["in_internet"] = false;
-		data["in_store"] = false
+		data["in_store"] = false;
 
-		const statusData = await getRow(res, Status, { label: label_status.requested });
+		const statusData = await getRow(res, Status, {
+			label: label_status.requested,
+		});
 		data["status_id"] = statusData.id;
 
-		const condition = {[Op.or]: [{ email },{ phone }],};
+		const condition = { [Op.or]: [{ email }, { phone }] };
 
-
-		commonsController.create(function(result){
+		commonsController.create(
+			function (result) {
 				const token = generateToken(result, true);
 				//Send mail
 
 				return res
 					.status(success.create.status)
 					.json({ entity: Partners.name, message: success.create.message });
-		},
-		res, Partners, data, condition, null, true);
+			},
+			res,
+			Partners,
+			data,
+			condition,
+			null,
+			true
+		);
 	},
 
 	updatePartner: async function (res, id, data) {
-		const {phone, email, status_id} = data
+		const { phone, email, status_id } = data;
 		const getCondition = [];
-		if (phone) getCondition.push({phone});
+		if (phone) getCondition.push({ phone });
 		if (email) {
 			/*
 			const emailValid = await isEmailValid(email);
@@ -108,10 +128,10 @@ module.exports = {
 					.status(error.parameters.status)
 					.json({ message: emailValid });
 			*/
-			
-			getCondition.push({email})
-		};
-		const condition = {[Op.or]: [...getCondition],};
+
+			getCondition.push({ email });
+		}
+		const condition = { [Op.or]: [...getCondition] };
 
 		const statusData = await getRow(res, Status, { id: status_id });
 
@@ -127,14 +147,14 @@ module.exports = {
 	},
 
 	getPartnerDiscounts: async function (res, id, queries) {
-		const {status, size, page} = queries
+		const { status, size, page } = queries;
 
-		let condition = {partner_id: id};
+		let condition = { partner_id: id };
 		if (status) {
 			let statusData = await getRow(res, Status, { label: status });
 			condition.status_id = statusData.id;
 		}
-		const excludeDiscounts = ["type_disc_id","status_id"];
+		const excludeDiscounts = ["type_disc_id", "status_id"];
 		const includeDiscounts = [
 			{ model: Status, as: "status", attributes: excludeCommon },
 			{
@@ -144,9 +164,9 @@ module.exports = {
 					exclude: ["status_id"],
 				},
 				include: [{ model: Status, as: "status", attributes: excludeCommon }],
-			}
-		]
-		let pagination = getPaginationQueries(size,page)
+			},
+		];
+		let pagination = getPaginationQueries(size, page);
 
 		commonsController.getAll(
 			res,
@@ -159,7 +179,7 @@ module.exports = {
 	},
 
 	getTransactions: async function (res, id, queries) {
-		const {size, page} = queries
+		const { size, page } = queries;
 		let condition = {};
 
 		if (status) {
@@ -172,15 +192,13 @@ module.exports = {
 			{
 				model: Users,
 				as: "user",
-				attributes: { exclude:["terminal_id", "status_id", "password"] },
-				include: [
-					{ model: Status, as: "status", attributes: excludeCommon },
-				],
+				attributes: { exclude: ["terminal_id", "status_id", "password"] },
+				include: [{ model: Status, as: "status", attributes: excludeCommon }],
 			},
 			{
 				model: Discounts,
 				as: "discount",
-				attributes: { exclude: ["type_disc_id","status_id"] },
+				attributes: { exclude: ["type_disc_id", "status_id"] },
 				required: true,
 				include: [
 					{ model: Status, as: "status", attributes: excludeCommon },
@@ -190,16 +208,25 @@ module.exports = {
 						attributes: {
 							exclude: ["status_id"],
 						},
-						include: [{ model: Status, as: "status", attributes: excludeCommon }],
-					}
+						include: [
+							{ model: Status, as: "status", attributes: excludeCommon },
+						],
+					},
 				],
-				where: { partner_id: id }
+				where: { partner_id: id },
 			},
 			{ model: Status, as: "status", attributes: excludeCommon },
-		]
-		let pagination = getPaginationQueries(size,page)
+		];
+		let pagination = getPaginationQueries(size, page);
 		condition = Object.keys(condition).length === 0 ? null : condition;
 
-		commonsController.getAll(res, Tokens, condition, excludeTransactions, includeTransactions, pagination);
-	}
+		commonsController.getAll(
+			res,
+			Tokens,
+			condition,
+			excludeTransactions,
+			includeTransactions,
+			pagination
+		);
+	},
 };

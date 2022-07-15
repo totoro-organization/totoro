@@ -3,8 +3,13 @@ import TableWrapper from 'src/components/TableWrapper';
 import SuspenseLoader from 'src/components/SuspenseLoader';
 import { useApi } from 'src/hooks/useApi';
 import { StatusEnum } from 'src/models';
+<<<<<<< HEAD
 import useAuth from 'src/hooks/useAuth';
 import { API_ROUTES } from 'src/services/routes';
+=======
+import { API_ROUTES } from 'src/services/routes';
+import { useSession } from 'src/hooks/useSession';
+>>>>>>> webapp
 
 const statusOptions = [
   {
@@ -26,7 +31,11 @@ const statusOptions = [
 ];
 
 export default function Jobs() {
+<<<<<<< HEAD
   const { currentApp } = useAuth();
+=======
+  const { currentApp } = useSession();
+>>>>>>> webapp
   const { data: jobs, loading } = useApi(
     `/organizations/${currentApp.data.id}/jobs`
   );

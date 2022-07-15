@@ -1,9 +1,4 @@
-const {
-	Status,
-	Partners,
-	Discounts,
-	Types_discounts
-} = require("~orm/models");
+const { Status, Partners, Discounts, Types_discounts } = require("~orm/models");
 const commonsController = require("~services/Commons/controller");
 const { label_status } = require("~utils/enum.json");
 
@@ -13,13 +8,11 @@ const excludeCommon = { exclude: ["id", "createdAt", "updatedAt"] };
 
 const include = [
 	{ model: Status, as: "status", attributes: excludeCommon },
-	{ 
-		model: Partners, 
-		as: "partner", 
+	{
+		model: Partners,
+		as: "partner",
 		attributes: { exclude: ["status_id"] },
-		include: [
-			{ model: Status, as: "status", attributes: excludeCommon },
-		]
+		include: [{ model: Status, as: "status", attributes: excludeCommon }],
 	},
 	{
 		model: Types_discounts,
@@ -28,14 +21,14 @@ const include = [
 			exclude: ["status_id"],
 		},
 		include: [{ model: Status, as: "status", attributes: excludeCommon }],
-	}
+	},
 ];
 
 const exclude = ["status_id", "usertype_disc_id_id", "partner_id"];
 
 module.exports = {
 	getDiscounts: async function (res, queries) {
-		const {size,page,status} = queries
+		const { size, page, status } = queries;
 		let condition = {};
 		if (status) {
 			let statusData = await getRow(res, Status, { label: status });
@@ -44,9 +37,16 @@ module.exports = {
 
 		condition = Object.keys(condition).length === 0 ? null : condition;
 
-		let pagination = getPaginationQueries(size,page)
+		let pagination = getPaginationQueries(size, page);
 
-		commonsController.getAll(res, Discounts, condition, exclude, include, pagination);
+		commonsController.getAll(
+			res,
+			Discounts,
+			condition,
+			exclude,
+			include,
+			pagination
+		);
 	},
 
 	getDiscount: function (res, id) {
@@ -54,7 +54,7 @@ module.exports = {
 	},
 
 	createDiscount: async function (res, data) {
-		const { name, type_disc_id, partner_id } = data
+		const { name, type_disc_id, partner_id } = data;
 
 		const statusData = await getRow(res, Status, { id: label_status.actived });
 		const typeData = await getRow(res, Types_discounts, { id: type_disc_id });
@@ -62,11 +62,10 @@ module.exports = {
 		const condition = { name };
 
 		commonsController.create(null, res, Discounts, data, condition);
-
 	},
 
 	updateDiscount: async function (res, id, data) {
-		const { name, type_disc_id } = data
+		const { name, type_disc_id } = data;
 		const typeData = await getRow(res, Types_discounts, { id: type_disc_id });
 		const condition = {};
 		if (name) condition.name = name;
@@ -75,5 +74,5 @@ module.exports = {
 
 	deleteDiscount: function (res, id) {
 		commonsController.delete(res, Discounts, { id });
-	}
+	},
 };
