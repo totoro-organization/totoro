@@ -1,4 +1,4 @@
-import useActivity, { Order } from 'src/hooks/useActivity';
+import useUserActivity, { Order } from 'src/hooks/useUserActivity';
 
 import {
   Box,
@@ -26,7 +26,7 @@ const AvatarPrimary = styled(Avatar)(
 function RecentActivityCard() {
   const theme = useTheme();
   // const { tags, difficulties, categories } = useContext(CommonsContext);
-  const { recentActivities } = useActivity({
+  const { recentActivities } = useUserActivity({
     role: 'Administrateur',
     order: Order.DESC
   });
