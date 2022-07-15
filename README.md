@@ -12,7 +12,7 @@ Totoro est un service de proximité proposant à ses utilisateurs des missions �
 
 #### API
 
-- JavaScript (NodeJS)
+- JavaScript (NodeJS )
 
 #### TEST
 
