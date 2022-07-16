@@ -4,29 +4,17 @@ import ShopCard from "../components/molecules/ShopCard";
 import styled from "styled-components/native";
 import Spacer from "../components/atoms/Spacer";
 import { View } from "react-native";
-
-const FAKE_DISCOUNTS = [
-  {
-    shopName: "Mademoiselle Vrac",
-    description: "-50% sur les articles de cuisine",
-    isObtained: true,
-    tokens: 20,
-  },
-  {
-    shopName: "HUTTE",
-    description: "-10% sur tous les articles",
-    isObtained: false,
-    tokens: 5,
-  },
-];
+import useDiscounts from "../common/api/hooks/useDiscounts";
 
 export default function Shop() {
+  const { discounts } = useDiscounts();
+
   return (
     <GlobalLayout pageTitle="Boutique">
       <ShopCardsWrapper>
-        {FAKE_DISCOUNTS.map((discount, index) => {
+        {discounts?.map((discount, index) => {
           return (
-            <View key={`${discount.shopName}+${index}`}>
+            <View key={`${discount.name}+${index}`}>
               <ShopCard discount={discount} />
 
               <Spacer axis="vertical" size={1} />
