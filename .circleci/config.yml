@@ -1,7 +1,7 @@
 version: 2.1
 jobs:
   build:
-    working_directory: ~/repo/webapp
+    working_directory: ~/totoro/webapp
     docker:
       - image: cimg/node:16.13.2
     steps:
@@ -17,7 +17,7 @@ jobs:
       - save_cache:
           key: dependency-cache-{{ checksum "package-lock.json" }}
           paths:
-            - ~/repo/webapp/node_modules
+            - ./node_modules
       - run:
           name: Build React App
           command: npm run build
