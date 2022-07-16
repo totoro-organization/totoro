@@ -11,7 +11,7 @@ jobs:
           command: "sudo npm install -g npm"
       - run:
           name: Install Dependencies
-          command: npm ci     
+          command: npm install --legacy-peer-deps   
       - run:
           name: Build React App
           command: npm run build
