@@ -1,9 +1,10 @@
 import { Box, Button, Container, styled, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
+import useDeviceDetect from 'src/hooks/useDeviceDetect';
 import ConfirmationIllustration from './Illustration';
 
 const Content = styled(Box)(
-    ({ theme }) => `
+  ({ theme }) => `
           display: flex;
           flex-direction: column;
           align-items: center;
@@ -16,11 +17,13 @@ const Content = styled(Box)(
               column-gap: ${theme.spacing(8)};
           }
   `
-  );
+);
 
 function AccountConfirmation() {
+  const { isMobile } = useDeviceDetect();
+
   return (
-    <Container sx={{ height: '100%'}} component="main" maxWidth="md">
+    <Container sx={{ height: '100%' }} component="main" maxWidth="md">
       <Content>
         <Box display="flex" flexDirection="column" rowGap={2}>
           <Box display="flex" flexDirection="column" rowGap={4}>
@@ -33,7 +36,13 @@ function AccountConfirmation() {
               mail.
             </Typography>
           </Box>
-          <Button to="/login" component={Link} sx={{width: 'fit-content'}} variant="contained" color="primary">
+          <Button
+            to="/login"
+            component={Link}
+            sx={{ width: 'fit-content' }}
+            variant="contained"
+            color="primary"
+          >
             Ok, c'est fait !
           </Button>
         </Box>
