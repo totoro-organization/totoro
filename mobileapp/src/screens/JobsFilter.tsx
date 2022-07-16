@@ -13,6 +13,7 @@ import RadioGroup from "../components/molecules/RadioGroup";
 import PillGroup from "../components/molecules/PillGroup";
 import Slider from "../components/atoms/Slider";
 import Box from "../components/atoms/Box";
+import Checkbox from "../components/atoms/Checkbox";
 
 // TODO: Fix header or add this component as Modal?
 export default function JobsFilter() {
@@ -82,6 +83,20 @@ export default function JobsFilter() {
           animationType="spring"
           onValueChange={(value) => setDistanceValue(value)}
         />
+      </CategorySection>
+
+      <CategorySection>
+        <CategoryTitle>AUTRES</CategoryTitle>
+
+        <Checkbox label="Voir uniquement les associations suivies" />
+
+        <Spacer axis="vertical" size={1} />
+
+        <Checkbox label="Voir uniquement les missions auxquelles je ne participe pas déjà" />
+
+        <Spacer axis="vertical" size={1} />
+
+        <Checkbox label="Voir uniquement les missions pour lesquelles il reste des places" />
       </CategorySection>
 
       <Button
