@@ -36,7 +36,7 @@ function SignupForm() {
       lastname: formData.lastname,
       username: formData.username,
       birthday: format(new Date(formData.birthday), 'yyyy-MM-dd')
-    };
+    };    
     signup(data);
   };
   return (
@@ -97,7 +97,7 @@ function SignupForm() {
             />
           </Grid>
           <Grid item xs={12}>
-            <FormDatePicker label="Date de naissance" name="birthday" />
+            <FormDatePicker defaultValue={null} label="Date de naissance" name="birthday" />
           </Grid>
 
           {/* <Grid item xs={12}>
