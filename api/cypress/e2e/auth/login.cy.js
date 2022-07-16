@@ -1,39 +1,33 @@
-import Cypress from "cypress";
 import { API_ROUTES } from "../../support/routes";
+import loginUserEmail from "../../fixtures/user/login-email.json";
+import loginUserName from "../../fixtures/user/login-username.json";
 
-const FAKE_USER_EMAIL = "me@totoro.com";
-const FAKE_USER_USERNAME = "rogerDu82";
-const FAKE_USER_PASSWORD = "123456";
-
+// TODO: Add test when the user received an error.
 describe("POST /login", () => {
   it("user connects with our email", () => {
-    const body = {
-      emailOrUsername: FAKE_USER_EMAIL,
-      password: FAKE_USER_PASSWORD,
-    };
     cy.request({
       method: "POST",
       url: API_ROUTES.LOGIN,
-      body: body,
+      body: loginUserEmail,
       headers: {
-        app_id: Cypress.env("APP_ID"),
+        "content-type": "application/json",
+        app_id: "ad7258a1-bc27-4b04-882b-eeca86afcc7e",
       },
-    }).should((response) => {
+    }).then((response) => {
       expect(response.status).eq(201);
     });
   });
 
   it("user connects with our username", () => {
-    const body = {
-      emailOrUsername: FAKE_USER_USERNAME,
-      password: FAKE_USER_PASSWORD,
-    };
-
     cy.request({
       method: "POST",
       url: API_ROUTES.LOGIN,
-      body: body,
-    }).should((response) => {
+      body: loginUserName,
+      headers: {
+        "content-type": "application/json",
+        app_id: "ad7258a1-bc27-4b04-882b-eeca86afcc7e",
+      },
+    }).then((response) => {
       expect(response.status).eq(201);
     });
   });
