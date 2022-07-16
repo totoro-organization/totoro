@@ -10,12 +10,12 @@ jobs:
           name: Update NPM
           command: "sudo npm install -g npm"
       - restore_cache:
-          key: dependency-cache-{{ checksum "package-lock.json" }}
+          key: dependency-cache-{{ checksum " ~/totoro/webapp/package-lock.json" }}
       - run:
           name: Install Dependencies
           command: npm install --legacy-peer-deps
       - save_cache:
-          key: dependency-cache-{{ checksum "package-lock.json" }}
+          key: dependency-cache-{{ checksum " ~/totoro/webapp/package-lock.json" }}
           paths:
             - ~/totoro/webapp/node_modules
       - run:
