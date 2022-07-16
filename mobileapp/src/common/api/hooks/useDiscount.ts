@@ -9,5 +9,5 @@ export default function useDiscount(discountId: string) {
     async () => await getDiscount(discountId)
   );
 
-  return { job: data, isLoading, error };
+  return { discount: data, isLoading, error };
 }
