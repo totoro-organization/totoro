@@ -1,7 +1,5 @@
 version: 2.1
 jobs:
-  
-  deploy_netlify_webapp:
   build:
     working_directory: ~/totoro/webapp
     docker:
@@ -30,44 +28,12 @@ jobs:
       - run:
           name: Deploy to Netlify
           command: ./node_modules/.bin/netlify deploy --site $NETLIFY_SITE_ID --auth $NETLIFY_ACCESS_TOKEN --prod --dir=build
-
-  deploy_netlify_backoffice:
-  build:
-    working_directory: ~/totoro/backoffice
-    docker:
-      - image: cimg/node:16.13.2
-    steps:
-      - checkout
-      - run:
-          name: Update NPM
-          command: "sudo npm install -g npm"
-      - restore_cache:
-          key: dependency-cache-{{ checksum "package-lock.json" }}
-      - run:
-          name: Install Dependencies
-          command: npm install
-      - save_cache:
-          key: dependency-cache-{{ checksum "package-lock.json" }}
-          paths:
-            - ./node_modules
-      - run:
-          name: Build React App
-          command: npm run build
-      - save_cache:
-          key: app-build-cache-{{ .Branch }}
-          paths:
-            - ./build
-      - run:
-          name: Deploy to Netlify
-          command: ./node_modules/.bin/netlify deploy --site $NETLIFY_SITE_ID1 --auth $NETLIFY_ACCESS_TOKEN --prod --dir=build
 workflows:
   version: 2
   build-deploy:
     jobs:
-    - deploy_netlify_webapp
-    - deploy_netlify_backoffice
-    - build:
-        filters:
-          branches:
-            only:
+      - build:
+          filters:
+            branches:
+              only:
                 - main
