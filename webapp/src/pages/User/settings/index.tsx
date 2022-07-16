@@ -8,7 +8,6 @@ import { styled } from '@mui/material/styles';
 
 import EditProfileTab from './EditProfileTab';
 import NotificationsTab from './NotificationsTab';
-import SecurityTab from './SecurityTab';
 
 const TabsWrapper = styled(Tabs)(
   () => `
@@ -20,13 +19,11 @@ const TabsWrapper = styled(Tabs)(
 
 function ManagementUserSettings() {
 
-  const [currentTab, setCurrentTab] = useState<string>('activity');
+  const [currentTab, setCurrentTab] = useState<string>('edit_profile');
 
   const tabs = [
-    { value: 'activity', label: 'Activity' },
     { value: 'edit_profile', label: 'Edit Profile' },
-    { value: 'notifications', label: 'Notifications' },
-    { value: 'security', label: 'Passwords/Security' }
+    { value: 'notifications', label: 'Notifications' }
   ];
 
   const handleTabsChange = (event: ChangeEvent<{}>, value: string): void => {
@@ -66,7 +63,6 @@ function ManagementUserSettings() {
           <Grid item xs={12}>
             {currentTab === 'edit_profile' && <EditProfileTab />}
             {currentTab === 'notifications' && <NotificationsTab />}
-            {currentTab === 'security' && <SecurityTab />}
           </Grid>
         </Grid>
       </Container>

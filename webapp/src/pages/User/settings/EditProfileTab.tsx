@@ -5,7 +5,10 @@ import {
   Card,
   Box,
   Divider,
-  Button
+  Button,
+  List,
+  ListItem,
+  ListItemText
 } from '@mui/material';
 
 import formatPhoneNumber from 'src/utils/formatPhoneNumber';
@@ -49,15 +52,6 @@ function EditProfileTab() {
     getCurrentUser();
   };
 
-  const handleEditUserAvatar = async () => {
-    const updateResponse = await updateAvatarUser(valueEdit);
-    if ('error' in updateResponse) return;
-    setEditAvatar(false);
-    const userResponse = await getCurrentUser();
-    if ('error' in userResponse) return;
-    setUser(userResponse as User);
-  };
-
   const formatedPhoneNumber = formatPhoneNumber(String(user.phone));
 
   return (
@@ -78,89 +72,141 @@ function EditProfileTab() {
                 Manage informations related to your personal details
               </Typography>
             </Box>
-            <Button variant="text" startIcon={<EditTwoToneIcon />}>
-              Edit
-            </Button>
+            <>
+              {!EditUser ? (
+                <Button
+                  variant="text"
+                  startIcon={<EditTwoToneIcon />}
+                  onClick={() => {
+                    setEditUser(true);
+                  }}
+                >
+                  Edit
+                </Button>
+              ) : (
+                <div>
+                  <Button
+                    variant="text"
+                    color="success"
+                    startIcon={<CheckIcon />}
+                    onClick={handleEditUser}
+                  >
+                    validé
+                  </Button>
+
+                  <Button
+                    variant="text"
+                    startIcon={<CancelIcon />}
+                    onClick={() => {
+                      setEditUser(false);
+                    }}
+                  >
+                    annuler
+                  </Button>
+                </div>
+              )}
+            </>
           </Box>
           <Divider />
           <CardContent sx={{ p: 4 }}>
             <Typography variant="subtitle2">
-              <Grid container spacing={0}>
+              <Grid justifyItems={'center'} container spacing={0}>
                 <Grid item xs={12} sm={4} md={3} textAlign={{ sm: 'right' }}>
                   <Box pr={3} pb={2}>
-                    Name:
+                    Firstname:
                   </Box>
                 </Grid>
                 <Grid item xs={12} sm={8} md={9}>
                   <Text color="black">
-                    <b>Craig Donin</b>
+                    {!EditUser ? (
+                      <b>{user.firstname}</b>
+                    ) : (
+                      <TextField
+                        id="user-firstname"
+                        label="Firstname"
+                        name="firstname"
+                        onChange={(e: any) => {
+                          handleChangeEdit(e);
+                        }}
+                        variant="standard"
+                        size="small"
+                      />
+                    )}
                   </Text>
                 </Grid>
                 <Grid item xs={12} sm={4} md={3} textAlign={{ sm: 'right' }}>
                   <Box pr={3} pb={2}>
-                    Date of birth:
+                    Lastname:
                   </Box>
                 </Grid>
                 <Grid item xs={12} sm={8} md={9}>
                   <Text color="black">
-                    <b>15 March 1977</b>
+                    {!EditUser ? (
+                      <b>{user.lastname}</b>
+                    ) : (
+                      <TextField
+                        id="user-lastname"
+                        label="Lastname"
+                        name="lastname"
+                        onChange={(e: any) => {
+                          handleChangeEdit(e);
+                        }}
+                        variant="standard"
+                        size="small"
+                      />
+                    )}
                   </Text>
                 </Grid>
                 <Grid item xs={12} sm={4} md={3} textAlign={{ sm: 'right' }}>
                   <Box pr={3} pb={2}>
-                    Address:
-                  </Box>
-                </Grid>
-                <Grid item xs={12} sm={8} md={9}>
-                  <Box sx={{ maxWidth: { xs: 'auto', sm: 300 } }}>
-                    <Text color="black">
-                      1749 High Meadow Lane, SEQUOIA NATIONAL PARK, California,
-                      93262
-                    </Text>
-                  </Box>
-                </Grid>
-              </Grid>
-            </Typography>
-          </CardContent>
-        </Card>
-      </Grid>
-      <Grid item xs={12}>
-        <Card>
-          <Box
-            p={3}
-            display="flex"
-            alignItems="center"
-            justifyContent="space-between"
-          >
-            <Box>
-              <Typography variant="h4" gutterBottom>
-                Account Settings
-              </Typography>
-              <Typography variant="subtitle2">
-                Manage details related to your account
-              </Typography>
-            </Box>
-            <Button variant="text" startIcon={<EditTwoToneIcon />}>
-              Edit
-            </Button>
-          </Box>
-          <Divider />
-          <CardContent sx={{ p: 4 }}>
-            <Typography variant="subtitle2">
-              <Grid container spacing={0}>
-                <Grid item xs={12} sm={4} md={3} textAlign={{ sm: 'right' }}>
-                  <Box pr={3} pb={2}>
-                    Language:
+                    Email:
                   </Box>
                 </Grid>
                 <Grid item xs={12} sm={8} md={9}>
                   <Text color="black">
-                    <b>English (US)</b>
+                    {!EditUser ? (
+                      <b>{user.email}</b>
+                    ) : (
+                      <TextField
+                        type="email"
+                        id="user-email"
+                        label="Email"
+                        name="email"
+                        onChange={(e: any) => {
+                          handleChangeEdit(e);
+                        }}
+                        variant="standard"
+                        size="small"
+                      />
+                    )}
                   </Text>
                 </Grid>
                 <Grid item xs={12} sm={4} md={3} textAlign={{ sm: 'right' }}>
                   <Box pr={3} pb={2}>
-                    Timezone:
+                    Birthday:
+                  </Box>
+                </Grid>
+                <Grid item xs={12} sm={8} md={9}>
+                  <Text color="black">
+                    {!EditUser ? (
+                      <b>{user.birthday}</b>
+                    ) : (
+                      <TextField
+                        id="birdthday"
+                        label="Birthday"
+                        name="birthday"
+                        onChange={(e: any) => {
+                          handleChangeEdit(e);
+                        }}
+                        variant="standard"
+                        size="small"
+                      />
+                    )}
+                  </Text>
+                </Grid>
+                <Grid item xs={12} sm={4} md={3} textAlign={{ sm: 'right' }}>
+                  <Box pr={3} pb={2}>
+                    Phone number:
                   </Box>
                 </Grid>
                 <Grid item xs={12} sm={8} md={9}>
@@ -183,7 +229,7 @@ function EditProfileTab() {
                 </Grid>
                 <Grid item xs={12} sm={4} md={3} textAlign={{ sm: 'right' }}>
                   <Box pr={3} pb={2}>
-                    Account status:
+                    Address:
                   </Box>
                 </Grid>
                 <Grid item xs={12} sm={8} md={9}>
@@ -213,7 +259,7 @@ function EditProfileTab() {
         </Card>
       </Grid>
       <Grid item xs={12}>
-        {/* <Card>
+        <Card>
           <List>
             <ListItem sx={{ p: 3 }}>
               <ListItemText
@@ -287,7 +333,7 @@ function EditProfileTab() {
               </>
             )}
           </List>
-        </Card> */}
+        </Card>
       </Grid>
       <Grid item xs={12}>
         <Card>
@@ -299,10 +345,10 @@ function EditProfileTab() {
           >
             <Box>
               <Typography variant="h4" gutterBottom>
-                Email Addresses
+                Account Settings
               </Typography>
               <Typography variant="subtitle2">
-                Manage details related to your associated email addresses
+                Manage details related to your account
               </Typography>
             </Box>
             <Button variant="text" startIcon={<EditTwoToneIcon />}>
@@ -315,26 +361,34 @@ function EditProfileTab() {
               <Grid container spacing={0}>
                 <Grid item xs={12} sm={4} md={3} textAlign={{ sm: 'right' }}>
                   <Box pr={3} pb={2}>
-                    Email ID:
+                    Language:
                   </Box>
                 </Grid>
                 <Grid item xs={12} sm={8} md={9}>
                   <Text color="black">
-                    <b>example@demo.com</b>
+                    <b>English (US)</b>
                   </Text>
-                  <Box pl={1} component="span">
-                    <Label color="success">Primary</Label>
-                  </Box>
                 </Grid>
                 <Grid item xs={12} sm={4} md={3} textAlign={{ sm: 'right' }}>
                   <Box pr={3} pb={2}>
-                    Email ID:
+                    Timezone:
                   </Box>
                 </Grid>
                 <Grid item xs={12} sm={8} md={9}>
                   <Text color="black">
-                    <b>demo@example.com</b>
+                    <b>GMT +2</b>
                   </Text>
+                </Grid>
+                <Grid item xs={12} sm={4} md={3} textAlign={{ sm: 'right' }}>
+                  <Box pr={3} pb={2}>
+                    Account status:
+                  </Box>
+                </Grid>
+                <Grid item xs={12} sm={8} md={9}>
+                  <Label color="success">
+                    <DoneTwoToneIcon fontSize="small" />
+                    <b>Active</b>
+                  </Label>
                 </Grid>
               </Grid>
             </Typography>
