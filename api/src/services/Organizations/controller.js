@@ -55,7 +55,7 @@ const exclude = ["status_id"];
 
 module.exports = {
 	getOrganizations: async function (res, queries) {
-		const {size,page,status} = queries
+		const {size,page,status,order} = queries
 		let condition = {};
 		if (status) {
 			let statusData = await getRow(res, Status, { label: status });
@@ -66,7 +66,7 @@ module.exports = {
 
 		let pagination = getPaginationQueries(size,page)
 
-		commonsController.getAll(res, Associations, condition, exclude, include, pagination);
+		commonsController.getAll(res, Associations, condition, exclude, include, pagination, order);
 	},
 
 	getOrganization: function (res, id) {
@@ -166,7 +166,7 @@ module.exports = {
 
 	responseMemberOrganization: async function (res, id, data) {
 		const statusData = await getRow(res, Status, { id: data.status_id });
-		if(statusData.label === "deleted" || statusData.label === "denied" || statusData.label === "closed" ){
+		if(statusData.label === "deleted" || statusData.label === "denied" || statusData.label === "canceled" ){
 			commonsController.delete(res, Associations_users, { id }, true);
 		} 
 		else {
@@ -183,7 +183,7 @@ module.exports = {
 	},
 
 	getOrganizationJobs: async function (res, id, queries) {
-		const {status, size, page} = queries
+		const {status, size, page, order} = queries
 
 		let condition = {};
 		if (status) {
@@ -231,12 +231,13 @@ module.exports = {
 			condition,
 			excludeJobs,
 			includeJobs,
-			pagination
+			pagination, 
+			order
 		);
 	},
 
 	getFavorites: async function (res, id, queries) {
-		const {size, page} = queries
+		const {size, page, order} = queries
 
 		const excludeFavorites = ["user_id"];
 		const includeFavorites = [
@@ -251,11 +252,11 @@ module.exports = {
 		]
 		let pagination = getPaginationQueries(size,page)
 
-		commonsController.getAll(res, Favorites, {assos_id: id}, excludeFavorites, includeFavorites, pagination);
+		commonsController.getAll(res, Favorites, {assos_id: id}, excludeFavorites, includeFavorites, pagination, order);
 	},
 
 	getMembers: async function (res, id, queries) {
-		const {status, size, page} = queries
+		const {status, size, page, order} = queries
 
 		let condition = {assos_id: id};
 		if (status) {
@@ -282,7 +283,8 @@ module.exports = {
 			condition,
 			excludeMembers,
 			includeMembers,
-			pagination
+			pagination, 
+			order
 		);
 	},
 
@@ -293,7 +295,7 @@ module.exports = {
 	},
 
 	getSubscriptions: async function (res, id, queries) {
-		const {status, size, page} = queries
+		const {status, size, page, order} = queries
 
 		let condition = {assos_id: id};
 		if (status) {
@@ -325,7 +327,8 @@ module.exports = {
 			condition,
 			excludeSub,
 			includeSub,
-			pagination
+			pagination, 
+			order
 		);
 	},
 

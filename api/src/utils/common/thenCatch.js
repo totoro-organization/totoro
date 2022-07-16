@@ -7,7 +7,8 @@ module.exports = {
     condition = null,
     exclude = null,
     include = null,
-    pagination = null
+    pagination = null,
+    order = null
   ) {
 
     const params = {
@@ -15,6 +16,8 @@ module.exports = {
       attributes: { exclude },
       where: condition,
     };
+
+    if(order) params.order = [['createdAt', order.toUpperCase()]]
 
     let getPagination = {}
     var page = 0;

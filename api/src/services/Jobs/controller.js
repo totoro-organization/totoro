@@ -262,7 +262,7 @@ module.exports = {
 			});
 	},
 	getParticipants: async function (res, id, queries) {
-		const {status, size, page} = queries
+		const {status, size, page, order} = queries
 
 		let condition = {};
 		let statusData = null;
@@ -289,10 +289,10 @@ module.exports = {
 		];
 		let pagination = getPaginationQueries(size,page)
 
-		commonsController.getAll(res, Groups, {jobs_id: id}, excludeGroup, includeGroup, pagination);
+		commonsController.getAll(res, Groups, {jobs_id: id}, excludeGroup, includeGroup, pagination, order);
 	},
 	getFavorites: async function (res, id, queries) {
-		const {size, page} = queries
+		const {size, page, order} = queries
 
 		const excludeFavorites = ["user_id"];
 		const includeFavorites = [
@@ -307,7 +307,7 @@ module.exports = {
 		]
 		let pagination = getPaginationQueries(size,page)
 
-		commonsController.getAll(res, Favorites, {jobs_id: id}, excludeFavorites, includeFavorites, pagination);
+		commonsController.getAll(res, Favorites, {jobs_id: id}, excludeFavorites, includeFavorites, pagination, order);
 	},
 	createJob: async function (req, res) {
 		const {body: data, files} = req;
@@ -454,7 +454,7 @@ module.exports = {
 			if (status_id || difficulty_id){
 				const {participants, job} = await module.exports.membersOrganisationJob(res, id);
 				for (const participant of participants) {
-					sendMail(updateJob.template, {to: participant.email, subject: updateJob.subject}, {job, status: stat, difficulty: diff})
+					sendMail(updateJob.template, {to: participant.email, subject: updateJob.subject+ ` "${job.title}"`}, {job, status: stat, difficulty: diff})
 				}
 			}
 			commonsController.update(res, Jobs, id, data, condition);
@@ -463,7 +463,7 @@ module.exports = {
 	deleteJob: async function (res, id) {
 		const {members, job} = await module.exports.membersOrganisationJob(res, id);
 		for (const member of members) {
-			sendMail(updateJob.template, {to: member.email, subject: updateJob.subject}, {job})
+			sendMail(updateJob.template, {to: member.email, subject: updateJob.subject+ ` "${job.title}"`}, {job})
 		}
 		commonsController.delete(res, Jobs, { id });
 	},
@@ -474,7 +474,7 @@ module.exports = {
 		commonsController.update(res, Attachment_jobs, id, data);
   	},
 	getJobLitigations: async function (res, id, queries) {
-		const {status, size, page} = queries
+		const {status, size, page, order} = queries
 
 		let condition = {type: false};
 		if (status) {
@@ -505,7 +505,7 @@ module.exports = {
 		];
 		let pagination = getPaginationQueries(size,page)
 
-    	commonsController.getAll(res, Litigations, condition, ['litigation_object_id','group_id','status_id'], includeLitigation, pagination);
+    	commonsController.getAll(res, Litigations, condition, ['litigation_object_id','group_id','status_id'], includeLitigation, pagination, order);
   	},
 	registerToJob: async function (res, data) {
 		const { jobs_id, user_id } = data
@@ -570,7 +570,7 @@ module.exports = {
 								if (result){
 									const {members, job} = await module.exports.membersOrganisationJob(res, jobs_id);
 									for (const member of members) {
-										sendMail(registerToJob.template, {to: member.email, subject: registerToJob.subject}, {job, user: userData})
+										sendMail(registerToJob.template, {to: member.email, subject: registerToJob.subject+ ` "${job.title}"`}, {job, user: userData})
 									}
 									return res
 											.status(success.create.status)
@@ -621,10 +621,23 @@ module.exports = {
 			]
 		);
 		const job = await getRow(Jobs, {id}, include);
+		const participants = await getRows(
+			Groups, 
+			{jobs_id: id},
+			[{
+				model: Users,
+				as: "participant",
+				attributes: { exclude:["terminal_id", "status_id", "password"] },
+				include: [
+					{ model: Status, as: "status", attributes: excludeCommon },
+				],
+			},
+			{ model: Status, as: "status", attributes: excludeCommon, where: {label: label_status.actived}},]
+		);
 
 		return {
 			members: data["author"]["organization"]["members"],
-			participants:null,
+			participants,
 			job
 		}
 	}

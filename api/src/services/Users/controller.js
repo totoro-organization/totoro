@@ -96,7 +96,7 @@ const includeUser = [
 
 module.exports = {
 	getUsers: async function (res, queries) {
-		const {size,page,status} = queries
+		const {size,page,status, order} = queries
 		let condition = {};
 		if (status) {
 			let statusData = await getRow(res, Status, { label: status });
@@ -107,7 +107,7 @@ module.exports = {
 
 		let pagination = getPaginationQueries(size,page)
 
-		commonsController.getAll(res, Users, condition, exclude, include, pagination);
+		commonsController.getAll(res, Users, condition, exclude, include, pagination, order);
 	},
 
 	getUser: function (res, id) {
@@ -192,7 +192,7 @@ module.exports = {
 		);
 	},
 	getFavorites: async function (res, id, queries) {
-		const {status, size, page} = queries
+		const {status, size, page, order} = queries
 		let condition = {};
 
 		if (status) {
@@ -222,7 +222,8 @@ module.exports = {
 			{ user_id: id },
 			["assos_id", "jobs_id", "status_id"],
 			includeFavorites,
-			pagination
+			pagination, 
+			order
 		);
 	},
 
@@ -248,7 +249,7 @@ module.exports = {
 	},
 
 	getUserJobs: async function (res, id, queries) {
-		const {status, size, page} = queries
+		const {status, size, page, order} = queries
 
 		let condition = {user_id: id};
 		if (status) {
@@ -264,12 +265,13 @@ module.exports = {
 			condition,
 			excludeGroup,
 			includeUser,
-			pagination
+			pagination,
+			order
 		);
 	},
 
 	getUserLitigations: async function (res, id, queries) {
-		const {status, size, page} = queries
+		const {status, size, page, order} = queries
 
 		let condition = {type: true};
 		if (status) {
@@ -292,11 +294,11 @@ module.exports = {
 		];
 		let pagination = getPaginationQueries(size,page)
 
-		commonsController.getAll(res, Litigations, condition, ['litigation_object_id','group_id','status_id'], includeLitigation, pagination);
+		commonsController.getAll(res, Litigations, condition, ['litigation_object_id','group_id','status_id'], includeLitigation, pagination, order);
   	},
 
 	getTransactions: async function (res, id, queries) {
-		const {size, page} = queries
+		const {size, page, status, order} = queries
 		let condition = {user_id : id};
 
 		if (status) {
@@ -335,6 +337,6 @@ module.exports = {
 		]
 		let pagination = getPaginationQueries(size,page)
 
-		commonsController.getAll(res, Tokens, condition, excludeTransactions, includeTransactions, pagination);
+		commonsController.getAll(res, Tokens, condition, excludeTransactions, includeTransactions, pagination, order);
 	}
 };

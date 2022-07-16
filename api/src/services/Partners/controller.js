@@ -37,7 +37,7 @@ const exclude = ["status_id", "user_id"];
 
 module.exports = {
 	getPartners: async function (res, queries) {
-		const {size,page,status} = queries
+		const {size,page,status, order} = queries
 		let condition = {};
 		if (status) {
 			let statusData = await getRow(res, Status, { label: status });
@@ -48,7 +48,7 @@ module.exports = {
 
 		let pagination = getPaginationQueries(size,page)
 
-		commonsController.getAll(res, Partners, condition, exclude, include, pagination);
+		commonsController.getAll(res, Partners, condition, exclude, include, pagination, order);
 	},
 
 	getPartner: function (res, id) {
@@ -127,7 +127,7 @@ module.exports = {
 	},
 
 	getPartnerDiscounts: async function (res, id, queries) {
-		const {status, size, page} = queries
+		const {status, size, page, order} = queries
 
 		let condition = {partner_id: id};
 		if (status) {
@@ -154,12 +154,13 @@ module.exports = {
 			condition,
 			excludeDiscounts,
 			includeDiscounts,
-			pagination
+			pagination, 
+			order
 		);
 	},
 
 	getTransactions: async function (res, id, queries) {
-		const {size, page} = queries
+		const {size, page, status, order} = queries
 		let condition = {};
 
 		if (status) {
@@ -200,6 +201,6 @@ module.exports = {
 		let pagination = getPaginationQueries(size,page)
 		condition = Object.keys(condition).length === 0 ? null : condition;
 
-		commonsController.getAll(res, Tokens, condition, excludeTransactions, includeTransactions, pagination);
+		commonsController.getAll(res, Tokens, condition, excludeTransactions, includeTransactions, pagination, order);
 	}
 };
