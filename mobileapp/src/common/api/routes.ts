@@ -17,6 +17,9 @@ export const API_ROUTES = {
   JOB_FAVORITES: (jobId: string) => `/jobs/${jobId}/favorites`,
   JOB_REGISTER: (jobId: string) => `/jobs/${jobId}/register`,
 
+  DISCOUNTS: "/discounts",
+  DISCOUNT: (discountId: string) => `/discounts/${discountId}`,
+
   // UTIL
   TOTORO_TAGS: "/tags",
 } as const;
