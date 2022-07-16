@@ -1,7 +1,7 @@
 version: 2.1
 jobs:
   build:
-    working_directory: ~/totoro/webapp
+    working_directory: ~/repo/webapp
     docker:
       - image: cimg/node:16.13.2
     steps:
