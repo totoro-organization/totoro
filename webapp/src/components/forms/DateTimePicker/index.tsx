@@ -69,8 +69,7 @@ function FormDateTimePicker({
                 label={label}
                 value={value}
                 onChange={(data) => handleChange(data, field.onChange)}
-                renderInput={(params) => <TextField {...params} />}
-                // onError={(error, value) => console.log(error, value)}
+                renderInput={(params) => <TextField {...params} error={!!error} />}
               />
               {!!error && (
                 <FormHelperText error={!!error}>{error.message}</FormHelperText>
