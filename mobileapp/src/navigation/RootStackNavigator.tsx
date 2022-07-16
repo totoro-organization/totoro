@@ -1,6 +1,6 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
-import useAuth from "../common/contexts/AuthContext";
+import useAuth from "../common/hooks/useAuth";
 import Explanation from "../screens/Explanation";
 import Login from "../screens/auth/Login";
 import Register from "../screens/auth/Register";

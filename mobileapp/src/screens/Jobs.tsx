@@ -5,7 +5,7 @@ import { ActivityIndicator } from "react-native";
 import Filter from "../assets/icons/Filter";
 import Sort from "../assets/icons/Sort";
 import useJobs from "../common/api/hooks/useJobs";
-import useAuth from "../common/contexts/AuthContext";
+import useAuth from "../common/hooks/useAuth";
 import useBoolean from "../common/hooks/useBoolean";
 import Box from "../components/atoms/Box";
 import Button from "../components/atoms/Button";

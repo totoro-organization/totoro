@@ -16,7 +16,7 @@ import { Link } from "@react-navigation/native";
 import useUserFavorites from "../../common/api/hooks/useUserFavorites";
 import addUserFavorite from "../../common/api/requests/addUserFavorite";
 import Check from "../../assets/icons/Check";
-import useAuth from "../../common/contexts/AuthContext";
+import useAuth from "../../common/hooks/useAuth";
 import deleteFavorite from "../../common/api/requests/deleteFavorite";
 import useJob from "../../common/api/hooks/useJob";
 import useJobFavorites from "../../common/api/hooks/useJobFavorites";

@@ -20,7 +20,9 @@ interface AuthContextType {
   isLoading?: boolean;
 }
 
-const AuthContext = createContext<AuthContextType>({} as AuthContextType);
+export const AuthContext = createContext<AuthContextType>(
+  {} as AuthContextType
+);
 
 export function AuthProvider({
   children,
@@ -77,8 +79,4 @@ export function AuthProvider({
   return (
     <AuthContext.Provider value={memoedValue}>{children}</AuthContext.Provider>
   );
-}
-
-export default function useAuth() {
-  return useContext(AuthContext);
 }

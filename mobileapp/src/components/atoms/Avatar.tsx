@@ -7,7 +7,7 @@ import { Text } from "./Text";
 // TODO: Rename user to fallback or initials props.
 type AvatarProps = {
   src?: string;
-  user?: User;
+  user?: User | undefined | null;
   size?: "md" | "sm";
   type?: "user" | "organization";
 };
