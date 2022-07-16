@@ -55,7 +55,7 @@ jobs:
             - ./build
       - run:
           name: Deploy to Netlify
-          command: ./node_modules/.bin/netlify deploy --site $NETLIFY_SITE_ID1 --auth $NETLIFY_ACCESS_TOKEN1 --prod --dir=build
+          command: ./node_modules/.bin/netlify deploy --site $NETLIFY_SITE_ID1 --auth $NETLIFY_ACCESS_TOKEN --prod --dir=build
 workflows:
   version: 2
   build-deploy:
