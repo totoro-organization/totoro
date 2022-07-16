@@ -2,9 +2,7 @@ export const border = {
   radius: {
     none: `0px`,
 
-    // TODO: add our values (check figma)
-    // sm: `4px`,
-
+    sm: `4px`,
     md: `6px`, // default?
     lg: `8px`,
 
