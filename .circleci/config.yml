@@ -15,7 +15,7 @@ jobs:
           command: npm install --legacy-peer-deps   
       - run:
           name: Build React App
-          command: npm run build
+          command: CI=false npm run build
       - save_cache:
           key: app-build-cache-{{ .Branch }}
           paths:
