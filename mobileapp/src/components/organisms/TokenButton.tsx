@@ -7,7 +7,7 @@ import getLocaleCurrencyNotation from "../../common/utils/getLocaleCurrencyNotat
 import Spacer from "../atoms/Spacer";
 import Token from "../../assets/icons/Token";
 import useBoolean from "../../common/hooks/useBoolean";
-import useAuth from "../../common/contexts/AuthContext";
+import useAuth from "../../common/hooks/useAuth";
 
 export default function TokenButton() {
   const { user } = useAuth();

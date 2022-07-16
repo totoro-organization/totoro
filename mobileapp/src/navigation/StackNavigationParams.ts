@@ -4,6 +4,7 @@ export type StackParamList = {
   Job: { id: string };
   Conversation: { id: number };
   Profile: { id: number; type: ProfileType };
+  Discount: { id: string };
 } & AuthParamList &
   BottomTabParamList &
   AppParamList;

@@ -1,105 +1,64 @@
 import React from "react";
-import { ImageBackground } from "react-native";
-import Toast from "react-native-toast-message";
+
 import styled from "styled-components/native";
+import { Discount } from "../../models/discount";
 import Box from "../atoms/Box";
-import Button from "../atoms/Button";
+import Spacer from "../atoms/Spacer";
 import { Text } from "../atoms/Text";
+import { Card } from "../atoms/Card";
+import { useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { StackParamList } from "../../navigation/StackNavigationParams";
 
 const PLACEHOLDER_IMAGE =
   "https://images.unsplash.com/photo-1528698827591-e19ccd7bc23d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2952&q=80";
 
-// TODO: Add real types (see with the backend).
-type Discount = {
-  shopName: string;
-  description: string;
-  tokens: number;
-  banner?: any;
-  isObtained: boolean;
-};
-
 export type ShopCardProps = {
   discount: Discount;
+  isObtained?: boolean;
 };
 
-export default function ShopCard({ discount }: ShopCardProps) {
-  // TODO: Add api call here.
-  function handleBuyDiscount(shopName: string) {
-    Toast.show({
-      type: "success",
-      props: {
-        title: "Félicitations !",
-        text: `Le bon de réduction de chez ${shopName} a bien été acheté.`,
-      },
-    });
-  }
+export default function ShopCard({
+  discount,
+  isObtained = false,
+}: ShopCardProps) {
+  const navigation = useNavigation<StackNavigationProp<StackParamList>>();
 
   return (
-    <Container>
-      <InfoWrapper>
-        <StyledImage
-          source={{ uri: PLACEHOLDER_IMAGE as any }}
-          resizeMode="cover"
-        >
-          <Overlay />
+    <Container
+      onPress={() => navigation.navigate("Discount", { id: discount.id })}
+    >
+      <ShopBanner
+        source={{
+          uri: PLACEHOLDER_IMAGE,
+        }}
+        resizeMode="cover"
+      />
 
-          <Box display="flex" flexDirection="column" padding={0.875}>
-            <Text size="lg" color="white" weight="semiBold">
-              {discount.shopName}
-            </Text>
-            <Text size="sm" color="white">
-              {discount.description}
-            </Text>
-          </Box>
-        </StyledImage>
-      </InfoWrapper>
+      <Box display="flex" flexDirection="column" padding={1}>
+        <Text size="lg">{discount.partner.name}</Text>
 
-      <StyledButton
-        horizontalPosition="stretch"
-        color={discount.isObtained ? "grey" : "primary"}
-        disabled={discount.isObtained}
-        handlePress={() => handleBuyDiscount(discount.shopName)}
-      >
-        {discount.isObtained
-          ? "Déjà obtenu"
-          : `Obtenir pour ${discount.tokens} tokens`}
-      </StyledButton>
+        <Spacer axis="vertical" size={0.5} />
+
+        <Text size="sm" color="grey">
+          {discount.description}
+        </Text>
+      </Box>
     </Container>
   );
 }
 
-const Container = styled.View`
-  width: 100%;
-  border-radius: ${({ theme }) => theme.border.radius.lg};
+const Container = styled(Card)`
+  border: ${({ theme }) => theme.border.width[1]} solid
+    ${({ theme }) => theme.colors.v1.grey[200]};
+  padding: 0;
 `;
 
-const StyledButton = styled(Button)`
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-`;
-
-const InfoWrapper = styled.View`
-  position: relative;
+const ShopBanner = styled.ImageBackground`
   width: 100%;
-  height: 160px;
-  border-top-left-radius: ${({ theme }) => theme.border.radius.lg};
-  border-top-right-radius: ${({ theme }) => theme.border.radius.lg};
-`;
-
-const Overlay = styled.View`
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-color: ${({ theme }) => theme.colors.core.black.base};
-  opacity: 0.3;
-`;
-
-const StyledImage = styled(ImageBackground)`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: flex-end;
-  border-top-left-radius: ${({ theme }) => theme.border.radius.lg};
-  border-top-right-radius: ${({ theme }) => theme.border.radius.lg};
+  height: 150px;
+  border-top-left-radius: ${({ theme }) => theme.border.radius.md};
+  border-top-right-radius: ${({ theme }) => theme.border.radius.md};
   overflow: hidden;
+  position: relative;
 `;

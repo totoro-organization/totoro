@@ -1,7 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import React from "react";
-import useAuth from "../common/contexts/AuthContext";
+import useAuth from "../common/hooks/useAuth";
 import Avatar from "../components/atoms/Avatar";
 import Box from "../components/atoms/Box";
 import Button from "../components/atoms/Button";
