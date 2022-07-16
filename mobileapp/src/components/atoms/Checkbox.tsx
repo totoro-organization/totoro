@@ -34,7 +34,7 @@ export default function Checkbox({ label, onValueChange }: CheckboxProps) {
 
 const Container = styled.Pressable`
   flex-direction: row;
-  align-items: center;
+  align-items: flex-start;
 `;
 
 const CheckboxWrapper = styled.View<{ $checked: boolean }>`
