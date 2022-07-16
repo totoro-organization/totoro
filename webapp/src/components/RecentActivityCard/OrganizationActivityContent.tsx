@@ -1,7 +1,6 @@
 import { Box, Typography } from '@mui/material';
 import FallbackAvatar from 'src/components/FallbackAvatar';
 import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
-import { styled } from '@mui/material/styles';
 
 function OrganizationActivityContent() {
   return (

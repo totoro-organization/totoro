@@ -1,7 +1,6 @@
 import { Box, Typography } from '@mui/material';
 import FallbackAvatar from 'src/components/FallbackAvatar';
 import WorkIcon from '@mui/icons-material/Work';
-import { styled } from '@mui/material/styles';
 
 function JobActivityContent() {
   return (
