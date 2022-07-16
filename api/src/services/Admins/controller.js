@@ -26,7 +26,7 @@ const exclude = ["role_id", "status_id", "password"];
 module.exports = {
 	getAdmins: async function (res, queries) {
 		let condition = {};
-		const {status, role, size, page} = queries
+		const {status, role, size, page, order} = queries
 
 		if(status){
 			let statusData = await getRow(res, Status, { label: status });
@@ -41,7 +41,7 @@ module.exports = {
 
 		let pagination = getPaginationQueries(size,page)
 
-		commonsController.getAll(res, Admins, condition, exclude, include, pagination);
+		commonsController.getAll(res, Admins, condition, exclude, include, pagination, order);
 	},
 	getAdmin: function (res, id) {
 		commonsController.getOne(res, Admins, id, exclude, include);

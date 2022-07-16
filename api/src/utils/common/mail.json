@@ -24,7 +24,7 @@
       "template": "update-job"
     },
     "registerToJob": {
-      "subject": "Votre abonnement",
+      "subject": "Nouveau participant à la mission",
       "template": "register-to-job"
     },
     "subcription_expirate": {

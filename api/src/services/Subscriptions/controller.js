@@ -37,7 +37,7 @@ const exclude = ["pricing_id", "assos_id", "status_id"];
 
 module.exports = {
 	getSubscriptions: async function (res, queries) {
-		const {size,page,status, label, current} = queries
+		const {size,page,status, label, current, order} = queries
 		let condition = {};
 		if (status) {
 			let statusData = await getRow(res, Status, { label: status });
@@ -58,7 +58,7 @@ module.exports = {
 
 		let pagination = getPaginationQueries(size,page)
 
-		commonsController.getAll(res, Subscriptions, condition, exclude, include, pagination);
+		commonsController.getAll(res, Subscriptions, condition, exclude, include, pagination, order);
 	},
 
 	getSubscription: function (res, id) {

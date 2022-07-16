@@ -64,7 +64,7 @@ const include = [
 
 module.exports = {
   getLitigations: async function (res, queries) {
-    const {status, size, page} = queries;
+    const {status, size, page, order} = queries;
     let condition = {};
     if (status) {
       let statusData = await getRow(res, Status, { label: status });
@@ -75,7 +75,7 @@ module.exports = {
 
     let pagination = getPaginationQueries(size,page)
 
-    commonsController.getAll(res, Litigations, condition, exclude, include, pagination);
+    commonsController.getAll(res, Litigations, condition, exclude, include, pagination, order);
   },
   getLitigation: function (res, id) {
     commonsController.getOne(res, Litigations, id, exclude, include);

@@ -7,7 +7,8 @@
     <meta name="x-apple-disable-message-reformatting">  <!-- Disable auto-scale in iOS 10 Mail entirely -->
     <title></title> <!-- The title tag shows in email notifications, like Android 4.4. -->
 
-    <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:200,300,400,600,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
 
     <!-- CSS Reset : BEGIN -->
     <style>
@@ -120,7 +121,7 @@ img.g-img + div {
     <style>
 
 	    .primary{
-	background: #f1c638;
+	background: #7068DC;
 }
 .bg_white{
 	background: #ffffff;
@@ -145,8 +146,8 @@ img.g-img + div {
 }
 .btn.btn-primary{
 	border-radius: 5px;
-	background: #f1c638;
-	color: #000;
+	background: #7068DC;
+	color: #ffffff;
 }
 .btn.btn-white{
 	border-radius: 5px;
@@ -166,13 +167,13 @@ img.g-img + div {
 }
 
 h1,h2,h3,h4,h5,h6{
-	font-family: 'Nunito Sans', sans-serif;
+	font-family: 'Outfit', sans-serif;
 	color: #000000;
 	margin-top: 0;
 }
 
 body{
-	font-family: 'Nunito Sans', sans-serif;
+	font-family: 'Outfit', sans-serif;
 	font-weight: 400;
 	font-size: 15px;
 	line-height: 1.8;
@@ -180,7 +181,7 @@ body{
 }
 
 a{
-	color: #f1c638;
+	color: #7068DC;
 }
 
 table{
@@ -194,7 +195,7 @@ table{
 	color: #000000;
 	font-size: 20px;
 	font-weight: 700;
-	font-family: 'Nunito Sans', sans-serif;
+	font-family: 'Outfit', sans-serif;
 }
 
 .navigation{
@@ -208,7 +209,8 @@ table{
 	font-weight: 500;
 }
 .navigation li a{
-	color: rgba(0,0,0,.4);
+	color: #7068DC;
+;
 }
 
 /*HERO*/
@@ -274,7 +276,7 @@ table{
 	content: '';
 	width: 100%;
 	height: 2px;
-	background: #f1c638;
+	background: #7068DC;
 	margin: 0 auto;
 }
 
@@ -282,7 +284,7 @@ table{
 	color: rgba(255,255,255,.8);
 }
 .heading-section-white h2{
-	font-family: 
+	font-family: 'Outfit', sans-serif;
 	line-height: 1;
 	padding-bottom: 0;
 }
@@ -369,7 +371,7 @@ table{
 	position: relative;
 	text-align: center;
 	border: 1px solid rgba(0,0,0,.05);
-	border: 1px solid #f1c638;
+	border: 1px solid #7068DC;
 	padding: 2em 1em;
 	/*rgba(0,0,0,.05;)*/
 }
@@ -495,7 +497,7 @@ ul.social li{
 /*FOOTER*/
 
 .footer{
-	color: rgba(255,255,255,.5);
+	color: #ffffff;
 
 }
 .footer .heading{
@@ -534,7 +536,6 @@ ul.social li{
 
 
 </head>
-
 <body width="100%" style="margin: 0; padding: 0 !important; mso-line-height-rule: exactly; background-color: #222222;">
 	<center style="width: 100%; background-color: #f1f1f1;">
     <div style="display: none; font-size: 1px;max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden; mso-hide: all; font-family: sans-serif;">
@@ -547,79 +548,108 @@ ul.social li{
           <td valign="top" class="bg_white" style="padding: 1em 2.5em;">
           	<table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
           		<tr>
-          			<td width="40%" class="logo" style="text-align: left;">
-			            <h1><a href="#">Business</a></h1>
+          			<td width="30%" class="logo" style="text-align: left;">
+			            <h1>
+                            <a href="#" rel="noopener noreferrer nofollow" target="_blank"><img width="80" src="{{base_url}}/illustrations/totoro-logo.svg" title="logo" alt="logo"></a>
+                        </h1>
 			          </td>
-			          <td width="60%" class="logo" style="text-align: right;">
+			          <td width="70%" class="logo" style="text-align: right;">
 			            <ul class="navigation">
-			            	<li><a href="#">Home</a></li>
-			            	<li><a href="#">About</a></li>
-			            	<li><a href="#">Works</a></li>
-			            	<li><a href="#">Blog</a></li>
-			            	<li><a href="#">Contact</a></li>
+			            	<li><a href="#" rel="noopener noreferrer nofollow" target="_blank">Notre concept</a></li>
+			            	<li><a href="#" rel="noopener noreferrer nofollow" target="_blank">Devenir partenaire</a></li>
+			            	<li><a href="#" rel="noopener noreferrer nofollow" target="_blank">Plan d'abonnement</a></li>
 			            </ul>
 			          </td>
           		</tr>
           	</table>
           </td>
-	      </tr><!-- end tr -->
-		  <tr>
-          <td valign="middle" class="hero bg_white">
-            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-            	<tr>
-                <td valign="middle" width="100%">
-                  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-                    <tr>
-                      	<td class="text" style="text-align: left; padding: 20px 30px;">
-							<h2>Hello <a href="#">{{firstname}} {{lastname}}</a></h2>
-							<p>Vous avez maintenant des accès administrateurs.</p>
-							<p>
-								- Nom d'utilisateur : <strong>{{username}}</strong><br/>
-								- Mot de passe : <strong>{{password}}</strong>
-							</p>
-							<p>
-								<a href="{{bo_url}}" target="_blank" style="padding: 5px 15px; display: inline-block; border-radius: 5px; background: #7068DC; color: #ffffff;">Accéder au back office</a>
-							</p>                        
-						</td>
-                    </tr>
-                  </table>
-                </td>
-            	</tr>
-            </table>
-          </td>
-	      </tr><!-- end tr -->
-	    
-      <!-- 1 Column Text + Button : END -->
-      </table>
-      <table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin: auto;">
-        <tr>
-        	<td valign="middle" class="bg_black footer email-section">
-        		<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin: auto;">
-        			<tr>
-        				<td width="100%" style="text-align: center;">
-        					<p style="font-size: 22px; margin-top: 0;">203 Fake St. Mountain View, San Francisco, California, USA</p>
-        				</td>
-        			</tr>
-        			<tr>
-        				<td width="100%" style="text-align: center;">
-        					<p style="margin-top: 0;">No longer want to receive these email? You can <a href="#">Unsubscribe here</a></p>
-        				</td>
-        			</tr>
-        			<tr>
-        				<td width="100%" style="text-align: center;">
-        					<ul class="social">
-                		<li><img src="images/004-twitter-logo.png" alt="" style="width: 24px; max-width: 600px; height: auto; display: block;"></li>
-                		<li><img src="images/005-facebook.png" alt="" style="width: 24px; max-width: 600px; height: auto; display: block;"></li>
-                		<li><img src="images/006-instagram-logo.png" alt="" style="width: 24px; max-width: 600px; height: auto; display: block;"></li>
-                	</ul>
-        				</td>
-        			</tr>
-            </table>
-        	</td>
-        </tr>
+	    </tr><!-- end tr -->
+			
       </table>
 
-    </div>
-  </center>
+
+
+
+
+<table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin: auto;">
+	<tr>
+		<td class="bg_white email-section" style="width: 100%;">
+			<table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
+				<tr>
+					<td valign="middle" width="35%">
+			<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+			  <tr>
+				<td>
+				  <img src="{{base_url}}/{{job.attachments[0].image}}" alt="" style="width: 100%; max-width: 600px; height: auto; margin: auto; display: block;">
+				</td>
+			  </tr>
+			</table>
+		  </td>
+		  <td valign="middle" width="65%">
+			<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+			  <tr>
+				<td class="text-services" style="text-align: left; padding-left:25px;">
+					<div class="heading-section">
+						<h2>{{job.title}}</h2>
+						<p>Cette mission a eu des mise à jours importante</p>
+						{{#if difficulty}}
+						<p>Difficulté -> <strong>{{job.difficulty.level}} ({{difficulty.token}} tokens)</strong></p>
+						{{/if}}
+						{{#if status}}
+						<p>Status -> <strong>{{status.label}}</strong></p>
+						{{/if}}
+						<p>
+							<a href="{{bo_url}}/" target="_blank" style="padding: 5px 15px; display: inline-block; border-radius: 5px; background: #7068DC; color: #ffffff;">Voir la mission</a>
+						</p>
+					</div>
+				</td>
+			  </tr>
+			</table>
+		  </td>
+		</tr>
+			</table>
+		</td>
+	</tr><!-- end: tr -->
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin: auto;">
+    <tr>
+        <td valign="middle" class="bg_black footer email-section">
+            <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin: auto;">
+                <tr>
+                    <td width="100%" style="text-align: center;">
+                        <p style="margin-top: 0;">Vous ne souhaitez plus recevoir ces emails ? Vous pouvez vous <a href="#" rel="noopener noreferrer nofollow" target="_blank">Désabonnez ici</a></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100%" style="text-align: center;">
+                        <ul class="social">
+                            <li><img src="{{base_url}}/illustrations/004-twitter-logo.png" alt="" style="width: 24px; max-width: 600px; height: auto; display: block;"></li>
+                            <li><img src="{{base_url}}/illustrations/005-facebook.png" alt="" style="width: 24px; max-width: 600px; height: auto; display: block;"></li>
+                            <li><img src="{{base_url}}/illustrations/006-instagram-logo.png" alt="" style="width: 24px; max-width: 600px; height: auto; display: block;"></li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+  </table>
+
+</div>
+</center>
 </body>
 </html>

@@ -65,7 +65,7 @@ const exclude = ["user_id","discount_id","status_id"];
 
 module.exports = {
 	getTransactions: async function (res, queries) {
-		const {size,page,status} = queries
+		const {size,page,status, order} = queries
 		let condition = {};
 		if (status) {
 			let statusData = await getRow(res, Status, { label: status });
@@ -76,7 +76,7 @@ module.exports = {
 
 		let pagination = getPaginationQueries(size,page)
 
-		commonsController.getAll(res, Tokens, condition, exclude, include, pagination);
+		commonsController.getAll(res, Tokens, condition, exclude, include, pagination, order);
 	},
 	getTransaction: function (res, id) {
 		commonsController.getOne(res, Tokens, id, exclude, include);
