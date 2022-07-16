@@ -5,7 +5,8 @@ jobs:
     docker:
       - image: cimg/node:16.13.2
     steps:
-      - checkout
+      - checkout:
+          path: ~/totoro
       - run:
           name: Update NPM
           command: "sudo npm install -g npm"
@@ -18,10 +19,10 @@ jobs:
       - save_cache:
           key: app-build-cache-{{ .Branch }}
           paths:
-            -  ~/totoro/webapp/build
+            -  build
       - run:
           name: Deploy to Netlify
-          command:  ~/totoro/webapp/node_modules/.bin/netlify deploy --site $NETLIFY_SITE_ID --auth $NETLIFY_ACCESS_TOKEN --prod --dir=build
+          command:  node_modules/.bin/netlify deploy --site $NETLIFY_SITE_ID --auth $NETLIFY_ACCESS_TOKEN --prod --dir=build
 workflows:
   version: 2
   build-deploy2:
