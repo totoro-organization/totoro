@@ -29,6 +29,7 @@ function SigninForm() {
     <FormProvider {...methods}>
       <FormContainer onSubmit={methods.handleSubmit(onSubmit)}>
         <FormTextField
+        defaultValue={''}
           margin="normal"
           required
           fullWidth
@@ -39,6 +40,7 @@ function SigninForm() {
           autoFocus
         />
         <FormTextField
+        defaultValue={''}
           margin="normal"
           required
           fullWidth
