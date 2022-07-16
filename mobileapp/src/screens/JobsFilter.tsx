@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import GlobalLayout from "../components/layouts/GlobalLayout";
 import { Text } from "../components/atoms/Text";
 import styled from "styled-components/native";
@@ -11,9 +11,13 @@ import { TouchableOpacity } from "react-native";
 import useTotoroTags from "../common/api/hooks/useTotoroTags";
 import RadioGroup from "../components/molecules/RadioGroup";
 import PillGroup from "../components/molecules/PillGroup";
+import Slider from "../components/atoms/Slider";
+import Box from "../components/atoms/Box";
 
 // TODO: Fix header or add this component as Modal?
 export default function JobsFilter() {
+  const [distanceValue, setDistanceValue] = useState<number | number[]>(0);
+
   const navigation = useNavigation<StackNavigationProp<AppParamList>>();
   const { tags, categories } = useTotoroTags();
 
@@ -66,9 +70,18 @@ export default function JobsFilter() {
       </CategorySection>
 
       <CategorySection>
-        <CategoryTitle>DISTANCE (en km)</CategoryTitle>
+        <Box justifyContent="space-between">
+          <CategoryTitle>DISTANCE (en km)</CategoryTitle>
+          <Text size="xs">{`< ${distanceValue}`}</Text>
+        </Box>
 
-        <Text>TODO: Ajouter le slider</Text>
+        <Slider
+          value={distanceValue}
+          minimumValue={0}
+          maximumValue={200}
+          animationType="spring"
+          onValueChange={(value) => setDistanceValue(value)}
+        />
       </CategorySection>
 
       <Button
