@@ -16,6 +16,10 @@
       "status": 403,
       "message": "Access forbidden"
     },
+    "user_inactive": {
+      "status": 403,
+      "message": "Inactive account. Please check your mails"
+    },
     "not_found": {
       "status": 404,
       "message": "Ressource not found"
@@ -45,10 +49,6 @@
     "create": {
       "status": 201,
       "message": "Ressource successfully created"
-    },
-    "user_inactive": {
-      "status": 201,
-      "message": "Inactive account. Please check your mails"
     },
     "update": {
       "status": 201,

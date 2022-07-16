@@ -66,7 +66,7 @@ module.exports = {
         const token = generateToken(user, isAdmin);
         if (user.status.label !== label_status.actived) {
           //Send mail
-          if(user.status.label === label_status.disabled) sendMail(verify.template, {to: user.email, subject: verify.subject}, {firstname: user.firstname, lastname: user.lastname, token})
+          if(user.status.label === label_status.disabled) sendMail(verify.template, {to: user.email, subject: verify.subject}, {firstname: user.firstname, lastname: user.lastname, encodeURIComponent(token)})
 
           return res
             .status(success.user_inactive.status)
@@ -115,7 +115,7 @@ module.exports = {
 
         const token = generateToken(result);
         //Send mail
-        sendMail(signup.template, {to: email, subject: signup.subject}, {firstname: result.firstname, lastname: result.lastname, token})
+        sendMail(signup.template, {to: email, subject: signup.subject}, {firstname: result.firstname, lastname: result.lastname, encodeURIComponent(token)})
 
         return res
           .status(success.create.status)
@@ -155,7 +155,7 @@ module.exports = {
         if (found) {
           const token = generateToken(found);
           //Send mail
-          sendMail(forgot.template, {to: email, subject: forgot.subject}, {firstname: found.firstname, lastname: found.lastname, token})
+          sendMail(forgot.template, {to: email, subject: forgot.subject}, {firstname: found.firstname, lastname: found.lastname, encodeURIComponent(token)})
 
           return res
             .status(success.get.status)
