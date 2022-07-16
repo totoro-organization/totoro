@@ -13,12 +13,12 @@ export interface LoginData {
 }
 
 export interface SignUpData {
-    username: FormDataEntryValue,
-    firstname: FormDataEntryValue,
-    lastname: FormDataEntryValue,
-    email: FormDataEntryValue,
-    birthday: Date,
-    password: FormDataEntryValue
+    username: string,
+    firstname: string,
+    lastname: string,
+    email: string,
+    birthday: string,
+    password: string
 }
   
 
