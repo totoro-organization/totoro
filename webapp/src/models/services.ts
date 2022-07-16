@@ -8,8 +8,8 @@ export interface Response {
 }
   
 export interface LoginData {
-    emailOrUsername: FormDataEntryValue;
-    password: FormDataEntryValue;
+    emailOrUsername: string;
+    password: string;
 }
 
 export interface SignUpData {

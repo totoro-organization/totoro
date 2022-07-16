@@ -11,7 +11,7 @@ function Copyright(props: any) {
     >
       {'Copyright © '}
       <Link color="inherit" href="https://mui.com/">
-        Your Website
+        Totoro Organization
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
