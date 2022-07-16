@@ -1,16 +1,17 @@
 import { Organization } from "./organization";
+import { Partner } from "./partner";
 import { Role } from "./role";
-import { Status, StatusEnum } from "./status";
+import { MembershipStatus, UserStatus } from "./status";
 
 
-export enum UserStatusEnum {
-    actived = StatusEnum.actived,
-    disabled = StatusEnum.disabled,
-    deleted = StatusEnum.deleted,
-    freezed = StatusEnum.freezed
+export interface Membership {
+    id: string,
+    organization: Organization,
+    role: Role,
+    status: MembershipStatus,
+    createdAt: string,
+    updatedAt: string
 }
-
-export type UserStatus = Status<keyof typeof UserStatusEnum>;
 
 export interface User {
     id: string,
@@ -24,12 +25,8 @@ export interface User {
     birthday?: Date,
     avatar: string,
     status: UserStatus,
-    memberships: {
-        organization: Organization,
-        role: Role,
-        createdAt: string,
-        updatedAt: string
-    },
+    memberships: Membership[],
+    partners: Partner[],
     createdAt: string,
     updatedAt: string
 }

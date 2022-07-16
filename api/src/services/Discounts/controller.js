@@ -3,11 +3,11 @@ const {
 	Partners,
 	Discounts,
 	Types_discounts
-} = require("./../../../models");
-const commonsController = require("services/Commons/controller");
-const { label_status } = require("utils/enum.json");
+} = require("~orm/models");
+const commonsController = require("~services/Commons/controller");
+const { label_status } = require("~utils/enum.json");
 
-const { getRow, getPaginationQueries } = require("utils/common/thenCatch");
+const { getRow, getPaginationQueries } = require("~utils/common/thenCatch");
 
 const excludeCommon = { exclude: ["id", "createdAt", "updatedAt"] };
 
@@ -35,7 +35,7 @@ const exclude = ["status_id", "usertype_disc_id_id", "partner_id"];
 
 module.exports = {
 	getDiscounts: async function (res, queries) {
-		const {size,page,status} = queries
+		const {size,page,status,order} = queries
 		let condition = {};
 		if (status) {
 			let statusData = await getRow(res, Status, { label: status });
@@ -46,7 +46,7 @@ module.exports = {
 
 		let pagination = getPaginationQueries(size,page)
 
-		commonsController.getAll(res, Discounts, condition, exclude, include, pagination);
+		commonsController.getAll(res, Discounts, condition, exclude, include, pagination,order);
 	},
 
 	getDiscount: function (res, id) {

@@ -1,15 +1,18 @@
 const asyncLib = require("async");
 const bcrypt = require("bcryptjs");
 const { Op } = require("sequelize");
-const { generateToken } = require("utils/session");
-//const { getNearestTerminal } = require("utils/localisation");
-const { getRow, getField } = require("utils/common/thenCatch");
-const { error, success } = require("utils/common/messages.json");
-const { Terminals, Status } = require("../../../models");
+const { generateToken } = require("~utils/session");
+//const { getNearestTerminal } = require("~utils/localisation");
+const { getRow, getField } = require("~utils/common/thenCatch");
+const { error, success } = require("~utils/common/messages.json");
+const { Terminals, Status } = require("~orm/models");
 //Send mail
-const { from, subject, host } = require("utils/common/mail.json");
-const commonsController = require("services/Commons/controller");
-const { label_status } = require("utils/enum.json");
+const { signup, verify, forgot } = require("~utils/common/mail.json");
+const { sendMail } = require("~externals/mailer");
+const commonsController = require("~services/Commons/controller");
+const { label_status } = require("~utils/enum.json");
+const { isEmailValid } = require("~utils/verify");
+
 const excludeCommon = { exclude: ["id", "createdAt", "updatedAt"] };
 
 const include = [{ model: Status, as: "status", attributes: excludeCommon }];
@@ -63,6 +66,7 @@ module.exports = {
         const token = generateToken(user, isAdmin);
         if (user.status.label !== label_status.actived) {
           //Send mail
+          if(user.status.label === label_status.disabled) sendMail(verify.template, {to: user.email, subject: verify.subject}, {firstname: user.firstname, lastname: user.lastname, token})
 
           return res
             .status(success.user_inactive.status)
@@ -76,6 +80,14 @@ module.exports = {
 
   signup: async function (res, model, data) {
     const {password,email,username} = data
+    /*
+    const emailValid = await isEmailValid(email);
+    if(emailValid !== "ok")
+      return res
+        .status(error.parameters.status)
+        .json({ message: emailValid });
+    */
+
     const inactiveStatus = await getRow(res, Status, {
       label: label_status.disabled,
     });
@@ -95,7 +107,7 @@ module.exports = {
     data["password"] = bcrypt.hashSync(password, 10);
     //data["terminal_id"] = nearestTerminal.id;
 
-    const condition = { email, username };
+    const condition = {[Op.or]: [{ email },{ username }],};
 
     commonsController.create(
       function (result) {
@@ -103,6 +115,7 @@ module.exports = {
 
         const token = generateToken(result);
         //Send mail
+        sendMail(signup.template, {to: email, subject: signup.subject}, {firstname: result.firstname, lastname: result.lastname, token})
 
         return res
           .status(success.create.status)
@@ -119,6 +132,15 @@ module.exports = {
 
   forgot: async function (res, model, data) {
     const {email} = data
+
+    /*
+    const emailValid = await isEmailValid(email);
+    if(emailValid !== "ok")
+      return res
+        .status(error.parameters.status)
+        .json({ message: emailValid });
+    */
+
     const activeStatus = await getRow(Status, { label: label_status.actived });
 
     asyncLib.waterfall(
@@ -133,6 +155,7 @@ module.exports = {
         if (found) {
           const token = generateToken(found);
           //Send mail
+          sendMail(forgot.template, {to: email, subject: forgot.subject}, {firstname: found.firstname, lastname: found.lastname, token})
 
           return res
             .status(success.get.status)

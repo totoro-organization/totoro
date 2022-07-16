@@ -28,7 +28,7 @@ export type ButtonProps = PropsWithChildren<
 export default function Button({
   variant = "default",
   size = "fullWidth",
-  color = "black",
+  color = "primary",
   horizontalPosition = "flex-start",
   children,
   Icon,
@@ -65,13 +65,6 @@ export default function Button({
           </LoadingWrapper>
         )}
 
-        {Icon && (
-          <>
-            {Icon}
-            <Spacer axis="horizontal" size={0.5} />
-          </>
-        )}
-
         <StyledText
           $isHidden={isInternalLoading}
           variant={variant}
@@ -79,6 +72,13 @@ export default function Button({
         >
           {children}
         </StyledText>
+
+        {Icon && (
+          <>
+            <Spacer axis="horizontal" size={0.5} />
+            {Icon}
+          </>
+        )}
       </StyledButton>
     </OuterLayout>
   );
@@ -87,29 +87,35 @@ export default function Button({
 export type ColorVariables = {
   background: string;
   border: string;
+  backgroundLight?: string;
 };
 
+// TODO: Refactor me.
 function getButtonVariables(variables: ColorVariables) {
   const backgroundColor = variables.background;
   const borderColor = variables.border;
 
-  return [backgroundColor, borderColor];
+  const backgroundLightColor = variables.backgroundLight;
+
+  return [backgroundColor, borderColor, backgroundLightColor];
 }
 
 const styleColor: { [key in ButtonColor]: FlattenSimpleInterpolation } = {
   black: getButtonVariables({
-    background: theme.colors.grey[900],
-    border: theme.colors.grey[900],
+    background: theme.colors.core.black.base,
+    border: theme.colors.core.black.base,
   }),
 
   primary: getButtonVariables({
-    background: theme.colors.primary[500],
-    border: theme.colors.primary[500],
+    background: theme.colors.brand.primary.base,
+    border: theme.colors.brand.primary.base,
+    backgroundLight: theme.colors.brand.primary.lightest,
   }),
 
   grey: getButtonVariables({
-    background: theme.colors.grey[300],
-    border: theme.colors.grey[300],
+    background: theme.colors.v1.grey[300],
+    border: theme.colors.v1.grey[300],
+    backgroundLight: theme.colors.v1.grey[50],
   }),
 };
 
@@ -125,7 +131,7 @@ function getButtonStyles(variant: ButtonVariant, color: ButtonColor) {
     return css`
       border: 1px solid;
       border-color: ${styleColor[color][1]};
-      background-color: transparent;
+      background-color: ${styleColor[color][2] || "transparent"};
     `;
   }
 
@@ -194,6 +200,6 @@ const StyledText = styled(Text)<ContentProps>`
   opacity: ${({ $isHidden }) => ($isHidden ? "0" : "1")};
   color: ${({ variant, color, theme }) =>
     variant === "default"
-      ? theme.colors.white[600]
+      ? theme.colors.core.white.base
       : getColors(color as Colors)};
 `;

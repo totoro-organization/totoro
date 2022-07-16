@@ -1,24 +1,31 @@
 {
-  "presets": [
-    [
-      "@babel/preset-env",
-      {
-        "targets": {
-          "esmodules": true,
-          "node": true
+    "presets": [
+      [
+        "@babel/preset-env",
+        {
+          "targets": {
+            "esmodules": true,
+            "node": true
+          }
         }
-      }
-    ]
-  ],
-  "plugins": [
-    [
-      "module-resolver",
-      {
-        "root": ["./src"],
-        "alias": {
-          "~": "./src"
+      ]
+    ],
+    "plugins": [
+      [
+        "module-resolver",
+        {
+          "root": ["./"],
+          "alias": {
+            "~": "./",
+            "~~": "./src",
+            "~services": "./src/services",
+            "~utils": "./src/utils",
+            "~orm": "./orm",
+            "~public": "./public",
+            "~externals": "./src/services/externals",
+            "~sass": "./src/services/Saas"
+          }
         }
-      }
+      ]
     ]
-  ]
-}
+  }

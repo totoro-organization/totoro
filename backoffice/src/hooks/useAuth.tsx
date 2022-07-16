@@ -7,7 +7,7 @@ import {
   useState
 } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Admin } from 'src/models';
+import { Admin, LoginData } from 'src/models';
 import * as sessionsService from 'src/services/auth.service';
 import { LangEnum } from 'src/models';
 
@@ -16,7 +16,7 @@ interface AuthContextType {
   lang: keyof typeof LangEnum;
   loading: boolean;
   error?: any;
-  login: (params: sessionsService.LoginType) => void;
+  login: (params: LoginData) => void;
   logout: () => void;
 }
 
@@ -28,7 +28,7 @@ export function AuthProvider({
 }: {
   children: ReactNode;
 }): JSX.Element {
-  const [user, setUser] = useState<Admin>();
+  const [user, setUser] = useState<Admin | null>();
   const [lang, setLang] = useState<keyof typeof LangEnum>(LangEnum.fr || localStorage.getItem('lang') as keyof typeof LangEnum);
   const [error, setError] = useState<any>();
   const [loading, setLoading] = useState<boolean>(false);
@@ -57,10 +57,9 @@ export function AuthProvider({
       .getCurrentUser()
       .then((response) => {
         if("error" in response) {
-          setError(response.error);
           return;
         } 
-        setUser(response);
+        setUser(response as Admin);
       })
       .catch((_error) => {})
       .finally(() => setLoadingInitial(false));
@@ -75,14 +74,14 @@ export function AuthProvider({
   //
   // Finally, just signal the component that loading the
   // loading state is over.
-  function login(params: sessionsService.LoginType) {
+  function login(params: LoginData) {
     setLoading(true);
 
     sessionsService
       .login(params)
       .then((response) => {
         if ('error' in response) {
-          setError(response.error);
+          setError(response);
           return;
         }
         localStorage.setItem('token', response.token);
@@ -93,10 +92,10 @@ export function AuthProvider({
       .getCurrentUser()
       .then((response) => {
           if('error' in response) {
-            setError(response.error);
+            setError(response);
             return;
           } 
-          setUser(response);
+          setUser(response as Admin);
           navigate('/')
         })
       })
@@ -107,7 +106,7 @@ export function AuthProvider({
   // from the state.
   function logout() {
       localStorage.removeItem('token');
-      setUser(undefined);
+      setUser(null);
   }
   // Make the provider update only when it should.
   // We only want to force re-renders if the user,

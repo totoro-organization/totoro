@@ -63,10 +63,3 @@ export default function DateTimePickerInput({
     </View>
   );
 }
-
-const ErrorMessage = styled(Text)`
-  color: ${({ theme }) => theme.colors.error[500]};
-  min-height: 16px;
-  font-size: 12px;
-  margin-top: ${({ theme }) => theme.spacing[1]};
-`;

@@ -1,8 +1,8 @@
 const express = require("express");
-const { passport, passportAdmin } = require("utils/session");
+const { passport, passportAdmin } = require("~utils/session");
 const controller = require("./controller");
-const { path } = require("utils/enum.json");
-const { upload } = require("utils/storage");
+const { path } = require("~utils/enum.json");
+const { upload } = require("~utils/storage");
 
 exports.router = (function () {
 	const jobsRouter = express.Router();
@@ -31,6 +31,14 @@ exports.router = (function () {
 			controller.deleteJob(res, id);
 		},
 	]);
+
+	jobsRouter.post("/:id/register", [passport, async function (req, res) {
+		const data = {
+			jobs_id: req.params.id,
+			user_id: req.userData.id
+		};
+		controller.registerToJob(res, data);
+	}]);
 
 	jobsRouter.get("/:id/participants", [
 		passport,

@@ -1,15 +1,16 @@
 import { Job } from "./job";
-import { Status, StatusEnum } from "./status";
+import { Role } from "./role";
+import { OrganizationStatus, Status } from "./status";
 import { User } from "./user";
 
-export enum OrganizationStatusEnum {
-    actived = StatusEnum.actived,
-    disabled = StatusEnum.disabled,
-    deleted = StatusEnum.deleted,
-    freezed = StatusEnum.freezed
+interface Member {
+    id: string,
+    user: User,
+    role: Role,
+    status: Status<any>
+    createdAt: string,
+    updatedAt: string
 }
-
-export type OrganizationStatus = Status<keyof typeof OrganizationStatusEnum>;
 
 export interface Organization {
     id: string,
@@ -29,7 +30,7 @@ export interface Organization {
     status: OrganizationStatus,
     creation_date?: string,
     activity?: string,
-    users: User[],
+    members: Member[],
     jobs: Job[],
     createdAt: string,
     updatedAt: string

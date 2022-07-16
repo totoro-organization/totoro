@@ -37,7 +37,7 @@ services:
     restart: unless-stopped
     env_file: ./.env
     ports:
-      - $API_LOCAL_PORT:$API_DOCKER_PORT
+      - $API_LOCAL_PORT:$PORT
     volumes:
       - ./api:/usr/src/api
       - /usr/src/api/node_modules
@@ -48,6 +48,12 @@ services:
       - DB_PASSWORD=$MYSQLDB_ROOT_PASSWORD
       - DB_NAME=$MYSQLDB_DATABASE
       - DB_PORT=$MYSQLDB_DOCKER_PORT
+      - MAILER_USER=$MAILER_USER
+      - MAILER_PASS=$MAILER_PASS
+      - API_BASE_URL=$API_BASE_URL
+      - WEB_APP_URL=$WEB_APP_URL
+      - BO_URL=$BO_URL
+      - LANDING_PAGE_URL=$LANDING_PAGE_URL
     networks:
       - backend
       - frontend

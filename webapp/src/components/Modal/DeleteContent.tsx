@@ -1,6 +1,6 @@
 import { Button } from "@mui/material";
 import { FormEvent } from "react";
-import { Form } from "src/components/Form";
+import { FormContainer } from "src/components/forms";
 import { ButtonsBox } from "src/components/Modal";
 import { TableMethods } from "src/models";
 
@@ -19,7 +19,7 @@ export const DeleteContent = ({item, handleDelete, handleClose, message}: Delete
     }
   
     return (
-      <Form onSubmit={(e: FormEvent) => handleSubmit(e)}>
+      <FormContainer onSubmit={(e: FormEvent) => handleSubmit(e)}>
         <p>{ message }</p>
         <ButtonsBox>
             <Button variant="outlined" onClick={handleClose}>
@@ -32,6 +32,6 @@ export const DeleteContent = ({item, handleDelete, handleClose, message}: Delete
               Supprimer
             </Button>
           </ButtonsBox>
-      </Form>
+      </FormContainer>
     );
   };

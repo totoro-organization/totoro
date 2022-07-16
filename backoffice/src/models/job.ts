@@ -1,24 +1,30 @@
-import { AttachmentJob } from "./attachment_job";
-import { JobDifficulty } from "./job_difficulty";
 import { Organization } from "./organization";
-import { Status, StatusEnum } from "./status";
-import { Tag } from "./tag";
+import { JobDifficultyStatus, JobStatus, Status, SubscriptionStatus } from "./status";
 import { User } from "./user";
 
-export enum JobStatusEnum {
-    actived = StatusEnum.actived,
-    disabled = StatusEnum.disabled,
-    deleted = StatusEnum.deleted,
-    coming = StatusEnum.coming,
+export interface AttachmentJob {
+    id: string,
+    original_name: string,
+    type: string,
+    image: string,
+    createdAt: string,
+    updatedAt: string
 }
 
-export type JobStatus = Status<keyof typeof JobStatusEnum>;
+export interface JobDifficulty {
+    id: string,
+    level: number,
+    token: number,
+    status: JobDifficultyStatus,
+    createdAt: string,
+    updatedAt: string
+}
 
 export interface Author {
     id: string,
     organization: Organization,
     user: User,
-    satatus: Status<any>
+    status: Status<any>
 }
 
 export interface Job {
@@ -45,4 +51,13 @@ export interface Job {
     status: JobStatus,
     createdAt: string,
     updatedAt: string
+}
+
+export interface Tag {
+    id: string,
+    label: string,
+    type: 'mission' | 'category'
+    status: SubscriptionStatus,
+    createdAt: string,
+    updatedAt: string,
 }

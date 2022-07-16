@@ -90,7 +90,7 @@ const Overlay = styled.View`
   position: absolute;
   width: 100%;
   height: 100%;
-  background-color: ${({ theme }) => theme.colors.grey[900]};
+  background-color: ${({ theme }) => theme.colors.core.black.base};
   opacity: 0.3;
 `;
 

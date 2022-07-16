@@ -1,5 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import React from "react";
+import * as Location from "expo-location";
+
+import React, { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import {
   RegisterStepFinalFormValues,
@@ -16,9 +18,15 @@ import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { StackParamList } from "../../../navigation/StackNavigationParams";
 import Toast from "react-native-toast-message";
+import type { LocationObject } from "expo-location";
+import { Text } from "../../atoms/Text";
+import { StatusCode } from "../../../common/api/interfaces/StatusCode.enum";
 
 export default function RegisterStepFinal() {
   const navigation = useNavigation<StackNavigationProp<StackParamList>>();
+  const [location, setLocation] = useState<LocationObject | null>(null);
+  const [isEmailAlreadyExist, setIsEmailAlreadyExist] =
+    useState<boolean>(false);
 
   const { control, handleSubmit } = useForm<RegisterStepFinalFormValues>({
     defaultValues: {
@@ -27,6 +35,19 @@ export default function RegisterStepFinal() {
     mode: "onBlur",
     resolver: yupResolver(registerStepFinalSchema),
   });
+
+  useEffect(() => {
+    const getLocationPermission = async () => {
+      const { status } = await Location.requestForegroundPermissionsAsync();
+
+      if (status !== "granted") return null;
+
+      const currentLocation = await Location.getCurrentPositionAsync({});
+      setLocation(currentLocation);
+    };
+
+    getLocationPermission();
+  }, []);
 
   const registerErrorToast = () =>
     Toast.show({
@@ -39,21 +60,21 @@ export default function RegisterStepFinal() {
 
   async function onSubmit(data: RegisterStepFinalFormValues) {
     const body = {
-      // TODO: FIX TYPO!!!!!!!
-      adress: data.address,
-      longitude: 48.88039283558442,
-      latitude: 2.4123843153442976,
+      address: data.address,
+      longitude: location?.coords.longitude,
+      latitude: location?.coords.latitude,
       cp: 93310,
     };
 
-    // TODO: Add this step
-    // await AsyncStorage.mergeItem?.("userFormData", JSON.stringify(body));
+    await AsyncStorage.mergeItem?.("userFormData", JSON.stringify(body));
     const userData = (await AsyncStorage.getItem("userFormData")) || "";
 
     await fetchRegisterUser({ user: JSON.parse(userData) })
       .then((res) => {
-        if (res.status === 201) {
+        if (res.status === StatusCode.CREATED) {
           navigation.navigate("Se connecter");
+        } else if (res.status === StatusCode.CONFLICT) {
+          setIsEmailAlreadyExist(true);
         } else {
           registerErrorToast();
         }
@@ -63,34 +84,55 @@ export default function RegisterStepFinal() {
 
   return (
     <>
-      <Alert type="info">
-        Totoro est une application de proximité, votre adresse de résidence nous
-        permet de séléctionner les meilleurs missions près de chez vous.
-      </Alert>
+      {isEmailAlreadyExist && (
+        <>
+          <Text>Ravis de te revoir !</Text>
 
-      <Spacer axis="vertical" size={3} />
+          <Spacer axis="vertical" size={3} />
 
-      <Controller
-        name="address"
-        control={control}
-        render={({
-          field: { onChange, onBlur, value },
-          fieldState: { error },
-        }) => (
-          <InputGroup
-            label="Adresse de résidence"
-            onBlur={onBlur}
-            onChangeText={onChange}
-            value={value}
-            placeholder="8 rue de la résidence des ploucs"
-            error={error}
+          <Text>Il semblerait que tu aies déjà un compte chez nous.</Text>
+
+          <Spacer axis="vertical" size={3} />
+
+          <Button handlePress={() => navigation.navigate("Se connecter")}>
+            Je me connecte
+          </Button>
+        </>
+      )}
+
+      {!isEmailAlreadyExist && (
+        <>
+          <Alert type="info">
+            Totoro est une application de proximité, votre adresse de résidence
+            nous permet de séléctionner les meilleurs missions près de chez
+            vous.
+          </Alert>
+
+          <Spacer axis="vertical" size={3} />
+
+          <Controller
+            name="address"
+            control={control}
+            render={({
+              field: { onChange, onBlur, value },
+              fieldState: { error },
+            }) => (
+              <InputGroup
+                label="Adresse de résidence"
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+                placeholder="8 rue de la résidence des ploucs"
+                error={error}
+              />
+            )}
           />
-        )}
-      />
 
-      <Spacer axis="vertical" size={3} />
+          <Spacer axis="vertical" size={3} />
 
-      <Button handlePress={handleSubmit(onSubmit)}>Je m'inscris !</Button>
+          <Button handlePress={handleSubmit(onSubmit)}>Je m'inscris !</Button>
+        </>
+      )}
     </>
   );
 }

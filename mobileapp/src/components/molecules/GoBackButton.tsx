@@ -12,7 +12,7 @@ export default function GoBackButton() {
   }
 
   return (
-    <Container onPress={handleGoBack} underlayColor={theme.colors.grey[300]}>
+    <Container onPress={handleGoBack} underlayColor={theme.colors.v1.grey[300]}>
       <Arrow />
     </Container>
   );
@@ -22,7 +22,7 @@ const Container = styled.TouchableHighlight`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: ${({ theme }) => theme.colors.grey[100]};
+  background-color: ${({ theme }) => theme.colors.v1.grey[100]};
   width: 42px;
   height: 42px;
   border-radius: ${({ theme }) => theme.border.radius.circle};
