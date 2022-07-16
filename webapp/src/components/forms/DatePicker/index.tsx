@@ -16,6 +16,7 @@ interface IFormDatePicker {
   disablePast?: boolean;
   minTime?: any;
   maxTime?: any;
+  inputFormat?: string,
 }
 
 function FormDatePicker({
@@ -27,6 +28,7 @@ function FormDatePicker({
   handleChangeDate,
   disabled,
   disablePast,
+  inputFormat = "dd/MM/yyyy",
   ...props
 }: IFormDatePicker): JSX.Element {
   const { control } = useFormContext();
@@ -52,7 +54,7 @@ function FormDatePicker({
                 disabled={disabled}
                 minDate={minDate}
                 maxDate={maxDate}
-                inputFormat="dd/MM/yyyy HH:mm"
+                inputFormat={inputFormat}
                 label={label}
                 value={value}
                 onChange={(data) => handleChange(data, field.onChange)}
