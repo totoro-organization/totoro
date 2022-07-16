@@ -64,8 +64,8 @@ workflows:
   version: 2
   build-deploy:
     jobs:
-    -deploy_netlify_webapp
-    -deploy_netlify_backoffice
+    - deploy_netlify_webapp
+    - deploy_netlify_backoffice
       - build:
           filters:
             branches:
