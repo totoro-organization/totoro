@@ -6,15 +6,15 @@ import { Text } from "../atoms/Text";
 import { Colors, getColors } from "../../theme/utils";
 
 type PillVariant = "default" | "outline";
-type PillColor = "black";
+type PillColor = "black" | "primary";
 
 type PillProps = {
   variant?: PillVariant;
-  checked: boolean;
+  checked?: boolean;
   Icon?: JSX.Element;
   color?: PillColor;
   label: string;
-  handlePress: (selectedLabel: string) => void;
+  handlePress?: (selectedLabel: string) => void;
 };
 
 export default function Pill({
@@ -32,7 +32,9 @@ export default function Pill({
         color={color}
         checked={checked}
         onPress={() => {
-          handlePress(label);
+          if (handlePress) handlePress(label);
+
+          return null;
         }}
       >
         <>
@@ -65,14 +67,20 @@ const PillContainer = styled.TouchableOpacity<StyledPillProps>`
   border-radius: ${({ theme }) => theme.border.radius.circle};
   padding: ${({ theme }) => theme.spacing[2]} ${({ theme }) => theme.spacing[4]};
 
-  background-color: ${({ theme, checked }) =>
-    checked ? theme.colors.core.black.base : "transparent"};
+  background-color: ${({ theme, checked, color }) =>
+    checked
+      ? theme.colors.core.black.base
+      : color === "primary"
+      ? theme.colors.brand.primary.subtle
+      : "transparent"};
   border: 1px solid
-    ${({ theme, variant, checked }) =>
+    ${({ theme, variant, checked, color }) =>
       variant === "default"
         ? "transparent"
         : checked
         ? "transparent"
+        : color === "primary"
+        ? theme.colors.brand.primary.lightest
         : theme.colors.core.black.base};
 `;
 
