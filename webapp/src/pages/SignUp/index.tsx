@@ -16,7 +16,7 @@ export default function SignUp() {
     <Container sx={containerStyles} component="main" maxWidth="sm">
       <AuthLogo />
       <SignupForm />
-      <Copyright sx={{ mt: 5 }} />
+      <Copyright/>
     </Container>
   );
 }
