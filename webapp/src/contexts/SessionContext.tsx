@@ -126,7 +126,7 @@ export function SessionProvider({
         setError(response.error);
         return;
       }
-      navigate('/login');
+      navigate('/confirmer-mon-compte');
     });
   }
 
