@@ -58,11 +58,13 @@ const Resume = Loader(
 
 /* Applications - Partner */
 
+
 /* PAGES */
 
 /* Authentication */
 const SignIn = Loader(lazy(() => import('src/pages/SignIn')));
 const SignUp = Loader(lazy(() => import('src/pages/SignUp')));
+const AccountConfirmation = Loader(lazy(() => import('src/pages/AccountConfirmation')));
 const FirstLogin = Loader(lazy(() => import('src/pages/SignIn/FirstLogin')));
 
 /* User */
@@ -91,6 +93,10 @@ const routes: PartialRouteObject[] = [
       {
         path: 'signup',
         element: <SignUp />
+      },
+      {
+        path: 'confirmer-mon-compte',
+        element: <AccountConfirmation/>
       },
       {
         element: <ProtectedRoute />,
