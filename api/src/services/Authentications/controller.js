@@ -69,8 +69,8 @@ module.exports = {
           if(user.status.label === label_status.disabled) sendMail(verify.template, {to: user.email, subject: verify.subject}, {firstname: user.firstname, lastname: user.lastname, provider: provider[app.name], token: encodeURIComponent(token)})
 
           return res
-            .status(success.user_inactive.status)
-            .json({ message: success.user_inactive.message });
+            .status(error.user_inactive.status)
+            .json({ message: error.user_inactive.message });
         } else {
           return res.status(success.create.status).json({ token });
         }
