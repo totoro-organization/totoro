@@ -1,5 +1,7 @@
 import { Box, Container, styled } from '@mui/material';
+import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { validateAccountUser } from 'src/services/users.service';
 import AfterValidationContent from './AfterValidationContent';
 import BeforeValidationContent from './BeforeValidationContent';
 
@@ -22,13 +24,24 @@ const Content = styled(Box)(
 
 function AccountConfirmation() {
   const [searchParams] = useSearchParams();
+  const [isValidate, setIsValidate] = useState(false);
+
   const token = searchParams.get('access_token');
-  
+
+  useEffect(() => {
+    (async () => {
+      if(token) {
+        const response = await validateAccountUser(decodeURIComponent(token));
+        if('error' in response) return
+        setIsValidate(prevState => !prevState);
+      }
+    })()
+  }, [token])
   return (
     <Container sx={{ height: '100%' }} component="main" maxWidth="md">
       <Content>
        {
-        token ? <AfterValidationContent/> : <BeforeValidationContent/>
+        isValidate ? <AfterValidationContent/> : <BeforeValidationContent/>
        }
       </Content>
     </Container>

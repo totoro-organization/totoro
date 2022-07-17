@@ -1,6 +1,6 @@
-import { Box, Button, Container, styled, Typography } from '@mui/material';
-import { Link } from 'react-router-dom';
-import useDeviceDetect from 'src/hooks/useDeviceDetect';
+import { Box, Button, styled, Typography } from '@mui/material';
+import { NavLink } from 'react-router-dom';
+
 
 const Content = styled(Box)(
     ({ theme }) => `
@@ -18,20 +18,29 @@ const Content = styled(Box)(
     `
   );
 
-function ResetPasswordConfirmation() {
+  const Heading = styled('div')({
+    display: 'flex',
+    flexDirection: 'column',
+    rowGap: 8
+  });
+
+function AfterResetPasswordConfirmation() {
   return (
     <Content>
-          <Box display="flex" flexDirection="column" rowGap={4}>
+          <Heading>
             <Typography component="h1" variant="h2">
               Ton mot de passe a bien été modifié !
             </Typography>
             <Typography variant="subtitle1" gutterBottom component="div">
               C'est bon, tu vas enfin pouvoir retourner à tes missions. Utilise ton nouveau mot de passe pour te connecter.
             </Typography>
-          </Box>
+          </Heading>
+          <Button variant="contained" color="primary" LinkComponent={NavLink}>
+            Je me connecte
+          </Button>
         {/* <ConfirmationIllustration /> */}
       </Content>
   )
 }
 
-export default ResetPasswordConfirmation
+export default AfterResetPasswordConfirmation

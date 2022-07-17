@@ -12,19 +12,23 @@ interface ResetPasswordFieldTypes {
   passwordConfirmation: string;
 }
 
-function ResetPasswordForm() {
+interface ResetPasswordFormProps {
+  setIsValidate: (bool: boolean) => void
+}
+
+function ResetPasswordForm({ setIsValidate }: ResetPasswordFormProps) {
   const [searchParams] = useSearchParams();
   const methods = useForm<ResetPasswordFieldTypes>({
     resolver: yupResolver(ResetPasswordSchema)
   });
   const { setToast } = useToast();
-  const token = searchParams.get('token');
-console.log(token);
+  const token = searchParams.get('access_token');
 
   const onSubmit = async (formData: ResetPasswordFieldTypes) => {
+
     if (formData.password === formData.passwordConfirmation && token) {
       const data = {
-        token,
+        token: decodeURIComponent(token),
         password: formData.password
       };
       const response = await resetPasswordUser(data);
@@ -41,6 +45,7 @@ console.log(token);
         message: 'Votre mot de passe à été modifié avec succès',
         duration: 8000
       });
+      setIsValidate(true);
     }
   };
 

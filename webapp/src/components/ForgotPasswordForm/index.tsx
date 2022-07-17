@@ -3,6 +3,8 @@ import { Button, Link } from '@mui/material';
 import { FormProvider, useForm } from 'react-hook-form';
 import { NavLink } from 'react-router-dom';
 import { FormContainer, FormTextField } from 'src/components/forms';
+import { useToast } from 'src/hooks/useToast';
+import { forgotPassword } from 'src/services/auth.service';
 import { ForgotPasswordSchema } from './ForgotPassword.schema';
 
 interface ForgotPasswordFieldTypes {
@@ -13,11 +15,26 @@ function ForgotPasswordForm() {
   const methods = useForm<ForgotPasswordFieldTypes>({
     resolver: yupResolver(ForgotPasswordSchema)
   });
-
-  const onSubmit = (formData: ForgotPasswordFieldTypes) => {
+  const { setToast } = useToast();
+  const onSubmit = async (formData: ForgotPasswordFieldTypes) => {
     const data = {
       email: formData.email
     };
+    const response = await forgotPassword(data);
+    if ('error' in response) {
+      setToast({
+        variant: 'error',
+        message: response.message,
+        duration: 6000
+      });
+      return;
+    }
+    setToast({
+      variant: 'success',
+      message: 'Votre demande à été envoyée avec succès. Veuillez vérifier votre boite mail',
+      duration: 8000
+    });
+
   };
 
   return (
