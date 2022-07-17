@@ -1,11 +1,12 @@
-import { Box, Button, Container, styled, Typography } from '@mui/material';
-import { Link } from 'react-router-dom';
-import useDeviceDetect from 'src/hooks/useDeviceDetect';
-import ConfirmationIllustration from './Illustration';
+import { Box, Container, styled } from '@mui/material';
+import { useSearchParams } from 'react-router-dom';
+import AfterValidationContent from './AfterValidationContent';
+import BeforeValidationContent from './BeforeValidationContent';
 
 const Content = styled(Box)(
   ({ theme }) => `
           display: flex;
+          flex: 1 1;
           flex-direction: column;
           align-items: center;
           justify-content: center;
@@ -20,33 +21,15 @@ const Content = styled(Box)(
 );
 
 function AccountConfirmation() {
-  const { isMobile } = useDeviceDetect();
-
+  const [searchParams] = useSearchParams();
+  const token = searchParams.get('access_token');
+  
   return (
     <Container sx={{ height: '100%' }} component="main" maxWidth="md">
       <Content>
-        <Box display="flex" flexDirection="column" rowGap={2}>
-          <Box display="flex" flexDirection="column" rowGap={4}>
-            <Typography component="h1" variant="h2">
-              Vérifie tes mails et active ton compte pour commencer
-            </Typography>
-            <Typography variant="subtitle1" gutterBottom component="div">
-              Oups ! On dirait que ton compte n'a pas encore été activé. Pour se
-              faire je t'invite à cliquer sur le lien qui t'as été envoyé par
-              mail.
-            </Typography>
-          </Box>
-          <Button
-            to="/login"
-            component={Link}
-            sx={{ width: 'fit-content' }}
-            variant="contained"
-            color="primary"
-          >
-            Ok, c'est fait !
-          </Button>
-        </Box>
-        <ConfirmationIllustration />
+       {
+        token ? <AfterValidationContent/> : <BeforeValidationContent/>
+       }
       </Content>
     </Container>
   );

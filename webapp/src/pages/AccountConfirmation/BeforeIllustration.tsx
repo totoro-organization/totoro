@@ -1,11 +1,11 @@
 import { Box, useTheme } from "@mui/material";
 
-function ConfirmationIllustration() {
+function BeforeConfirmationIllustration() {
 
     const theme = useTheme();
 
   return (
-    <Box>
+    <Box sx={{width: '100%', maxWidth: '300px'}}>
     <svg
         style={{width: '100%'}}
       data-name="Layer 1"
@@ -159,4 +159,4 @@ function ConfirmationIllustration() {
   );
 }
 
-export default ConfirmationIllustration;
+export default BeforeConfirmationIllustration;
