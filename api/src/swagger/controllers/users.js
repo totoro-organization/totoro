@@ -195,7 +195,7 @@ module.exports = {
           responses: response200("getJobsUser")
         }
     },
-    "/api/users/members/:memberId/jobs": {
+    "/api/users/members/{memberId}/jobs": {
       get: {
         tags: [
           "Users"
