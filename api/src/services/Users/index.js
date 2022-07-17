@@ -114,7 +114,7 @@ exports.router = (function () {
 	UsersRouter.get("/members/:memberId/jobs", [
 		passport,
 		async function (req, res) {
-			const id = req.params.id;
+			const id = req.params.memberId;
 			controller.getUserJobsPublished(res, id, req.query);
 		},
 	]);

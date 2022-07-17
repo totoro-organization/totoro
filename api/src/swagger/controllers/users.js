@@ -203,7 +203,7 @@ module.exports = {
         "x-swagger-router-controller": "users",
         operationId: "getJobsPublishedUserInOrganization",
         parameters: [
-          ...param("id", "path", "string"),
+          ...param("memberId", "path", "string"),
           {
             name: "status",
             in: "query",
