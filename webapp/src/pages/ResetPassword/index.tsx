@@ -1,5 +1,7 @@
-import { Container, styled, Typography } from '@mui/material';
-import ResetPasswordForm from 'src/components/ResetPasswordForm';
+import { Container } from '@mui/material';
+import { useState } from 'react';
+import AfterResetPasswordConfirmation from './AfterValidationContent';
+import BeforeResetValidationContent from './BeforeValidationContent';
 
 const containerStyles = {
   display: 'flex',
@@ -10,24 +12,15 @@ const containerStyles = {
   height: '100%'
 };
 
-const Heading = styled("div")({
-  display: 'flex',
-  flexDirection: 'column',
-  rowGap: 8,
-})
-
 function ResetPassword() {
+
+  const [isValidate, setIsValidate] = useState(false)
+
   return (
     <Container sx={containerStyles} component="main" maxWidth="sm">
-      <Heading>
-        <Typography component="h1" variant="h2">
-        Choisis un nouveau mot de passe
-      </Typography>
-      <Typography component="h5" variant="subtitle1">
-       Ce mot de passe te permet de te connecter aux applications Totoro. Choisis le avec précaution !
-      </Typography>
-      </Heading>
-      <ResetPasswordForm />
+      {
+        isValidate ? <AfterResetPasswordConfirmation/> : <BeforeResetValidationContent setIsValidate={setIsValidate}/>
+      }
     </Container>
   );
 }
