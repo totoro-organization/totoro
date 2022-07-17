@@ -1,49 +1,43 @@
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import { FormControl, FormHelperText, TextField } from '@mui/material';
-import { DateTimePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { format } from 'date-fns';
 import { useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
-interface IFormDateTimePicker {
+interface IFormDatePicker {
   name: string;
   label?: string;
-  minDateTime?: any;
-  maxDateTime?: any;
+  minDate?: any;
+  maxDate?: any;
   handleChangeDate?: (date: Date) => void;
   defaultValue?: any;
   disabled?: boolean;
-  minutesStep?: number;
   disablePast?: boolean;
-  minDate?: any;
-  maxDate?: any;
   minTime?: any;
   maxTime?: any;
+  inputFormat?: string,
 }
 
-function FormDateTimePicker({
+function FormDatePicker({
   label,
   name,
-  minDateTime,
-  maxDateTime,
   minDate,
   maxDate,
-  minTime,
-  maxTime,
   defaultValue,
   handleChangeDate,
   disabled,
   disablePast,
-  minutesStep = 1,
+  inputFormat = "dd/MM/yyyy",
   ...props
-}: IFormDateTimePicker): JSX.Element {
+}: IFormDatePicker): JSX.Element {
   const { control } = useFormContext();
 
   const [value, setValue] = useState<Date | string>(defaultValue ?? null);
 
   const handleChange = (date, onChange) => {
     setValue(date);
-    onChange(date);    
+    onChange(date);
     if (handleChangeDate) handleChangeDate(date);
   };
 
@@ -55,21 +49,18 @@ function FormDateTimePicker({
           name={name}
           render={({ field, fieldState: { error } }) => (
             <FormControl>
-              <DateTimePicker
+              <DatePicker
                 disablePast={disablePast}
-                minutesStep={minutesStep}
                 disabled={disabled}
-                minDateTime={minDateTime}
-                maxDateTime={maxDateTime}
-                minTime={minTime}
-                maxTime={maxTime}
                 minDate={minDate}
                 maxDate={maxDate}
-                inputFormat="dd/MM/yyyy HH:mm"
+                inputFormat={inputFormat}
                 label={label}
                 value={value}
                 onChange={(data) => handleChange(data, field.onChange)}
-                renderInput={(params) => <TextField {...params} error={!!error} />}
+                renderInput={(params) => (
+                  <TextField {...params} error={!!error}  />
+                )}
               />
               {!!error && (
                 <FormHelperText error={!!error}>{error.message}</FormHelperText>
@@ -83,4 +74,4 @@ function FormDateTimePicker({
   );
 }
 
-export default FormDateTimePicker;
+export default FormDatePicker;

@@ -7,6 +7,7 @@ import FormDateTimePicker from "./DateTimePicker";
 import FormDateTimeRangePicker from "./DateTimeRangePicker";
 import FormUpload from "./Upload";
 import UploadImagePreview from "./UploadImagePreview";
+import FormDatePicker from "./DatePicker";
 
 export {
     FormTextField,
@@ -15,6 +16,7 @@ export {
     FormSelect,
     FormDateTimeRangePicker,
     FormDateTimePicker,
+    FormDatePicker,
     FormTextarea,
     FormUpload,
     UploadImagePreview

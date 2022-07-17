@@ -3,22 +3,28 @@ export type Token = string;
 export interface Response {
     error?: boolean
     message: string,
+    status_code: number,
     entity?: string,
     token?: Token
 }
   
 export interface LoginData {
-    emailOrUsername: FormDataEntryValue;
-    password: FormDataEntryValue;
+    emailOrUsername: string;
+    password: string;
 }
 
 export interface SignUpData {
-    username: FormDataEntryValue,
-    firstname: FormDataEntryValue,
-    lastname: FormDataEntryValue,
-    email: FormDataEntryValue,
-    birthday: Date,
-    password: FormDataEntryValue
+    username: string,
+    firstname: string,
+    lastname: string,
+    email: string,
+    birthday: string,
+    password: string
+}
+
+export interface ResetPasswordData {
+    token: Token,
+    password: string
 }
   
 

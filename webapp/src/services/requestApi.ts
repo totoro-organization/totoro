@@ -41,14 +41,15 @@ export async function requestAxios(method: string, uri: string, data = null) {
         } else {
             return 'cette methode n\'est pas prise en compte par l\'api'
         }
-        return request.data;
+        return {...request.data, status_code: request.status};
     } catch(error){
         if(error.response === undefined){
             //BACK OFFLINE
             return "offline";
         } else {
             return {
-                error: error.response.data.message
+                error: error.response.data.message,
+                status_code: error.response.status
             }
         }
     }
