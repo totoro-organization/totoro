@@ -11,7 +11,7 @@ import { SocketProvider } from './contexts/SocketContext';
 
 ReactDOM.render(
   <HelmetProvider>
-    <SocketProvider>
+    {/* <SocketProvider> */}
       <ToastProvider>
         <SidebarProvider>
           <BrowserRouter>
@@ -19,7 +19,7 @@ ReactDOM.render(
           </BrowserRouter>
         </SidebarProvider>
       </ToastProvider>
-    </SocketProvider>
+    {/* </SocketProvider> */}
   </HelmetProvider>,
   document.getElementById('root')
 );
