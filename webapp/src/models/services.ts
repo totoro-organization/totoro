@@ -3,6 +3,7 @@ export type Token = string;
 export interface Response {
     error?: boolean
     message: string,
+    status_code: number,
     entity?: string,
     token?: Token
 }
@@ -18,6 +19,11 @@ export interface SignUpData {
     lastname: string,
     email: string,
     birthday: string,
+    password: string
+}
+
+export interface ResetPasswordData {
+    token: Token,
     password: string
 }
   
