@@ -70,6 +70,19 @@ module.exports = {
           responses: response201()
         }
     },
+    "/api/users/account/activate": {
+      put: {
+        tags: [
+          "Users"
+        ],
+        "x-swagger-router-controller": "users",
+        operationId: "activateUser",
+        parameters: [
+          ...bodyParam("Activated User", "activateUser")
+        ],
+        responses: response201("User Activate")
+      }
+    },
     "/api/users/reset/password": {
       put: {
         tags: [
@@ -300,4 +313,5 @@ module.exports = {
         responses: response200("getTransactionsUser")
       }
     },
+    
 }

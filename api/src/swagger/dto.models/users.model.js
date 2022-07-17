@@ -62,6 +62,20 @@ module.exports = {
       }
     }
   },
+  activateUser: function () {
+    return {
+      type: "object",
+      properties: {
+        token: {
+          type: "string"
+        }
+      },
+      required:["token"],
+      example: {
+        token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijg2NzcwODc1LTc2MGEtNDQ3NS04MmE2LTk5YmEyOWFmMWNiZCIsImlzQWRtaW4iOnRydWUsImlhdCI6MTY1Nzc0MDg0OSwiZXhwIjoxNjU4MzQ1NjQ5fQ.-rWZx6cA_d5lFjHAC5lYTFqu_ZY0DfJo_rmZKXfj9eI"
+      }
+    }
+  },
   resetPassword: function () {
     return {
       type: "object",
