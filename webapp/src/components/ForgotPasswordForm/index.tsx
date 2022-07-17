@@ -26,7 +26,6 @@ function ForgotPasswordForm() {
         <FormTextField
           defaultValue={''}
           margin="normal"
-          required
           fullWidth
           name="email"
           label="Email"
