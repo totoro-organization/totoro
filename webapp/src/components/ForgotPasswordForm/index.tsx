@@ -44,7 +44,7 @@ function ForgotPasswordForm() {
         </Button>
         <Link
           component={NavLink}
-          to="/reinitialiser-mot-de-passe"
+          to="/login"
           variant="body2"
         >
           J'avais juste oublié ! Je me connecte
