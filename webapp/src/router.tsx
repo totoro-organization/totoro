@@ -66,6 +66,7 @@ const SignIn = Loader(lazy(() => import('src/pages/SignIn')));
 const SignUp = Loader(lazy(() => import('src/pages/SignUp')));
 const AccountConfirmation = Loader(lazy(() => import('src/pages/AccountConfirmation')));
 const ForgotPassword = Loader(lazy(() => import('src/pages/ForgotPassword')));
+const ResetPassword = Loader(lazy(() => import('src/pages/ResetPassword')));
 const FirstLogin = Loader(lazy(() => import('src/pages/SignIn/FirstLogin')));
 
 /* User */
@@ -102,6 +103,10 @@ const routes: PartialRouteObject[] = [
       {
         path: 'mot-de-passe-oublie',
         element: <ForgotPassword/>
+      },
+      {
+        path: 'reinitialiser-mot-de-passe',
+        element: <ResetPassword/>
       },
       {
         element: <ProtectedRoute />,
