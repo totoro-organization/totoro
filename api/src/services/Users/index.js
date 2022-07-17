@@ -145,7 +145,6 @@ exports.router = (function () {
 				const id = token['id'];
 				const statusData = await getRow(res, Status, { label: label_status.actived });
     			data.status_id = statusData.id
-				data.status_id = 
 				controller.updateUser(res, id, data);
 			} else {
 				return res

@@ -141,7 +141,7 @@ module.exports = {
         .json({ message: emailValid });
     */
 
-    const activeStatus = await getRow(Status, { label: label_status.actived });
+    const activeStatus = await getRow(res, Status, { label: label_status.actived });
 
     asyncLib.waterfall(
       [
