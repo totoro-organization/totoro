@@ -22,6 +22,16 @@ module.exports = {
             },
             ...param("current","query", "boolean",false),
             ...param("label","query", "string",false),
+            {
+              name: "order",
+              in: "query",
+              type: "string",
+              required: false,
+              enum: [
+                "ASC",
+                "DESC"
+              ]
+            },
             ...pagination
           ],
           responses: response200("getAllSubscriptions")

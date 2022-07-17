@@ -111,6 +111,14 @@ exports.router = (function () {
 		},
 	]);
 
+	UsersRouter.get("/members/:memberId/jobs", [
+		passport,
+		async function (req, res) {
+			const id = req.params.id;
+			controller.getUserJobsPublished(res, id, req.query);
+		},
+	]);
+
 	// Litigations
 	UsersRouter.get("/:id/litigations", [
 		passport,

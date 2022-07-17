@@ -1,4 +1,4 @@
-const { labelType, date, organization, userProperties, arrayType, job, partner, tokenProperties, discount } = require("../generique/index");
+const { labelType, date, organization, userProperties, arrayType, job, partner, tokenProperties, discount, difficulty } = require("../generique/index");
 module.exports = {
   getUser: function() {
     return {
@@ -126,6 +126,22 @@ module.exports = {
         },
         ...date(),
         job: job(),
+        status: labelType()
+      }
+    })
+  },
+  getJobsPublishedByUser: function(){
+    return arrayType({
+      type: "object",
+      properties: {
+        id: {
+          type: "string"
+        },
+        assos_user_id: {
+          type: "string"
+        },
+        ...date(),
+        difficulty: difficulty(),
         status: labelType()
       }
     })

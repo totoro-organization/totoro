@@ -20,6 +20,16 @@ module.exports = {
                 "deleted"
               ]
             },
+            {
+              name: "order",
+              in: "query",
+              type: "string",
+              required: false,
+              enum: [
+                "ASC",
+                "DESC"
+              ]
+            },
             ...pagination
           ],
           responses: response200("getAllLitigations")
