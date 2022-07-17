@@ -21,6 +21,16 @@ module.exports = {
                 "deleted"
               ]
             },
+            {
+              name: "order",
+              in: "query",
+              type: "string",
+              required: false,
+              enum: [
+                "ASC",
+                "DESC"
+              ]
+            },
             ...pagination
           ],
           responses: response200("getAllUsers")
@@ -122,6 +132,16 @@ module.exports = {
                 "deleted"
               ]
             },
+            {
+              name: "order",
+              in: "query",
+              type: "string",
+              required: false,
+              enum: [
+                "ASC",
+                "DESC"
+              ]
+            },
             ...pagination
           ],
           responses: response200("getFavoritesUser")
@@ -160,10 +180,55 @@ module.exports = {
                 "deleted"
               ]
             },
+            {
+              name: "order",
+              in: "query",
+              type: "string",
+              required: false,
+              enum: [
+                "ASC",
+                "DESC"
+              ]
+            },
             ...pagination
           ],
           responses: response200("getJobsUser")
         }
+    },
+    "/api/users/members/:memberId/jobs": {
+      get: {
+        tags: [
+          "Users"
+        ],
+        "x-swagger-router-controller": "users",
+        operationId: "getJobsPublishedUserInOrganization",
+        parameters: [
+          ...param("id", "path", "string"),
+          {
+            name: "status",
+            in: "query",
+            type: "string",
+            required: false,
+            enum: [
+              "actived",
+              "disabled",
+              "deleted"
+            ]
+          },
+          {
+            name: "order",
+            in: "query",
+            type: "string",
+            required: false,
+            enum: [
+              "ASC",
+              "DESC"
+            ]
+          },
+          ...pagination
+        ],
+        responses: response200("getJobsPublishedByUser")
+      }
     },
     "/api/users/{id}/litigations": {
         get: {
@@ -183,6 +248,16 @@ module.exports = {
                 "actived",
                 "disabled",
                 "deleted"
+              ]
+            },
+            {
+              name: "order",
+              in: "query",
+              type: "string",
+              required: false,
+              enum: [
+                "ASC",
+                "DESC"
               ]
             },
             ...pagination
@@ -208,6 +283,16 @@ module.exports = {
               "actived",
               "disabled",
               "deleted"
+            ]
+          },
+          {
+            name: "order",
+            in: "query",
+            type: "string",
+            required: false,
+            enum: [
+              "ASC",
+              "DESC"
             ]
           },
           ...pagination

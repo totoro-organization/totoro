@@ -146,6 +146,16 @@ module.exports = {
                   "deleted"
                 ]
             },
+            {
+              name: "order",
+              in: "query",
+              type: "string",
+              required: false,
+              enum: [
+                "ASC",
+                "DESC"
+              ]
+            },
             ...pagination
           ],
           responses: response200("getParticipantsJob")
@@ -160,6 +170,16 @@ module.exports = {
           operationId: "getFavoritesJobById",
           parameters: [
             ...param("id","path","string"),
+            {
+              name: "order",
+              in: "query",
+              type: "string",
+              required: false,
+              enum: [
+                "ASC",
+                "DESC"
+              ]
+            },
             ...pagination
           ],
           responses: response200("getFavoritesJob")
@@ -183,6 +203,16 @@ module.exports = {
                   "actived",
                   "deleted"
                 ]
+            },
+            {
+              name: "order",
+              in: "query",
+              type: "string",
+              required: false,
+              enum: [
+                "ASC",
+                "DESC"
+              ]
             },
             ...pagination
           ],
