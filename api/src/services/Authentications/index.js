@@ -11,21 +11,25 @@ exports.router = (function () {
 
   authRouter.post("/login", async function (req, res) {
     const data = req.body;
+    data.app = req.app;
     controller.login(res, Users, data, false);
   });
 
   authRouter.post("/login/admin", async function (req, res) {
     const data = req.body;
+    data.app = req.app;
     controller.login(res, Admins, data, true);
   });
 
   authRouter.post("/signup", async function (req, res) {
     const data = req.body;
+    data.app = req.app;
     controller.signup(res, Users, data);
   });
 
   authRouter.post("/forgot", async function (req, res) {
     const data = req.body;
+    data.app = req.app;
     controller.forgot(res, Users, data);
   });
 

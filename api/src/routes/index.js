@@ -43,19 +43,19 @@ const accessApi = async (req, res, next) => {
 		Applications.findOne({
 			where: { id: APP_ID },
 		})
-			.then((data) => {
-				if (data) {
-					req.request = data;
-					next();
-				} else {
-					return res
-						.status(error.access_denied.status)
-						.json({ message: error.access_denied.message });
-				}
-			})
-			.catch((error) => console.log(error));
+		.then((data) => {
+			if (data) {
+				req.app = data;
+				next();
+			} else {
+				return res
+					.status(error.access_denied.status)
+					.json({ message: error.access_denied.message });
+			}
+		})
+		.catch((error) => console.log(error));
 	} catch (error) {
-		console.log("jarce");
+		console.log(error);
 	}
 };
 

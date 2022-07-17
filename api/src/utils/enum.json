@@ -37,5 +37,10 @@
     "qrcodeParticipations": "/qrcode-participations",
     "codebareDiscounts": "/codebare-discounts",
     "site": "/site"
+  },
+  "provider": {
+    "MOBILE APP": "mobile",
+    "WEB APP": "webapp",
+    "BACK OFFICE": "backoffice"
   }
 }
