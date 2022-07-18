@@ -4,7 +4,6 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
 import ReportProblemIcon from '@mui/icons-material/ReportProblem';
 import SpeedIcon from '@mui/icons-material/Speed';
-import QueryStatsIcon from '@mui/icons-material/QueryStats';
 import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 import CardMembershipIcon from '@mui/icons-material/CardMembership';
@@ -12,13 +11,12 @@ import GroupWorkIcon from '@mui/icons-material/GroupWork';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import PeopleIcon from '@mui/icons-material/People';
 import PaletteIcon from '@mui/icons-material/Palette';
-import GroupAddIcon from '@mui/icons-material/GroupAdd';
-import GroupsIcon from '@mui/icons-material/Groups';
 import StyleIcon from '@mui/icons-material/Style';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import InvertColorsIcon from '@mui/icons-material/InvertColors';
 import SettingsIcon from '@mui/icons-material/Settings';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import AppsIcon from '@mui/icons-material/Apps';
 
 export interface MenuItem {
   link?: string;
@@ -110,6 +108,11 @@ const menuItems: MenuItems[] = [
         icon: SettingsIcon,
         link: '/app-reglages/parametrage',
         items: [
+          {
+            name: 'Applications',
+            icon: AppsIcon,
+            link: '/app-reglages/parametrage/applications'
+          },
           {
             name: 'Tags',
             icon: StyleIcon,
