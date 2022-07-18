@@ -18,8 +18,8 @@ import { StatusOptions } from 'src/models/status';
 import { addItem, deleteItem, getItems, updateItem } from 'src/services/common.service';
 import { useModal } from 'src/hooks/useModal';
 import { sendLog } from 'src/services/admins.service';
-import useAuth from 'src/hooks/useAuth';
-import type { TableEnum, Filters } from 'src/models';
+import useSession from 'src/hooks/useSession';
+import type { TableEnum, StatusEnum } from 'src/models';
 import type { Route } from 'src/services/routes';
 import { useToast } from 'src/hooks/useToast';
 
@@ -32,6 +32,10 @@ interface TableWrapperProps {
   statusOptions?: StatusOptions,
   children: ReactNode,
   addButton?: boolean
+}
+
+export interface Filters {
+  status?: keyof typeof StatusEnum | 'all';
 }
 
 const applyFilters = (items: any, filters: Filters): any => {
@@ -82,7 +86,7 @@ const TableWrapper: FC<TableWrapperProps> = ({
     }
   }, [defaultItems])
 
-  const { user } = useAuth();
+  const { user } = useSession();
 
   if(statusOptions) {
       statusOptions = [

@@ -12,7 +12,7 @@ import {
   ListItemText
 } from '@mui/material';
 
-import useAuth from '../../../hooks/useAuth';
+import useSession from '../../../hooks/useSession';
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import DoneTwoToneIcon from '@mui/icons-material/DoneTwoTone';
 import Text from 'src/components/Text';
@@ -29,7 +29,7 @@ import { useToast } from 'src/hooks/useToast';
 function EditProfileTab() {
   const [EditUser, setEditUser] = useState(false);
   const [valueEdit, setValueEdit] = useState({});
-  const { user: currentUser } = useAuth();
+  const { user: currentUser } = useSession();
   const [editPassword, setEditPassword] = useState(false);
   const [user, setUser] = useState<Admin>(currentUser);
   const { setToast } = useToast();

@@ -20,7 +20,7 @@ import ExpandMoreTwoToneIcon from '@mui/icons-material/ExpandMoreTwoTone';
 import AccountBoxTwoToneIcon from '@mui/icons-material/AccountBoxTwoTone';
 import LockOpenTwoToneIcon from '@mui/icons-material/LockOpenTwoTone';
 import AccountTreeTwoToneIcon from '@mui/icons-material/AccountTreeTwoTone';
-import useAuth from 'src/hooks/useAuth';
+import useSession from 'src/hooks/useSession';
 import FallbackAvatar from 'src/components/FallbackAvatar';
 
 const UserBoxButton = styled(Button)(
@@ -60,7 +60,7 @@ const UserBoxDescription = styled(Typography)(
 
 function HeaderUserbox() {
 
-  const { user, logout } = useAuth();
+  const { user, logout } = useSession();
 
   const ref = useRef<any>(null);
   const [isOpen, setOpen] = useState<boolean>(false);
