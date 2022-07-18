@@ -1,4 +1,5 @@
 export const API_ROUTES = {
+    APPLICATIONS: "/applications",
     STATUS: "/status",
     ROLES: "/roles",
     TAGS: "/tags",

@@ -66,6 +66,9 @@ const Crypto = Loader(lazy(() => import('src/pages/Dashboards/Crypto')));
 
 /* Apps Configuration */
 
+const ApplicationSettings = Loader(
+  lazy(() => import('src/pages/Applications/Settings/Applications'))
+);
 const TagSettings = Loader(
   lazy(() => import('src/pages/Applications/Settings/Tags'))
 );
@@ -249,6 +252,10 @@ const routes: PartialRouteObject[] = [
                     replace
                   />
                 )
+              },
+              {
+                path: 'parametrage/applications',
+                element: <ApplicationSettings/>
               },
               {
                 path: 'parametrage/tags',
