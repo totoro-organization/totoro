@@ -1,7 +1,7 @@
 import { MenuItem, Select } from "@mui/material"
 import { useContext, useEffect, useState } from "react";
 import { StatusContext } from "src/contexts/StatusContext";
-import useAuth from "src/hooks/useAuth";
+import useSession from "src/hooks/useSession";
 import { Status, StatusEnum, StatusOptions } from "src/models";
 import { sendLog } from "src/services/admins.service";
 import { changeStatus } from "src/services/status.service";
@@ -23,7 +23,7 @@ function StatusSelect({ statusOptions, currentItem, table }: StatusSelectProps) 
     const allStatuses = useContext(StatusContext);
     const [options, setOptions] = useState<any>([]);
     const [selectedOption, setSelectedOption] = useState<any>(null);
-    const { user } = useAuth();
+    const { user } = useSession();
 
     useEffect(() => {
         if(allStatuses.length) {

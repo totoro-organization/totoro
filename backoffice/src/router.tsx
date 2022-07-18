@@ -6,7 +6,7 @@ import SidebarLayout from 'src/layouts/SidebarLayout';
 import BaseLayout from 'src/layouts/BaseLayout';
 
 import SuspenseLoader from 'src/components/SuspenseLoader';
-import useAuth from './hooks/useAuth';
+import useSession from './hooks/useSession';
 
 const Loader = (Component) => (props) =>
   (
@@ -16,7 +16,7 @@ const Loader = (Component) => (props) =>
   );
 
 const ProtectedRoute = (props: RouteProps) => {
-  const { user } = useAuth();
+  const { user } = useSession();
 
   if (!user) return <Navigate to="/login" />;
   return <Route {...props} />;
@@ -66,6 +66,9 @@ const Crypto = Loader(lazy(() => import('src/pages/Dashboards/Crypto')));
 
 /* Apps Configuration */
 
+const ApplicationSettings = Loader(
+  lazy(() => import('src/pages/Applications/Settings/Applications'))
+);
 const TagSettings = Loader(
   lazy(() => import('src/pages/Applications/Settings/Tags'))
 );
@@ -249,6 +252,10 @@ const routes: PartialRouteObject[] = [
                     replace
                   />
                 )
+              },
+              {
+                path: 'parametrage/applications',
+                element: <ApplicationSettings/>
               },
               {
                 path: 'parametrage/tags',

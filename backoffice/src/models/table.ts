@@ -1,5 +1,5 @@
 import { ChangeEvent } from "react";
-import { StatusEnum, StatusOptions } from "./status";
+import { StatusOptions } from "./status";
 
 export type TableItem = any;
 
@@ -11,6 +11,7 @@ export interface TableMethods {
 }
 
 export enum TableEnum {
+  applications = "Applications",
   admins = "Admins",
   users = "Users",
   organizations = "Organizations",
@@ -44,8 +45,4 @@ export interface TableProps<T> {
   handleGetItems: () => void,
   table?: TableEnum,
   statusOptions: StatusOptions
-}
-
-export interface Filters {
-  status?: keyof typeof StatusEnum | 'all';
 }

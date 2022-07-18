@@ -11,7 +11,7 @@ import HeaderUserbox from './Userbox';
 import Logo from 'src/components/Logo';
 
 import {useTranslation} from "react-i18next";
-import useAuth from 'src/hooks/useAuth';
+import useSession from 'src/hooks/useSession';
 
 const HeaderWrapper = styled(Box)(
   ({ theme }) => `
