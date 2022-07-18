@@ -69,7 +69,7 @@ const ApplicationsTable: FC<TableProps<Application>> = ({
               <TableCell>ID</TableCell>
               <TableCell>Date de création</TableCell>
               <TableCell align="right">Statut</TableCell>
-              <TableCell align="right">Actions</TableCell>
+              {/* <TableCell align="right">Actions</TableCell> */}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -123,7 +123,7 @@ const ApplicationsTable: FC<TableProps<Application>> = ({
                   <TableCell align="right">
                     <StatusLabel status={application.status.label} />
                   </TableCell>
-                  <TableCell align="right">
+                  {/* <TableCell align="right">
                     <Tooltip title="Editer la mission" arrow>
                         <IconButton
                           onClick={() => handleOpenEditModal(application)}
@@ -152,13 +152,13 @@ const ApplicationsTable: FC<TableProps<Application>> = ({
                         <DeleteTwoToneIcon fontSize="small" />
                       </IconButton>
                     </Tooltip>
-                  </TableCell>
+                  </TableCell> */}
                 </TableRow>
               );
             })}
           </TableBody>
         </Table>
-        <Modal   open={editModalOpen} handleClose={handleCloseEditModal} title={`Editer l'application suivante : ${editModalItem?.name}`}>
+        {/* <Modal   open={editModalOpen} handleClose={handleCloseEditModal} title={`Editer l'application suivante : ${editModalItem?.name}`}>
             <EditApplicationContent handleClose={handleCloseEditModal} handleUpdate={handleUpdate} item={editModalItem}/>
         </Modal>
         <Modal open={deleteModalOpen} handleClose={handleCloseDeleteModal} title={`Supprimer l'application suivante : ${deleteModalItem?.name}`}>
@@ -166,7 +166,7 @@ const ApplicationsTable: FC<TableProps<Application>> = ({
         </Modal>
         <Modal open={addModalOpen} handleClose={handleCloseAddModal} title="Ajouter un application">
         <AddApplicationContent handleClose={handleCloseAddModal} handleAdd={handleAddItem}/>
-      </Modal>
+      </Modal> */}
       </TableContainer>
   );
 };

@@ -40,7 +40,7 @@ function Applications() {
     <WrapperBox>
       {
         loading || !applications ? <SuspenseLoader/> : 
-        <TableWrapper table={TableEnum.applications} addButton url={API_ROUTES.TAGS} statusOptions={statusOptions} defaultItems={applications?.data}>
+        <TableWrapper table={TableEnum.applications} url={API_ROUTES.TAGS} statusOptions={statusOptions} defaultItems={applications?.data}>
           {/* @ts-ignore */}
             <ApplicationsTable  />
         </TableWrapper>
