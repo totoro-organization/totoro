@@ -14,6 +14,7 @@ export type { Subscription } from './subscription';
 export type { TableItem, TableMethods, TableProps } from './table'
 export type { Token, LoginData, SignUpData, Response } from './services'
 export type { Log } from './log';
+export type { Application } from './application';
 
 export { StatusEnum } from './status';
 export { LangEnum } from './lang';

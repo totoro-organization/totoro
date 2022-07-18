@@ -11,6 +11,7 @@ export interface TableMethods {
 }
 
 export enum TableEnum {
+  applications = "Applications",
   admins = "Admins",
   users = "Users",
   organizations = "Organizations",

@@ -28,6 +28,12 @@ export type StatusOptions = {
     name: string
 }[]
 
+export enum ApplicationStatus {
+    actived = StatusEnum.actived,
+    disabled = StatusEnum.disabled,
+    deleted = StatusEnum.deleted,
+}
+
 export enum AdminStatusEnum {
     actived = StatusEnum.actived,
     disabled = StatusEnum.disabled,
