@@ -48,6 +48,10 @@ const JobParticipant = Loader(
 const Job = Loader(
   lazy(() => import('src/pages/applications/Organization/Gestion/Jobs'))
 );
+// Add
+const AddOrganization = Loader(
+  lazy(() => import('src/pages/applications/Organization/Add'))
+);
 // Dashboards
 const Crypto = Loader(
   lazy(() => import('src/pages/applications/Organization/Dashboards/Crypto'))
@@ -168,6 +172,7 @@ const routes: PartialRouteObject[] = [
           },
           {
             path: 'association',
+            element: <SidebarLayout />,
             children: [
               {
                 path: '/',
@@ -175,7 +180,6 @@ const routes: PartialRouteObject[] = [
               },
               {
                 path: 'dashboards',
-                element: <SidebarLayout />,
                 children: [
                   {
                     path: '/',
@@ -192,8 +196,11 @@ const routes: PartialRouteObject[] = [
                 ]
               },
               {
+                path: 'ajouter',
+                element: <AddOrganization/>
+              },
+              {
                 path: 'gestion',
-                element: <SidebarLayout />,
                 children: [
                   {
                     path: '/',
