@@ -17,3 +17,8 @@ export enum Activities {
   add_partner = "add_partner",
   add_discount = "add_discount"
 }
+
+export const ACTIVITY_DATA = [
+  {type: "join_organization", name: "Voir ensemble", members: "16", date: "14/03", time: "10:10", job_title: "Sauvegarder le patrimoine : RÉNOVER UN MONUMENT"},
+  {type: "add_organization", name: "Voir ensemble", members: "16", date: "12/03", time: "12:10"}
+] as const;

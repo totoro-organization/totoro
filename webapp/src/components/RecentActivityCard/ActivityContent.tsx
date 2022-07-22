@@ -2,14 +2,18 @@ import { Box, Typography } from '@mui/material';
 import FallbackAvatar from 'src/components/FallbackAvatar';
 import StorefrontIcon from '@mui/icons-material/Storefront';
 
-function PartnerACtivityContent() {
+interface ActivityProps {
+  data: any;
+}
+
+function ACtivityContent({ data }: ActivityProps) {
   return (
     <Box mt={2} sx={{ display: 'flex', justifyContent: 'space-between' }}>
       <Box sx={{ display: 'flex' }}>
         <FallbackAvatar
           variant="rounded"
           src=""
-          fallback="La Fnac"
+          fallback={data[0].name}
           fallbackIcon={<StorefrontIcon />}
           alt="Partner name"
         ></FallbackAvatar>
@@ -22,7 +26,7 @@ function PartnerACtivityContent() {
           }}
         >
           <Typography gutterBottom variant="h4">
-            La Fnac
+            {data[0].name}
           </Typography>
         </Box>
       </Box>
@@ -33,11 +37,11 @@ function PartnerACtivityContent() {
           alignItems: 'flex-end'
         }}
       >
-        <Typography>15/03</Typography>
-        <Typography>16:20</Typography>
+        <Typography>{data[0].date}</Typography>
+        <Typography>{data[0].time}</Typography>
       </Box>
     </Box>
   );
 }
 
-export default PartnerACtivityContent;
+export default ACtivityContent;

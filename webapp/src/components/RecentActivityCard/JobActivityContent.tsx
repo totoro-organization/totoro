@@ -2,7 +2,11 @@ import { Box, Typography } from '@mui/material';
 import FallbackAvatar from 'src/components/FallbackAvatar';
 import WorkIcon from '@mui/icons-material/Work';
 
-function JobActivityContent() {
+interface ActivityProps {
+  data: any;
+}
+
+function JobActivityContent({ data }: ActivityProps) {
   return (
     <Box mt={2} sx={{ display: 'flex', justifyContent: 'space-between' }}>
       <Box sx={{ display: 'flex' }}>
@@ -16,7 +20,7 @@ function JobActivityContent() {
           }}
         >
           <Typography gutterBottom variant="h4">
-            Sauvegarder le patrimoine : RÉNOVER UN MONUMENT
+            {data[0].job_title}
           </Typography>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <FallbackAvatar
@@ -25,9 +29,9 @@ function JobActivityContent() {
               src=""
               fallback="Tous ensemble"
               fallbackIcon={<WorkIcon />}
-              alt="Organization name"
+              alt={data[0].name}
             ></FallbackAvatar>
-            <Typography ml={1}>Tous ensemble</Typography>
+            <Typography ml={1}>{data[0].name}</Typography>
           </Box>
         </Box>
       </Box>
@@ -38,8 +42,8 @@ function JobActivityContent() {
           alignItems: 'flex-end'
         }}
       >
-        <Typography>14/03</Typography>
-        <Typography>10:10</Typography>
+        <Typography>{data[0].date}</Typography>
+        <Typography>{data[0].time}</Typography>
       </Box>
     </Box>
   );
