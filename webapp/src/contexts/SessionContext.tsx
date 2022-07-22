@@ -18,7 +18,7 @@ import * as sessionsService from 'src/services/auth.service';
 
 interface SessionContextType {
   user?: User;
-  getCurrentUser: () => Promise<void>;
+  getCurrentUser: () => void;
   currentApp: App;
   handleCurrentApp: (app: App) => void;
   loading: boolean;
@@ -59,7 +59,7 @@ export function SessionProvider({
   }, [location.pathname]);
 
   useEffect(() => {
-    getCurrentUser().finally(() => setLoadingInitial(false));
+    getCurrentUser()
   }, []);
 
   useEffect(() => {
@@ -88,8 +88,9 @@ export function SessionProvider({
     }
   }, [user]);
 
-  function getCurrentUser(): Promise<void> {
-    return sessionsService
+  function getCurrentUser(): void {
+    if(localStorage.getItem("token")) {
+    sessionsService
       .getCurrentUser()
       .then((response) => {
         if ('error' in response) {
@@ -98,7 +99,8 @@ export function SessionProvider({
         }
         setUser(response as User);
       })
-      .catch((error) => setError(error));
+      .finally(() => setLoadingInitial(false));
+    } else setLoadingInitial(false)
   }
 
   function login(params: LoginData) {
@@ -109,14 +111,15 @@ export function SessionProvider({
       .then((response) => {
         if ('error' in response) {
           setError(response.error);
+          if(response.status_code === 403) navigate('/confirmer-mon-compte')
           return;
         }
         localStorage.setItem('token', response.token);
+        getCurrentUser();
       })
-      .then((_) => getCurrentUser())
       .finally(() => {
         setLoading(false);
-        navigate('/')
+        user && navigate('/')
       });
   }
 
@@ -126,7 +129,7 @@ export function SessionProvider({
         setError(response.error);
         return;
       }
-      navigate('/login');
+      navigate('/confirmer-mon-compte');
     });
   }
 

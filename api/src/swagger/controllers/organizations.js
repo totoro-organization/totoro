@@ -20,6 +20,16 @@ module.exports = {
                   "deleted"
                 ]
             },
+            {
+              name: "order",
+              in: "query",
+              type: "string",
+              required: false,
+              enum: [
+                "ASC",
+                "DESC"
+              ]
+            },
             ...pagination
           ],
           responses: response200("getAllOrganizations")
@@ -89,6 +99,16 @@ module.exports = {
                   "deleted"
                 ]
             },
+            {
+              name: "order",
+              in: "query",
+              type: "string",
+              required: false,
+              enum: [
+                "ASC",
+                "DESC"
+              ]
+            },
             ...pagination
           ],
           responses: response200("getJobsOrganization")
@@ -113,6 +133,16 @@ module.exports = {
                   "deleted"
                 ]
             },
+            {
+              name: "order",
+              in: "query",
+              type: "string",
+              required: false,
+              enum: [
+                "ASC",
+                "DESC"
+              ]
+            },
             ...pagination
           ],
           responses: response200("getMembersOrganization")
@@ -127,6 +157,16 @@ module.exports = {
           operationId: "getFavoritessOrganizationById",
           parameters: [
             ...param("id","path","string"),
+            {
+              name: "order",
+              in: "query",
+              type: "string",
+              required: false,
+              enum: [
+                "ASC",
+                "DESC"
+              ]
+            },
             ...pagination
           ],
           responses: response200("getFavoritessOrganization")
@@ -163,6 +203,16 @@ module.exports = {
                   "actived",
                   "deleted"
                 ]
+            },
+            {
+              name: "order",
+              in: "query",
+              type: "string",
+              required: false,
+              enum: [
+                "ASC",
+                "DESC"
+              ]
             },
             ...pagination
           ],

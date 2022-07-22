@@ -1,18 +1,13 @@
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import React, { useState } from "react";
+import React from "react";
 import { ActivityIndicator } from "react-native";
 import Filter from "../assets/icons/Filter";
-import Sort from "../assets/icons/Sort";
 import useJobs from "../common/api/hooks/useJobs";
-import useAuth from "../common/contexts/AuthContext";
-import useBoolean from "../common/hooks/useBoolean";
-import Box from "../components/atoms/Box";
+import useAuth from "../common/hooks/useAuth";
 import Button from "../components/atoms/Button";
-import Modal from "../components/atoms/Modal";
+
 import Spacer from "../components/atoms/Spacer";
-import Spinner from "../components/atoms/Spinner";
-import { Text } from "../components/atoms/Text";
 
 import GlobalLayout from "../components/layouts/GlobalLayout";
 import JobsList from "../components/organisms/JobsList";

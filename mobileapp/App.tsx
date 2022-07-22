@@ -8,7 +8,7 @@ import { useCachedResources } from "./src/common/hooks/useCachedResources";
 import Loading from "./src/screens/Loading";
 import { ToastAtom as Toast } from "./src/components/atoms/Toast";
 import React from "react";
-import useAuth, { AuthProvider } from "./src/common/contexts/AuthContext";
+import { AuthProvider } from "./src/common/contexts/AuthContext";
 
 export default function App() {
   const queryClient = new QueryClient();

@@ -1,0 +1,22 @@
+{
+  "id": "504a8e9b-24c2-41ed-8932-1026906c57d2",
+  "firstname": "mae",
+  "lastname": "mae",
+  "username": "maem",
+  "email": "mae-test@mae.mae",
+  "birthday": null,
+  "longitude": null,
+  "latitude": null,
+  "avatar": null,
+  "bio": null,
+  "phone": null,
+  "total_token": 0,
+  "createdAt": "2022-07-11T16:04:14.955Z",
+  "updatedAt": "2022-07-11T16:10:40.622Z",
+  "status": {
+    "label": "actived",
+    "type": "['Admins', 'Users', 'Partners', 'Jobs', 'Groups', 'Associations', 'Commons']"
+  },
+  "memberships": [],
+  "partners": []
+}

@@ -11,7 +11,8 @@ module.exports = {
       base_url: process.env.API_BASE_URL, 
       landing_page: process.env.LANDING_PAGE_URL,
       web_app: process.env.WEB_APP_URL,
-      back_office: process.env.BO_URL
+      back_office: process.env.BO_URL,
+      mobile_app: process.env.BO_URL,
     }
 
 

@@ -20,6 +20,16 @@ module.exports = {
                   "deleted"
                 ]
             },
+            {
+              name: "order",
+              in: "query",
+              type: "string",
+              required: false,
+              enum: [
+                "ASC",
+                "DESC"
+              ]
+            },
             ...pagination
           ],
           responses: response200("getAllPartners")
@@ -89,6 +99,16 @@ module.exports = {
                   "deleted"
                 ]
             },
+            {
+              name: "order",
+              in: "query",
+              type: "string",
+              required: false,
+              enum: [
+                "ASC",
+                "DESC"
+              ]
+            },
             ...pagination
           ],
           responses: response200("getDiscountsPartner")
@@ -103,6 +123,16 @@ module.exports = {
           operationId: "getTransactionsPartnerById",
           parameters: [
             ...param("id","path","string"),
+            {
+              name: "order",
+              in: "query",
+              type: "string",
+              required: false,
+              enum: [
+                "ASC",
+                "DESC"
+              ]
+            },
             ...pagination
           ],
           responses: response200("getTransactionsPartner")

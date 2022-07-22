@@ -11,7 +11,7 @@ import Spacer from "../../atoms/Spacer";
 import Alert from "../../atoms/Alert";
 import InputGroup from "../../molecules/InputGroup";
 
-import useAuth from "../../../common/contexts/AuthContext";
+import useAuth from "../../../common/hooks/useAuth";
 
 export default function LoginForm() {
   const { login, error } = useAuth();

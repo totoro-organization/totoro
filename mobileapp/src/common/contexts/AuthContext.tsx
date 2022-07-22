@@ -20,7 +20,9 @@ interface AuthContextType {
   isLoading?: boolean;
 }
 
-const AuthContext = createContext<AuthContextType>({} as AuthContextType);
+export const AuthContext = createContext<AuthContextType>(
+  {} as AuthContextType
+);
 
 export function AuthProvider({
   children,
@@ -60,16 +62,21 @@ export function AuthProvider({
   }
 
   useEffect(() => {
-    setUser(user);
-  }, [user]);
+    setUser(userConnected);
+  }, [user, userConnected]);
+
+  const memoedValue = useMemo(
+    () => ({
+      user,
+      logout,
+      login,
+      error,
+      isLoading,
+    }),
+    [user, isLoading, error]
+  );
 
   return (
-    <AuthContext.Provider value={{ user, logout, login, error, isLoading }}>
-      {children}
-    </AuthContext.Provider>
+    <AuthContext.Provider value={memoedValue}>{children}</AuthContext.Provider>
   );
-}
-
-export default function useAuth() {
-  return useContext(AuthContext);
 }

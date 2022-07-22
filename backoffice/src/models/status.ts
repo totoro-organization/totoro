@@ -18,13 +18,21 @@ export enum StatusEnum {
     freezed = "freezed",
     expired = "expired",
     opened = "opened",
-    canceled = "canceled"
+    canceled = "canceled",
+    requested = "requested",
+    invited = "invited"
 }
 
 export type StatusOptions = {
     id: keyof typeof StatusEnum | 'all',
     name: string
 }[]
+
+export enum ApplicationStatus {
+    actived = StatusEnum.actived,
+    disabled = StatusEnum.disabled,
+    deleted = StatusEnum.deleted,
+}
 
 export enum AdminStatusEnum {
     actived = StatusEnum.actived,
@@ -79,7 +87,7 @@ export enum OrganizationStatusEnum {
     actived = StatusEnum.actived,
     disabled = StatusEnum.disabled,
     deleted = StatusEnum.deleted,
-    freezed = StatusEnum.freezed
+    freezed = StatusEnum.freezed,
 }
 
 export enum LitigationStatusEnum {
@@ -89,7 +97,12 @@ export enum LitigationStatusEnum {
 
 export enum MembershipStatusEnum {
     actived = StatusEnum.actived,
-    disabled = StatusEnum.disabled
+    disabled = StatusEnum.disabled,
+    requested = StatusEnum.requested,
+    invited = StatusEnum.invited,
+    deleted = StatusEnum.deleted,
+    denied = StatusEnum.denied,
+    canceled = StatusEnum.canceled
 }
 
 export type LitigationObjectStatus = Status<keyof typeof LitigationObjectStatusEnum>;

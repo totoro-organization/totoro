@@ -21,6 +21,16 @@ module.exports = {
                 "deleted"
               ]
             },
+            {
+              name: "order",
+              in: "query",
+              type: "string",
+              required: false,
+              enum: [
+                "ASC",
+                "DESC"
+              ]
+            },
             ...pagination
           ],
           responses: response200("getAllUsers")
@@ -59,6 +69,19 @@ module.exports = {
           parameters: param("id", "path", "string"),
           responses: response201()
         }
+    },
+    "/api/users/account/activate": {
+      put: {
+        tags: [
+          "Users"
+        ],
+        "x-swagger-router-controller": "users",
+        operationId: "activateUser",
+        parameters: [
+          ...bodyParam("Activated User", "activateUser")
+        ],
+        responses: response201("User Activate")
+      }
     },
     "/api/users/reset/password": {
       put: {
@@ -122,6 +145,16 @@ module.exports = {
                 "deleted"
               ]
             },
+            {
+              name: "order",
+              in: "query",
+              type: "string",
+              required: false,
+              enum: [
+                "ASC",
+                "DESC"
+              ]
+            },
             ...pagination
           ],
           responses: response200("getFavoritesUser")
@@ -160,10 +193,55 @@ module.exports = {
                 "deleted"
               ]
             },
+            {
+              name: "order",
+              in: "query",
+              type: "string",
+              required: false,
+              enum: [
+                "ASC",
+                "DESC"
+              ]
+            },
             ...pagination
           ],
           responses: response200("getJobsUser")
         }
+    },
+    "/api/users/members/{memberId}/jobs": {
+      get: {
+        tags: [
+          "Users"
+        ],
+        "x-swagger-router-controller": "users",
+        operationId: "getJobsPublishedUserInOrganization",
+        parameters: [
+          ...param("memberId", "path", "string"),
+          {
+            name: "status",
+            in: "query",
+            type: "string",
+            required: false,
+            enum: [
+              "actived",
+              "disabled",
+              "deleted"
+            ]
+          },
+          {
+            name: "order",
+            in: "query",
+            type: "string",
+            required: false,
+            enum: [
+              "ASC",
+              "DESC"
+            ]
+          },
+          ...pagination
+        ],
+        responses: response200("getJobsPublishedByUser")
+      }
     },
     "/api/users/{id}/litigations": {
         get: {
@@ -183,6 +261,16 @@ module.exports = {
                 "actived",
                 "disabled",
                 "deleted"
+              ]
+            },
+            {
+              name: "order",
+              in: "query",
+              type: "string",
+              required: false,
+              enum: [
+                "ASC",
+                "DESC"
               ]
             },
             ...pagination
@@ -210,9 +298,20 @@ module.exports = {
               "deleted"
             ]
           },
+          {
+            name: "order",
+            in: "query",
+            type: "string",
+            required: false,
+            enum: [
+              "ASC",
+              "DESC"
+            ]
+          },
           ...pagination
         ],
         responses: response200("getTransactionsUser")
       }
     },
+    
 }

@@ -10,7 +10,7 @@ const { Terminals, Status } = require("~orm/models");
 const { signup, verify, forgot } = require("~utils/common/mail.json");
 const { sendMail } = require("~externals/mailer");
 const commonsController = require("~services/Commons/controller");
-const { label_status } = require("~utils/enum.json");
+const { label_status, provider } = require("~utils/enum.json");
 const { isEmailValid } = require("~utils/verify");
 
 const excludeCommon = { exclude: ["id", "createdAt", "updatedAt"] };
@@ -20,7 +20,7 @@ const exclude = ["status_id", "terminal_id"];
 
 module.exports = {
   login: async function (res, model, data, isAdmin) {
-    const {emailOrUsername, password} = data
+    const {emailOrUsername, password, app} = data
 
     asyncLib.waterfall(
       [
@@ -66,11 +66,11 @@ module.exports = {
         const token = generateToken(user, isAdmin);
         if (user.status.label !== label_status.actived) {
           //Send mail
-          if(user.status.label === label_status.disabled) sendMail(verify.template, {to: user.email, subject: verify.subject}, {firstname: user.firstname, lastname: user.lastname, token})
+          if(user.status.label === label_status.disabled) sendMail(verify.template, {to: user.email, subject: verify.subject}, {firstname: user.firstname, lastname: user.lastname, provider: provider[app.name], token: encodeURIComponent(token)})
 
           return res
-            .status(success.user_inactive.status)
-            .json({ message: success.user_inactive.message });
+            .status(error.user_inactive.status)
+            .json({ message: error.user_inactive.message });
         } else {
           return res.status(success.create.status).json({ token });
         }
@@ -79,7 +79,7 @@ module.exports = {
   },
 
   signup: async function (res, model, data) {
-    const {password,email,username} = data
+    const {password,email,username, app} = data
     /*
     const emailValid = await isEmailValid(email);
     if(emailValid !== "ok")
@@ -115,7 +115,7 @@ module.exports = {
 
         const token = generateToken(result);
         //Send mail
-        sendMail(signup.template, {to: email, subject: signup.subject}, {firstname: result.firstname, lastname: result.lastname, token})
+        sendMail(signup.template, {to: email, subject: signup.subject}, {firstname: result.firstname, lastname: result.lastname, provider: provider[app.name], token: encodeURIComponent(token)})
 
         return res
           .status(success.create.status)
@@ -131,7 +131,7 @@ module.exports = {
   },
 
   forgot: async function (res, model, data) {
-    const {email} = data
+    const {email, app} = data
 
     /*
     const emailValid = await isEmailValid(email);
@@ -141,7 +141,7 @@ module.exports = {
         .json({ message: emailValid });
     */
 
-    const activeStatus = await getRow(Status, { label: label_status.actived });
+    const activeStatus = await getRow(res, Status, { label: label_status.actived });
 
     asyncLib.waterfall(
       [
@@ -155,7 +155,7 @@ module.exports = {
         if (found) {
           const token = generateToken(found);
           //Send mail
-          sendMail(forgot.template, {to: email, subject: forgot.subject}, {firstname: found.firstname, lastname: found.lastname, token})
+          sendMail(forgot.template, {to: email, subject: forgot.subject}, {firstname: found.firstname, lastname: found.lastname, provider: provider[app.name], token: encodeURIComponent(token)})
 
           return res
             .status(success.get.status)

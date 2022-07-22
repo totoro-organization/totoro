@@ -3,7 +3,7 @@ import { config } from './config';
 
 export async function requestAxios(method: string, uri: string, data = null) {
     const token = localStorage.getItem('token') ?? null;
-  
+    
     try {
         if (!uri) {
             console.error('fonction de api requiere uri')
@@ -36,20 +36,20 @@ export async function requestAxios(method: string, uri: string, data = null) {
             }
             let options = {
                 headers: headers
-            }            
-            request = await axios[method](url, data, options);                        
+            }
+            request = await axios[method](url, data, options);
         } else {
             return 'cette methode n\'est pas prise en compte par l\'api'
         }
-        return request.data;
+        return {...request.data, status_code: request.status};
     } catch(error){
         if(error.response === undefined){
             //BACK OFFLINE
             return "offline";
         } else {
             return {
-                error: true,
-                ...error.response.data
+                error: error.response.data.message,
+                status_code: error.response.status
             }
         }
     }

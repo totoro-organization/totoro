@@ -270,6 +270,35 @@ module.exports = {
 		);
 	},
 
+	getUserJobsPublished: async function (res, id, queries) {
+		const {status, size, page, order} = queries
+		let statusData = await getRow(res, Status, { label: status });
+
+		let condition = {assos_user_id: id};
+		if (status) {
+			let statusData = await getRow(res, Status, { label: status });
+			condition.status_id = statusData.id;
+		}
+
+		const includeJobs = [
+			{ model: Status, as: "status", attributes: excludeCommon },
+			{ model: Difficulties, as: "difficulty", attributes: excludeCommon }
+		];
+
+		const excludeJobs = ["status_id", "difficulty_id"];
+		let pagination = getPaginationQueries(size,page)
+
+		commonsController.getAll(
+			res,
+			Jobs,
+			condition,
+			excludeJobs,
+			includeJobs,
+			pagination,
+			order
+		);
+	},
+
 	getUserLitigations: async function (res, id, queries) {
 		const {status, size, page, order} = queries
 

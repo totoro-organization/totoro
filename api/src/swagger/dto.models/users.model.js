@@ -1,4 +1,4 @@
-const { labelType, date, organization, userProperties, arrayType, job, partner, tokenProperties, discount } = require("../generique/index");
+const { labelType, date, organization, userProperties, arrayType, job, partner, tokenProperties, discount, difficulty } = require("../generique/index");
 module.exports = {
   getUser: function() {
     return {
@@ -59,6 +59,20 @@ module.exports = {
         phone: "0751932695",
         longitude: 2.43796,
         latitude: 48.8268
+      }
+    }
+  },
+  activateUser: function () {
+    return {
+      type: "object",
+      properties: {
+        token: {
+          type: "string"
+        }
+      },
+      required:["token"],
+      example: {
+        token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijg2NzcwODc1LTc2MGEtNDQ3NS04MmE2LTk5YmEyOWFmMWNiZCIsImlzQWRtaW4iOnRydWUsImlhdCI6MTY1Nzc0MDg0OSwiZXhwIjoxNjU4MzQ1NjQ5fQ.-rWZx6cA_d5lFjHAC5lYTFqu_ZY0DfJo_rmZKXfj9eI"
       }
     }
   },
@@ -126,6 +140,22 @@ module.exports = {
         },
         ...date(),
         job: job(),
+        status: labelType()
+      }
+    })
+  },
+  getJobsPublishedByUser: function(){
+    return arrayType({
+      type: "object",
+      properties: {
+        id: {
+          type: "string"
+        },
+        assos_user_id: {
+          type: "string"
+        },
+        ...date(),
+        difficulty: difficulty(),
         status: labelType()
       }
     })

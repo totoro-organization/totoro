@@ -111,6 +111,14 @@ exports.router = (function () {
 		},
 	]);
 
+	UsersRouter.get("/members/:memberId/jobs", [
+		passport,
+		async function (req, res) {
+			const id = req.params.memberId;
+			controller.getUserJobsPublished(res, id, req.query);
+		},
+	]);
+
 	// Litigations
 	UsersRouter.get("/:id/litigations", [
 		passport,
@@ -137,7 +145,6 @@ exports.router = (function () {
 				const id = token['id'];
 				const statusData = await getRow(res, Status, { label: label_status.actived });
     			data.status_id = statusData.id
-				data.status_id = 
 				controller.updateUser(res, id, data);
 			} else {
 				return res

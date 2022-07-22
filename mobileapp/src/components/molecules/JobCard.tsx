@@ -14,6 +14,7 @@ import Token from "../../assets/icons/Token";
 import { Job } from "../../models/job";
 import getFormatDateFrenchLocale from "../../common/utils/getFormatDateFrenchLocale";
 import { MOBILEAPP_API_BASE_URL } from "@env";
+import Pill from "../atoms/Pill";
 
 type JobCardProps = {
   job: Job;
@@ -32,6 +33,12 @@ export default function JobCard({ job }: JobCardProps) {
       />
 
       <Box display="flex" flexDirection="column" padding={1}>
+        <TagWrapper>
+          <Pill label={job.tags[0]?.label} color="primary" />
+        </TagWrapper>
+
+        <Spacer axis="vertical" size={0.5} />
+
         <Text size="lg">{job.title}</Text>
 
         <Spacer axis="vertical" size={0.5} />
@@ -98,6 +105,7 @@ const JobBanner = styled.ImageBackground`
   border-top-left-radius: ${({ theme }) => theme.border.radius.md};
   border-top-right-radius: ${({ theme }) => theme.border.radius.md};
   overflow: hidden;
+  position: relative;
 `;
 
 const JobDetails = styled.View`
@@ -111,4 +119,9 @@ const JobDetails = styled.View`
 const FlexWrapper = styled.View`
   flex-direction: row;
   align-items: center;
+`;
+
+const TagWrapper = styled.View`
+  position: absolute;
+  top: -22px;
 `;
