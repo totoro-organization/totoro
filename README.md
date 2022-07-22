@@ -12,23 +12,27 @@ Totoro est un service de proximité proposant à ses utilisateurs des missions �
 
 #### API
 
-- JavaScript (NodeJS)
+- JavaScript (NodeJS & Express)
 
 #### TEST
 
 - Jest (test unitaire)
-- Cypress (test e2e)
+- Cypress (test intégration/e2e)
 
 example:
 
 ```code
+// Test d'intégration
 cd webapp && npm start && npm run cypress
+
+// Test unitaire
+cd mobileapp && npm start && npm run test
 ```
 
 ## Documentation
 
 // TODO
-[Swagger - API](https://linktodocumentation)
+[Swagger - API]([https://linktodocumentation](https://api-totoro.herokuapp.com/docs)
 
 ## Installation
 
@@ -41,15 +45,18 @@ cd webapp && npm start && npm run cypress
 - Update the database if the api structure has changed : `sh cmd/maj-db.sh` or `.\cmd\maj-db.sh`
 - Restart services docker : `sh cmd/restart.sh` or `.\cmd\restart.sh` or for example restart deux services `sh cmd/restart.sh api webapp` or `.\cmd\restart.sh api webapp`
 
-## ip infra
+## Nos applications/services
 
-- api : http://localhost:6868
-- swagger : http://localhost:6868/docs
-- ui-backoffice : http://localhost:3002
-- landingpage : http://localhost:5555
-- mobileapp : http://127.0.0.1:19002
-- webapp : http://localhost:3000
-- phpmyadmin: http://localhost:8888
+ | **Application** | **URL**                              |
+|-----------------|---------------------------------------|
+| API             | https://api-totoro.herokuapp.com/     |
+| API doc         | https://api-totoro.herokuapp.com/docs |
+| Landing         | https://totoro-landing.netlify.app/   |
+| Dashboard client    | TODO   |
+| Backoffice admin    | https://totoro-backoffice.netlify.app/login   |
+| App mobile    | TODO: expo link   |
+| messaging-service    | TODO   |
+
 
 ## deployment
 
