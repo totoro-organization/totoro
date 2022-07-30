@@ -22,7 +22,7 @@ jobs:
             -  build
       - run:
           name: Deploy to Netlify
-          command: ls node_modules/.bin
+          command: ./webapp/node_modules/./netlify deploy --site $NETLIFY_SITE_ID --auth $NETLIFY_ACCESS_TOKEN --prod --dir=build
 workflows:
   version: 2
   build-deploy3:
