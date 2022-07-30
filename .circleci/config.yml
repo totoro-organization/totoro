@@ -22,7 +22,7 @@ jobs:
             -  build
       - run:
           name: Deploy to Netlify
-          command: ls -la
+          command: ls node_modules/.bin
 workflows:
   version: 2
   build-deploy3:
