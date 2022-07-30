@@ -22,7 +22,7 @@ jobs:
             -  build
       - run:
           name: Deploy to Netlify
-          command: pwd
+          command: cat package.json
 workflows:
   version: 2
   build-deploy3:
