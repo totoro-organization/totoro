@@ -1,0 +1,7 @@
+@import 'global';
+
+.hide-mobile {
+    @include mobile {
+        display: none;
+    }
+}

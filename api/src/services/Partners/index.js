@@ -60,7 +60,18 @@ exports.router = (function () {
 		const data = {};
 		if (req.file) {
 			data.file = req.file;
-			data.path = path.logo;
+			data.path = path.partners;
+		}
+
+		controller.updateLogo(res, id, data);
+	}]);
+
+	partnersRouter.put("/:id/banner", [passport, upload(path.partners).single("banner"), async function (req, res) {
+		const id = req.params.id;
+		const data = {};
+		if (req.file) {
+			data.file = req.file;
+			data.path = path.partners;
 		}
 
 		controller.updateLogo(res, id, data);
