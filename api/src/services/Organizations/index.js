@@ -140,6 +140,17 @@ exports.router = (function () {
 		controller.updateLogo(res, id, data);
 	}]);
 
+	organizationsRouter.put("/banner/:id", [passport, upload(path.logo).single("banner"), async function (req, res) {
+		const id = req.params.id;
+		const data = {};
+		if (req.file) {
+			data.file = req.file;
+			data.path = path.logo;
+		}
+
+		controller.updateLogo(res, id, data);
+	}]);
+
 	organizationsRouter.put("/:id/subscriptions/change", [passport, async function (req, res) {
 		const id = req.params.id;
 		const data = req.body;
