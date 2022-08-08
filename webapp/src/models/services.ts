@@ -30,5 +30,11 @@ export interface ResetPasswordData {
 export interface ForgotPasswordData {
     email: string,
 }
-  
+
+export interface AddOrganizationData {
+    type: "siret" | "siren",
+    typeValue: string,
+    email: string,
+    phone: number
+}
 
