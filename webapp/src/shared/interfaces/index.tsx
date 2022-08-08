@@ -27,3 +27,9 @@ export type ItemCarrousel = {
     name: string,
     description: string
 }
+
+export interface ProjectProps
+{
+  items: ItemCarrousel[],
+  settings: SettingsT
+}
