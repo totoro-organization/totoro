@@ -24,6 +24,10 @@ const { path } = require("~utils/enum.json");
 const { upload } = require("~utils/storage");
 const { label_status } = require("~utils/enum.json");
 
+
+const { params } = require("~utils/verify");
+const { postCommon, putCommon, postDifficulty, putDifficulty, postLitigationObject, putLitigationObject, postPricing, putPricing, changeStatus } = require("./interface");
+
 const excludeCommon = { exclude: ["id", "createdAt", "updatedAt"] }
 const include = [
   { model: Status, as: "status", attributes: excludeCommon }
@@ -58,6 +62,9 @@ exports.router = (function () {
 
   .post("/roles", [passportAdmin, async function (req, res) {
     const data = req.body;
+    const restrictions = params(res, data, postCommon);
+    if(restrictions) return restrictions;
+
     const statusData = await getRow(res, Status, { label: label_status.actived });
     data.status_id = statusData.id
     const condition = { label: data.label };
@@ -67,6 +74,9 @@ exports.router = (function () {
   .put("/roles/:id", [passportAdmin, async function (req, res) {
     const id = req.params.id;
     const data = req.body;
+    const restrictions = params(res, data, putCommon);
+    if(restrictions) return restrictions;
+
     const condition = { label: data.label };
     controller.update(res, Roles, id, data, condition);
   }])
@@ -97,6 +107,9 @@ exports.router = (function () {
 
   .post("/pricings", [passportAdmin, async function (req, res) {
     const data = req.body;
+    const restrictions = params(res, data, postPricing);
+    if(restrictions) return restrictions;
+
     const statusData = await getRow(res, Status, { label: label_status.actived });
     data.status_id = statusData.id
     const condition = { label: data.label };
@@ -106,6 +119,9 @@ exports.router = (function () {
   .put("/pricings/:id", [passportAdmin, async function (req, res) {
     const id = req.params.id;
     const data = req.body;
+    const restrictions = params(res, data, putPricing);
+    if(restrictions) return restrictions;
+
     const condition = { label: data.label };
     controller.update(res, Pricings, id, data, condition);
   }])
@@ -139,6 +155,9 @@ exports.router = (function () {
 
   .post("/tags", [passportAdmin, async function (req, res) {
     const data = req.body;
+    const restrictions = params(res, data, postCommon);
+    if(restrictions) return restrictions;
+
     const statusData = await getRow(res, Status, { label: label_status.actived });
     data.status_id = statusData.id
     const condition = { label: data.label };
@@ -148,6 +167,9 @@ exports.router = (function () {
   .put("/tags/:id", [passportAdmin, async function (req, res) {
     const id = req.params.id;
     const data = req.body;
+    const restrictions = params(res, data, putCommon);
+    if(restrictions) return restrictions;
+
     const condition = { label: data.label };
     controller.update(res, Tags, id, data, condition);
   }])
@@ -176,6 +198,9 @@ exports.router = (function () {
 
   .post("/status", [passportAdmin, async function (req, res) {
     const data = req.body;
+    const restrictions = params(res, data, postCommon);
+    if(restrictions) return restrictions;
+
     const condition = { label: data.label };
     controller.create(null, res, Status, data, condition);
   }])
@@ -183,6 +208,9 @@ exports.router = (function () {
   .put("/status/:id", [passportAdmin, async function (req, res) {
     const id = req.params.id;
     const data = req.body;
+    const restrictions = params(res, data, postCommon);
+    if(restrictions) return restrictions;
+
     const condition = { label: data.label };
     controller.update(res, Status, id, data, condition);
   }])
@@ -191,6 +219,9 @@ exports.router = (function () {
     const id = req.body.id;
     const status_id = req.body.status_id
     const tableName = req.body.tableName;
+    const restrictions = params(res, {status_id, tableName, id}, changeStatus);
+    if(restrictions) return restrictions;
+
     const statusData = await getRow(res, Status, { id: status_id });
 
     controller.update(res, models[tableName], id, { status_id });
@@ -217,6 +248,9 @@ exports.router = (function () {
 
   .post("/types-discounts", [passportAdmin, async function (req, res) {
     const data = req.body;
+    const restrictions = params(res, data, postCommon);
+    if(restrictions) return restrictions;
+
     const statusData = await getRow(res, Status, { label: label_status.actived });
     data.status_id = statusData.id
     const condition = { label: data.label };
@@ -226,6 +260,9 @@ exports.router = (function () {
   .put("/types-discounts/:id", [passportAdmin, async function (req, res) {
     const id = req.params.id;
     const data = req.body;
+    const restrictions = params(res, data, putCommon);
+    if(restrictions) return restrictions;
+
     const condition = { label: data.label };
     controller.update(res, Types_discounts, id, data, condition);
   }])
@@ -256,6 +293,9 @@ exports.router = (function () {
 
   .post("/litigation-objects", [passportAdmin, async function (req, res) {
     const data = req.body;
+    const restrictions = params(res, data, postLitigationObject);
+    if(restrictions) return restrictions;
+
     const statusData = await getRow(res, Status, { label: label_status.actived });
     data.status_id = statusData.id
     const condition = { label: data.label };
@@ -265,6 +305,9 @@ exports.router = (function () {
   .put("/litigation-objects/:id", [passportAdmin, async function (req, res) {
     const id = req.params.id;
     const data = req.body;
+    const restrictions = params(res, data, putLitigationObject);
+    if(restrictions) return restrictions;
+
     const condition = { label: data.label };
     controller.update(res, Litigation_objects, id, data, condition);
   }])
@@ -295,6 +338,9 @@ exports.router = (function () {
 
   .post("/difficulties", [passportAdmin, async function (req, res) {
     const data = req.body;
+    const restrictions = params(res, data, postDifficulty);
+    if(restrictions) return restrictions;
+
     const statusData = await getRow(res, Status, { label: label_status.actived });
     data.status_id = statusData.id
     const condition = { level: data.level };
@@ -304,6 +350,9 @@ exports.router = (function () {
   .put("/difficulties/:id", [passportAdmin, async function (req, res) {
     const id = req.params.id;
     const data = req.body;
+    const restrictions = params(res, data, putDifficulty);
+    if(restrictions) return restrictions;
+
     const condition = { level: data.level };
     controller.update(res, Difficulties, id, data, condition);
   }])

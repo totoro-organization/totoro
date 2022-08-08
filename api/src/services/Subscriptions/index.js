@@ -2,6 +2,9 @@ const express = require("express");
 const { passport, passportAdmin } = require("~utils/session");
 const controller = require("./controller");
 
+const { params } = require("~utils/verify");
+const { postSubscription, putSubscription } = require("./interface");
+
 exports.router = (function () {
 	const subscriptionsRouter = express.Router();
 
@@ -14,6 +17,9 @@ exports.router = (function () {
 		passport,
 		async function (req, res) {
 			const data = req.body;
+			const restrictions = params(res, data, postSubscription);
+			if(restrictions) return restrictions;
+
 			controller.createSubscription(res, data);
 		},
 	])
@@ -26,6 +32,9 @@ exports.router = (function () {
 	.put("/:id", [passport, async function (req, res) {
 		const id = req.params.id;
 		const data = req.body;
+		const restrictions = params(res, data, putSubscription);
+		if(restrictions) return restrictions;
+
 		controller.updateSubscription(res, id, data);
 	}]);
 

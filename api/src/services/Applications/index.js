@@ -7,6 +7,10 @@ const {
   getPaginationQueries
 } = require("~utils/common/thenCatch");
 
+const { params } = require("~utils/verify");
+const {postApplication, putApplication} = require("./interface");
+
+
 const excludeCommon = { exclude: ["id", "createdAt", "updatedAt"] }
 const include = [
   { model: Status, as: "status", attributes: excludeCommon }
@@ -37,6 +41,9 @@ exports.router = (function () {
 
   .post("/", [passportAdmin, async function (req, res) {
     const data = req.body;
+    const restrictions = params(res, data, postApplication);
+    if(restrictions) return restrictions;
+
     const condition = { name: data.name };
     controller.create(null, res, Applications, data, condition);
   }])
@@ -44,6 +51,9 @@ exports.router = (function () {
   .put("/:id",[passportAdmin, async function (req, res) {
     const id = req.params.id;
     const data = req.body;
+    const restrictions = params(res, data, putApplication);
+    if(restrictions) return restrictions;
+
     const condition = { name: data.name };
     controller.update(res, Applications, id, data, condition);
   }])

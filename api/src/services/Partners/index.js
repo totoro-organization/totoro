@@ -4,6 +4,9 @@ const controller = require("./controller");
 const { path } = require("~utils/enum.json");
 const { upload } = require("~utils/storage");
 
+const { params } = require("~utils/verify");
+const { putPartner, postPartner } = require("./interface");
+
 exports.router = (function () {
 	const partnersRouter = express.Router();
 
@@ -16,6 +19,9 @@ exports.router = (function () {
 		passport,
 		async function (req, res) {
 			const data = req.body;
+			const restrictions = params(res, data, postPartner);
+			if(restrictions) return restrictions;
+
 			data.user_id = req.userData.id;
 			controller.createPartner(res, data);
 		},
@@ -29,6 +35,9 @@ exports.router = (function () {
 	.put("/:id", [passport, async function (req, res) {
 		const id = req.params.id;
 		const data = req.body;
+		const restrictions = params(res, data, putPartner);
+		if(restrictions) return restrictions;
+
 		controller.updatePartner(res, id, data);
 	}])
 

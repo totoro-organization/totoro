@@ -7,6 +7,9 @@ const { getRow } = require("~utils/common/thenCatch");
 const { Status, Roles, Users } = require("~orm/models");
 const { label_status, role } = require("~utils/enum.json");
 
+const { params } = require("~utils/verify");
+const { putChangeSubscription, postInviteOrganization, postOrganization, putMemberOrganization, putOrganization, putResponseOrganization } = require("./interface");
+
 exports.router = (function () {
 	const organizationsRouter = express.Router();
 
@@ -19,6 +22,9 @@ exports.router = (function () {
 		passport,
 		async function (req, res) {
 			const data = req.body;
+			const restrictions = params(res, data, postOrganization);
+			if(restrictions) return restrictions;
+
 			data["user_id"] = req.userData.id;
 			controller.createOrganization(res, data);
 		},
@@ -32,6 +38,9 @@ exports.router = (function () {
 	.put("/:id", [passport, async function (req, res) {
 		const id = req.params.id;
 		const data = req.body;
+		const restrictions = params(res, data, putOrganization);
+		if(restrictions) return restrictions;
+
 		controller.updateOrganization(res, id, data);
 	}])
 
@@ -88,6 +97,7 @@ exports.router = (function () {
 		passport,
 		async function (req, res) {
 			const data = req.body;
+
 			const statusData = await getRow(res, Status, { label: label_status.requested });
 			data["status_id"] = statusData.id;			
 			const roleData = await getRow(res, Roles, { label: role.moderator });
@@ -101,6 +111,9 @@ exports.router = (function () {
 
 	.post("/:id/invite", async function (req, res) {
 		const data = req.body;
+		const restrictions = params(res, data, postInviteOrganization);
+		if(restrictions) return restrictions;
+
 		const statusData = await getRow(res, Status, { label: label_status.invited });
 		data["status_id"] = statusData.id;		
 		const roleData = await getRow(res, Roles, { label: role.moderator });
@@ -116,6 +129,9 @@ exports.router = (function () {
 		async function (req, res) {
 			const id = req.params.memberId;
 			const data = req.body;
+			const restrictions = params(res, data, putResponseOrganization);
+			if(restrictions) return restrictions;
+
 			controller.responseMemberOrganization(res, id, data);
 		},
 	])
@@ -125,6 +141,9 @@ exports.router = (function () {
 		async function (req, res) {
 			const id = req.params.memberId;
 			const data = req.body;
+			const restrictions = params(res, data, putMemberOrganization);
+			if(restrictions) return restrictions;
+
 			controller.updateMemberOrganization(res, id, data);
 		},
 	])
@@ -154,6 +173,9 @@ exports.router = (function () {
 	.put("/:id/subscriptions/change", [passport, async function (req, res) {
 		const id = req.params.id;
 		const data = req.body;
+		const restrictions = params(res, data, putChangeSubscription);
+		if(restrictions) return restrictions;
+
 		controller.changeSubscription(res, id, data);
 	}]);
 

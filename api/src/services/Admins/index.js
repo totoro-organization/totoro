@@ -2,6 +2,7 @@ const express = require("express");
 const { passportAdmin } = require("~utils/session");
 const { params } = require("~utils/verify");
 const controller = require("./controller");
+const {postAdmin, postLogAdmin, putAdmin, putPasswordAdmin, putRoleAdmin} = require("./interface");
 
 exports.router = (function () {
   const adminRouter = express.Router();
@@ -26,6 +27,9 @@ exports.router = (function () {
     passportAdmin,
     async function (req, res) {
       const data = req.body;
+      const restrictions = params(res, data, postAdmin);
+      if(restrictions) return restrictions;
+      
       controller.createAdmin(res, data);
     },
   ])
@@ -33,12 +37,18 @@ exports.router = (function () {
   .put("/:id",[passportAdmin, async function (req, res) {
 		const id = req.params.id;
     const data = req.body;
+    const restrictions = params(res, data, putAdmin);
+    if(restrictions) return restrictions;
+
 		controller.updateAdmin(res, id, data);
 	}])
 
 	.put("/:id/role",[passportAdmin, async function (req, res) {
 		const data = req.body;
-		data.admin_id = req.params.id;
+		data.admin_id = req.params.id;   
+    const restrictions = params(res, data, putRoleAdmin);
+    if(restrictions) return restrictions;
+    
 		controller.changeRole(res, data);
 	}])
 
@@ -54,6 +64,9 @@ exports.router = (function () {
 
 	.post("/:id/logs", [passportAdmin, async function (req, res) {
 		const data = req.body;
+    const restrictions = params(res, data, postLogAdmin);
+    if(restrictions) return restrictions;
+    
 		data.admin_id = req.params.id;
 		controller.createLog(res, data);
 	}])
@@ -64,6 +77,9 @@ exports.router = (function () {
 
 	.put("/change/password",[passportAdmin, async function (req, res) {
 		const data = req.body;
+    const restrictions = params(res, data, putPasswordAdmin);
+    if(restrictions) return restrictions;
+
 		data.id = req.userData.id;
 		controller.changePassword(res, data);
 	}])

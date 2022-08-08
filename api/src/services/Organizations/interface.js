@@ -1,51 +1,50 @@
 module.exports = {
-    postAdmin: {
-        firstname: {
-            required: true
-        },
-        lastname: {
-            required: true
-        },
-        username: {
-            required: true
-        },
-        email: {
+    putMemberOrganization: {
+        status_id: {
             required: true
         },
         role_id: {
             required: true
         }
     },
-    putAdmin: {
-        firstname: {
-            required: false
-        },
-        lastname: {
-            required: false
-        },
+    putResponseOrganization: {
+        status_id: {
+            required: true
+        }
+    },
+    postInviteOrganization: {
+        user_id: {
+            required: true
+        }
+    },
+    putOrganization: {
         email: {
             required: false
+        },
+        phone: {
+            required: false
+        },
+        status_id: {
+            required: false
         }
     },
-    putPasswordAdmin: {
-        old_password: {
+    postOrganization: {
+        email: {
             required: true
         },
-        password: {
-            required: true
-        }
-    },
-    postLogAdmin: {
-        table: {
+        phone: {
             required: true
         },
-        action: {
+        type: {
+            required: true
+        },
+        typeValue: {
             required: true
         }
     },
-    putRoleAdmin: {
-        role_id: {
+    putChangeSubscription: {
+        pricing_id: {
             required: true
         }
-    }
+    },
 };

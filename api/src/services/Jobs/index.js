@@ -4,6 +4,9 @@ const controller = require("./controller");
 const { path } = require("~utils/enum.json");
 const { upload } = require("~utils/storage");
 
+const { params } = require("~utils/verify");
+const { putJob } = require("./interface");
+
 exports.router = (function () {
 	const jobsRouter = express.Router();
 
@@ -22,6 +25,9 @@ exports.router = (function () {
 	.put("/:id", [passport, async function (req, res) {
 		const id = req.params.id;
 		const data = req.body;
+		const restrictions = params(res, data, putJob);
+		if(restrictions) return restrictions;
+
 		controller.updateJob(res, id, data);
 	}])
 

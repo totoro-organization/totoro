@@ -13,6 +13,9 @@ const {
 } = require("~utils/common/thenCatch");
 const { label_status } = require("~utils/enum.json");
 
+const { params } = require("~utils/verify");
+const { postFavotitesUser, putUser, activateUser, resetPassword, putPassword } = require("./interface");
+
 
 exports.router = (function () {
 	const UsersRouter = express.Router();
@@ -38,6 +41,9 @@ exports.router = (function () {
 		async function (req, res) {
 			const id = req.params.id;
 			const data = req.body;
+			const restrictions = params(res, data, putUser);
+			if(restrictions) return restrictions;
+
 			controller.updateUser(res, id, data);
 		},
 	])
@@ -54,6 +60,9 @@ exports.router = (function () {
 		passport,
 		async function (req, res) {
 			const data = req.body;
+			const restrictions = params(res, data, putPassword);
+			if(restrictions) return restrictions;
+
 			data.id = req.userData.id;
 			controller.changePassword(res, data);
 		},
@@ -62,6 +71,9 @@ exports.router = (function () {
 	.put("/reset/password",
 		async function (req, res) {
 			const data = req.body;
+			const restrictions = params(res, data, resetPassword);
+			if(restrictions) return restrictions;
+
 			const token = getUser(data.token);
 			if(token){
 				delete data.token;
@@ -97,6 +109,9 @@ exports.router = (function () {
 		passport,
 		async function (req, res) {
 			const data = req.body;
+			const restrictions = params(res, data, postFavotitesUser);
+			if(restrictions) return restrictions;
+
 			data.user_id = req.params.id;
 			controller.createFavorite(res, data);
 		},
@@ -139,6 +154,9 @@ exports.router = (function () {
 	.put("/account/activate",
 		async function (req, res) {
 			const data = req.body;
+			const restrictions = params(res, data, activateUser);
+			if(restrictions) return restrictions;
+
 			const token = getUser(data.token);
 			if(token){
 				delete data.token;
