@@ -47,6 +47,7 @@ module.exports = (sequelize, DataTypes) => {
       cp: DataTypes.INTEGER,
       commune: DataTypes.STRING,
       logo: DataTypes.STRING,
+      banner: DataTypes.STRING,
       description: DataTypes.TEXT,
       link: DataTypes.STRING,
       phone: DataTypes.STRING,

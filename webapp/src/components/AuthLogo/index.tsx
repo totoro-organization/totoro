@@ -7,18 +7,16 @@ function AuthLogo() {
   return (
     <Box
       sx={{
-        marginTop: 8,
+        marginTop: 1,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center'
       }}
     >
-      <Avatar sx={{ m: 1, bgcolor: theme.colors.primary.main }}>
-        <LockOutlinedIcon />
-      </Avatar>
-      <Typography component="h1" variant="h5">
-        S'inscrire
-      </Typography>
+      <img
+        alt="BTC"
+        src="/static/images/logo/totoro-logo.svg"
+      />
     </Box>
   );
 }
