@@ -1,19 +1,18 @@
-import { Box, Container, CssBaseline, Grid } from '@mui/material';
+import { Box, Container, CssBaseline, Grid, } from '@mui/material';
 import AuthLogo from 'src/components/AuthLogo';
 import Copyright from 'src/components/Copyright';
 import SigninForm from 'src/components/SigninForm';
 import Paper from '@mui/material/Paper';
 import { DefaultSettingsT, ItemCarrousel } from 'src/shared/interfaces';
-import CarrouselItems from 'src/components/CarrouselItems';
-import 'src/style/common.scss';
-
+import { styled, withTheme, Theme } from '@mui/material/styles';
+import Carousel from 'src/components/Carousel';
 
 const containerStyles = {
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
   alignItems: 'center',
-  rowGap: 8
+  rowGap: 8,
 };
 
 const items: ItemCarrousel[] = [
@@ -53,20 +52,14 @@ export default function SignIn() {
           backgroundPosition: 'center',
         }}
       >
-        <Box
-          className='hide-mobile'
-          sx={{
-            width: '100%',
-            height: '100%',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            color: '#fff',
-            backgroundColor: 'rgba(0,0,0,0.7)'
+        <Carousel sx={{
+          display: {
+            xs: 'none',
+            sm: 'flex'
           }}
-        >
-          <CarrouselItems items={items} settings={DefaultSettingsT} />
-        </Box>
+        }
+          items={items} 
+          settings={DefaultSettingsT}/>
       </Grid>
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
         <Box

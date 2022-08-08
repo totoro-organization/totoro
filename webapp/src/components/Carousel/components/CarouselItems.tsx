@@ -5,16 +5,9 @@ import {
     Box,
     Container,
 } from '@mui/material'
+import { ProjectProps } from 'src/shared/interfaces';
 
-import { ItemCarrousel, SettingsT } from 'src/shared/interfaces';
-
-interface ProjectProps
-{
-  items: ItemCarrousel[],
-  settings: SettingsT
-}
-
-const CarrouselItems = ({items, settings}: ProjectProps) => {
+const CarrouselItems = ({ items, settings }: ProjectProps) => {
 
     return (
       <Container component="main" sx={{ mt: 8, mb: 2 }} maxWidth="sm">
