@@ -29,10 +29,10 @@ module.exports = {
     return {
       type: "object",
       properties: {
-        firstName: {
+        firstname: {
           type: "string"
         },
-        lastName: {
+        lastname: {
           type: "string"
         },
         email: {

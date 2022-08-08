@@ -1,79 +1,97 @@
 const express = require("express");
 const { passportAdmin } = require("~utils/session");
+const { params } = require("~utils/verify");
 const controller = require("./controller");
+const {postAdmin, postLogAdmin, putAdmin, putPasswordAdmin, putRoleAdmin} = require("./interface");
 
 exports.router = (function () {
   const adminRouter = express.Router();
 
-  adminRouter.get("/", [
+  adminRouter
+  .get("/", [
     passportAdmin,
     async function (req, res) {
       controller.getAdmins(res, req.query);
     },
-  ]);
+  ])
 
-  adminRouter.get("/:id", [
+  .get("/:id", [
     passportAdmin,
     async function (req, res) {
       const id = req.params.id;
       controller.getAdmin(res, id);
     },
-  ]);
+  ])
 
-  adminRouter.post("/", [
+  .post("/", [
     passportAdmin,
     async function (req, res) {
       const data = req.body;
+      const restrictions = params(res, data, postAdmin);
+      if(restrictions) return restrictions;
+      
       controller.createAdmin(res, data);
     },
-  ]);
+  ])
 
-  adminRouter.put("/:id",[passportAdmin, async function (req, res) {
+  .put("/:id",[passportAdmin, async function (req, res) {
 		const id = req.params.id;
     const data = req.body;
+    const restrictions = params(res, data, putAdmin);
+    if(restrictions) return restrictions;
+
 		controller.updateAdmin(res, id, data);
-	}]);
+	}])
 
-	adminRouter.put("/:id/role",[passportAdmin, async function (req, res) {
+	.put("/:id/role",[passportAdmin, async function (req, res) {
 		const data = req.body;
-		data.admin_id = req.params.id;
+		data.admin_id = req.params.id;   
+    const restrictions = params(res, data, putRoleAdmin);
+    if(restrictions) return restrictions;
+    
 		controller.changeRole(res, data);
-	}]);
+	}])
 
-	adminRouter.delete("/:id", [passportAdmin, async function (req, res) {
+	.delete("/:id", [passportAdmin, async function (req, res) {
 		const id = req.params.id;
 		controller.deleteAdmin(res, id);
-	}]);
+	}])
 
-	adminRouter.get("/:id/logs", [passportAdmin, async function (req, res) {
+	.get("/:id/logs", [passportAdmin, async function (req, res) {
 		const adminId = req.params.id;
 		controller.getLog(res, adminId, req.query);
-	}]);
+	}])
 
-	adminRouter.post("/:id/logs", [passportAdmin, async function (req, res) {
+	.post("/:id/logs", [passportAdmin, async function (req, res) {
 		const data = req.body;
+    const restrictions = params(res, data, postLogAdmin);
+    if(restrictions) return restrictions;
+    
 		data.admin_id = req.params.id;
 		controller.createLog(res, data);
-	}]);
+	}])
 
-  adminRouter.put("/:id/reset-password", [passportAdmin, async function (req, res) {
+  .put("/:id/reset-password", [passportAdmin, async function (req, res) {
 		controller.resetPassword(res, req.params.id);
-	}]);
+	}])
 
-	adminRouter.put("/change/password",[passportAdmin, async function (req, res) {
+	.put("/change/password",[passportAdmin, async function (req, res) {
 		const data = req.body;
+    const restrictions = params(res, data, putPasswordAdmin);
+    if(restrictions) return restrictions;
+
 		data.id = req.userData.id;
 		controller.changePassword(res, data);
-	}]);
+	}])
 
-  adminRouter.get("/logs/getAll", [
+  .get("/logs/getAll", [
     passportAdmin,
     async function (req, res) {
       controller.getLogs(res, req.query);
     },
-  ]);
+  ])
 
-  adminRouter.delete("/logs/truncate", [
+  .delete("/logs/truncate", [
     passportAdmin,
     async function (req, res) {
       controller.truncateLogs(res, req.query);

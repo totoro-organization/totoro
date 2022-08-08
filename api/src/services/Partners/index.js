@@ -4,58 +4,68 @@ const controller = require("./controller");
 const { path } = require("~utils/enum.json");
 const { upload } = require("~utils/storage");
 
+const { params } = require("~utils/verify");
+const { putPartner, postPartner } = require("./interface");
+
 exports.router = (function () {
 	const partnersRouter = express.Router();
 
-	partnersRouter.get("/", async function (req, res) {
+	partnersRouter
+	.get("/", async function (req, res) {
 		controller.getPartners(res, req.query);
-	});
+	})
 
-	partnersRouter.post("/", [
+	.post("/", [
 		passport,
 		async function (req, res) {
 			const data = req.body;
+			const restrictions = params(res, data, postPartner);
+			if(restrictions) return restrictions;
+
 			data.user_id = req.userData.id;
 			controller.createPartner(res, data);
 		},
-	]);
+	])
 
-	partnersRouter.get("/:id", async function (req, res) {
+	.get("/:id", async function (req, res) {
 		const id = req.params.id;
 		controller.getPartner(res, id);
-	});
+	})
 
-	partnersRouter.put("/:id", [passport, async function (req, res) {
+	.put("/:id", [passport, async function (req, res) {
 		const id = req.params.id;
 		const data = req.body;
-		controller.updatePartner(res, id, data);
-	}]);
+		const restrictions = params(res, data, putPartner);
+		if(restrictions) return restrictions;
 
-	partnersRouter.delete("/:id", [
+		controller.updatePartner(res, id, data);
+	}])
+
+	.delete("/:id", [
 		passport,
 		async function (req, res) {
 			const id = req.params.id;
 			controller.deletePartner(res, id);
 		},
-	]);
+	])
 
-	partnersRouter.get("/:id/discounts", [
+	.get("/:id/discounts", [
 		passport,
 		async function (req, res) {
 			const id = req.params.id;
 			controller.getPartnerDiscounts(res, id, req.query);
 		},
-	]);
+	])
 
-	partnersRouter.get("/:id/transactions", [
+	.get("/:id/transactions", [
 		passport,
 		async function (req, res) {
 			const id = req.params.id;
 			controller.getTransactions(res, id, req.query);
 		},
-	]);
+	])
 
-	partnersRouter.put("/:id/logo", [passport, upload(path.partners).single("logo"), async function (req, res) {
+	.put("/:id/logo", [passport, upload(path.partners).single("logo"), async function (req, res) {
 		const id = req.params.id;
 		const data = {};
 		if (req.file) {
@@ -64,9 +74,9 @@ exports.router = (function () {
 		}
 
 		controller.updateLogo(res, id, data);
-	}]);
+	}])
 
-	partnersRouter.put("/:id/banner", [passport, upload(path.partners).single("banner"), async function (req, res) {
+	.put("/:id/banner", [passport, upload(path.partners).single("banner"), async function (req, res) {
 		const id = req.params.id;
 		const data = {};
 		if (req.file) {

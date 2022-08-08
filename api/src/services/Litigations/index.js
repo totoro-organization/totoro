@@ -2,30 +2,40 @@ const express = require("express");
 const { passport, passportAdmin } = require("~utils/session");
 const controller = require("./controller");
 
+const { params } = require("~utils/verify");
+const { postLitigation, putLitigation } = require("./interface");
+
 exports.router = (function () {
   const litigationsRouter = express.Router();
 
-  litigationsRouter.get("/", [passportAdmin, async function (req, res) {
+  litigationsRouter
+  .get("/", [passportAdmin, async function (req, res) {
     controller.getLitigations(res, req.query);
-  }]);
+  }])
 
-  litigationsRouter.get("/:id", [passportAdmin, async function (req, res) {
+  .get("/:id", [passportAdmin, async function (req, res) {
     const id = req.params.id;
     controller.getLitigation(res, id);
-  }]);
+  }])
 
-  litigationsRouter.post("/", [passport, async function (req, res) {
+  .post("/", [passport, async function (req, res) {
     const data = req.body;
-    controller.createLitigation(res, data);
-  }]);
+    const restrictions = params(res, data, postLitigation);
+		if(restrictions) return restrictions;
 
-  litigationsRouter.put("/:id", [passportAdmin, async function (req, res) {
+    controller.createLitigation(res, data);
+  }])
+
+  .put("/:id", [passportAdmin, async function (req, res) {
     const id = req.params.id;
     const data = req.body;
-    controller.updateLitigation(res, id, data);
-  }]);
+    const restrictions = params(res, data, putLitigation);
+		if(restrictions) return restrictions;
 
-  litigationsRouter.delete("/:id", [passportAdmin, async function (req, res) {
+    controller.updateLitigation(res, id, data);
+  }])
+
+  .delete("/:id", [passportAdmin, async function (req, res) {
     const id = req.params.id;
     controller.deleteLitigation(res, id);
   }]);

@@ -19,10 +19,10 @@ module.exports = {
     return {
       type: "object",
       properties: {
-        firstName: {
+        firstname: {
           type: "string"
         },
-        lastName: {
+        lastname: {
           type: "string"
         },
         username: {
@@ -36,8 +36,8 @@ module.exports = {
         }
       },
       required: [
-        "firstName",
-        "lastName",
+        "firstname",
+        "lastname",
         "username",
         "email",
         "role_id"
@@ -55,10 +55,10 @@ module.exports = {
     return {
       type: "object",
       properties: {
-        firstName: {
+        firstname: {
           type: "string"
         },
-        lastName: {
+        lastname: {
           type: "string"
         },
         email: {
