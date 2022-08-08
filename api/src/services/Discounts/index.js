@@ -5,30 +5,31 @@ const controller = require("./controller");
 exports.router = (function () {
 	const discountsRouter = express.Router();
 
-	discountsRouter.get("/", [passport, async function (req, res) {
+	discountsRouter
+	.get("/", [passport, async function (req, res) {
 		controller.getDiscounts(res, req.query);
-	}]);
+	}])
 
-	discountsRouter.post("/", [
+	.post("/", [
 		passport,
 		async function (req, res) {
 			const data = req.body;
 			controller.createDiscount(res, data);
 		},
-	]);
+	])
 
-	discountsRouter.get("/:id", async function (req, res) {
+	.get("/:id", async function (req, res) {
 		const id = req.params.id;
 		controller.getDiscount(res, id);
-	});
+	})
 
-	discountsRouter.put("/:id", [passport, async function (req, res) {
+	.put("/:id", [passport, async function (req, res) {
 		const id = req.params.id;
 		const data = req.body;
 		controller.updateDiscount(res, id, data);
-	}]);
+	}])
 
-	discountsRouter.delete("/:id", [
+	.delete("/:id", [
 		passport,
 		async function (req, res) {
 			const id = req.params.id;
