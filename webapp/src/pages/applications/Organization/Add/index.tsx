@@ -8,6 +8,7 @@ import {
 } from '@mui/material';
 
 import Footer from 'src/components/Footer';
+import AddOrganizationForm from 'src/components/AddOrganizationForm';
 
 
 function AddOrganization() {
@@ -23,7 +24,7 @@ function AddOrganization() {
         />
       </PageTitleWrapper>
       <Container maxWidth="lg">
-        
+        <AddOrganizationForm/>
       </Container>
       <Footer />
     </>
