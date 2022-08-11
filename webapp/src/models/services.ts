@@ -32,8 +32,7 @@ export interface ForgotPasswordData {
 }
 
 export interface AddOrganizationData {
-    type: "siret" | "siren",
-    typeValue: string,
+    siret: string,
     email: string,
     phone: number
 }
