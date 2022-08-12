@@ -30,5 +30,10 @@ export interface ResetPasswordData {
 export interface ForgotPasswordData {
     email: string,
 }
-  
+
+export interface AddOrganizationData {
+    siret: string,
+    email: string,
+    phone: number
+}
 
