@@ -35,10 +35,7 @@ module.exports = {
         phone: {
             required: true
         },
-        type: {
-            required: true
-        },
-        typeValue: {
+        siret: {
             required: true
         }
     },

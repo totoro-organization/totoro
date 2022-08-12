@@ -28,6 +28,14 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
+      siren: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
+      siret: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
       address: {
         allowNull: true,
         type: Sequelize.STRING

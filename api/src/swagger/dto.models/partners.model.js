@@ -70,24 +70,19 @@ module.exports = {
               phone: {
                 type: "string"
               },
-              type: {
-                type: "string"
-              },
-              typeValue: {
+              siret: {
                 type: "string"
               }
             },
             required: [
               "email",
               "phone",
-              "type",
-              "typeValue"
+              "siret"
             ],
             example: {
               email: "contact@partner.org",
               phone: "0753869526",
-              type: "siren",
-              typeValue: "775664410"
+              siret: "775664410"
             }
         }
     }
