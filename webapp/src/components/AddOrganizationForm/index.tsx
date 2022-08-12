@@ -7,6 +7,7 @@ import { useToast } from 'src/hooks/useToast';
 import { AddOrganizationData } from 'src/models/services';
 import { addItem } from 'src/services/common.service';
 import { API_ROUTES } from 'src/services/routes';
+import { isSiretValid } from 'src/utils/IsSiretValid';
 import { AddOrganizationSchema } from './AddOrganization.schema';
 
 interface AddOrganizationFieldTypes {
@@ -21,28 +22,34 @@ function AddOrganizationForm() {
   });
   const { setToast } = useToast();
   const onSubmit = async (formData: AddOrganizationFieldTypes) => {
+    if(!isSiretValid(formData.siret)) {
+      setToast({
+        variant: 'error',
+        message: "Une erreur s'est produite : Siret invalide",
+        duration: 6000
+      });
+      return;
+    }
     const data: AddOrganizationData = {
       siret: formData.siret,
       email: formData.email,
       phone: formData.phone
     };
-    console.log(data);
-    
-    // const response = await addItem(API_ROUTES.ORGANIZATIONS, data);
-    // if ('error' in response) {
-    //   setToast({
-    //     variant: 'error',
-    //     message: response.message,
-    //     duration: 6000
-    //   });
-    //   return;
-    // }
-    // setToast({
-    //   variant: 'success',
-    //   message:
-    //     'Votre demande à été envoyée avec succès. Vous serez notifié quand elle sera sera acceptée ou refusée',
-    //   duration: 8000
-    // });
+    const response = await addItem(API_ROUTES.ORGANIZATIONS, data);
+    if ('error' in response) {
+      setToast({
+        variant: 'error',
+        message: response.message,
+        duration: 6000
+      });
+      return;
+    }
+    setToast({
+      variant: 'success',
+      message:
+        'Votre demande à été envoyée avec succès. Vous serez notifié quand elle sera sera acceptée ou refusée',
+      duration: 8000
+    });
   };
 
   return (
