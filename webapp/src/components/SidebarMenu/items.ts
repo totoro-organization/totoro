@@ -25,13 +25,13 @@ export const organizationMenuItems: MenuItems[] = [
     items: [
       {
         name: 'Statistiques',
-        link: '/association/dashboards/statistiques',
+        link: '/organization/dashboards/stats',
         icon: QueryStatsIcon
       },
       {
         name:'Résumé',
         icon: DashboardIcon,
-        link: '/association/dashboards/resume'
+        link: '/organization/dashboards/resume'
       }
     ]
   },
@@ -41,12 +41,12 @@ export const organizationMenuItems: MenuItems[] = [
       {
         name: 'Mes missions',
         icon: ListIcon,
-        link: '/association/gestion/missions'
+        link: '/organization/management/jobs'
       },
       {
         name: 'Créer une mission',
         icon: AddTaskIcon,
-        link: '/association/gestion/missions/creation'
+        link: '/organization/management/jobs/creation'
       }
     ]
   },
@@ -59,13 +59,13 @@ export const partnerMenuItems: MenuItems[] = [
     items: [
       {
         name: 'Statistiques',
-        link: '/partenaire/dashboards/statistiques',
+        link: '/partner/dashboards/stats',
         icon: QueryStatsIcon
       },
       {
         name:'Résumé',
         icon: DashboardIcon,
-        link: '/partenaire/dashboards/resume'
+        link: '/partner/dashboards/resume'
       }
     ]
   },
@@ -75,12 +75,12 @@ export const partnerMenuItems: MenuItems[] = [
       {
         name: 'Mes réductions',
         icon: ListIcon,
-        link: '/partenaire/gestion/reductions'
+        link: '/partner/management/reductions'
       },
       {
         name: 'Ajouter une réduction',
         icon: AddTaskIcon,
-        link: '/partenaire/gestion/reductions/creation'
+        link: '/partner/management/reductions/creation'
       }
     ]
   },

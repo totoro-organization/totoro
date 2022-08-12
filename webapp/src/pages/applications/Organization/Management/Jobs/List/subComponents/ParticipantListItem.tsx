@@ -54,7 +54,7 @@ function ParticipantListItem({ user }: any) {
     <TableCell align="right">
       <Tooltip title="Voir le profil" arrow>
         <IconButton
-          onClick={() => navigate(`/association/gestion/missions/${id}/participant/${user.participant.id}`)}
+          onClick={() => navigate(`/organization/management/jobs/${id}/participant/${user.participant.id}`)}
           sx={{
             '&:hover': { background: theme.colors.error.lighter },
             color: theme.palette.error.main

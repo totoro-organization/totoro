@@ -111,7 +111,7 @@ export function SessionProvider({
       .then((response) => {
         if ('error' in response) {
           setError(response.error);
-          if(response.status_code === 403) navigate('/confirmer-mon-compte')
+          if(response.status_code === 403) navigate('/account-verification')
           return;
         }
         localStorage.setItem('token', response.token);
@@ -129,7 +129,7 @@ export function SessionProvider({
         setError(response.error);
         return;
       }
-      navigate('/confirmer-mon-compte');
+      navigate('/account-verification');
     });
   }
 

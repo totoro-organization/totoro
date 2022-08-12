@@ -31,7 +31,7 @@ function Job() {
   const handleTabsChange = (event: ChangeEvent<{}>, value: string): void => {
     setCurrentTab(value);
   };
-  const handleGoBack = () => navigate('/association/gestion/missions');
+  const handleGoBack = () => navigate('/organization/management/jobs');
   
   return (
     <>

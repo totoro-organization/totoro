@@ -51,8 +51,8 @@ export default function JobTableItem({
           gutterBottom
           noWrap
         >
-          <Link to={`/gestion/missions/${job.id}`}>{job.title}</Link>
-          <Link to={`/association/gestion/missions/${job?.id}`}>
+          <Link to={`/management/jobs/${job.id}`}>{job.title}</Link>
+          <Link to={`/organization/management/jobs/${job?.id}`}>
             {job?.title}
           </Link>
         </Typography>

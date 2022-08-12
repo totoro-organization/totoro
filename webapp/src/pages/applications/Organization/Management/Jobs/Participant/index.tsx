@@ -17,7 +17,7 @@ function UserDetails() {
 
   const navigate = useNavigate();
 
-  const handleGoBack = () => navigate(`/association/gestion/missions/${jobId}`);
+  const handleGoBack = () => navigate(`/organization/management/jobs/${jobId}`);
 
   return (
     <>

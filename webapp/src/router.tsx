@@ -27,26 +27,26 @@ const AppIndexRoute = () => {
   const session = useSession();
 
   if (session.currentApp.type === 'organization')
-    return <Navigate to="/association/dashboards/resume" replace />;
+    return <Navigate to="/organization/dashboards/resume" replace />;
 
-  return <Navigate to="/partenaire/dashboards/resume" replace />;
+  return <Navigate to="/partner/dashboards/resume" replace />;
 };
 
 /* Applications - Organization */
 // Gestion
 const CreationJob = Loader(
-  lazy(() => import('src/pages/applications/Organization/Gestion/Jobs/Create'))
+  lazy(() => import('src/pages/applications/Organization/Management/Jobs/Create'))
 );
 const ListingJobs = Loader(
-  lazy(() => import('src/pages/applications/Organization/Gestion/Jobs/List'))
+  lazy(() => import('src/pages/applications/Organization/Management/Jobs/List'))
 );
 const JobParticipant = Loader(
   lazy(
-    () => import('src/pages/applications/Organization/Gestion/Jobs/Participant')
+    () => import('src/pages/applications/Organization/Management/Jobs/Participant')
   )
 );
 const Job = Loader(
-  lazy(() => import('src/pages/applications/Organization/Gestion/Jobs'))
+  lazy(() => import('src/pages/applications/Organization/Management/Jobs'))
 );
 // Add
 const AddOrganization = Loader(
@@ -101,15 +101,15 @@ const routes: PartialRouteObject[] = [
         element: <SignUp />
       },
       {
-        path: 'confirmer-mon-compte',
+        path: 'account-verification',
         element: <AccountConfirmation/>
       },
       {
-        path: 'mot-de-passe-oublie',
+        path: 'forgot-password',
         element: <ForgotPassword/>
       },
       {
-        path: 'reinitialiser-mot-de-passe',
+        path: 'reset-password',
         element: <ResetPassword/>
       },
       {
@@ -171,7 +171,7 @@ const routes: PartialRouteObject[] = [
             ]
           },
           {
-            path: 'association',
+            path: 'organization',
             element: <SidebarLayout />,
             children: [
               {
@@ -186,7 +186,7 @@ const routes: PartialRouteObject[] = [
                     element: <Navigate to="resume" replace />
                   },
                   {
-                    path: 'statistiques',
+                    path: 'stats',
                     element: <Crypto />
                   },
                   {
@@ -196,26 +196,26 @@ const routes: PartialRouteObject[] = [
                 ]
               },
               {
-                path: 'ajouter',
+                path: 'add',
                 element: <AddOrganization/>
               },
               {
-                path: 'gestion',
+                path: 'management',
                 children: [
                   {
                     path: '/',
-                    element: <Navigate to="missions" replace />
+                    element: <Navigate to="jobs" replace />
                   },
                   {
-                    path: '/missions',
+                    path: '/jobs',
                     element: <ListingJobs />
                   },
                   {
-                    path: '/missions/creation',
+                    path: '/jobs/creation',
                     element: <CreationJob />
                   },
                   {
-                    path: '/missions/:jobId/participant/:id',
+                    path: '/jobs/:jobId/participant/:id',
                     element: <JobParticipant />
                   }
                 ]
@@ -223,7 +223,7 @@ const routes: PartialRouteObject[] = [
             ]
           },
           {
-            path: 'partenaire',
+            path: 'partner',
             children: [
               {
                 path: '/',
@@ -238,7 +238,7 @@ const routes: PartialRouteObject[] = [
                     element: <Navigate to="resume" replace />
                   },
                   {
-                    path: 'statistiques',
+                    path: 'stats',
                     element: <Crypto />
                   },
                   {
@@ -248,35 +248,27 @@ const routes: PartialRouteObject[] = [
                 ]
               },
               {
-                path: 'gestion',
+                path: 'management',
                 element: <SidebarLayout />,
                 children: [
                   {
                     path: '/',
-                    element: <Navigate to="reductions" replace />
+                    element: <Navigate to="discounts" replace />
                   },
                   {
-                    path: '/reductions',
+                    path: '/discounts',
                     element: <ListingJobs />
                   },
                   {
-                    path: '/reductions/creation',
+                    path: 'discounts/:id',
+                    element: <Job />
+                  },
+                  {
+                    path: '/discounts/add',
                     element: <CreationJob />
                   }
                 ]
               },
-              {
-                path: 'missions/:id',
-                element: <Job />
-              },
-              {
-                path: 'missions/:id',
-                element: <Job />
-              },
-              {
-                path: '/missions/creation',
-                element: <CreationJob />
-              }
             ]
           }
         ]

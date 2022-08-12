@@ -65,7 +65,7 @@ function SigninForm() {
         </Button>
         <Grid container>
           <Grid item xs>
-            <Link to="/mot-de-passe-oublie" component={NavLink}  variant="body2">
+            <Link to="/forgot-password" component={NavLink}  variant="body2">
               Mot de passe oublié ?
             </Link>
           </Grid>
