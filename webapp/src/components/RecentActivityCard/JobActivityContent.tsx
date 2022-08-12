@@ -3,7 +3,14 @@ import FallbackAvatar from 'src/components/FallbackAvatar';
 import WorkIcon from '@mui/icons-material/Work';
 
 interface ActivityProps {
-  data: any;
+interface ActivityProps {
+  data: {
+   type: string; // ou l'enum avec tous les types
+   name: string;
+   job_title: string;
+   date: string;
+   time: string;
+   }
 }
 
 function JobActivityContent({ data }: ActivityProps) {
