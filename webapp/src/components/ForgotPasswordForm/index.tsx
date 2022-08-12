@@ -4,7 +4,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { NavLink } from 'react-router-dom';
 import { FormContainer, FormTextField } from 'src/components/forms';
 import { useToast } from 'src/hooks/useToast';
-import { forgotPassword } from 'src/api/auth.service';
+import { forgotPassword } from 'src/api/auth';
 import { ForgotPasswordSchema } from './ForgotPassword.schema';
 
 interface ForgotPasswordFieldTypes {

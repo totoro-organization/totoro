@@ -25,7 +25,7 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import CheckIcon from '@mui/icons-material/Check';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { useState } from 'react';
-import { getCurrentUser } from 'src/api/auth.service';
+import { getCurrentUser } from 'src/api/auth';
 import { updateUser } from 'src/api/users.service';
 
 const Input = styled('input')({

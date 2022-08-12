@@ -14,7 +14,7 @@ import {
   SignUpData,
   Organization
 } from 'src/models';
-import * as sessionsService from 'src/api/auth.service';
+import * as authService from 'src/api/auth';
 
 interface SessionContextType {
   user?: User;
@@ -90,7 +90,7 @@ export function SessionProvider({
 
   function getCurrentUser(): void {
     if(localStorage.getItem("token")) {
-    sessionsService
+    authService
       .getCurrentUser()
       .then((response) => {
         if ('error' in response) {
@@ -106,7 +106,7 @@ export function SessionProvider({
   function login(params: LoginData) {
     setLoading(true);
 
-    sessionsService
+    authService
       .login(params)
       .then((response) => {
         if ('error' in response) {
@@ -124,7 +124,7 @@ export function SessionProvider({
   }
 
   function signup(params: SignUpData) {
-    sessionsService.signup(params).then((response) => {
+    authService.signup(params).then((response) => {
       if ('error' in response) {
         setError(response.error);
         return;
