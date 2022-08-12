@@ -74,7 +74,7 @@ module.exports = {
 	},
 
 	createOrganization: async function (res, data) {
-		const { email, phone, type, typeValue, user_id } = data
+		const { email, phone, siret, user_id } = data
 
 		/*
 		const emailValid = await isEmailValid(email);
@@ -85,15 +85,13 @@ module.exports = {
 		*/
 
     	const activeStatus = await getRow(Status, { label: label_status.actived });
-		const request = await axios.get(`https://entreprise.data.gouv.fr/api/sirene/v1/${type}/${typeValue}`);
+		const request = await axios.get(`https://entreprise.data.gouv.fr/api/sirene/v1/siret/${siret}`);
 		if(request.data.message){
 			return res
 					.status(success.not_found.status)
-					.json({ entity: type, message: request.data.message });
+					.json({ entity: 'siret', message: request.data.message });
 		}
 
-		delete data.type
-		delete data.typeValue
 		data["siren"] = request.data.siege_social.siren
 		data["siret"] = request.data.siege_social.siret
 		data["name"] = request.data.siege_social.nom_raison_sociale

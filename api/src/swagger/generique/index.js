@@ -134,6 +134,12 @@ module.exports = {
       name: {
         type: "string"
       },
+      siren: {
+        type: "string"
+      },
+      siret: {
+        type: "string"
+      },
       email: {
         type: "string"
       },

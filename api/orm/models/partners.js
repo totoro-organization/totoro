@@ -30,6 +30,8 @@ module.exports = (sequelize, DataTypes) => {
   Partners.init(
     {
       name: DataTypes.STRING,
+      siren: DataTypes.STRING,
+      siret: DataTypes.STRING,
       address: DataTypes.STRING,
       logo: DataTypes.STRING,
       banner: DataTypes.STRING,
