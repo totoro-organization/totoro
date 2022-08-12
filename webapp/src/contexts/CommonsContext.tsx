@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import { JobDifficulty, Tag } from "src/models";
-import { getItems } from "src/services/common.service";
+import { getItems } from "src/api/requests";
 
 export const CommonsContext = createContext<any>({});
 

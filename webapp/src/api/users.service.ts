@@ -1,5 +1,5 @@
 import { ForgotPasswordData, ResetPasswordData, Response, Token } from "src/models/services";
-import { requestAxios } from "./requestApi";
+import { requestAxios } from "./requestAxios";
 import { API_ROUTES } from "./routes";
 
 export const User_BASE_URL = "/users"

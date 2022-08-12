@@ -1,4 +1,4 @@
-import { requestAxios } from "./requestApi";
+import { requestAxios } from "./requestAxios";
 
 export async function getItems(uri: string, query?: any) {
     if(query) {

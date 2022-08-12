@@ -21,7 +21,7 @@ import {
 } from '@mui/material';
 import BulkActions from './BulkActions';
 import { StatusEnum, StatusOptions, TableItem } from 'src/models';
-import { deleteItem, getItems, updateItem } from 'src/services/common.service';
+import { deleteItem, getItems, updateItem } from 'src/api/requests';
 import { useModal } from 'src/hooks/useModal';
 
 interface TableWrapperProps {

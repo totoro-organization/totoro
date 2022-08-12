@@ -1,6 +1,6 @@
 import { LoginData, SignUpData, User, Response } from "src/models";
 import { ForgotPasswordData } from "src/models/services";
-import { requestAxios } from "./requestApi";
+import { requestAxios } from "./requestAxios";
 import { API_ROUTES } from "./routes";
 
 export async function signup(params: SignUpData) {

@@ -14,7 +14,7 @@ import {
   SignUpData,
   Organization
 } from 'src/models';
-import * as sessionsService from 'src/services/auth.service';
+import * as sessionsService from 'src/api/auth.service';
 
 interface SessionContextType {
   user?: User;

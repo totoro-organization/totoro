@@ -15,7 +15,7 @@ import { ChangeEvent, useState } from 'react';
 import getFormatLocalDate from 'src/utils/getFormatLocalDate';
 import Footer from 'src/components/Footer';
 import ParticipantsTable from './List/ParticipantsTable';
-import { config } from 'src/services/config';
+import { config } from 'src/api/config';
 import JobItem from './subComponents/JobItem';
 
 function Job() {

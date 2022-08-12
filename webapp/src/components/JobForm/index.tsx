@@ -18,10 +18,11 @@ import { sortObjectArrayByAscOrder } from 'src/utils/sortByAscOrder';
 import type { JobDifficulty, Tag } from 'src/models';
 import format from 'date-fns/format';
 import AddIcon from '@mui/icons-material/Add';
-import { addItem, getItems } from 'src/services/common.service';
-import { API_ROUTES } from 'src/services/routes';
+import { addItem, getItems } from 'src/api/requests';
+import { API_ROUTES } from 'src/api/routes';
 import { useSession } from 'src/hooks/useSession';
 import RefreshIcon from '@mui/icons-material/Refresh';
+import { addJob } from 'src/api/jobs/addJob';
 
 interface JobFormFieldTypes {
   start_date: Date;
@@ -71,7 +72,7 @@ const JobForm = () => {
       images: formData.images,
       assos_user_id: currentApp.member_id
     };
-    // const response = await addItem(API_ROUTES.JOBS, data);
+    // const response = await addJob(data);
     console.log(data);
     
   };

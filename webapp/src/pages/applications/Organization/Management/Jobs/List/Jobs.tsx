@@ -3,7 +3,7 @@ import TableWrapper from 'src/components/TableWrapper';
 import SuspenseLoader from 'src/components/SuspenseLoader';
 import { useApi } from 'src/hooks/useApi';
 import { StatusEnum } from 'src/models';
-import { API_ROUTES } from 'src/services/routes';
+import { API_ROUTES } from 'src/api/routes';
 import { useSession } from 'src/hooks/useSession';
 
 const statusOptions = [

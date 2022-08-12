@@ -12,7 +12,7 @@ import { Box } from '@mui/system';
 import React, { useState } from 'react';
 import FallbackAvatar from 'src/components/FallbackAvatar';
 import { useSession } from 'src/hooks/useSession';
-import { config } from 'src/services/config';
+import { config } from 'src/api/config';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
 import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';

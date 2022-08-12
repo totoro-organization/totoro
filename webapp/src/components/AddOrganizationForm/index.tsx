@@ -5,8 +5,8 @@ import { NavLink } from 'react-router-dom';
 import { FormContainer, FormSelect, FormTextField } from 'src/components/forms';
 import { useToast } from 'src/hooks/useToast';
 import { AddOrganizationData } from 'src/models/services';
-import { addItem } from 'src/services/common.service';
-import { API_ROUTES } from 'src/services/routes';
+import { addItem } from 'src/api/requests';
+import { API_ROUTES } from 'src/api/routes';
 import { isSiretValid } from 'src/utils/IsSiretValid';
 import { AddOrganizationSchema } from './AddOrganization.schema';
 

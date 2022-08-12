@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { getItems } from 'src/services/common.service';
-import { Route } from 'src/services/routes';
+import { getItems } from 'src/api/requests';
+import { Route } from 'src/api/routes';
 import { useToast } from './useToast';
 
 export type ApiResponse = {
