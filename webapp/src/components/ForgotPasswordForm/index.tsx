@@ -6,6 +6,7 @@ import { FormContainer, FormTextField } from 'src/components/forms';
 import { useToast } from 'src/hooks/useToast';
 import { forgotPassword } from 'src/api/auth';
 import { ForgotPasswordSchema } from './ForgotPassword.schema';
+import { APP_PATHS } from 'src/appPaths';
 
 interface ForgotPasswordFieldTypes {
   email: string;
@@ -61,7 +62,7 @@ function ForgotPasswordForm() {
         </Button>
         <Link
           component={NavLink}
-          to="/login"
+          to={APP_PATHS.LOGIN}
           variant="body2"
         >
           J'avais juste oublié ! Je me connecte

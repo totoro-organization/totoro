@@ -10,6 +10,7 @@ import {
   useTheme
 } from '@mui/material';
 import getFormatLocalDate from 'src/utils/getFormatLocalDate';
+import { APP_PATHS } from 'src/appPaths';
 
 function ParticipantListItem({ user }: any) {
   const theme = useTheme();
@@ -54,7 +55,7 @@ function ParticipantListItem({ user }: any) {
     <TableCell align="right">
       <Tooltip title="Voir le profil" arrow>
         <IconButton
-          onClick={() => navigate(`/organization/management/jobs/${id}/participant/${user.participant.id}`)}
+          onClick={() => navigate(APP_PATHS.ORGANIZATION_JOB_PARTICIPANT(id, user.participant.id))}
           sx={{
             '&:hover': { background: theme.colors.error.lighter },
             color: theme.palette.error.main

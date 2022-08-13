@@ -7,6 +7,7 @@ import BaseLayout from 'src/layouts/BaseLayout';
 
 import SuspenseLoader from 'src/components/SuspenseLoader';
 import { useSession } from './hooks/useSession';
+import { APP_PATHS } from './appPaths';
 
 const Loader = (Component) => (props) =>
   (
@@ -18,7 +19,7 @@ const Loader = (Component) => (props) =>
 const ProtectedRoute = (props: RouteProps) => {
   const session = useSession();
 
-  if (!session.user) return <Navigate to="/login" />;
+  if (!session.user) return <Navigate to={APP_PATHS.LOGIN} />;
   return <Route {...props} />;
 };
 
@@ -27,9 +28,9 @@ const AppIndexRoute = () => {
   const session = useSession();
 
   if (session.currentApp.type === 'organization')
-    return <Navigate to="/organization/dashboards/resume" replace />;
+    return <Navigate to={APP_PATHS.ORGANIZATION_DASHBOARDS_RESUME} replace />;
 
-  return <Navigate to="/partner/dashboards/resume" replace />;
+  return <Navigate to={APP_PATHS.PARTNER_DASHBOARDS_RESUME} replace />;
 };
 
 /* Applications - Organization */
@@ -93,23 +94,23 @@ const routes: PartialRouteObject[] = [
     element: <BaseLayout />,
     children: [
       {
-        path: 'login',
+        path: APP_PATHS.LOGIN,
         element: <SignIn />
       },
       {
-        path: 'signup',
+        path: APP_PATHS.SIGNUP,
         element: <SignUp />
       },
       {
-        path: 'account-verification',
+        path: APP_PATHS.ACCOUNT_VERIFICATION,
         element: <AccountConfirmation/>
       },
       {
-        path: 'forgot-password',
+        path: APP_PATHS.FORGOT_PASSWORD,
         element: <ForgotPassword/>
       },
       {
-        path: 'reset-password',
+        path: APP_PATHS.RESET_PASSWORD,
         element: <ResetPassword/>
       },
       {
@@ -120,7 +121,7 @@ const routes: PartialRouteObject[] = [
             element: <AppIndexRoute />
           },
           {
-            path: '/first-login',
+            path: APP_PATHS.FIRST_LOGIN,
             element: <FirstLogin />
           },
           {
@@ -200,26 +201,26 @@ const routes: PartialRouteObject[] = [
                 element: <AddOrganization/>
               },
               {
-                path: 'management',
+                path: 'jobs',
                 children: [
                   {
                     path: '/',
-                    element: <Navigate to="jobs" replace />
+                    element: <ListingJobs />,
                   },
                   {
-                    path: '/jobs',
-                    element: <ListingJobs />
+                    path: '/:jobId',
+                    element: <Job />
                   },
                   {
-                    path: '/jobs/creation',
-                    element: <CreationJob />
-                  },
-                  {
-                    path: '/jobs/:jobId/participant/:id',
+                    path: '/:jobId/participant/:id',
                     element: <JobParticipant />
                   }
                 ]
-              }
+              },
+              {
+                path: 'add-job',
+                element: <CreationJob />
+              },
             ]
           },
           {

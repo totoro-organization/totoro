@@ -15,6 +15,7 @@ import {
   Organization
 } from 'src/models';
 import * as authService from 'src/api/auth';
+import { APP_PATHS } from 'src/appPaths';
 
 interface SessionContextType {
   user?: User;
@@ -111,7 +112,7 @@ export function SessionProvider({
       .then((response) => {
         if ('error' in response) {
           setError(response.error);
-          if(response.status_code === 403) navigate('/account-verification')
+          if(response.status_code === 403) navigate(APP_PATHS.ACCOUNT_VERIFICATION)
           return;
         }
         localStorage.setItem('token', response.token);
@@ -129,7 +130,7 @@ export function SessionProvider({
         setError(response.error);
         return;
       }
-      navigate('/account-verification');
+      navigate(APP_PATHS.ACCOUNT_VERIFICATION);
     });
   }
 

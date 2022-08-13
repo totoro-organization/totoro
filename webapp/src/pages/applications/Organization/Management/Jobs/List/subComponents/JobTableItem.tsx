@@ -16,6 +16,7 @@ import { Job } from '../../../../../../../models';
 
 import StatusLabel from '../../../../../../../components/StatusLabel';
 import getFormatLocalDate from 'src/utils/getFormatLocalDate';
+import { APP_PATHS } from 'src/appPaths';
 
 interface JobTableItemProps {
   job: Job;
@@ -51,8 +52,7 @@ export default function JobTableItem({
           gutterBottom
           noWrap
         >
-          <Link to={`/management/jobs/${job.id}`}>{job.title}</Link>
-          <Link to={`/organization/management/jobs/${job?.id}`}>
+          <Link to={APP_PATHS.ORGANIZATION_JOB(job?.id)}>
             {job?.title}
           </Link>
         </Typography>
