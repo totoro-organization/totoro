@@ -26,7 +26,7 @@ import { useSession } from 'src/hooks/useSession';
 function EditProfileTab() {
   const [EditUser, setEditUser] = useState(false);
   const [valueEdit, setValueEdit] = useState({});
-  const { user, getCurrentUser } = useSession();
+  const { user, getConnectedUser } = useSession();
   const [editPassword, setEditPassword] = useState(false);
 
   const handleChangeEdit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -42,14 +42,14 @@ function EditProfileTab() {
     const updateResponse = await updateUser(user.id, valueEdit);
     if ('error' in updateResponse) return;
     setEditUser(false);
-    getCurrentUser();
+    getConnectedUser();
   };
 
   const handleEditUserPassword = async () => {
     const updateResponse = await updatePasswordUser(valueEdit);
     if ('error' in updateResponse) return;
     setEditPassword(false);
-    getCurrentUser();
+    getConnectedUser();
   };
 
   const formatedPhoneNumber = formatPhoneNumber(String(user.phone));

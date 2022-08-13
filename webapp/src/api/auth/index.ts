@@ -1,4 +1,4 @@
 export { signup } from './signup';
 export { login } from './login';
-export { getCurrentUser } from './getCurrentUser';
+export { getConnectedUser } from './getConnectedUser';
 export { forgotPassword } from './forgotPassword';

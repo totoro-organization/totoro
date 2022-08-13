@@ -18,7 +18,7 @@ import * as authService from 'src/api/auth';
 
 interface SessionContextType {
   user?: User;
-  getCurrentUser: () => void;
+  getConnectedUser: () => void;
   currentApp: App;
   handleCurrentApp: (app: App) => void;
   loading: boolean;
@@ -59,7 +59,7 @@ export function SessionProvider({
   }, [location.pathname]);
 
   useEffect(() => {
-    getCurrentUser()
+    getConnectedUser()
   }, []);
 
   useEffect(() => {
@@ -88,10 +88,10 @@ export function SessionProvider({
     }
   }, [user]);
 
-  function getCurrentUser(): void {
+  function getConnectedUser(): void {
     if(localStorage.getItem("token")) {
     authService
-      .getCurrentUser()
+      .getConnectedUser()
       .then((response) => {
         if ('error' in response) {
           setError(response.error);
@@ -115,7 +115,7 @@ export function SessionProvider({
           return;
         }
         localStorage.setItem('token', response.token);
-        getCurrentUser();
+        getConnectedUser();
       })
       .finally(() => {
         setLoading(false);
@@ -155,7 +155,7 @@ export function SessionProvider({
   const memoedValue = useMemo(
     () => ({
       user,
-      getCurrentUser,
+      getConnectedUser,
       loading,
       error,
       login,

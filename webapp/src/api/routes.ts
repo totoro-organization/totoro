@@ -15,7 +15,8 @@ export const API_ROUTES = {
     USERS: "/users",
     ADMIN: "/admin",
     FAVORITES: "/favorites",
-    AUTH: "/auth"
+    AUTH: "/auth",
+    AUTH_CONNECTED: "/auth/connected"
 } as const
 
 type BaseRoute = typeof API_ROUTES[keyof typeof API_ROUTES]
