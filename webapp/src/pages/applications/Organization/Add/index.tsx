@@ -4,7 +4,6 @@ import PageTitle from 'src/components/PageTitle';
 import PageTitleWrapper from 'src/components/PageTitleWrapper';
 import {
   Container,
-  Grid,
 } from '@mui/material';
 
 import Footer from 'src/components/Footer';

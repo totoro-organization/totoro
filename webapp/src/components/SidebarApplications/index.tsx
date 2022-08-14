@@ -1,4 +1,4 @@
-import { ExpandLess, ExpandMore, StarBorder } from '@mui/icons-material';
+import { ExpandLess, ExpandMore } from '@mui/icons-material';
 import {
   Collapse,
   Divider,
@@ -9,7 +9,7 @@ import {
   ListSubheader
 } from '@mui/material';
 import { Box } from '@mui/system';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import FallbackAvatar from 'src/components/FallbackAvatar';
 import { useSession } from 'src/hooks/useSession';
 import { config } from 'src/api/config';

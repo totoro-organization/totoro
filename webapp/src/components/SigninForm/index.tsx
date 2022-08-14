@@ -1,5 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Button, Checkbox, FormControlLabel, Grid, Link } from '@mui/material';
+import { Button, Grid, Link } from '@mui/material';
 import { FormProvider, useForm } from 'react-hook-form';
 import { NavLink } from 'react-router-dom';
 import { useSession } from 'src/hooks/useSession';

@@ -4,7 +4,6 @@ import Copyright from 'src/components/Copyright';
 import SigninForm from 'src/components/SigninForm';
 import Paper from '@mui/material/Paper';
 import { DefaultSettingsT, ItemCarrousel } from 'src/shared/interfaces';
-import { styled, withTheme, Theme } from '@mui/material/styles';
 import Carousel from 'src/components/Carousel';
 
 const containerStyles = {

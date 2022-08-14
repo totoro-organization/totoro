@@ -81,7 +81,7 @@ function Job() {
               {currentTab === 'details' &&
                 (!jobLoading && job ? (
                   <Card>
-                    <img style={{ objectFit: "cover", width: '100%', maxHeight: '40vh' }} src={config.server + job.attachments[0].image} alt="Job Image" />
+                    <img style={{ objectFit: "cover", width: '100%', maxHeight: '40vh' }} src={config.server + job.attachments[0].image} alt="Job" />
                     <CardContent sx={{ p: 4 }}>
                       <Typography variant="subtitle2">
                         <Grid justifyItems={'center'} container spacing={0}>

@@ -8,7 +8,6 @@ import {
   FormDateTimeRangePicker,
   FormSelect,
   FormTextarea,
-  UploadImagePreview,
   FormUpload
 } from 'src/components/forms';
 import { JobFormSchema } from './JobForm.schema';
@@ -18,11 +17,9 @@ import { sortObjectArrayByAscOrder } from 'src/utils/sortByAscOrder';
 import type { JobDifficulty, Tag } from 'src/models';
 import format from 'date-fns/format';
 import AddIcon from '@mui/icons-material/Add';
-import { addItem, getItems } from 'src/api/requests';
-import { API_ROUTES } from 'src/api/routes';
 import { useSession } from 'src/hooks/useSession';
 import RefreshIcon from '@mui/icons-material/Refresh';
-import { addJob } from 'src/api/jobs/addJob';
+// import { addJob } from 'src/api/jobs/addJob';
 
 interface JobFormFieldTypes {
   start_date: Date;

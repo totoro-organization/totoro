@@ -1,7 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Button } from '@mui/material';
 import { FormProvider, useForm } from 'react-hook-form';
-import { Navigate, useNavigate, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { FormContainer, FormTextField } from 'src/components/forms';
 import { useToast } from 'src/hooks/useToast';
 import { resetPasswordUser } from 'src/api/users';

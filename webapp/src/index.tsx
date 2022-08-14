@@ -7,7 +7,7 @@ import { BrowserRouter } from 'react-router-dom';
 import 'nprogress/nprogress.css';
 import { SidebarProvider } from './contexts/SidebarContext';
 import { ToastProvider } from './contexts/ToastContext';
-import { SocketProvider } from './contexts/SocketContext';
+// import { SocketProvider } from './contexts/SocketContext';
 
 ReactDOM.render(
   <HelmetProvider>

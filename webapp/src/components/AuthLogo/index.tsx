@@ -1,8 +1,7 @@
-import { Avatar, Box, Typography, useTheme } from '@mui/material';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import { Box } from '@mui/material';
 
 function AuthLogo() {
-  const theme = useTheme();
+  // const theme = useTheme();
 
   return (
     <Box
