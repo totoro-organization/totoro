@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import { JobDifficulty, Tag } from "src/models";
-import { getItems } import { requestAxios } from "src/api/requestAxios";
+import { getItems } from "src/api/requests";
 
 export const CommonsContext = createContext<any>({});
 
