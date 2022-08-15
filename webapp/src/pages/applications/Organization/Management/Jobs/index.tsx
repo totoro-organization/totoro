@@ -5,7 +5,6 @@ import { Box, Grid, IconButton, Tab, Tooltip, Card, Typography, CardContent } fr
 import PageTitle from 'src/components/PageTitle';
 import ArrowBackTwoToneIcon from '@mui/icons-material/ArrowBackTwoTone';
 import StatusLabel from 'src/components/StatusLabel';
-import { useApi } from 'src/hooks/useApi';
 import Text from 'src/components/Text';
 import TabsWrapper from 'src/components/TabsWrapper';
 import { Container } from '@mui/system';
@@ -17,12 +16,13 @@ import Footer from 'src/components/Footer';
 import ParticipantsTable from './List/ParticipantsTable';
 import { config } from 'src/api/config';
 import JobItem from './subComponents/JobItem';
+import { useJob, useJobParticipants } from 'src/api/jobs/hooks';
 
 function Job() {
   const navigate = useNavigate();
   const { id } = useParams();
-  const { data: job, loading: jobLoading } = useApi(`/jobs/${id}`);
-  const { data: participants, loading: participantsLoading } = useApi(`/jobs/${id}/participants`); 
+  const { data: { data: job }, loading: jobLoading } = useJob(id);
+  const { data: { data: participants }, loading: participantsLoading } = useJobParticipants(id); 
   const [currentTab, setCurrentTab] = useState<string>('details');
   const tabs = [
     { value: 'details', label: 'Détails' },
@@ -157,7 +157,7 @@ function Job() {
                   (!participantsLoading && participants ? (
                   <TableWrapper
                     title="Participants"
-                    defaultItems={participants?.data}
+                    defaultItems={participants}
                   >
                     <ParticipantsTable items={participants} />
                   </TableWrapper>
