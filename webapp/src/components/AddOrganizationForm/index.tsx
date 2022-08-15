@@ -6,7 +6,7 @@ import { useToast } from 'src/hooks/useToast';
 import { AddOrganizationData } from 'src/models/services';
 import { isSiretValid } from 'src/utils/IsSiretValid';
 import { AddOrganizationSchema } from './AddOrganization.schema';
-import { addOrganization } from 'src/api/organizations/addOrganization';
+import { addOrganization } from 'src/api/organizations/requests/addOrganization';
 
 interface AddOrganizationFieldTypes {
   siret: string;
