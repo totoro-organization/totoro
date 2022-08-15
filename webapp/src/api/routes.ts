@@ -20,6 +20,7 @@ export const API_ROUTES = {
     REQUEST_ORGANIZATION: (id: string) => `/organizations/${id}/request`,
     JOBS: '/jobs',
     JOB: (id: string) => `/jobs/${id}`,
+    JOB_PARTICIPANTS: (id: string) => `/jobs/${id}/participants`,
     SUBSCRIPTIONS: "/subscriptions",
     LITIGATIONS: "/litigations",
     ORGANIZATIONS: "/organizations",
