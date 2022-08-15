@@ -4,10 +4,9 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { FormContainer, FormTextField } from 'src/components/forms';
 import { useToast } from 'src/hooks/useToast';
 import { AddOrganizationData } from 'src/models/services';
-import { addItem } from 'src/api/requests';
-import { API_ROUTES } from 'src/api/routes';
 import { isSiretValid } from 'src/utils/IsSiretValid';
 import { AddOrganizationSchema } from './AddOrganization.schema';
+import { addOrganization } from 'src/api/organizations/addOrganization';
 
 interface AddOrganizationFieldTypes {
   siret: string;
@@ -34,7 +33,7 @@ function AddOrganizationForm() {
       email: formData.email,
       phone: formData.phone
     };
-    const response = await addItem(API_ROUTES.ORGANIZATIONS, data);
+    const response = await addOrganization(data);
     if ('error' in response) {
       setToast({
         variant: 'error',

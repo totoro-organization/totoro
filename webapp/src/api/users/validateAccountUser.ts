@@ -1,5 +1,5 @@
 import { Token } from "src/models";
-import { requestAxios } from "../requestAxios";
+import { requestAxios } from "src/api/requestAxios";
 import { API_ROUTES } from "src/api/routes";
 
 export async function validateAccountUser(token: Token): Promise<Response> {
