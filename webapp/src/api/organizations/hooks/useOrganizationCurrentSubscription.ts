@@ -4,14 +4,14 @@ import { getOrganizationCurrentSubscription } from '../requests';
 import { useToast } from 'src/hooks/useToast';
 import { Subscription } from 'react-hook-form/dist/utils/createSubject';
 
-export type useOrganizationsResponse = {
+export type useOrganizationCurrentSubscriptionResponse = {
   data: ApiResponse<Subscription>;
   error: any;
   loading: boolean;
   getData: () => Promise<any>
 };
 
-export const useOrganizationCurrentSubscription = (id: string): useOrganizationsResponse => {
+export const useOrganizationCurrentSubscription = (id: string): useOrganizationCurrentSubscriptionResponse => {
   const [data, setData] = useState<ApiResponse<Subscription>>();
   const [error, setError] = useState<any>();
   const [loading, setLoading] = useState<boolean>(false);

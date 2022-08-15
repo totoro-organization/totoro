@@ -4,7 +4,7 @@ import { useToast } from 'src/hooks/useToast';
 import { Tag } from 'src/models';
 import { getTags } from '../requests';
 
-export type useOrganizationsResponse = {
+export type useTagsResponse = {
   tags: ApiResponse<Tag[]>;
   categories: ApiResponse<Tag[]>;
   error: any;
@@ -12,7 +12,7 @@ export type useOrganizationsResponse = {
   getData: () => Promise<any>
 };
 
-export const useDifficulties = (query?: any): useOrganizationsResponse => {
+export const useTags= (query?: any): useTagsResponse => {
   const [tags, setTags] = useState<ApiResponse<Tag[]>>();
   const [categories, setCategories] = useState<ApiResponse<Tag[]>>();
   const [error, setError] = useState<any>();

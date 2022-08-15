@@ -4,14 +4,14 @@ import { getOrganizationSubscriptions } from '../requests';
 import { useToast } from 'src/hooks/useToast';
 import { Subscription } from 'src/models';
 
-export type useOrganizationsResponse = {
+export type useOrganizationSubscriptionsResponse = {
   data: ApiResponse<Subscription[]>;
   error: any;
   loading: boolean;
   getData: () => Promise<any>
 };
 
-export const useOrganizationSubscriptions = (id: string, query?: any): useOrganizationsResponse => {
+export const useOrganizationSubscriptions = (id: string, query?: any): useOrganizationSubscriptionsResponse => {
   const [data, setData] = useState<ApiResponse<Subscription[]>>();
   const [error, setError] = useState<any>();
   const [loading, setLoading] = useState<boolean>(false);

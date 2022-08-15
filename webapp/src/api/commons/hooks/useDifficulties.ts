@@ -4,14 +4,14 @@ import { useToast } from 'src/hooks/useToast';
 import { JobDifficulty } from 'src/models';
 import { getDifficulties } from '../requests';
 
-export type useOrganizationsResponse = {
+export type useDifficultiesResponse = {
   data: ApiResponse<JobDifficulty[]>;
   error: any;
   loading: boolean;
   getData: () => Promise<any>
 };
 
-export const useDifficulties = (query?: any): useOrganizationsResponse => {
+export const useDifficulties = (query?: any): useDifficultiesResponse => {
   const [data, setData] = useState<ApiResponse<JobDifficulty[]>>();
   const [error, setError] = useState<any>();
   const [loading, setLoading] = useState<boolean>(false);

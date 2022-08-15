@@ -3,14 +3,14 @@ import { ApiResponse } from 'src/api/shared/interfaces';
 import { getOrganizationFavorites } from '../requests';
 import { useToast } from 'src/hooks/useToast';
 
-export type useOrganizationsResponse = {
+export type useOrganizationFavoritesResponse = {
   data: ApiResponse<any[]>;
   error: any;
   loading: boolean;
   getData: () => Promise<any>
 };
 
-export const useOrganizationFavorites = (id: string, query?: any): useOrganizationsResponse => {
+export const useOrganizationFavorites = (id: string, query?: any): useOrganizationFavoritesResponse => {
   const [data, setData] = useState<ApiResponse<any[]>>();
   const [error, setError] = useState<any>();
   const [loading, setLoading] = useState<boolean>(false);
