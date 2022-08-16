@@ -14,13 +14,12 @@ export type useJobsResponse = {
 export const useJobs = (query?: any): useJobsResponse => {
   const [data, setData] = useState<ApiResponse<Job[]>>();
   const [error, setError] = useState<any>();
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const { setToast } = useToast();
 
   const getAPIData = async (): Promise<any> => {
     if(error) setError(null);
-    setLoading(true);
     try {
       const response = await getJobs(query);
       if('error' in response) {

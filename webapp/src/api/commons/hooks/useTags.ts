@@ -5,24 +5,24 @@ import { Tag } from 'src/models';
 import { getTags } from '../requests';
 
 export type useTagsResponse = {
-  tags: ApiResponse<Tag[]>;
-  categories: ApiResponse<Tag[]>;
+  tags: Tag[];
+  categories: Tag[];
   error: any;
   loading: boolean;
   getData: () => Promise<any>
 };
 
 export const useTags= (query?: any): useTagsResponse => {
-  const [tags, setTags] = useState<ApiResponse<Tag[]>>();
-  const [categories, setCategories] = useState<ApiResponse<Tag[]>>();
+    const [data, setData] = useState<ApiResponse<Tag[]>>();
+  const [tags, setTags] = useState<Tag[]>();
+  const [categories, setCategories] = useState<Tag[]>();
   const [error, setError] = useState<any>();
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const { setToast } = useToast();
 
   const getAPIData = async (): Promise<any> => {
     if(error) setError(null);
-    setLoading(true);
     try {
       const response = await getTags(query);
       if('error' in response) {
@@ -30,19 +30,22 @@ export const useTags= (query?: any): useTagsResponse => {
         setToast({ variant: 'error', message: response.message, duration: 6000})
         return;
       }
-      filterTags(response);
+      setData(response);
     } catch (error) {
       setError(error);
+      setLoading(false);
     }
-    setLoading(false);
   };
 
-  const filterTags = (data) => {
-    const tagArray = data.filter((tag: Tag) => tag.type === "mission");
-    const categoryArray = data.filter((tag: Tag )=> tag.type === "category");
-    setTags(tagArray);
-    setCategories(categoryArray);
-  }
+  useEffect(() => {
+    if(data) {
+        const tagArray = data.data.filter((tag: Tag) => tag.type === "mission");
+        const categoryArray = data.data.filter((tag: Tag )=> tag.type === "category");
+        setTags(tagArray);
+        setCategories(categoryArray);
+        setLoading(false);
+    }
+  }, [data])
 
   useEffect(() => {
     if(!error) {

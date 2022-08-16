@@ -3,24 +3,24 @@ import { ApiResponse } from 'src/api/shared/interfaces';
 // import { Organization } from 'src/models';
 import { getOrganizationMembers } from '../requests';
 import { useToast } from 'src/hooks/useToast';
+import { OrganizationMember } from 'src/models/organization';
 
 export type useOrganizationMembersResponse = {
-  data: ApiResponse<any[]>;
+  data: ApiResponse<OrganizationMember[]>;
   error: any;
   loading: boolean;
   getData: () => Promise<any>
 };
 
 export const useOrganizationMembers = (id: string, query?: any): useOrganizationMembersResponse => {
-  const [data, setData] = useState<ApiResponse<any[]>>();
+  const [data, setData] = useState<ApiResponse<OrganizationMember[]>>();
   const [error, setError] = useState<any>();
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const { setToast } = useToast();
 
   const getAPIData = async (): Promise<any> => {
     if(error) setError(null);
-    setLoading(true);
     try {
       const response = await getOrganizationMembers(id, query);
       if('error' in response) {

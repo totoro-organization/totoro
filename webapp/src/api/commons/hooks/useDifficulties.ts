@@ -1,38 +1,43 @@
 import { useState, useEffect } from 'react';
-import { ApiResponse } from 'src/api/shared/interfaces';
 import { useToast } from 'src/hooks/useToast';
 import { JobDifficulty } from 'src/models';
+import { sortObjectArrayByAscOrder } from 'src/utils/sortByAscOrder';
 import { getDifficulties } from '../requests';
 
 export type useDifficultiesResponse = {
-  data: ApiResponse<JobDifficulty[]>;
+  data: JobDifficulty[];
   error: any;
   loading: boolean;
   getData: () => Promise<any>
 };
 
 export const useDifficulties = (query?: any): useDifficultiesResponse => {
-  const [data, setData] = useState<ApiResponse<JobDifficulty[]>>();
+  const [data, setData] = useState<JobDifficulty[]>();
   const [error, setError] = useState<any>();
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const { setToast } = useToast();
 
   const getAPIData = async (): Promise<any> => {
     if(error) setError(null);
-    setLoading(true);
     try {
+    setLoading(true)
       const response = await getDifficulties(query);
       if('error' in response) {
         setError(response.message);
         setToast({ variant: 'error', message: response.message, duration: 6000})
         return;
       }
-      setData(response);
+      const ascDifficulties = sortObjectArrayByAscOrder(
+        response?.data,
+        'level'
+      );    
+      setData(ascDifficulties);
+      setLoading(false);
     } catch (error) {
       setError(error);
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   useEffect(() => {

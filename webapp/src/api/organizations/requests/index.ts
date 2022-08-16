@@ -1,3 +1,4 @@
+export { answerOrganizationRequest } from "./answerOrganizationRequest";
 export { addOrganization } from "./addOrganization";
 export { getOrganization } from "./getOrganization";
 export { getOrganizationCurrentSubscription } from "./getOrganizationCurrentSubscription";
@@ -10,4 +11,4 @@ export { requestOrganization } from "./requestOrganization";
 export { updateOrganization } from "./updateOrganization";
 export { updateOrganizationBanner } from "./updateOrganizationBanner";
 export { updateOrganizationLogo } from "./updateOrganizationLogo";
-export { updateOrganizationMemberRole } from "./updateOrganizationMemberRole";
+export { updateOrganizationMember } from "./updateOrganizationMemberRole";

@@ -14,13 +14,12 @@ export type useOrganizationResponse = {
 export const useOrganization = (id: string): useOrganizationResponse => {
   const [data, setData] = useState<ApiResponse<Organization>>();
   const [error, setError] = useState<any>();
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const { setToast } = useToast();
 
   const getAPIData = async (): Promise<any> => {
     if(error) setError(null);
-    setLoading(true);
     try {
       const response = await getOrganization(id);
       if('error' in response) {

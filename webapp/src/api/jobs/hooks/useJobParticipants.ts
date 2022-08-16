@@ -1,25 +1,25 @@
 import { useState, useEffect } from 'react';
 import { ApiResponse } from 'src/api/shared/interfaces';
 import { useToast } from 'src/hooks/useToast';
+import { JobParticipant } from 'src/models/job';
 import { getJobParticipants } from '../requests';
 
 export type useJobParticipantsResponse = {
-  data: ApiResponse<any[]>;
+  data: ApiResponse<JobParticipant[]>;
   error: any;
   loading: boolean;
   getData: () => Promise<any>
 };
 
 export const useJobParticipants = (id: string, query?: any): useJobParticipantsResponse => {
-  const [data, setData] = useState<ApiResponse<any[]>>();
+  const [data, setData] = useState<ApiResponse<JobParticipant[]>>();
   const [error, setError] = useState<any>();
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const { setToast } = useToast();
 
   const getAPIData = async (): Promise<any> => {
     if(error) setError(null);
-    setLoading(true);
     try {
       const response = await getJobParticipants(id, query);
       if('error' in response) {
