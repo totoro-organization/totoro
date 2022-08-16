@@ -1,12 +1,6 @@
-export const API_ROUTES = {
-    STATUS: "/status",
-    ROLES: "/roles",
-    TAGS: "/tags",
-    DIFFICULTIES: "/difficulties",
-    LITIGATION_OBJECTS: "/litigation-objects",
-    DISCOUNT_TYPES: "/types-discounts",
-    APPAEARANCES: "/appearances",
-    PRICINGS: "/pricings",
+export const API_ORGANIZATIONS_ROUTES = {
+    ORGANIZATIONS: '/organizations',
+    ORGANIZATION: (id: string): string => `organizations/${id}`,
     ORGANIZATION_JOBS: (id: string): string => `organizations/${id}/jobs`,
     ORGANIZATION_MEMBERS: (id: string): string => `organizations/${id}/members`,
     ORGANIZATION_FAVORITES: (id: string): string => `organizations/${id}/favorites`,
@@ -19,19 +13,4 @@ export const API_ROUTES = {
     ORGANIZATION_INVITE: (id: string) => `/organizations/${id}/invite`,
     ORGANIZATION_ANSWER_REQUEST: (memberId: string) => `organizations/response/${memberId}`,
     REQUEST_ORGANIZATION: (id: string) => `/organizations/${id}/request`,
-    JOBS: '/jobs',
-    JOB: (id: string) => `/jobs/${id}`,
-    JOB_PARTICIPANTS: (id: string) => `/jobs/${id}/participants`,
-    SUBSCRIPTIONS: "/subscriptions",
-    LITIGATIONS: "/litigations",
-    ORGANIZATIONS: "/organizations",
-    PARTNERS: "/partners",
-    USERS: "/users",
-    ADMIN: "/admin",
-    AUTH: "/auth",
-    AUTH_CONNECTED: "/auth/connected"
-} as const
-
-export type Route = typeof API_ROUTES[keyof typeof API_ROUTES]
-
-// export type Route = BaseRoute | `${BaseRoute}/${string}` 
+}
