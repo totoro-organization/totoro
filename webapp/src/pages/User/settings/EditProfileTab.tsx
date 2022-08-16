@@ -17,7 +17,7 @@ import DoneTwoToneIcon from '@mui/icons-material/DoneTwoTone';
 import Text from 'src/components/Text';
 import Label from 'src/components/Label';
 import { useState } from 'react';
-import { updateUser, updatePasswordUser } from 'src/api/users';
+import { updateUser, updatePasswordUser } from 'src/api/users/requests';
 import CheckIcon from '@mui/icons-material/Check';
 import CancelIcon from '@mui/icons-material/Cancel';
 import TextField from '@mui/material/TextField';

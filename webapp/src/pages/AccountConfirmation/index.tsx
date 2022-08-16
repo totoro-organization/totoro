@@ -1,7 +1,7 @@
 import { Box, Container, styled } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { validateAccountUser } from 'src/api/users';
+import { validateAccountUser } from 'src/api/users/requests';
 import AfterValidationContent from './AfterValidationContent';
 import BeforeValidationContent from './BeforeValidationContent';
 

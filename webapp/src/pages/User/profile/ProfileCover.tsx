@@ -26,7 +26,7 @@ import CheckIcon from '@mui/icons-material/Check';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { useState } from 'react';
 import { getConnectedUser } from 'src/api/auth';
-import { updateUser } from 'src/api/users';
+import { updateUser } from 'src/api/users/requests';
 
 const Input = styled('input')({
   display: 'none'

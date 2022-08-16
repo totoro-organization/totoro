@@ -5,15 +5,15 @@ import PageTitleWrapper from 'src/components/PageTitleWrapper';
 import ArrowBackTwoToneIcon from '@mui/icons-material/ArrowBackTwoTone';
 import { Box, Container, Grid, IconButton, Tooltip } from '@mui/material';
 import Footer from 'src/components/Footer';
-import { useApi } from 'src/hooks/useApi';
 import SuspenseLoader from 'src/components/SuspenseLoader';
 import StatusLabel from 'src/components/StatusLabel';
 import ParticipantCard from './subComponents/ParticipantCard';
+import { useUser } from 'src/api/users/hooks';
 
 function UserDetails() {
   const { jobId ,id } = useParams();
 
-  const { data: user, loading: userLoading } = useApi(`/users/${id}`);
+  const { data: { data: user }, loading: userLoading } = useUser(id);
 
   const navigate = useNavigate();
 
