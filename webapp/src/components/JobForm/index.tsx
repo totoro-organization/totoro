@@ -11,15 +11,13 @@ import {
   FormUpload
 } from 'src/components/forms';
 import { JobFormSchema } from './JobForm.schema';
-import { useContext } from 'react';
-import { CommonsContext } from 'src/contexts/CommonsContext';
-import { sortObjectArrayByAscOrder } from 'src/utils/sortByAscOrder';
 import type { JobDifficulty, Tag } from 'src/models';
 import format from 'date-fns/format';
 import AddIcon from '@mui/icons-material/Add';
 import { useSession } from 'src/hooks/useSession';
 import RefreshIcon from '@mui/icons-material/Refresh';
-// import { addJob } from 'src/api/jobs/addJob';
+import { useDifficulties, useTags } from 'src/api/commons/hooks';
+import SuspenseLoader from '../SuspenseLoader';
 
 interface JobFormFieldTypes {
   start_date: Date;
@@ -52,7 +50,8 @@ const JobForm = () => {
   });
   const { currentApp } = useSession();
 
-  const { tags, difficulties, categories } = useContext(CommonsContext);
+  const { tags, categories, loading: tagsLoading } = useTags();
+  const { data: difficulties, loading: difficultiesLoading } = useDifficulties();
 
   const onSubmit = async (formData: JobFormFieldTypes) => {
     const tagsId = formData.tags.map((tag: Tag) => tag.id);
@@ -74,13 +73,8 @@ const JobForm = () => {
     
   };
 
-  const ascDifficulties: JobDifficulty[] = sortObjectArrayByAscOrder(
-    difficulties,
-    'level'
-  );
-
   return (
-    <FormProvider {...methods}>
+    !tagsLoading && !difficultiesLoading ? <FormProvider {...methods}>
       <FormContainer onSubmit={methods.handleSubmit(onSubmit)}>
         <Box display="flex" justifyContent={"flex-end"}>
           <Button  startIcon={<RefreshIcon/>} onClick={() => methods.reset()} variant={'text'}>
@@ -107,9 +101,9 @@ const JobForm = () => {
         <FormSelect
           label="Difficulté"
           name="difficulty"
-          defaultValue={ascDifficulties[0] ?? ''}
+          defaultValue={difficulties[0] ?? ''}
         >
-          {ascDifficulties && ascDifficulties.map((difficulty: JobDifficulty) => (
+          {difficulties && difficulties.map((difficulty: JobDifficulty) => (
             <MenuItem key={difficulty.id} value={difficulty.id}>
               {`${difficulty.level} (${difficulty.token} tokens)`}
             </MenuItem>
@@ -133,7 +127,7 @@ const JobForm = () => {
           <Button variant="contained" color="primary" type="submit">Créer une mission</Button>
         </Box>
       </FormContainer>
-    </FormProvider>
+    </FormProvider> : <SuspenseLoader/>
   );
 };
 
