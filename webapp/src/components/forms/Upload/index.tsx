@@ -1,5 +1,5 @@
 import { Button, FormControl, FormHelperText, styled } from '@mui/material';
-import { ReactNode, useEffect, useState } from 'react';
+import { ReactNode, useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
 const Input = styled('input')({
@@ -29,11 +29,11 @@ function FormUpload({
     setFiles([...files]);
   };
 
-  const handleDeleteFile = (index: number) => {
-    const newFiles = [...files];
-    newFiles.splice(index, 1);
-    setFiles(newFiles);
-  };
+  // const handleDeleteFile = (index: number) => {
+  //   const newFiles = [...files];
+  //   newFiles.splice(index, 1);
+  //   setFiles(newFiles);
+  // };
 
   return (
     <>

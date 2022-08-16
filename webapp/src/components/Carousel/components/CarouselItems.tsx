@@ -1,6 +1,5 @@
 import Carousel from 'react-material-ui-carousel';
 import {
-    Paper,
     Typography,
     Box,
     Container,

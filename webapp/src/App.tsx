@@ -6,7 +6,6 @@ import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import ThemeProvider from './theme/ThemeProvider';
 import { CssBaseline } from '@mui/material';
 import { SessionProvider } from 'src/contexts/SessionContext';
-import { CommonsProvider } from 'src/contexts/CommonsContext';
 
 const App = () => {
 
@@ -17,9 +16,7 @@ const App = () => {
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <CssBaseline />
         <SessionProvider>
-          <CommonsProvider>
             {content}
-          </CommonsProvider>
         </SessionProvider>
       </LocalizationProvider>
     </ThemeProvider>

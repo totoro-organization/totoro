@@ -1,14 +1,12 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Button, Link, MenuItem } from '@mui/material';
+import { Button } from '@mui/material';
 import { FormProvider, useForm } from 'react-hook-form';
-import { NavLink } from 'react-router-dom';
-import { FormContainer, FormSelect, FormTextField } from 'src/components/forms';
+import { FormContainer, FormTextField } from 'src/components/forms';
 import { useToast } from 'src/hooks/useToast';
 import { AddOrganizationData } from 'src/models/services';
-import { addItem } from 'src/services/common.service';
-import { API_ROUTES } from 'src/services/routes';
 import { isSiretValid } from 'src/utils/IsSiretValid';
 import { AddOrganizationSchema } from './AddOrganization.schema';
+import { addOrganization } from 'src/api/organizations/requests/addOrganization';
 
 interface AddOrganizationFieldTypes {
   siret: string;
@@ -35,7 +33,7 @@ function AddOrganizationForm() {
       email: formData.email,
       phone: formData.phone
     };
-    const response = await addItem(API_ROUTES.ORGANIZATIONS, data);
+    const response = await addOrganization(data);
     if ('error' in response) {
       setToast({
         variant: 'error',

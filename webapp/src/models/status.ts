@@ -77,6 +77,12 @@ export enum JobStatusEnum {
     coming = StatusEnum.coming,
 }
 
+export enum JobParticipantStatusEnum {
+    actived = StatusEnum.actived,
+    closed = StatusEnum.closed,
+    deleted = StatusEnum.deleted,
+}
+
 export enum OrganizationStatusEnum {
     actived = StatusEnum.actived,
     disabled = StatusEnum.disabled,
@@ -102,6 +108,8 @@ export enum MembershipStatusEnum {
 export type LitigationObjectStatus = Status<keyof typeof LitigationObjectStatusEnum>;
 
 export type JobStatus = Status<keyof typeof JobStatusEnum>;
+
+export type JobParticipantStatus = Status<keyof typeof JobParticipantStatusEnum>;
 
 export type JobDifficultyStatus = Status<keyof typeof CommonStatusEnum>;
 

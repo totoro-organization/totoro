@@ -97,7 +97,7 @@ function Status500() {
                 >
                   Refresh view
                 </LoadingButton>
-                <Button href="/dashboards/statistiques" variant="contained" sx={{ ml: 1 }}>
+                <Button href="/dashboards/stats" variant="contained" sx={{ ml: 1 }}>
                   Go back
                 </Button>
               </Box>
@@ -125,7 +125,7 @@ function Status500() {
                     High performance React template built with lots of powerful Material-UI components across multiple product niches for fast &amp; perfect apps development processes.
                   </TypographySecondary>
                   <Button
-                    href="/dashboards/statistiques"
+                    href="/dashboards/stats"
                     size="large"
                     variant="contained"
                   >
