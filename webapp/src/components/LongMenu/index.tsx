@@ -1,4 +1,4 @@
-import { Menu, MenuItem, IconButton } from '@mui/material';
+import { Menu, MenuItem, IconButton, ListItemIcon } from '@mui/material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { MouseEvent, useState } from 'react';
 import { useNavigate } from 'react-router';
@@ -6,7 +6,8 @@ import { useNavigate } from 'react-router';
 interface MenuOption {
   value: string,
   name?: string,
-  link?: string
+  link?: string,
+  icon?: any
 }
 
 interface LongMenuProps {
@@ -50,6 +51,7 @@ export default function LongMenu({ options }: LongMenuProps) {
       >
         {options && options.map((option) => (
           <MenuItem key={option.value} onClick={ () => handleClickMenuItem(option)}>
+            {option.icon && <ListItemIcon><option.icon/></ListItemIcon>}
             {option.name}
           </MenuItem>
         ))}
