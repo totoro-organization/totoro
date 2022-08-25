@@ -21,6 +21,16 @@ module.exports = {
               ]
             },
             ...pagination,
+            {
+              name: "order",
+              in: "query",
+              type: "string",
+              required: false,
+              enum: [
+                "ASC",
+                "DESC"
+              ]
+            },
             ...param("latitude","query","integer",false,"La longitude de l'utilisateur"),
             ...param("longitude","query","integer",false,"La latitude de l'utilisateur"),
             ...param("distance","query","integer",false),
@@ -57,9 +67,10 @@ module.exports = {
             ...param("address","formData","string",true,"Adresse où se passe la mission (n° + nom de la rue)"),
             ...param("cp","formData","integer",true,"Code postal où se passe la mission"),
             ...param("commune","formData","string",true,"Commune où se passe la mission"),
-            ...param("longitude","formData","integer",true,"La longitude de l'adresse"),
-            ...param("latitude","formData","integer",true,"La latitude de l'adresse"),
-            ...param("images","formData", ["array", {items: {type:"string", format:"binary"}}],true,"Illustrations (images liées à la mission)"),
+            ...param("longitude","formData","string",true,"La longitude de l'adresse"),
+            ...param("latitude","formData","string",true,"La latitude de l'adresse"),
+            ...param("images","formData","file",true,"Illustrations (images liées à la mission)"),
+            //...param("images","formData", ["array", {items: {type:"string", format:"binary"}}],true,"Illustrations (images liées à la mission)"),
             /*{
               "files[]": {
                 "name": "files",

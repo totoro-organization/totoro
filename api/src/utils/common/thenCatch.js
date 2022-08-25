@@ -30,7 +30,7 @@ module.exports = {
 
     model[pagination ? "findAndCountAll" : "findAll"](params)
     .then(function (results) {
-        let response = pagination ? module.exports.getPagingData(results, page, getPagination.limit):{ totalRows: results.length, data: results };
+        let response = pagination ? module.exports.getPagingData(results, page, getPagination.limit):{ total_rows: results.length, data: results };
         return res
           .status(200)
           .json(response);
@@ -240,10 +240,10 @@ module.exports = {
     }
   },
   getPagingData: function (results, page, limit) {
-    const { count: totalRows, rows: data } = results;
-    const currentPage = page ? +page : 0;
-    const totalPages = Math.ceil(totalRows / limit);
-    return { totalRows, data, totalPages, currentPage: totalPages == 0 ? 0 : currentPage + 1 };
+    const { count: total_rows, rows: data } = results;
+    const current_page = page ? +page : 0;
+    const total_pages = Math.ceil(total_rows / limit);
+    return { total_rows, data, total_pages, current_page: total_pages == 0 ? 0 : current_page + 1 };
   },
   getPagination : function (page, size) {
     const limit = size ? +size : 10;

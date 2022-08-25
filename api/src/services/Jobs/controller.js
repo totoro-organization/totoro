@@ -6,6 +6,7 @@ const { updateJob, registerToJob } = require("~utils/common/mail.json");
 const { sendMail } = require("~externals/mailer");
 const env = process.env.NODE_ENV || "development";
 const config = require("~orm/config/config.json")[env];
+const { v4: uuidv4 } = require("uuid");
 
 const { 
 	getRow,
@@ -97,7 +98,7 @@ const exclude = ["assos_user_id","difficulty_id","status_id"];
 
 module.exports = {
 	getJobs: async function (res, queries) {
-		const {status, size, page, title, min, max, isExpired, start_date, end_date, cp, commune, type, category, latitude, longitude, distance} = queries
+		const {status, size, page, title, min, max, isExpired, start_date, end_date, cp, commune, type, category, latitude, longitude, distance, order} = queries
 
 		let condition = {};
 		let listTags = [];
@@ -195,11 +196,14 @@ module.exports = {
 			if(distance) params.having = Jobs.sequelize.literal(`distance <= ${distance}`)
 		} 
 
+		if(order) params.order = [['createdAt', order.toUpperCase()]]
+
+
 		Jobs[size ? "findAndCountAll" : "findAll"](params)
 		.then(function (results) {
 			let response = size ? 
 				getPagingData(results, pagination.page, getPaginationTab.limit) : 
-				{ totalRows: results.length, data: results }
+				{ total_rows: results.length, data: results }
 
 			return res
 				.status(200)
@@ -316,13 +320,23 @@ module.exports = {
 		const statusData = await getRow(res, Status, { label: label_status.disabled });
 		const difficultyData = await getRow(res, Difficulties, { id: difficulty_id });
 		const authorData = await getRow(res, Associations_users, { id: assos_user_id });
+		const tagsData = await getRows(Tags, { id: {[Op.in]: tags} });
+
+		if(tagsData.length !== tags.length){
+			return res
+			.status(error.not_exist.status)
+			.json({ entity: Tags.name, message: "error, one of the key id does not exist" });
+		}
+
 		data.status_id = statusData.id;
 
 		const tagsJob = tags;
 		delete data.tags;
 		const condition = {title};
+
+		console.log(tagsJob);
+
 		if(data.participants_max) data.remaining_place = data.participants_max
-		
 		commonsController.create(
 			async function (result) {
 				const linkQrcode = await qrcode(path.qrcodeJobs, result.id)
@@ -332,6 +346,7 @@ module.exports = {
 					var allValueTags = [];
 					for (var i=0; i < tagsJob.length; i++) {
 						var valueObj = {
+							id: uuidv4(),
 							tag_id: tagsJob[i],
 							jobs_id: result.id
 						};
@@ -340,41 +355,33 @@ module.exports = {
 
 					commonsController.create(
 						function (resultTags) {
-							const uploadFiles = upload(path.jobs).array("images");
-							uploadFiles(req, res, function(error) {
-								if (error){
-									return res
-										.status(error.syntax_error.status)
-										.json({ message:"error uploading file" });
-								}
-						
-								let index, len;
-								const tabFiles = []
-						
-								for (index = 0, len = files.length; index < len; ++index) {
-									var valueObj = {
-										jobs_id: result.id,
-										original_name: files[index].originalname,
-										type: files[index].mimetype,
-										image: `${path.jobs}/${files[index].filename}`
-									};
-									tabFiles.push(valueObj);
-								}
+							let index, len;
+							const tabFiles = []
+					
+							for (index = 0, len = files.length; index < len; ++index) {
+								var valueObj = {
+									id: uuidv4(),
+									jobs_id: result.id,
+									original_name: files[index].originalname,
+									type: files[index].mimetype,
+									image: `${path.jobs}/${files[index].filename}`
+								};
+								tabFiles.push(valueObj);
+							}
 
-								commonsController.create(
-									function (resultAttachments) {
-										return res
-											.status(success.create.status)
-											.json({ entity: Jobs.name, message: success.create.message });
-									},
-									res,
-									Attachment_jobs,
-									tabFiles,
-									null,
-									null,
-									true
-								);
-							});
+							commonsController.create(
+								function (resultAttachments) {
+									return res
+										.status(success.create.status)
+										.json({ entity: Jobs.name, message: success.create.message });
+								},
+								res,
+								Attachment_jobs,
+								tabFiles,
+								null,
+								null,
+								true
+							);
 						},
 						res,
 						Tag_jobs,

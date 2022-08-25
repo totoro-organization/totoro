@@ -15,7 +15,7 @@ exports.router = (function () {
 		controller.getJobs(res, req.query);
 	})
 
-	.post("/", [passport, controller.createJob])
+	.post("/", [passport, upload(path.jobs).array("images"), controller.createJob])
 
 	.get("/:id", async function (req, res) {
 		const id = req.params.id;
