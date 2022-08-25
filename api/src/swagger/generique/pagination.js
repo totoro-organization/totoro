@@ -10,5 +10,5 @@ module.exports = [
         in: "query",
         type: "integer",
         required: false
-    }
+    },
 ]
