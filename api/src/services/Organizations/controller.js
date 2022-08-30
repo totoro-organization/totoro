@@ -1,5 +1,4 @@
-
-const axios = require("axios");
+const { getAllByInsee } = require("~externals/insee");
 const moment = require("moment");
 const { Op } = require("sequelize");
 const asyncLib = require("async");
@@ -84,24 +83,13 @@ module.exports = {
 				.json({ message: emailValid });
 		*/
 
-    	const activeStatus = await getRow(Status, { label: label_status.actived });
-		const request = await axios.get(`https://entreprise.data.gouv.fr/api/sirene/v1/siret/${siret}`);
-		if(request.data.message){
-			return res
-					.status(success.not_found.status)
-					.json({ entity: 'siret', message: request.data.message });
-		}
+		data = await getAllByInsee("siret", siret, data, "association");
 
-		data["siren"] = request.data.siege_social.siren
-		data["siret"] = request.data.siege_social.siret
-		data["name"] = request.data.siege_social.nom_raison_sociale
-		data["longitude"] = parseFloat(request.data.siege_social.longitude)
-		data["latitude"] = parseFloat(request.data.siege_social.latitude)
-		data["creation_date"] = `${request.data.siege_social.date_creation.substring(0, 4)}-${request.data.siege_social.date_creation.substring(4, 6)}-${request.data.siege_social.date_creation.substring(6, 8)}`
-		data["activity"] = request.data.siege_social.libelle_activite_principale
-		data["address"] = request.data.siege_social.l4_normalisee || request.data.siege_social.l4_declaree || `${request.data.siege_social.numero_voie} ${request.data.siege_social.type_voie} ${request.data.siege_social.libelle_voie}`
-		data["cp"] = request.data.siege_social.code_postal
-		data["commune"] = request.data.siege_social.libelle_commune
+		if(data.statut && data.message){
+			return res
+					.status(data.statut)
+					.json({ entity: 'siret', message: data.message });
+		}
 
 		const statusData = await getRow(res, Status, { label: label_status.requested });
 		data["status_id"] = statusData.id;

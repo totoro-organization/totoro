@@ -54,6 +54,7 @@ services:
       - WEB_APP_URL=$WEB_APP_URL
       - BO_URL=$BO_URL
       - LANDING_PAGE_URL=$LANDING_PAGE_URL
+      - INSEE=$INSEE
     networks:
       - backend
       - frontend
