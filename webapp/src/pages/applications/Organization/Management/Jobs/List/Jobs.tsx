@@ -4,7 +4,7 @@ import SuspenseLoader from 'src/components/SuspenseLoader';
 import { StatusEnum } from 'src/models';
 import { API_ROUTES } from 'src/api/routes';
 import { useSession } from 'src/hooks/useSession';
-import { useJobs } from 'src/api/jobs/hooks';
+import { useOrganizationJobs } from 'src/api/organizations/hooks/useOrganizationJobs';
 
 const statusOptions = [
   {
@@ -27,7 +27,7 @@ const statusOptions = [
 
 export default function Jobs() {
   const { currentApp } = useSession();
-  const { data: jobs, loading } = useJobs(currentApp.data.id);
+  const { data: jobs, loading } = useOrganizationJobs(currentApp.data.id);
 
   return jobs && !loading ? (
     <TableWrapper
