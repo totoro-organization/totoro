@@ -7,6 +7,8 @@ import { AddOrganizationData } from 'src/models/services';
 import { isSiretValid } from 'src/utils/IsSiretValid';
 import { AddOrganizationSchema } from './AddOrganization.schema';
 import { addOrganization } from 'src/api/organizations/requests/addOrganization';
+import { useNavigate } from 'react-router';
+import { APP_PATHS } from 'src/appPaths';
 
 interface AddOrganizationFieldTypes {
   siret: string;
@@ -18,6 +20,7 @@ function AddOrganizationForm() {
   const methods = useForm<AddOrganizationFieldTypes>({
     resolver: yupResolver(AddOrganizationSchema)
   });
+  const navigate = useNavigate();
   const { setToast } = useToast();
   const onSubmit = async (formData: AddOrganizationFieldTypes) => {
     if(!isSiretValid(formData.siret)) {
@@ -48,6 +51,7 @@ function AddOrganizationForm() {
         'Votre demande à été envoyée avec succès. Vous serez notifié quand elle sera sera acceptée ou refusée',
       duration: 8000
     });
+    navigate(APP_PATHS.ORGANIZATION_DASHBOARDS_RESUME);
   };
 
   return (
