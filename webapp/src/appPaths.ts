@@ -13,6 +13,7 @@ export const APP_PATHS = {
     PROFILE_SETTINGS: '/profile/settings',
     ORGANIZATION_DASHBOARDS_STATS: '/organization/dashboards/stats',
     ORGANIZATION_DASHBOARDS_RESUME: '/organization/dashboards/resume',
+    JOIN_ORGANIZATION: '/organization/join',
     ADD_ORGANIZATION: '/organization/add',
     ORGANIZATION_ADD_JOB: '/organization/add-job',
     ORGANIZATION_JOB_PARTICIPANTS: '/organization/jobs/:jobId/:id',

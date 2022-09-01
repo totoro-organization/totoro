@@ -64,7 +64,7 @@ function MenuAppList() {
           {
             value: 'request_organization',
             name: 'Rejoindre une association',
-            link: APP_PATHS.ADD_ORGANIZATION,
+            link: APP_PATHS.JOIN_ORGANIZATION,
             icon: LoginIcon
           }
         ]}/>
