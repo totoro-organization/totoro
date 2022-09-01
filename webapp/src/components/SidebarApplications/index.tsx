@@ -6,17 +6,26 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
-  ListSubheader
+  ListSubheader,
+  styled
 } from '@mui/material';
 import { Box } from '@mui/system';
 import { useState } from 'react';
 import FallbackAvatar from 'src/components/FallbackAvatar';
 import { useSession } from 'src/hooks/useSession';
 import { config } from 'src/api/config';
-import AddBoxIcon from '@mui/icons-material/AddBox';
-import GroupAddIcon from '@mui/icons-material/GroupAdd';
 import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
 import StorefrontIcon from '@mui/icons-material/Storefront';
+import LongMenu from 'src/components/LongMenu';
+import { APP_PATHS } from 'src/appPaths';
+import AddIcon from '@mui/icons-material/Add';
+import LoginIcon from '@mui/icons-material/Login';
+
+const Heading = styled(Box)(({
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+}));
 
 function MenuAppList() {
   const [openOrganizations, setOpenOrganizations] = useState(false);
@@ -43,7 +52,23 @@ function MenuAppList() {
       }
     >
       <Divider />
-      <h4> Associations</h4>
+      <Heading>
+        <h4> Associations</h4>
+        <LongMenu options={[
+          {
+            value: 'add_organization',
+            name: 'Ajouter une association',
+            link: APP_PATHS.ADD_ORGANIZATION,
+            icon: AddIcon
+          },
+          {
+            value: 'request_organization',
+            name: 'Rejoindre une association',
+            link: APP_PATHS.ADD_ORGANIZATION,
+            icon: LoginIcon
+          }
+        ]}/>
+      </Heading>
       <ListItemButton onClick={handleClickOrganizations}>
         <ListItemIcon>
           <FallbackAvatar
@@ -104,26 +129,14 @@ function MenuAppList() {
                 </Box>
               </ListItemButton>
             ))
-          ) : (
-            <>
-              <ListItemButton>
-                <ListItemIcon>
-                  <AddBoxIcon />
-                </ListItemIcon>
-                <ListItemText primary="Ajouter" />
-              </ListItemButton>
-              <ListItemButton>
-                <ListItemIcon>
-                  <GroupAddIcon />
-                </ListItemIcon>
-                <ListItemText primary="Rejoindre" />
-              </ListItemButton>
-            </>
-          )}
+          ) : <p>Aucune association</p>
+}
         </List>
       </Collapse>
       <Divider />
-      <h4>Partenaires</h4>
+      <Heading>
+        <h4>Partenaires</h4>
+      </Heading>
       <ListItemButton onClick={handleClickPartners}>
         <>
           <ListItemIcon>
@@ -169,7 +182,7 @@ function MenuAppList() {
               </ListItemButton>
             ))
           ) : (
-            <p>Ajouter un partenaire</p>
+            <p>Aucun partenaire</p>
           )}
         </List>
       </Collapse>

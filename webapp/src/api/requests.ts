@@ -2,6 +2,7 @@ import { requestAxios } from "./requestAxios";
 
 export async function getItems(uri: string, query?: any) {
     if(query) {
+        console.log(query);
         uri += '?';
         for (const key in query) {
             uri += key + '=' + query[key] + '&';
