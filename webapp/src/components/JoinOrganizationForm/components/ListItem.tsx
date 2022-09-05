@@ -13,6 +13,8 @@ import Loader from 'src/components/Loader';
 import { useState } from 'react';
 import { requestOrganization } from 'src/api/organizations/requests';
 import { useToast } from 'src/hooks/useToast';
+import { APP_PATHS } from 'src/appPaths';
+import { Link } from 'react-router-dom';
 
 const Container = styled(ListItem)(
   ({ theme }) => `
@@ -46,7 +48,6 @@ function JoinOrganizationListItem({ item }) {
       duration: 6000
     });
   };
-
   return (
     <Container
       role={undefined}
@@ -63,7 +64,10 @@ function JoinOrganizationListItem({ item }) {
         inputProps={{ "aria-labelledby": labelId }}
       />
     </ListItemIcon> */}
-      <ListItemText id={labelId} primary={item.name} />
+      <Link to={APP_PATHS.ORGANIZATION(item.id)}>
+        <ListItemText id={labelId} primary={item.name}/>
+      </Link>
+      {/* <ListItemText  /> */}
       <ListItemSecondaryAction onClick={handleRequestOrganization}>
         <IconButton color="primary" edge="end" aria-label="comments">
           {/* */}
