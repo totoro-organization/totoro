@@ -430,6 +430,7 @@ module.exports = {
 				var allValueTags = [];
 				for (var i=0; i < tagsJob.length; i++) {
 					var valueObj = {
+						id: `"${uuidv4()}"`,
 						tag_id: tagsJob[i],
 						jobs_id: id
 					};
