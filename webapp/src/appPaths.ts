@@ -15,6 +15,7 @@ export const APP_PATHS = {
     ORGANIZATION_DASHBOARDS_RESUME: '/organization/dashboards/resume',
     JOIN_ORGANIZATION: '/organization/join',
     ADD_ORGANIZATION: '/organization/add',
+    ORGANIZATION: (id: string) => `/organization/${id}/details`,
     ORGANIZATION_ADD_JOB: '/organization/add-job',
     ORGANIZATION_JOB_PARTICIPANTS: '/organization/jobs/:jobId/:id',
     ORGANIZATION_JOB_PARTICIPANT: (jobId: string, userId: string) => `/organization/jobs/${jobId}/participant/${userId}`,

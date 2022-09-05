@@ -41,6 +41,9 @@ const CreationJob = Loader(
 const ListingJobs = Loader(
   lazy(() => import('src/pages/applications/Organization/Management/Jobs/List'))
 );
+const OrganizationDetails = Loader(
+  lazy(() => import('src/pages/applications/Organization/Details'))
+);
 const JobParticipant = Loader(
   lazy(
     () => import('src/pages/applications/Organization/Management/Jobs/Participant')
@@ -197,6 +200,10 @@ const routes: PartialRouteObject[] = [
                     element: <Resume />
                   }
                 ]
+              },
+              {
+                path: ':id/details',
+                element: <OrganizationDetails/>
               },
               {
                 path: 'add',

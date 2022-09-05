@@ -1,18 +1,17 @@
 import { useState, useEffect } from 'react';
-import { ApiResponse } from 'src/api/shared/interfaces';
 import { Organization } from 'src/models';
 import { getOrganization } from '../requests';
 import { useToast } from 'src/hooks/useToast';
 
 export type useOrganizationResponse = {
-  data: ApiResponse<Organization>;
+  data: Organization;
   error: any;
   loading: boolean;
   getData: () => Promise<any>
 };
 
 export const useOrganization = (id: string): useOrganizationResponse => {
-  const [data, setData] = useState<ApiResponse<Organization>>();
+  const [data, setData] = useState<Organization>();
   const [error, setError] = useState<any>();
   const [loading, setLoading] = useState<boolean>(true);
 
