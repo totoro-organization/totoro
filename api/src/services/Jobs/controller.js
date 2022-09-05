@@ -334,8 +334,6 @@ module.exports = {
 		delete data.tags;
 		const condition = {title};
 
-		console.log(tagsJob);
-
 		if(data.participants_max) data.remaining_place = data.participants_max
 		commonsController.create(
 			async function (result) {
@@ -346,7 +344,7 @@ module.exports = {
 					var allValueTags = [];
 					for (var i=0; i < tagsJob.length; i++) {
 						var valueObj = {
-							id: uuidv4(),
+							id: `"${uuidv4()}"`,
 							tag_id: tagsJob[i],
 							jobs_id: result.id
 						};
@@ -360,7 +358,7 @@ module.exports = {
 					
 							for (index = 0, len = files.length; index < len; ++index) {
 								var valueObj = {
-									id: uuidv4(),
+									id: `"${uuidv4()}"`,
 									jobs_id: result.id,
 									original_name: files[index].originalname,
 									type: files[index].mimetype,
