@@ -12,9 +12,9 @@ import {
 } from '@mui/material';
 
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
-import { Job } from '../../../../../../../models';
+import { Job } from 'src/models';
 
-import StatusLabel from '../../../../../../../components/StatusLabel';
+import StatusLabel from 'src/components/StatusLabel';
 import getFormatLocalDate from 'src/utils/getFormatLocalDate';
 import { APP_PATHS } from 'src/appPaths';
 

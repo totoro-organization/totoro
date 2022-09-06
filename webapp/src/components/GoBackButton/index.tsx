@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router';
 interface GoBackButtonProps {
   path: string;
   tooltipText?: string;
-  children: JSX.Element;
+  children: JSX.Element | JSX.Element[];
 }
 
 function GoBackButton({ children, path, tooltipText }: GoBackButtonProps) {

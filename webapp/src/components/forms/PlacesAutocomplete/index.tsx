@@ -10,7 +10,7 @@ interface PlacesAutocompleteProps {
   name: string
 }
 
-export default function PlacesAutocomplete({ name }) {
+export default function PlacesAutocomplete({ name }: PlacesAutocompleteProps) {
   const { control, setValue: setFormValue } = useFormContext();
   const {
     ready,

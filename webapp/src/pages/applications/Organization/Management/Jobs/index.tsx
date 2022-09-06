@@ -1,28 +1,28 @@
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router';
 import { Helmet } from 'react-helmet-async';
 import PageTitleWrapper from 'src/components/PageTitleWrapper';
-import { Box, Grid, IconButton, Tab, Tooltip, Card, Typography, CardContent } from '@mui/material';
+import { Box, Grid, IconButton, Tab, Tooltip } from '@mui/material';
 import PageTitle from 'src/components/PageTitle';
 import ArrowBackTwoToneIcon from '@mui/icons-material/ArrowBackTwoTone';
 import StatusLabel from 'src/components/StatusLabel';
-import Text from 'src/components/Text';
 import TabsWrapper from 'src/components/TabsWrapper';
 import { Container } from '@mui/system';
 import SuspenseLoader from 'src/components/SuspenseLoader';
 import TableWrapper from 'src/components/TableWrapper';
 import { ChangeEvent, useState } from 'react';
-import getFormatLocalDate from 'src/utils/getFormatLocalDate';
 import Footer from 'src/components/Footer';
 import ParticipantsTable from './List/ParticipantsTable';
-import { config } from 'src/api/config';
-import JobItem from './subComponents/JobItem';
 import { useJob, useJobParticipants } from 'src/api/jobs/hooks';
+import JobCard from 'src/components/JobCard';
+import GoBackButton from 'src/components/GoBackButton';
+import { APP_PATHS } from 'src/appPaths';
 
 function Job() {
   const navigate = useNavigate();
-  const { id } = useParams();
-  const { data: { data: job }, loading: jobLoading } = useJob(id);
-  const { data: { data: participants }, loading: participantsLoading } = useJobParticipants(id); 
+  const { jobId } = useParams();
+  const { data: job, loading: jobLoading } = useJob(jobId);
+  const { data: participants, loading: participantsLoading } =
+    useJobParticipants(jobId);
   const [currentTab, setCurrentTab] = useState<string>('details');
   const tabs = [
     { value: 'details', label: 'Détails' },
@@ -31,31 +31,23 @@ function Job() {
   const handleTabsChange = (event: ChangeEvent<{}>, value: string): void => {
     setCurrentTab(value);
   };
-  const handleGoBack = () => navigate('/organization/management/jobs');
-  
+
   return (
     <>
       <Helmet>
         <title>{job?.title}</title>
       </Helmet>
       <PageTitleWrapper>
-        <Box alignItems={"center"} display="flex">
-          <Tooltip
-            onClick={handleGoBack}
-            arrow
-            placement="top"
-            title="Retourner aux missions"
-          >
-            <IconButton color="primary" sx={{ p: 2, mr: 2 }}>
-              <ArrowBackTwoToneIcon />
-            </IconButton>
-          </Tooltip>
+        <GoBackButton
+          path={APP_PATHS.ORGANIZATION_JOBS}
+          tooltipText="Retourner aux associations"
+        >
           <PageTitle
             heading={job?.title}
             subHeading={job?.author.organization.name}
           />
-            { job && <StatusLabel status={job?.status.label}/>}
-        </Box>
+          {job && <StatusLabel status={job?.status.label} />}
+        </GoBackButton>
       </PageTitleWrapper>
       <Container maxWidth="lg">
         <Grid
@@ -77,99 +69,23 @@ function Job() {
               <Tab key={tab.value} label={tab.label} value={tab.value} />
             ))}
           </TabsWrapper>
-            <Grid item xs={12}>
-              {currentTab === 'details' &&
-                (!jobLoading && job ? (
-                  <Card>
-                    <img style={{ objectFit: "cover", width: '100%', maxHeight: '40vh' }} src={config.server + job.attachments[0].image} alt="Job" />
-                    <CardContent sx={{ p: 4 }}>
-                      <Typography variant="subtitle2">
-                        <Grid justifyItems={'center'} container spacing={0}>
-                          <JobItem title='Titre :'>
-                            <Text color="black">
-                              <b>{job.title}</b>
-                            </Text>
-                          </JobItem>
-                          <JobItem title='Association :'>
-                            <Text color="black">
-                              <b>{job.author.organization.name}</b>
-                            </Text>
-                          </JobItem>
-                          <JobItem title='Description :'>
-                            <Text color="black">
-                              <b>{job.description}</b>                       
-                            </Text>
-                          </JobItem>
-                          <JobItem title='Auteur :'>
-                            <Text color="black">
-                              <b>
-                                {job.author.user.firstname} {job.author.user.lastname} (
-                                {job.author.user.username})
-                              </b>
-                            </Text>
-                          </JobItem>
-                          <JobItem title='Nombre de participants :'>
-                            <Text color="black">
-                              <b>
-                                {job.participants_max - job.remaining_place} /{' '}
-                                {job.participants_max}
-                              </b>
-                            </Text>
-                          </JobItem>
-                          <JobItem title='Adresse :'>
-                          <Text color="black">
-                              <b>
-                                {job.address}, {job.cp} {job.commune}
-                              </b>
-                            </Text>
-                          </JobItem>
-                          <JobItem title='Difficulté :'>
-                            <Text color="black">
-                              <b>
-                                {job.difficulty.level} ({job.difficulty.token})
-                              </b>
-                            </Text>
-                          </JobItem>
-                          <JobItem title='Dates :'>
-                            <Text color="black">
-                              <b>Commence le : {getFormatLocalDate(job.start_date)}</b>
-                              &emsp;
-                              <b>Termine le : {getFormatLocalDate(job.end_date)}</b>
-                            </Text>                     
-                          </JobItem>
-                          <JobItem title='Créée le :'>
-                            <Text color="black">{getFormatLocalDate(job.createdAt)}</Text>
-                          </JobItem>
-                          <JobItem title='Modifiée le :'>
-                            <Text color="black">{getFormatLocalDate(job.updatedAt)}</Text>                
-                          </JobItem>
-                          <JobItem title='QR code :'>
-                            <img src={config.server + job.qrcode} alt="Qr Code" />
-                          </JobItem>
-                        </Grid>
-                      </Typography>
-                    </CardContent>
-                  </Card>
-                ) : (
-                  <SuspenseLoader />
-                ))}
-              {currentTab === 'participants' &&
-                  (!participantsLoading && participants ? (
-                  <TableWrapper
-                    title="Participants"
-                    defaultItems={participants}
-                  >
-                    <ParticipantsTable items={participants} />
-                  </TableWrapper>
-                  ) : (
-                  <SuspenseLoader />
-                  ))}
-              </Grid>
+          <Grid item xs={12}>
+            {currentTab === 'details' &&
+              (!jobLoading && job ? <JobCard job={job} /> : <SuspenseLoader />)}
+            {currentTab === 'participants' &&
+              (!participantsLoading && participants ? (
+                <TableWrapper title="Participants" defaultItems={participants}>
+                  <ParticipantsTable items={participants} />
+                </TableWrapper>
+              ) : (
+                <SuspenseLoader />
+              ))}
           </Grid>
-        </Container>
+        </Grid>
+      </Container>
       <Footer />
     </>
-  )
+  );
 }
 
-export default Job
+export default Job;
