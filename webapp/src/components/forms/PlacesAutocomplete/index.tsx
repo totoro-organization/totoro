@@ -108,6 +108,7 @@ export default function PlacesAutocomplete({ name }: PlacesAutocompleteProps) {
         name={name}
         render={({ field, fieldState: { error } }) => (
           <TextField
+          sx={{ width: '100%'}}
             label="Addresse"
             value={value}
             onChange={handleInput}
