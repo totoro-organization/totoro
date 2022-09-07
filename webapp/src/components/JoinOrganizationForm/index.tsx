@@ -7,11 +7,7 @@ import SuspenseLoader from '../SuspenseLoader';
 import JoinOrganizationList from './components/List';
 
 const filterData = (query: string, data: Organization[]) => {
-  console.log(query);
-
   if (!query) {
-    console.log('no query');
-
     return data;
   } else {
     return data.filter((d: Organization) =>
@@ -25,8 +21,7 @@ const paperClasses = {
   flexDirection: 'column',
   rowGap: 2,
   padding: 2
-}
-
+};
 
 function JoinOrganizationForm() {
   const { data: organizations, loading } = useOrganizations();
@@ -35,8 +30,8 @@ function JoinOrganizationForm() {
   // const [checked, setChecked] = useState([0]);
 
   useEffect(() => {
-      const dataFiltered = filterData(searchQuery, organizations?.data);
-      setFilteredItems(dataFiltered);
+    const dataFiltered = filterData(searchQuery, organizations?.data);
+    setFilteredItems(dataFiltered);
   }, [searchQuery]);
 
   useEffect(() => {
@@ -60,7 +55,7 @@ function JoinOrganizationForm() {
   //   setSearched("");
   //   requestSearch(searched);
   // };
-  
+
   return (
     <Paper sx={paperClasses} component={Box}>
       <Searchbar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
