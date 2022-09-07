@@ -1,4 +1,5 @@
 export const APP_PATHS = {
+    INDEX: '/',
     LOGIN: '/login',
     SIGNUP: '/signup',
     ACCOUNT_VERIFICATION: '/account-verification',
