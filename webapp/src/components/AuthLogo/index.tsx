@@ -13,6 +13,7 @@ function AuthLogo() {
       }}
     >
       <img
+        style={{ width: "100%"}}
         alt="BTC"
         src="/static/images/logo/totoro-logo.svg"
       />
