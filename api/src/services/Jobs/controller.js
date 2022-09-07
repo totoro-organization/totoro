@@ -626,7 +626,7 @@ module.exports = {
 				}
 			]
 		);
-		const job = await getRow(Jobs, {id}, include);
+		const job = await getRow(res, Jobs, {id}, include);
 		const participants = await getRows(
 			Groups, 
 			{jobs_id: id},
