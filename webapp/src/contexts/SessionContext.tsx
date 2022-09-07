@@ -131,7 +131,6 @@ export function SessionProvider({
       })
       .finally(() => {
         setLoading(false);
-        navigate(APP_PATHS.INDEX);
       });
   }
 

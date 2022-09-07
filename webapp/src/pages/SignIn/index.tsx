@@ -5,6 +5,10 @@ import SigninForm from 'src/components/SigninForm';
 import Paper from '@mui/material/Paper';
 import { DefaultSettingsT, ItemCarrousel } from 'src/shared/interfaces';
 import Carousel from 'src/components/Carousel';
+import { useNavigate } from 'react-router';
+import { useSession } from 'src/hooks/useSession';
+import { APP_PATHS } from 'src/appPaths';
+import { useEffect } from 'react';
 
 const containerStyles = {
   display: 'flex',
@@ -34,6 +38,12 @@ const items: ItemCarrousel[] = [
 ]
 
 export default function SignIn() {
+  const { user } = useSession();
+  const navigate = useNavigate();
+  useEffect(() => {
+    if(user) navigate(APP_PATHS.INDEX);
+  }, [user]) ;
+  
   return (
     <Grid container component="main" sx={{ height: '100vh' }}>
       <CssBaseline />
