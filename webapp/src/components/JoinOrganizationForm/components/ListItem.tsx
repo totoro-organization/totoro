@@ -17,6 +17,7 @@ import { APP_PATHS } from 'src/appPaths';
 import { Link } from 'react-router-dom';
 import { useSession } from 'src/hooks/useSession';
 import { LoadingButton } from '@mui/lab';
+import ListItemStatus from './ListItemStatus';
 
 const Container = styled(ListItem)(
   ({ theme }) => `
@@ -77,7 +78,7 @@ function JoinOrganizationListItem({ item }) {
       {/* <ListItemText  /> */}
       <ListItemSecondaryAction>
         {isUserInOrganization ? (
-          <p> Vous faites partie de cette association</p>
+          <ListItemStatus id={item.id} />
         ) : success ? (
           <CheckCircleIcon color="success" />
         ) : (
