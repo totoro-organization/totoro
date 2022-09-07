@@ -15,6 +15,8 @@ import { requestOrganization } from 'src/api/organizations/requests';
 import { useToast } from 'src/hooks/useToast';
 import { APP_PATHS } from 'src/appPaths';
 import { Link } from 'react-router-dom';
+import { useSession } from 'src/hooks/useSession';
+import { LoadingButton } from '@mui/lab';
 
 const Container = styled(ListItem)(
   ({ theme }) => `
@@ -24,6 +26,7 @@ const Container = styled(ListItem)(
 
 function JoinOrganizationListItem({ item }) {
   const labelId = `checkbox-list-label-${item.id}`;
+  const { user } = useSession();
   const { setToast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -48,6 +51,10 @@ function JoinOrganizationListItem({ item }) {
       duration: 6000
     });
   };
+  const isUserInOrganization = user.memberships.find(
+    (membership) => membership.organization.id === item.id
+  );
+
   return (
     <Container
       role={undefined}
@@ -65,20 +72,25 @@ function JoinOrganizationListItem({ item }) {
       />
     </ListItemIcon> */}
       <Link to={APP_PATHS.ORGANIZATION(item.id)}>
-        <ListItemText id={labelId} primary={item.name}/>
+        <ListItemText id={labelId} primary={item.name} />
       </Link>
       {/* <ListItemText  /> */}
-      <ListItemSecondaryAction onClick={handleRequestOrganization}>
-        <IconButton color="primary" edge="end" aria-label="comments">
-          {/* */}
-          {isLoading ? (
-            <Loader size={24} />
-          ) : success ? (
-            <CheckCircleIcon color="success" />
-          ) : (
-            <ArrowForwardIcon />
-          )}
-        </IconButton>
+      <ListItemSecondaryAction>
+        {isUserInOrganization ? (
+          <p> Vous faites partie de cette association</p>
+        ) : success ? (
+          <CheckCircleIcon color="success" />
+        ) : (
+          <LoadingButton
+            onClick={handleRequestOrganization}
+            loading={isLoading}
+            loadingPosition="start"
+            variant="outlined"
+            startIcon={<ArrowForwardIcon />}
+          >
+            Rejoindre
+          </LoadingButton>
+        )}
       </ListItemSecondaryAction>
     </Container>
   );
