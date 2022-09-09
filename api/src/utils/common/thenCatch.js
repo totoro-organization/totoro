@@ -114,10 +114,15 @@ module.exports = {
   createField: function (res, model, data, done, isContinue = false) {
     if(Array.isArray(data)){
       model
-        .bulkCreate(data)
-        .then((newFields) => {
-          if (isContinue) done(null, newFields);
-          else done(newFields);
+        .bulkCreate(
+          data,
+          {
+            ignoreDuplicates: true,
+          }
+        )
+        .then(() => {
+          if (isContinue) done(null, data);
+          else done(data);
         })
         .catch((err) => {
           return res
