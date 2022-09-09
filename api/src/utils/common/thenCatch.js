@@ -111,20 +111,25 @@ module.exports = {
           .json({ message: error.syntax_error.message });
       });
   },
-  createField: async function (res, model, data, done, isContinue = false) {
+  createField: function (res, model, data, done, isContinue = false) {
     if(Array.isArray(data)){
       const returning = Object.keys(data[0])
-
-      await model
+      model
         .bulkCreate(data, {
-          upsertKeys:["id"],
-          returning,
-          ignoreDuplicates: true,
+          fields: returning,
+          updateOnDuplicate: ['id'],
+          returning: true
         })
+        .then((newFields) => {
 
-      if (isContinue) done(null, data);
-      else done(data);
-
+          if (isContinue) done(null, newFields);
+          else done(newFields);
+        })
+        .catch((err) => {
+          return res
+            .status(error.during_creation.status)
+            .json({ message: err+ " => " +error.during_creation.message });
+        });
     } else {
       if (data.files) {
         let object = data.files;
