@@ -125,9 +125,11 @@ module.exports = {
           else done(data);
         })
         .catch((err) => {
-          return res
+          if (isContinue) done(null, data);
+          else done(data);
+          /*return res
             .status(error.during_creation.status)
-            .json({ message: error.during_creation.message });
+            .json({ message: error.during_creation.message });*/
         });
     } else {
       if (data.files) {
