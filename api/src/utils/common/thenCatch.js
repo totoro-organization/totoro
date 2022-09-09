@@ -114,22 +114,16 @@ module.exports = {
   createField: function (res, model, data, done, isContinue = false) {
     if(Array.isArray(data)){
       model
-        .bulkCreate(
-          data,
-          {
-            ignoreDuplicates: true,
-          }
-        )
+        .bulkCreate(data)
         .then(() => {
-          if (isContinue) done(null, data);
+          if(isContinue) done(null, data);
           else done(data);
         })
         .catch((err) => {
-          if (isContinue) done(null, data);
-          else done(data);
-          /*return res
+          console.log(err);
+          return res
             .status(error.during_creation.status)
-            .json({ message: error.during_creation.message });*/
+            .json({ message: err+" => "+error.during_creation.message });
         });
     } else {
       if (data.files) {
