@@ -113,10 +113,15 @@ module.exports = {
   },
   createField: function (res, model, data, done, isContinue = false) {
     if(Array.isArray(data)){
+      const returning = Object.keys(data[0])
+
       model
-        .bulkCreate(data, {returning: true})
+        .bulkCreate(data, {
+          upsertKeys:["id"],
+          returning,
+          ignoreDuplicates: true
+        })
         .then((newFields) => {
-          console.log(newFields);
           if (isContinue) done(null, newFields);
           else done(newFields);
         })
