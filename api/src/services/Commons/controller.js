@@ -45,7 +45,7 @@ module.exports = {
           if (condition) getField(res, model, condition, done, true, include);
           else done(null, false);
         },
-        function (result, done) {
+        async function (result, done) {
           if (result) {
             if (data.file) fs.unlinkSync(data.file.path);
 
@@ -62,7 +62,7 @@ module.exports = {
               .status(error.duplicate.status)
               .json({ entity: model.name, message: error.duplicate.message });
           } else {
-            createField(res, model, data, done, true);
+            await createField(res, model, data, done, true);
           }
         },
 
