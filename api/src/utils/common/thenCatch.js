@@ -114,22 +114,12 @@ module.exports = {
       });
   },
   createField: function (res, model, data, done, isContinue = false) {
+    console.log(data);
     if(Array.isArray(data)){
       if(config.dialect ===  "postgres"){
         model
-        .bulkCreate(data, {
-          hooks: false
-        })
-        .then((newFields) => {
-          if (isContinue) done(null, newFields);
-          else done(newFields);
-        })
-        .catch((err) => {
-          return res
-            .status(error.during_creation.status)
-            .json({ message: error.during_creation.message });
-        });
-        
+        .bulkCreate(data)
+
         if (isContinue) done(null, data);
         else done(data);
       }
