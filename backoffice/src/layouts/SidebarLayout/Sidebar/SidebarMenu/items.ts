@@ -37,7 +37,7 @@ const menuItems: MenuItems[] = [
     heading: 'Dashboards',
     items: [
       {
-        name: 'Statistiques',
+        name: 'Résumé',
         link: '/dashboards/statistiques',
         icon: DashboardIcon
       },
