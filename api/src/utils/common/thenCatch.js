@@ -114,7 +114,6 @@ module.exports = {
       });
   },
   createField: function (res, model, data, done, isContinue = false) {
-    console.log(data);
     if(Array.isArray(data)){
       if(config.dialect ===  "postgres"){
         model

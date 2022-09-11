@@ -332,6 +332,8 @@ module.exports = {
 
 		const tagsJob = tags;
 		delete data.tags;
+		delete data.images;
+		console.log(files);
 		const condition = {title};
 
 		if(data.participants_max) data.remaining_place = data.participants_max
