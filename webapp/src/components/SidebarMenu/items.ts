@@ -24,11 +24,11 @@ export const organizationMenuItems: MenuItems[] = [
   {
     heading: 'Dashboards',
     items: [
-      {
-        name: 'Statistiques',
-        link: APP_PATHS.ORGANIZATION_DASHBOARDS_STATS,
-        icon: QueryStatsIcon
-      },
+      // {
+      //   name: 'Statistiques',
+      //   link: APP_PATHS.ORGANIZATION_DASHBOARDS_STATS,
+      //   icon: QueryStatsIcon
+      // },
       {
         name:'Résumé',
         icon: DashboardIcon,

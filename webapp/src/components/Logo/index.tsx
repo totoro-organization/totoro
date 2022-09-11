@@ -1,6 +1,7 @@
 import { Box, Hidden, Tooltip } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
+import AuthLogo from '../AuthLogo';
 
 const LogoWrapper = styled(Link)(
   ({ theme }) => `
@@ -74,19 +75,7 @@ const LogoSignInner = styled(Box)(
 const LogoTextWrapper = styled(Box)(
   ({ theme }) => `
         padding-left: ${theme.spacing(1)};
-`
-);
-
-const VersionBadge = styled(Box)(
-  ({ theme }) => `
-        background: ${theme.palette.success.main};
-        color: ${theme.palette.success.contrastText};
-        padding: ${theme.spacing(0.4, 1)};
-        border-radius: ${theme.general.borderRadiusSm};
-        text-align: center;
-        display: inline-block;
-        line-height: 1;
-        font-size: ${theme.typography.pxToRem(11)};
+        width: 100px
 `
 );
 
@@ -109,10 +98,7 @@ function Logo() {
       </LogoSignWrapper>
       <Hidden smDown>
         <LogoTextWrapper>
-          <Tooltip title="Version 1.1.0" arrow placement="right">
-            <VersionBadge>1.1</VersionBadge>
-          </Tooltip>
-          <LogoText>Totoro Admin</LogoText>
+          <AuthLogo/>
         </LogoTextWrapper>
       </Hidden>
     </LogoWrapper>

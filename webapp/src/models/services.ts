@@ -1,8 +1,8 @@
 export type Token = string;
 
 export interface Response {
-    error?: boolean
-    message: string,
+    error?: string
+    message?: string,
     status_code: number,
     entity?: string,
     token?: Token

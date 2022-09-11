@@ -74,7 +74,7 @@ function Logo() {
 
   return (
     <Tooltip title="Totoro Admin Dashboard" arrow>
-      <LogoWrapper to="/dashboards/stats">
+      <LogoWrapper to="/">
         <LogoSignWrapper>
           <LogoSign>
             <LogoSignInner />

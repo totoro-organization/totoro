@@ -41,6 +41,9 @@ const CreationJob = Loader(
 const ListingJobs = Loader(
   lazy(() => import('src/pages/applications/Organization/Management/Jobs/List'))
 );
+const OrganizationDetails = Loader(
+  lazy(() => import('src/pages/applications/Organization/Details'))
+);
 const JobParticipant = Loader(
   lazy(
     () => import('src/pages/applications/Organization/Management/Jobs/Participant')
@@ -53,6 +56,8 @@ const Job = Loader(
 const AddOrganization = Loader(
   lazy(() => import('src/pages/applications/Organization/Add'))
 );
+// Join 
+const JoinOrganization = Loader(lazy(() => import('src/pages/applications/Organization/Join')))
 // Dashboards
 const Crypto = Loader(
   lazy(() => import('src/pages/applications/Organization/Dashboards/Crypto'))
@@ -197,8 +202,16 @@ const routes: PartialRouteObject[] = [
                 ]
               },
               {
+                path: ':id/details',
+                element: <OrganizationDetails/>
+              },
+              {
                 path: 'add',
                 element: <AddOrganization/>
+              },
+              {
+                path: 'join',
+                element: <JoinOrganization/>
               },
               {
                 path: 'jobs',

@@ -20,6 +20,7 @@ import LongMenu from 'src/components/LongMenu';
 import { APP_PATHS } from 'src/appPaths';
 import AddIcon from '@mui/icons-material/Add';
 import LoginIcon from '@mui/icons-material/Login';
+import useOrganizationMembership from 'src/hooks/useOrganizationMembership';
 
 const Heading = styled(Box)(({
     display: 'flex',
@@ -31,7 +32,6 @@ function MenuAppList() {
   const [openOrganizations, setOpenOrganizations] = useState(false);
   const [openPartners, setOpenPartners] = useState(false);
   const { user, currentApp, handleCurrentApp } = useSession();
-
   const handleClickOrganizations = () => {
     setOpenOrganizations(!openOrganizations);
   };
@@ -64,7 +64,7 @@ function MenuAppList() {
           {
             value: 'request_organization',
             name: 'Rejoindre une association',
-            link: APP_PATHS.ADD_ORGANIZATION,
+            link: APP_PATHS.JOIN_ORGANIZATION,
             icon: LoginIcon
           }
         ]}/>
@@ -109,6 +109,7 @@ function MenuAppList() {
                 }
                 sx={{ pl: 4 }}
                 key={membership.organization.id}
+                disabled={membership.status.label !== 'actived'}
               >
                 <ListItemIcon>
                   <FallbackAvatar
@@ -125,7 +126,7 @@ function MenuAppList() {
                   key={membership.organization.id}
                 >
                   <ListItemText primary={membership.organization.name} />
-                  <ListItemText secondary={membership.role.label} />
+                  <ListItemText secondary={membership.status.label !== 'actived' ? 'Demande envoyée' : membership.role.label} />
                 </Box>
               </ListItemButton>
             ))
