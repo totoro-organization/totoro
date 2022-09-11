@@ -6,6 +6,10 @@ const statuses = {
         name: 'A venir',
         color: 'info',
     },
+    requested: {
+        name: 'Demande envoyée',
+        color: 'info',
+    },
     pending: {
         name: 'En attente',
         color: 'info',

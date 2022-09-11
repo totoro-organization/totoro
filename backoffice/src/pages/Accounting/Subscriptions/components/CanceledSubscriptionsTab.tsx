@@ -14,7 +14,7 @@ function StandardSubscriptionTab({ handleSetTabs }: TabProps) {
   
   useEffect(() => {
     if(subscriptions) {
-      handleSetTabs('canceled', subscriptions.totalRows)
+      handleSetTabs('canceled',  subscriptions.data.length)
     }
   }, [subscriptions])
   

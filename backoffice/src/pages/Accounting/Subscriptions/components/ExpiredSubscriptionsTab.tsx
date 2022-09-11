@@ -14,7 +14,7 @@ function StandardSubscriptionTab({ handleSetTabs }: TabProps) {
   
   useEffect(() => {
     if(subscriptions) {
-      handleSetTabs('expired', subscriptions.totalRows)
+      handleSetTabs('expired',  subscriptions.data.length)
     }
   }, [subscriptions])
 

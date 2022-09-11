@@ -20,6 +20,10 @@ function Organizations() {
       name: 'Supprimé'
     },
     {
+      id: StatusEnum.requested,
+      name: 'Demande en cours'
+    },
+    {
       id: StatusEnum.freezed,
       name: 'Gelé'
     },
