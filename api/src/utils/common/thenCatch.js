@@ -1,4 +1,6 @@
 const { error, success } = require("./messages.json");
+const env = process.env.NODE_ENV || "development";
+const config = require("~orm/config/config.json")[env];
 
 module.exports = {
   responseAll: function (
@@ -113,23 +115,37 @@ module.exports = {
   },
   createField: function (res, model, data, done, isContinue = false) {
     if(Array.isArray(data)){
-      const returning = Object.keys(data[0])
-      model
+      if(config.dialect ===  "postgres"){
+        model
         .bulkCreate(data, {
-          fields: returning,
-          updateOnDuplicate: ['id'],
-          returning: true
+          hooks: false
         })
         .then((newFields) => {
-
           if (isContinue) done(null, newFields);
           else done(newFields);
         })
         .catch((err) => {
           return res
             .status(error.during_creation.status)
-            .json({ message: err+ " => " +error.during_creation.message });
+            .json({ message: error.during_creation.message });
         });
+        
+        if (isContinue) done(null, data);
+        else done(data);
+      }
+      else {
+        model
+        .bulkCreate(data)
+        .then((newFields) => {
+          if (isContinue) done(null, newFields);
+          else done(newFields);
+        })
+        .catch((err) => {
+          return res
+            .status(error.during_creation.status)
+            .json({ message: error.during_creation.message });
+        });
+      }
     } else {
       if (data.files) {
         let object = data.files;
