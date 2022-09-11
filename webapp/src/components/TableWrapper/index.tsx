@@ -108,7 +108,7 @@ const TableWrapper: FC<TableWrapperProps> = ({
   const handleGetItems = async () => {
     const itemsResponse = await getItems(url);
     if ('error' in itemsResponse) return;
-    setItems(itemsResponse?.data);
+    setItems(itemsResponse?.data.filter(job => job.status.label !== "deleted"));
   };
 
   const handleUpdateItem = async (id: string, data: object) => {

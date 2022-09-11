@@ -17,6 +17,7 @@ import {
 import * as authService from 'src/api/auth';
 import { APP_PATHS } from 'src/appPaths';
 import { useToast } from 'src/hooks/useToast';
+import { MembershipStatus } from 'src/models/status';
 
 interface SessionContextType {
   user?: User;
@@ -35,6 +36,7 @@ interface App {
   member_id?: string;
   data: Organization | Partner;
   role?: Role;
+  status?: MembershipStatus
 }
 
 export const SessionContext = createContext<SessionContextType>(

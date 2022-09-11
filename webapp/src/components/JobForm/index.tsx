@@ -87,7 +87,7 @@ const JobForm = () => {
       cp: Number(cp),
       longitude, 
       latitude
-    };
+    };    
     const response = await addJob(data);
     if ('error' in response) {
       setToast({
@@ -147,9 +147,9 @@ const JobForm = () => {
         </FormSelect>
         <FormDateTimeRangePicker name="date" />
         <FormTextField
-          inputProps={{ min: 0 }}
+          inputProps={{ min: 1 }}
           type="number"
-          defaultValue={0}
+          defaultValue={1}
           label="Nombre de participants"
           name="participants_max"
         />

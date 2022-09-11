@@ -28,12 +28,12 @@ const statusOptions = [
 export default function Jobs() {
   const { currentApp } = useSession();
   const { data: jobs, loading } = useOrganizationJobs(currentApp.data.id);
-
+  
   return jobs && !loading ? (
     <TableWrapper
       url={API_ROUTES.JOBS}
       statusOptions={statusOptions}
-      defaultItems={jobs.data}
+      defaultItems={jobs.data.filter(job => job.status.label !== "deleted")}
     >
       {/* TODO: Fix type here. Maybe add optional mention to TableProps */}
       {/* @ts-ignore */}

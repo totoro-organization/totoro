@@ -1,4 +1,4 @@
-import useUserActivity, { Order } from 'src/hooks/useUserActivity';
+import useUserActivity from 'src/hooks/useUserActivity';
 
 import {
   Card,
@@ -8,6 +8,7 @@ import {
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import Activity from './Activity';
+import { Order } from 'src/utils/sortByAscOrder';
 
 const AvatarPrimary = styled(Avatar)(
   ({ theme }) => `
