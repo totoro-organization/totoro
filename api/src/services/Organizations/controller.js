@@ -186,7 +186,7 @@ module.exports = {
 				as: "author",
 				required: true,
 				attributes: {
-					exclude: ["user_id", "role_id", "status_id","createdAt","updatedAt"],
+					exclude: ["createdAt","updatedAt"],
 				},
 				include: [
 					{
