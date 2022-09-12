@@ -49,6 +49,7 @@ cd mobileapp && npm start && npm run test
 
  | **Application** | **URL**                              |
 |-----------------|---------------------------------------|
+| Docs totoro     | https://docs-totoro.netlify.app/docs/mobile/introduction     |
 | API             | https://api-totoro.herokuapp.com/     |
 | API doc         | https://api-totoro.herokuapp.com/docs |
 | Landing         | https://totoro-landing.netlify.app/   |
