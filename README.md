@@ -255,14 +255,15 @@ Pour l'API nous utilisons [Swagger](https://swagger.io/), la documentation est d
 
 > Dernière version : Totoro v0.01 - [Disponible ici »]()
  - > Dernière version APK : Totoro-v0.01.apk - [Disponible ici »]()
-	| APP | Fonctionnel |
-	| :--: | :--: |
-	| API | ✔️ |
-	| Back-office | ✔️ |
-	| Landing-page | ❌ |
-	| Mobile | ❌ |
-	| Web-app | ❌ |
- | Documentation | ✔️ |
+
+| APP | Fonctionnel |
+| :--: | :--: |
+| API | ✔️ |
+| Back-office | ✔️ |
+| Landing-page | ❌ |
+| Mobile | ❌ |
+| Web-app | ❌ |
+ Documentation | ✔️ |
 
 [//]: # (❌ ou ✔️)
 
