@@ -1,5 +1,5 @@
 export type { Job, JobDifficulty, AttachmentJob, Tag } from './job';
-export type { Organization } from './organization';
+export type { Organization, OrganizationMember } from './organization';
 export type { Litigation, LitigationObject  } from './litigation';
 export type { Role } from './role';
 export type { User, Membership } from './user';

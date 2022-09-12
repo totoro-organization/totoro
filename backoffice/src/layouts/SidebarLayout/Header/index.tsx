@@ -10,9 +10,6 @@ import HeaderButtons from './Buttons';
 import HeaderUserbox from './Userbox';
 import Logo from 'src/components/Logo';
 
-import {useTranslation} from "react-i18next";
-import useSession from 'src/hooks/useSession';
-
 const HeaderWrapper = styled(Box)(
   ({ theme }) => `
         height: ${theme.header.height};
@@ -33,7 +30,6 @@ const HeaderWrapper = styled(Box)(
 );
 
 function Header() {
-
   const { sidebarToggle, toggleSidebar } = useContext(SidebarContext);
 
   return (

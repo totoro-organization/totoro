@@ -4,6 +4,7 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import QueryStatsIcon from '@mui/icons-material/QueryStats';
 import ListIcon from '@mui/icons-material/List';
 import AddTaskIcon from '@mui/icons-material/AddTask';
+import { APP_PATHS } from 'src/appPaths';
 
 export interface MenuItem {
   link?: string;
@@ -23,15 +24,15 @@ export const organizationMenuItems: MenuItems[] = [
   {
     heading: 'Dashboards',
     items: [
-      {
-        name: 'Statistiques',
-        link: '/association/dashboards/statistiques',
-        icon: QueryStatsIcon
-      },
+      // {
+      //   name: 'Statistiques',
+      //   link: APP_PATHS.ORGANIZATION_DASHBOARDS_STATS,
+      //   icon: QueryStatsIcon
+      // },
       {
         name:'Résumé',
         icon: DashboardIcon,
-        link: '/association/dashboards/resume'
+        link: APP_PATHS.ORGANIZATION_DASHBOARDS_RESUME
       }
     ]
   },
@@ -41,12 +42,12 @@ export const organizationMenuItems: MenuItems[] = [
       {
         name: 'Mes missions',
         icon: ListIcon,
-        link: '/association/gestion/missions'
+        link: APP_PATHS.ORGANIZATION_JOBS
       },
       {
         name: 'Créer une mission',
         icon: AddTaskIcon,
-        link: '/association/gestion/missions/creation'
+        link: APP_PATHS.ORGANIZATION_ADD_JOB
       }
     ]
   },
@@ -58,14 +59,9 @@ export const partnerMenuItems: MenuItems[] = [
     heading: 'Dashboards',
     items: [
       {
-        name: 'Statistiques',
-        link: '/partenaire/dashboards/statistiques',
-        icon: QueryStatsIcon
-      },
-      {
         name:'Résumé',
         icon: DashboardIcon,
-        link: '/partenaire/dashboards/resume'
+        link: APP_PATHS.PARTNER_DASHBOARDS_RESUME
       }
     ]
   },
@@ -75,12 +71,12 @@ export const partnerMenuItems: MenuItems[] = [
       {
         name: 'Mes réductions',
         icon: ListIcon,
-        link: '/partenaire/gestion/reductions'
+        link: APP_PATHS.PARTNER_DISCOUNTS
       },
       {
         name: 'Ajouter une réduction',
         icon: AddTaskIcon,
-        link: '/partenaire/gestion/reductions/creation'
+        link: APP_PATHS.PARTNER_ADD_DISCOUNT
       }
     ]
   },

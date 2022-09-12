@@ -64,6 +64,10 @@ module.exports = {
         allowNull: true,
         type: Sequelize.STRING
       },
+      banner: {
+        allowNull: true,
+        type: Sequelize.STRING
+      },
       description: {
         allowNull: true,
         type: Sequelize.TEXT

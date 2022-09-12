@@ -21,7 +21,7 @@ import {
 } from '@mui/material';
 import BulkActions from './BulkActions';
 import { StatusEnum, StatusOptions, TableItem } from 'src/models';
-import { deleteItem, getItems, updateItem } from 'src/services/common.service';
+import { deleteItem, getItems, updateItem } from 'src/api/requests';
 import { useModal } from 'src/hooks/useModal';
 
 interface TableWrapperProps {
@@ -108,7 +108,7 @@ const TableWrapper: FC<TableWrapperProps> = ({
   const handleGetItems = async () => {
     const itemsResponse = await getItems(url);
     if ('error' in itemsResponse) return;
-    setItems(itemsResponse?.data);
+    setItems(itemsResponse?.data.filter(job => job.status.label !== "deleted"));
   };
 
   const handleUpdateItem = async (id: string, data: object) => {

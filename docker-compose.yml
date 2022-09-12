@@ -54,6 +54,7 @@ services:
       - WEB_APP_URL=$WEB_APP_URL
       - BO_URL=$BO_URL
       - LANDING_PAGE_URL=$LANDING_PAGE_URL
+      - INSEE=$INSEE
     networks:
       - backend
       - frontend
@@ -66,6 +67,7 @@ services:
       context: ./webapp
       args:
         - API_BASE_URL=$API_BASE_URL
+        - APP_ID=$APP_ID
     ports:
       - $WEBAPP_LOCAL_PORT:$GNIX_PORT
     networks:
@@ -79,6 +81,7 @@ services:
       context: ./backoffice
       args:
         - API_BASE_URL=$API_BASE_URL
+        - APP_ID=$APP_ID
     ports:
       - $BACKOFFICE_LOCAL_PORT:$GNIX_PORT
     networks:
@@ -92,6 +95,7 @@ services:
       context: ./mobileapp
       args:
         - API_BASE_URL=$API_BASE_URL
+        - APP_ID=$APP_ID
     ports:
       - $MOBILEAPP_LOCAL_PORT:$MOBILEAPP_DOCKER_PORT
       - $MOBILEAPP_LOCAL_PORT2:$MOBILEAPP_DOCKER_PORT2
@@ -101,7 +105,7 @@ services:
       - /usr/src/app_mobile/node_modules
     environment:
       - EXPO_DEVTOOLS_LISTEN_ADDRESS=$MOBILE_APP_PUBLIC_IP
-      - REACT_NATIVE_PACKAGER_HOSTNAME=127.0.0.1
+      - REACT_NATIVE_PACKAGER_HOSTNAME=$IP
     networks:
       - frontend
 

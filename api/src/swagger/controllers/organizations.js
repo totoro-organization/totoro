@@ -304,5 +304,22 @@ module.exports = {
           ],
           responses: response201("Organization logo's Updated")
         }
+    },
+    "/api/organizations/banner/{id}": {
+      put: {
+        tags: [
+          "Organizations"
+        ],
+        "x-swagger-router-controller": "organizations",
+        operationId: "putBannerOrganization",
+        consumes: [
+          "multipart/form-data"
+        ],
+        parameters: [
+          ...param("id","path","string"),
+          ...param("banner","formData","file",true,"Bannière de l'association"),
+        ],
+        responses: response201("Organization banner's Updated")
+      }
     }
 }

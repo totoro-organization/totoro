@@ -1,5 +1,6 @@
 import { Job } from "./job";
-import { OrganizationStatus } from "./status";
+import { Role } from "./role";
+import { MembershipStatus, OrganizationStatus } from "./status";
 import { User } from "./user";
 
 
@@ -10,7 +11,8 @@ export interface Organization {
     address?: string,
     cp?: number,
     commune?: string,
-    logo: string,
+    logo?: string,
+    banner?: string,
     description?: string,
     link?: string,
     phone?: string,
@@ -25,4 +27,22 @@ export interface Organization {
     jobs: Job[],
     createdAt: string,
     updatedAt: string
+}
+
+export interface OrganizationMember {
+    id: string,
+    assos_id: string,
+    user: User,
+    role: Role,
+    status: MembershipStatus,
+    createdAt: string,
+    updatedAt: string,
+}
+
+export interface OrganizationFavorite {
+    id: string,
+    assos_id: string,
+    user: User,
+    createdAt: string,
+    updatedAt: string,
 }

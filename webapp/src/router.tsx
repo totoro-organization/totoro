@@ -7,6 +7,7 @@ import BaseLayout from 'src/layouts/BaseLayout';
 
 import SuspenseLoader from 'src/components/SuspenseLoader';
 import { useSession } from './hooks/useSession';
+import { APP_PATHS } from './appPaths';
 
 const Loader = (Component) => (props) =>
   (
@@ -18,7 +19,7 @@ const Loader = (Component) => (props) =>
 const ProtectedRoute = (props: RouteProps) => {
   const session = useSession();
 
-  if (!session.user) return <Navigate to="/login" />;
+  if (!session.user) return <Navigate to={APP_PATHS.LOGIN} />;
   return <Route {...props} />;
 };
 
@@ -27,27 +28,36 @@ const AppIndexRoute = () => {
   const session = useSession();
 
   if (session.currentApp.type === 'organization')
-    return <Navigate to="/association/dashboards/resume" replace />;
+    return <Navigate to={APP_PATHS.ORGANIZATION_DASHBOARDS_RESUME} replace />;
 
-  return <Navigate to="/partenaire/dashboards/resume" replace />;
+  return <Navigate to={APP_PATHS.PARTNER_DASHBOARDS_RESUME} replace />;
 };
 
 /* Applications - Organization */
 // Gestion
 const CreationJob = Loader(
-  lazy(() => import('src/pages/applications/Organization/Gestion/Jobs/Create'))
+  lazy(() => import('src/pages/applications/Organization/Management/Jobs/Create'))
 );
 const ListingJobs = Loader(
-  lazy(() => import('src/pages/applications/Organization/Gestion/Jobs/List'))
+  lazy(() => import('src/pages/applications/Organization/Management/Jobs/List'))
+);
+const OrganizationDetails = Loader(
+  lazy(() => import('src/pages/applications/Organization/Details'))
 );
 const JobParticipant = Loader(
   lazy(
-    () => import('src/pages/applications/Organization/Gestion/Jobs/Participant')
+    () => import('src/pages/applications/Organization/Management/Jobs/Participant')
   )
 );
 const Job = Loader(
-  lazy(() => import('src/pages/applications/Organization/Gestion/Jobs'))
+  lazy(() => import('src/pages/applications/Organization/Management/Jobs'))
 );
+// Add
+const AddOrganization = Loader(
+  lazy(() => import('src/pages/applications/Organization/Add'))
+);
+// Join 
+const JoinOrganization = Loader(lazy(() => import('src/pages/applications/Organization/Join')))
 // Dashboards
 const Crypto = Loader(
   lazy(() => import('src/pages/applications/Organization/Dashboards/Crypto'))
@@ -89,23 +99,23 @@ const routes: PartialRouteObject[] = [
     element: <BaseLayout />,
     children: [
       {
-        path: 'login',
+        path: APP_PATHS.LOGIN,
         element: <SignIn />
       },
       {
-        path: 'signup',
+        path: APP_PATHS.SIGNUP,
         element: <SignUp />
       },
       {
-        path: 'confirmer-mon-compte',
+        path: APP_PATHS.ACCOUNT_VERIFICATION,
         element: <AccountConfirmation/>
       },
       {
-        path: 'mot-de-passe-oublie',
+        path: APP_PATHS.FORGOT_PASSWORD,
         element: <ForgotPassword/>
       },
       {
-        path: 'reinitialiser-mot-de-passe',
+        path: APP_PATHS.RESET_PASSWORD,
         element: <ResetPassword/>
       },
       {
@@ -116,7 +126,7 @@ const routes: PartialRouteObject[] = [
             element: <AppIndexRoute />
           },
           {
-            path: '/first-login',
+            path: APP_PATHS.FIRST_LOGIN,
             element: <FirstLogin />
           },
           {
@@ -167,7 +177,8 @@ const routes: PartialRouteObject[] = [
             ]
           },
           {
-            path: 'association',
+            path: 'organization',
+            element: <SidebarLayout />,
             children: [
               {
                 path: '/',
@@ -175,14 +186,13 @@ const routes: PartialRouteObject[] = [
               },
               {
                 path: 'dashboards',
-                element: <SidebarLayout />,
                 children: [
                   {
                     path: '/',
                     element: <Navigate to="resume" replace />
                   },
                   {
-                    path: 'statistiques',
+                    path: 'stats',
                     element: <Crypto />
                   },
                   {
@@ -192,31 +202,42 @@ const routes: PartialRouteObject[] = [
                 ]
               },
               {
-                path: 'gestion',
-                element: <SidebarLayout />,
+                path: ':id/details',
+                element: <OrganizationDetails/>
+              },
+              {
+                path: 'add',
+                element: <AddOrganization/>
+              },
+              {
+                path: 'join',
+                element: <JoinOrganization/>
+              },
+              {
+                path: 'jobs',
                 children: [
                   {
                     path: '/',
-                    element: <Navigate to="missions" replace />
+                    element: <ListingJobs />,
                   },
                   {
-                    path: '/missions',
-                    element: <ListingJobs />
+                    path: '/:jobId',
+                    element: <Job />
                   },
                   {
-                    path: '/missions/creation',
-                    element: <CreationJob />
-                  },
-                  {
-                    path: '/missions/:jobId/participant/:id',
+                    path: '/:jobId/participant/:id',
                     element: <JobParticipant />
                   }
                 ]
-              }
+              },
+              {
+                path: 'add-job',
+                element: <CreationJob />
+              },
             ]
           },
           {
-            path: 'partenaire',
+            path: 'partner',
             children: [
               {
                 path: '/',
@@ -231,7 +252,7 @@ const routes: PartialRouteObject[] = [
                     element: <Navigate to="resume" replace />
                   },
                   {
-                    path: 'statistiques',
+                    path: 'stats',
                     element: <Crypto />
                   },
                   {
@@ -241,35 +262,27 @@ const routes: PartialRouteObject[] = [
                 ]
               },
               {
-                path: 'gestion',
+                path: 'management',
                 element: <SidebarLayout />,
                 children: [
                   {
                     path: '/',
-                    element: <Navigate to="reductions" replace />
+                    element: <Navigate to="discounts" replace />
                   },
                   {
-                    path: '/reductions',
+                    path: '/discounts',
                     element: <ListingJobs />
                   },
                   {
-                    path: '/reductions/creation',
+                    path: 'discounts/:id',
+                    element: <Job />
+                  },
+                  {
+                    path: '/discounts/add',
                     element: <CreationJob />
                   }
                 ]
               },
-              {
-                path: 'missions/:id',
-                element: <Job />
-              },
-              {
-                path: 'missions/:id',
-                element: <Job />
-              },
-              {
-                path: '/missions/creation',
-                element: <CreationJob />
-              }
             ]
           }
         ]

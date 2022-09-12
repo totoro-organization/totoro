@@ -7,7 +7,8 @@
 		"dialect": "mysql",
 		"define": {
 			"freezeTableName": true
-		}
+		},
+		"logging" : true
 	},
 	"test": {
 		"username": "root",
@@ -17,7 +18,8 @@
 		"dialect": "mysql",
 		"define": {
 			"freezeTableName": true
-		}
+		},
+		"logging" : true
 	},
 	"production": {
 		"use_env_variable": "HEROKU_POSTGRESQL_CYAN_URL",
@@ -32,6 +34,7 @@
 		},
 		"define": {
 			"freezeTableName": true
-		}
+		},
+		"logging" : true
 	}
 }

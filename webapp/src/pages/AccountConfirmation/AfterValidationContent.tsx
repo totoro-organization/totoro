@@ -1,5 +1,6 @@
 import { Box, Button, Typography } from "@mui/material"
 import { Link } from "react-router-dom"
+import { APP_PATHS } from "src/appPaths"
 import AfterConfirmationIllustration from "./AfterIllustration"
 
 function BeforeValidationContent() {
@@ -15,7 +16,7 @@ function BeforeValidationContent() {
             </Typography>
           </Box>
           <Button
-            to="/login"
+            to={APP_PATHS.LOGIN}
             component={Link}
             sx={{ width: 'fit-content' }}
             variant="contained"

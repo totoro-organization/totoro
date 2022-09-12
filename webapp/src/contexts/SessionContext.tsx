@@ -14,11 +14,14 @@ import {
   SignUpData,
   Organization
 } from 'src/models';
-import * as sessionsService from 'src/services/auth.service';
+import * as authService from 'src/api/auth';
+import { APP_PATHS } from 'src/appPaths';
+import { useToast } from 'src/hooks/useToast';
+import { MembershipStatus } from 'src/models/status';
 
 interface SessionContextType {
   user?: User;
-  getCurrentUser: () => void;
+  getConnectedUser: () => void;
   currentApp: App;
   handleCurrentApp: (app: App) => void;
   loading: boolean;
@@ -33,6 +36,7 @@ interface App {
   member_id?: string;
   data: Organization | Partner;
   role?: Role;
+  status?: MembershipStatus
 }
 
 export const SessionContext = createContext<SessionContextType>(
@@ -49,7 +53,7 @@ export function SessionProvider({
   const [error, setError] = useState<any>();
   const [loading, setLoading] = useState<boolean>(false);
   const [loadingInitial, setLoadingInitial] = useState<boolean>(true);
-
+  const { setToast } = useToast();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -59,7 +63,7 @@ export function SessionProvider({
   }, [location.pathname]);
 
   useEffect(() => {
-    getCurrentUser()
+    getConnectedUser()
   }, []);
 
   useEffect(() => {
@@ -88,10 +92,10 @@ export function SessionProvider({
     }
   }, [user]);
 
-  function getCurrentUser(): void {
+  function getConnectedUser(): void {
     if(localStorage.getItem("token")) {
-    sessionsService
-      .getCurrentUser()
+    authService
+      .getConnectedUser()
       .then((response) => {
         if ('error' in response) {
           setError(response.error);
@@ -106,30 +110,39 @@ export function SessionProvider({
   function login(params: LoginData) {
     setLoading(true);
 
-    sessionsService
+    authService
       .login(params)
       .then((response) => {
         if ('error' in response) {
           setError(response.error);
-          if(response.status_code === 403) navigate('/confirmer-mon-compte')
+          if(response.status_code === 403) {
+            if(response.error !== "Access forbidden") {
+              navigate(APP_PATHS.ACCOUNT_VERIFICATION);
+              return
+            }
+            setToast({
+              variant: 'error',
+              message: "Une erreur est survenue : Identifiants incorrects",
+              duration: 6000
+            })
+          } 
           return;
         }
         localStorage.setItem('token', response.token);
-        getCurrentUser();
+        getConnectedUser();
       })
       .finally(() => {
         setLoading(false);
-        user && navigate('/')
       });
   }
 
   function signup(params: SignUpData) {
-    sessionsService.signup(params).then((response) => {
+    authService.signup(params).then((response) => {
       if ('error' in response) {
         setError(response.error);
         return;
       }
-      navigate('/confirmer-mon-compte');
+      navigate(APP_PATHS.ACCOUNT_VERIFICATION);
     });
   }
 
@@ -155,7 +168,7 @@ export function SessionProvider({
   const memoedValue = useMemo(
     () => ({
       user,
-      getCurrentUser,
+      getConnectedUser,
       loading,
       error,
       login,

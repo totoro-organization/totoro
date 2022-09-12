@@ -1,7 +1,6 @@
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import { FormControl, FormHelperText, TextField } from '@mui/material';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
-import { format } from 'date-fns';
 import { useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 

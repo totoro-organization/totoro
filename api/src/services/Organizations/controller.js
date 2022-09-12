@@ -1,5 +1,4 @@
-
-const axios = require("axios");
+const { getAllByInsee } = require("~externals/insee");
 const moment = require("moment");
 const { Op } = require("sequelize");
 const asyncLib = require("async");
@@ -74,7 +73,7 @@ module.exports = {
 	},
 
 	createOrganization: async function (res, data) {
-		const { email, phone, type, typeValue, user_id } = data
+		const { email, phone, siret, user_id } = data
 
 		/*
 		const emailValid = await isEmailValid(email);
@@ -84,26 +83,13 @@ module.exports = {
 				.json({ message: emailValid });
 		*/
 
-    	const activeStatus = await getRow(Status, { label: label_status.actived });
-		const request = await axios.get(`https://entreprise.data.gouv.fr/api/sirene/v1/${type}/${typeValue}`);
-		if(request.data.message){
-			return res
-					.status(success.not_found.status)
-					.json({ entity: type, message: request.data.message });
-		}
+		data = await getAllByInsee("siret", siret, data, "association");
 
-		delete data.type
-		delete data.typeValue
-		data["siren"] = request.data.siege_social.siren
-		data["siret"] = request.data.siege_social.siret
-		data["name"] = request.data.siege_social.nom_raison_sociale
-		data["longitude"] = parseFloat(request.data.siege_social.longitude)
-		data["latitude"] = parseFloat(request.data.siege_social.latitude)
-		data["creation_date"] = `${request.data.siege_social.date_creation.substring(0, 4)}-${request.data.siege_social.date_creation.substring(4, 6)}-${request.data.siege_social.date_creation.substring(6, 8)}`
-		data["activity"] = request.data.siege_social.libelle_activite_principale
-		data["address"] = request.data.siege_social.l4_normalisee || request.data.siege_social.l4_declaree || `${request.data.siege_social.numero_voie} ${request.data.siege_social.type_voie} ${request.data.siege_social.libelle_voie}`
-		data["cp"] = request.data.siege_social.code_postal
-		data["commune"] = request.data.siege_social.libelle_commune
+		if(data.statut && data.message){
+			return res
+					.status(data.statut)
+					.json({ entity: 'siret', message: data.message });
+		}
 
 		const statusData = await getRow(res, Status, { label: label_status.requested });
 		data["status_id"] = statusData.id;
@@ -200,7 +186,7 @@ module.exports = {
 				as: "author",
 				required: true,
 				attributes: {
-					exclude: ["user_id", "role_id", "status_id","createdAt","updatedAt"],
+					exclude: ["createdAt","updatedAt"],
 				},
 				include: [
 					{

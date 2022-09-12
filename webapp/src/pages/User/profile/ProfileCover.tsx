@@ -25,8 +25,8 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import CheckIcon from '@mui/icons-material/Check';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { useState } from 'react';
-import { getCurrentUser } from 'src/services/auth.service';
-import { updateUser } from 'src/services/users.service';
+import { getConnectedUser } from 'src/api/auth';
+import { updateUser } from 'src/api/users/requests';
 
 const Input = styled('input')({
   display: 'none'
@@ -101,7 +101,7 @@ const ProfileCover = ({ user }) => {
     const updateResponse = await updateUser(user.id, valueEdit);
     if ('error' in updateResponse) return;
     setEditUserBio(false);
-    getCurrentUser()
+    getConnectedUser()
   };
 
   const userFullname = user.firstname + " " + user.lastname;

@@ -154,5 +154,22 @@ module.exports = {
           ],
           responses: response201("Partner logo's Updated")
         }
+    },
+    "/api/partners/{id}/banner": {
+      put: {
+        tags: [
+          "Partners"
+        ],
+        "x-swagger-router-controller": "partners",
+        operationId: "putBannerPartner",
+        consumes: [
+          "multipart/form-data"
+        ],
+        parameters: [
+          ...param("id","path","string"),
+          ...param("banner","formData","file",true,"Bannière du partenaire"),
+        ],
+        responses: response201("Partner banner's Updated")
+      }
     }
 }

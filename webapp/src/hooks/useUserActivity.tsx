@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Activities } from 'src/components/RecentActivityCard/activities';
 import { Role, Status, Membership } from 'src/models';
+import { Order, sortObjectArrayByOrder } from 'src/utils/sortByAscOrder';
 import { useSession } from './useSession';
 
 interface Filters {
@@ -12,11 +13,6 @@ interface Filters {
     end_date?: string;
   };
   size?: number;
-}
-
-export enum Order {
-  ASC = 'asc',
-  DESC = 'desc'
 }
 
 const useActivity = ({
@@ -52,19 +48,6 @@ const useActivity = ({
     if (size) return orderedItems.slice(size);
     return orderedItems;
   };
-
-  function sortObjectArrayByOrder(items: any[], key: string, order: Order) {
-    // if (isObjectArray(items)) {
-    if (order === 'desc') {
-      return items.sort((a, b) =>
-        a[key] > b[key] ? -1 : a[key] < b[key] ? 1 : 0
-      );
-    }
-    return items.sort((a, b) =>
-      a[key] < b[key] ? -1 : a[key] > b[key] ? 1 : 0
-    );
-    // }
-  }
 
   //   const getStatus = (x) => status === x)
 

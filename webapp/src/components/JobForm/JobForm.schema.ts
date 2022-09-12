@@ -17,6 +17,12 @@ export const JobFormSchema = Yup.object({
     .test(
       'fileFormat',
       'Format non supporté',
-      (value) => value && SUPPORTED_FORMATS.includes(value.type)
+      (value: any) => {
+        let nbErrors = 0;
+         [...value].forEach((file: File )=> {
+            if(!SUPPORTED_FORMATS.includes(file.type)) nbErrors++
+          });
+          return nbErrors === 0;
+      }
     )
 }).required(REQUIRED_MSG);

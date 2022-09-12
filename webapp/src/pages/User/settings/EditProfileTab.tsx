@@ -17,7 +17,7 @@ import DoneTwoToneIcon from '@mui/icons-material/DoneTwoTone';
 import Text from 'src/components/Text';
 import Label from 'src/components/Label';
 import { useState } from 'react';
-import { updateUser, updatePasswordUser } from 'src/services/users.service';
+import { updateUser, updatePasswordUser } from 'src/api/users/requests';
 import CheckIcon from '@mui/icons-material/Check';
 import CancelIcon from '@mui/icons-material/Cancel';
 import TextField from '@mui/material/TextField';
@@ -26,7 +26,7 @@ import { useSession } from 'src/hooks/useSession';
 function EditProfileTab() {
   const [EditUser, setEditUser] = useState(false);
   const [valueEdit, setValueEdit] = useState({});
-  const { user, getCurrentUser } = useSession();
+  const { user, getConnectedUser } = useSession();
   const [editPassword, setEditPassword] = useState(false);
 
   const handleChangeEdit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -42,14 +42,14 @@ function EditProfileTab() {
     const updateResponse = await updateUser(user.id, valueEdit);
     if ('error' in updateResponse) return;
     setEditUser(false);
-    getCurrentUser();
+    getConnectedUser();
   };
 
   const handleEditUserPassword = async () => {
     const updateResponse = await updatePasswordUser(valueEdit);
     if ('error' in updateResponse) return;
     setEditPassword(false);
-    getCurrentUser();
+    getConnectedUser();
   };
 
   const formatedPhoneNumber = formatPhoneNumber(String(user.phone));

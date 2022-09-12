@@ -112,6 +112,9 @@ module.exports = {
       logo: {
         type: "string"
       },
+      banner: {
+        type: "string"
+      },
       description: {
         type: "string"
       },
@@ -131,6 +134,12 @@ module.exports = {
       name: {
         type: "string"
       },
+      siren: {
+        type: "string"
+      },
+      siret: {
+        type: "string"
+      },
       email: {
         type: "string"
       },
@@ -144,6 +153,9 @@ module.exports = {
         type: "boolean"
       },
       logo: {
+        type: "string"
+      },
+      banner: {
         type: "string"
       },
       description: {

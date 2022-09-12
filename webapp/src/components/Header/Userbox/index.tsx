@@ -23,6 +23,7 @@ import AccountTreeTwoToneIcon from '@mui/icons-material/AccountTreeTwoTone';
 import FallbackAvatar from 'src/components/FallbackAvatar';
 import { SessionContext } from 'src/contexts/SessionContext';
 import { useSession } from 'src/hooks/useSession';
+import { APP_PATHS } from 'src/appPaths';
 
 const UserBoxButton = styled(Button)(
   ({ theme }) => `
@@ -116,13 +117,13 @@ function HeaderUserbox() {
         </MenuUserBox>
         <Divider sx={{ mb: 0 }} />
         <List sx={{ p: 1 }} component="nav">
-          <ListItem button to="/profile/details" component={NavLink}>
+          <ListItem button to={APP_PATHS.PROFILE_DETAILS} component={NavLink}>
             <AccountBoxTwoToneIcon fontSize="small" />
             <ListItemText primary="My Profile" />
           </ListItem>
           <ListItem
             button
-            to="/profile/settings"
+            to={APP_PATHS.PROFILE_SETTINGS}
             component={NavLink}
           >
             <AccountTreeTwoToneIcon fontSize="small" />

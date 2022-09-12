@@ -1,4 +1,4 @@
-const axios = require("axios");
+const { getAllByInsee } = require("~externals/insee");
 const { Op } = require("sequelize");
 const { success, error } = require("~utils/common/messages.json");
 const { label_status } = require("~utils/enum.json");
@@ -56,7 +56,7 @@ module.exports = {
 	},
 
 	createPartner: async function (res, data) {
-		const { email, phone, type, typeValue } = data
+		const { email, phone, siret } = data
 		/*
 		const emailValid = await isEmailValid(email);
 		if(emailValid !== "ok")
@@ -65,17 +65,15 @@ module.exports = {
 				.json({ message: emailValid });
 		*/
 
-		const request = await axios.get(`https://entreprise.data.gouv.fr/api/sirene/v1/${type}/${typeValue}`);
-		if(request.data.message){
+		
+		data = await getAllByInsee("siret", siret, data, "partner");
+
+		if(data.statut && data.message){
 			return res
-					.status(success.not_found.status)
-					.json({ entity: type, message: request.data.message });
+					.status(data.statut)
+					.json({ entity: 'siret', message: data.message });
 		}
 
-		delete data.type
-		delete data.typeValue
-		data["name"] = request.data.siege_social.nom_raison_sociale
-		data["address"] = request.data.siege_social.l4_normalisee || request.data.siege_social.l4_declaree || `${request.data.siege_social.numero_voie} ${request.data.siege_social.type_voie} ${request.data.siege_social.libelle_voie}`
 		data["in_internet"] = false;
 		data["in_store"] = false
 

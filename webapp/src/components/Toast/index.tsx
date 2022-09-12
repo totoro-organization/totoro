@@ -1,4 +1,4 @@
-import { Alert, Snackbar } from "@mui/material";
+import { Alert } from "@mui/material";
 import { SyntheticEvent, useState } from "react";
 
 interface ToastProps {

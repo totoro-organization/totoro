@@ -1,10 +1,11 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Button, Checkbox, FormControlLabel, Grid, Link } from '@mui/material';
+import { Button, Grid, Link } from '@mui/material';
 import { FormProvider, useForm } from 'react-hook-form';
 import { NavLink } from 'react-router-dom';
 import { useSession } from 'src/hooks/useSession';
 import { FormContainer, FormTextField } from 'src/components/forms';
 import { SigninSchema } from './Signin.schema';
+import { APP_PATHS } from 'src/appPaths';
 
 interface SigninFieldTypes {
   emailOrUsername: string;
@@ -65,12 +66,12 @@ function SigninForm() {
         </Button>
         <Grid container>
           <Grid item xs>
-            <Link to="/mot-de-passe-oublie" component={NavLink}  variant="body2">
+            <Link to={APP_PATHS.FORGOT_PASSWORD} component={NavLink}  variant="body2">
               Mot de passe oublié ?
             </Link>
           </Grid>
           <Grid item>
-            <Link to="/signup" component={NavLink} variant="body2">
+            <Link to={APP_PATHS.SIGNUP} component={NavLink} variant="body2">
               Pas encore inscrit ? Je m'inscris
             </Link>
           </Grid>

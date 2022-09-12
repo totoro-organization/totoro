@@ -30,7 +30,7 @@ function StandardSubscriptionTab({ handleSetTabs }: TabProps) {
   
   useEffect(() => {
     if(subscriptions) {
-      handleSetTabs('standard', subscriptions.totalRows)
+      handleSetTabs('standard', subscriptions.data.length)      
     }
   }, [subscriptions])
   

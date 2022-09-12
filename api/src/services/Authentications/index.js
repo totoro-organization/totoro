@@ -6,34 +6,50 @@ const controller = require("./controller");
 
 const { Users, Admins } = require("~orm/models");
 
+const { params } = require("~utils/verify");
+const {loginUser, forgot, signup} = require("./interface");
+
 exports.router = (function () {
   const authRouter = express.Router();
 
-  authRouter.post("/login", async function (req, res) {
+  authRouter
+  .post("/login", async function (req, res) {
     const data = req.body;
+    const restrictions = params(res, data, loginUser);
+    if(restrictions) return restrictions;
+
     data.app = req.app;
     controller.login(res, Users, data, false);
-  });
+  })
 
-  authRouter.post("/login/admin", async function (req, res) {
+  .post("/login/admin", async function (req, res) {
     const data = req.body;
+    const restrictions = params(res, data, loginUser);
+    if(restrictions) return restrictions;
+
     data.app = req.app;
     controller.login(res, Admins, data, true);
-  });
+  })
 
-  authRouter.post("/signup", async function (req, res) {
+  .post("/signup", async function (req, res) {
     const data = req.body;
+    const restrictions = params(res, data, signup);
+    if(restrictions) return restrictions;
+
     data.app = req.app;
     controller.signup(res, Users, data);
-  });
+  })
 
-  authRouter.post("/forgot", async function (req, res) {
+  .post("/forgot", async function (req, res) {
     const data = req.body;
+    const restrictions = params(res, data, forgot);
+    if(restrictions) return restrictions;
+
     data.app = req.app;
     controller.forgot(res, Users, data);
-  });
+  })
 
-  authRouter.get("/connected", [
+  .get("/connected", [
     passport,
     async function (req, res) {
       if (req.userData.isAdmin) adminsController.getAdmin(res, req.userData.id);
