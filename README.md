@@ -10,7 +10,7 @@
 <p align="center">
   La joie de donner mais aussi de recevoir !!
   <br>
-  <a href=""><strong>Documentation »</strong></a>
+  <a href="https://docs-totoro.netlify.app/docs/intro"><strong>Documentation »</strong></a>
   <br>
   <br>
   <a href="https://github.com/totoro-organization/totoro/issues/new?assignees=-&labels=🐛%20bugfix">Report bug</a>
@@ -34,8 +34,6 @@
 		<img src="https://img.shields.io/badge/figma-%23F24E1E.svg?style=for-the-badge&logo=figma&logoColor=white">
 	</a>	
 </p>
-
-Démo : https://docs-totoro.netlify.app/docs/intro
 
 ## Totoro
 
