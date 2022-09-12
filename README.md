@@ -32,7 +32,7 @@ cd mobileapp && npm start && npm run test
 ## Documentation
 
 // TODO
-[Swagger - API]([https://linktodocumentation](https://api-totoro.herokuapp.com/docs)
+[TOTORO DOCS]([https://linktodocumentation](https://docs-totoro.netlify.app/docs/mobile/introduction)
 
 ## Installation
 
@@ -49,7 +49,6 @@ cd mobileapp && npm start && npm run test
 
  | **Application** | **URL**                              |
 |-----------------|---------------------------------------|
-| Docs totoro     | https://docs-totoro.netlify.app/docs/mobile/introduction     |
 | API             | https://api-totoro.herokuapp.com/     |
 | API doc         | https://api-totoro.herokuapp.com/docs |
 | Landing         | https://totoro-landing.netlify.app/   |
