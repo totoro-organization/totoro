@@ -317,7 +317,7 @@ module.exports = {
 		const {body: data, files} = req;
 		const {tags, difficulty_id, assos_user_id, title} = data
 
-		const statusData = await getRow(res, Status, { label: label_status.disabled });
+		const statusData = await getRow(res, Status, { label: label_status.actived });
 		const difficultyData = await getRow(res, Difficulties, { id: difficulty_id });
 		const authorData = await getRow(res, Associations_users, { id: assos_user_id });
 		const tagsData = await getRows(Tags, { id: {[Op.in]: tags} });
@@ -333,7 +333,7 @@ module.exports = {
 		const tagsJob = tags;
 		delete data.tags;
 		delete data.images;
-		console.log(files);
+
 		const condition = {title};
 
 		if(data.participants_max) data.remaining_place = data.participants_max
