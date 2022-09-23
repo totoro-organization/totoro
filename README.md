@@ -8,8 +8,6 @@
 </p>
 <h4 align="center">Totoro-organization</h4>
 <p align="center">
-  La joie de donner mais aussi de recevoir !!
-  <br>
   <a href="https://docs-totoro.netlify.app/docs/intro"><strong>Documentation »</strong></a>
   <br>
   <br>
@@ -25,9 +23,6 @@
 		<img src="https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white">
 	</a>
 	<a href="https://">
-		<img src="https://img.shields.io/badge/Trello-%23026AA7.svg?style=for-the-badge&logo=Trello&logoColor=white">
-	</a>
-	<a href="https://">
 		<img src="https://img.shields.io/badge/Discord-%237289DA.svg?style=for-the-badge&logo=discord&logoColor=white">
 	</a>
 	<a href="https://">
@@ -37,7 +32,7 @@
 
 ## Totoro
 
-[Totoro](https://notrelandingpagepourtotoro) est un service de proximité proposant à ses utilisateurs des missions à réaliser avec des associations en échange de `tokens` dépensables directement dans notre boutique contre des bons de réductions chez des commerçants locaux.
+[Totoro](https://notrelandingpagepourtotoro) est un service de proximité proposant à ses utilisateurs des missions à réaliser avec des associations en échange de `tokens` échangeables directement dans notre boutique contre des bons de réductions chez des commerçants locaux.
 
 
 ## Sommaire
@@ -48,7 +43,6 @@
 - [Documentation](#4---documentation)
 - [Contribution](#5---contribution)
 - [Version](#6---version)
-- [🙏 Merci 🙏](#7----merci-)
 - [Copyright et licence](#8---copyright-et-licence)
 
 
@@ -123,10 +117,6 @@ La Landingpage se trouve sur ce repo : https://github.com/totoro-organization/la
 
 	[![React Native](https://img.shields.io/badge/react_native-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)](https://reactnative.dev/)
 
-- ####  Component ⚙️
-
-	[![Styled Components](https://img.shields.io/badge/styled--components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white)](https://styled-components.com/)
-
  - ####  Outil 🛠
 
 	[![Expo](https://img.shields.io/badge/expo-1C1E24?style=for-the-badge&logo=expo&logoColor=#D04A37)](https://expo.dev/)
@@ -144,10 +134,6 @@ La Landingpage se trouve sur ce repo : https://github.com/totoro-organization/la
 
 	[![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)](https://fr.reactjs.org/)
 
-- ####  Component ⚙️
-
-	[![MUI](https://img.shields.io/badge/MUI-%230081CB.svg?style=for-the-badge&logo=mui&logoColor=white)](https://mui.com/)
-
 </details>
 
 <details>
@@ -159,10 +145,6 @@ La Landingpage se trouve sur ce repo : https://github.com/totoro-organization/la
 	[![Swagger](https://img.shields.io/badge/-Swagger-%23Clojure?style=for-the-badge&logo=swagger&logoColor=white)](https://swagger.io/)
 
 [//]: # (Objectif Typescript)
-
- - ####  Outil 🛠
-
-	[![Postman](https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white)](https://www.postman.com/)
 
 </details>
 
@@ -231,22 +213,12 @@ Pour l'API nous utilisons [Swagger](https://swagger.io/), la documentation est d
   <tr>
     <td align="center"><a href="https://github.com/tlugat"><img src="https://avatars.githubusercontent.com/u/56915793?v=4?s=64" width="64px;" alt=""/><br /><sub><b>tlugat</b></sub></a><br /><a href="https://github.com/totoro-organization/totoro/commits?author=tlugat" title="Code">💻</a><a href="" title="Bug">🐛</a><a href="" title="Management">📆</a><a href="" title="Review">👀</a>
 </td>
-    <td align="center"><a href="https://github.com/MaeWolff"><img src="https://avatars.githubusercontent.com/u/56693082?v=4?s=64" width="64px;" alt=""/><br /><sub><b>MaeWolff</b></sub></a><br /><a href="https://github.com/totoro-organization/totoro/commits?author=MaeWolff" title="Code">📱</a><a href="" title="Review">👀</a><a href="" title="Design">🎨</a></td>
+    <td align="center"><a href="https://github.com/MaeWolff"><img src="https://avatars.githubusercontent.com/u/56693082?v=4?s=64" width="64px;" alt=""/><br /><sub><b>MaeWolff</b></sub></a><br /><a href="https://github.com/totoro-organization/totoro/commits?author=MaeWolff" title="Code">📱</a><a href="" title="Review">👀</a><a href="" title="Design">🎨</a><a href="" title="Management">📆</a><a href="" title="Bug">🐛</a></td>
     <td align="center"><a href="https://github.com/j2frise"><img src="https://avatars.githubusercontent.com/u/53154206?v=4?s=64" width="64px;" alt=""/><br /><sub><b>j2frise</b></sub></a><br /><a href="https://github.com/totoro-organization/totoro/commits?author=j2frise" title="Code">💻</a><a href="" title="Bug">🐛</a><a href="" title="Data/API">🔣</a></td>
     <td align="center"><a href="https://github.com/ElyasC"><img src="https://avatars.githubusercontent.com/u/93398025?v=4?s=64" width="64px;" alt=""/><br /><sub><b>ElyasC</b></sub></a><br /><a href="https://github.com/totoro-organization/totoro/commits?author=ElyasC" title="Code">💻</a><a href="" title="Data/API">🔣</a>
 </td>
-    <td align="center"><a href="https://github.com/Pierre-AlexisM"><img src="https://avatars.githubusercontent.com/u/56915632?v=4?s=64" width="64px;" alt=""/><br /><sub><b>Pierre-AlexisM</b></sub></a><br /><a href="https://github.com/totoro-organization/totoro/commits?author=Pierre-AlexisM" title="Code">💻</a><a href="" title="Management">📆</a></td>
   </tr>
-  <tr>
-     <td align="center"><a href="https://github.com/QuentinHuber"><img src="https://avatars.githubusercontent.com/u/56915614?v=4?s=64" width="64px;" alt=""/><br /><sub><b>QuentinHuber</b></sub></a><br /><a href="https://github.com/totoro-organization/totoro/commits?author=QuentinHuber" title="Code">💻</a><a href="" title="Design">🎨</a>
-</td>
-    <td align="center"><a href="https://github.com/Nstampfli"><img src="https://avatars.githubusercontent.com/u/56916270?v=4?s=64" width="64px;" alt=""/><br /><sub><b>Nstampfli</b></sub></a><br /><a href="https://github.com/totoro-organization/totoro/commits?author=Nstampfli" title="Code">💻</a>
-</td>
     <td align="center"><a href="https://github.com/maellemoisis"><img src="https://avatars.githubusercontent.com/u/45653537?v=4?s=64" width="64px;" alt=""/><br /><sub><b>maellemoisis</b></sub></a><br /><a href="" title="Design">🎨</a><a title="Content">🖋</a>
-</td>
-    <td align="center"><a href="https://github.com/LucasMassol"><img src="https://avatars.githubusercontent.com/u/57172016?v=4?s=64" width="64px;" alt=""/><br /><sub><b>LucasMassol</b></sub></a><br /><a href="" title="Design">🎨</a>
-</td>
-    <td align="center"><a href="https://github.com/cristianamonteiroo"><img src="https://avatars.githubusercontent.com/u/59604348?v=4?s=64" width="64px;" alt=""/><br /><sub><b>cristianamonteiroo</b></sub></a><br /><a href="" title="Data/API">🔣</a>
 </td>
   </tr>
 </table>
@@ -255,31 +227,6 @@ Pour l'API nous utilisons [Swagger](https://swagger.io/), la documentation est d
 
 > Dernière version : Totoro v0.01 - [Disponible ici »]()
  - > Dernière version APK : Totoro-v0.01.apk - [Disponible ici »]()
-
-| APP | Fonctionnel |
-| :--: | :--: |
-| API | ✔️ |
-| Back-office | ✔️ |
-| Landing-page | ❌ |
-| Mobile | ❌ |
-| Web-app | ❌ |
- Documentation | ✔️ |
-
-[//]: # (❌ ou ✔️)
-
-## [7](#sommaire) - 🙏 Merci 🙏
-
-<a href="https://www.arcplex.fr/">
-  <img src="https://www.arcplex.fr/wp-content/uploads/2021/10/logo-arcplex-formation.png" alt="Arcplex" width="192" height="42">
-</a>
-
-Merci [Arcplex](https://www.arcplex.fr/) pour l'aide apportée.
-
-<a href="https://www.hetic.net/">
-  <img src="https://www.hetic.net/sites/all/themes/hetic_v7/img/svg/logo_hetic.svg" alt="HETIC" width="160" height="64">
-</a>
-
-Merci [HETIC](https://www.hetic.net/) pour cette année.
 
 
 ## [8](#sommaire) - Copyright et licence
